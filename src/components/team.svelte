@@ -32,6 +32,14 @@
         showAvailablePlayers = !showAvailablePlayers;
     };
 
+    const calculateTeamValue = () => {
+        const playerValue = $roster.players
+            .map((x) => x.player.cost)
+            .reduce((a, b) => a + b, 0);
+        const rerolls = $roster.rerolls * selectedTeam.reroll.cost;
+        return playerValue + rerolls;
+    };
+
     roster.subscribe((x) => {
         localStorage.setItem("roster", JSON.stringify(x));
     });

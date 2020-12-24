@@ -54,6 +54,6 @@
         <td>{`${stat}${index > 1 ? '+' : ''}`}</td>
     {/each}
     <td class="skills left-align">{getSkills(player.skills)}</td>
-    <td>{player.primary}</td>
-    <td>{player.secondary}</td>
+    <td>{player.primary.join('')}</td>
+    <td>{player.secondary.join('')}</td>
 </tr>

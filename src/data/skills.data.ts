@@ -9,7 +9,7 @@ export const skills: Skill[] = [
   { id: 6, name: "jump up", category: "A" },
   { id: 7, name: "leap", category: "A" },
   { id: 8, name: "safe pair of hands", category: "A" },
-  { id: 9, name: "sidestep", category: "A" },
+  { id: 9, name: "side step", category: "A" },
   { id: 10, name: "sneaky git", category: "A" },
   { id: 11, name: "sprint", category: "A" },
   { id: 12, name: "sure feet", category: "A" },
@@ -87,6 +87,6 @@ export const skills: Skill[] = [
   { id: 84, name: "take root", category: "T" },
   { id: 85, name: "titchy", category: "T" },
   { id: 86, name: "throw team-mate", category: "T" },
-  { id: 87, name: "timm-ber!", category: "T" },
+  { id: 87, name: "timmm-ber!", category: "T" },
   { id: 88, name: "unchannelled fury", category: "T" },
 ];

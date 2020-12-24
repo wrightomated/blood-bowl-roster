@@ -55,7 +55,7 @@ const goblinBruiserLineman: Player = {
   position: "Goblin Bruiser Lineman",
   playerStats: [6, 3, 2, 4, 8],
   cost: 45,
-  skills: [],
+  skills: [4,78,81,60],
   primary: ["A"],
   secondary: ["G", "P", "S"],
 };
@@ -65,7 +65,7 @@ const blackOrc: Player = {
   position: "Black Orc",
   playerStats: [4, 4, 4, 5, 10],
   cost: 90,
-  skills: [],
+  skills: [50,52],
   primary: ["G", "S"],
   secondary: ["A", "P"],
 };
@@ -75,7 +75,7 @@ const trainedTroll: Player = {
   position: "Trained Troll",
   playerStats: [4, 5, 5, 5, 10],
   cost: 115,
-  skills: [],
+  skills: [63,71,55,75,76,77,86],
   primary: ["S"],
   secondary: ["A", "G", "P"],
 };
@@ -226,6 +226,344 @@ const deathroller: Player = {
   secondary: ["A"],
 };
 
+const unionLineman: Player = {
+  id: 24,
+  position: "Lineman",
+  playerStats: [6, 3, 2, 4, 8],
+  cost: 60,
+  skills: [],
+  primary: ["A", "G"],
+  secondary: ["S"],
+};
+
+const unionThrower: Player = {
+  id: 25,
+  position: "Thrower",
+  playerStats: [6, 3, 2, 2, 8],
+  cost: 75,
+  skills: [46],
+  primary: ["A", "G", "P"],
+  secondary: ["S"],
+};
+
+const unionCatcher: Player = {
+  id: 26,
+  position: "Catcher",
+  playerStats: [8, 3, 2, 4, 8],
+  cost: 100,
+  skills: [1,44],
+  primary: ["A", "G"],
+  secondary: ["S"],
+};
+
+const unionBlitzer: Player = {
+  id: 27,
+  position: "Blitzer",
+  playerStats: [7,3,2,3,9],
+  cost: 115,
+  skills: [13, 9],
+  primary: ["A", "G"],
+  secondary: ["P","S"],
+};
+
+const goblinLineman: Player = {
+  id: 28,
+  position: "Goblin Lineman",
+  playerStats: [6,2,3,4,8],
+  cost: 40,
+  skills: [4,78,81],
+  primary: ["A"],
+  secondary: ["G", "P","S"],
+}
+
+const bomma: Player = {
+  id: 29,
+  position: "Bomma",
+  playerStats: [6,2,3,4,8],
+  cost: 45,
+  skills: [65,4,79,81],
+  primary: ["A"],
+  secondary: ["G", "P","S"],
+}
+
+const looney: Player = {
+  id: 30,
+  position: "Looney",
+  playerStats: [6,2,3,0,8],
+  cost: 40,
+  skills: [67,79,81],
+  primary: ["A"],
+  secondary: ["G","S"],
+}
+
+const fanatic: Player = {
+  id: 31,
+  position: "Fanatic",
+  playerStats: [3,7,3,0,8],
+  cost: 70,
+  skills: [64,72,79,81],
+  primary: ["S"],
+  secondary: ["A","G"],
+}
+
+const pogoer: Player = {
+  id: 32,
+  position: "Pogoer",
+  playerStats: [7,2,3,5,8],
+  cost: 75,
+  skills: [4,74,81],
+  primary: ["S"],
+  secondary: ["A","G"],
+}
+
+const ooligan: Player = {
+  id: 33,
+  position: "'Ooligan'",
+  playerStats: [6,2,3,6,8],
+  cost: 65,
+  skills: [15,27,4,78 ,81],
+  primary: ["A"],
+  secondary: ["G","P","S"],
+}
+const doomDiver: Player = {
+  id: 34,
+  position: "Doom Diver",
+  playerStats: [6,2,3,6,8],
+  cost: 60,
+  skills: [78 ,81, 83],
+  primary: ["A"],
+  secondary: ["G", "S"],
+}
+const halflingHopefulLineman: Player = {
+  id: 35,
+  position: "Halfling Hopeful Lineman",
+  playerStats: [5,2,3,4,7],
+  cost: 30,
+  skills: [4,78,81],
+  primary: ["A"],
+  secondary: ["G", "S"],
+}
+const heftys: Player = {
+  id: 36,
+  position: "Halfling Heftys",
+  playerStats: [5,2,3,3,8],
+  cost: 50,
+  skills: [4,16,81],
+  primary: ["A", "P"],
+  secondary: ["G", "S"],
+}
+
+const halflingCatcher: Player = {
+  id: 37,
+  position: "Halfling Catcher",
+  playerStats: [5,2,3,5,7],
+  cost: 55,
+  skills: [1,4,78,11,81],
+  primary: ["A"],
+  secondary: ["G", "S"],
+}
+
+const treeman: Player = {
+  id: 38,
+  position: "Forest Treeman",
+  playerStats: [2,6,5,5,11],
+  cost: 120,
+  skills: [55,58,59,84,60,86,87],
+  primary: ["A"],
+  secondary: ["G", "S"],
+}
+
+const humanLineman: Player = {
+  id: 39,
+  position: "Human Lineman",
+  playerStats: [6,3,3,4,9],
+  cost: 50,
+  skills: [],
+  primary: ["G"],
+  secondary: ["A", "S"],
+}
+
+const humanThrower: Player = {
+  id: 40,
+  position: "Thrower",
+  playerStats: [6,3,3,2,9],
+  cost: 80,
+  skills: [46,22],
+  primary: ["G", "P"],
+  secondary: ["A", "S"],
+}
+
+const humanCatcher: Player = {
+  id: 41,
+  position: "Catcher",
+  playerStats: [8,2,3,5,8],
+  cost: 65,
+  skills: [1,4],
+  primary: ["A", "G"],
+  secondary: ["P", "S"],
+}
+
+const humanBlitzer: Player = {
+  id: 42,
+  position: "Blitzer",
+  playerStats: [7,3,3,4,9],
+  cost: 85,
+  skills: [13],
+  primary: ["A", "G"],
+  secondary: ["P", "S"],
+}
+
+const skinkRunnerLineman: Player = {
+  id: 43,
+  position: "Skink Runner Lineman",
+  playerStats: [8,2,3,4,8],
+  cost: 60,
+  skills: [4,81],
+  primary: ["A"],
+  secondary: ["G", "P", "S"],
+}
+
+const chameleonSkink: Player = {
+  id: 44,
+  position: "Chameleon Skinks",
+  playerStats: [7,2,3,3,8],
+  cost: 70,
+  skills: [4,45,20,81],
+  primary: ["A"],
+  secondary: ["G", "P", "S"],
+}
+
+const saurusBlocker: Player = {
+  id: 45,
+  position: "Saurus Blocker",
+  playerStats: [6,4,5,6,10],
+  cost: 85,
+  skills: [],
+  primary: ["G", "S"],
+  secondary: ["A"],
+}
+
+const kroxigor: Player = {
+  id: 46,
+  position: "Kroxigor",
+  playerStats: [6,5,5,0,10],
+  cost: 140,
+  skills: [66,71,55,33,60],
+  primary: ["S"],
+  secondary: ["A", "G"],
+}
+
+const zombieLineman: Player = {
+  id: 47,
+  position: "Zombie Lineman",
+  playerStats: [4,3,4,0,9],
+  cost: 40,
+  skills: [77],
+  primary: ["G"],
+  secondary: ["A","S"],
+}
+
+const ghoulRunner: Player = {
+  id: 48,
+  position: "Ghoul Runner",
+  playerStats: [7,3,3,4,8],
+  cost: 75,
+  skills: [4],
+  primary: ["G", "S"],
+  secondary: ["A"],
+}
+const wraith: Player = {
+  id: 49,
+  position: "Wraith",
+  playerStats: [6,3,3,0,9],
+  cost: 95,
+  skills: [13,29,72,77,9],
+  primary: ["G", "S"],
+  secondary: ["A"],
+}
+const werewolf: Player = {
+  id: 50,
+  position: "Werewolf",
+  playerStats: [8,3,3,4,9],
+  cost: 125,
+  skills: [26,17,77],
+  primary: ["A", "G"],
+  secondary: ["P","S"],
+}
+const fleshGolem: Player = {
+  id: 51,
+  position: "Flesh Golem",
+  playerStats: [4,4,4,0,10],
+  cost: 70,
+  skills: [77,58,60],
+  primary: ["G","S"],
+  secondary: ["A"],
+}
+const rotterLineman: Player = {
+  id: 52,
+  position: "Rotter Lineman",
+  playerStats: [5,3,4,6,9],
+  cost: 35,
+  skills: [68,73],
+  primary: ["G","M"],
+  secondary: ["A","S"],
+}
+const pestigor: Player = {
+  id: 53,
+  position: "Pestigor",
+  playerStats: [6,3,4,4,9],
+  cost: 75,
+  skills: [30,73,77],
+  primary: ["G","M","S"],
+  secondary: ["A","P"],
+}
+const bloater: Player = {
+  id: 54,
+  position: "Bloater",
+  playerStats: [4,4,4,6,10],
+  cost: 115,
+  skills: [27,29,73,77],
+  primary: ["G","M","S"],
+  secondary: ["A"],
+}
+const rotspawn: Player = {
+  id: 55,
+  position: "Rotspawn",
+  playerStats: [4,5,5,0,10],
+  cost: 140,
+  skills: [27,29,71,55,73,76,77,34],
+  primary: ["S"],
+  secondary: ["A","G","M"],
+}
+const gnoblarLineman: Player = {
+  id: 56,
+  position: "Gnoblar Lineman",
+  playerStats: [5,1,3,5,6],
+  cost: 15,
+  skills: [4,78,9,81,85],
+  primary: ["A"],
+  secondary: ["G"],
+}
+const ogreRuntPunter: Player = {
+  id: 57,
+  position: "Ogre Runt Punter",
+  playerStats: [5,5,4,4,10],
+  cost: 145,
+  skills: [66,70,55,60],
+  primary: ["S"],
+  secondary: ["A","G","P"],
+}
+
+const ogreBlocker: Player = {
+  id: 58,
+  position: "Ogre Blocker",
+  playerStats: [5,5,4,5,10],
+  cost: 140,
+  skills: [66,55,60,86],
+  primary: ["P","S"],
+  secondary: ["A","G"],
+}
+
 export const playerCatalogue: PlayerCatalogue = {
   players: [
     imperialLineman,
@@ -250,6 +588,41 @@ export const playerCatalogue: PlayerCatalogue = {
     dwarfRunner,
     dwarfBlitzer,
     trollSlayer,
-    deathroller
+    deathroller,
+    unionLineman,
+    unionThrower,
+    unionCatcher,
+    unionBlitzer,
+    goblinLineman,
+    bomma,
+    looney,
+    fanatic,
+    pogoer,
+    ooligan,
+    doomDiver,
+    halflingHopefulLineman,
+    heftys,
+    halflingCatcher,
+    treeman,
+    humanLineman,
+    humanThrower,
+    humanCatcher,
+    humanBlitzer,
+    skinkRunnerLineman,
+    chameleonSkink,
+    saurusBlocker,
+    kroxigor,
+    ghoulRunner,
+    wraith,
+    werewolf,
+    fleshGolem,
+    zombieLineman,
+    rotterLineman,
+    pestigor,
+    bloater,
+    rotspawn,
+    gnoblarLineman,
+    ogreRuntPunter,
+    ogreBlocker
   ],
 };

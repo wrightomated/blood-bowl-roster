@@ -107,3 +107,8 @@
         </tbody>
     </table>
 </div>
+
+<!-- <div>
+    Total value:
+    {$roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0)}
+</div> -->
