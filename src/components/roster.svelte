@@ -1,6 +1,5 @@
 <script lang="ts">
     import { roster } from "../store/teamRoster.store";
-    // import { teamData } from "../data/teams.data";
     import RosterRow from "./rosterPlayer.svelte";
     import type { Player } from "../models/player.model";
 
@@ -41,20 +40,17 @@
     .left-align {
         text-align: left;
     }
-    .name-input {
-        border: 0;
-        border-bottom: 2px solid #193f80;
-        border-radius: 0;
-    }
 </style>
 
-<h3 class="heading"><span><input bind:value={$roster.teamName} /></span></h3>
+<h3 class="heading">
+    <span><input placeholder="Type name" bind:value={$roster.teamName} /></span>
+</h3>
 <div class="table-container">
     <table>
         <thead>
             <tr>
                 <td />
-                <td class="left-align">Name</td>
+                <td class="left-align" colspan="2">Name</td>
                 <td class="left-align">Position</td>
                 <td>MA</td>
                 <td>ST</td>
@@ -78,8 +74,12 @@
                 {#if $roster.players.length < 16}
                     <td />
                     <td class="left-align">
-                        <input bind:value={newName} class="name-input" />
+                        <input
+                            placeholder="New Player"
+                            bind:value={newName}
+                            class="name-input" />
                     </td>
+                    <td />
                     <td class="left-align">
                         <select bind:value={selected}>
                             {#each playerTypes as playerType}
@@ -106,9 +106,4 @@
             </tr>
         </tbody>
     </table>
-</div>
-
-<div>
-    Total value:
-    {$roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0)}
 </div>

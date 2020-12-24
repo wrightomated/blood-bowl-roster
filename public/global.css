@@ -49,10 +49,20 @@ textarea {
   font-size: inherit;
   -webkit-padding: 0.4em 0;
   padding: 0.4em;
-  margin: 0 0 0.5em 0;
+  /* margin: 0 0 0.5em 0; */
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 2px;
+}
+
+input {
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+input:placeholder-shown {
+  border-bottom: 2px solid #193f80;
 }
 
 input:disabled {
@@ -79,7 +89,7 @@ button:focus {
 
 table {
   border-collapse: collapse;
-  width: 100%;
+  /* width: 100%; */
 }
 td,
 tr {

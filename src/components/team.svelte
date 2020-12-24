@@ -5,6 +5,7 @@
     import type { Team } from "../models/team.model";
     import PlayerRow from "./player.svelte";
     import Roster from "./roster.svelte";
+    import RerollsTable from "./rerollsTable.svelte";
 
     // import { PlayerCatalogue } from "../models/player.model";
     // const teams = teamIndex.index;
@@ -36,7 +37,7 @@
     });
 </script>
 
-<style>
+<style lang="scss">
     .table-container {
         width: 100%;
         overflow-x: auto;
@@ -92,4 +93,5 @@
     {/if}
     <Roster playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
     <div />
+    <RerollsTable {selectedTeam} />
 {/if}

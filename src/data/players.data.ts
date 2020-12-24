@@ -176,6 +176,56 @@ const witchElf: Player = {
   secondary: ["P", "S"],
 };
 
+const dwarfBlockerLineman: Player = {
+  id: 19,
+  position: "Dwarf Blocker Lineman",
+  playerStats: [4, 3, 4, 5, 10],
+  cost: 70,
+  skills: [13,23,60],
+  primary: ["G", "S"],
+  secondary: ["A"],
+};
+
+const dwarfRunner: Player = {
+  id: 20,
+  position: "Runner",
+  playerStats: [6, 3, 3, 4, 9],
+  cost: 85,
+  skills: [22,60],
+  primary: ["G", "P"],
+  secondary: ["A", "S"],
+};
+
+const dwarfBlitzer: Player = {
+  id: 21,
+  position: "Blitzer",
+  playerStats: [5, 3, 3, 4, 10],
+  cost: 80,
+  skills: [13,60],
+  primary: ["G", "S"],
+  secondary: ["A", "P"],
+};
+
+const trollSlayer: Player = {
+  id: 22,
+  position: "Troll Slayer",
+  playerStats: [5, 3, 4, 0, 9],
+  cost: 95,
+  skills: [13,14,17,60],
+  primary: ["G", "S"],
+  secondary: ["A"],
+};
+
+const deathroller: Player = {
+  id: 23,
+  position: "Deathroller",
+  playerStats: [4, 7, 5, 0, 11],
+  cost: 170,
+  skills: [51,15,54,71,55,72,79,58],
+  primary: ["G", "S"],
+  secondary: ["A"],
+};
+
 export const playerCatalogue: PlayerCatalogue = {
   players: [
     imperialLineman,
@@ -196,5 +246,10 @@ export const playerCatalogue: PlayerCatalogue = {
     darkElfBlitzer,
     assassin,
     witchElf,
+    dwarfBlockerLineman,
+    dwarfRunner,
+    dwarfBlitzer,
+    trollSlayer,
+    deathroller
   ],
 };

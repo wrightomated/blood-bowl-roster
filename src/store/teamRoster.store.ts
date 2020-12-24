@@ -35,6 +35,20 @@ function createRoster() {
           players: switchTwoElements(store.players, index, index + 1),
         };
       }),
+    addReroll: () =>
+      update((store) => {
+        return {
+          ...store,
+          rerolls: store.rerolls + 1,
+        };
+      }),
+      removeReroll: () =>
+      update((store) => {
+        return {
+          ...store,
+          rerolls: store.rerolls - 1,
+        };
+      }),
     reset: () => set(getEmptyRoster()),
     set,
   };

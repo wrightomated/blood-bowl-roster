@@ -15,25 +15,36 @@
     };
 </script>
 
-<style>
+<style lang="scss">
+    td {
+        input {
+            margin-bottom: 0;
+        }
+    }
     .left-align {
         text-align: left;
+    }
+    .right-align {
+        text-align: right;
     }
 </style>
 
 <tr>
     <td>{index + 1}</td>
     <td class="left-align">
-        <input bind:value={$roster.players[index].playerName} />
-        <button on:click={removePlayer}>-</button>
+        <input
+            placeholder="Click to name"
+            bind:value={$roster.players[index].playerName} />
+    </td>
+    <td class="right-align">
         {#if index > 0}<button on:click={moveUp}>^</button>{/if}
         {#if index < $roster.players.length - 1}
             <button on:click={moveDown}>d</button>
         {/if}
+        <button on:click={removePlayer}>-</button>
     </td>
     <td class="left-align">{player.position}</td>
-    <!-- <td on:click={addPlayer}>0/{max}</td> -->
-    <!-- <td>{player.cost},000</td> -->
+
     {#each player.playerStats as stat, i}
         <td>{`${stat}${i > 1 ? '+' : ''}`}</td>
     {/each}

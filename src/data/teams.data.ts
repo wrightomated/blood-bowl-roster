@@ -56,5 +56,19 @@ export const teamData: TeamList = {
       apothecary: true,
       tier: 1,
     },
+    {
+      name: "Dwarf",
+      id: 5,
+      players: [
+        { id: 19, max: 12 },
+        { id: 20, max: 2 },
+        { id: 21, max: 2 },
+        { id: 22, max: 2 },
+        { id: 23, max: 1 },
+      ],
+      reroll: { cost: 50, max: 8 },
+      apothecary: true,
+      tier: 1,
+    },
   ],
 };

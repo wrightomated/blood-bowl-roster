@@ -4,6 +4,8 @@
 
 <table>
     <thead>
-        <td>`</td>
+        <tr>
+            <td>Re-roll</td>
+        </tr>
     </thead>
 </table>
