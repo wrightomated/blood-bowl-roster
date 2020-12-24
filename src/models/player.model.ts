@@ -1,3 +1,5 @@
+import type { SkillCategory } from "./skill.model";
+
 export interface Player {
   id: number;
   position: string;
@@ -11,5 +13,3 @@ export interface Player {
 export interface PlayerCatalogue {
   players: Player[];
 }
-
-export type SkillCategory = "A" | "M" | "P" | "G" | "S";

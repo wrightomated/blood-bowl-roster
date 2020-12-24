@@ -1,0 +1,3 @@
+{
+    "svelte.language-server.runtime": "/usr/local/bin/node"
+}

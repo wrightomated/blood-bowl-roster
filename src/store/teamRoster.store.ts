@@ -36,14 +36,16 @@ function createRoster() {
         };
       }),
     reset: () => set(getEmptyRoster()),
+    set,
   };
 }
 
 const getEmptyRoster: () => Roster = () => {
   return {
     teamId: 0,
-    players: [],
+    players: [], 
     rerolls: 0,
+    teamName: 'Team Name'
   };
 };
 

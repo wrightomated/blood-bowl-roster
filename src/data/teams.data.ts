@@ -28,5 +28,33 @@ export const teamData: TeamList = {
       apothecary: true,
       tier: 2,
     },
+    {
+      name: "Chaos Chosen",
+      id: 3,
+      players: [
+        { id: 9, max: 16 },
+        { id: 10, max: 4 },
+        { id: 11, max: 1 },
+        { id: 12, max: 1 },
+        { id: 13, max: 1 },
+      ],
+      reroll: { cost: 60, max: 8 },
+      apothecary: true,
+      tier: 2,
+    },
+    {
+      name: "Dark Elf",
+      id: 4,
+      players: [
+        { id: 14, max: 12 },
+        { id: 15, max: 2 },
+        { id: 16, max: 4 },
+        { id: 17, max: 2 },
+        { id: 18, max: 2 },
+      ],
+      reroll: { cost: 50, max: 8 },
+      apothecary: true,
+      tier: 1,
+    },
   ],
 };
