@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Footer from "./components/footer.svelte";
+
     import Team from "./components/team.svelte";
 </script>
 
@@ -26,4 +28,5 @@
 
 <main>
     <Team />
+    <Footer />
 </main>
