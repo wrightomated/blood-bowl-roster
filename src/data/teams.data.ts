@@ -15,6 +15,7 @@ export const teamData: TeamList = {
       reroll: { cost: 70, max: 8 },
       apothecary: true,
       tier: 2,
+      specialRules: ["Old World Classic"],
     },
     {
       name: "Black Orc",
@@ -27,6 +28,7 @@ export const teamData: TeamList = {
       reroll: { cost: 60, max: 8 },
       apothecary: true,
       tier: 2,
+      specialRules: ['Badlands Brawl', 'Bribery and Corruption']
     },
     {
       name: "Chaos Chosen",
@@ -41,6 +43,7 @@ export const teamData: TeamList = {
       reroll: { cost: 60, max: 8 },
       apothecary: true,
       tier: 2,
+      specialRules: ['Favoured of...']
     },
     {
       name: "Dark Elf",
@@ -55,6 +58,7 @@ export const teamData: TeamList = {
       reroll: { cost: 50, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ['Elven Kingdoms League']
     },
     {
       name: "Dwarf",
@@ -69,6 +73,7 @@ export const teamData: TeamList = {
       reroll: { cost: 50, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ["Old World Classic", "Worlds Edge Superleague"]
     },
     {
       name: "Elven Union",
@@ -82,6 +87,7 @@ export const teamData: TeamList = {
       reroll: { cost: 50, max: 8 },
       apothecary: true,
       tier: 2,
+      specialRules: ["Elven Kingdoms League"]
     },
     {
       name: "Goblin",
@@ -99,6 +105,7 @@ export const teamData: TeamList = {
       reroll: { cost: 60, max: 8 },
       apothecary: true,
       tier: 3,
+      specialRules: ["Badlands Brawl", "Bribery and Corruption", "Underworld Challenge"]
     },
     {
       name: "Halfling",
@@ -112,6 +119,7 @@ export const teamData: TeamList = {
       reroll: { cost: 60, max: 8 },
       apothecary: true,
       tier: 3,
+      specialRules: ["Halfling Thimble Cup", "Old World Classic"]
     },
     {
       name: "Human",
@@ -127,6 +135,7 @@ export const teamData: TeamList = {
       reroll: { cost: 50, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ["Old World Classic"]
     },
     {
       name: "Lizardmen",
@@ -140,6 +149,7 @@ export const teamData: TeamList = {
       reroll: { cost: 70, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ["Lustrian Superleague"]
     },
     {
       name: "Necromantic Horror",
@@ -154,6 +164,7 @@ export const teamData: TeamList = {
       reroll: { cost: 70, max: 8 },
       apothecary: false,
       tier: 2,
+      specialRules: ["Masters of Undeath", "Sylvanian Spotlight"]
     },
     {
       name: "Nurgle",
@@ -167,6 +178,7 @@ export const teamData: TeamList = {
       reroll: { cost: 70, max: 8 },
       apothecary: false,
       tier: 2,
+      specialRules: ["Favoured of Nurgle"]
     },
     {
       name: "Ogre",
@@ -179,6 +191,7 @@ export const teamData: TeamList = {
       reroll: { cost: 70, max: 8 },
       apothecary: true,
       tier: 3,
+      specialRules: ["Badlands Brawl", "Low Cost Linemen", "Old World Classic"]
     },
     {
       name: "Old World Alliance",
@@ -194,11 +207,12 @@ export const teamData: TeamList = {
         { id: 22, max: 1 },
         { id: 35, max: 2 },
         { id: 5, max: 1 },
-        { id: 38, max:1 }
+        { id: 38, max: 1 }
       ],
       reroll: { cost: 70, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ["Old World Classic"]
     },
     {
       name: "Orc",
@@ -214,6 +228,7 @@ export const teamData: TeamList = {
       reroll: { cost: 60, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ["Badlands Brawl"]
     },
     {
       name: "Shambling Undead",
@@ -228,6 +243,7 @@ export const teamData: TeamList = {
       reroll: { cost: 70, max: 8 },
       apothecary: false,
       tier: 1,
+      specialRules: ["Masters of Undeath", "Sylvanian Spotlight"]
     },
     {
       name: "Skaven",
@@ -242,6 +258,78 @@ export const teamData: TeamList = {
       reroll: { cost: 50, max: 8 },
       apothecary: true,
       tier: 1,
+      specialRules: ["Underworld Challenge"]
+    },
+    {
+      name: "Snotling",
+      id: 18,
+      players: [
+        { id: 73, max: 16 },
+        { id: 74, max: 2 },
+        { id: 75, max: 2 },
+        { id: 76, max: 2 },
+        { id: 77, max: 2 },
+        { id: 8, max: 2 },
+      ],
+      reroll: { cost: 60, max: 8 },
+      apothecary: true,
+      tier: 3,
+      specialRules: ["Bribery and Corruption", "Low Cost Linemen", "Underworld Challenge"]
+    },
+    {
+      name: "Underworld Denizen",
+      id: 19,
+      players: [
+        { id: 28, max: 12 },
+        { id: 73, max: 6 },
+        { id: 68, max: 3 },
+        { id: 69, max: 1 },
+        { id: 70, max: 1 },
+        { id: 71, max: 1 },
+        { id: 71, max: 1 },
+        { id: 8, max: 1 },
+        { id: 72, max: 1 }
+      ],
+      reroll: { cost: 70, max: 8 },
+      apothecary: true,
+      tier: 2,
+      specialRules: ["Bribery and Corruption", "Underworld Challenge"]
+    },
+    {
+      name: "Wood Elf",
+      id: 20,
+      players: [
+        { id: 78, max: 12 },
+        { id: 79, max: 2 },
+        { id: 80, max: 4 },
+        { id: 81, max: 2 },
+        { id: 38, max: 1 },
+
+      ],
+      reroll: { cost: 50, max: 8 },
+      apothecary: true,
+      tier: 1,
+      specialRules: ["Elven Kingdoms League"]
+    },
+    {
+      name: "Chaos Renegade",
+      id: 21,
+      players: [
+        { id: 39, max: 12 },
+        { id: 40, max: 1 },
+        { id: 28, max: 4 },
+        { id: 59, max: 1 },
+        { id: 68, max: 1 },
+        { id: 8, max: 1 },
+        { id: 5, max: 1 },
+        { id: 13, max: 1 },
+        { id: 72, max: 1 },
+
+      ],
+      reroll: { cost: 70, max: 8 },
+      apothecary: true,
+      tier: 2,
+      specialRules: ["Favoured of..."]
     },
   ],
 };

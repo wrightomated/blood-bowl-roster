@@ -61,7 +61,7 @@
 <TeamSelector {teamList} />
 
 {#if selectedTeam}
-    <h2>{selectedTeam.name}</h2>
+    <h2>{selectedTeam.name} Team</h2>
     <p>
         Available Players
         <button

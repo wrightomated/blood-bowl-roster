@@ -4,4 +4,4 @@ export interface Skill {
   category: SkillCategory;
 }
 
-export type SkillCategory = "A" | "M" | "P" | "G" | "S" | "T";
+export type SkillCategory = "A" | "M" | "P" | "G" | "S" | "T" | "NA";

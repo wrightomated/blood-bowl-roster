@@ -74,7 +74,7 @@ const trainedTroll: Player = {
   position: "Trained Troll",
   playerStats: [4, 5, 5, 5, 10],
   cost: 115,
-  skills: [63, 71, 55, 75, 76, 77, 86],
+  skills: [63, 711, 55, 75, 76, 77, 86],
   primary: ["S"],
   secondary: ["A", "G", "P"],
 };
@@ -84,7 +84,7 @@ const beastmanRunnerLineman: Player = {
   position: "Beastman Runner Lineman",
   playerStats: [6, 3, 3, 4, 9],
   cost: 60,
-  skills: [],
+  skills: [30],
   primary: ["G", "M", "S"],
   secondary: ["A", "P"],
 };
@@ -98,9 +98,14 @@ const chosenBlocker: Player = {
   primary: ["G", "M", "S"],
   secondary: ["A", "P"],
 };
-
-const chaosTroll: Player = {
+const untrainedTroll: Player = {
   ...trainedTroll,
+  id:64,
+  skills: [63, 71, 55, 75, 76, 77, 86],
+  position: 'Untrained Troll'
+}
+const chaosTroll: Player = {
+  ...untrainedTroll,
   id: 11,
   position: "Chaos Troll",
   primary: ["M", "S"],
@@ -120,7 +125,7 @@ const minotaur: Player = {
   position: "Minotaur",
   playerStats: [5, 5, 4, 0, 9],
   cost: 150,
-  skills: [],
+  skills: [71,17,30,55,60,88],
   primary: ["M", "S"],
   secondary: ["A", "G"],
 };
@@ -140,7 +145,7 @@ const darkElfRunner: Player = {
   position: "Runner",
   playerStats: [7, 3, 2, 3, 8],
   cost: 80,
-  skills: [],
+  skills: [40],
   primary: ["A", "G", "P"],
   secondary: ["S"],
 };
@@ -150,7 +155,7 @@ const darkElfBlitzer: Player = {
   position: "Blitzer",
   playerStats: [7, 3, 2, 4, 9],
   cost: 100,
-  skills: [],
+  skills: [13],
   primary: ["A", "G"],
   secondary: ["P", "S"],
 };
@@ -160,7 +165,7 @@ const assassin: Player = {
   position: "Assassin",
   playerStats: [7, 3, 2, 5, 8],
   cost: 85,
-  skills: [],
+  skills: [20,80],
   primary: ["A", "G"],
   secondary: ["P", "S"],
 };
@@ -170,7 +175,7 @@ const witchElf: Player = {
   position: "Witch Elf",
   playerStats: [7, 3, 2, 5, 8],
   cost: 110,
-  skills: [],
+  skills: [4,17,6],
   primary: ["A", "G"],
   secondary: ["P", "S"],
 };
@@ -220,7 +225,7 @@ const deathroller: Player = {
   position: "Deathroller",
   playerStats: [4, 7, 5, 0, 11],
   cost: 170,
-  skills: [51, 15, 54, 71, 55, 72, 79, 58],
+  skills: [51, 15, 54, 710, 55, 72, 79, 58],
   primary: ["G", "S"],
   secondary: ["A"],
 };
@@ -368,8 +373,8 @@ const treeman: Player = {
   playerStats: [2, 6, 5, 5, 11],
   cost: 120,
   skills: [55, 58, 59, 84, 60, 86, 87],
-  primary: ["A"],
-  secondary: ["G", "S"],
+  primary: ["S"],
+  secondary: ["A","G", "P"],
 }
 
 const humanLineman: Player = {
@@ -604,11 +609,6 @@ const orcGoblin: Player = {
   id: 63,
   secondary: ["G","S"]
 }
-const untrainedTroll: Player = {
-  ...trainedTroll,
-  id:64,
-  position: 'Untrained Troll'
-}
 const skeletonLineman: Player = {
   id: 65,
   position: "Skeleton Lineman",
@@ -665,7 +665,7 @@ const gutterRunner: Player = {
 }
 const skavenBlitzer: Player = {
   id: 71,
-  position: "blitzer",
+  position: "Blitzer",
   playerStats: [7, 3, 3, 5,9],
   cost: 90,
   skills: [13],
@@ -674,12 +674,93 @@ const skavenBlitzer: Player = {
 }
 const ratOgre: Player = {
   id: 72,
-  position: "blitzer",
+  position: "Rat Ogre",
   playerStats: [6,5,4,0,9],
   cost: 150,
   skills: [61,17,71,55,33],
   primary: ["S"],
   secondary: ["A", "G", "M"],
+}
+const snotlingLineman: Player = {
+  id: 73,
+  position: "Snotling Lineman",
+  playerStats: [5,1,3,5,6],
+  cost: 15,
+  skills: [4,78,9,81,82,85],
+  primary: ["A"],
+  secondary: ["G"],
+}
+const fungusFlinga: Player = {
+  id: 74,
+  position: "Fungus Flinga",
+  playerStats: [5,1,3,4,6],
+  cost: 30,
+  skills: [65,4,78,79,9,81],
+  primary: ["A", "P"],
+  secondary: ["G"],
+}
+const funHoppa: Player = {
+  id: 75,
+  position: "Fun-hoppa",
+  playerStats: [6,1,3,5,6],
+  cost: 20,
+  skills: [4,74,78,9,81],
+  primary: ["A"],
+  secondary: ["G"],
+}
+const stiltyRunna: Player = {
+  id: 76,
+  position: "Stilty Runna",
+  playerStats: [6,1,3,5,6],
+  cost: 20,
+  skills: [4,78,9,11,81],
+  primary: ["A"],
+  secondary: ["G"],
+}
+const pumpWagon: Player = {
+  id: 77,
+  position: "Pump Wagon",
+  playerStats: [4,5,5,0,9],
+  cost: 105,
+  skills: [15,54,55,76,79,58],
+  primary: ["S"],
+  secondary: ["A","G"],
+}
+const woodElfLineman: Player = {
+  id: 78,
+  position: "Wood Elf Lineman",
+  playerStats: [7,3,2,4,8],
+  cost: 70,
+  skills: [],
+  primary: ["A", "G"],
+  secondary: ["S"],
+}
+const weThrower: Player = {
+  id: 79,
+  position: "Thrower",
+  playerStats: [7,3,2,2,8],
+  cost: 95,
+  skills: [46],
+  primary: ["A", "G","P"],
+  secondary: ["S"],
+}
+const weCatcher: Player = {
+  id: 80,
+  position: "Catcher",
+  playerStats: [8,2,2,4,8],
+  cost: 90,
+  skills: [1,4],
+  primary: ["A", "G"],
+  secondary: ["P","S"],
+}
+const wardancer: Player = {
+  id: 81,
+  position: "Wardancer",
+  playerStats: [8,3,2,4,8],
+  cost: 125,
+  skills: [13,4,7],
+  primary: ["A", "G"],
+  secondary: ["P","S"],
 }
 
 
@@ -756,6 +837,15 @@ export const playerCatalogue: PlayerCatalogue = {
     skavenThrower,
     gutterRunner,
     skavenBlitzer,
-    ratOgre
+    ratOgre,
+    snotlingLineman,
+    fungusFlinga,
+    funHoppa,
+    stiltyRunna,
+    pumpWagon,
+    woodElfLineman,
+    weThrower,
+    weCatcher,
+    wardancer
   ],
 };
