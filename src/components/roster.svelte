@@ -21,7 +21,7 @@
     .heading {
         font-size: large;
         width: 100%;
-        // border-bottom: 3px solid #193f80;
+
         input {
             display: block;
             font-family: "Roboto Slab", serif;
@@ -37,14 +37,18 @@
             text-align: center;
         }
     }
+    // .sub-heading {
+    //     text-align: center;
+    // }
     .left-align {
         text-align: left;
     }
 </style>
 
 <h3 class="heading">
-    <span><input placeholder="Type name" bind:value={$roster.teamName} /></span>
+    <span><input placeholder="Team Name" bind:value={$roster.teamName} /></span>
 </h3>
+<!-- <p class="sub-heading">{$roster.teamType}</p> -->
 <div class="table-container">
     <table>
         <thead>
@@ -75,7 +79,7 @@
                     <td />
                     <td class="left-align">
                         <input
-                            placeholder="New Player"
+                            placeholder="Player Name"
                             bind:value={newName}
                             class="name-input" />
                     </td>

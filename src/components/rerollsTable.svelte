@@ -42,10 +42,8 @@
             {#if rerolls > 0}<button on:click={removeReroll}>-</button>{/if}
         </td>
     </tr>
-    <table>
-        <tr>
-            <th>Total TV</th>
-            <td>{teamTotal},000</td>
-        </tr>
-    </table>
+    <tr>
+        <th>Total TV</th>
+        <td>{teamTotal},000</td>
+    </tr>
 </table>

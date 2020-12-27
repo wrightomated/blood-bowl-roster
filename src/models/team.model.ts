@@ -1,5 +1,5 @@
 export interface Team {
-  name: string;
+  name: TeamName;
   id: number;
   players: Array<TeamPlayer>;
   reroll: TeamReroll;
@@ -22,3 +22,5 @@ export interface TeamReroll {
 }
 
 export type TeamTier = 1 | 2 | 3;
+
+export type TeamName = "Imperial Nobility"|"Black Orc"|"Chaos Chosen"|"Dark Elf"|"Dwarf"|"Elven Union"|"Goblin"|"Halfling"|"Human"|"Lizardmen"|"Necromantic Horror"|"Nurgle"|"Ogre"|"Old World Alliance"|"Orc"|"Shambling Undead"|"Skaven"

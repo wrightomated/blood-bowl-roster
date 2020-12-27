@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { slide } from "svelte/transition";
+
     import type { Player } from "../models/player.model";
     import { roster } from "../store/teamRoster.store";
     export let index: number;
@@ -33,7 +35,7 @@
     <td>{index + 1}</td>
     <td class="left-align">
         <input
-            placeholder="Click to name"
+            placeholder="Player Name"
             bind:value={$roster.players[index].playerName} />
     </td>
     <td class="right-align">

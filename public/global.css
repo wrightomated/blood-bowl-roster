@@ -62,14 +62,15 @@ input {
 }
 
 input:placeholder-shown {
-  border-bottom: 2px solid #193f80;
+  /* border-bottom: 2px solid #970f0c; */
+  font-style: italic;
 }
 
 input:disabled {
   color: #ccc;
 }
 
-button {
+/* button {
   color: #333;
   background-color: #f4f4f4;
   outline: none;
@@ -85,7 +86,7 @@ button:not(:disabled):active {
 
 button:focus {
   border-color: #666;
-}
+} */
 
 table {
   border-collapse: collapse;

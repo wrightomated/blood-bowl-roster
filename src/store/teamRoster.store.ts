@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 
 import type { Roster, RosterPlayerRecord } from "../models/roster.model";
+import type { TeamName } from "../models/team.model";
 
 function createRoster() {
   const { subscribe, set, update }: Writable<Roster> = writable(
@@ -49,17 +50,18 @@ function createRoster() {
           rerolls: store.rerolls - 1,
         };
       }),
-    reset: () => set(getEmptyRoster()),
+    reset: (options?: {teamId: number, teamType: TeamName}) => set(getEmptyRoster(options)),
     set,
   };
 }
 
-const getEmptyRoster: () => Roster = () => {
+const getEmptyRoster: (options?: {teamId: number, teamType: TeamName}) => Roster = (options) => {
   return {
-    teamId: 0,
+    teamId: options?.teamId || 0,
     players: [], 
     rerolls: 0,
-    teamName: 'Team Name'
+    teamName: '',
+    teamType: options?.teamType || '' as TeamName
   };
 };
 

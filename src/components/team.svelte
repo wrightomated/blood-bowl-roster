@@ -2,27 +2,23 @@
     import { roster } from "../store/teamRoster.store";
     import { playerCatalogue } from "../data/players.data";
     import { teamData } from "../data/teams.data";
-    import type { Team } from "../models/team.model";
+    import { currentTeam } from "../store/currentTeam.store";
     import PlayerRow from "./player.svelte";
     import Roster from "./roster.svelte";
     import RerollsTable from "./rerollsTable.svelte";
+    import TeamSelector from "./teamSelector.svelte";
 
     // import { PlayerCatalogue } from "../models/player.model";
     // const teams = teamIndex.index;
     const teamList = teamData.teams;
 
-    let selectedTeam: Team;
+    $: selectedTeam = $currentTeam;
     // let selectedTeamInfo: Team;
     let showAvailablePlayers = true;
 
     // roster.subscribe(
     //     (x) => (selectedTeam = teams.find((j) => j.id === x.teamId))
     // );
-
-    const newTeam = (index: number) => {
-        selectedTeam = teamList.find((x) => x.id === index);
-        // selectedTeamInfo = teamList.find((x) => x.id === selectedTeam.id);
-    };
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);
@@ -32,16 +28,20 @@
         showAvailablePlayers = !showAvailablePlayers;
     };
 
-    const calculateTeamValue = () => {
-        const playerValue = $roster.players
-            .map((x) => x.player.cost)
-            .reduce((a, b) => a + b, 0);
-        const rerolls = $roster.rerolls * selectedTeam.reroll.cost;
-        return playerValue + rerolls;
-    };
+    // const calculateTeamValue = () => {
+    //     const playerValue = $roster.players
+    //         .map((x) => x.player.cost)
+    //         .reduce((a, b) => a + b, 0);
+    //     const rerolls = $roster.rerolls * selectedTeam.reroll.cost;
+    //     return playerValue + rerolls;
+    // };
 
     roster.subscribe((x) => {
         localStorage.setItem("roster", JSON.stringify(x));
+    });
+
+    currentTeam.subscribe((x) => {
+        localStorage.setItem("selectedTeam", JSON.stringify(x));
     });
 </script>
 
@@ -58,11 +58,7 @@
     }
 </style>
 
-{#each teamList as team}
-    <button on:click={(e) => newTeam(team.id)}>{team.name}</button>
-{/each}
-
-<button on:click={() => roster.reset()}>Clear</button>
+<TeamSelector {teamList} />
 
 {#if selectedTeam}
     <h2>{selectedTeam.name}</h2>

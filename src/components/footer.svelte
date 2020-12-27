@@ -8,7 +8,7 @@
 
 <footer>
     <p>
-        All rules references and player names are property of Games Workshop.
+        All rule references and player names are property of Games Workshop.
         This site is not affiliated with Games Workshop. I just think they're
         neat.
     </p>
