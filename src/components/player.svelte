@@ -51,7 +51,7 @@
     <td class="left-align">{player.position}</td>
     <td>{player.cost},000</td>
     {#each player.playerStats as stat, index}
-        <td>{`${stat}${index > 1 ? '+' : ''}`}</td>
+        <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
     {/each}
     <td class="skills left-align">{getSkills(player.skills)}</td>
     <td>{player.primary.join('')}</td>

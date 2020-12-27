@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { slide } from "svelte/transition";
-
     import type { Player } from "../models/player.model";
     import { roster } from "../store/teamRoster.store";
     export let index: number;
@@ -48,7 +46,7 @@
     <td class="left-align">{player.position}</td>
 
     {#each player.playerStats as stat, i}
-        <td>{`${stat}${i > 1 ? '+' : ''}`}</td>
+        <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>
     {/each}
     <td class="left-align">None</td>
     <td>{player.cost}</td>
