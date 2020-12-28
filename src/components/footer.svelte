@@ -2,7 +2,7 @@
     p {
         text-align: center;
         font-size: small;
-        color: #999999;
+        // color: #;
     }
 </style>
 

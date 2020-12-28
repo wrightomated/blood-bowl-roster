@@ -4,8 +4,19 @@
     import MaterialButton from "./materialButton.svelte";
     import { skills } from "../data/skills.data";
     import SkillElement from "./skillElement.svelte";
+    import { currentTeam } from "../store/currentTeam.store";
     export let index: number;
     export let player: Player;
+
+    $: numberOfPlayerType = $roster.players.filter(
+        (x) => x.player.id === player.id
+    ).length;
+    $: maxOfPlayerType = $currentTeam.players.find((x) => x.id === player.id)
+        .max;
+    $: danger = numberOfPlayerType > maxOfPlayerType;
+    // $: danger =
+    //     $roster.players.filter((x) => x.player.id === player.id).length >
+    //     ;
 
     const removePlayer = () => {
         roster.removePlayer(index);
@@ -16,12 +27,10 @@
     const moveDown = () => {
         roster.movePlayerDown(index);
     };
-    const getSkill = (id: number) => {
-        return skills.find((s) => s.id === id).name;
-    };
 </script>
 
 <style lang="scss">
+    @import "../styles/colour";
     td {
         input {
             margin-bottom: 0;
@@ -36,12 +45,19 @@
     .flex-container {
         display: flex;
     }
+    .danger {
+        color: $main-colour;
+        i {
+            vertical-align: text-bottom;
+        }
+    }
 </style>
 
 <tr>
     <td>{index + 1}</td>
     <td class="left-align">
         <input
+            aria-labelledby="name-header"
             placeholder="Player Name"
             bind:value={$roster.players[index].playerName} />
     </td>
@@ -62,7 +78,15 @@
                 clickFunction={removePlayer} />
         </div>
     </td>
-    <td class="left-align">{player.position}</td>
+    <td class="left-align">
+        {player.position}
+        {#if danger}
+            <span class="danger">
+                <i class="material-icons">warning</i>
+                {numberOfPlayerType}/{maxOfPlayerType}
+            </span>
+        {/if}
+    </td>
 
     {#each player.playerStats as stat, i}
         <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>

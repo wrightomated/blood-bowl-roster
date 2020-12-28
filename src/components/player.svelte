@@ -1,14 +1,18 @@
 <script lang="ts">
     import type { Player } from "../models/player.model";
     import { roster } from "../store/teamRoster.store";
+    import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
     import SkillElement from "./skillElement.svelte";
     export let player: Player;
     export let max: number;
-    $: playerTypeCount = $roster.players.filter(
-        (x) => x.player.id === player.id
-    ).length;
+    $: playerTypeCount = $teamSelectionOpen
+        ? 0
+        : $roster.players.filter((x) => x.player.id === player.id).length;
 
     const addPlayer = () => {
+        if ($teamSelectionOpen) {
+            return;
+        }
         const newPlayer = {
             player: player,
             playerName: "",

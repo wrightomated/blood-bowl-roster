@@ -17,7 +17,6 @@
 
 <style lang="scss">
     .reroll {
-        // width: 50%;
         margin-block-start: 1em;
         margin-block-end: 1em;
         th {

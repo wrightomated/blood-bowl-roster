@@ -92,7 +92,7 @@
             </table>
         </div>
     {/if}
-    {#if !$teamSelectionOpen}
+    {#if !$teamSelectionOpen && $roster.teamType}
         <Roster
             playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
         <RerollsTable {selectedTeam} />

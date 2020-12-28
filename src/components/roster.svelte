@@ -16,6 +16,9 @@
 </script>
 
 <style lang="scss">
+    .heading-box {
+        margin-top: 50px;
+    }
     .sub-heading-box {
         display: flex;
         align-items: flex-end;
@@ -58,7 +61,12 @@
 
 <div class="heading-box">
     <h3 class="heading">
-        <input placeholder="Team Name" bind:value={$roster.teamName} />
+        <!-- <label for="team-name">Team name:</label> -->
+        <input
+            aria-label="team name"
+            placeholder="Team Name"
+            id="team-name"
+            bind:value={$roster.teamName} />
     </h3>
 </div>
 <div class="sub-heading-box">
@@ -71,8 +79,8 @@
         <thead>
             <tr>
                 <td />
-                <td class="left-align" colspan="2">Name</td>
-                <td class="left-align">Position</td>
+                <td class="left-align" colspan="2" id="name-header">Name</td>
+                <td class="left-align" id="position-header">Position</td>
                 <td>MA</td>
                 <td>ST</td>
                 <td>AG</td>
@@ -96,6 +104,7 @@
                     <td />
                     <td class="left-align">
                         <input
+                            aria-labelledby="name-header"
                             placeholder="Player Name"
                             bind:value={newName}
                             class="name-input" />
@@ -106,7 +115,9 @@
                             clickFunction={addPlayer} />
                     </td>
                     <td class="left-align">
-                        <select bind:value={selected}>
+                        <select
+                            aria-labelledby="position-header"
+                            bind:value={selected}>
                             {#each playerTypes as playerType}
                                 <option value={playerType}>
                                     {playerType.position}
