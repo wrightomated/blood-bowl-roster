@@ -6,6 +6,8 @@
     import { roster } from "../store/teamRoster.store";
     import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
     import { savedRosterIndex } from "../store/saveDirectory.store";
+    import type { Roster } from "../models/roster.model";
+    import { teamLoadOpen } from "../store/teamLoadOpen.store";
     export let teamList: Team[];
 
     $: showTeams = $teamSelectionOpen;
@@ -22,6 +24,10 @@
         teamSelectionOpen.set(!showTeams);
     };
 
+    const toggleLoad = () => {
+        teamLoadOpen.set(!$teamLoadOpen);
+    };
+
     const createTeam = () => {
         savedRosterIndex.newId();
         roster.reset({
@@ -29,6 +35,16 @@
             teamType: $currentTeam.name,
         });
         teamSelectionOpen.set(false);
+    };
+
+    const loadTeam = (savedRoster) => {
+        const loadedRoster: Roster = JSON.parse(
+            localStorage.getItem(`savedRoster${savedRoster.id}`)
+        );
+        currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
+        roster.loadRoster(`savedRoster${savedRoster.id}`);
+        savedRosterIndex.updateCurrentIndex(savedRoster.id);
+        toggleLoad();
     };
 </script>
 
@@ -61,12 +77,20 @@
     }
 </style>
 
-<button
-    class={showTeams ? 'cancel' : ''}
-    on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
-</button>
+{#if !$teamLoadOpen}
+    <button
+        class={showTeams ? 'cancel' : ''}
+        on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
+    </button>
+{/if}
 
-{#if showTeams}
+{#if $savedRosterIndex.index.length > 0 && !showTeams}
+    <button
+        class={$teamLoadOpen ? 'cancel' : ''}
+        on:click={() => toggleLoad()}>{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button>
+{/if}
+
+{#if showTeams && !$teamLoadOpen}
     <div class="button-container" transition:slide>
         {#each sortedTeam() as team}
             <button
@@ -75,4 +99,13 @@
         {/each}
     </div>
     <button transition:slide on:click={() => createTeam()}>Create</button>
+{/if}
+
+{#if $teamLoadOpen}
+    <div class="button-container" transition:slide>
+        {#each $savedRosterIndex.index as savedRoster}
+            <button
+                on:click={() => loadTeam(savedRoster)}>{savedRoster.name}</button>
+        {/each}
+    </div>
 {/if}

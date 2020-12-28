@@ -2,7 +2,6 @@
     import type { Player } from "../models/player.model";
     import { roster } from "../store/teamRoster.store";
     import MaterialButton from "./materialButton.svelte";
-    import { skills } from "../data/skills.data";
     import SkillElement from "./skillElement.svelte";
     import { currentTeam } from "../store/currentTeam.store";
     export let index: number;
@@ -11,12 +10,9 @@
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === player.id
     ).length;
-    $: maxOfPlayerType = $currentTeam.players.find((x) => x.id === player.id)
-        .max;
+    $: maxOfPlayerType =
+        $currentTeam.players.find((x) => x.id === player.id)?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
-    // $: danger =
-    //     $roster.players.filter((x) => x.player.id === player.id).length >
-    //     ;
 
     const removePlayer = () => {
         roster.removePlayer(index);
@@ -92,10 +88,10 @@
         <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>
     {/each}
     <SkillElement playerSkillIds={player.skills} />
-    <td>{player.cost}</td>
+    <td>{player.cost},000</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
-    <td>{player.cost}</td>
+    <td>{player.cost},000</td>
 </tr>

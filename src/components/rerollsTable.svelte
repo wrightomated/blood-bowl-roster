@@ -48,6 +48,8 @@
     </tr>
     <tr>
         <th>Total TV</th>
-        <td>{teamTotal},000</td>
+        <td>
+            {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+        </td>
     </tr>
 </table>

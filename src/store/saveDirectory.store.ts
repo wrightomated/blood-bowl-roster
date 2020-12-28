@@ -37,9 +37,17 @@ const createSavedRosterIndex = () => {
                 removeRosterFromStorage(store.currentIndex);
                 return {
                     ...store,
-                    players: store.index.filter((x) => store.currentIndex !== x.id),
+                    index: store.index.filter((x) => store.currentIndex !== x.id)
                 };
             }),
+        updateCurrentIndex: (indexNumber: number) => 
+            update((store) => {
+                return {
+                    ...store,
+                    currentIndex: indexNumber
+                };
+            }),
+        
     };
 };
 

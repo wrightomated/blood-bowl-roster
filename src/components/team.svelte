@@ -10,6 +10,7 @@
     import { savedRosterIndex } from "../store/saveDirectory.store";
     import MaterialButton from "./materialButton.svelte";
     import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
+    import { teamLoadOpen } from "../store/teamLoadOpen.store";
 
     const teamList = teamData.teams;
 
@@ -92,7 +93,7 @@
             </table>
         </div>
     {/if}
-    {#if !$teamSelectionOpen && $roster.teamType}
+    {#if !$teamSelectionOpen && !$teamLoadOpen && $roster.teamType}
         <Roster
             playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
         <RerollsTable {selectedTeam} />

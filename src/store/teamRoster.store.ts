@@ -51,8 +51,8 @@ function createRoster() {
                 }
             }),
         loadRoster: (rosterKey: string) =>
-            update(() => {
-                return getSavedRoster(rosterKey)
+            update((store) => {
+                return {...getSavedRoster(rosterKey)}
             }),
         reset: (options?: { teamId: number; teamType: TeamName }) =>
             set(getEmptyRoster(options)),
