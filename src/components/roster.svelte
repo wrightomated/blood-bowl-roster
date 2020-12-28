@@ -2,6 +2,8 @@
     import { roster } from "../store/teamRoster.store";
     import RosterRow from "./rosterPlayer.svelte";
     import type { Player } from "../models/player.model";
+    import RosterSave from "./rosterSave.svelte";
+    import MaterialButton from "./materialButton.svelte";
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -14,13 +16,18 @@
 </script>
 
 <style lang="scss">
+    .sub-heading-box {
+        display: flex;
+        align-items: flex-end;
+    }
     .table-container {
         width: 100%;
         overflow-x: auto;
     }
     .heading {
         font-size: large;
-        width: 100%;
+        margin-block-end: 0;
+        // margin-top: 50px;
 
         input {
             display: block;
@@ -29,26 +36,36 @@
             font-size: 32px;
             -webkit-padding: 0;
             padding: 0;
-            margin: 0 0 0.5em 0;
             box-sizing: inherit;
             border: none;
             color: #970f0c;
-            margin: 0 auto;
-            text-align: center;
+            margin: 0;
+            text-align: left;
         }
     }
-    // .sub-heading {
-    //     text-align: center;
-    // }
+    .sub-heading {
+        margin-block-end: 4px;
+        font-family: "Roboto Slab", serif;
+        margin-right: 12px;
+    }
     .left-align {
         text-align: left;
     }
+    .skills {
+        min-width: 200px;
+    }
 </style>
 
-<h3 class="heading">
-    <span><input placeholder="Team Name" bind:value={$roster.teamName} /></span>
-</h3>
-<!-- <p class="sub-heading">{$roster.teamType}</p> -->
+<div class="heading-box">
+    <h3 class="heading">
+        <input placeholder="Team Name" bind:value={$roster.teamName} />
+    </h3>
+</div>
+<div class="sub-heading-box">
+    <p class="sub-heading">{$roster.teamType} Team</p>
+    <RosterSave />
+</div>
+
 <div class="table-container">
     <table>
         <thead>
@@ -61,9 +78,9 @@
                 <td>AG</td>
                 <td>PA</td>
                 <td>AV</td>
-                <td>Skills</td>
+                <td class="skills">Skills</td>
                 <td>Hiring Fee</td>
-                <td>Unspent Spp</td>
+                <td>Spp</td>
                 <td>Mng</td>
                 <td>Ni</td>
                 <td>TR</td>
@@ -83,7 +100,11 @@
                             bind:value={newName}
                             class="name-input" />
                     </td>
-                    <td />
+                    <td class="left-align">
+                        <MaterialButton
+                            symbol="add_circle"
+                            clickFunction={addPlayer} />
+                    </td>
                     <td class="left-align">
                         <select bind:value={selected}>
                             {#each playerTypes as playerType}
@@ -92,7 +113,6 @@
                                 </option>
                             {/each}
                         </select>
-                        <button on:click={addPlayer}>+</button>
                     </td>
                     <td />
                     <td />

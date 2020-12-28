@@ -4,10 +4,11 @@
     import type { Team } from "../models/team.model";
     import { currentTeam } from "../store/currentTeam.store";
     import { roster } from "../store/teamRoster.store";
-
+    import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
+    import { savedRosterIndex } from "../store/saveDirectory.store";
     export let teamList: Team[];
 
-    let showTeams: boolean = false;
+    $: showTeams = $teamSelectionOpen;
 
     const sortedTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
@@ -15,45 +16,63 @@
 
     const newTeam = (index: number) => {
         currentTeam.set(teamList.find((x) => x.id === index));
-        roster.reset({
-            teamId: index,
-            teamType: teamList.find((x) => x.id === index).name,
-        });
     };
 
     const toggleTeam = () => {
-        showTeams = !showTeams;
+        teamSelectionOpen.set(!showTeams);
     };
 
-    const clear = () => {
-        roster.reset();
-        // currentTeam.set({} as Team);
+    const createTeam = () => {
+        savedRosterIndex.newId();
+        roster.reset({
+            teamId: $currentTeam.id,
+            teamType: $currentTeam.name,
+        });
+        teamSelectionOpen.set(false);
     };
 </script>
 
 <style lang="scss">
-    .button-container {
-        // display: flex;
-    }
-
+    @import "../styles/colour";
     button {
         border-radius: 10px;
-        background-color: #1a3f7f;
-        color: white;
+        background-color: white;
+        color: $secondary-colour;
         padding: 10px;
         margin: 5px;
-        // border: 2px solid #1a3f7f;
+        border: 2px solid $secondary-colour;
+
+        &.selected {
+            background-color: $secondary-colour;
+            color: white;
+            border-color: $secondary-colour;
+        }
+
+        &.cancel {
+            color: $main-colour;
+            border-color: $main-colour;
+        }
+    }
+
+    .button-container {
+        border-radius: 10px;
+        background: $secondary-background-colour;
+        padding: 10px;
     }
 </style>
 
-<button on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
+<button
+    class={showTeams ? 'cancel' : ''}
+    on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
 </button>
-<button on:click={() => clear()}>Clear</button>
 
 {#if showTeams}
     <div class="button-container" transition:slide>
         {#each sortedTeam() as team}
-            <button on:click={() => newTeam(team.id)}>{team.name}</button>
+            <button
+                class:selected={$currentTeam.id === team.id}
+                on:click={() => newTeam(team.id)}>{team.name}</button>
         {/each}
     </div>
+    <button transition:slide on:click={() => createTeam()}>Create</button>
 {/if}

@@ -7,18 +7,15 @@
     import Roster from "./roster.svelte";
     import RerollsTable from "./rerollsTable.svelte";
     import TeamSelector from "./teamSelector.svelte";
+    import { savedRosterIndex } from "../store/saveDirectory.store";
+    import MaterialButton from "./materialButton.svelte";
+    import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
 
-    // import { PlayerCatalogue } from "../models/player.model";
-    // const teams = teamIndex.index;
     const teamList = teamData.teams;
 
     $: selectedTeam = $currentTeam;
-    // let selectedTeamInfo: Team;
-    let showAvailablePlayers = true;
 
-    // roster.subscribe(
-    //     (x) => (selectedTeam = teams.find((j) => j.id === x.teamId))
-    // );
+    let showAvailablePlayers = true;
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);
@@ -28,20 +25,16 @@
         showAvailablePlayers = !showAvailablePlayers;
     };
 
-    // const calculateTeamValue = () => {
-    //     const playerValue = $roster.players
-    //         .map((x) => x.player.cost)
-    //         .reduce((a, b) => a + b, 0);
-    //     const rerolls = $roster.rerolls * selectedTeam.reroll.cost;
-    //     return playerValue + rerolls;
-    // };
-
     roster.subscribe((x) => {
         localStorage.setItem("roster", JSON.stringify(x));
     });
 
     currentTeam.subscribe((x) => {
         localStorage.setItem("selectedTeam", JSON.stringify(x));
+    });
+
+    savedRosterIndex.subscribe((x) => {
+        localStorage.setItem("rosterIndex", JSON.stringify(x));
     });
 </script>
 
@@ -56,17 +49,21 @@
     .left-align {
         text-align: left;
     }
+    .header-container {
+        display: flex;
+        align-items: center;
+    }
 </style>
 
 <TeamSelector {teamList} />
 
 {#if selectedTeam}
-    <h2>{selectedTeam.name} Team</h2>
-    <p>
-        Available Players
-        <button
-            on:click={togglePlayers}>{showAvailablePlayers ? 'Hide' : 'Show'}</button>
-    </p>
+    <div class="header-container">
+        <h2>{selectedTeam.name} Team Players</h2>
+        <MaterialButton
+            symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
+            clickFunction={togglePlayers} />
+    </div>
     {#if showAvailablePlayers}
         <div class="table-container">
             <table>
@@ -95,7 +92,9 @@
             </table>
         </div>
     {/if}
-    <Roster playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
-    <div />
-    <RerollsTable {selectedTeam} />
+    {#if !$teamSelectionOpen}
+        <Roster
+            playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
+        <RerollsTable {selectedTeam} />
+    {/if}
 {/if}

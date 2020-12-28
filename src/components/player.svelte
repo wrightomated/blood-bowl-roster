@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Player } from "../models/player.model";
     import { roster } from "../store/teamRoster.store";
-    import { skills } from "../data/skills.data";
+    import SkillElement from "./skillElement.svelte";
     export let player: Player;
     export let max: number;
     $: playerTypeCount = $roster.players.filter(
@@ -15,29 +15,11 @@
         };
         roster.addPlayer(newPlayer);
     };
-
-    const getSkill = (id: number) => {
-        return skills.find((s) => s.id === id).name;
-    };
-
-    const getSkills = (ids: number[]) => {
-        return ids.map((id) => getSkill(id)).join(", ");
-    };
-
-    // const unsubscribe = roster.subscribe((r) => {
-    //     playerTypeCount = r.players.filter((x) => x.player.id === player.id)
-    //         .length;
-    // });
-
-    // $roster.players.filter((x) => x.player.id === player.id).length;
 </script>
 
 <style>
     .danger {
         color: #970f0c;
-    }
-    .skills {
-        text-transform: capitalize;
     }
     .left-align {
         text-align: left;
@@ -53,7 +35,7 @@
     {#each player.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
     {/each}
-    <td class="skills left-align">{getSkills(player.skills)}</td>
+    <SkillElement playerSkillIds={player.skills} />
     <td>{player.primary.join('')}</td>
     <td>{player.secondary.join('')}</td>
 </tr>

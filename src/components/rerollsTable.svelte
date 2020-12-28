@@ -1,5 +1,6 @@
 <script lang="ts">
     import { roster } from "../store/teamRoster.store";
+    import MaterialButton from "./materialButton.svelte";
     export let selectedTeam;
     $: rerolls = $roster.rerolls;
     $: teamTotal =
@@ -37,9 +38,13 @@
         <td>{selectedTeam.reroll.cost},000</td>
         <td>
             {#if rerolls < selectedTeam.reroll.max}
-                <button on:click={addReroll}>+</button>
+                <MaterialButton symbol="add_circle" clickFunction={addReroll} />
             {/if}
-            {#if rerolls > 0}<button on:click={removeReroll}>-</button>{/if}
+            {#if rerolls > 0}
+                <MaterialButton
+                    symbol="remove_circle"
+                    clickFunction={removeReroll} />
+            {/if}
         </td>
     </tr>
     <tr>
