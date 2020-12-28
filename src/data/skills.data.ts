@@ -16,6 +16,7 @@ export const skills: Skill[] = [
   { id: 13, name: "block", category: "G" },
   { id: 14, name: "dauntless", category: "G" },
   { id: 15, name: "dirty player (+1)", category: "G" },
+  { id: 151, name: "dirty player (+2)", category: "NA" },
   { id: 16, name: "fend", category: "G" },
   { id: 17, name: "frenzy", category: "G" },
   { id: 18, name: "kick", category: "G" },

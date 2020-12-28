@@ -11,12 +11,14 @@
     import MaterialButton from "./materialButton.svelte";
     import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
     import { teamLoadOpen } from "../store/teamLoadOpen.store";
+    import StarPlayers from "./starPlayers.svelte";
 
     const teamList = teamData.teams;
 
     $: selectedTeam = $currentTeam;
 
     let showAvailablePlayers = true;
+    let showAvailableStarPlayers = false;
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);
@@ -24,6 +26,10 @@
 
     const togglePlayers = () => {
         showAvailablePlayers = !showAvailablePlayers;
+    };
+
+    const toggleStarPlayers = () => {
+        showAvailableStarPlayers = !showAvailableStarPlayers;
     };
 
     roster.subscribe((x) => {
@@ -60,7 +66,7 @@
 
 {#if selectedTeam}
     <div class="header-container">
-        <h2>{selectedTeam.name} Team Players</h2>
+        <h3>{selectedTeam.name} Team Players</h3>
         <MaterialButton
             symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={togglePlayers} />
@@ -93,6 +99,16 @@
             </table>
         </div>
     {/if}
+    <div class="header-container">
+        <h3>Star Players for {selectedTeam.name} Teams</h3>
+        <MaterialButton
+            symbol={showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
+            clickFunction={toggleStarPlayers} />
+    </div>
+    {#if showAvailableStarPlayers}
+        <StarPlayers />
+    {/if}
+
     {#if !$teamSelectionOpen && !$teamLoadOpen && $roster.teamType}
         <Roster
             playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
