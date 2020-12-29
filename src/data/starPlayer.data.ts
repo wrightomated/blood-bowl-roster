@@ -151,7 +151,7 @@ const roxanna: StarPlayer = {
     id: 216,
     position: "Roxanna Darknail",
     playerStats: [8,3,1,4,8],
-    playsFor: [],
+    playsFor: ['Elven Kingdoms League'],
     skills: [4,17,6,54,7,71],
     cost: 270,
     specialRules: ['Burst of Speed']

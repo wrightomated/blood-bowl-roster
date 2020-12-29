@@ -18,6 +18,12 @@
         );
 </script>
 
+<style lang="scss">
+    .skills-header {
+        min-width: 200px;
+    }
+</style>
+
 <div class="table-container">
     <table>
         <thead>
