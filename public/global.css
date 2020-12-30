@@ -1,17 +1,18 @@
 html,
 body {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 body {
-  color: #333;
-  margin: 0;
-  padding: 8px;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 8px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    font-size: 16px;
 }
 
 h1,
@@ -20,54 +21,54 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Roboto Slab", serif;
-  font-weight: 600;
+    font-family: 'Roboto Slab', serif;
+    font-weight: 600;
 }
 
 a {
-  color: rgb(0, 100, 200);
-  text-decoration: none;
+    color: rgb(0, 100, 200);
+    text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 a:visited {
-  color: rgb(0, 80, 160);
+    color: rgb(0, 80, 160);
 }
 
 label {
-  display: block;
+    display: block;
 }
 
 input,
 button,
 select,
 textarea {
-  font-family: inherit;
-  font-size: inherit;
-  -webkit-padding: 0.4em 0;
-  padding: 0.4em;
-  /* margin: 0 0 0.5em 0; */
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
+    font-family: inherit;
+    font-size: inherit;
+    -webkit-padding: 0.4em 0;
+    padding: 0.4em;
+    /* margin: 0 0 0.5em 0; */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 2px;
 }
 
 input {
-  border: 0;
-  border-radius: 0;
-  background: none;
+    border: 0;
+    border-radius: 0;
+    background: none;
 }
 
 input:placeholder-shown {
-  /* border-bottom: 2px solid #970f0c; */
-  font-style: italic;
+    /* border-bottom: 2px solid #970f0c; */
+    font-style: italic;
 }
 
 input:disabled {
-  color: #ccc;
+    color: #ccc;
 }
 
 /* button {
@@ -89,21 +90,21 @@ button:focus {
 } */
 
 table {
-  border-collapse: collapse;
-  /* width: 100%; */
+    border-collapse: collapse;
+    /* width: 100%; */
 }
 td,
 tr {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
 }
 tr:nth-of-type(even) {
-  background: #eee;
+    background: #eee;
 }
 thead {
-  background-color: #970f0c;
-  color: white;
-  text-transform: uppercase;
-  /* blue #193f80 */
+    background-color: #970f0c;
+    color: white;
+    text-transform: uppercase;
+    /* blue #193f80 */
 }

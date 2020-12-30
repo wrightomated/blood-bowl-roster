@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { roster } from "../store/teamRoster.store";
-    import RosterRow from "./rosterPlayer.svelte";
-    import type { Player } from "../models/player.model";
-    import RosterSave from "./rosterSave.svelte";
-    import MaterialButton from "./materialButton.svelte";
+    import { roster } from '../store/teamRoster.store';
+    import RosterRow from './rosterPlayer.svelte';
+    import type { Player } from '../models/player.model';
+    import RosterSave from './rosterSave.svelte';
+    import MaterialButton from './materialButton.svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -11,7 +11,7 @@
 
     const addPlayer = () => {
         roster.addPlayer({ playerName: newName, player: selected });
-        newName = "";
+        newName = '';
     };
 </script>
 
@@ -34,7 +34,7 @@
 
         input {
             display: block;
-            font-family: "Roboto Slab", serif;
+            font-family: 'Roboto Slab', serif;
             font-weight: 600;
             font-size: 32px;
             -webkit-padding: 0;
@@ -44,11 +44,15 @@
             color: #970f0c;
             margin: 0;
             text-align: left;
+
+            @media screen and (max-width: 450px) {
+                font-size: 24px;
+            }
         }
     }
     .sub-heading {
         margin-block-end: 4px;
-        font-family: "Roboto Slab", serif;
+        font-family: 'Roboto Slab', serif;
         margin-right: 12px;
     }
     .left-align {
@@ -56,6 +60,9 @@
     }
     .skills {
         min-width: 200px;
+    }
+    #team-name {
+        max-width: 100%;
     }
 </style>
 

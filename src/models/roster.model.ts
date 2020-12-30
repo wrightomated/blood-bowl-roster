@@ -7,10 +7,14 @@ export interface Roster {
   teamType: TeamName;
   players: RosterPlayerRecord[];
   rerolls: number;
-  extra?: unknown;
+  extra?: ExtraRosterInfo;
 }
 
 export interface RosterPlayerRecord {
   player: Player;
   playerName: string;
+}
+
+interface ExtraRosterInfo {
+    [key: string]: number;
 }

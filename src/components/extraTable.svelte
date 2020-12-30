@@ -1,11 +1,55 @@
 <script lang="ts">
-    let cake;
+    // import { roster } from "../store/teamRoster.store";
+    // import MaterialButton from "./materialButton.svelte";
+    // export let selectedTeam;
+    // $: rerolls = $roster.rerolls;
+    // $: teamTotal =
+    //     $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
+    //     $roster.rerolls * (selectedTeam?.reroll?.cost || 0);
+
+    // const addReroll = () => {
+    //     roster.addReroll();
+    // };
+    // const removeReroll = () => {
+    //     roster.removeReroll();
+    // };
 </script>
 
-<table>
-    <thead>
-        <tr>
-            <td>Re-roll</td>
-        </tr>
-    </thead>
+<style lang="scss">
+    // .reroll {
+    //     margin-block-start: 1em;
+    //     margin-block-end: 1em;
+    //     th {
+    //         background-color: #970f0c;
+    //         color: white;
+    //         text-align: left;
+    //         text-transform: uppercase;
+    //         font-weight: normal;
+    //         padding: 10px;
+    //     }
+    // }
+</style>
+
+<table class="reroll">
+    <!-- <tr>
+        <th>Rerolls</th>
+        <td>{rerolls} / {selectedTeam.reroll.max}</td>
+        <td>{selectedTeam.reroll.cost},000</td>
+        <td>
+            {#if rerolls < selectedTeam.reroll.max}
+                <MaterialButton symbol="add_circle" clickFunction={addReroll} />
+            {/if}
+            {#if rerolls > 0}
+                <MaterialButton
+                    symbol="remove_circle"
+                    clickFunction={removeReroll} />
+            {/if}
+        </td>
+    </tr>
+    <tr>
+        <th>Total TV</th>
+        <td>
+            {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+        </td>
+    </tr> -->
 </table>

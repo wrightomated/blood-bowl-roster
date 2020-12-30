@@ -1,23 +1,28 @@
 <script lang="ts">
-    import { roster } from "../store/teamRoster.store";
-    import MaterialButton from "./materialButton.svelte";
-    export let selectedTeam;
-    $: rerolls = $roster.rerolls;
+    import { roster } from '../store/teamRoster.store';
+    import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
+    import type { Team } from '../models/team.model';
+    export let selectedTeam: Team;
+    const extras = [
+        { extraString: 'apothecary', cost: 50, max: 1 },
+        { extraString: 'assistant_coaches', cost: 10, max: 12 },
+        { extraString: 'cheerleaders', cost: 10, max: 10 },
+        {
+            extraString: 'rerolls',
+            cost: selectedTeam.reroll.cost,
+            max: selectedTeam.reroll.max,
+        },
+    ];
+
     $: teamTotal =
         $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
-        $roster.rerolls * (selectedTeam?.reroll?.cost || 0);
-
-    const addReroll = () => {
-        roster.addReroll();
-    };
-    const removeReroll = () => {
-        roster.removeReroll();
-    };
+        extras
+            .map((e) => $roster.extra[e.extraString] * e.cost || 0)
+            .reduce((a, b) => a + b, 0);
 </script>
 
 <style lang="scss">
-    .reroll {
-        margin-block-start: 1em;
+    .table {
         margin-block-end: 1em;
         th {
             background-color: #970f0c;
@@ -28,28 +33,33 @@
             padding: 10px;
         }
     }
+    .tables {
+        width: 100%;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 1em;
+    }
 </style>
 
-<table class="reroll">
-    <tr>
-        <th>Rerolls</th>
-        <td>{rerolls} / {selectedTeam.reroll.max}</td>
-        <td>{selectedTeam.reroll.cost},000</td>
-        <td>
-            {#if rerolls < selectedTeam.reroll.max}
-                <MaterialButton symbol="add_circle" clickFunction={addReroll} />
-            {/if}
-            {#if rerolls > 0}
-                <MaterialButton
-                    symbol="remove_circle"
-                    clickFunction={removeReroll} />
-            {/if}
-        </td>
-    </tr>
-    <tr>
-        <th>Total TV</th>
-        <td>
-            {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
-        </td>
-    </tr>
-</table>
+<div class="tables">
+    <table class="table">
+        {#each extras as extra}
+            <ExtraRosterAdditionsRow {extra} />
+        {/each}
+    </table>
+    <table class="table">
+        <tr>
+            <th>Team Value</th>
+            <td>
+                {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+            </td>
+        </tr>
+        <tr>
+            <th>Current TV</th>
+            <td>
+                {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+            </td>
+        </tr>
+    </table>
+</div>
