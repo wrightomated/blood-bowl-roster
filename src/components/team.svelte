@@ -1,17 +1,17 @@
 <script lang="ts">
-    import { roster } from "../store/teamRoster.store";
-    import { playerCatalogue } from "../data/players.data";
-    import { teamData } from "../data/teams.data";
-    import { currentTeam } from "../store/currentTeam.store";
-    import PlayerRow from "./player.svelte";
-    import Roster from "./roster.svelte";
-    import RerollsTable from "./rerollsTable.svelte";
-    import TeamSelector from "./teamSelector.svelte";
-    import { savedRosterIndex } from "../store/saveDirectory.store";
-    import MaterialButton from "./materialButton.svelte";
-    import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
-    import { teamLoadOpen } from "../store/teamLoadOpen.store";
-    import StarPlayers from "./starPlayers.svelte";
+    import { roster } from '../store/teamRoster.store';
+    import { playerCatalogue } from '../data/players.data';
+    import { teamData } from '../data/teams.data';
+    import { currentTeam } from '../store/currentTeam.store';
+    import PlayerRow from './player.svelte';
+    import Roster from './roster.svelte';
+    import RerollsTable from './rerollsTable.svelte';
+    import TeamSelector from './teamSelector.svelte';
+    import { savedRosterIndex } from '../store/saveDirectory.store';
+    import MaterialButton from './materialButton.svelte';
+    import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
+    import { teamLoadOpen } from '../store/teamLoadOpen.store';
+    import StarPlayers from './starPlayers.svelte';
 
     const teamList = teamData.teams;
 
@@ -33,15 +33,15 @@
     };
 
     roster.subscribe((x) => {
-        localStorage.setItem("roster", JSON.stringify(x));
+        localStorage.setItem('roster', JSON.stringify(x));
     });
 
     currentTeam.subscribe((x) => {
-        localStorage.setItem("selectedTeam", JSON.stringify(x));
+        localStorage.setItem('selectedTeam', JSON.stringify(x));
     });
 
     savedRosterIndex.subscribe((x) => {
-        localStorage.setItem("rosterIndex", JSON.stringify(x));
+        localStorage.setItem('rosterIndex', JSON.stringify(x));
     });
 </script>
 
@@ -66,7 +66,7 @@
 
 {#if selectedTeam}
     <div class="header-container">
-        <h3>{selectedTeam.name} Team Players</h3>
+        <h3 on:click={togglePlayers}>{selectedTeam.name} Team Players</h3>
         <MaterialButton
             symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={togglePlayers} />
@@ -100,7 +100,11 @@
         </div>
     {/if}
     <div class="header-container">
-        <h3>Star Players for {selectedTeam.name} Teams</h3>
+        <h3 on:click={toggleStarPlayers}>
+            Star Players for
+            {selectedTeam.name}
+            Teams
+        </h3>
         <MaterialButton
             symbol={showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={toggleStarPlayers} />
