@@ -2,17 +2,23 @@
     import { roster } from '../store/teamRoster.store';
     import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
     import type { Team } from '../models/team.model';
+    import type { Extra } from '../models/extra.model';
+
     export let selectedTeam: Team;
-    const extras = [
-        { extraString: 'apothecary', cost: 50, max: 1 },
-        { extraString: 'assistant_coaches', cost: 10, max: 12 },
-        { extraString: 'cheerleaders', cost: 10, max: 10 },
+
+    const extras: Extra[] = [
         {
             extraString: 'rerolls',
             cost: selectedTeam.reroll.cost,
             max: selectedTeam.reroll.max,
         },
-    ];
+        { extraString: 'assistant_coaches', cost: 10, max: 12 },
+        { extraString: 'cheerleaders', cost: 10, max: 10 },
+    ].concat(
+        selectedTeam.apothecary
+            ? [{ extraString: 'apothecary', cost: 50, max: 1 }]
+            : [],
+    );
 
     $: teamTotal =
         $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
@@ -35,7 +41,7 @@
     }
     .tables {
         width: 100%;
-        overflow: scroll;
+        overflow: auto;
         display: flex;
         flex-wrap: wrap;
         margin-top: 1em;

@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { Player } from "../models/player.model";
-    import { roster } from "../store/teamRoster.store";
-    import MaterialButton from "./materialButton.svelte";
-    import SkillElement from "./skillElement.svelte";
-    import { currentTeam } from "../store/currentTeam.store";
+    import type { Player } from '../models/player.model';
+    import { roster } from '../store/teamRoster.store';
+    import MaterialButton from './materialButton.svelte';
+    import SkillElement from './skillElement.svelte';
+    import { currentTeam } from '../store/currentTeam.store';
     export let index: number;
     export let player: Player;
 
     $: numberOfPlayerType = $roster.players.filter(
-        (x) => x.player.id === player.id
+        (x) => x.player.id === player.id,
     ).length;
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === player.id)?.max || 0;
@@ -23,10 +23,13 @@
     const moveDown = () => {
         roster.movePlayerDown(index);
     };
+    const playerCostString = () => {
+        return player.cost > 0 ? `${player.cost},000` : '-';
+    };
 </script>
 
 <style lang="scss">
-    @import "../styles/colour";
+    @import '../styles/colour';
     td {
         input {
             margin-bottom: 0;
@@ -88,10 +91,10 @@
         <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>
     {/each}
     <SkillElement playerSkillIds={player.skills} />
-    <td>{player.cost},000</td>
+    <td>{playerCostString()}</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
-    <td>{player.cost},000</td>
+    <td>{playerCostString()}</td>
 </tr>

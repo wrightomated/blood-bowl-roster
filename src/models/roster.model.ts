@@ -8,12 +8,22 @@ export interface Roster {
   players: RosterPlayerRecord[];
   rerolls: number;
   extra?: ExtraRosterInfo;
+  inducements: ExtraRosterInfo;
+  starPlayers: number[];
 }
 
 export interface RosterPlayerRecord {
   player: Player;
   playerName: string;
+  starPlayer?: boolean;
 }
+
+// interface RosteredInducement {
+//     name: string;
+//     cost: number;
+//     amount: number;
+//     id: string;
+// }
 
 interface ExtraRosterInfo {
     [key: string]: number;

@@ -1,21 +1,10 @@
 <script lang="ts">
-    import { starPlayers } from "../data/starPlayer.data";
-    import { currentTeam } from "../store/currentTeam.store";
-    import StarPlayerRow from "./starPlayerRow.svelte";
+    import { starPlayers } from '../data/starPlayer.data';
+    import { currentTeam } from '../store/currentTeam.store';
+    import StarPlayerRow from './starPlayerRow.svelte';
+    import { filterStarPlayers } from '../helpers/starPlayerFilter';
 
-    $: filteredStarPlayers = starPlayers.starPlayers
-        .filter(
-            (x) =>
-                x.playsFor.length === 0 ||
-                x.playsFor.some((a) => $currentTeam.specialRules.includes(a))
-        )
-        .filter(
-            (p) =>
-                !p?.doesNotPlayFor ||
-                p.doesNotPlayFor.every(
-                    (a) => !$currentTeam.specialRules.includes(a)
-                )
-        );
+    $: filteredStarPlayers = filterStarPlayers(starPlayers, $currentTeam);
 </script>
 
 <style lang="scss">

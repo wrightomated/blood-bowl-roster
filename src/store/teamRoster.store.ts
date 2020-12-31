@@ -36,14 +36,19 @@ function createRoster() {
                     players: switchTwoElements(store.players, index, index + 1),
                 };
             }),
-        addReroll: () =>
+        addInducement: (inducementKey: string) =>
             update((store) => {
                 return {
                     ...store,
-                    rerolls: store.rerolls + 1,
+                    inducements: {
+                        ...store.inducements,
+                        [inducementKey]: store?.inducements?.[inducementKey]
+                            ? store.inducements[inducementKey] + 1
+                            : 1,
+                    },
                 };
             }),
-        removeReroll: () =>
+        removeInducement: () =>
             update((store) => {
                 return {
                     ...store,
@@ -56,7 +61,9 @@ function createRoster() {
                     ...store,
                     extra: {
                         ...store.extra,
-                        [extraKey]: store?.extra?.[extraKey] ? store.extra[extraKey] + 1 : 1,
+                        [extraKey]: store?.extra?.[extraKey]
+                            ? store.extra[extraKey] + 1
+                            : 1,
                     },
                 };
             }),
@@ -66,7 +73,9 @@ function createRoster() {
                     ...store,
                     extra: {
                         ...store.extra,
-                        [extraKey]: store?.extra?.[extraKey] ? store.extra[extraKey] - 1 : 0,
+                        [extraKey]: store?.extra?.[extraKey]
+                            ? store.extra[extraKey] - 1
+                            : 0,
                     },
                 };
             }),
@@ -90,7 +99,9 @@ const getEmptyRoster: (options?: {
         rerolls: 0,
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
-        extra: {}
+        extra: {},
+        inducements: {},
+        starPlayers: [],
     };
 };
 

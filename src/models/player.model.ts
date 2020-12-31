@@ -19,8 +19,8 @@ export interface Player {
   playerStats: number[];
   cost: number;
   skills: number[];
-  primary: SkillCategory[];
-  secondary: SkillCategory[];
+  primary?: SkillCategory[];
+  secondary?: SkillCategory[];
 }
 
 export interface PlayerCatalogue {

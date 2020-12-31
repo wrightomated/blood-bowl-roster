@@ -1,8 +1,9 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
+    import type { Extra } from '../models/extra.model';
 
-    export let extra: { extraString: string; cost: number; max: number };
+    export let extra: Extra;
     $: extraAmount = $roster?.extra[extra.extraString] || 0;
 
     const addExtra = () => {
