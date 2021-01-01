@@ -1,21 +1,24 @@
 <script lang="ts">
-    import type { Player } from '../models/player.model';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
     import SkillElement from './skillElement.svelte';
     import { currentTeam } from '../store/currentTeam.store';
+    import type { RosterPlayerRecord } from '../models/roster.model';
+    import type { StarPlayer } from '../models/player.model';
+
     export let index: number;
-    export let player: Player;
+    export let rosterPlayer: RosterPlayerRecord;
 
     $: numberOfPlayerType = $roster.players.filter(
-        (x) => x.player.id === player.id,
+        (x) => x.player.id === rosterPlayer.player.id,
     ).length;
     $: maxOfPlayerType =
-        $currentTeam.players.find((x) => x.id === player.id)?.max || 0;
+        $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
+            ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
 
     const removePlayer = () => {
-        roster.removePlayer(index);
+        removeTwoForOne() ?? roster.removePlayer([index]);
     };
     const moveUp = () => {
         roster.movePlayerUp(index);
@@ -24,7 +27,22 @@
         roster.movePlayerDown(index);
     };
     const playerCostString = () => {
-        return player.cost > 0 ? `${player.cost},000` : '-';
+        return rosterPlayer.player.cost > 0
+            ? `${rosterPlayer.player.cost},000`
+            : '-';
+    };
+    const removeTwoForOne = () => {
+        if (rosterPlayer.starPlayer) {
+            const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
+            const tfoIndex = $roster.players.findIndex(
+                (p) => p.player.id === twoForOne,
+            );
+            if (twoForOne) {
+                roster.removePlayer([index, tfoIndex]);
+                return true;
+            }
+        }
+        return false;
     };
 </script>
 
@@ -38,9 +56,6 @@
     .left-align {
         text-align: left;
     }
-    // .right-align {
-    //     text-align: right;
-    // }
     .flex-container {
         display: flex;
     }
@@ -55,10 +70,14 @@
 <tr>
     <td>{index + 1}</td>
     <td class="left-align">
-        <input
-            aria-labelledby="name-header"
-            placeholder="Player Name"
-            bind:value={$roster.players[index].playerName} />
+        {#if rosterPlayer.starPlayer}
+            {rosterPlayer.player.position}
+        {:else}
+            <input
+                aria-labelledby="name-header"
+                placeholder="Player Name"
+                bind:value={$roster.players[index].playerName} />
+        {/if}
     </td>
     <td class="left-align">
         <div class="flex-container">
@@ -78,19 +97,23 @@
         </div>
     </td>
     <td class="left-align">
-        {player.position}
-        {#if danger}
-            <span class="danger">
-                <i class="material-icons">warning</i>
-                {numberOfPlayerType}/{maxOfPlayerType}
-            </span>
+        {#if rosterPlayer.starPlayer}
+            Star Player
+        {:else}
+            {rosterPlayer.player.position}
+            {#if danger}
+                <span class="danger">
+                    <i class="material-icons">warning</i>
+                    {numberOfPlayerType}/{maxOfPlayerType}
+                </span>
+            {/if}
         {/if}
     </td>
 
-    {#each player.playerStats as stat, i}
+    {#each rosterPlayer.player.playerStats as stat, i}
         <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>
     {/each}
-    <SkillElement playerSkillIds={player.skills} />
+    <SkillElement playerSkillIds={rosterPlayer.player.skills} />
     <td>{playerCostString()}</td>
     <td>0</td>
     <td>0</td>

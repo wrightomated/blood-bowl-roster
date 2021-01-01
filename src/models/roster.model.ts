@@ -25,6 +25,6 @@ export interface RosterPlayerRecord {
 //     id: string;
 // }
 
-interface ExtraRosterInfo {
+export interface ExtraRosterInfo {
     [key: string]: number;
 }

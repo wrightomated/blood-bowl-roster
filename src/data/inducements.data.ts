@@ -15,7 +15,7 @@ export const inducementData: {inducements: Inducement[]} = {
         {id: 'i11', displayName: 'Riotous Rookies', cost: 100, max: 1, requiresSpecialRule: 'Low Cost Linemen'},
         {id: 'i12', displayName: 'Halfling Master Chef', cost: 300, reducedCost: {specialRule:'Halfling Thimble Cup', cost: 100}, max: 1},
         {id: 'i13', displayName: 'Mercenary Player', cost: 30, max: 16},
-        {id: 'i14', displayName: 'Star Player', cost: 'variable', max: 2},
+        {id: 'i14', displayName: 'Star Player', cost: 0, max: 2},
         {id: 'i15', displayName: '(In)Famous Coaching Staff: Josef Bugman', cost: 100, max: 1},
         {id: 'i16', displayName: 'Wizard: Hireling Sports-Wizard', cost: 150, max: 1},
         {id: 'i17', displayName: 'Biased Referee', cost: 120, reducedCost: {specialRule:'Bribery and Corruption', cost: 80}, max: 2},

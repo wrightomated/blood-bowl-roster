@@ -104,7 +104,7 @@
         </thead>
         <tbody>
             {#each $roster.players as rosterPlayer, index}
-                <RosterRow {index} player={rosterPlayer.player} />
+                <RosterRow {index} {rosterPlayer} />
             {/each}
             <tr>
                 {#if $roster.players.length < 16}

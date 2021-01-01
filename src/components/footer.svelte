@@ -4,6 +4,9 @@
         font-size: small;
         // color: #;
     }
+    footer {
+        padding: 16px;
+    }
 </style>
 
 <footer>

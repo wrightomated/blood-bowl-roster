@@ -15,11 +15,11 @@ function createRoster() {
             update((store) => {
                 return { ...store, players: store.players.concat([player]) };
             }),
-        removePlayer: (index: number) =>
+        removePlayer: (indices: number[]) =>
             update((store) => {
                 return {
                     ...store,
-                    players: store.players.filter((_, i) => index !== i),
+                    players: store.players.filter((_, i) => !indices.includes(i)),
                 };
             }),
         movePlayerUp: (index: number) =>
@@ -48,13 +48,18 @@ function createRoster() {
                     },
                 };
             }),
-        removeInducement: () =>
-            update((store) => {
-                return {
-                    ...store,
-                    rerolls: store.rerolls - 1,
-                };
-            }),
+        removeInducement: (inducementKey: string) =>
+        update((store) => {
+            return {
+                ...store,
+                inducements: {
+                    ...store.inducements,
+                    [inducementKey]: store?.inducements?.[inducementKey]
+                        ? store.inducements[inducementKey] - 1
+                        : 0,
+                },
+            };
+        }),
         addExtra: (extraKey: string) =>
             update((store) => {
                 return {

@@ -1,13 +1,12 @@
 <script lang="ts">
     import { inducementData } from '../data/inducements.data';
-    import type { InducementCostReduction } from '../models/inducement.model';
     import type { Team } from '../models/team.model';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     export let selectedTeam: Team;
 
-    // inducementData
+    let showAllInducements = false;
     const filteredInducements = inducementData.inducements
         .filter((x) =>
             x?.requiresApothecary
@@ -21,15 +20,23 @@
         )
         .map((x) => ({
             ...x,
-            cost:
-                x?.reducedCost?.specialRule &&
-                selectedTeam.specialRules.includes(x.reducedCost.specialRule)
-                    ? x.reducedCost.cost
-                    : x.cost,
+            cost: selectedTeam.specialRules.includes(
+                x?.reducedCost?.specialRule,
+            )
+                ? x.reducedCost.cost
+                : x.cost,
         }));
 
     const addInducement = (key: string) => {
         roster.addInducement(key);
+    };
+
+    const removeInducement = (key: string) => {
+        roster.removeInducement(key);
+    };
+
+    const toggleShowAllInducements = () => {
+        showAllInducements = !showAllInducements;
     };
 </script>
 
@@ -51,7 +58,7 @@
         {#each filteredInducements as ind}
             {#if ind.displayName === 'Star Player'}
                 <StarPlayerInducement />
-            {:else}
+            {:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
                 <tr>
                     <td class="display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
@@ -59,14 +66,31 @@
                         {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
                     </td>
                     <td>
-                        <MaterialButton
-                            symbol="add_circle"
-                            clickFunction={() => addInducement(ind.id)} />
+                        {#if $roster.inducements?.[ind.id] || 0 < ind.max}
+                            <MaterialButton
+                                symbol="add_circle"
+                                clickFunction={() => addInducement(ind.id)} />
+                        {/if}
+                        {#if $roster.inducements?.[ind.id] > 0}
+                            <MaterialButton
+                                symbol="remove_circle"
+                                clickFunction={() => removeInducement(ind.id)} />
+                        {/if}
                     </td>
                 </tr>
             {/if}
-
-            <!-- <div>{ind.displayName} | {ind.cost}</div> -->
         {/each}
+        {#if !showAllInducements}
+            <tr>
+                <td class="display-name">Expand Available Inducements</td>
+                <td />
+                <td />
+                <td>
+                    <MaterialButton
+                        symbol={showAllInducements ? 'arrow_drop_up_circle' : 'arrow_drop_down_circle'}
+                        clickFunction={toggleShowAllInducements} />
+                </td>
+            </tr>
+        {/if}
     </tbody>
 </table>

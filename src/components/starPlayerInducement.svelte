@@ -6,7 +6,7 @@
     import MaterialButton from './materialButton.svelte';
     import type { StarPlayer } from '../models/player.model';
 
-    let selected: StarPlayer;
+    let selectedId: StarPlayer;
 
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
@@ -21,15 +21,18 @@
         return { ...x, displayName: displayName };
     });
 
+    const getSelected = (id) => {
+        return starPlayers.starPlayers.find((x) => x.id === id);
+    };
     const addStarPlayer = () => {
         roster.addPlayer({
-            player: selected,
-            playerName: selected.position,
+            player: getSelected(selectedId),
+            playerName: getSelected(selectedId).position,
             starPlayer: true,
         });
-        if (selected.twoForOne) {
+        if (getSelected(selectedId).twoForOne) {
             const twoForPlayer = starPlayers.starPlayers.find(
-                (x) => x.id === selected.twoForOne,
+                (x) => x.id === getSelected(selectedId).twoForOne,
             );
             roster.addPlayer({
                 player: twoForPlayer,
@@ -49,14 +52,14 @@
 <tr>
     <td class="left-align">
         Star Player:
-        <select aria-label="star player name" bind:value={selected}>
+        <select aria-label="star player name" bind:value={selectedId}>
             {#each filteredStarPlayers as star}
-                <option value={star}>{star.displayName}</option>
+                <option value={star.id}>{star.displayName}</option>
             {/each}
         </select>
     </td>
-    <td>0 / 2</td>
-    <td>{selected?.cost || 0},000</td>
+    <td>{$roster.players.filter((x) => x.starPlayer).length} / 2</td>
+    <td>{getSelected(selectedId)?.cost || 0},000</td>
     <td>
         <MaterialButton symbol="add_circle" clickFunction={addStarPlayer} />
     </td>

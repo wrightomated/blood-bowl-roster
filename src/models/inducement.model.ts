@@ -3,7 +3,7 @@ import type { TeamSpecialRule } from './team.model';
 export interface Inducement {
     id: string;
     displayName: string;
-    cost: number | 'variable';
+    cost: number;
     reducedCost?: InducementCostReduction;
     max: number;
     requiresSpecialRule?: TeamSpecialRule;

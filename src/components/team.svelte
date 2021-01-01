@@ -12,7 +12,6 @@
     import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import StarPlayers from './starPlayers.svelte';
-    import Inducements from './inducements.svelte';
 
     const teamList = teamData.teams;
 
@@ -69,7 +68,7 @@
     <div class="header-container">
         <h2 on:click={togglePlayers}>{selectedTeam.name} Team Players</h2>
         <MaterialButton
-            symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
+            symbol={showAvailablePlayers ? 'arrow_drop_down' : 'arrow_drop_up'}
             clickFunction={togglePlayers} />
     </div>
     {#if showAvailablePlayers}
@@ -118,6 +117,5 @@
         <Roster
             playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
         <RerollsTable {selectedTeam} />
-        <Inducements {selectedTeam} />
     {/if}
 {/if}

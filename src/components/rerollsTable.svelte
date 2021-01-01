@@ -3,6 +3,8 @@
     import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
     import type { Team } from '../models/team.model';
     import type { Extra } from '../models/extra.model';
+    import { calculateInducementTotal } from '../helpers/totalInducementAmount';
+    import Inducements from './inducements.svelte';
 
     export let selectedTeam: Team;
 
@@ -24,12 +26,14 @@
         $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
         extras
             .map((e) => $roster.extra[e.extraString] * e.cost || 0)
-            .reduce((a, b) => a + b, 0);
+            .reduce((a, b) => a + b, 0) +
+        calculateInducementTotal($roster.inducements);
 </script>
 
 <style lang="scss">
     .table {
         margin-block-end: 1em;
+        margin-right: 1em;
         th {
             background-color: #970f0c;
             color: white;
@@ -68,4 +72,5 @@
             </td>
         </tr>
     </table>
+    <Inducements {selectedTeam} />
 </div>
