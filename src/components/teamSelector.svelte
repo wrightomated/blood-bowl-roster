@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { slide } from "svelte/transition";
+    import { slide } from 'svelte/transition';
 
-    import type { Team } from "../models/team.model";
-    import { currentTeam } from "../store/currentTeam.store";
-    import { roster } from "../store/teamRoster.store";
-    import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
-    import { savedRosterIndex } from "../store/saveDirectory.store";
-    import type { Roster } from "../models/roster.model";
-    import { teamLoadOpen } from "../store/teamLoadOpen.store";
+    import type { Team } from '../models/team.model';
+    import { currentTeam } from '../store/currentTeam.store';
+    import { roster } from '../store/teamRoster.store';
+    import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
+    import { savedRosterIndex } from '../store/saveDirectory.store';
+    import type { Roster } from '../models/roster.model';
+    import { teamLoadOpen } from '../store/teamLoadOpen.store';
     export let teamList: Team[];
 
     $: showTeams = $teamSelectionOpen;
@@ -39,7 +39,7 @@
 
     const loadTeam = (savedRoster) => {
         const loadedRoster: Roster = JSON.parse(
-            localStorage.getItem(`savedRoster${savedRoster.id}`)
+            localStorage.getItem(`savedRoster${savedRoster.id}`),
         );
         currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
         roster.loadRoster(`savedRoster${savedRoster.id}`);
@@ -49,7 +49,7 @@
 </script>
 
 <style lang="scss">
-    @import "../styles/colour";
+    @import '../styles/colour';
     button {
         border-radius: 10px;
         background-color: white;
@@ -79,14 +79,16 @@
 
 {#if !$teamLoadOpen}
     <button
-        class={showTeams ? 'cancel' : ''}
+        class:cancel={showTeams}
+        class="new-team"
         on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
     </button>
 {/if}
 
 {#if $savedRosterIndex.index.length > 0 && !showTeams}
     <button
-        class={$teamLoadOpen ? 'cancel' : ''}
+        class="load-team-button"
+        class:cancel={$teamLoadOpen}
         on:click={() => toggleLoad()}>{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button>
 {/if}
 
@@ -94,17 +96,22 @@
     <div class="button-container" transition:slide>
         {#each sortedTeam() as team}
             <button
+                class="team-button"
                 class:selected={$currentTeam.id === team.id}
                 on:click={() => newTeam(team.id)}>{team.name}</button>
         {/each}
     </div>
-    <button transition:slide on:click={() => createTeam()}>Create</button>
+    <button
+        class="create-team"
+        transition:slide
+        on:click={() => createTeam()}>Create</button>
 {/if}
 
 {#if $teamLoadOpen}
     <div class="button-container" transition:slide>
         {#each $savedRosterIndex.index as savedRoster}
             <button
+                class="saved-team-button"
                 on:click={() => loadTeam(savedRoster)}>{savedRoster.name}</button>
         {/each}
     </div>

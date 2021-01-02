@@ -121,7 +121,7 @@
                             symbol="add_circle"
                             clickFunction={addPlayer} />
                     </td>
-                    <td class="left-align">
+                    <td class="position left-align">
                         <select
                             aria-labelledby="position-header"
                             bind:value={selected}>

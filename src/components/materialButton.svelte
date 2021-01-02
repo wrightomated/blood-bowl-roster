@@ -14,4 +14,5 @@
     }
 </style>
 
-<button on:click={()=>clickFunction()}><i class="material-icons">{symbol}</i></button>
+<button class="symbol-control" on:click={() => clickFunction()}><i
+        class="material-icons">{symbol}</i></button>

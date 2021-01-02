@@ -18,7 +18,7 @@
     $: danger = numberOfPlayerType > maxOfPlayerType;
 
     const removePlayer = () => {
-        removeTwoForOne() ?? roster.removePlayer([index]);
+        removeTwoForOne() || roster.removePlayer([index]);
     };
     const moveUp = () => {
         roster.movePlayerUp(index);
@@ -69,7 +69,7 @@
 
 <tr>
     <td>{index + 1}</td>
-    <td class="left-align">
+    <td class="player-name left-align">
         {#if rosterPlayer.starPlayer}
             {rosterPlayer.player.position}
         {:else}
@@ -79,7 +79,7 @@
                 bind:value={$roster.players[index].playerName} />
         {/if}
     </td>
-    <td class="left-align">
+    <td class="controls left-align">
         <div class="flex-container">
             {#if index > 0}
                 <MaterialButton
@@ -96,7 +96,7 @@
                 clickFunction={removePlayer} />
         </div>
     </td>
-    <td class="left-align">
+    <td class="player-position left-align">
         {#if rosterPlayer.starPlayer}
             Star Player
         {:else}

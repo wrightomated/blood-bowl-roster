@@ -56,7 +56,7 @@
     </thead>
     <tbody>
         {#each filteredInducements as ind}
-            {#if ind.displayName === 'Star Player'}
+            {#if ind.displayName === 'Star Player' && showAllInducements}
                 <StarPlayerInducement />
             {:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
                 <tr>
@@ -82,7 +82,7 @@
         {/each}
         {#if !showAllInducements}
             <tr>
-                <td class="display-name">Expand Available Inducements</td>
+                <td class="display-name">Expand Inducements</td>
                 <td />
                 <td />
                 <td>
