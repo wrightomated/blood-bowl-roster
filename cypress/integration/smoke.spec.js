@@ -51,16 +51,6 @@ context('Create and save team', () => {
         cy.get('.load-team-button').click();
         cy.get('.saved-team-button').click();
         cy.get('.header-container:nth-child(5) > h2').should('have.text', 'Imperial Nobility Team Players');
-        // cy.get('#team-name').should('have.text','Altdorf Daemons')
     });
-    // it('should load team', () => {
-    //     // cy.reload();
-
-    //     cy.get('.load-team-button').click();
-    //     cy.get('.saved-team-button').click();
-    //     // cy.get('.team-button:nth-child(1)').should();
-    //     // cy.get('.header-container:nth-child(5) > h2').click();
-
-    // })
 });
 

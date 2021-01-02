@@ -1,4 +1,6 @@
 /node_modules/
 /public/build/
+/cypress/videos/
+/cypress/integration/examples
 
 .DS_Store
