@@ -44,6 +44,10 @@
     .display-name {
         text-align: left;
     }
+    .control {
+        background: white;
+        color: black;
+    }
 </style>
 
 <table>
@@ -66,7 +70,7 @@
                         {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
                     </td>
                     <td>
-                        {#if $roster.inducements?.[ind.id] || 0 < ind.max}
+                        {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
                             <MaterialButton
                                 symbol="add_circle"
                                 clickFunction={() => addInducement(ind.id)} />
@@ -82,12 +86,12 @@
         {/each}
         {#if !showAllInducements}
             <tr>
-                <td class="display-name">Expand Inducements</td>
+                <td class="display-name">Show All Inducements</td>
                 <td />
                 <td />
-                <td>
+                <td class="control">
                     <MaterialButton
-                        symbol={showAllInducements ? 'arrow_drop_up_circle' : 'arrow_drop_down_circle'}
+                        symbol={showAllInducements ? 'arrow_drop_up' : 'arrow_drop_down'}
                         clickFunction={toggleShowAllInducements} />
                 </td>
             </tr>

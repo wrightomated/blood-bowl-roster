@@ -16,9 +16,6 @@
 </script>
 
 <style lang="scss">
-    .heading-box {
-        margin-top: 50px;
-    }
     .sub-heading-box {
         display: flex;
         align-items: flex-end;
@@ -30,7 +27,6 @@
     .heading {
         font-size: large;
         margin-block-end: 0;
-        // margin-top: 50px;
 
         input {
             display: block;
@@ -149,8 +145,3 @@
         </tbody>
     </table>
 </div>
-
-<!-- <div>
-    Total value:
-    {$roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0)}
-</div> -->
