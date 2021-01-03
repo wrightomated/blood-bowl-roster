@@ -4,9 +4,9 @@
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
-    import type { StarPlayer } from '../models/player.model';
+    // import type { StarPlayer } from '../models/player.model';
 
-    let selectedId: StarPlayer;
+    let selectedId: number;
 
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
@@ -40,6 +40,10 @@
                 starPlayer: true,
             });
         }
+        setTimeout(() => {
+            // This is a hack until I work out why the binding isn't updated when the options array change
+            selectedId = filteredStarPlayers[0].id;
+        }, 2);
     };
 </script>
 
@@ -53,7 +57,7 @@
     <td class="left-align">
         Star Player:
         <select aria-label="star player name" bind:value={selectedId}>
-            {#each filteredStarPlayers as star}
+            {#each filteredStarPlayers as star (star.id)}
                 <option value={star.id}>{star.displayName}</option>
             {/each}
         </select>

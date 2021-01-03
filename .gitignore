@@ -2,5 +2,8 @@
 /public/build/
 /cypress/videos/
 /cypress/integration/examples
+/cypress/fixtures
+/cypress/plugins
+/cypress/support
 
 .DS_Store
