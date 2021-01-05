@@ -11,6 +11,9 @@
     .skills-header {
         min-width: 200px;
     }
+    .left-align {
+        text-align: left;
+    }
 </style>
 
 <div class="table-container">

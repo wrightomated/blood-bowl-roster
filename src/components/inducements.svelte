@@ -47,15 +47,21 @@
     .control {
         background: white;
         color: black;
+        border: 0;
     }
 </style>
 
 <table>
     <thead>
         <tr>
-            <td>Inducement</td>
-            <td>QTY</td>
-            <td>Cost</td>
+            <td on:click={toggleShowAllInducements}>Inducement</td>
+            <td on:click={toggleShowAllInducements}>QTY</td>
+            <td on:click={toggleShowAllInducements}>Cost</td>
+            <td class="control">
+                <MaterialButton
+                    symbol={showAllInducements ? 'arrow_drop_up' : 'arrow_drop_down'}
+                    clickFunction={toggleShowAllInducements} />
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -84,17 +90,5 @@
                 </tr>
             {/if}
         {/each}
-        {#if !showAllInducements}
-            <tr>
-                <td class="display-name">Show All Inducements</td>
-                <td />
-                <td />
-                <td class="control">
-                    <MaterialButton
-                        symbol={showAllInducements ? 'arrow_drop_up' : 'arrow_drop_down'}
-                        clickFunction={toggleShowAllInducements} />
-                </td>
-            </tr>
-        {/if}
     </tbody>
 </table>

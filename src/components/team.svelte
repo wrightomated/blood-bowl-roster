@@ -46,6 +46,8 @@
 </script>
 
 <style lang="scss">
+    @import '../styles/font';
+
     .table-container {
         width: 100%;
         overflow-x: auto;
@@ -58,7 +60,10 @@
     }
     .header-container {
         display: flex;
-        align-items: center;
+        margin-top: 1em;
+        caption {
+            font-family: $display-font;
+        }
     }
 </style>
 
@@ -66,9 +71,12 @@
 
 {#if selectedTeam}
     <div class="header-container">
-        <h2 on:click={togglePlayers}>{selectedTeam.name} Team Players</h2>
+        <caption on:click={togglePlayers}>
+            {selectedTeam.name}
+            Team Players
+        </caption>
         <MaterialButton
-            symbol={showAvailablePlayers ? 'arrow_drop_down' : 'arrow_drop_up'}
+            symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={togglePlayers} />
     </div>
     {#if showAvailablePlayers}
@@ -100,11 +108,10 @@
         </div>
     {/if}
     <div class="header-container">
-        <h2 on:click={toggleStarPlayers}>
-            Star Players for
+        <caption on:click={toggleStarPlayers}>
             {selectedTeam.name}
-            Teams
-        </h2>
+            Team Star Players
+        </caption>
         <MaterialButton
             symbol={showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={toggleStarPlayers} />
