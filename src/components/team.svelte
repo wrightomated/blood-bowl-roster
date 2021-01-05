@@ -71,9 +71,8 @@
 
 {#if selectedTeam}
     <div class="header-container">
-        <caption on:click={togglePlayers}>
-            {selectedTeam.name}
-            Team Players
+        <caption class="team-player-caption" on:click={togglePlayers}>
+            {`${selectedTeam.name} Team Players`}
         </caption>
         <MaterialButton
             symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
@@ -108,9 +107,8 @@
         </div>
     {/if}
     <div class="header-container">
-        <caption on:click={toggleStarPlayers}>
-            {selectedTeam.name}
-            Team Star Players
+        <caption class="team-star-player-caption" on:click={toggleStarPlayers}>
+            {`${selectedTeam.name} Team Star Playerss`}
         </caption>
         <MaterialButton
             symbol={showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}

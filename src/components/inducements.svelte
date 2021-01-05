@@ -49,6 +49,12 @@
         color: black;
         border: 0;
     }
+    @media print {
+        .add-box,
+        .control {
+            display: none;
+        }
+    }
 </style>
 
 <table>
@@ -75,7 +81,7 @@
                     <td>
                         {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
                     </td>
-                    <td>
+                    <td class="add-box">
                         {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
                             <MaterialButton
                                 symbol="add_circle"

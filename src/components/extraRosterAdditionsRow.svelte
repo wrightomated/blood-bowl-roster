@@ -24,13 +24,19 @@
         font-weight: normal;
         padding: 10px;
     }
+
+    @media print {
+        .control {
+            display: none;
+        }
+    }
 </style>
 
 <tr>
     <th>{extra.extraString.replace('_', ' ')}</th>
     <td>{extraAmount} / {extra.max}</td>
     <td>{extra.cost},000</td>
-    <td>
+    <td class="control">
         {#if extraAmount < extra.max}
             <MaterialButton symbol="add_circle" clickFunction={addExtra} />
         {/if}

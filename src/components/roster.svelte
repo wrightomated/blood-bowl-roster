@@ -21,7 +21,7 @@
         align-items: flex-end;
     }
     .table-container {
-        width: 100%;
+        max-width: 100%;
         overflow-x: auto;
     }
     .heading {
@@ -60,9 +60,20 @@
     #team-name {
         max-width: 100%;
     }
+    @media print {
+        .team-name-container {
+            page-break-before: always;
+        }
+        .table-container {
+            overflow: inherit;
+        }
+        .add-player-row {
+            display: none;
+        }
+    }
 </style>
 
-<div class="heading-box">
+<div class="team-name-container">
     <h3 class="heading">
         <!-- <label for="team-name">Team name:</label> -->
         <input
@@ -102,8 +113,8 @@
             {#each $roster.players as rosterPlayer, index}
                 <RosterRow {index} {rosterPlayer} />
             {/each}
-            <tr>
-                {#if $roster.players.length < 16}
+            {#if $roster.players.length < 16}
+                <tr class="add-player-row">
                     <td />
                     <td class="left-align">
                         <input
@@ -140,8 +151,8 @@
                     <td />
                     <td />
                     <td />
-                {/if}
-            </tr>
+                </tr>
+            {/if}
         </tbody>
     </table>
 </div>

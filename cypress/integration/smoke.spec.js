@@ -6,9 +6,9 @@ context('Create and save team', () => {
         cy.visit('/');
         cy.get('.new-team').click();
         cy.get('.team-button:nth-child(1)').click();
-        cy.get('.header-container:nth-child(5) > h2').should('have.text', 'Black Orc Team Players');
+        cy.get('.team-player-caption').should('have.text', 'Black Orc Team Players');
         cy.get('.team-button:nth-child(10)').click();
-        cy.get('.header-container:nth-child(5) > h2').should('have.text', 'Imperial Nobility Team Players');
+        cy.get('.team-player-caption').should('have.text', 'Imperial Nobility Team Players');
         cy.get('.create-team').click();
         cy.get('#team-name').click();
         cy.get('#team-name').type('Altdorf Daemons');
@@ -46,11 +46,11 @@ context('Create and save team', () => {
 
         cy.get('.new-team').click();
         cy.get('.team-button:nth-child(1)').click();
-        cy.get('.header-container:nth-child(5) > h2').should('have.text', 'Black Orc Team Players');
+        cy.get('.team-player-caption').should('have.text', 'Black Orc Team Players');
         cy.get('.create-team').click();
         cy.get('.load-team-button').click();
         cy.get('.saved-team-button').click();
-        cy.get('.header-container:nth-child(5) > h2').should('have.text', 'Imperial Nobility Team Players');
+        cy.get('.team-player-caption').should('have.text', 'Imperial Nobility Team Players');
     });
 });
 

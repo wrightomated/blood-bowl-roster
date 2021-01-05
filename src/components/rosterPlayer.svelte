@@ -65,6 +65,17 @@
             vertical-align: text-bottom;
         }
     }
+    @media print {
+        .flex-container {
+            display: none;
+        }
+        .player-name {
+            border-right: 0;
+        }
+        .controls {
+            border-left: 0;
+        }
+    }
 </style>
 
 <tr>

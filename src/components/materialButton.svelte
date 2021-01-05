@@ -12,6 +12,11 @@
         font: inherit;
         cursor: pointer;
     }
+    @media print {
+        button {
+            display: none;
+        }
+    }
 </style>
 
 <button class="symbol-control" on:click={() => clickFunction()}><i

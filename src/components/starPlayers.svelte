@@ -14,6 +14,10 @@
     .left-align {
         text-align: left;
     }
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
 </style>
 
 <div class="table-container">

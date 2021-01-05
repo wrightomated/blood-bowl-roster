@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { roster } from "../store/teamRoster.store";
-    import { savedRosterIndex } from "../store/saveDirectory.store";
-    import MaterialButton from "./materialButton.svelte";
+    import { roster } from '../store/teamRoster.store';
+    import { savedRosterIndex } from '../store/saveDirectory.store';
+    import MaterialButton from './materialButton.svelte';
 
     let saved = false;
     let rosterCleared = false;
@@ -27,6 +27,11 @@
     .saved {
         color: green;
         margin-bottom: 3px;
+    }
+    @media print {
+        :host {
+            display: none;
+        }
     }
 </style>
 
