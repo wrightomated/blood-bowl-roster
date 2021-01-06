@@ -108,7 +108,7 @@
     {/if}
     <div class="header-container">
         <caption class="team-star-player-caption" on:click={toggleStarPlayers}>
-            {`${selectedTeam.name} Team Star Playerss`}
+            {`${selectedTeam.name} Team Star Players`}
         </caption>
         <MaterialButton
             symbol={showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}

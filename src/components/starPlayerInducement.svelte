@@ -56,7 +56,10 @@
 <tr>
     <td class="left-align">
         Star Player:
-        <select aria-label="star player name" bind:value={selectedId}>
+        <select
+            aria-label="star player name"
+            class="star-player-select"
+            bind:value={selectedId}>
             {#each filteredStarPlayers as star (star.id)}
                 <option value={star.id}>{star.displayName}</option>
             {/each}

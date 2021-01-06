@@ -41,18 +41,22 @@
 </script>
 
 <style lang="scss">
-    .display-name {
-        text-align: left;
-    }
-    .control {
-        background: white;
-        color: black;
-        border: 0;
+    .inducement {
+        &__display-name {
+            text-align: left;
+        }
+        &__toggle {
+            background: white;
+            color: black;
+            border: 0;
+        }
     }
     @media print {
-        .add-box,
-        .control {
-            display: none;
+        .inducement {
+            &__control,
+            &__toggle {
+                display: none;
+            }
         }
     }
 </style>
@@ -63,7 +67,7 @@
             <td on:click={toggleShowAllInducements}>Inducement</td>
             <td on:click={toggleShowAllInducements}>QTY</td>
             <td on:click={toggleShowAllInducements}>Cost</td>
-            <td class="control">
+            <td class="inducement__toggle">
                 <MaterialButton
                     symbol={showAllInducements ? 'arrow_drop_up' : 'arrow_drop_down'}
                     clickFunction={toggleShowAllInducements} />
@@ -76,12 +80,12 @@
                 <StarPlayerInducement />
             {:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
                 <tr>
-                    <td class="display-name">{ind.displayName}</td>
+                    <td class="inducement__display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
                     <td>
                         {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
                     </td>
-                    <td class="add-box">
+                    <td class="inducement__control">
                         {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
                             <MaterialButton
                                 symbol="add_circle"

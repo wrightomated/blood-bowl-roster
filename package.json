@@ -6,7 +6,8 @@
     "dev": "rollup -c -w --host 0.0.0.0",
     "start": "sirv public --host 0.0.0.0",
     "validate": "svelte-check",
-    "test:integration" : "cypress run --spec \"cypress/integration/smoke.spec.js\""
+    "e2e" : "cypress run --spec \"cypress/integration/smoke.spec.js\"",
+    "e2e:local" : "CYPRESS_BASE_URL=http://localhost:5000 cypress run --spec \"cypress/integration/smoke.spec.js\""
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^16.0.0",
