@@ -1,18 +1,21 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
 
-    import type { Team } from '../models/team.model';
+    import type { Team, TeamTier } from '../models/team.model';
     import { currentTeam } from '../store/currentTeam.store';
     import { roster } from '../store/teamRoster.store';
     import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import type { Roster } from '../models/roster.model';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
+    import { filteredTiers, toggledTiers } from '../store/filterTier.store';
     export let teamList: Team[];
 
     $: showTeams = $teamSelectionOpen;
 
-    const sortedTeam = () => {
+    $: sortedTeam = sortTeam().filter((x) => $filteredTiers.includes(x.tier));
+
+    const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
 
@@ -21,6 +24,9 @@
     };
 
     const toggleTeam = () => {
+        if (showTeams && $roster.teamId) {
+            currentTeam.set(teamList.find((x) => x.id === $roster.teamId));
+        }
         teamSelectionOpen.set(!showTeams);
     };
 
@@ -46,10 +52,24 @@
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
         toggleLoad();
     };
+
+    const tierToNumeral = (tier: TeamTier) => {
+        switch (tier) {
+            case 1:
+                return 'I';
+            case 2:
+                return 'II';
+            case 3:
+                return 'III';
+            default:
+                break;
+        }
+    };
 </script>
 
 <style lang="scss">
     @import '../styles/colour';
+    @import '../styles/font';
     button {
         border-radius: 10px;
         background-color: white;
@@ -75,6 +95,28 @@
         background: $secondary-background-colour;
         padding: 10px;
     }
+    .team-button {
+        span {
+            font-family: $display-font;
+        }
+    }
+    .filter-button {
+        font-family: $display-font;
+        border-radius: 50%;
+        font-size: 0.75em;
+        background-color: white;
+        color: $secondary-colour;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        line-height: 0px;
+        text-align: center;
+        margin: 0 auto;
+        border: 2px solid $secondary-colour;
+    }
+    .tier-selector {
+        margin-top: 1em;
+    }
 </style>
 
 {#if !$teamLoadOpen}
@@ -94,12 +136,28 @@
 
 {#if showTeams && !$teamLoadOpen}
     <div class="button-container" transition:slide>
-        {#each sortedTeam() as team}
+        {#each sortedTeam as team}
             <button
                 class="team-button"
                 class:selected={$currentTeam.id === team.id}
-                on:click={() => newTeam(team.id)}>{team.name}</button>
+                on:click={() => newTeam(team.id)}>{team.name}
+                <span>{tierToNumeral(team.tier)}</span></button>
         {/each}
+        <div class="tier-selector">
+            Filter tiers:
+            <button
+                on:click={() => toggledTiers.toggleTier(1)}
+                class:selected={$filteredTiers.includes(1)}
+                class="filter-button">I</button>
+            <button
+                on:click={() => toggledTiers.toggleTier(2)}
+                class:selected={$filteredTiers.includes(2)}
+                class="filter-button">II</button>
+            <button
+                on:click={() => toggledTiers.toggleTier(3)}
+                class:selected={$filteredTiers.includes(3)}
+                class="filter-button">III</button>
+        </div>
     </div>
     <button
         class="create-team"

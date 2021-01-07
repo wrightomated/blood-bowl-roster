@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="Description" content="Create team rosters for Blood Bowl 2020.">
+        <meta name="Description" content="Create team rosters for Blood Bowl 2020. Includes all current teams, star players and inducements. Exhibition and league matches.">
 
         <title>BB Roster</title>
 
@@ -19,7 +19,14 @@
         <link rel="stylesheet" href="/global.css" />
         <link rel="stylesheet" href="/build/bundle.css" />
         <script>
-            window.onerror = function(message, source, lineno, colno, error) { localStorage.clear(); location.reload();};</script>
+            window.onerror = function(message, source, lineno, colno, error) { 
+                const hasFailed = sessionStorage.getItem('failedOnce');
+                if (!hasFailed) {
+                    localStorage.clear(); 
+                    location.reload();
+                    sessionStorage.setItem('failedOnce','true');
+                }
+            };</script>
 
         <script defer src="/build/bundle.js"></script>
     </head>

@@ -7,11 +7,12 @@
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
     import TeamSelector from './teamSelector.svelte';
-    import { savedRosterIndex } from '../store/saveDirectory.store';
     import MaterialButton from './materialButton.svelte';
     import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import StarPlayers from './starPlayers.svelte';
+    import LocalStorageController from './localStorageController.svelte';
+    import Welcome from './welcome.svelte';
 
     const teamList = teamData.teams;
 
@@ -31,18 +32,6 @@
     const toggleStarPlayers = () => {
         showAvailableStarPlayers = !showAvailableStarPlayers;
     };
-
-    roster.subscribe((x) => {
-        localStorage.setItem('roster', JSON.stringify(x));
-    });
-
-    currentTeam.subscribe((x) => {
-        localStorage.setItem('selectedTeam', JSON.stringify(x));
-    });
-
-    savedRosterIndex.subscribe((x) => {
-        localStorage.setItem('rosterIndex', JSON.stringify(x));
-    });
 </script>
 
 <style lang="scss">
@@ -66,6 +55,12 @@
         }
     }
 </style>
+
+<LocalStorageController />
+
+{#if !selectedTeam}
+    <Welcome />
+{/if}
 
 <TeamSelector {teamList} />
 

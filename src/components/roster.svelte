@@ -4,6 +4,7 @@
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
+    import { onMount } from 'svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -13,6 +14,12 @@
         roster.addPlayer({ playerName: newName, player: selected });
         newName = '';
     };
+
+    onMount(async () => {
+        const element = document.getElementById('team-name');
+
+        element.scrollIntoView({ behavior: 'smooth' });
+    });
 </script>
 
 <style lang="scss">
@@ -74,14 +81,13 @@
 </style>
 
 <div class="team-name-container">
-    <h3 class="heading">
-        <!-- <label for="team-name">Team name:</label> -->
+    <h2 class="heading">
         <input
             aria-label="team name"
             placeholder="Team Name"
             id="team-name"
             bind:value={$roster.teamName} />
-    </h3>
+    </h2>
 </div>
 <div class="sub-heading-box">
     <p class="sub-heading">{$roster.teamType} Team</p>
