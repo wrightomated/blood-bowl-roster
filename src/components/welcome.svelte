@@ -13,7 +13,7 @@
         exhibition games. I'm looking to expand it for league play too!
     </p>
     <p>
-        This is a work in progress so if you notice anything off or would love
+        This is a work in progress, so if you notice anything off or would love
         to see certain features
         <a href="mailto:bbrosterapp@gmail.com">email me</a>.
     </p>
