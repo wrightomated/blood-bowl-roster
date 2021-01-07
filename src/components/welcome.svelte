@@ -9,8 +9,8 @@
         with roster creation.
     </p>
     <p>
-        Currently the feature set only covers initial roster or exhibition
-        games. I'm looking to expand it for league play too!
+        Currently the feature set only covers initial roster creation and
+        exhibition games. I'm looking to expand it for league play too!
     </p>
     <p>
         This is a work in progress so if you notice anything off or would love

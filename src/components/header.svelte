@@ -13,5 +13,5 @@
 
 <header>
     <h1>BB Roster</h1>
-    <p>Teams don't dream themselves</p>
+    <p>Dream your team.</p>
 </header>

@@ -28,6 +28,11 @@
         margin-top: 2em;
         padding-bottom: 1em;
     }
+    @media print {
+        footer {
+            display: none;
+        }
+    }
 </style>
 
 <footer>
