@@ -46,6 +46,7 @@
         site is not affiliated with Games Workshop. I just think they're neat.
     </p>
     <p>
+        This is a work in progres.
         <a href="mailto:bbrosterapp@gmail.com">Email</a>
         for all queries, concerns and suggestions.
     </p>

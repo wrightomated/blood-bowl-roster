@@ -58,10 +58,6 @@
 
 <LocalStorageController />
 
-{#if !selectedTeam}
-    <Welcome />
-{/if}
-
 <TeamSelector {teamList} />
 
 {#if selectedTeam}
