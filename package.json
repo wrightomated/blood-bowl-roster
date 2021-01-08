@@ -1,6 +1,6 @@
 {
   "name": "svelte-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w --host 0.0.0.0",
@@ -28,7 +28,6 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "sirv-cli": "^1.0.0",
-    "smoothscroll-polyfill": "^0.4.4"
+    "sirv-cli": "^1.0.0"
   }
 }

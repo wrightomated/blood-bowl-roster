@@ -93,10 +93,10 @@ const chosenBlocker: Player = {
     id: 10,
     position: 'Chosen Blocker',
     playerStats: [5, 4, 3, 5, 10],
-    cost: 60,
+    cost: 100,
     skills: [],
     primary: ['G', 'M', 'S'],
-    secondary: ['A', 'P'],
+    secondary: ['A'],
 }
 const untrainedTroll: Player = {
     ...trainedTroll,

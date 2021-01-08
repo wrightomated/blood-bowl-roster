@@ -12,25 +12,25 @@
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import StarPlayers from './starPlayers.svelte';
     import LocalStorageController from './localStorageController.svelte';
-    import Welcome from './welcome.svelte';
+    import {
+        showAvailablePlayers,
+        showAvailableStarPlayers,
+    } from '../store/showPlayerList.store';
 
     const teamList = teamData.teams;
 
     $: selectedTeam = $currentTeam;
-
-    let showAvailablePlayers = true;
-    let showAvailableStarPlayers = false;
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);
     };
 
     const togglePlayers = () => {
-        showAvailablePlayers = !showAvailablePlayers;
+        showAvailablePlayers.set(!$showAvailablePlayers);
     };
 
     const toggleStarPlayers = () => {
-        showAvailableStarPlayers = !showAvailableStarPlayers;
+        showAvailableStarPlayers.set(!$showAvailableStarPlayers);
     };
 </script>
 
@@ -66,10 +66,10 @@
             {`${selectedTeam.name} Team Players`}
         </caption>
         <MaterialButton
-            symbol={showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
+            symbol={$showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={togglePlayers} />
     </div>
-    {#if showAvailablePlayers}
+    {#if $showAvailablePlayers}
         <div class="table-container">
             <table>
                 <thead>
@@ -102,10 +102,10 @@
             {`${selectedTeam.name} Team Star Players`}
         </caption>
         <MaterialButton
-            symbol={showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
+            symbol={$showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={toggleStarPlayers} />
     </div>
-    {#if showAvailableStarPlayers}
+    {#if $showAvailableStarPlayers}
         <StarPlayers />
     {/if}
 

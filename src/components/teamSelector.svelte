@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { slide } from 'svelte/transition';
-
     import type { Team, TeamTier } from '../models/team.model';
     import { currentTeam } from '../store/currentTeam.store';
     import { roster } from '../store/teamRoster.store';
@@ -9,6 +7,10 @@
     import type { Roster } from '../models/roster.model';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import { filteredTiers, toggledTiers } from '../store/filterTier.store';
+    import {
+        showAvailablePlayers,
+        showAvailableStarPlayers,
+    } from '../store/showPlayerList.store';
     export let teamList: Team[];
 
     $: showTeams = $teamSelectionOpen;
@@ -41,6 +43,8 @@
             teamType: $currentTeam.name,
         });
         teamSelectionOpen.set(false);
+        showAvailablePlayers.set(false);
+        showAvailableStarPlayers.set(false);
     };
 
     const loadTeam = (savedRoster) => {
@@ -135,7 +139,7 @@
 {/if}
 
 {#if showTeams && !$teamLoadOpen}
-    <div class="button-container" transition:slide>
+    <div class="button-container">
         {#each sortedTeam as team}
             <button
                 class="team-button"
@@ -159,14 +163,11 @@
                 class="filter-button">III</button>
         </div>
     </div>
-    <button
-        class="create-team"
-        transition:slide
-        on:click={() => createTeam()}>Create</button>
+    <button class="create-team" on:click={() => createTeam()}>Create</button>
 {/if}
 
 {#if $teamLoadOpen}
-    <div class="button-container" transition:slide>
+    <div class="button-container">
         {#each $savedRosterIndex.index as savedRoster}
             <button
                 class="saved-team-button"

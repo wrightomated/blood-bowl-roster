@@ -4,7 +4,7 @@
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
-    import { onMount } from 'svelte';
+    // import { onMount } from 'svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -15,11 +15,11 @@
         newName = '';
     };
 
-    onMount(async () => {
-        const element = document.getElementById('team-name');
+    // onMount(async () => {
+    //     const element = document.getElementById('team-name');
 
-        element.scrollIntoView({ behavior: 'smooth' });
-    });
+    //     element.scrollIntoView({ behavior: 'smooth' });
+    // });
 </script>
 
 <style lang="scss">
