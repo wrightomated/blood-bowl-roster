@@ -1,4 +1,4 @@
-import type { Player, PlayerCatalogue } from '../models/player.model'
+import type { Player, PlayerCatalogue } from '../models/player.model';
 
 const imperialLineman: Player = {
     id: 1,
@@ -8,7 +8,7 @@ const imperialLineman: Player = {
     skills: [16],
     primary: ['G'],
     secondary: ['A', 'S'],
-}
+};
 const imperialThrower: Player = {
     id: 2,
     position: 'Imperial Thrower',
@@ -17,7 +17,7 @@ const imperialThrower: Player = {
     skills: [46, 47],
     primary: ['G', 'P'],
     secondary: ['A', 'S'],
-}
+};
 
 const nobleBlitzer: Player = {
     id: 3,
@@ -27,7 +27,7 @@ const nobleBlitzer: Player = {
     skills: [13, 1],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 
 const bodyguard: Player = {
     id: 4,
@@ -37,7 +37,7 @@ const bodyguard: Player = {
     skills: [58, 24],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 
 const ogre: Player = {
     id: 5,
@@ -47,7 +47,7 @@ const ogre: Player = {
     skills: [66, 71, 55, 60, 86],
     primary: ['S'],
     secondary: ['A', 'G'],
-}
+};
 
 const goblinBruiserLineman: Player = {
     id: 6,
@@ -57,7 +57,7 @@ const goblinBruiserLineman: Player = {
     skills: [4, 78, 81, 60],
     primary: ['A'],
     secondary: ['G', 'P', 'S'],
-}
+};
 
 const blackOrc: Player = {
     id: 7,
@@ -67,7 +67,7 @@ const blackOrc: Player = {
     skills: [50, 52],
     primary: ['G', 'S'],
     secondary: ['A', 'P'],
-}
+};
 
 const trainedTroll: Player = {
     id: 8,
@@ -77,7 +77,7 @@ const trainedTroll: Player = {
     skills: [63, 711, 55, 75, 76, 77, 86],
     primary: ['S'],
     secondary: ['A', 'G', 'P'],
-}
+};
 
 const beastmanRunnerLineman: Player = {
     id: 9,
@@ -87,7 +87,7 @@ const beastmanRunnerLineman: Player = {
     skills: [30],
     primary: ['G', 'M', 'S'],
     secondary: ['A', 'P'],
-}
+};
 
 const chosenBlocker: Player = {
     id: 10,
@@ -97,20 +97,20 @@ const chosenBlocker: Player = {
     skills: [],
     primary: ['G', 'M', 'S'],
     secondary: ['A'],
-}
+};
 const untrainedTroll: Player = {
     ...trainedTroll,
     id: 64,
     skills: [63, 71, 55, 75, 76, 77, 86],
     position: 'Untrained Troll',
-}
+};
 const chaosTroll: Player = {
     ...untrainedTroll,
     id: 11,
     position: 'Chaos Troll',
     primary: ['M', 'S'],
     secondary: ['A', 'G'],
-}
+};
 
 const chaosOgre: Player = {
     ...ogre,
@@ -118,7 +118,7 @@ const chaosOgre: Player = {
     position: 'Chaos Ogre',
     primary: ['M', 'S'],
     secondary: ['A', 'G'],
-}
+};
 
 const minotaur: Player = {
     id: 13,
@@ -128,7 +128,7 @@ const minotaur: Player = {
     skills: [71, 17, 30, 55, 60, 88],
     primary: ['M', 'S'],
     secondary: ['A', 'G'],
-}
+};
 
 const darkElfLineman: Player = {
     id: 14,
@@ -138,7 +138,7 @@ const darkElfLineman: Player = {
     skills: [],
     primary: ['A', 'G'],
     secondary: ['S'],
-}
+};
 
 const darkElfRunner: Player = {
     id: 15,
@@ -148,7 +148,7 @@ const darkElfRunner: Player = {
     skills: [40],
     primary: ['A', 'G', 'P'],
     secondary: ['S'],
-}
+};
 
 const darkElfBlitzer: Player = {
     id: 16,
@@ -158,7 +158,7 @@ const darkElfBlitzer: Player = {
     skills: [13],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 
 const assassin: Player = {
     id: 17,
@@ -168,7 +168,7 @@ const assassin: Player = {
     skills: [20, 80],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 
 const witchElf: Player = {
     id: 18,
@@ -178,7 +178,7 @@ const witchElf: Player = {
     skills: [4, 17, 6],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 
 const dwarfBlockerLineman: Player = {
     id: 19,
@@ -188,7 +188,7 @@ const dwarfBlockerLineman: Player = {
     skills: [13, 23, 60],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 
 const dwarfRunner: Player = {
     id: 20,
@@ -198,7 +198,7 @@ const dwarfRunner: Player = {
     skills: [22, 60],
     primary: ['G', 'P'],
     secondary: ['A', 'S'],
-}
+};
 
 const dwarfBlitzer: Player = {
     id: 21,
@@ -208,7 +208,7 @@ const dwarfBlitzer: Player = {
     skills: [13, 60],
     primary: ['G', 'S'],
     secondary: ['A', 'P'],
-}
+};
 
 const trollSlayer: Player = {
     id: 22,
@@ -218,7 +218,7 @@ const trollSlayer: Player = {
     skills: [13, 14, 17, 60],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 
 const deathroller: Player = {
     id: 23,
@@ -228,7 +228,7 @@ const deathroller: Player = {
     skills: [51, 15, 54, 710, 55, 72, 79, 58],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 
 const unionLineman: Player = {
     id: 24,
@@ -238,7 +238,7 @@ const unionLineman: Player = {
     skills: [],
     primary: ['A', 'G'],
     secondary: ['S'],
-}
+};
 
 const unionThrower: Player = {
     id: 25,
@@ -248,7 +248,7 @@ const unionThrower: Player = {
     skills: [46],
     primary: ['A', 'G', 'P'],
     secondary: ['S'],
-}
+};
 
 const unionCatcher: Player = {
     id: 26,
@@ -258,7 +258,7 @@ const unionCatcher: Player = {
     skills: [1, 44],
     primary: ['A', 'G'],
     secondary: ['S'],
-}
+};
 
 const unionBlitzer: Player = {
     id: 27,
@@ -268,7 +268,7 @@ const unionBlitzer: Player = {
     skills: [13, 9],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 
 const goblinLineman: Player = {
     id: 28,
@@ -278,7 +278,7 @@ const goblinLineman: Player = {
     skills: [4, 78, 81],
     primary: ['A'],
     secondary: ['G', 'P', 'S'],
-}
+};
 
 const bomma: Player = {
     id: 29,
@@ -288,7 +288,7 @@ const bomma: Player = {
     skills: [65, 4, 79, 81],
     primary: ['A'],
     secondary: ['G', 'P', 'S'],
-}
+};
 
 const looney: Player = {
     id: 30,
@@ -298,7 +298,7 @@ const looney: Player = {
     skills: [67, 79, 81],
     primary: ['A'],
     secondary: ['G', 'S'],
-}
+};
 
 const fanatic: Player = {
     id: 31,
@@ -308,7 +308,7 @@ const fanatic: Player = {
     skills: [64, 72, 79, 81],
     primary: ['S'],
     secondary: ['A', 'G'],
-}
+};
 
 const pogoer: Player = {
     id: 32,
@@ -318,7 +318,7 @@ const pogoer: Player = {
     skills: [4, 74, 81],
     primary: ['S'],
     secondary: ['A', 'G'],
-}
+};
 
 const ooligan: Player = {
     id: 33,
@@ -328,7 +328,7 @@ const ooligan: Player = {
     skills: [15, 27, 4, 78, 81],
     primary: ['A'],
     secondary: ['G', 'P', 'S'],
-}
+};
 const doomDiver: Player = {
     id: 34,
     position: 'Doom Diver',
@@ -337,7 +337,7 @@ const doomDiver: Player = {
     skills: [78, 81, 83],
     primary: ['A'],
     secondary: ['G', 'S'],
-}
+};
 const halflingHopefulLineman: Player = {
     id: 35,
     position: 'Halfling Hopeful Lineman',
@@ -346,7 +346,7 @@ const halflingHopefulLineman: Player = {
     skills: [4, 78, 81],
     primary: ['A'],
     secondary: ['G', 'S'],
-}
+};
 const heftys: Player = {
     id: 36,
     position: 'Halfling Heftys',
@@ -355,7 +355,7 @@ const heftys: Player = {
     skills: [4, 16, 81],
     primary: ['A', 'P'],
     secondary: ['G', 'S'],
-}
+};
 
 const halflingCatcher: Player = {
     id: 37,
@@ -365,7 +365,7 @@ const halflingCatcher: Player = {
     skills: [1, 4, 78, 11, 81],
     primary: ['A'],
     secondary: ['G', 'S'],
-}
+};
 
 const treeman: Player = {
     id: 38,
@@ -375,7 +375,7 @@ const treeman: Player = {
     skills: [55, 58, 59, 84, 60, 86, 87],
     primary: ['S'],
     secondary: ['A', 'G', 'P'],
-}
+};
 
 const humanLineman: Player = {
     id: 39,
@@ -385,7 +385,7 @@ const humanLineman: Player = {
     skills: [],
     primary: ['G'],
     secondary: ['A', 'S'],
-}
+};
 
 const humanThrower: Player = {
     id: 40,
@@ -395,7 +395,7 @@ const humanThrower: Player = {
     skills: [46, 22],
     primary: ['G', 'P'],
     secondary: ['A', 'S'],
-}
+};
 
 const humanCatcher: Player = {
     id: 41,
@@ -405,7 +405,7 @@ const humanCatcher: Player = {
     skills: [1, 4],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 
 const humanBlitzer: Player = {
     id: 42,
@@ -413,9 +413,9 @@ const humanBlitzer: Player = {
     playerStats: [7, 3, 3, 4, 9],
     cost: 85,
     skills: [13],
-    primary: ['A', 'G'],
-    secondary: ['P', 'S'],
-}
+    primary: ['G', 'S'],
+    secondary: ['A', 'P'],
+};
 
 const skinkRunnerLineman: Player = {
     id: 43,
@@ -425,7 +425,7 @@ const skinkRunnerLineman: Player = {
     skills: [4, 81],
     primary: ['A'],
     secondary: ['G', 'P', 'S'],
-}
+};
 
 const chameleonSkink: Player = {
     id: 44,
@@ -435,7 +435,7 @@ const chameleonSkink: Player = {
     skills: [4, 45, 20, 81],
     primary: ['A'],
     secondary: ['G', 'P', 'S'],
-}
+};
 
 const saurusBlocker: Player = {
     id: 45,
@@ -445,7 +445,7 @@ const saurusBlocker: Player = {
     skills: [],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 
 const kroxigor: Player = {
     id: 46,
@@ -455,7 +455,7 @@ const kroxigor: Player = {
     skills: [66, 71, 55, 33, 60],
     primary: ['S'],
     secondary: ['A', 'G'],
-}
+};
 
 const zombieLineman: Player = {
     id: 47,
@@ -465,7 +465,7 @@ const zombieLineman: Player = {
     skills: [77],
     primary: ['G'],
     secondary: ['A', 'S'],
-}
+};
 
 const ghoulRunner: Player = {
     id: 48,
@@ -475,7 +475,7 @@ const ghoulRunner: Player = {
     skills: [4],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 const wraith: Player = {
     id: 49,
     position: 'Wraith',
@@ -484,7 +484,7 @@ const wraith: Player = {
     skills: [13, 29, 72, 77, 9],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 const werewolf: Player = {
     id: 50,
     position: 'Werewolf',
@@ -493,7 +493,7 @@ const werewolf: Player = {
     skills: [26, 17, 77],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 const fleshGolem: Player = {
     id: 51,
     position: 'Flesh Golem',
@@ -502,7 +502,7 @@ const fleshGolem: Player = {
     skills: [77, 58, 60],
     primary: ['G', 'S'],
     secondary: ['A'],
-}
+};
 const rotterLineman: Player = {
     id: 52,
     position: 'Rotter Lineman',
@@ -511,7 +511,7 @@ const rotterLineman: Player = {
     skills: [68, 73],
     primary: ['G', 'M'],
     secondary: ['A', 'S'],
-}
+};
 const pestigor: Player = {
     id: 53,
     position: 'Pestigor',
@@ -520,7 +520,7 @@ const pestigor: Player = {
     skills: [30, 73, 77],
     primary: ['G', 'M', 'S'],
     secondary: ['A', 'P'],
-}
+};
 const bloater: Player = {
     id: 54,
     position: 'Bloater',
@@ -529,7 +529,7 @@ const bloater: Player = {
     skills: [27, 29, 73, 77],
     primary: ['G', 'M', 'S'],
     secondary: ['A'],
-}
+};
 const rotspawn: Player = {
     id: 55,
     position: 'Rotspawn',
@@ -538,7 +538,7 @@ const rotspawn: Player = {
     skills: [27, 29, 71, 55, 73, 76, 77, 34],
     primary: ['S'],
     secondary: ['A', 'G', 'M'],
-}
+};
 const gnoblarLineman: Player = {
     id: 56,
     position: 'Gnoblar Lineman',
@@ -547,7 +547,7 @@ const gnoblarLineman: Player = {
     skills: [4, 78, 9, 81, 85],
     primary: ['A'],
     secondary: ['G'],
-}
+};
 const ogreRuntPunter: Player = {
     id: 57,
     position: 'Ogre Runt Punter',
@@ -556,7 +556,7 @@ const ogreRuntPunter: Player = {
     skills: [66, 70, 55, 60],
     primary: ['P', 'S'],
     secondary: ['A', 'G'],
-}
+};
 
 const ogreBlocker: Player = {
     id: 58,
@@ -566,7 +566,7 @@ const ogreBlocker: Player = {
     skills: [66, 55, 60, 86],
     primary: ['S'],
     secondary: ['A', 'G', 'P'],
-}
+};
 
 const orcLineman: Player = {
     id: 59,
@@ -576,7 +576,7 @@ const orcLineman: Player = {
     skills: [62],
     primary: ['G'],
     secondary: ['A', 'S'],
-}
+};
 const orcThrower: Player = {
     id: 60,
     position: 'Thrower',
@@ -585,7 +585,7 @@ const orcThrower: Player = {
     skills: [62, 46, 22],
     primary: ['G', 'P'],
     secondary: ['A', 'S'],
-}
+};
 const orcBlitzer: Player = {
     id: 61,
     position: 'Orc Blitzer',
@@ -594,21 +594,21 @@ const orcBlitzer: Player = {
     skills: [62, 13],
     primary: ['G', 'S'],
     secondary: ['A', 'P'],
-}
+};
 const bigUnBlocker: Player = {
     id: 62,
     position: 'Big Un Blocker',
-    playerStats: [6, 3, 3, 4, 10],
+    playerStats: [5, 4, 4, 0, 10],
     cost: 90,
     skills: [62],
     primary: ['G', 'S'],
-    secondary: ['A', 'P'],
-}
+    secondary: ['A'],
+};
 const orcGoblin: Player = {
     ...goblinLineman,
     id: 63,
     secondary: ['G', 'S'],
-}
+};
 const skeletonLineman: Player = {
     id: 65,
     position: 'Skeleton Lineman',
@@ -617,7 +617,7 @@ const skeletonLineman: Player = {
     skills: [77, 60],
     primary: ['G'],
     secondary: ['A', 'S'],
-}
+};
 const wightBlitzer: Player = {
     id: 66,
     position: 'Wight Blitzer',
@@ -626,7 +626,7 @@ const wightBlitzer: Player = {
     skills: [13, 77],
     primary: ['G', 'S'],
     secondary: ['A', 'P'],
-}
+};
 const mummy: Player = {
     id: 67,
     position: 'Mummy',
@@ -635,7 +635,7 @@ const mummy: Player = {
     skills: [55, 77],
     primary: ['S'],
     secondary: ['A', 'G'],
-}
+};
 const skavenClanratLineman: Player = {
     id: 68,
     position: 'Skaven Clanrat Lineman',
@@ -644,7 +644,7 @@ const skavenClanratLineman: Player = {
     skills: [],
     primary: ['G'],
     secondary: ['A', 'M', 'S'],
-}
+};
 const skavenThrower: Player = {
     id: 69,
     position: 'Thower',
@@ -653,7 +653,7 @@ const skavenThrower: Player = {
     skills: [46, 22],
     primary: ['G', 'P'],
     secondary: ['A', 'M', 'S'],
-}
+};
 const gutterRunner: Player = {
     id: 70,
     position: 'Gutter Runner',
@@ -662,7 +662,7 @@ const gutterRunner: Player = {
     skills: [4],
     primary: ['A', 'G'],
     secondary: ['M', 'P', 'S'],
-}
+};
 const skavenBlitzer: Player = {
     id: 71,
     position: 'Blitzer',
@@ -671,7 +671,7 @@ const skavenBlitzer: Player = {
     skills: [13],
     primary: ['G', 'S'],
     secondary: ['A', 'M', 'P'],
-}
+};
 const ratOgre: Player = {
     id: 72,
     position: 'Rat Ogre',
@@ -680,7 +680,7 @@ const ratOgre: Player = {
     skills: [61, 17, 71, 55, 33],
     primary: ['S'],
     secondary: ['A', 'G', 'M'],
-}
+};
 const snotlingLineman: Player = {
     id: 73,
     position: 'Snotling Lineman',
@@ -689,7 +689,7 @@ const snotlingLineman: Player = {
     skills: [4, 78, 9, 81, 82, 85],
     primary: ['A'],
     secondary: ['G'],
-}
+};
 const fungusFlinga: Player = {
     id: 74,
     position: 'Fungus Flinga',
@@ -698,7 +698,7 @@ const fungusFlinga: Player = {
     skills: [65, 4, 78, 79, 9, 81],
     primary: ['A', 'P'],
     secondary: ['G'],
-}
+};
 const funHoppa: Player = {
     id: 75,
     position: 'Fun-hoppa',
@@ -707,7 +707,7 @@ const funHoppa: Player = {
     skills: [4, 74, 78, 9, 81],
     primary: ['A'],
     secondary: ['G'],
-}
+};
 const stiltyRunna: Player = {
     id: 76,
     position: 'Stilty Runna',
@@ -716,7 +716,7 @@ const stiltyRunna: Player = {
     skills: [4, 78, 9, 11, 81],
     primary: ['A'],
     secondary: ['G'],
-}
+};
 const pumpWagon: Player = {
     id: 77,
     position: 'Pump Wagon',
@@ -725,7 +725,7 @@ const pumpWagon: Player = {
     skills: [15, 54, 55, 76, 79, 58],
     primary: ['S'],
     secondary: ['A', 'G'],
-}
+};
 const woodElfLineman: Player = {
     id: 78,
     position: 'Wood Elf Lineman',
@@ -734,7 +734,7 @@ const woodElfLineman: Player = {
     skills: [],
     primary: ['A', 'G'],
     secondary: ['S'],
-}
+};
 const weThrower: Player = {
     id: 79,
     position: 'Thrower',
@@ -743,7 +743,7 @@ const weThrower: Player = {
     skills: [46],
     primary: ['A', 'G', 'P'],
     secondary: ['S'],
-}
+};
 const weCatcher: Player = {
     id: 80,
     position: 'Catcher',
@@ -752,7 +752,7 @@ const weCatcher: Player = {
     skills: [1, 4],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
 const wardancer: Player = {
     id: 81,
     position: 'Wardancer',
@@ -761,7 +761,77 @@ const wardancer: Player = {
     skills: [13, 4, 7],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
-}
+};
+const weTree: Player = {
+    ...treeman,
+    id: 82,
+    position: 'Loren Forest Treeman',
+    skills: [71].concat(treeman.skills),
+    primary: ['S'],
+    secondary: ['A', 'G'],
+};
+const rHLineman: Player = {
+    ...humanLineman,
+    id: 83,
+    primary: ['G', 'M'],
+};
+const rHThrower: Player = {
+    position: 'Renegade Human Thrower',
+    id: 84,
+    cost: 75,
+    playerStats: [6,3,3,3,9],
+    skills: [620, 46, 8],
+    primary: ['G', 'M', 'P'],
+    secondary: ['A','S']
+};
+const rGoblin: Player = {
+    ...goblinLineman,
+    id: 85,
+    skills: [620],
+    primary: ['A', 'M'],
+    secondary: ['G', 'P'],
+};
+const rOrc: Player = {
+    ...orcLineman,
+    position: 'Renegade Orc',
+    id: 86,
+    playerStats: [5,3,3,5,10],
+    skills: [620],
+    primary: ['G', 'M'],
+};
+const rSkaven: Player = {
+    ...skavenClanratLineman,
+    position: 'Renegade Skaven',
+    id: 87,
+    skills: [620],
+    primary: ['G', 'M'],
+    secondary: ['A', 'S'],
+};
+const rElf: Player = {
+    position: 'Renegade Dark Elf',
+    id: 88,
+    cost: 75,
+    playerStats: [6, 3, 2, 3, 9],
+    skills: [620],
+    primary: ['A', 'G', 'M'],
+    secondary: ['P', 'S'],
+};
+const rTroll: Player = {
+    ...trainedTroll,
+    id: 89,
+    secondary: ['A', 'G', 'M'],
+};
+const rOgre: Player = {
+    ...ogre,
+    id: 90,
+    secondary: ['A', 'G', 'M'],
+};
+const rMinotaur: Player = {
+    ...minotaur,
+    id: 91,
+    primary: ['S'],
+    secondary: ['A', 'G', 'M'],
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -846,5 +916,15 @@ export const playerCatalogue: PlayerCatalogue = {
         weThrower,
         weCatcher,
         wardancer,
+        weTree,
+        rHLineman,
+        rHThrower,
+        rGoblin,
+        rOrc,
+        rSkaven,
+        rElf,
+        rTroll,
+        rOgre,
+        rMinotaur
     ],
-}
+};
