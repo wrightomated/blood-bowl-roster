@@ -42,7 +42,7 @@ const glorielSummerbloom: StarPlayer = {
     playerStats: [7,2,2,2,8],
     playsFor: ['Elven Kingdoms League'],
     skills: [37,4,711,9,22],
-    cost: 195,
+    cost: 150,
     specialRules: ['Shot to Nothing']
 }
 const grak: StarPlayer = {

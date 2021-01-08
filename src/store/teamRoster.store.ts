@@ -109,7 +109,7 @@ const getEmptyRoster: (options?: {
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
-        extra: {},
+        extra: {dedicated_fans: 1},
         inducements: {}
     };
 };

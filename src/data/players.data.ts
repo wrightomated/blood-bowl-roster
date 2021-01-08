@@ -52,7 +52,7 @@ const ogre: Player = {
 const goblinBruiserLineman: Player = {
     id: 6,
     position: 'Goblin Bruiser Lineman',
-    playerStats: [6, 3, 2, 4, 8],
+    playerStats: [6, 2, 3, 4, 8],
     cost: 45,
     skills: [4, 78, 81, 60],
     primary: ['A'],
@@ -62,7 +62,7 @@ const goblinBruiserLineman: Player = {
 const blackOrc: Player = {
     id: 7,
     position: 'Black Orc',
-    playerStats: [6, 3, 3, 5, 9],
+    playerStats: [4, 4, 4, 5, 10],
     cost: 90,
     skills: [50, 52],
     primary: ['G', 'S'],

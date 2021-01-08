@@ -4,7 +4,7 @@
     import type { Extra } from '../models/extra.model';
 
     export let extra: Extra;
-    $: extraAmount = $roster?.extra[extra.extraString] || 0;
+    $: extraAmount = $roster?.extra[extra.extraString] || extra?.min || 0;
 
     const addExtra = () => {
         roster.addExtra(extra.extraString);
@@ -47,7 +47,7 @@
             {#if extraAmount < extra.max}
                 <MaterialButton symbol="add_circle" clickFunction={addExtra} />
             {/if}
-            {#if extraAmount > 0}
+            {#if extraAmount > (extra.min || 0)}
                 <MaterialButton
                     symbol="remove_circle"
                     clickFunction={removeExtra} />

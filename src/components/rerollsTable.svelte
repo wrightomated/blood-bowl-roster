@@ -16,6 +16,7 @@
         },
         { extraString: 'assistant_coaches', cost: 10, max: 12 },
         { extraString: 'cheerleaders', cost: 10, max: 10 },
+        { extraString: 'dedicated_fans', cost: 10, max: 6, min: 1 },
     ].concat(
         selectedTeam.apothecary
             ? [{ extraString: 'apothecary', cost: 50, max: 1 }]
@@ -27,7 +28,8 @@
         extras
             .map((e) => $roster.extra[e.extraString] * e.cost || 0)
             .reduce((a, b) => a + b, 0) +
-        calculateInducementTotal($roster.inducements);
+        calculateInducementTotal($roster.inducements) -
+        10;
 </script>
 
 <style lang="scss">
