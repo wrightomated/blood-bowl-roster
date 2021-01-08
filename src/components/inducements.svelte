@@ -50,6 +50,12 @@
             color: black;
             border: 0;
         }
+        &__qty {
+            min-width: 44px;
+        }
+    }
+    .flex-container {
+        display: flex;
     }
     @media print {
         .inducement {
@@ -65,7 +71,9 @@
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>
-            <td on:click={toggleShowAllInducements}>QTY</td>
+            <td class="inducement__qty" on:click={toggleShowAllInducements}>
+                QTY
+            </td>
             <td on:click={toggleShowAllInducements}>Cost</td>
             <td class="inducement__toggle">
                 <MaterialButton
@@ -86,16 +94,18 @@
                         {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
                     </td>
                     <td class="inducement__control">
-                        {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
-                            <MaterialButton
-                                symbol="add_circle"
-                                clickFunction={() => addInducement(ind.id)} />
-                        {/if}
-                        {#if $roster.inducements?.[ind.id] > 0}
-                            <MaterialButton
-                                symbol="remove_circle"
-                                clickFunction={() => removeInducement(ind.id)} />
-                        {/if}
+                        <div class="flex-container">
+                            {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
+                                <MaterialButton
+                                    symbol="add_circle"
+                                    clickFunction={() => addInducement(ind.id)} />
+                            {/if}
+                            {#if $roster.inducements?.[ind.id] > 0}
+                                <MaterialButton
+                                    symbol="remove_circle"
+                                    clickFunction={() => removeInducement(ind.id)} />
+                            {/if}
+                        </div>
                     </td>
                 </tr>
             {/if}

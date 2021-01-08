@@ -22,6 +22,12 @@ function createRoster() {
                     players: store.players.filter((_, i) => !indices.includes(i)),
                 };
             }),
+        updatePlayer: (player: RosterPlayerRecord, index: number) =>
+            update((store) => {
+                const updatedPlayers = [...store.players];
+                updatedPlayers[index] = player;
+                return { ...store, players: updatedPlayers };
+            }),
         movePlayerUp: (index: number) =>
             update((store) => {
                 return {
@@ -101,12 +107,10 @@ const getEmptyRoster: (options?: {
     return {
         teamId: options?.teamId || 0,
         players: [],
-        rerolls: 0,
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
         extra: {},
-        inducements: {},
-        starPlayers: [],
+        inducements: {}
     };
 };
 

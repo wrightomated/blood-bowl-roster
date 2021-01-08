@@ -4,22 +4,19 @@
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
-    // import { onMount } from 'svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
     let newName: string;
 
     const addPlayer = () => {
-        roster.addPlayer({ playerName: newName, player: selected });
+        roster.addPlayer({
+            playerName: newName,
+            player: { ...selected },
+            alterations: { spp: 0, ni: 0 },
+        });
         newName = '';
     };
-
-    // onMount(async () => {
-    //     const element = document.getElementById('team-name');
-
-    //     element.scrollIntoView({ behavior: 'smooth' });
-    // });
 </script>
 
 <style lang="scss">
@@ -108,7 +105,7 @@
                 <td>AV</td>
                 <td class="skills">Skills</td>
                 <td>Hiring Fee</td>
-                <td>Spp</td>
+                <td id="spp-header">Unspent Spp</td>
                 <td>Mng</td>
                 <td>Ni</td>
                 <td>TR</td>
@@ -116,8 +113,8 @@
             </tr>
         </thead>
         <tbody>
-            {#each $roster.players as rosterPlayer, index}
-                <RosterRow {index} {rosterPlayer} />
+            {#each $roster.players as _, index}
+                <RosterRow {index} />
             {/each}
             {#if $roster.players.length < 16}
                 <tr class="add-player-row">
