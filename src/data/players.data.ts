@@ -779,13 +779,14 @@ const rHThrower: Player = {
     position: 'Renegade Human Thrower',
     id: 84,
     cost: 75,
-    playerStats: [6,3,3,3,9],
+    playerStats: [6, 3, 3, 3, 9],
     skills: [620, 46, 8],
     primary: ['G', 'M', 'P'],
-    secondary: ['A','S']
+    secondary: ['A', 'S'],
 };
 const rGoblin: Player = {
     ...goblinLineman,
+    position: 'Renegade Goblin',
     id: 85,
     skills: [620],
     primary: ['A', 'M'],
@@ -795,7 +796,7 @@ const rOrc: Player = {
     ...orcLineman,
     position: 'Renegade Orc',
     id: 86,
-    playerStats: [5,3,3,5,10],
+    playerStats: [5, 3, 3, 5, 10],
     skills: [620],
     primary: ['G', 'M'],
 };
@@ -818,16 +819,19 @@ const rElf: Player = {
 };
 const rTroll: Player = {
     ...trainedTroll,
+    position: 'Renegade Troll',
     id: 89,
     secondary: ['A', 'G', 'M'],
 };
 const rOgre: Player = {
     ...ogre,
+    position: 'Renegade Ogre',
     id: 90,
     secondary: ['A', 'G', 'M'],
 };
 const rMinotaur: Player = {
     ...minotaur,
+    position: 'Renegade Minotaur',
     id: 91,
     primary: ['S'],
     secondary: ['A', 'G', 'M'],
@@ -925,6 +929,6 @@ export const playerCatalogue: PlayerCatalogue = {
         rElf,
         rTroll,
         rOgre,
-        rMinotaur
+        rMinotaur,
     ],
 };

@@ -1,6 +1,8 @@
 export interface Extra {
-    extraString: string;
+    extraString: ExtraString;
     cost: number;
     max: number;
     min?: number;
 }
+
+type ExtraString = 'rerolls' | 'assistant_coaches' | 'cheerleaders' | 'dedicated_fans' | 'apothecary';

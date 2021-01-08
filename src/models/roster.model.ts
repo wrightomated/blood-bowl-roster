@@ -8,6 +8,7 @@ export interface Roster {
   players: RosterPlayerRecord[];
   extra?: ExtraRosterInfo;
   inducements: ExtraRosterInfo;
+  treasury?: number;
 }
 
 export interface RosterPlayerRecord {

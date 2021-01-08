@@ -16,7 +16,7 @@
         },
         { extraString: 'assistant_coaches', cost: 10, max: 12 },
         { extraString: 'cheerleaders', cost: 10, max: 10 },
-        { extraString: 'dedicated_fans', cost: 10, max: 6, min: 1 },
+        { extraString: 'dedicated_fans', cost: 0, max: 6, min: 1 },
     ].concat(
         selectedTeam.apothecary
             ? [{ extraString: 'apothecary', cost: 50, max: 1 }]
@@ -26,10 +26,10 @@
     $: teamTotal =
         $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
         extras
+            .filter((e) => e.extraString !== 'dedicated_fans')
             .map((e) => $roster.extra[e.extraString] * e.cost || 0)
             .reduce((a, b) => a + b, 0) +
-        calculateInducementTotal($roster.inducements) -
-        10;
+        calculateInducementTotal($roster.inducements);
 </script>
 
 <style lang="scss">

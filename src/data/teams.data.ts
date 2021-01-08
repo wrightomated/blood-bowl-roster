@@ -1,4 +1,4 @@
-import type { TeamList } from '../models/team.model'
+import type { TeamList } from '../models/team.model';
 
 export const teamData: TeamList = {
     teams: [
@@ -343,4 +343,4 @@ export const teamData: TeamList = {
             specialRules: ['Favoured of...'],
         },
     ],
-}
+};

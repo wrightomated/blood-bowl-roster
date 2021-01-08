@@ -1,4 +1,4 @@
-import type { Skill } from "../models/skill.model";
+import type { Skill } from '../models/skill.model';
 
 export const skillCatalogue: Skill[] = [
     { id: 1, name: 'Catch', category: 'A' },
@@ -93,5 +93,5 @@ export const skillCatalogue: Skill[] = [
     { id: 85, name: 'Titchy', category: 'T' },
     { id: 86, name: 'Throw Team-mate', category: 'T' },
     { id: 87, name: 'Timmm-ber!', category: 'T' },
-    { id: 88, name: 'Unchannelled Fury', category: 'T' }
-  ];
+    { id: 88, name: 'Unchannelled Fury', category: 'T' },
+];

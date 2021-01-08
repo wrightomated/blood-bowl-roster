@@ -19,7 +19,9 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
-                    players: store.players.filter((_, i) => !indices.includes(i)),
+                    players: store.players.filter(
+                        (_, i) => !indices.includes(i),
+                    ),
                 };
             }),
         updatePlayer: (player: RosterPlayerRecord, index: number) =>
@@ -55,17 +57,17 @@ function createRoster() {
                 };
             }),
         removeInducement: (inducementKey: string) =>
-        update((store) => {
-            return {
-                ...store,
-                inducements: {
-                    ...store.inducements,
-                    [inducementKey]: store?.inducements?.[inducementKey]
-                        ? store.inducements[inducementKey] - 1
-                        : 0,
-                },
-            };
-        }),
+            update((store) => {
+                return {
+                    ...store,
+                    inducements: {
+                        ...store.inducements,
+                        [inducementKey]: store?.inducements?.[inducementKey]
+                            ? store.inducements[inducementKey] - 1
+                            : 0,
+                    },
+                };
+            }),
         addExtra: (extraKey: string) =>
             update((store) => {
                 return {
@@ -109,8 +111,9 @@ const getEmptyRoster: (options?: {
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
-        extra: {dedicated_fans: 1},
-        inducements: {}
+        extra: { dedicated_fans: 1 },
+        inducements: {},
+        treasury: 1000,
     };
 };
 
