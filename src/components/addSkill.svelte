@@ -78,7 +78,7 @@
         <div>
             {category}:
             {#each secondarySkills.filter((s) => s.category === category) as s}
-                <button>{s.name}</button>
+                <button on:click={() => addSkill(s.id)}>{s.name}</button>
             {/each}
         </div>
     {/each}
