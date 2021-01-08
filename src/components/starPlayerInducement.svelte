@@ -51,6 +51,9 @@
     .left-align {
         text-align: left;
     }
+    .add-star {
+        display: flex;
+    }
 </style>
 
 <tr>
@@ -68,6 +71,8 @@
     <td>{$roster.players.filter((x) => x.starPlayer).length} / 2</td>
     <td>{getSelected(selectedId)?.cost || 0},000</td>
     <td>
-        <MaterialButton symbol="add_circle" clickFunction={addStarPlayer} />
+        <div class="add-star">
+            <MaterialButton symbol="add_circle" clickFunction={addStarPlayer} />
+        </div>
     </td>
 </tr>

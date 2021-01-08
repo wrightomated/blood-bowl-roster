@@ -82,6 +82,7 @@
         margin: 5px;
         border: 2px solid $secondary-colour;
 
+        &:hover,
         &.selected {
             background-color: $secondary-colour;
             color: white;
@@ -91,6 +92,11 @@
         &.cancel {
             color: $main-colour;
             border-color: $main-colour;
+
+            &:hover {
+                color: white;
+                background-color: $main-colour;
+            }
         }
     }
 

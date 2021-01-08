@@ -3,12 +3,14 @@
     import MaterialButton from './materialButton.svelte';
     import SkillElement from './skillElement.svelte';
     import { currentTeam } from '../store/currentTeam.store';
-    import type { RosterPlayerRecord } from '../models/roster.model';
     import type { StarPlayer } from '../models/player.model';
+    import AddSkill from './addSkill.svelte';
 
     export let index: number;
-    export let rosterPlayer: RosterPlayerRecord;
 
+    let showAddSkills: boolean = false;
+
+    $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === rosterPlayer.player.id,
     ).length;
@@ -16,6 +18,9 @@
         $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
+    $: playerSkillIds = rosterPlayer.player.skills.concat(
+        rosterPlayer.alterations?.extraSkills || [],
+    );
 
     const removePlayer = () => {
         removeTwoForOne() || roster.removePlayer([index]);
@@ -44,6 +49,10 @@
         }
         return false;
     };
+
+    const toggleShowSkills = () => {
+        showAddSkills = !showAddSkills;
+    };
 </script>
 
 <style lang="scss">
@@ -65,6 +74,16 @@
             vertical-align: text-bottom;
         }
     }
+    .add-skill {
+        vertical-align: middle;
+        display: inline-block;
+        margin-top: -1px;
+    }
+    .spp-input {
+        width: 60px;
+        text-align: center;
+        margin-right: -15px;
+    }
     @media print {
         .flex-container {
             display: none;
@@ -74,6 +93,9 @@
         }
         .controls {
             border-left: 0;
+        }
+        .add-skill {
+            display: none;
         }
     }
 </style>
@@ -124,11 +146,36 @@
     {#each rosterPlayer.player.playerStats as stat, i}
         <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>
     {/each}
-    <SkillElement playerSkillIds={rosterPlayer.player.skills} />
+    <td class="left-align">
+        <SkillElement {playerSkillIds} />
+        {#if !rosterPlayer.starPlayer}
+            <span class="add-skill">
+                <MaterialButton
+                    symbol={showAddSkills ? 'cancel' : 'add_circle'}
+                    clickFunction={toggleShowSkills} />
+            </span>
+        {/if}
+    </td>
     <td>{playerCostString()}</td>
-    <td>0</td>
+    <td>
+        {#if $roster.players[index]?.alterations?.spp !== undefined}
+            <input
+                class="spp-input"
+                type="number"
+                aria-labelledby="spp-header"
+                placeholder="?"
+                bind:value={$roster.players[index].alterations.spp} />
+        {:else}0{/if}
+    </td>
     <td>0</td>
     <td>0</td>
     <td>0</td>
     <td>{playerCostString()}</td>
 </tr>
+{#if !rosterPlayer.starPlayer && showAddSkills}
+    <tr>
+        <td colspan="16">
+            <AddSkill {index} />
+        </td>
+    </tr>
+{/if}

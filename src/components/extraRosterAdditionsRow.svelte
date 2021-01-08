@@ -24,6 +24,12 @@
         font-weight: normal;
         padding: 10px;
     }
+    .qty {
+        min-width: 44px;
+    }
+    .flex-container {
+        display: flex;
+    }
 
     @media print {
         .control {
@@ -34,16 +40,18 @@
 
 <tr>
     <th>{extra.extraString.replace('_', ' ')}</th>
-    <td>{extraAmount} / {extra.max}</td>
+    <td class="qty">{extraAmount} / {extra.max}</td>
     <td>{extra.cost},000</td>
     <td class="control">
-        {#if extraAmount < extra.max}
-            <MaterialButton symbol="add_circle" clickFunction={addExtra} />
-        {/if}
-        {#if extraAmount > 0}
-            <MaterialButton
-                symbol="remove_circle"
-                clickFunction={removeExtra} />
-        {/if}
+        <div class="flex-container">
+            {#if extraAmount < extra.max}
+                <MaterialButton symbol="add_circle" clickFunction={addExtra} />
+            {/if}
+            {#if extraAmount > 0}
+                <MaterialButton
+                    symbol="remove_circle"
+                    clickFunction={removeExtra} />
+            {/if}
+        </div>
     </td>
 </tr>

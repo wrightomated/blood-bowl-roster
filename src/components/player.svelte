@@ -1,8 +1,9 @@
 <script lang="ts">
-    import type { Player } from "../models/player.model";
-    import { roster } from "../store/teamRoster.store";
-    import { teamSelectionOpen } from "../store/teamSelectionOpen.store";
-    import SkillElement from "./skillElement.svelte";
+    import type { Player } from '../models/player.model';
+    import type { RosterPlayerRecord } from '../models/roster.model';
+    import { roster } from '../store/teamRoster.store';
+    import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
+    import SkillElement from './skillElement.svelte';
     export let player: Player;
     export let max: number;
     $: playerTypeCount = $teamSelectionOpen
@@ -13,9 +14,13 @@
         if ($teamSelectionOpen) {
             return;
         }
-        const newPlayer = {
+        const newPlayer: RosterPlayerRecord = {
             player: player,
-            playerName: "",
+            playerName: '',
+            alterations: {
+                spp: 0,
+                ni: 0,
+            },
         };
         roster.addPlayer(newPlayer);
     };
@@ -39,7 +44,9 @@
     {#each player.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
     {/each}
-    <SkillElement playerSkillIds={player.skills} />
+    <td class="left-align">
+        <SkillElement playerSkillIds={player.skills} />
+    </td>
     <td>{player.primary.join('')}</td>
     <td>{player.secondary.join('')}</td>
 </tr>

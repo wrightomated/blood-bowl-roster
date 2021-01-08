@@ -498,7 +498,7 @@ const fleshGolem: Player = {
     id: 51,
     position: 'Flesh Golem',
     playerStats: [4, 4, 4, 0, 10],
-    cost: 70,
+    cost: 115,
     skills: [77, 58, 60],
     primary: ['G', 'S'],
     secondary: ['A'],
