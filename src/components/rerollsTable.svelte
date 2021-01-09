@@ -17,11 +17,11 @@
         { extraString: 'assistant_coaches', cost: 10, max: 12 },
         { extraString: 'cheerleaders', cost: 10, max: 10 },
         { extraString: 'dedicated_fans', cost: 0, max: 6, min: 1 },
-    ].concat(
-        selectedTeam.apothecary
-            ? [{ extraString: 'apothecary', cost: 50, max: 1 }]
-            : [],
-    );
+    ];
+
+    if (selectedTeam.apothecary) {
+        extras.concat([{ extraString: 'apothecary', cost: 50, max: 1 }]);
+    }
 
     $: teamTotal =
         $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
@@ -61,6 +61,14 @@
         {/each}
     </table>
     <table class="table">
+        <tr>
+            <th>Treasury</th>
+            <td>
+                {$roster.treasury
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+            </td>
+        </tr>
         <tr>
             <th>Team Value</th>
             <td>
