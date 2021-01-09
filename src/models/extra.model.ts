@@ -5,4 +5,4 @@ export interface Extra {
     min?: number;
 }
 
-type ExtraString = 'rerolls' | 'assistant_coaches' | 'cheerleaders' | 'dedicated_fans' | 'apothecary';
+export type ExtraString = 'rerolls' | 'assistant_coaches' | 'cheerleaders' | 'dedicated_fans' | 'apothecary';

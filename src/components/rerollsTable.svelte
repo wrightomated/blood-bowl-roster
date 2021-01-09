@@ -2,7 +2,7 @@
     import { roster } from '../store/teamRoster.store';
     import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
     import type { Team } from '../models/team.model';
-    import type { Extra } from '../models/extra.model';
+    import type { Extra, ExtraString } from '../models/extra.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import Inducements from './inducements.svelte';
 
@@ -10,18 +10,20 @@
 
     const extras: Extra[] = [
         {
-            extraString: 'rerolls',
+            extraString: 'rerolls' as ExtraString,
             cost: selectedTeam.reroll.cost,
             max: selectedTeam.reroll.max,
         },
-        { extraString: 'assistant_coaches', cost: 10, max: 12 },
-        { extraString: 'cheerleaders', cost: 10, max: 10 },
-        { extraString: 'dedicated_fans', cost: 0, max: 6, min: 1 },
-    ];
-
-    if (selectedTeam.apothecary) {
-        extras.concat([{ extraString: 'apothecary', cost: 50, max: 1 }]);
-    }
+        { extraString: 'assistant_coaches' as ExtraString, cost: 10, max: 12 },
+        { extraString: 'cheerleaders' as ExtraString, cost: 10, max: 10 },
+        {
+            extraString: 'dedicated_fans' as ExtraString,
+            cost: 0,
+            max: 6,
+            min: 1,
+        },
+        { extraString: 'apothecary' as ExtraString, cost: 50, max: 1 },
+    ].filter((x) => x.extraString !== 'apothecary' || selectedTeam.apothecary);
 
     $: teamTotal =
         $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
@@ -61,14 +63,14 @@
         {/each}
     </table>
     <table class="table">
-        <tr>
+        <!-- <tr>
             <th>Treasury</th>
             <td>
                 {$roster.treasury
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
             </td>
-        </tr>
+        </tr> -->
         <tr>
             <th>Team Value</th>
             <td>
