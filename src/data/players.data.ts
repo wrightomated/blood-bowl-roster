@@ -766,7 +766,7 @@ const weTree: Player = {
     ...treeman,
     id: 82,
     position: 'Loren Forest Treeman',
-    skills: [71,55, 58, 59, 84, 60, 86],
+    skills: [71, 55, 58, 59, 84, 60, 86],
     primary: ['S'],
     secondary: ['A', 'G'],
 };
@@ -903,7 +903,7 @@ const enslavedMin: Player = {
     ...minotaur,
     position: 'Enslaved Minotaur',
     id: 99,
-    skills: [61, 17, 30,71, 55, 60],
+    skills: [61, 17, 30, 71, 55, 60],
     primary: ['S'],
     secondary: ['A', 'G', 'M'],
 };
@@ -911,7 +911,7 @@ const hELineman: Player = {
     position: 'Lineman',
     id: 100,
     cost: 70,
-    playerStats: [6,3,2,4,9],
+    playerStats: [6, 3, 2, 4, 9],
     skills: [],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
@@ -920,8 +920,8 @@ const heThrower: Player = {
     position: 'Thrower',
     id: 101,
     cost: 100,
-    playerStats: [6,3,2,2,9],
-    skills: [39,46,48],
+    playerStats: [6, 3, 2, 2, 9],
+    skills: [39, 46, 48],
     primary: ['A', 'G', 'P'],
     secondary: ['S'],
 };
@@ -929,7 +929,7 @@ const heCatcher: Player = {
     position: 'Catcher',
     id: 102,
     cost: 90,
-    playerStats: [8,3,2,5,8],
+    playerStats: [8, 3, 2, 5, 8],
     skills: [1],
     primary: ['A', 'G'],
     secondary: ['S'],
@@ -938,71 +938,71 @@ const heBlitzer: Player = {
     position: 'Blitzer',
     id: 103,
     cost: 100,
-    playerStats: [7,3,2,4,9],
+    playerStats: [7, 3, 2, 4, 9],
     skills: [13],
     primary: ['A', 'G'],
-    secondary: ['P','S'],
+    secondary: ['P', 'S'],
 };
 const norseL: Player = {
     position: 'Norse Lineman',
     id: 104,
     cost: 50,
-    playerStats: [6,3,3,4,8],
+    playerStats: [6, 3, 3, 4, 8],
     skills: [13],
     primary: ['G'],
-    secondary: ['A','S'],
+    secondary: ['A', 'S'],
 };
 const norseT: Player = {
     position: 'Norse Thrower',
     id: 105,
     cost: 70,
-    playerStats: [6,3,3,3,8],
-    skills: [13,46],
-    primary: ['G','P'],
-    secondary: ['A','S'],
+    playerStats: [6, 3, 3, 3, 8],
+    skills: [13, 46],
+    primary: ['G', 'P'],
+    secondary: ['A', 'S'],
 };
 const norseC: Player = {
     position: 'Norse Catcher',
     id: 106,
     cost: 90,
-    playerStats: [7,3,3,5,8],
-    skills: [13,14],
-    primary: ['A','G'],
+    playerStats: [7, 3, 3, 5, 8],
+    skills: [13, 14],
+    primary: ['A', 'G'],
     secondary: ['S'],
 };
 const norseB: Player = {
     position: 'Norse Berserker',
     id: 107,
     cost: 90,
-    playerStats: [6,3,3,5,8],
-    skills: [13,17,6],
-    primary: ['G','S'],
+    playerStats: [6, 3, 3, 5, 8],
+    skills: [13, 17, 6],
+    primary: ['G', 'S'],
     secondary: ['A'],
 };
 const ulfwerner: Player = {
     position: 'Ulfwerner',
     id: 108,
     cost: 105,
-    playerStats: [6,4,4,0,9],
+    playerStats: [6, 4, 4, 0, 9],
     skills: [17],
-    primary: ['G','S'],
+    primary: ['G', 'S'],
     secondary: ['A'],
 };
 const yhetee: Player = {
     position: 'Yhetee',
     id: 109,
     cost: 140,
-    playerStats: [5,5,5,0,9],
-    skills: [26,27,17,71,88],
+    playerStats: [5, 5, 5, 0, 9],
+    skills: [26, 27, 17, 71, 88],
     primary: ['S'],
-    secondary: ['A','G'],
+    secondary: ['A', 'G'],
 };
 const anointedT: Player = {
     position: 'Anointed Thrower',
     id: 110,
     cost: 70,
-    playerStats: [6,3,4,3,8],
-    skills: [46,77,22,60],
+    playerStats: [6, 3, 4, 3, 8],
+    skills: [46, 77, 22, 60],
     primary: ['G', 'P'],
     secondary: ['A'],
 };
@@ -1010,8 +1010,8 @@ const anointedB: Player = {
     position: 'Anointed Blitzer',
     id: 111,
     cost: 90,
-    playerStats: [6,3,4,6,9],
-    skills: [13,77,60],
+    playerStats: [6, 3, 4, 6, 9],
+    skills: [13, 77, 60],
     primary: ['G', 'S'],
     secondary: ['A', 'P'],
 };
@@ -1019,8 +1019,8 @@ const tombGuardian: Player = {
     position: 'Tomb Guardian',
     id: 112,
     cost: 100,
-    playerStats: [4,5,5,0,10],
-    skills: [68,77],
+    playerStats: [4, 5, 5, 0, 10],
+    skills: [68, 77],
     primary: ['S'],
     secondary: ['A', 'G'],
 };
@@ -1028,7 +1028,7 @@ const thrallLineman: Player = {
     position: 'Thrall Lineman',
     id: 113,
     cost: 40,
-    playerStats: [6,3,3,5,8],
+    playerStats: [6, 3, 3, 5, 8],
     skills: [],
     primary: ['G'],
     secondary: ['A', 'S'],
@@ -1037,9 +1037,9 @@ const vampire: Player = {
     position: 'Vampire Blitzer',
     id: 114,
     cost: 110,
-    playerStats: [6,4,2,3,9],
-    skills: [61,69,77],
-    primary: ['A', 'G','S'],
+    playerStats: [6, 4, 2, 3, 9],
+    skills: [61, 69, 77],
+    primary: ['A', 'G', 'S'],
     secondary: ['P'],
 };
 const owHL: Player = {
@@ -1049,7 +1049,7 @@ const owHL: Player = {
 };
 const owHT: Player = {
     ...humanThrower,
-    playerStats: [6,3,3,3,9],
+    playerStats: [6, 3, 3, 3, 9],
     position: 'Old World Human Thrower',
     skills: [621].concat(humanThrower.skills),
     id: 116,
@@ -1059,7 +1059,7 @@ const owHC: Player = {
     position: 'Old World Human Catcher',
     id: 117,
     skills: [621].concat(humanCatcher.skills),
-    secondary: ['S']
+    secondary: ['S'],
 };
 const owHB: Player = {
     ...humanBlitzer,
@@ -1067,14 +1067,14 @@ const owHB: Player = {
     id: 118,
     cost: 90,
     skills: [621].concat(humanBlitzer.skills),
-    secondary: ['A']
+    secondary: ['A'],
 };
 const owDBlocker: Player = {
     ...dwarfBlockerLineman,
     position: 'Old World Dwarf Blocker',
     id: 119,
     cost: 75,
-    skills: [49,50,711,60],
+    skills: [49, 50, 711, 60],
 };
 const owDR: Player = {
     ...dwarfRunner,
@@ -1087,8 +1087,8 @@ const owDBlitzer: Player = {
     ...dwarfBlitzer,
     position: 'Old World Dwarf Blitzer',
     id: 121,
-    skills: [13, 711,60],
-    secondary: ['A']
+    skills: [13, 711, 60],
+    secondary: ['A'],
 };
 const owDTS: Player = {
     ...trollSlayer,
@@ -1106,6 +1106,66 @@ const owTree: Player = {
     ...treeman,
     id: 124,
     skills: [71].concat(treeman.skills),
+};
+const uwGoblin: Player = {
+    ...goblinLineman,
+    id: 125,
+    position: 'Underworld Goblin Lineman',
+    primary: ['A', 'M'],
+    secondary: ['G', 'S'],
+};
+const uwSnotling: Player = {
+    ...snotlingLineman,
+    id: 126,
+    position: 'Underworld Snotling',
+    primary: ['A', 'M'],
+    secondary: ['G'],
+};
+const uwClanrat: Player = {
+    ...skavenClanratLineman,
+    id: 127,
+    position: 'Skaven Clanrat',
+    skills: [623],
+    primary: ['G', 'M'],
+    secondary: ['A', 'S'],
+};
+const uwThrower: Player = {
+    ...skavenThrower,
+    id: 128,
+    position: 'Skaven Thrower',
+    skills: [623].concat(skavenThrower.skills),
+    primary: ['G', 'M', 'P'],
+    secondary: ['A', 'S'],
+};
+const uwRunner: Player = {
+    ...gutterRunner,
+    id: 129,
+    position: 'Gutter Runner',
+    skills: [623].concat(gutterRunner.skills),
+    primary: ['A', 'G', 'M'],
+    secondary: ['P', 'S'],
+};
+const uwBlitzer: Player = {
+    ...skavenBlitzer,
+    id: 130,
+    position: 'Skaven Blitzer',
+    skills: [623].concat(skavenBlitzer.skills),
+    primary: ['G', 'M', 'S'],
+    secondary: ['A', 'P'],
+};
+const uwTroll: Player = {
+    ...untrainedTroll,
+    id: 131,
+    position: 'Underworld Troll',
+    primary: ['M', 'S'],
+    secondary: ['A', 'G', 'P'],
+};
+const uwRatOgre: Player = {
+    ...ratOgre,
+    id: 132,
+    position: 'Mutant Rat Ogre',
+    primary: ['M', 'S'],
+    secondary: ['A', 'G'],
 };
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1232,6 +1292,14 @@ export const playerCatalogue: PlayerCatalogue = {
         owDBlitzer,
         owDTS,
         owHH,
-        owTree
+        owTree,
+        uwGoblin,
+        uwSnotling,
+        uwClanrat,
+        uwThrower,
+        uwRunner,
+        uwBlitzer,
+        uwTroll,
+        uwRatOgre
     ],
 };
