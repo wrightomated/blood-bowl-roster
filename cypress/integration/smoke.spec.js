@@ -5,9 +5,9 @@ context('Smoke tests', () => {
     it('should create, save and load team', () => {
         cy.visit('/');
         cy.get('.new-team').click();
-        cy.get('.team-button:nth-child(1)').click();
+        cy.get('.team-button:nth-child(2)').click();
         cy.get('.team-player-caption').should('have.text', 'Black Orc Team Players');
-        cy.get('.team-button:nth-child(10)').click();
+        cy.get('.team-button:nth-child(13)').click();
         cy.get('.team-player-caption').should('have.text', 'Imperial Nobility Team Players');
         cy.get('.create-team').click();
         cy.get('#team-name').click();
@@ -45,7 +45,7 @@ context('Smoke tests', () => {
         });
 
         cy.get('.new-team').click();
-        cy.get('.team-button:nth-child(1)').click();
+        cy.get('.team-button:nth-child(2)').click();
         cy.get('.team-player-caption').should('have.text', 'Black Orc Team Players');
         cy.get('.create-team').click();
         cy.get('.load-team-button').click();
@@ -56,7 +56,7 @@ context('Smoke tests', () => {
     it('Should add star player', () => {
         cy.visit('/');
         cy.get('.new-team').click();
-        cy.get('.team-button:nth-child(11)').click();
+        cy.get('.team-button:nth-child(14)').click();
         cy.get('.create-team').click();
         cy.get('.inducement__toggle .material-icons').click();
         cy.get('.star-player-select').select('Zolcath the Zoat');

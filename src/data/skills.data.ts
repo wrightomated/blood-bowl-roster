@@ -66,6 +66,8 @@ export const skillCatalogue: Skill[] = [
     { id: 61, name: 'Animal Savagery', category: 'T' },
     { id: 62, name: 'Animosity', category: 'T' },
     { id: 620, name: 'Animosity (all team-mates)', category: 'T' },
+    { id: 621, name: 'Animosity (all Dwarf and Halfling team-mates)', category: 'T' },
+    { id: 622, name: 'Animosity (all Dwarf and Human team-mates)', category: 'T' },
     { id: 63, name: 'Always Hungry', category: 'T' },
     { id: 64, name: 'Ball & Chain', category: 'T' },
     { id: 65, name: 'Bombardier', category: 'T' },

@@ -225,7 +225,7 @@ const deathroller: Player = {
     position: 'Deathroller',
     playerStats: [4, 7, 5, 0, 11],
     cost: 170,
-    skills: [51, 15, 54, 710, 55, 72, 79, 58],
+    skills: [51, 151, 54, 710, 55, 72, 79, 58],
     primary: ['G', 'S'],
     secondary: ['A'],
 };
@@ -369,7 +369,7 @@ const halflingCatcher: Player = {
 
 const treeman: Player = {
     id: 38,
-    position: 'Forest Treeman',
+    position: 'Altern Forest Treeman',
     playerStats: [2, 6, 5, 5, 11],
     cost: 120,
     skills: [55, 58, 59, 84, 60, 86, 87],
@@ -766,7 +766,7 @@ const weTree: Player = {
     ...treeman,
     id: 82,
     position: 'Loren Forest Treeman',
-    skills: [71].concat(treeman.skills),
+    skills: [71,55, 58, 59, 84, 60, 86],
     primary: ['S'],
     secondary: ['A', 'G'],
 };
@@ -1042,7 +1042,71 @@ const vampire: Player = {
     primary: ['A', 'G','S'],
     secondary: ['P'],
 };
-
+const owHL: Player = {
+    ...humanLineman,
+    position: 'Old World Human Lineman',
+    id: 115,
+};
+const owHT: Player = {
+    ...humanThrower,
+    playerStats: [6,3,3,3,9],
+    position: 'Old World Human Thrower',
+    skills: [621].concat(humanThrower.skills),
+    id: 116,
+};
+const owHC: Player = {
+    ...humanCatcher,
+    position: 'Old World Human Catcher',
+    id: 117,
+    skills: [621].concat(humanCatcher.skills),
+    secondary: ['S']
+};
+const owHB: Player = {
+    ...humanBlitzer,
+    position: 'Old World Human Blitzer',
+    id: 118,
+    cost: 90,
+    skills: [621].concat(humanBlitzer.skills),
+    secondary: ['A']
+};
+const owDBlocker: Player = {
+    ...dwarfBlockerLineman,
+    position: 'Old World Dwarf Blocker',
+    id: 119,
+    cost: 75,
+    skills: [49,50,711,60],
+};
+const owDR: Player = {
+    ...dwarfRunner,
+    position: 'Old World Dwarf Runner',
+    id: 120,
+    cost: 85,
+    skills: [711].concat(dwarfRunner.skills),
+};
+const owDBlitzer: Player = {
+    ...dwarfBlitzer,
+    position: 'Old World Dwarf Blitzer',
+    id: 121,
+    skills: [13, 711,60],
+    secondary: ['A']
+};
+const owDTS: Player = {
+    ...trollSlayer,
+    position: 'Old World Dwarf Troll Slayer',
+    id: 122,
+    skills: [13, 14, 17, 711, 60],
+};
+const owHH: Player = {
+    ...halflingHopefulLineman,
+    position: 'Old World Halfling Hopeful',
+    id: 123,
+    skills: [622].concat(halflingHopefulLineman.skills),
+};
+const owTree: Player = {
+    ...treeman,
+    id: 124,
+    skills: [71].concat(treeman.skills),
+};
 export const playerCatalogue: PlayerCatalogue = {
     players: [
         imperialLineman,
@@ -1158,6 +1222,16 @@ export const playerCatalogue: PlayerCatalogue = {
         anointedB,
         tombGuardian,
         thrallLineman,
-        vampire
+        vampire,
+        owHB,
+        owHC,
+        owHL,
+        owHT,
+        owDBlocker,
+        owDR,
+        owDBlitzer,
+        owDTS,
+        owHH,
+        owTree
     ],
 };
