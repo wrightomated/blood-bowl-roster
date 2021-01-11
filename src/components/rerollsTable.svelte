@@ -5,6 +5,7 @@
     import type { Extra, ExtraString } from '../models/extra.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import Inducements from './inducements.svelte';
+    import { teamData } from '../data/teams.data';
 
     export let selectedTeam: Team;
 
@@ -31,7 +32,10 @@
             .filter((e) => e.extraString !== 'dedicated_fans')
             .map((e) => $roster.extra[e.extraString] * e.cost || 0)
             .reduce((a, b) => a + b, 0) +
-        calculateInducementTotal($roster.inducements);
+        calculateInducementTotal(
+            $roster.inducements,
+            teamData.teams.find((x) => x.id === $roster.teamId).specialRules,
+        );
 </script>
 
 <style lang="scss">

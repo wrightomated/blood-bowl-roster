@@ -22,11 +22,11 @@ export interface ExtraRosterInfo {
     [key: string]: number;
 }
 
-interface PlayerAlterations {
-    spp: number;
-    ni: number;
-    mng?: boolean;
-    tr?: boolean;
-    statChange?: number[]
-    extraSkills?: number[];
+export interface PlayerAlterations {
+    spp: number; // s
+    ni: number; // n
+    mng?: boolean; // m
+    tr?: boolean; // t
+    statChange?: number[] // c
+    extraSkills?: number[]; // e
 }
