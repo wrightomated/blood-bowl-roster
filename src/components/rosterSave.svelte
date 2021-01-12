@@ -12,8 +12,6 @@
         savedRosterIndex.addRoster($roster);
         saved = true;
         const str = rosterToString($roster);
-        console.log(str);
-        console.log(stringToRoster(str));
     };
 
     const clearRoster = () => {
