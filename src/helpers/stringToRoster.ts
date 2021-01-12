@@ -1,21 +1,23 @@
 import { playerCatalogue } from '../data/players.data';
 import { starPlayers } from '../data/starPlayer.data';
 import { teamData } from '../data/teams.data';
-import type { PlayerAlterations } from '../models/roster.model';
+import type { ExtraRosterInfo, PlayerAlterations, Roster } from '../models/roster.model';
 
-export const stringToRoster = (rosterString: string) => {
+export const stringToRoster = (code: string) => {
+    const [rosterString, rosterNames] = code.split('I');
     const [teamDetails, ...players] = rosterString.split('p');
     const [id, treasury, ...extras] = itemsInString(teamDetails);
     const teamId = getNumber(id);
-    return {
+    const roster: Roster = {
         teamId,
         extra: stringToExtra(extras.filter((x) => !x.includes('i'))),
         players: expandPlayers(players),
         teamName: '',
         teamType: teamData.teams.find((t) => t.id === teamId).name,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
-        treasury: getNumber(treasury)
+        treasury: getNumber(treasury),
     };
+    return addNamesToRoster(roster, rosterNames);
 };
 
 const expandPlayers = (players: string[]) => {
@@ -56,7 +58,7 @@ const mapInducements = (inducements: string[]) => {
 
 const constructAlterations = (other: string[]) => {
     const alterations: PlayerAlterations = { spp: 0, ni: 0 };
-    other.forEach(o => {
+    other.forEach((o) => {
         switch (o[0]) {
             case 's':
                 alterations['spp'] = getNumber(o);
@@ -79,19 +81,25 @@ const constructAlterations = (other: string[]) => {
             default:
                 break;
         }
-    })
+    });
     return alterations;
 };
 
 const statChangeArray = (statString: string) => {
-    return statString.substring(1).match(/-?\d/g).map(x => parseInt(x, 10));
-}
+    return statString
+        .substring(1)
+        .match(/-?\d/g)
+        .map((x) => parseInt(x, 10));
+};
 
 const skillArray = (skillString: string) => {
-    return skillString.substring(1).split('.').map(x => parseInt(x, 10));
-}
+    return skillString
+        .substring(1)
+        .split('.')
+        .map((x) => parseInt(x, 10));
+};
 
-const stringToExtra = (extras: string[]) => {
+const stringToExtra: (extras: string[]) => ExtraRosterInfo = (extras) => {
     const map = {
         r: 'rerolls',
         a: 'assistant_coaches',
@@ -112,4 +120,23 @@ const itemsInString = (rosterSection: string) => {
 
 const getNumber = (match: string) => {
     return parseInt(match.substring(1), 10);
+};
+
+const decodeName = (name: string) => {
+    return decodeURIComponent(name);
+};
+
+const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (roster, rosterNames) => {
+    const [teamName, ...playerNames] = rosterNames
+        .split('.')
+        .map((n) => decodeName(n));
+    return {
+        ...roster,
+        teamName: teamName || '',
+        players: roster.players.map((p, i) =>
+            !p.starPlayer && playerNames?.[i]
+                ? { ...p, playerName: playerNames[i] }
+                : p,
+        ),
+    };
 };
