@@ -573,7 +573,7 @@ const orcLineman: Player = {
     position: 'Orc Lineman',
     playerStats: [5, 3, 3, 4, 10],
     cost: 50,
-    skills: [62],
+    skills: [624],
     primary: ['G'],
     secondary: ['A', 'S'],
 };
@@ -591,7 +591,7 @@ const orcBlitzer: Player = {
     position: 'Orc Blitzer',
     playerStats: [6, 3, 3, 4, 10],
     cost: 80,
-    skills: [62, 13],
+    skills: [620, 13],
     primary: ['G', 'S'],
     secondary: ['A', 'P'],
 };
@@ -600,7 +600,7 @@ const bigUnBlocker: Player = {
     position: 'Big Un Blocker',
     playerStats: [5, 4, 4, 0, 10],
     cost: 90,
-    skills: [62],
+    skills: [625],
     primary: ['G', 'S'],
     secondary: ['A'],
 };
