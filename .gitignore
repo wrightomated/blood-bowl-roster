@@ -5,5 +5,6 @@
 /cypress/fixtures
 /cypress/plugins
 /cypress/support
+/cypress/screenshots
 
 .DS_Store

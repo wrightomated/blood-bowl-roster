@@ -31,7 +31,7 @@ const getTeamFromQuery = () => {
 
 const getTeamFromCode = (code: string) => {
     if (code) {
-        const id = parseInt(code.split('t')[1]);
+        const id = parseInt(code.split('t')[0], 10);
         getTeamFromId(id);
     }
     return null;
