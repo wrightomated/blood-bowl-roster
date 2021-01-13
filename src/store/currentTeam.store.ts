@@ -4,7 +4,6 @@ import type { Writable } from 'svelte/store';
 import type { Team } from '../models/team.model';
 
 
-// export const currentTeam = writable<Team>(getTeam());
 const currentTeamStore = () => {
     const { subscribe, update, set }: Writable<Team> = writable<Team>(getTeam())
     return {
@@ -13,7 +12,12 @@ const currentTeamStore = () => {
         set,
         setCurrentTeamWithCode: (code: string) => {
             update((store) => {
-                return getTeamFromCode(code) || {} as Team;
+                return getTeamFromCode(code) || store;
+            })
+        },
+        setCurrentTeamWithId: (id: number) => {
+            update((store) => {
+                return getTeamFromId(id) || store;
             })
         }
     }
@@ -27,12 +31,17 @@ const getTeamFromQuery = () => {
 
 const getTeamFromCode = (code: string) => {
     if (code) {
-        return teamData.teams.find(
-            (x) => x.id === parseInt(code.split('t')[1]),
-        );
+        const id = parseInt(code.split('t')[1]);
+        getTeamFromId(id);
     }
     return null;
 };
+
+const getTeamFromId = (id: number) => {
+    return teamData.teams.find(
+        (x) => x.id === id
+    );
+}
 
 const getTeamFromStorage = () => {
     const team = localStorage.getItem('selectedTeam');

@@ -141,7 +141,7 @@
         align-items: center;
 
         input {
-            margin-right: 1em;
+            margin-right: 8px;
         }
     }
 </style>
@@ -154,7 +154,7 @@
     </button>
 {/if}
 
-{#if $savedRosterIndex.index.length > 0 && !showTeams}
+{#if !showTeams}
     <button
         class="load-team-button"
         class:cancel={$teamLoadOpen}
@@ -198,6 +198,7 @@
         {/each}
         <div class="code-box">
             <input
+                aria-label="Input code"
                 id="code-input"
                 placeholder="Input Code"
                 bind:value={rosterCode} />
