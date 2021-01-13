@@ -9,7 +9,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "e2e": "cypress run --spec \"cypress/integration/smoke.spec.js\"",
+    "e2e": "cypress run",
     "e2e:local": "CYPRESS_BASE_URL=http://localhost:5000 cypress run"
   },
   "devDependencies": {
