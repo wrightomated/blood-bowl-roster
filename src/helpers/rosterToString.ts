@@ -62,14 +62,24 @@ const pAlterations = (alts: PlayerAlterations) => {
 };
 
 const getNameString = (roster: Roster) => {
-    return encodeNames([
+    const encodedNames = encodeNames([
         roster.teamName,
-        ...roster.players.map(x => x?.starPlayer ? '' : x.playerName),
+        ...roster.players.map((x) => (x?.starPlayer ? '' : x.playerName)),
     ]);
+    return compressEncodedNames(encodedNames);
 };
 
+const compressEncodedNames = (encodedNames: string) => {
+    if(encodedNames?.[0] === ' ') {
+        return ('e' + encodedNames).trim().replace(/ /g, ':').substring(1);
+    }
+    return encodedNames.trim().replace(/ /g, ':');
+}
+
 const encodeNames = (names: string[]) => {
-    return names.map((n) => encodeName(n)).join(' ').trim().replace(/ /g, '.');
+    return names
+        .map((n) => encodeName(n))
+        .join(' ');
 };
 
 const encodeName = (name: string) => {
@@ -80,5 +90,7 @@ export const rosterToString = (roster: Roster) => {
     const extraS = extraToString(roster.extra);
     const inducementS = inducementToString(roster.inducements);
     const players = roster.players.map((x) => playerToString(x)).join('');
-    return `t${roster.teamId}t${roster.treasury}${extraS}${inducementS}${players}I${getNameString(roster)}`;
+    return `t${roster.teamId}t${
+        roster.treasury
+    }${extraS}${inducementS}${players}I${getNameString(roster)}`;
 };

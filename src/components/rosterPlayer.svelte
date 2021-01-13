@@ -57,6 +57,11 @@
 
 <style lang="scss">
     @import '../styles/colour';
+    input {
+        border: 0;
+        border-radius: 0;
+        background: none;
+    }
     td {
         input {
             margin-bottom: 0;

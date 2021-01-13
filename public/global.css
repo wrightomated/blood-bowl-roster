@@ -55,12 +55,6 @@ textarea {
     border-radius: 2px;
 }
 
-input {
-    border: 0;
-    border-radius: 0;
-    background: none;
-}
-
 input:placeholder-shown {
     font-style: italic;
 }

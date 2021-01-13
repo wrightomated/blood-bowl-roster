@@ -2,8 +2,7 @@
     import { roster } from '../store/teamRoster.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import MaterialButton from './materialButton.svelte';
-    import { rosterToString } from '../helpers/rosterToString';
-    import { stringToRoster } from '../helpers/stringToRoster';
+    import { showExport } from '../store/showExport.store';
 
     let saved = false;
     let rosterCleared = false;
@@ -11,7 +10,6 @@
     const saveRoster = () => {
         savedRosterIndex.addRoster($roster);
         saved = true;
-        const str = rosterToString($roster);
     };
 
     const clearRoster = () => {
@@ -19,6 +17,8 @@
         savedRosterIndex.removeRoster();
         rosterCleared = true;
     };
+
+    const toggleExport = () => showExport.set(!$showExport);
 
     roster.subscribe((x) => {
         saved = false;
@@ -31,6 +31,7 @@
         color: green;
         margin-bottom: 3px;
     }
+
     @media print {
         :host {
             display: none;
@@ -44,3 +45,6 @@
 {#if !rosterCleared}
     <MaterialButton symbol="delete_forever" clickFunction={clearRoster} />
 {/if}
+<MaterialButton
+    symbol={$showExport ? 'link_off' : 'link'}
+    clickFunction={toggleExport} />

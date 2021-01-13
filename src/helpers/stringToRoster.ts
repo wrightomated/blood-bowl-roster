@@ -4,7 +4,8 @@ import { teamData } from '../data/teams.data';
 import type { ExtraRosterInfo, PlayerAlterations, Roster } from '../models/roster.model';
 
 export const stringToRoster = (code: string) => {
-    const [rosterString, rosterNames] = code.split('I');
+    const [rosterString, ...rest] = code.split('I');
+    const rosterNames = rest.join('I');
     const [teamDetails, ...players] = rosterString.split('p');
     const [id, treasury, ...extras] = itemsInString(teamDetails);
     const teamId = getNumber(id);
@@ -17,7 +18,7 @@ export const stringToRoster = (code: string) => {
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
     };
-    return addNamesToRoster(roster, rosterNames);
+    return rosterNames.length > 0 ? addNamesToRoster(roster, rosterNames) : roster;
 };
 
 const expandPlayers = (players: string[]) => {
@@ -128,7 +129,7 @@ const decodeName = (name: string) => {
 
 const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (roster, rosterNames) => {
     const [teamName, ...playerNames] = rosterNames
-        .split('.')
+        .split(':')
         .map((n) => decodeName(n));
     return {
         ...roster,
