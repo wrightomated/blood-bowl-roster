@@ -4,10 +4,11 @@
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
+    import Export from './export.svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
-    let newName: string;
+    let newName: string = '';
 
     const addPlayer = () => {
         roster.addPlayer({
@@ -27,6 +28,11 @@
     .table-container {
         max-width: 100%;
         overflow-x: auto;
+    }
+    input {
+        border: 0;
+        border-radius: 0;
+        background: none;
     }
     .heading {
         font-size: large;
@@ -90,6 +96,7 @@
     <p class="sub-heading">{$roster.teamType} Team</p>
     <RosterSave />
 </div>
+<Export />
 
 <div class="table-container">
     <table>

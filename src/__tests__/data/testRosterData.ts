@@ -206,8 +206,46 @@ export const playerSkills = {
     treasury: 20,
 };
 
+export const noTeamName = {
+    teamId: 2,
+    players: [
+        {
+            playerName: 'Bob',
+            player: {
+                id: 6,
+                position: 'Goblin Bruiser Lineman',
+                playerStats: [6, 2, 3, 4, 8],
+                cost: 45,
+                skills: [4, 78, 81, 60],
+                primary: ['A'],
+                secondary: ['G', 'P', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 6,
+                position: 'Goblin Bruiser Lineman',
+                playerStats: [6, 2, 3, 4, 8],
+                cost: 45,
+                skills: [4, 78, 81, 60],
+                primary: ['A'],
+                secondary: ['G', 'P', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+    ],
+    teamName: '',
+    teamType: 'Black Orc',
+    extra: { dedicated_fans: 1 },
+    inducements: {},
+    treasury: 1000,
+};
+
 export const inducementAndStarPlayerString = 't22t10d1y1i8.1p224I';
 
-export const testRosterString = 't1t1000d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons.Bob......Bill';
+export const testRosterString =
+    't1t1000d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:Bob::::::Bill';
 
 export const playerSkillsString = 't25t20d1p104s1n1e21.55t1c10-101I';

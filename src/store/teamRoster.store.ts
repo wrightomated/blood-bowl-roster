@@ -3,10 +3,12 @@ import type { Writable } from 'svelte/store';
 
 import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
+import { stringToRoster } from '../helpers/stringToRoster';
+import { currentTeam } from './currentTeam.store';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
-        JSON.parse(localStorage.getItem('roster')) || getEmptyRoster(),
+        getDefaultRoster(),
     );
 
     return {
@@ -96,6 +98,12 @@ function createRoster() {
             update((store) => {
                 return { ...getSavedRoster(rosterKey) };
             }),
+        codeToRoster: (rosterCode: string) =>
+            update((store) => {
+                const loadedRoster = rosterFromCode(rosterCode) || getEmptyRoster();
+                currentTeam.setCurrentTeamWithCode(rosterCode);
+                return { ...loadedRoster };
+            }),
         reset: (options?: { teamId: number; teamType: TeamName }) =>
             set(getEmptyRoster(options)),
         set,
@@ -131,6 +139,27 @@ const switchTwoElements = (arr: any[], index1: number, index2: number) => {
     }
     return arr.map((x, i, a) =>
         i === index1 ? a[index2] : i === index2 ? a[index1] : x,
+    );
+};
+
+const rosterFromQueryString = () => {
+    const code = window.location.search.substring(1).split('=')[1];
+    return rosterFromCode(code);
+};
+
+const rosterFromCode = (code: string) => {
+    try {
+        return stringToRoster(code);
+    } catch (error) {
+        return null;
+    }
+}
+
+const getDefaultRoster: () => Roster = () => {
+    return (
+        rosterFromQueryString() ||
+        JSON.parse(localStorage.getItem('roster')) ||
+        getEmptyRoster()
     );
 };
 

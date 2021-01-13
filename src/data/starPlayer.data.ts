@@ -230,6 +230,15 @@ const zolcath: StarPlayer = {
     cost: 230,
     specialRules: ['Excuse Me, Are You a Zoat?']
 }
+const akhorne: StarPlayer = {
+    id: 225,
+    position: "Akhorne the Squirrel",
+    playerStats: [7,1,2,0,6],
+    playsFor: [],
+    skills: [26,14,4,17,6,71,72,9,81,85],
+    cost: 80,
+    specialRules: ['Blind Rage']
+}
 
 export const starPlayers = {
     starPlayers: [
@@ -257,6 +266,7 @@ export const starPlayers = {
         varag,
         grombrindal,
         willow,
-        zolcath
+        zolcath,
+        akhorne
     ]
 }

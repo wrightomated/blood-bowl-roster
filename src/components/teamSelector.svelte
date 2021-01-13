@@ -11,7 +11,10 @@
         showAvailablePlayers,
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
+    import MaterialButton from './materialButton.svelte';
     export let teamList: Team[];
+
+    let rosterCode: string;
 
     $: showTeams = $teamSelectionOpen;
 
@@ -68,6 +71,11 @@
             default:
                 break;
         }
+    };
+
+    const inputCode = () => {
+        roster.codeToRoster(rosterCode);
+        toggleLoad();
     };
 </script>
 
@@ -127,6 +135,15 @@
     .tier-selector {
         margin-top: 1em;
     }
+    .code-box {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+
+        input {
+            margin-right: 1em;
+        }
+    }
 </style>
 
 {#if !$teamLoadOpen}
@@ -179,5 +196,12 @@
                 class="saved-team-button"
                 on:click={() => loadTeam(savedRoster)}>{savedRoster.name}</button>
         {/each}
+        <div class="code-box">
+            <input
+                id="code-input"
+                placeholder="Input Code"
+                bind:value={rosterCode} />
+            <MaterialButton symbol="input" clickFunction={inputCode} />
+        </div>
     </div>
 {/if}
