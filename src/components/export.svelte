@@ -6,7 +6,7 @@
 
     import MaterialButton from './materialButton.svelte';
 
-    const baseUrl = 'http://localhost:5000';
+    const baseUrl = 'https://bbroster.com';
 
     let urlCoppied = false;
     let codeCoppied = false;
