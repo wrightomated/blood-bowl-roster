@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { advancementCosts } from '../data/advancementCost.data';
+
     import { skillCatalogue } from '../data/skills.data';
     import { characteristics } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
@@ -42,9 +44,15 @@
             alterations: {
                 ...rosterPlayer.alterations,
                 extraSkills: extraSkills,
+                spp: rosterPlayer.alterations.spp - sppCost(),
+                advancements: (rosterPlayer.alterations?.advancements || 0) + 1,
+                valueChange:
+                    (rosterPlayer.alterations?.valueChange || 0) +
+                    skillIncreaseCost(),
             },
         };
         roster.updatePlayer(newPlayer, index);
+        cancel();
     };
 
     const addCharacteristic = (charIndex: number) => {
@@ -55,9 +63,15 @@
             alterations: {
                 ...rosterPlayer.alterations,
                 statChange: stats,
+                spp: rosterPlayer.alterations.spp - sppCost(),
+                advancements: (rosterPlayer.alterations?.advancements || 0) + 1,
+                valueChange:
+                    (rosterPlayer.alterations?.valueChange || 0) +
+                    charCostIncrease(charIndex),
             },
         };
         roster.updatePlayer(newPlayer, index);
+        cancel();
     };
 
     const selectPrimary = () => {
@@ -141,6 +155,57 @@
             x >= 2 ? characteristics[i] : x,
         );
     };
+
+    const sppCost = () => {
+        const advancementLevel = rosterPlayer.alterations?.advancements || 0;
+        if (showPrimary) {
+            if (showRandom) {
+                return advancementCosts.ranPri[advancementLevel];
+            }
+            return advancementCosts.priOrRanSec[advancementLevel];
+        }
+        if (showSecondary) {
+            if (showRandom) {
+                return advancementCosts.priOrRanSec[advancementLevel];
+            }
+            return advancementCosts.sec[advancementLevel];
+        }
+        if (showCharacteristics) {
+            return advancementCosts.char[advancementLevel];
+        }
+        return;
+    };
+
+    const skillIncreaseCost = () => {
+        if (showPrimary) {
+            if (showRandom) {
+                return 10;
+            }
+            return 20;
+        }
+        if (showSecondary) {
+            if (showRandom) {
+                return 20;
+            }
+            return 40;
+        }
+    };
+
+    const charCostIncrease = (index: number) => {
+        switch (index) {
+            case 4:
+                return 10;
+            case 0:
+            case 3:
+                return 20;
+            case 2:
+                return 40;
+            case 1:
+                return 80;
+            default:
+                break;
+        }
+    };
 </script>
 
 <div class="container">
@@ -160,7 +225,7 @@
 
     {#if showPrimary}
         <div class="primary">
-            Primary Skills
+            Primary Skills: {sppCost()}spp
             {#each rosterPlayer.player.primary as category}
                 <div>
                     {categoryToName.get(category)}:
@@ -174,7 +239,7 @@
     {/if}
     {#if showSecondary}
         <div class="secondary">
-            Secondary Skills:
+            Secondary Skills: {sppCost()}spp
             {#each rosterPlayer.player.secondary as category}
                 <div>
                     {categoryToName.get(category)}:
@@ -188,6 +253,7 @@
     {/if}
     {#if showCharacteristics}
         <div class="secondary">
+            Randomly Improve Characteristic: {sppCost()}spp
             <button on:click={roll}>{d16 ? d16 : 'Roll D16'}</button>
             {#each characteristics as chara, i}
                 <button

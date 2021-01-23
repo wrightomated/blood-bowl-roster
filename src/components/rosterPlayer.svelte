@@ -33,7 +33,10 @@
     };
     const playerCostString = () => {
         return rosterPlayer.player.cost > 0
-            ? `${rosterPlayer.player.cost},000`
+            ? `${
+                  rosterPlayer.player.cost +
+                  (rosterPlayer.alterations?.valueChange || 0)
+              },000`
             : '-';
     };
     const removeTwoForOne = () => {
@@ -56,7 +59,9 @@
 
     const getStat = (stat: number, i: number) => {
         const alteredStat =
-            stat + (rosterPlayer.alterations?.statChange?.[i] || 0);
+            stat +
+            (rosterPlayer.alterations?.statChange?.[i] || 0) *
+                (i === 2 || i === 3 ? -1 : 1);
         return `${
             alteredStat === 0 ? '-' : i > 1 ? `${alteredStat}+` : alteredStat
         }`;
@@ -107,6 +112,14 @@
                     {numberOfPlayerType}/{maxOfPlayerType}
                 </span>
             {/if}
+            {#if (rosterPlayer.alterations?.advancements || 0) < 6}
+                <span class="add-skill">
+                    <MaterialButton
+                        symbol="elevator"
+                        clickFunction={toggleShowSkills}
+                    />
+                </span>
+            {/if}
         {/if}
     </td>
 
@@ -117,14 +130,6 @@
     {/each}
     <td class="left-align">
         <SkillElement {playerSkillIds} />
-        {#if !rosterPlayer.starPlayer}
-            <span class="add-skill">
-                <MaterialButton
-                    symbol={showAddSkills ? 'cancel' : 'add_circle'}
-                    clickFunction={toggleShowSkills}
-                />
-            </span>
-        {/if}
     </td>
     <td>{playerCostString()}</td>
     <td>
@@ -143,7 +148,7 @@
     <td>0</td>
     <td>{playerCostString()}</td>
 </tr>
-{#if !rosterPlayer.starPlayer && showAddSkills}
+{#if !rosterPlayer.starPlayer && showAddSkills && (rosterPlayer.alterations?.advancements || 0) < 6}
     <tr>
         <td colspan="16">
             <AddSkill {index} />
