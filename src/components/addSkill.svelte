@@ -1,10 +1,22 @@
 <script lang="ts">
     import { skillCatalogue } from '../data/skills.data';
+    import { characteristics } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
+    import { categoryToName } from '../models/skill.model';
     import { roster } from '../store/teamRoster.store';
 
-    export let rosterPlayer: RosterPlayerRecord;
     export let index: number;
+
+    let showButtons: boolean = true;
+    let showPrimary: boolean = false;
+    let showSecondary: boolean = false;
+    let showRandom: boolean = false;
+    let showCharacteristics: boolean = false;
+
+    $: d16 = 0;
+    $: enabled = allowedSkills(d16).filter(
+        (x) => !twoIncrements(rosterPlayer).includes(x),
+    );
 
     $: rosterPlayer = $roster.players[index];
 
@@ -34,16 +46,167 @@
         };
         roster.updatePlayer(newPlayer, index);
     };
+
+    const addCharacteristic = (charIndex: number) => {
+        const stats = rosterPlayer.alterations.statChange || [0, 0, 0, 0, 0];
+        stats[charIndex]++;
+        const newPlayer: RosterPlayerRecord = {
+            ...rosterPlayer,
+            alterations: {
+                ...rosterPlayer.alterations,
+                statChange: stats,
+            },
+        };
+        roster.updatePlayer(newPlayer, index);
+    };
+
+    const selectPrimary = () => {
+        showPrimary = true;
+        showSecondary = false;
+        showRandom = false;
+        showButtons = false;
+        showCharacteristics = false;
+    };
+    const randomPrimary = () => {
+        showPrimary = true;
+        showSecondary = false;
+        showRandom = true;
+        showButtons = false;
+        showCharacteristics = false;
+    };
+    const selectSecondary = () => {
+        showPrimary = false;
+        showSecondary = true;
+        showRandom = false;
+        showButtons = false;
+        showCharacteristics = false;
+    };
+    const randomSecondary = () => {
+        showPrimary = false;
+        showSecondary = true;
+        showRandom = true;
+        showButtons = false;
+        showCharacteristics = false;
+    };
+    const randomCharacteristic = () => {
+        showPrimary = false;
+        showSecondary = false;
+        showRandom = true;
+        showButtons = false;
+        showCharacteristics = true;
+        d16 = 0;
+    };
+    const cancel = () => {
+        showPrimary = false;
+        showSecondary = false;
+        showRandom = false;
+        showButtons = true;
+        showCharacteristics = false;
+        d16 = 0;
+    };
+    const roll = () => {
+        d16 = Math.floor(Math.random() * Math.floor(15)) + 1;
+    };
+
+    const allowedSkills = (dice: number) => {
+        switch (dice) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                return ['MA', 'AV'];
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                return ['MA', 'PA', 'AV'];
+            case 14:
+                return ['AG', 'PA'];
+            case 15:
+                return ['ST', 'AG'];
+            case 16:
+                return characteristics;
+            default:
+                return characteristics;
+        }
+    };
+
+    const twoIncrements = (p) => {
+        return (p?.alterations?.statChange || [0, 0, 0, 0, 0]).map((x, i) =>
+            x >= 2 ? characteristics[i] : x,
+        );
+    };
 </script>
 
+<div class="container">
+    {#if showButtons}
+        <div>
+            <button on:click={randomPrimary}>Random Primary</button>
+            <button on:click={selectPrimary}>Select Primary</button>
+            <button on:click={randomSecondary}>Random Secondary</button>
+            <button on:click={selectSecondary}>Select Secondary</button>
+            <button on:click={randomCharacteristic}
+                >Random Characteristic</button
+            >
+        </div>
+    {:else}
+        <button on:click={cancel}>Cancel</button>
+    {/if}
+
+    {#if showPrimary}
+        <div class="primary">
+            Primary Skills
+            {#each rosterPlayer.player.primary as category}
+                <div>
+                    {categoryToName.get(category)}:
+                    {#each primarySkills.filter((s) => s.category === category) as s}
+                        <button on:click={() => addSkill(s.id)}>{s.name}</button
+                        >
+                    {/each}
+                </div>
+            {/each}
+        </div>
+    {/if}
+    {#if showSecondary}
+        <div class="secondary">
+            Secondary Skills:
+            {#each rosterPlayer.player.secondary as category}
+                <div>
+                    {categoryToName.get(category)}:
+                    {#each secondarySkills.filter((s) => s.category === category) as s}
+                        <button on:click={() => addSkill(s.id)}>{s.name}</button
+                        >
+                    {/each}
+                </div>
+            {/each}
+        </div>
+    {/if}
+    {#if showCharacteristics}
+        <div class="secondary">
+            <button on:click={roll}>{d16 ? d16 : 'Roll D16'}</button>
+            {#each characteristics as chara, i}
+                <button
+                    disabled={!enabled.includes(chara)}
+                    on:click={() => addCharacteristic(i)}>{chara}</button
+                >
+            {/each}
+            <button on:click={selectSecondary}>Select Secondary</button>
+        </div>
+    {/if}
+</div>
+
 <style lang="scss">
-    div {
+    .container {
         max-width: 90vw;
         text-align: left;
         position: sticky;
         left: 0;
         top: 0;
-        // padding-left: 16px;
     }
     button {
         @import '../styles/colour';
@@ -58,28 +221,17 @@
             background-color: $secondary-colour;
             color: white;
             border-color: $secondary-colour;
+
+            &:disabled {
+                background-color: white;
+                color: grey;
+                border: none;
+            }
+        }
+
+        &:disabled {
+            border: none;
+            color: grey;
         }
     }
 </style>
-
-<div>
-    Primary Skills
-    {#each rosterPlayer.player.primary as category}
-        <div>
-            {category}:
-            {#each primarySkills.filter((s) => s.category === category) as s}
-                <button on:click={() => addSkill(s.id)}>{s.name}</button>
-            {/each}
-        </div>
-    {/each}
-
-    Secondary Skills:
-    {#each rosterPlayer.player.secondary as category}
-        <div>
-            {category}:
-            {#each secondarySkills.filter((s) => s.category === category) as s}
-                <button on:click={() => addSkill(s.id)}>{s.name}</button>
-            {/each}
-        </div>
-    {/each}
-</div>

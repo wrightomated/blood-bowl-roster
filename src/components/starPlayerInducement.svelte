@@ -47,15 +47,6 @@
     };
 </script>
 
-<style lang="scss">
-    .left-align {
-        text-align: left;
-    }
-    .add-star {
-        display: flex;
-    }
-</style>
-
 <tr>
     <td class="left-align">
         Star Player:
@@ -76,3 +67,12 @@
         </div>
     </td>
 </tr>
+
+<style lang="scss">
+    .left-align {
+        text-align: left;
+    }
+    .add-star {
+        display: flex;
+    }
+</style>

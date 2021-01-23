@@ -5,6 +5,8 @@ import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
+import type { RosterMode } from './rosterMode.store';
+import { inducementCost } from '../helpers/totalInducementAmount';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -15,12 +17,24 @@ function createRoster() {
         subscribe,
         addPlayer: (player: RosterPlayerRecord) =>
             update((store) => {
-                return { ...store, players: store.players.concat([player]) };
+                return {
+                    ...store,
+                    players: store.players.concat([player]),
+                    treasury: store.treasury - player.player.cost,
+                };
             }),
-        removePlayer: (indices: number[]) =>
+        removePlayer: (indices: number[], rosterMode?: RosterMode) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury:
+                        rosterMode !== 'postGame'
+                            ? store.treasury +
+                              store.players
+                                  .filter((_, i) => indices.includes(i))
+                                  .map((p) => p.player.cost)
+                                  .reduce((a, b) => a + b, 0)
+                            : store.treasury,
                     players: store.players.filter(
                         (_, i) => !indices.includes(i),
                     ),
@@ -46,10 +60,15 @@ function createRoster() {
                     players: switchTwoElements(store.players, index, index + 1),
                 };
             }),
-        addInducement: (inducementKey: string) =>
+        addInducement: (inducementKey: string, rosterMode?: RosterMode) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury:
+                        rosterMode === 'postGame'
+                            ? store.treasury
+                            : store.treasury -
+                              inducementCost(inducementKey, store.teamId),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -58,10 +77,15 @@ function createRoster() {
                     },
                 };
             }),
-        removeInducement: (inducementKey: string) =>
+        removeInducement: (inducementKey: string, rosterMode?: RosterMode) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury:
+                        rosterMode === 'postGame'
+                            ? store.treasury
+                            : store.treasury +
+                              inducementCost(inducementKey, store.teamId),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -74,6 +98,7 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    treasury: store.treasury,
                     extra: {
                         ...store.extra,
                         [extraKey]: store?.extra?.[extraKey]
@@ -100,7 +125,8 @@ function createRoster() {
             }),
         codeToRoster: (rosterCode: string) =>
             update((store) => {
-                const loadedRoster = rosterFromCode(rosterCode) || getEmptyRoster();
+                const loadedRoster =
+                    rosterFromCode(rosterCode) || getEmptyRoster();
                 currentTeam.setCurrentTeamWithCode(rosterCode);
                 return { ...loadedRoster };
             }),
@@ -153,7 +179,7 @@ const rosterFromCode = (code: string) => {
     } catch (error) {
         return null;
     }
-}
+};
 
 const getDefaultRoster: () => Roster = () => {
     return (
