@@ -220,7 +220,7 @@ export const noTeamName = {
                 primary: ['A'],
                 secondary: ['G', 'P', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, valueChange: 20 },
         },
         {
             playerName: '',

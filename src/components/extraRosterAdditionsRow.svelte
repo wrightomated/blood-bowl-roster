@@ -2,17 +2,37 @@
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
     import type { Extra } from '../models/extra.model';
+    import { rosterMode } from '../store/rosterMode.store';
 
     export let extra: Extra;
     $: extraAmount = $roster?.extra[extra.extraString] || extra?.min || 0;
 
     const addExtra = () => {
-        roster.addExtra(extra.extraString);
+        roster.addExtra(extra.extraString, extra.cost);
     };
     const removeExtra = () => {
-        roster.removeExtra(extra.extraString);
+        roster.removeExtra(extra.extraString, $rosterMode, extra.cost);
     };
 </script>
+
+<tr>
+    <th>{extra.extraString.replace('_', ' ')}</th>
+    <td class="qty">{extraAmount} / {extra.max}</td>
+    <td>{extra.cost},000</td>
+    <td class="control">
+        <div class="flex-container">
+            {#if extraAmount < extra.max}
+                <MaterialButton symbol="add_circle" clickFunction={addExtra} />
+            {/if}
+            {#if extraAmount > (extra.min || 0)}
+                <MaterialButton
+                    symbol="remove_circle"
+                    clickFunction={removeExtra}
+                />
+            {/if}
+        </div>
+    </td>
+</tr>
 
 <style lang="scss">
     @import '../styles/colour';
@@ -37,21 +57,3 @@
         }
     }
 </style>
-
-<tr>
-    <th>{extra.extraString.replace('_', ' ')}</th>
-    <td class="qty">{extraAmount} / {extra.max}</td>
-    <td>{extra.cost},000</td>
-    <td class="control">
-        <div class="flex-container">
-            {#if extraAmount < extra.max}
-                <MaterialButton symbol="add_circle" clickFunction={addExtra} />
-            {/if}
-            {#if extraAmount > (extra.min || 0)}
-                <MaterialButton
-                    symbol="remove_circle"
-                    clickFunction={removeExtra} />
-            {/if}
-        </div>
-    </td>
-</tr>

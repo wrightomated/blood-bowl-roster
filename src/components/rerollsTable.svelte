@@ -12,7 +12,9 @@
     const extras = extrasForTeam(selectedTeam.id, $rosterMode);
 
     $: teamTotal =
-        $roster.players.map((x) => x.player.cost).reduce((a, b) => a + b, 0) +
+        $roster.players
+            .map((x) => x.player.cost + (x.alterations?.valueChange || 0))
+            .reduce((a, b) => a + b, 0) +
         extras
             .filter((e) => e.extraString !== 'dedicated_fans')
             .map((e) => $roster.extra[e.extraString] * e.cost || 0)

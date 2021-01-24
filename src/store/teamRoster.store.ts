@@ -7,6 +7,7 @@ import { stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
 import type { RosterMode } from './rosterMode.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
+import { extrasForTeam } from '../helpers/extrasForTeam';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -94,11 +95,11 @@ function createRoster() {
                     },
                 };
             }),
-        addExtra: (extraKey: string) =>
+        addExtra: (extraKey: string, extraCost: number) =>
             update((store) => {
                 return {
                     ...store,
-                    treasury: store.treasury,
+                    treasury: store.treasury - extraCost,
                     extra: {
                         ...store.extra,
                         [extraKey]: store?.extra?.[extraKey]
@@ -107,10 +108,18 @@ function createRoster() {
                     },
                 };
             }),
-        removeExtra: (extraKey: string) =>
+        removeExtra: (
+            extraKey: string,
+            rosterMode: RosterMode,
+            extraCost: number,
+        ) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury:
+                        rosterMode === 'postGame'
+                            ? store.treasury
+                            : store.treasury + extraCost,
                     extra: {
                         ...store.extra,
                         [extraKey]: store?.extra?.[extraKey]

@@ -255,13 +255,16 @@
         <div class="secondary">
             Randomly Improve Characteristic: {sppCost()}spp
             <button on:click={roll}>{d16 ? d16 : 'Roll D16'}</button>
-            {#each characteristics as chara, i}
-                <button
-                    disabled={!enabled.includes(chara)}
-                    on:click={() => addCharacteristic(i)}>{chara}</button
-                >
-            {/each}
-            <button on:click={selectSecondary}>Select Secondary</button>
+
+            <div>
+                {#each characteristics as chara, i}
+                    <button
+                        disabled={!enabled.includes(chara)}
+                        on:click={() => addCharacteristic(i)}>{chara}</button
+                    >
+                {/each}
+                <button on:click={selectSecondary}>Select Secondary</button>
+            </div>
         </div>
     {/if}
 </div>

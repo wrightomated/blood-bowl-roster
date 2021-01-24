@@ -37,7 +37,11 @@
 </div>
 <Export />
 <p>
-    Mode: {$rosterMode}
+    Mode: <select name="rosterMode" id="" bind:value={$rosterMode}>
+        <option value="league"> League Roster Creation </option>
+        <option value="postGame"> Post Game </option>
+        <option value="exhibition"> Exhibition </option>
+    </select>
 </p>
 <div class="table-container">
     <table>
@@ -54,9 +58,11 @@
                 <td class="skills">Skills</td>
                 <td>Hiring Fee</td>
                 <td id="spp-header">Unspent Spp</td>
-                <td>Mng</td>
-                <td>Ni</td>
-                <td>TR</td>
+                {#if $rosterMode === 'postGame'}
+                    <td>Mng</td>
+                    <td>Ni</td>
+                    <td>TR</td>
+                {/if}
                 <td>Current Value</td>
             </tr>
         </thead>
@@ -100,9 +106,11 @@
                     <td />
                     <td />
                     <td />
-                    <td />
-                    <td />
-                    <td />
+                    {#if $rosterMode === 'postGame'}
+                        <td />
+                        <td />
+                        <td />
+                    {/if}
                     <td />
                 </tr>
             {/if}

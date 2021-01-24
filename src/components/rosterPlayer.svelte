@@ -5,6 +5,7 @@
     import { currentTeam } from '../store/currentTeam.store';
     import type { StarPlayer } from '../models/player.model';
     import AddSkill from './addSkill.svelte';
+    import { rosterMode } from '../store/rosterMode.store';
 
     export let index: number;
 
@@ -31,11 +32,13 @@
     const moveDown = () => {
         roster.movePlayerDown(index);
     };
-    const playerCostString = () => {
+    const playerCostString = (currentValue: boolean = false) => {
         return rosterPlayer.player.cost > 0
             ? `${
                   rosterPlayer.player.cost +
-                  (rosterPlayer.alterations?.valueChange || 0)
+                  (currentValue
+                      ? rosterPlayer.alterations?.valueChange || 0
+                      : 0)
               },000`
             : '-';
     };
@@ -112,7 +115,7 @@
                     {numberOfPlayerType}/{maxOfPlayerType}
                 </span>
             {/if}
-            {#if (rosterPlayer.alterations?.advancements || 0) < 6}
+            {#if $rosterMode !== 'league' && (rosterPlayer.alterations?.advancements || 0) < 6}
                 <span class="add-skill">
                     <MaterialButton
                         symbol="elevator"
@@ -143,10 +146,13 @@
             />
         {:else}0{/if}
     </td>
-    <td>0</td>
-    <td>0</td>
-    <td>0</td>
-    <td>{playerCostString()}</td>
+    {#if $rosterMode === 'postGame'}
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+    {/if}
+
+    <td>{playerCostString(true)}</td>
 </tr>
 {#if !rosterPlayer.starPlayer && showAddSkills && (rosterPlayer.alterations?.advancements || 0) < 6}
     <tr>
