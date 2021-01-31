@@ -17,10 +17,14 @@
     export let teamList: Team[];
 
     let rosterCode: string;
+    let includeNaf: boolean = true;
+    const nafTeams = [28, 29];
 
     $: showTeams = $teamSelectionOpen;
 
-    $: sortedTeam = sortTeam().filter((x) => $filteredTiers.includes(x.tier));
+    $: sortedTeam = sortTeam()
+        .filter((x) => $filteredTiers.includes(x.tier))
+        .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true));
 
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
@@ -81,13 +85,18 @@
         roster.codeToRoster(rosterCode);
         toggleLoad();
     };
+
+    const toggleNaf = () => {
+        includeNaf = !includeNaf;
+    };
 </script>
 
 {#if !$teamLoadOpen}
     <button
         class:cancel={showTeams}
         class="new-team"
-        on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
+        on:click={() => toggleTeam()}
+        >{!showTeams ? 'New Team' : 'Cancel'}
     </button>
 {/if}
 
@@ -135,6 +144,12 @@
                 on:click={() => toggledTiers.toggleTier(3)}
                 class:selected={$filteredTiers.includes(3)}
                 class="filter-button">III</button
+            >
+            <button
+                on:click={toggleNaf}
+                title="Filter NAF teams"
+                class:selected={includeNaf}
+                class="filter-button">N</button
             >
         </div>
     </div>
