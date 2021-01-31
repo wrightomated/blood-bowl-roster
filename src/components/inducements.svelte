@@ -38,7 +38,77 @@
     const toggleShowAllInducements = () => {
         showAllInducements = !showAllInducements;
     };
+    const removeAllInducements = () => {
+        roster.removeAllInducements();
+    };
 </script>
+
+<table>
+    <thead>
+        <tr>
+            <td on:click={toggleShowAllInducements}>Inducement</td>
+            <td class="inducement__qty" on:click={toggleShowAllInducements}>
+                QTY
+            </td>
+            <td on:click={toggleShowAllInducements}>Cost</td>
+            <td class="inducement__toggle">
+                <MaterialButton
+                    hoverText="Toggle Inducements"
+                    symbol={showAllInducements
+                        ? 'arrow_drop_up'
+                        : 'arrow_drop_down'}
+                    clickFunction={toggleShowAllInducements}
+                />
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {#if $roster.mode === 'league' && Object.keys($roster.inducements).length > 0}
+            <tr>
+                <td colspan="3">Remove all (no refund)</td>
+                <td>
+                    <MaterialButton
+                        hoverText="Remove all inducements"
+                        symbol="delete_forever"
+                        clickFunction={() => removeAllInducements()}
+                    /></td
+                >
+            </tr>
+        {/if}
+        {#each filteredInducements as ind}
+            {#if ind.displayName === 'Star Player' && showAllInducements}
+                <StarPlayerInducement />
+            {:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
+                <tr>
+                    <td class="inducement__display-name">{ind.displayName}</td>
+                    <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
+                    <td>
+                        {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
+                    </td>
+                    <td class="inducement__control">
+                        <div class="flex-container">
+                            {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
+                                <MaterialButton
+                                    hoverText="Add inducement"
+                                    symbol="add_circle"
+                                    clickFunction={() => addInducement(ind.id)}
+                                />
+                            {/if}
+                            {#if $roster.inducements?.[ind.id] > 0}
+                                <MaterialButton
+                                    hoverText="Remove inducement"
+                                    symbol="remove_circle"
+                                    clickFunction={() =>
+                                        removeInducement(ind.id)}
+                                />
+                            {/if}
+                        </div>
+                    </td>
+                </tr>
+            {/if}
+        {/each}
+    </tbody>
+</table>
 
 <style lang="scss">
     .inducement {
@@ -66,49 +136,3 @@
         }
     }
 </style>
-
-<table>
-    <thead>
-        <tr>
-            <td on:click={toggleShowAllInducements}>Inducement</td>
-            <td class="inducement__qty" on:click={toggleShowAllInducements}>
-                QTY
-            </td>
-            <td on:click={toggleShowAllInducements}>Cost</td>
-            <td class="inducement__toggle">
-                <MaterialButton
-                    symbol={showAllInducements ? 'arrow_drop_up' : 'arrow_drop_down'}
-                    clickFunction={toggleShowAllInducements} />
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        {#each filteredInducements as ind}
-            {#if ind.displayName === 'Star Player' && showAllInducements}
-                <StarPlayerInducement />
-            {:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
-                <tr>
-                    <td class="inducement__display-name">{ind.displayName}</td>
-                    <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
-                    <td>
-                        {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
-                    </td>
-                    <td class="inducement__control">
-                        <div class="flex-container">
-                            {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
-                                <MaterialButton
-                                    symbol="add_circle"
-                                    clickFunction={() => addInducement(ind.id)} />
-                            {/if}
-                            {#if $roster.inducements?.[ind.id] > 0}
-                                <MaterialButton
-                                    symbol="remove_circle"
-                                    clickFunction={() => removeInducement(ind.id)} />
-                            {/if}
-                        </div>
-                    </td>
-                </tr>
-            {/if}
-        {/each}
-    </tbody>
-</table>

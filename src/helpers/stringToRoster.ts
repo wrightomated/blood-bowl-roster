@@ -1,7 +1,12 @@
 import { playerCatalogue } from '../data/players.data';
 import { starPlayers } from '../data/starPlayer.data';
 import { teamData } from '../data/teams.data';
-import type { ExtraRosterInfo, PlayerAlterations, Roster } from '../models/roster.model';
+import type {
+    ExtraRosterInfo,
+    PlayerAlterations,
+    Roster,
+} from '../models/roster.model';
+import type { RosterMode } from '../store/rosterMode.store';
 
 export const stringToRoster = (code: string) => {
     const [rosterString, ...rest] = code.split('I');
@@ -11,14 +16,19 @@ export const stringToRoster = (code: string) => {
     const teamId = getNumber(id);
     const roster: Roster = {
         teamId,
-        extra: stringToExtra(extras.filter((x) => !x.includes('i'))),
+        extra: stringToExtra(
+            extras.filter((x) => !x.includes('i') && !x.includes('m')),
+        ),
         players: expandPlayers(players),
         teamName: '',
         teamType: teamData.teams.find((t) => t.id === teamId).name,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
+        mode: getMode(extras.filter((x) => x.includes('m'))?.[0] || 'm1'),
     };
-    return rosterNames.length > 0 ? addNamesToRoster(roster, rosterNames) : roster;
+    return rosterNames.length > 0
+        ? addNamesToRoster(roster, rosterNames)
+        : roster;
 };
 
 const expandPlayers = (players: string[]) => {
@@ -79,6 +89,15 @@ const constructAlterations = (other: string[]) => {
             case 'e':
                 alterations['extraSkills'] = skillArray(o);
                 break;
+            case 'v':
+                alterations['valueChange'] = getNumber(o);
+                break;
+            case 'a':
+                alterations['advancements'] = getNumber(o);
+                break;
+            case 'i':
+                alterations['injuries'] = statChangeArray(o);
+                break;
             default:
                 break;
         }
@@ -127,7 +146,10 @@ const decodeName = (name: string) => {
     return decodeURIComponent(name);
 };
 
-const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (roster, rosterNames) => {
+const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (
+    roster,
+    rosterNames,
+) => {
     const [teamName, ...playerNames] = rosterNames
         .split(':')
         .map((n) => decodeName(n));
@@ -140,4 +162,8 @@ const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (roste
                 : p,
         ),
     };
+};
+
+const getMode: (modeMatch: string) => RosterMode = (modeMatch) => {
+    return getNumber(modeMatch) === 0 ? 'league' : 'exhibition';
 };

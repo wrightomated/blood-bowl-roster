@@ -35,6 +35,34 @@
     });
 </script>
 
+{#if $showExport}
+    <div class="container">
+        <div class="share-box">
+            <label for="url-input">Share Url:</label>
+            <input id="url-input" value="{baseUrl}?code={code}" />
+            {#if !urlCoppied}
+                <MaterialButton
+                    hoverText="Copy Url"
+                    symbol="content_copy"
+                    clickFunction={() => copyLink(toggleUrlCopy, '#url-input')}
+                />
+            {:else}<i class="material-icons saved">check_circle</i>{/if}
+        </div>
+        <div class="share-box">
+            <label for="code-input">Export Code:</label>
+            <input id="code-input" value={code} />
+            {#if !codeCoppied}
+                <MaterialButton
+                    hoverText="Copy Code"
+                    symbol="content_copy"
+                    clickFunction={() =>
+                        copyLink(toggleCodeCopy, '#code-input')}
+                />
+            {:else}<i class="material-icons saved">check_circle</i>{/if}
+        </div>
+    </div>
+{/if}
+
 <style lang="scss">
     @import '../styles/colour';
     .container {
@@ -59,26 +87,3 @@
         }
     }
 </style>
-
-{#if $showExport}
-    <div class="container">
-        <div class="share-box">
-            <label for="url-input">Share Url:</label>
-            <input id="url-input" value="{baseUrl}?code={code}" />
-            {#if !urlCoppied}
-                <MaterialButton
-                    symbol="content_copy"
-                    clickFunction={() => copyLink(toggleUrlCopy, '#url-input')} />
-            {:else}<i class="material-icons saved">check_circle</i>{/if}
-        </div>
-        <div class="share-box">
-            <label for="code-input">Export Code:</label>
-            <input id="code-input" value={code} />
-            {#if !codeCoppied}
-                <MaterialButton
-                    symbol="content_copy"
-                    clickFunction={() => copyLink(toggleCodeCopy, '#code-input')} />
-            {:else}<i class="material-icons saved">check_circle</i>{/if}
-        </div>
-    </div>
-{/if}

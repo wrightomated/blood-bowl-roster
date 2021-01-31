@@ -12,6 +12,8 @@
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
     import MaterialButton from './materialButton.svelte';
+    import { rosterMode } from '../store/rosterMode.store';
+
     export let teamList: Team[];
 
     let rosterCode: string;
@@ -48,13 +50,15 @@
         roster.reset({
             teamId: $currentTeam.id,
             teamType: $currentTeam.name,
+            mode: $rosterMode,
+            fans: $rosterMode === 'exhibition' ? 0 : 1,
         });
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
     };
 
-    const loadTeam = (savedRoster) => {
+    const loadTeam = (savedRoster: { id: any; name?: string }) => {
         const loadedRoster: Roster = JSON.parse(
             localStorage.getItem(`savedRoster${savedRoster.id}`),
         );
@@ -106,6 +110,14 @@
 {/if}
 
 {#if showTeams && !$teamLoadOpen}
+    <button
+        on:click={() => rosterMode.set('league')}
+        class:selected={$rosterMode === 'league'}>League</button
+    >
+    <button
+        on:click={() => rosterMode.set('exhibition')}
+        class:selected={$rosterMode === 'exhibition'}>Exhibition</button
+    >
     <div class="button-container">
         {#each sortedTeam as team}
             <button
@@ -160,7 +172,11 @@
                 placeholder="Input Code"
                 bind:value={rosterCode}
             />
-            <MaterialButton symbol="input" clickFunction={inputCode} />
+            <MaterialButton
+                hoverText="Enter code"
+                symbol="input"
+                clickFunction={inputCode}
+            />
         </div>
     </div>
 {/if}

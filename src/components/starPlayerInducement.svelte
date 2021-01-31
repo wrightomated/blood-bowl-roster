@@ -47,15 +47,6 @@
     };
 </script>
 
-<style lang="scss">
-    .left-align {
-        text-align: left;
-    }
-    .add-star {
-        display: flex;
-    }
-</style>
-
 <tr>
     <td class="left-align">
         Star Player:
@@ -72,7 +63,20 @@
     <td>{getSelected(selectedId)?.cost || 0},000</td>
     <td>
         <div class="add-star">
-            <MaterialButton symbol="add_circle" clickFunction={addStarPlayer} />
+            <MaterialButton
+                hoverText="Add star player"
+                symbol="add_circle"
+                clickFunction={addStarPlayer}
+            />
         </div>
     </td>
 </tr>
+
+<style lang="scss">
+    .left-align {
+        text-align: left;
+    }
+    .add-star {
+        display: flex;
+    }
+</style>

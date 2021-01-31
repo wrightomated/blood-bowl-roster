@@ -5,6 +5,8 @@ import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
+import { inducementCost } from '../helpers/totalInducementAmount';
+import type { RosterMode } from './rosterMode.store';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -15,12 +17,23 @@ function createRoster() {
         subscribe,
         addPlayer: (player: RosterPlayerRecord) =>
             update((store) => {
-                return { ...store, players: store.players.concat([player]) };
+                return {
+                    ...store,
+                    players: store.players.concat([player]),
+                    treasury: store.treasury - player.player.cost,
+                };
             }),
-        removePlayer: (indices: number[]) =>
+        removePlayer: (indices: number[], firePlayer: boolean) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury: !firePlayer
+                        ? store.treasury +
+                          store.players
+                              .filter((_, i) => indices.includes(i))
+                              .map((p) => p.player.cost)
+                              .reduce((a, b) => a + b, 0)
+                        : store.treasury,
                     players: store.players.filter(
                         (_, i) => !indices.includes(i),
                     ),
@@ -50,6 +63,9 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    treasury:
+                        store.treasury -
+                        inducementCost(inducementKey, store.teamId),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -62,6 +78,9 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    treasury:
+                        store.treasury +
+                        inducementCost(inducementKey, store.teamId),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -70,10 +89,15 @@ function createRoster() {
                     },
                 };
             }),
-        addExtra: (extraKey: string) =>
+        removeAllInducements: () =>
+            update((store) => {
+                return { ...store, inducements: {} };
+            }),
+        addExtra: (extraKey: string, extraCost: number) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury: store.treasury - extraCost,
                     extra: {
                         ...store.extra,
                         [extraKey]: store?.extra?.[extraKey]
@@ -82,10 +106,11 @@ function createRoster() {
                     },
                 };
             }),
-        removeExtra: (extraKey: string) =>
+        removeExtra: (extraKey: string, extraCost: number) =>
             update((store) => {
                 return {
                     ...store,
+                    treasury: store.treasury + extraCost,
                     extra: {
                         ...store.extra,
                         [extraKey]: store?.extra?.[extraKey]
@@ -100,12 +125,21 @@ function createRoster() {
             }),
         codeToRoster: (rosterCode: string) =>
             update((store) => {
-                const loadedRoster = rosterFromCode(rosterCode) || getEmptyRoster();
+                const loadedRoster =
+                    rosterFromCode(rosterCode) || getEmptyRoster();
                 currentTeam.setCurrentTeamWithCode(rosterCode);
                 return { ...loadedRoster };
             }),
-        reset: (options?: { teamId: number; teamType: TeamName }) =>
-            set(getEmptyRoster(options)),
+        changeRosterMode: (mode: RosterMode) =>
+            update((store) => {
+                return { ...store, mode };
+            }),
+        reset: (options?: {
+            teamId: number;
+            teamType: TeamName;
+            mode: RosterMode;
+            fans: number;
+        }) => set(getEmptyRoster(options)),
         set,
     };
 }
@@ -113,15 +147,18 @@ function createRoster() {
 const getEmptyRoster: (options?: {
     teamId: number;
     teamType: TeamName;
+    fans: number;
+    mode: RosterMode;
 }) => Roster = (options) => {
     return {
         teamId: options?.teamId || 0,
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
-        extra: { dedicated_fans: 1 },
+        extra: { dedicated_fans: options?.fans || 0 },
         inducements: {},
         treasury: 1000,
+        mode: options?.mode,
     };
 };
 
@@ -153,7 +190,7 @@ const rosterFromCode = (code: string) => {
     } catch (error) {
         return null;
     }
-}
+};
 
 const getDefaultRoster: () => Roster = () => {
     return (
