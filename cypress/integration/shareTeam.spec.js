@@ -22,7 +22,7 @@ context('Test that a team can be copied', () => {
     });
 
     it('should load roster', () => {
-        const roster = {"teamId":3,"players":[{"playerName":"Erny","player":{"id":9,"position":"Beastman Runner Lineman","playerStats":[6,3,3,4,9],"cost":60,"skills":[30],"primary":["G","M","S"],"secondary":["A","P"]},"alterations":{"spp":0,"ni":0}}],"teamName":"The Horns","teamType":"Chaos Chosen","extra":{"dedicated_fans":1},"inducements":{},"treasury":1000};
+        const roster = {"teamId":3,"mode":"exhibition","players":[{"playerName":"Erny","player":{"id":9,"position":"Beastman Runner Lineman","playerStats":[6,3,3,4,9],"cost":60,"skills":[30],"primary":["G","M","S"],"secondary":["A","P"]},"alterations":{"spp":0,"ni":0}}],"teamName":"The Horns","teamType":"Chaos Chosen","extra":{"dedicated_fans":1},"inducements":{},"treasury":1000};
         cy.visit('?code=t3t1000d1p9IThe%20Horns:Erny');
         cy.get('.team-player-caption').should('have.text', 'Chaos Chosen Team Players');
         cy.get('#team-name').should(() => {

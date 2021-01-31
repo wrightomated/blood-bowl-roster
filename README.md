@@ -1,6 +1,6 @@
 # BBRoster
 
-A simple web app to keep track of Bloodbowl 2020 teams made with [Svelte](https://svelte.dev) apps.
+A simple web app to keep track of Bloodbowl 2020 teams made with [Svelte](https://svelte.dev).
 
 ## Get started
 
@@ -16,9 +16,9 @@ npm install
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running.
+Navigate to [localhost:5000](http://localhost:5000). You should see the app running.
 
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
+If you're using [Visual Studio Code](https://code.visualstudio.com/) [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) is pretty handy.
 
 ## Building and running in production mode
 
