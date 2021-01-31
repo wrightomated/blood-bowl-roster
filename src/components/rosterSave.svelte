@@ -26,6 +26,26 @@
     });
 </script>
 
+{#if !saved}
+    <MaterialButton
+        hoverText="Save team"
+        symbol="save"
+        clickFunction={() => saveRoster()}
+    />
+{:else}<i class="material-icons saved">check_circle</i>{/if}
+{#if !rosterCleared}
+    <MaterialButton
+        hoverText="Delete team forever"
+        symbol="delete_forever"
+        clickFunction={clearRoster}
+    />
+{/if}
+<MaterialButton
+    hoverText="Share team"
+    symbol={$showExport ? 'link_off' : 'link'}
+    clickFunction={toggleExport}
+/>
+
 <style lang="scss">
     .saved {
         color: green;
@@ -38,13 +58,3 @@
         }
     }
 </style>
-
-{#if !saved}
-    <MaterialButton symbol="save" clickFunction={() => saveRoster()} />
-{:else}<i class="material-icons saved">check_circle</i>{/if}
-{#if !rosterCleared}
-    <MaterialButton symbol="delete_forever" clickFunction={clearRoster} />
-{/if}
-<MaterialButton
-    symbol={$showExport ? 'link_off' : 'link'}
-    clickFunction={toggleExport} />

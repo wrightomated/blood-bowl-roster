@@ -1,5 +1,8 @@
+import type { Roster } from '../../models/roster.model';
+
 export const testRoster = {
     teamId: 1,
+    mode: 'exhibition',
     players: [
         {
             playerName: 'Bob',
@@ -154,6 +157,7 @@ export const testRoster = {
 
 export const inducementAndStarPlayer = {
     teamId: 22,
+    mode: 'exhibition',
     players: [
         {
             player: {
@@ -178,6 +182,7 @@ export const inducementAndStarPlayer = {
 
 export const playerSkills = {
     teamId: 25,
+    mode: 'exhibition',
     players: [
         {
             player: {
@@ -206,8 +211,9 @@ export const playerSkills = {
     treasury: 20,
 };
 
-export const noTeamName = {
+export const noTeamName: Roster = {
     teamId: 2,
+    mode: 'exhibition',
     players: [
         {
             playerName: 'Bob',
@@ -243,9 +249,9 @@ export const noTeamName = {
     treasury: 1000,
 };
 
-export const inducementAndStarPlayerString = 't22t10d1y1i8.1p224I';
+export const inducementAndStarPlayerString = 't22t10m1d1y1i8.1p224I';
 
 export const testRosterString =
-    't1t1000d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:Bob::::::Bill';
+    't1t1000m1d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:Bob::::::Bill';
 
-export const playerSkillsString = 't25t20d1p104s1n1e21.55t1c10-101I';
+export const playerSkillsString = 't25t20m1d1p104s1n1e21.55t1c10-101I';

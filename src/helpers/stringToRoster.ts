@@ -6,6 +6,7 @@ import type {
     PlayerAlterations,
     Roster,
 } from '../models/roster.model';
+import type { RosterMode } from '../store/rosterMode.store';
 
 export const stringToRoster = (code: string) => {
     const [rosterString, ...rest] = code.split('I');
@@ -15,12 +16,15 @@ export const stringToRoster = (code: string) => {
     const teamId = getNumber(id);
     const roster: Roster = {
         teamId,
-        extra: stringToExtra(extras.filter((x) => !x.includes('i'))),
+        extra: stringToExtra(
+            extras.filter((x) => !x.includes('i') && !x.includes('m')),
+        ),
         players: expandPlayers(players),
         teamName: '',
         teamType: teamData.teams.find((t) => t.id === teamId).name,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
+        mode: getMode(extras.filter((x) => x.includes('m'))?.[0] || 'm1'),
     };
     return rosterNames.length > 0
         ? addNamesToRoster(roster, rosterNames)
@@ -158,4 +162,8 @@ const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (
                 : p,
         ),
     };
+};
+
+const getMode: (modeMatch: string) => RosterMode = (modeMatch) => {
+    return getNumber(modeMatch) === 0 ? 'league' : 'exhibition';
 };

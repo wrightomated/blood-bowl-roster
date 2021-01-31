@@ -34,28 +34,6 @@
     };
 </script>
 
-<style lang="scss">
-    @import '../styles/font';
-
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-    }
-    .skills-header {
-        min-width: 100px;
-    }
-    .left-align {
-        text-align: left;
-    }
-    .header-container {
-        display: flex;
-        margin-top: 1em;
-        caption {
-            font-family: $display-font;
-        }
-    }
-</style>
-
 <LocalStorageController />
 
 <TeamSelector {teamList} />
@@ -66,8 +44,12 @@
             {`${selectedTeam.name} Team Players`}
         </caption>
         <MaterialButton
+            hoverText={$showAvailablePlayers
+                ? 'Hide available players'
+                : 'Show available players'}
             symbol={$showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
-            clickFunction={togglePlayers} />
+            clickFunction={togglePlayers}
+        />
     </div>
     {#if $showAvailablePlayers}
         <div class="table-container">
@@ -91,7 +73,8 @@
                     {#each selectedTeam.players as teamPlayer}
                         <PlayerRow
                             max={teamPlayer.max}
-                            player={playerById(teamPlayer.id)} />
+                            player={playerById(teamPlayer.id)}
+                        />
                     {/each}
                 </tbody>
             </table>
@@ -102,8 +85,14 @@
             {`${selectedTeam.name} Team Star Players`}
         </caption>
         <MaterialButton
-            symbol={$showAvailableStarPlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
-            clickFunction={toggleStarPlayers} />
+            hoverText={$showAvailableStarPlayers
+                ? 'Hide available star players'
+                : 'Show available star players'}
+            symbol={$showAvailableStarPlayers
+                ? 'arrow_drop_up'
+                : 'arrow_drop_down'}
+            clickFunction={toggleStarPlayers}
+        />
     </div>
     {#if $showAvailableStarPlayers}
         <StarPlayers />
@@ -111,7 +100,30 @@
 
     {#if !$teamSelectionOpen && !$teamLoadOpen && $roster.teamType}
         <Roster
-            playerTypes={selectedTeam.players.map((x) => playerById(x.id))} />
+            playerTypes={selectedTeam.players.map((x) => playerById(x.id))}
+        />
         <RerollsTable {selectedTeam} />
     {/if}
 {/if}
+
+<style lang="scss">
+    @import '../styles/font';
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+    }
+    .skills-header {
+        min-width: 100px;
+    }
+    .left-align {
+        text-align: left;
+    }
+    .header-container {
+        display: flex;
+        margin-top: 1em;
+        caption {
+            font-family: $display-font;
+        }
+    }
+</style>

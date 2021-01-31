@@ -5,7 +5,6 @@
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
     import Export from './export.svelte';
-    import { rosterMode } from '../store/rosterMode.store';
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -36,13 +35,6 @@
     <RosterSave />
 </div>
 <Export />
-<p>
-    Mode: <select name="rosterMode" id="" bind:value={$rosterMode}>
-        <option value="league"> League Roster Creation </option>
-        <option value="postGame"> Post Game </option>
-        <option value="exhibition"> Exhibition </option>
-    </select>
-</p>
 <div class="table-container">
     <table>
         <thead>
@@ -58,7 +50,7 @@
                 <td class="skills">Skills</td>
                 <td>Hiring Fee</td>
                 <td id="spp-header">Unspent Spp</td>
-                {#if $rosterMode === 'postGame'}
+                {#if false}
                     <td>Mng</td>
                     <td>Ni</td>
                     <td>TR</td>
@@ -83,6 +75,7 @@
                     </td>
                     <td class="left-align">
                         <MaterialButton
+                            hoverText="Add new player"
                             symbol="add_circle"
                             clickFunction={addPlayer}
                         />
@@ -106,7 +99,7 @@
                     <td />
                     <td />
                     <td />
-                    {#if $rosterMode === 'postGame'}
+                    {#if false}
                         <td />
                         <td />
                         <td />

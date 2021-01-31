@@ -1,7 +1,14 @@
 <script lang="ts">
     export let symbol: string;
     export let clickFunction: Function;
+    export let hoverText: string;
 </script>
+
+<button
+    class="symbol-control"
+    on:click={() => clickFunction()}
+    title={hoverText}><i class="material-icons">{symbol}</i></button
+>
 
 <style lang="scss">
     button {
@@ -18,6 +25,3 @@
         }
     }
 </style>
-
-<button class="symbol-control" on:click={() => clickFunction()}><i
-        class="material-icons">{symbol}</i></button>

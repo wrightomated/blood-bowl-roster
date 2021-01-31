@@ -5,9 +5,8 @@ import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
-import type { RosterMode } from './rosterMode.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
-import { extrasForTeam } from '../helpers/extrasForTeam';
+import type { RosterMode } from './rosterMode.store';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -24,18 +23,17 @@ function createRoster() {
                     treasury: store.treasury - player.player.cost,
                 };
             }),
-        removePlayer: (indices: number[], rosterMode?: RosterMode) =>
+        removePlayer: (indices: number[], firePlayer: boolean) =>
             update((store) => {
                 return {
                     ...store,
-                    treasury:
-                        rosterMode !== 'postGame'
-                            ? store.treasury +
-                              store.players
-                                  .filter((_, i) => indices.includes(i))
-                                  .map((p) => p.player.cost)
-                                  .reduce((a, b) => a + b, 0)
-                            : store.treasury,
+                    treasury: !firePlayer
+                        ? store.treasury +
+                          store.players
+                              .filter((_, i) => indices.includes(i))
+                              .map((p) => p.player.cost)
+                              .reduce((a, b) => a + b, 0)
+                        : store.treasury,
                     players: store.players.filter(
                         (_, i) => !indices.includes(i),
                     ),
@@ -61,15 +59,13 @@ function createRoster() {
                     players: switchTwoElements(store.players, index, index + 1),
                 };
             }),
-        addInducement: (inducementKey: string, rosterMode?: RosterMode) =>
+        addInducement: (inducementKey: string) =>
             update((store) => {
                 return {
                     ...store,
                     treasury:
-                        rosterMode === 'postGame'
-                            ? store.treasury
-                            : store.treasury -
-                              inducementCost(inducementKey, store.teamId),
+                        store.treasury -
+                        inducementCost(inducementKey, store.teamId),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -78,15 +74,13 @@ function createRoster() {
                     },
                 };
             }),
-        removeInducement: (inducementKey: string, rosterMode?: RosterMode) =>
+        removeInducement: (inducementKey: string) =>
             update((store) => {
                 return {
                     ...store,
                     treasury:
-                        rosterMode === 'postGame'
-                            ? store.treasury
-                            : store.treasury +
-                              inducementCost(inducementKey, store.teamId),
+                        store.treasury +
+                        inducementCost(inducementKey, store.teamId),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -94,6 +88,10 @@ function createRoster() {
                             : 0,
                     },
                 };
+            }),
+        removeAllInducements: () =>
+            update((store) => {
+                return { ...store, inducements: {} };
             }),
         addExtra: (extraKey: string, extraCost: number) =>
             update((store) => {
@@ -108,18 +106,11 @@ function createRoster() {
                     },
                 };
             }),
-        removeExtra: (
-            extraKey: string,
-            rosterMode: RosterMode,
-            extraCost: number,
-        ) =>
+        removeExtra: (extraKey: string, extraCost: number) =>
             update((store) => {
                 return {
                     ...store,
-                    treasury:
-                        rosterMode === 'postGame'
-                            ? store.treasury
-                            : store.treasury + extraCost,
+                    treasury: store.treasury + extraCost,
                     extra: {
                         ...store.extra,
                         [extraKey]: store?.extra?.[extraKey]
@@ -139,8 +130,16 @@ function createRoster() {
                 currentTeam.setCurrentTeamWithCode(rosterCode);
                 return { ...loadedRoster };
             }),
-        reset: (options?: { teamId: number; teamType: TeamName }) =>
-            set(getEmptyRoster(options)),
+        changeRosterMode: (mode: RosterMode) =>
+            update((store) => {
+                return { ...store, mode };
+            }),
+        reset: (options?: {
+            teamId: number;
+            teamType: TeamName;
+            mode: RosterMode;
+            fans: number;
+        }) => set(getEmptyRoster(options)),
         set,
     };
 }
@@ -148,15 +147,18 @@ function createRoster() {
 const getEmptyRoster: (options?: {
     teamId: number;
     teamType: TeamName;
+    fans: number;
+    mode: RosterMode;
 }) => Roster = (options) => {
     return {
         teamId: options?.teamId || 0,
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
-        extra: { dedicated_fans: 1 },
+        extra: { dedicated_fans: options?.fans || 0 },
         inducements: {},
         treasury: 1000,
+        mode: options?.mode,
     };
 };
 

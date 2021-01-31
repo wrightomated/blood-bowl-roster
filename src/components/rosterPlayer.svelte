@@ -5,7 +5,6 @@
     import { currentTeam } from '../store/currentTeam.store';
     import type { StarPlayer } from '../models/player.model';
     import AddSkill from './addSkill.svelte';
-    import { rosterMode } from '../store/rosterMode.store';
 
     export let index: number;
 
@@ -22,9 +21,11 @@
     $: playerSkillIds = rosterPlayer.player.skills.concat(
         rosterPlayer.alterations?.extraSkills || [],
     );
+    $: currentCost =
+        rosterPlayer.player.cost + (rosterPlayer.alterations?.valueChange || 0);
 
-    const removePlayer = () => {
-        removeTwoForOne() || roster.removePlayer([index]);
+    const removePlayer = (firePlayer: boolean) => {
+        removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
     };
     const moveUp = () => {
         roster.movePlayerUp(index);
@@ -32,24 +33,19 @@
     const moveDown = () => {
         roster.movePlayerDown(index);
     };
-    const playerCostString = (currentValue: boolean = false) => {
+    const playerCostString = () => {
         return rosterPlayer.player.cost > 0
-            ? `${
-                  rosterPlayer.player.cost +
-                  (currentValue
-                      ? rosterPlayer.alterations?.valueChange || 0
-                      : 0)
-              },000`
+            ? `${rosterPlayer.player.cost},000`
             : '-';
     };
-    const removeTwoForOne = () => {
+    const removeTwoForOne = (firePlayer: boolean) => {
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
             const tfoIndex = $roster.players.findIndex(
                 (p) => p.player.id === twoForOne,
             );
             if (twoForOne) {
-                roster.removePlayer([index, tfoIndex]);
+                roster.removePlayer([index, tfoIndex], firePlayer);
                 return true;
             }
         }
@@ -88,20 +84,30 @@
         <div class="flex-container">
             {#if index > 0}
                 <MaterialButton
+                    hoverText="Move player up"
                     symbol="arrow_circle_up"
                     clickFunction={moveUp}
                 />
             {/if}
             {#if index < $roster.players.length - 1}
                 <MaterialButton
+                    hoverText="Move player down"
                     symbol="arrow_circle_down"
                     clickFunction={moveDown}
                 />
             {/if}
             <MaterialButton
+                hoverText="Remove player"
                 symbol="delete_forever"
-                clickFunction={removePlayer}
+                clickFunction={() => removePlayer(false)}
             />
+            {#if $roster.mode === 'league'}
+                <MaterialButton
+                    hoverText="Fire player (no refund)"
+                    symbol="local_fire_department"
+                    clickFunction={() => removePlayer(true)}
+                />
+            {/if}
         </div>
     </td>
     <td class="player-position left-align">
@@ -115,9 +121,10 @@
                     {numberOfPlayerType}/{maxOfPlayerType}
                 </span>
             {/if}
-            {#if $rosterMode !== 'league' && (rosterPlayer.alterations?.advancements || 0) < 6}
+            {#if (rosterPlayer.alterations?.advancements || 0) < 6}
                 <span class="add-skill">
                     <MaterialButton
+                        hoverText="Player advancement"
                         symbol="elevator"
                         clickFunction={toggleShowSkills}
                     />
@@ -146,13 +153,13 @@
             />
         {:else}0{/if}
     </td>
-    {#if $rosterMode === 'postGame'}
+    {#if false}
         <td>0</td>
         <td>0</td>
         <td>0</td>
     {/if}
 
-    <td>{playerCostString(true)}</td>
+    <td>{currentCost},000</td>
 </tr>
 {#if !rosterPlayer.starPlayer && showAddSkills && (rosterPlayer.alterations?.advancements || 0) < 6}
     <tr>

@@ -2,7 +2,6 @@
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
     import type { Extra } from '../models/extra.model';
-    import { rosterMode } from '../store/rosterMode.store';
 
     export let extra: Extra;
     $: extraAmount = $roster?.extra[extra.extraString] || extra?.min || 0;
@@ -11,7 +10,7 @@
         roster.addExtra(extra.extraString, extra.cost);
     };
     const removeExtra = () => {
-        roster.removeExtra(extra.extraString, $rosterMode, extra.cost);
+        roster.removeExtra(extra.extraString, extra.cost);
     };
 </script>
 
@@ -22,10 +21,15 @@
     <td class="control">
         <div class="flex-container">
             {#if extraAmount < extra.max}
-                <MaterialButton symbol="add_circle" clickFunction={addExtra} />
+                <MaterialButton
+                    hoverText="Add extra"
+                    symbol="add_circle"
+                    clickFunction={addExtra}
+                />
             {/if}
             {#if extraAmount > (extra.min || 0)}
                 <MaterialButton
+                    hoverText="Remove extra"
                     symbol="remove_circle"
                     clickFunction={removeExtra}
                 />

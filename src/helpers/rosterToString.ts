@@ -4,6 +4,7 @@ import type {
     Roster,
     RosterPlayerRecord,
 } from '../models/roster.model';
+import type { RosterMode } from '../store/rosterMode.store';
 
 const extraToString = (extra: ExtraRosterInfo) => {
     const map = {
@@ -91,11 +92,15 @@ const charAndNumber = (char: string, num: number) => {
     return `${char}${num}`;
 };
 
+const getModeInt = (mode: RosterMode) => {
+    return mode === 'league' ? 0 : 1;
+};
+
 export const rosterToString = (roster: Roster) => {
     const extraS = extraToString(roster.extra);
     const inducementS = inducementToString(roster.inducements);
     const players = roster.players.map((x) => playerToString(x)).join('');
-    return `t${roster.teamId}t${
-        roster.treasury
-    }${extraS}${inducementS}${players}I${getNameString(roster)}`;
+    return `t${roster.teamId}t${roster.treasury}m${getModeInt(
+        roster.mode,
+    )}${extraS}${inducementS}${players}I${getNameString(roster)}`;
 };

@@ -4,6 +4,7 @@
     import { skillCatalogue } from '../data/skills.data';
     import { characteristics } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
+    import type { SkillCategory } from '../models/skill.model';
     import { categoryToName } from '../models/skill.model';
     import { roster } from '../store/teamRoster.store';
 
@@ -206,79 +207,128 @@
                 break;
         }
     };
+
+    const addRandomSkill = (category: SkillCategory) => {
+        const skills = availableSkills.filter((s) => s.category === category);
+        const randomIndex = Math.floor(Math.random() * skills.length);
+        addSkill(skills[randomIndex].id);
+    };
 </script>
 
 <div class="container">
-    {#if showButtons}
-        <div>
-            <button on:click={randomPrimary}>Random Primary</button>
-            <button on:click={selectPrimary}>Select Primary</button>
-            <button on:click={randomSecondary}>Random Secondary</button>
-            <button on:click={selectSecondary}>Select Secondary</button>
-            <button on:click={randomCharacteristic}
-                >Random Characteristic</button
-            >
-        </div>
-    {:else}
-        <button on:click={cancel}>Cancel</button>
-    {/if}
+    <div>
+        <button
+            class:selected={showPrimary && showRandom}
+            on:click={randomPrimary}
+            >Random Primary <span class="spp-font"
+                >{advancementCosts.ranPri[
+                    rosterPlayer.alterations?.advancements || 0
+                ]}spp</span
+            ></button
+        >
+        <button
+            on:click={selectPrimary}
+            class:selected={showPrimary && !showRandom}
+            >Select Primary <span class="spp-font"
+                >{advancementCosts.priOrRanSec[
+                    rosterPlayer.alterations?.advancements || 0
+                ]}spp</span
+            ></button
+        >
+        <button
+            on:click={randomSecondary}
+            class:selected={showSecondary && showRandom}
+            >Random Secondary <span class="spp-font"
+                >{advancementCosts.priOrRanSec[
+                    rosterPlayer.alterations?.advancements || 0
+                ]}spp</span
+            ></button
+        >
+        <button
+            on:click={selectSecondary}
+            class:selected={showSecondary && !showRandom}
+            >Select Secondary <span class="spp-font"
+                >{advancementCosts.sec[
+                    rosterPlayer.alterations?.advancements || 0
+                ]}spp</span
+            ></button
+        >
+        <button
+            on:click={randomCharacteristic}
+            class:selected={showCharacteristics}
+            >Random Characteristic <span class="spp-font"
+                >{advancementCosts.char[
+                    rosterPlayer.alterations?.advancements || 0
+                ]}spp</span
+            ></button
+        >
+    </div>
 
     {#if showPrimary}
-        <div class="primary">
-            Primary Skills: {sppCost()}spp
-            {#each rosterPlayer.player.primary as category}
-                <div>
-                    {categoryToName.get(category)}:
-                    {#each primarySkills.filter((s) => s.category === category) as s}
-                        <button on:click={() => addSkill(s.id)}>{s.name}</button
-                        >
-                    {/each}
-                </div>
-            {/each}
-        </div>
+        {#each rosterPlayer.player.primary as category}
+            <fieldset>
+                <legend>
+                    {categoryToName.get(category)}
+                </legend>
+                {#if showRandom}
+                    <button on:click={() => addRandomSkill(category)}
+                        >Random</button
+                    >
+                {/if}
+                {#each primarySkills.filter((s) => s.category === category) as s}
+                    <button on:click={() => addSkill(s.id)}>{s.name}</button>
+                {/each}
+            </fieldset>
+        {/each}
     {/if}
     {#if showSecondary}
-        <div class="secondary">
-            Secondary Skills: {sppCost()}spp
-            {#each rosterPlayer.player.secondary as category}
-                <div>
-                    {categoryToName.get(category)}:
-                    {#each secondarySkills.filter((s) => s.category === category) as s}
-                        <button on:click={() => addSkill(s.id)}>{s.name}</button
-                        >
-                    {/each}
-                </div>
-            {/each}
-        </div>
+        {#each rosterPlayer.player.secondary as category}
+            <fieldset>
+                <legend>
+                    {categoryToName.get(category)}
+                </legend>
+                {#if showRandom}
+                    <button on:click={() => addRandomSkill(category)}
+                        >Random</button
+                    >
+                {/if}
+                {#each secondarySkills.filter((s) => s.category === category) as s}
+                    <button on:click={() => addSkill(s.id)}>{s.name}</button>
+                {/each}
+            </fieldset>
+        {/each}
     {/if}
     {#if showCharacteristics}
-        <div class="secondary">
-            Randomly Improve Characteristic: {sppCost()}spp
-            <button on:click={roll}>{d16 ? d16 : 'Roll D16'}</button>
-
-            <div>
-                {#each characteristics as chara, i}
-                    <button
-                        disabled={!enabled.includes(chara)}
-                        on:click={() => addCharacteristic(i)}>{chara}</button
-                    >
-                {/each}
-                <button on:click={selectSecondary}>Select Secondary</button>
-            </div>
-        </div>
+        <fieldset>
+            <legend> Characteristic </legend>
+            <button class="dice" on:click={roll}
+                >{d16 ? d16 : 'Roll D16'}</button
+            >
+            {#each characteristics as chara, i}
+                <button
+                    disabled={!enabled.includes(chara)}
+                    on:click={() => addCharacteristic(i)}>{chara}</button
+                >
+            {/each}
+            <button on:click={selectSecondary}>Select Secondary</button>
+        </fieldset>
     {/if}
 </div>
 
 <style lang="scss">
+    @import '../styles/colour';
+    @import '../styles/font';
     .container {
-        max-width: 90vw;
         text-align: left;
         position: sticky;
         left: 0;
         top: 0;
+        max-width: calc(100vw - 16px);
+        // @media screen and (max-width: 450px) {
+        //     max-width: 90vw;
+        // }
     }
     button {
-        @import '../styles/colour';
         border-radius: 10px;
         background-color: white;
         color: $secondary-colour;
@@ -301,6 +351,25 @@
         &:disabled {
             border: none;
             color: grey;
+        }
+
+        &.selected {
+            background-color: $secondary-colour;
+            color: white;
+        }
+
+        .spp-font {
+            font-family: $display-font;
+        }
+    }
+    fieldset {
+        padding: 1em;
+        border-radius: 10px;
+        border: 2px solid;
+        border-color: $secondary-colour;
+        margin-top: 1em;
+        legend {
+            color: $secondary-colour;
         }
     }
 </style>

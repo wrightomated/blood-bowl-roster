@@ -4,12 +4,13 @@
     import type { Team } from '../models/team.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import Inducements from './inducements.svelte';
-    import { rosterMode } from '../store/rosterMode.store';
     import { extrasForTeam } from '../helpers/extrasForTeam';
+    import MaterialButton from './materialButton.svelte';
 
     export let selectedTeam: Team;
 
-    const extras = extrasForTeam(selectedTeam.id, $rosterMode);
+    const extras = extrasForTeam(selectedTeam.id, $roster.mode);
+    let showTreasury = false;
 
     $: teamTotal =
         $roster.players
@@ -20,6 +21,12 @@
             .map((e) => $roster.extra[e.extraString] * e.cost || 0)
             .reduce((a, b) => a + b, 0) +
         calculateInducementTotal($roster.inducements, $roster.teamId);
+
+    const noEmptyTreasury = () => {
+        if (!$roster.treasury && $roster.treasury !== 0) {
+            roster.set({ ...$roster, treasury: 0 });
+        }
+    };
 </script>
 
 <div class="tables">
@@ -29,23 +36,15 @@
         {/each}
     </table>
     <table class="table">
-        <!-- <tr>
-            <th>Treasury</th>
-            <td>
-                {$roster.treasury
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
-            </td>
-        </tr> -->
         <tr>
             <th>Team Value</th>
-            <td>
+            <td colspan="2">
                 {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
             </td>
         </tr>
         <tr>
             <th>Current TV</th>
-            <td>
+            <td colspan="2">
                 {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
             </td>
         </tr>
@@ -53,11 +52,39 @@
         <tr>
             <th>Treasury</th>
             <td>
-                {$roster.treasury
+                {($roster?.treasury || 0)
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
             </td>
+            <td>
+                <MaterialButton
+                    hoverText="Toggle treasury"
+                    symbol={showTreasury ? 'arrow_drop_up' : 'arrow_drop_down'}
+                    clickFunction={() => {
+                        showTreasury = !showTreasury;
+                    }}
+                /></td
+            >
+            <!-- <MaterialButton
+            hoverText="Toggle Inducements"
+            symbol={showAllInducements
+                ? 'arrow_drop_up'
+                : 'arrow_drop_down'}
+            clickFunction={toggleShowAllInducements} -->
         </tr>
+        {#if showTreasury}
+            <tr>
+                <td colspan="3">
+                    <input
+                        aria-label="treasury"
+                        bind:value={$roster.treasury}
+                        type="number"
+                        class="treasury"
+                        on:blur={() => noEmptyTreasury()}
+                    />,000</td
+                >
+            </tr>
+        {/if}
     </table>
     <Inducements {selectedTeam} />
 </div>
@@ -81,5 +108,8 @@
         display: flex;
         flex-wrap: wrap;
         margin-top: 1em;
+    }
+    .treasury {
+        width: 80px;
     }
 </style>

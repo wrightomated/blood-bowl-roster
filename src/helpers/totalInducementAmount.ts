@@ -7,19 +7,16 @@ export const calculateInducementTotal = (
     inducements: ExtraRosterInfo,
     teamId: number,
 ) => {
-    console.log(inducements);
     return Object.keys(inducements)
         .map((key) => inducementCost(key, teamId) * inducements[key])
         .reduce((a, b) => a + b, 0);
 };
 
-export const inducementCost = (
-    key: string,
-    teamId: number
-) => {
-    const specialRules: TeamSpecialRule[] = teamData.teams.find(x => x.id === teamId).specialRules;
+export const inducementCost = (key: string, teamId: number) => {
+    const specialRules: TeamSpecialRule[] = teamData.teams.find(
+        (x) => x.id === teamId,
+    ).specialRules;
     const ind = inducementData.inducements.find((x) => x.id === key);
-    console.log('kay', key);
     if (
         ind?.reducedCost &&
         specialRules.includes(ind.reducedCost?.specialRule)
