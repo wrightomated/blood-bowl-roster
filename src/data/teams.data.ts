@@ -348,7 +348,7 @@ export const teamData: TeamList = {
                 { id: 92, max: 16 },
                 { id: 93, max: 2 },
                 { id: 94, max: 2 },
-                { id: 95, max: 4 }
+                { id: 95, max: 4 },
             ],
             reroll: { cost: 50, max: 8 },
             apothecary: true,
@@ -362,12 +362,16 @@ export const teamData: TeamList = {
                 { id: 96, max: 16 },
                 { id: 97, max: 6 },
                 { id: 98, max: 2 },
-                { id: 99, max: 1 }
+                { id: 99, max: 1 },
             ],
             reroll: { cost: 70, max: 8 },
             apothecary: true,
             tier: 1,
-            specialRules: ['Badlands Brawl','Favoured of...','Worlds Edge Superleague'],
+            specialRules: [
+                'Badlands Brawl',
+                'Favoured of...',
+                'Worlds Edge Superleague',
+            ],
         },
         {
             name: 'High Elf',
@@ -376,7 +380,7 @@ export const teamData: TeamList = {
                 { id: 100, max: 16 },
                 { id: 101, max: 2 },
                 { id: 102, max: 4 },
-                { id: 103, max: 2 }
+                { id: 103, max: 2 },
             ],
             reroll: { cost: 50, max: 8 },
             apothecary: true,
@@ -424,6 +428,34 @@ export const teamData: TeamList = {
             apothecary: true,
             tier: 2,
             specialRules: ['Sylvanian Spotlight'],
+        },
+        {
+            name: 'Daemons of Khorne',
+            id: 28,
+            players: [
+                { id: 133, max: 16 },
+                { id: 134, max: 4 },
+                { id: 135, max: 2 },
+                { id: 136, max: 1 },
+            ],
+            reroll: { cost: 70, max: 8 },
+            apothecary: true,
+            tier: 2,
+            specialRules: ['Favoured of...'],
+        },
+        {
+            name: 'Slann',
+            id: 29,
+            players: [
+                { id: 137, max: 16 },
+                { id: 138, max: 4 },
+                { id: 139, max: 4 },
+                { id: 40, max: 1 },
+            ],
+            reroll: { cost: 50, max: 8 },
+            apothecary: true,
+            tier: 2,
+            specialRules: ['Lustrian Superleague'],
         },
     ],
 };

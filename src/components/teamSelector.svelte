@@ -15,10 +15,14 @@
     export let teamList: Team[];
 
     let rosterCode: string;
+    let includeNaf: boolean = true;
+    const nafTeams = [28, 29];
 
     $: showTeams = $teamSelectionOpen;
 
-    $: sortedTeam = sortTeam().filter((x) => $filteredTiers.includes(x.tier));
+    $: sortedTeam = sortTeam()
+        .filter((x) => $filteredTiers.includes(x.tier))
+        .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true));
 
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
@@ -77,7 +81,89 @@
         roster.codeToRoster(rosterCode);
         toggleLoad();
     };
+
+    const toggleNaf = () => {
+        includeNaf = !includeNaf;
+    };
 </script>
+
+{#if !$teamLoadOpen}
+    <button
+        class:cancel={showTeams}
+        class="new-team"
+        on:click={() => toggleTeam()}
+        >{!showTeams ? 'New Team' : 'Cancel'}
+    </button>
+{/if}
+
+{#if !showTeams}
+    <button
+        class="load-team-button"
+        class:cancel={$teamLoadOpen}
+        on:click={() => toggleLoad()}
+        >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button
+    >
+{/if}
+
+{#if showTeams && !$teamLoadOpen}
+    <div class="button-container">
+        {#each sortedTeam as team}
+            <button
+                class="team-button"
+                class:selected={$currentTeam.id === team.id}
+                on:click={() => newTeam(team.id)}
+                >{team.name}
+                <span>{tierToNumeral(team.tier)}</span></button
+            >
+        {/each}
+        <div class="tier-selector">
+            Filter tiers:
+            <button
+                on:click={() => toggledTiers.toggleTier(1)}
+                class:selected={$filteredTiers.includes(1)}
+                class="filter-button">I</button
+            >
+            <button
+                on:click={() => toggledTiers.toggleTier(2)}
+                class:selected={$filteredTiers.includes(2)}
+                class="filter-button">II</button
+            >
+            <button
+                on:click={() => toggledTiers.toggleTier(3)}
+                class:selected={$filteredTiers.includes(3)}
+                class="filter-button">III</button
+            >
+            <button
+                on:click={toggleNaf}
+                title="Filter NAF teams"
+                class:selected={includeNaf}
+                class="filter-button">N</button
+            >
+        </div>
+    </div>
+    <button class="create-team" on:click={() => createTeam()}>Create</button>
+{/if}
+
+{#if $teamLoadOpen}
+    <div class="button-container">
+        {#each $savedRosterIndex.index as savedRoster}
+            <button
+                class="saved-team-button"
+                on:click={() => loadTeam(savedRoster)}
+                >{savedRoster.name}</button
+            >
+        {/each}
+        <div class="code-box">
+            <input
+                aria-label="Input code"
+                id="code-input"
+                placeholder="Input Code"
+                bind:value={rosterCode}
+            />
+            <MaterialButton symbol="input" clickFunction={inputCode} />
+        </div>
+    </div>
+{/if}
 
 <style lang="scss">
     @import '../styles/colour';
@@ -145,64 +231,3 @@
         }
     }
 </style>
-
-{#if !$teamLoadOpen}
-    <button
-        class:cancel={showTeams}
-        class="new-team"
-        on:click={() => toggleTeam()}>{!showTeams ? 'New Team' : 'Cancel'}
-    </button>
-{/if}
-
-{#if !showTeams}
-    <button
-        class="load-team-button"
-        class:cancel={$teamLoadOpen}
-        on:click={() => toggleLoad()}>{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button>
-{/if}
-
-{#if showTeams && !$teamLoadOpen}
-    <div class="button-container">
-        {#each sortedTeam as team}
-            <button
-                class="team-button"
-                class:selected={$currentTeam.id === team.id}
-                on:click={() => newTeam(team.id)}>{team.name}
-                <span>{tierToNumeral(team.tier)}</span></button>
-        {/each}
-        <div class="tier-selector">
-            Filter tiers:
-            <button
-                on:click={() => toggledTiers.toggleTier(1)}
-                class:selected={$filteredTiers.includes(1)}
-                class="filter-button">I</button>
-            <button
-                on:click={() => toggledTiers.toggleTier(2)}
-                class:selected={$filteredTiers.includes(2)}
-                class="filter-button">II</button>
-            <button
-                on:click={() => toggledTiers.toggleTier(3)}
-                class:selected={$filteredTiers.includes(3)}
-                class="filter-button">III</button>
-        </div>
-    </div>
-    <button class="create-team" on:click={() => createTeam()}>Create</button>
-{/if}
-
-{#if $teamLoadOpen}
-    <div class="button-container">
-        {#each $savedRosterIndex.index as savedRoster}
-            <button
-                class="saved-team-button"
-                on:click={() => loadTeam(savedRoster)}>{savedRoster.name}</button>
-        {/each}
-        <div class="code-box">
-            <input
-                aria-label="Input code"
-                id="code-input"
-                placeholder="Input Code"
-                bind:value={rosterCode} />
-            <MaterialButton symbol="input" clickFunction={inputCode} />
-        </div>
-    </div>
-{/if}

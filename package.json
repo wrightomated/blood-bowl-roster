@@ -58,6 +58,9 @@
       "ts",
       "svelte"
     ],
-    "testPathIgnorePatterns": ["cypress", "__tests__/data"]
+    "testPathIgnorePatterns": [
+      "cypress",
+      "__tests__/data"
+    ]
   }
 }

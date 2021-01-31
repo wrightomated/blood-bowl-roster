@@ -51,7 +51,9 @@ export type TeamName =
     | 'High Elf'
     | 'Norse'
     | 'Tomb Kings'
-    | 'Vampire';
+    | 'Vampire'
+    | 'Daemons of Khorne'
+    | 'Slann';
 
 export type TeamSpecialRule =
     | 'Badlands Brawl'

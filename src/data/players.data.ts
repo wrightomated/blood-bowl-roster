@@ -1167,6 +1167,69 @@ const uwRatOgre: Player = {
     primary: ['M', 'S'],
     secondary: ['A', 'G'],
 };
+const pitFighter: Player = {
+    position: 'Pit Fighter',
+    id: 133,
+    cost: 60,
+    playerStats: [6, 3, 3, 4, 9],
+    skills: [17],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const bloodletter: Player = {
+    position: 'Bloodletter Daemon',
+    id: 134,
+    cost: 80,
+    playerStats: [6, 3, 3, 4, 8],
+    skills: [30, 54, 77],
+    primary: ['G', 'A', 'S'],
+    secondary: ['P'],
+};
+const kHerald: Player = {
+    position: 'Khorne Herald',
+    id: 135,
+    cost: 90,
+    playerStats: [6, 3, 3, 5, 9],
+    skills: [17, 30, 54],
+    primary: ['G', 'S'],
+    secondary: ['A', 'P'],
+};
+const bloodthirster: Player = {
+    position: 'Bloodthirster',
+    id: 136,
+    cost: 180,
+    playerStats: [6, 5, 5, 0, 10],
+    skills: [26, 17, 30, 54, 71, 88, 77],
+    primary: ['S'],
+    secondary: ['G', 'A'],
+};
+const slannLineman: Player = {
+    position: 'Lineman',
+    id: 137,
+    cost: 60,
+    playerStats: [6, 3, 3, 4, 9],
+    skills: [74, 36],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const slannCatcher: Player = {
+    position: 'Catcher',
+    id: 138,
+    cost: 80,
+    playerStats: [7, 2, 2, 4, 8],
+    skills: [2, 74, 36],
+    primary: ['G', 'A'],
+    secondary: ['S', 'P'],
+};
+const slannBlitzer: Player = {
+    position: 'Blitzer',
+    id: 139,
+    cost: 110,
+    playerStats: [7, 3, 3, 4, 9],
+    skills: [2, 6, 74, 36],
+    primary: ['G', 'A', 'S'],
+    secondary: ['P'],
+};
 export const playerCatalogue: PlayerCatalogue = {
     players: [
         imperialLineman,
@@ -1300,6 +1363,13 @@ export const playerCatalogue: PlayerCatalogue = {
         uwRunner,
         uwBlitzer,
         uwTroll,
-        uwRatOgre
+        uwRatOgre,
+        pitFighter,
+        bloodletter,
+        kHerald,
+        bloodthirster,
+        slannLineman,
+        slannCatcher,
+        slannBlitzer,
     ],
 };
