@@ -50,10 +50,10 @@
                 <td class="skills">Skills</td>
                 <td>Hiring Fee</td>
                 <td id="spp-header">Unspent Spp</td>
-                {#if false}
-                    <td>Mng</td>
+                {#if $roster.mode !== 'exhibition'}
+                    <td id="mng-header" title="Miss next game">Mng</td>
                     <td>Ni</td>
-                    <td>TR</td>
+                    <td id="tr-header" title="Temporarily Retiring">TR</td>
                 {/if}
                 <td>Current Value</td>
             </tr>
@@ -83,7 +83,8 @@
                     <td class="position left-align">
                         <select
                             aria-labelledby="position-header"
-                            bind:value={selected}>
+                            bind:value={selected}
+                        >
                             {#each playerTypes as playerType}
                                 <option value={playerType}>
                                     {playerType.position}
@@ -99,7 +100,7 @@
                     <td />
                     <td />
                     <td />
-                    {#if false}
+                    {#if $roster.mode !== 'exhibition'}
                         <td />
                         <td />
                         <td />

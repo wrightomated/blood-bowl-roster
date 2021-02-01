@@ -42,9 +42,15 @@ const pAlterations = (alts: PlayerAlterations) => {
                 case 'ni':
                     return charAndNumber('n', alts[x]);
                 case 'mng':
-                    return `m1`;
+                    if (alts[x]) {
+                        return `m1`;
+                    }
+                    break;
                 case 'tr':
-                    return `t1`;
+                    if (alts[x]) {
+                        return `t1`;
+                    }
+                    break;
                 case 'statChange':
                     return `c${alts[x].join('')}`;
                 case 'injuries':
