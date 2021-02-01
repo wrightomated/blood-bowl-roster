@@ -2,7 +2,6 @@
     import { roster } from '../store/teamRoster.store';
     import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
     import type { Team } from '../models/team.model';
-    import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import Inducements from './inducements.svelte';
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import MaterialButton from './materialButton.svelte';
@@ -12,15 +11,19 @@
     const extras = extrasForTeam(selectedTeam.id, $roster.mode);
     let showTreasury = false;
 
-    $: teamTotal =
-        $roster.players
-            .map((x) => x.player.cost + (x.alterations?.valueChange || 0))
-            .reduce((a, b) => a + b, 0) +
-        extras
-            .filter((e) => e.extraString !== 'dedicated_fans')
-            .map((e) => $roster.extra[e.extraString] * e.cost || 0)
-            .reduce((a, b) => a + b, 0) +
-        calculateInducementTotal($roster.inducements, $roster.teamId);
+    $: teamTotal = $roster.players
+        .map((x) => x.player.cost + (x.alterations?.valueChange || 0))
+        .reduce((a, b) => a + b, 0);
+
+    $: teamExtrasTotal = extrasForTeam(selectedTeam.id, $roster.mode)
+        .filter((e) => e.extraString !== 'dedicated_fans')
+        .map((e) => $roster.extra[e.extraString] * e.cost || 0)
+        .reduce((a, b) => a + b, 0);
+
+    $: currentTotal = $roster.players
+        .filter((p) => !p.alterations.tr && !p.alterations.mng)
+        .map((x) => x.player.cost + (x.alterations?.valueChange || 0))
+        .reduce((a, b) => a + b, 0);
 
     const noEmptyTreasury = () => {
         if (!$roster.treasury && $roster.treasury !== 0) {
@@ -39,13 +42,17 @@
         <tr>
             <th>Team Value</th>
             <td colspan="2">
-                {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+                {(teamTotal + teamExtrasTotal)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
             </td>
         </tr>
         <tr>
             <th>Current TV</th>
             <td colspan="2">
-                {teamTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+                {(currentTotal + teamExtrasTotal)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
             </td>
         </tr>
 
@@ -65,12 +72,6 @@
                     }}
                 /></td
             >
-            <!-- <MaterialButton
-            hoverText="Toggle Inducements"
-            symbol={showAllInducements
-                ? 'arrow_drop_up'
-                : 'arrow_drop_down'}
-            clickFunction={toggleShowAllInducements} -->
         </tr>
         {#if showTreasury}
             <tr>

@@ -65,6 +65,10 @@
             alteredStat === 0 ? '-' : i > 1 ? `${alteredStat}+` : alteredStat
         }`;
     };
+
+    const mng = (e) => {
+        console.log(e);
+    };
 </script>
 
 <tr>
@@ -153,10 +157,22 @@
             />
         {:else}0{/if}
     </td>
-    {#if false}
+    {#if $roster.mode !== 'exhibition'}
+        <td
+            ><input
+                type="checkbox"
+                aria-labelledby="mng-header"
+                bind:checked={$roster.players[index].alterations.mng}
+            /></td
+        >
         <td>0</td>
-        <td>0</td>
-        <td>0</td>
+        <td
+            ><input
+                type="checkbox"
+                aria-labelledby="tr-header"
+                bind:checked={$roster.players[index].alterations.tr}
+            /></td
+        >
     {/if}
 
     <td>{currentCost},000</td>
