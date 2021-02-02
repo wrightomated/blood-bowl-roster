@@ -5,7 +5,10 @@
     import { currentTeam } from '../store/currentTeam.store';
     import type { StarPlayer } from '../models/player.model';
     import AddSkill from './addSkill.svelte';
-    import { characteristicMaxValue } from '../data/statOrder.data';
+    import {
+        characteristicMaxValue,
+        characteristicMinValue,
+    } from '../data/statOrder.data';
 
     export let index: number;
 
@@ -69,25 +72,28 @@
                 (i === 2 || i === 3 ? -1 : 1) -
             (rosterPlayer.alterations?.injuries?.[i] || 0) *
                 (i === 2 || i === 3 ? -1 : 1);
+        const boundedStat = stat === 0 ? 0 : getBoundedStat(alteredStat, i);
         return `${
-            alteredStat <= 0 ? '-' : i > 1 ? `${alteredStat}+` : alteredStat
+            boundedStat === 0 ? '-' : i > 1 ? `${boundedStat}+` : boundedStat
         }`;
     };
 
-    const checkImproved = (i: number) => {
-        return (
-            (rosterPlayer.alterations?.statChange?.[i] || 0) -
-                (rosterPlayer.alterations?.injuries?.[i] || 0) >
-            0
-        );
-    };
-
-    const checkDegraded = (i: number) => {
-        return (
-            (rosterPlayer.alterations?.statChange?.[i] || 0) -
-                (rosterPlayer.alterations?.injuries?.[i] || 0) <
-            0
-        );
+    const getBoundedStat = (alt: number, i: number) => {
+        switch (i) {
+            case 2:
+            case 3:
+                return alt > characteristicMinValue[i]
+                    ? characteristicMinValue[i]
+                    : alt < characteristicMaxValue[i]
+                    ? characteristicMaxValue[i]
+                    : alt;
+            default:
+                return alt < characteristicMinValue[i]
+                    ? characteristicMinValue[i]
+                    : alt > characteristicMaxValue[i]
+                    ? characteristicMaxValue[i]
+                    : alt;
+        }
     };
 </script>
 
