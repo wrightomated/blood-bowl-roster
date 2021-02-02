@@ -23,14 +23,14 @@
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
     $: playerSkillIds = rosterPlayer.player.skills.concat(
-        rosterPlayer.alterations?.extraSkills || [],
+        rosterPlayer?.alterations?.extraSkills || [],
     );
     $: currentCost =
         rosterPlayer.player.cost + (rosterPlayer.alterations?.valueChange || 0);
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
-            (rosterPlayer.alterations?.statChange?.[i] || 0) -
-            (rosterPlayer.alterations?.injuries?.[i] || 0),
+            (rosterPlayer?.alterations?.statChange?.[i] || 0) -
+            (rosterPlayer?.alterations?.injuries?.[i] || 0),
     );
 
     const removePlayer = (firePlayer: boolean) => {
@@ -68,9 +68,9 @@
     const getStat = (stat: number, i: number) => {
         const alteredStat =
             stat +
-            (rosterPlayer.alterations?.statChange?.[i] || 0) *
+            (rosterPlayer?.alterations?.statChange?.[i] || 0) *
                 (i === 2 || i === 3 ? -1 : 1) -
-            (rosterPlayer.alterations?.injuries?.[i] || 0) *
+            (rosterPlayer?.alterations?.injuries?.[i] || 0) *
                 (i === 2 || i === 3 ? -1 : 1);
         const boundedStat = stat === 0 ? 0 : getBoundedStat(alteredStat, i);
         return `${
@@ -184,7 +184,7 @@
             />
         {:else}0{/if}
     </td>
-    {#if $roster.mode !== 'exhibition'}
+    {#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
         <td
             ><input
                 type="checkbox"
@@ -207,6 +207,10 @@
                 bind:checked={$roster.players[index].alterations.tr}
             /></td
         >
+    {:else if $roster.mode !== 'exhibition' && rosterPlayer.starPlayer}
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
     {/if}
 
     <td>{currentCost},000</td>
