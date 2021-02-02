@@ -20,10 +20,11 @@
     let showCharacteristics: boolean = false;
     let showInjuries: boolean = false;
 
-    $: d16 = 0;
-    $: enabled = allowedSkills(d16)
+    $: die = 0;
+    $: enabled = allowedSkills(die)
         .filter((x) => !isAtMax(x))
         .filter((x) => !twoIncrements(rosterPlayer).includes(x));
+    $: injuredRoll = injuryRoll(die);
 
     $: rosterPlayer = $roster.players[index];
 
@@ -132,7 +133,7 @@
         showButtons = false;
         showCharacteristics = true;
         showInjuries = false;
-        d16 = 0;
+        die = 0;
     };
     const injuries = () => {
         showPrimary = false;
@@ -141,6 +142,7 @@
         showButtons = false;
         showCharacteristics = false;
         showInjuries = true;
+        die = 0;
     };
     const cancel = () => {
         showPrimary = false;
@@ -149,10 +151,13 @@
         showButtons = true;
         showCharacteristics = false;
         showInjuries = false;
-        d16 = 0;
+        die = 0;
     };
     const roll = () => {
-        d16 = Math.floor(Math.random() * Math.floor(15)) + 1;
+        die = Math.floor(Math.random() * Math.floor(15)) + 1;
+    };
+    const rollD6 = () => {
+        die = Math.floor(Math.random() * Math.floor(5)) + 1;
     };
 
     const allowedSkills = (dice: number) => {
@@ -180,6 +185,24 @@
                 return characteristics;
             default:
                 return characteristics;
+        }
+    };
+
+    const injuryRoll = (dice: number) => {
+        switch (dice) {
+            case 1:
+            case 2:
+                return 'AV';
+            case 3:
+                return 'MA';
+            case 4:
+                return 'PA';
+            case 5:
+                return 'AG';
+            case 6:
+                return 'ST';
+            default:
+                return 'ALL';
         }
     };
 
@@ -303,7 +326,10 @@
                 ]}spp</span
             ></button
         >
-        <button on:click={injuries} class:selected={showInjuries}
+        <button
+            on:click={injuries}
+            class="injury-button"
+            class:selected={showInjuries}
             >Lasting Injury
         </button>
     </div>
@@ -346,7 +372,7 @@
         <fieldset>
             <legend> Characteristic </legend>
             <button class="dice" on:click={roll}
-                >{d16 ? d16 : 'Roll D16'}</button
+                >{die ? die : 'Roll D16'}</button
             >
             {#each characteristics as chara, i}
                 <button
@@ -360,11 +386,15 @@
     {#if showInjuries}
         <fieldset class="injury-fieldset">
             <legend> Lasting Injury </legend>
-            <button class="dice" on:click={roll}
-                >{d16 ? d16 : 'Roll D16'}</button
+            <button class="injury-button" on:click={rollD6}
+                >{die ? die : 'Roll D6'}</button
             >
             {#each characteristics as chara, i}
-                <button on:click={() => addInjury(i)}>{chara}</button>
+                <button
+                    disabled={injuredRoll !== 'ALL' && injuredRoll !== chara}
+                    class="injury-button"
+                    on:click={() => addInjury(i)}>{chara}</button
+                >
             {/each}
         </fieldset>
     {/if}
@@ -414,6 +444,34 @@
             font-family: $display-font;
         }
     }
+
+    .injury-button {
+        color: $main-colour;
+        border: 2px solid $main-colour;
+
+        &:disabled {
+            border: none;
+            color: grey;
+        }
+
+        &.selected {
+            background-color: $main-colour;
+            color: white;
+            border-color: $main-colour;
+        }
+
+        &:hover {
+            background-color: $main-colour;
+            color: white;
+            border-color: $main-colour;
+
+            &:disabled {
+                background-color: white;
+                color: grey;
+                border: none;
+            }
+        }
+    }
     fieldset {
         padding: 1em;
         border-radius: 10px;
@@ -428,28 +486,6 @@
             border-color: $main-colour;
             legend {
                 color: $main-colour;
-            }
-
-            button {
-                color: $main-colour;
-                border: 2px solid $main-colour;
-
-                &:disabled {
-                    border: none;
-                    color: grey;
-                }
-
-                &:hover {
-                    background-color: $main-colour;
-                    color: white;
-                    border-color: $main-colour;
-
-                    &:disabled {
-                        background-color: white;
-                        color: grey;
-                        border: none;
-                    }
-                }
             }
         }
     }
