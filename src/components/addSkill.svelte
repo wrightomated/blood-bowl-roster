@@ -2,7 +2,10 @@
     import { advancementCosts } from '../data/advancementCost.data';
 
     import { skillCatalogue } from '../data/skills.data';
-    import { characteristics } from '../data/statOrder.data';
+    import {
+        characteristicMaxValue,
+        characteristics,
+    } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
     import type { SkillCategory } from '../models/skill.model';
     import { categoryToName } from '../models/skill.model';
@@ -15,11 +18,12 @@
     let showSecondary: boolean = false;
     let showRandom: boolean = false;
     let showCharacteristics: boolean = false;
+    let showInjuries: boolean = false;
 
     $: d16 = 0;
-    $: enabled = allowedSkills(d16).filter(
-        (x) => !twoIncrements(rosterPlayer).includes(x),
-    );
+    $: enabled = allowedSkills(d16)
+        .filter((x) => !isAtMax(x))
+        .filter((x) => !twoIncrements(rosterPlayer).includes(x));
 
     $: rosterPlayer = $roster.players[index];
 
@@ -75,12 +79,27 @@
         cancel();
     };
 
+    const addInjury = (charIndex: number) => {
+        const injuries = rosterPlayer.alterations.injuries || [0, 0, 0, 0, 0];
+        injuries[charIndex]++;
+        const newPlayer: RosterPlayerRecord = {
+            ...rosterPlayer,
+            alterations: {
+                ...rosterPlayer.alterations,
+                injuries,
+            },
+        };
+        roster.updatePlayer(newPlayer, index);
+        cancel();
+    };
+
     const selectPrimary = () => {
         showPrimary = true;
         showSecondary = false;
         showRandom = false;
         showButtons = false;
         showCharacteristics = false;
+        showInjuries = false;
     };
     const randomPrimary = () => {
         showPrimary = true;
@@ -88,6 +107,7 @@
         showRandom = true;
         showButtons = false;
         showCharacteristics = false;
+        showInjuries = false;
     };
     const selectSecondary = () => {
         showPrimary = false;
@@ -95,6 +115,7 @@
         showRandom = false;
         showButtons = false;
         showCharacteristics = false;
+        showInjuries = false;
     };
     const randomSecondary = () => {
         showPrimary = false;
@@ -102,6 +123,7 @@
         showRandom = true;
         showButtons = false;
         showCharacteristics = false;
+        showInjuries = false;
     };
     const randomCharacteristic = () => {
         showPrimary = false;
@@ -109,7 +131,16 @@
         showRandom = true;
         showButtons = false;
         showCharacteristics = true;
+        showInjuries = false;
         d16 = 0;
+    };
+    const injuries = () => {
+        showPrimary = false;
+        showSecondary = false;
+        showRandom = false;
+        showButtons = false;
+        showCharacteristics = false;
+        showInjuries = true;
     };
     const cancel = () => {
         showPrimary = false;
@@ -117,6 +148,7 @@
         showRandom = false;
         showButtons = true;
         showCharacteristics = false;
+        showInjuries = false;
         d16 = 0;
     };
     const roll = () => {
@@ -213,6 +245,15 @@
         const randomIndex = Math.floor(Math.random() * skills.length);
         addSkill(skills[randomIndex].id);
     };
+
+    const isAtMax = (characteristic: string) => {
+        const i = characteristics.indexOf(characteristic);
+        const currentStat =
+            rosterPlayer.player.playerStats[i] +
+            (rosterPlayer.alterations?.statChange?.[i] || 0) *
+                (i === 2 || i === 3 ? -1 : 1);
+        return currentStat === characteristicMaxValue[i];
+    };
 </script>
 
 <div class="container">
@@ -262,6 +303,9 @@
                 ]}spp</span
             ></button
         >
+        <button on:click={injuries} class:selected={showInjuries}
+            >Lasting Injury
+        </button>
     </div>
 
     {#if showPrimary}
@@ -313,6 +357,17 @@
             <button on:click={selectSecondary}>Select Secondary</button>
         </fieldset>
     {/if}
+    {#if showInjuries}
+        <fieldset class="injury-fieldset">
+            <legend> Lasting Injury </legend>
+            <button class="dice" on:click={roll}
+                >{d16 ? d16 : 'Roll D16'}</button
+            >
+            {#each characteristics as chara, i}
+                <button on:click={() => addInjury(i)}>{chara}</button>
+            {/each}
+        </fieldset>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -324,9 +379,6 @@
         left: 0;
         top: 0;
         max-width: calc(100vw - 16px);
-        // @media screen and (max-width: 450px) {
-        //     max-width: 90vw;
-        // }
     }
     button {
         border-radius: 10px;
@@ -370,6 +422,35 @@
         margin-top: 1em;
         legend {
             color: $secondary-colour;
+        }
+
+        &.injury-fieldset {
+            border-color: $main-colour;
+            legend {
+                color: $main-colour;
+            }
+
+            button {
+                color: $main-colour;
+                border: 2px solid $main-colour;
+
+                &:disabled {
+                    border: none;
+                    color: grey;
+                }
+
+                &:hover {
+                    background-color: $main-colour;
+                    color: white;
+                    border-color: $main-colour;
+
+                    &:disabled {
+                        background-color: white;
+                        color: grey;
+                        border: none;
+                    }
+                }
+            }
         }
     }
 </style>
