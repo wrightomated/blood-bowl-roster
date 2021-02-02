@@ -5,6 +5,7 @@
     import { currentTeam } from '../store/currentTeam.store';
     import type { StarPlayer } from '../models/player.model';
     import AddSkill from './addSkill.svelte';
+    import { characteristicMaxValue } from '../data/statOrder.data';
 
     export let index: number;
 
@@ -23,6 +24,11 @@
     );
     $: currentCost =
         rosterPlayer.player.cost + (rosterPlayer.alterations?.valueChange || 0);
+    $: alteredStats = characteristicMaxValue.map(
+        (_, i) =>
+            (rosterPlayer.alterations?.statChange?.[i] || 0) -
+            (rosterPlayer.alterations?.injuries?.[i] || 0),
+    );
 
     const removePlayer = (firePlayer: boolean) => {
         removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
@@ -60,14 +66,28 @@
         const alteredStat =
             stat +
             (rosterPlayer.alterations?.statChange?.[i] || 0) *
+                (i === 2 || i === 3 ? -1 : 1) -
+            (rosterPlayer.alterations?.injuries?.[i] || 0) *
                 (i === 2 || i === 3 ? -1 : 1);
         return `${
-            alteredStat === 0 ? '-' : i > 1 ? `${alteredStat}+` : alteredStat
+            alteredStat <= 0 ? '-' : i > 1 ? `${alteredStat}+` : alteredStat
         }`;
     };
 
-    const mng = (e) => {
-        console.log(e);
+    const checkImproved = (i: number) => {
+        return (
+            (rosterPlayer.alterations?.statChange?.[i] || 0) -
+                (rosterPlayer.alterations?.injuries?.[i] || 0) >
+            0
+        );
+    };
+
+    const checkDegraded = (i: number) => {
+        return (
+            (rosterPlayer.alterations?.statChange?.[i] || 0) -
+                (rosterPlayer.alterations?.injuries?.[i] || 0) <
+            0
+        );
     };
 </script>
 
@@ -138,8 +158,9 @@
     </td>
 
     {#each rosterPlayer.player.playerStats as stat, i}
-        <td class:improved={rosterPlayer.alterations?.statChange?.[i] > 0}
-            >{getStat(stat, i)}</td
+        <td
+            class:improved={alteredStats[i] > 0}
+            class:degraded={alteredStats[i] < 0}>{getStat(stat, i)}</td
         >
     {/each}
     <td class="left-align">
@@ -165,8 +186,15 @@
                 bind:checked={$roster.players[index].alterations.mng}
             /></td
         >
-        <td>0</td>
-        <td
+        <td>
+            <input
+                class="spp-input"
+                type="number"
+                aria-label="Niggling Injuries"
+                placeholder="?"
+                bind:value={$roster.players[index].alterations.ni}
+            />
+        </td><td
             ><input
                 type="checkbox"
                 aria-labelledby="tr-header"
@@ -221,6 +249,9 @@
     }
     .improved {
         color: green;
+    }
+    .degraded {
+        color: $main-colour;
     }
     @media print {
         .flex-container {
