@@ -26,7 +26,10 @@
         rosterPlayer?.alterations?.extraSkills || [],
     );
     $: currentCost =
-        rosterPlayer.player.cost + (rosterPlayer.alterations?.valueChange || 0);
+        rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
+            ? 0
+            : rosterPlayer.player.cost +
+              (rosterPlayer.alterations?.valueChange || 0);
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
