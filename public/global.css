@@ -12,7 +12,7 @@ body {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
         Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 h1,
@@ -79,4 +79,14 @@ thead {
     background-color: #970f0c;
     color: white;
     text-transform: uppercase;
+}
+
+@media print {
+    body {
+        font-size: 10px;
+    }
+    td,
+    tr {
+        padding: 5px;
+    }
 }

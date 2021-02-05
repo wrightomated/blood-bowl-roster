@@ -163,6 +163,9 @@
         max-width: 100%;
     }
     @media print {
+        h2 {
+            font-size: 14px;
+        }
         .team-name-container {
             page-break-before: always;
         }
