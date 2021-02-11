@@ -450,7 +450,7 @@ export const teamData: TeamList = {
                 { id: 137, max: 16 },
                 { id: 138, max: 4 },
                 { id: 139, max: 4 },
-                { id: 40, max: 1 },
+                { id: 46, max: 1 },
             ],
             reroll: { cost: 50, max: 8 },
             apothecary: true,
