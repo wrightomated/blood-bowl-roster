@@ -158,11 +158,11 @@
 
 {#if $teamLoadOpen}
     <div class="button-container">
-        {#each $savedRosterIndex.index as savedRoster}
+        {#each $savedRosterIndex.index as savedRoster, i}
             <button
                 class="saved-team-button"
                 on:click={() => loadTeam(savedRoster)}
-                >{savedRoster.name}</button
+                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</button
             >
         {/each}
         <div class="code-box">

@@ -1,3 +1,8 @@
+<header>
+    <h1>BB Roster</h1>
+    <p>Build and grow your Blood Bowl teams.</p>
+</header>
+
 <style lang="scss">
     header {
         h1 {
@@ -10,8 +15,3 @@
         }
     }
 </style>
-
-<header>
-    <h1>BB Roster</h1>
-    <p>Dream your team.</p>
-</header>

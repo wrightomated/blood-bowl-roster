@@ -1,6 +1,6 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.4",
+  "name": "BBRoster",
+  "version": "1.0.5",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w --host 0.0.0.0",

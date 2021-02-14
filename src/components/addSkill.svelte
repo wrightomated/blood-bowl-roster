@@ -12,8 +12,9 @@
     import { roster } from '../store/teamRoster.store';
 
     export let index: number;
+    export let showButtons: boolean;
 
-    let showButtons: boolean = true;
+    // let showButtons: boolean = true;
     let showPrimary: boolean = false;
     let showSecondary: boolean = false;
     let showRandom: boolean = false;
@@ -417,6 +418,7 @@
         padding: 10px;
         margin: 5px;
         border: 2px solid $secondary-colour;
+        max-width: calc(50% - 20px);
 
         &:hover {
             background-color: $secondary-colour;

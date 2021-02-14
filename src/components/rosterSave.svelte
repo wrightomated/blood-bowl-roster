@@ -3,6 +3,8 @@
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import MaterialButton from './materialButton.svelte';
     import { showExport } from '../store/showExport.store';
+    import { rosterViewMode } from '../store/rosterDisplayMode.store';
+    import { showDelete } from '../store/showDelete.store';
 
     let saved = false;
     let rosterCleared = false;
@@ -12,11 +14,12 @@
         saved = true;
     };
 
-    const clearRoster = () => {
-        roster.reset();
-        savedRosterIndex.removeRoster();
-        rosterCleared = true;
-    };
+    // const clearRoster = () => {
+    //     roster.reset();
+    //     savedRosterIndex.removeRoster();
+    //     rosterCleared = true;
+    // };
+    const toggleDelete = () => showDelete.set(!$showDelete);
 
     const toggleExport = () => showExport.set(!$showExport);
 
@@ -37,9 +40,15 @@
     <MaterialButton
         hoverText="Delete team forever"
         symbol="delete_forever"
-        clickFunction={clearRoster}
+        clickFunction={toggleDelete}
     />
 {/if}
+<MaterialButton
+    hoverText="Toggle view"
+    symbol={$rosterViewMode === 'grid' ? 'table_rows' : 'grid_view'}
+    clickFunction={() =>
+        rosterViewMode.set($rosterViewMode === 'grid' ? 'table' : 'grid')}
+/>
 <MaterialButton
     hoverText="Share team"
     symbol={$showExport ? 'link_off' : 'link'}
