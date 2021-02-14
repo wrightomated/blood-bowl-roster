@@ -5,6 +5,12 @@
     import { currentTeam } from '../store/currentTeam.store';
     import type { StarPlayer } from '../models/player.model';
     import AddSkill from './addSkill.svelte';
+    import {
+        characteristicMaxValue,
+        characteristicMinValue,
+        characteristics,
+    } from '../data/statOrder.data';
+    import StatBlock from './playerCard/statBlock.svelte';
 
     export let index: number;
 
@@ -19,11 +25,21 @@
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
     $: playerSkillIds = rosterPlayer.player.skills.concat(
-        rosterPlayer.alterations?.extraSkills || [],
+        rosterPlayer?.alterations?.extraSkills || [],
+    );
+    $: currentCost =
+        rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
+            ? 0
+            : rosterPlayer.player.cost +
+              (rosterPlayer.alterations?.valueChange || 0);
+    $: alteredStats = characteristicMaxValue.map(
+        (_, i) =>
+            (rosterPlayer?.alterations?.statChange?.[i] || 0) -
+            (rosterPlayer?.alterations?.injuries?.[i] || 0),
     );
 
-    const removePlayer = () => {
-        removeTwoForOne() || roster.removePlayer([index]);
+    const removePlayer = (firePlayer: boolean) => {
+        removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
     };
     const moveUp = () => {
         roster.movePlayerUp(index);
@@ -36,14 +52,14 @@
             ? `${rosterPlayer.player.cost},000`
             : '-';
     };
-    const removeTwoForOne = () => {
+    const removeTwoForOne = (firePlayer: boolean) => {
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
             const tfoIndex = $roster.players.findIndex(
                 (p) => p.player.id === twoForOne,
             );
             if (twoForOne) {
-                roster.removePlayer([index, tfoIndex]);
+                roster.removePlayer([index, tfoIndex], firePlayer);
                 return true;
             }
         }
@@ -53,163 +69,289 @@
     const toggleShowSkills = () => {
         showAddSkills = !showAddSkills;
     };
+
+    const getStat = (stat: number, i: number) => {
+        const alteredStat =
+            stat +
+            (rosterPlayer?.alterations?.statChange?.[i] || 0) *
+                (i === 2 || i === 3 ? -1 : 1) -
+            (rosterPlayer?.alterations?.injuries?.[i] || 0) *
+                (i === 2 || i === 3 ? -1 : 1);
+        const boundedStat = stat === 0 ? 0 : getBoundedStat(alteredStat, i);
+        return `${
+            boundedStat === 0 ? '-' : i > 1 ? `${boundedStat}+` : boundedStat
+        }`;
+    };
+
+    const getBoundedStat = (alt: number, i: number) => {
+        switch (i) {
+            case 2:
+            case 3:
+                return alt > characteristicMinValue[i]
+                    ? characteristicMinValue[i]
+                    : alt < characteristicMaxValue[i]
+                    ? characteristicMaxValue[i]
+                    : alt;
+            default:
+                return alt < characteristicMinValue[i]
+                    ? characteristicMinValue[i]
+                    : alt > characteristicMaxValue[i]
+                    ? characteristicMaxValue[i]
+                    : alt;
+        }
+    };
 </script>
 
-<style lang="scss">
-    @import '../styles/colour';
-    // td {
-    //     input {
-    //         margin-bottom: 0;
-    //     }
-    // }
-    // .left-align {
-    //     text-align: left;
-    // }
-    // .flex-container {
-    //     display: flex;
-    // }
-    // .danger {
-    //     color: $main-colour;
-    //     i {
-    //         vertical-align: text-bottom;
-    //     }
-    // }
-    // .add-skill {
-    //     vertical-align: middle;
-    //     display: inline-block;
-    //     margin-top: -1px;
-    // }
-    // .spp-input {
-    //     width: 60px;
-    //     text-align: center;
-    //     margin-right: -15px;
-    // }
-    // @media print {
-    //     .flex-container {
-    //         display: none;
-    //     }
-    //     .player-name {
-    //         border-right: 0;
-    //     }
-    //     .controls {
-    //         border-left: 0;
-    //     }
-    //     .add-skill {
-    //         display: none;
-    //     }
-    // }
-    .header {
-        background-color: $main-colour;
-        padding: 8px;
-        color: white;
-        border-radius: 25px 25px 0 0;
-    }
-    .player-card {
-        // padding: 8px;
-        max-width: 400px;
-        box-shadow: 5px 5px #888888;
-        border-radius: 25px;
-        border: 1px solid;
-    }
-</style>
-
-<div class="player-card">
-    <!-- <div>{index + 1}</div> -->
+<section class="player-card">
     <div class="header">
-        <h4>
-            {rosterPlayer.starPlayer ? rosterPlayer.player.position : $roster.players[index].playerName}
-        </h4>
-        <p>
-            {rosterPlayer.starPlayer ? 'Star Player' : $roster.players[index].player.position}
-        </p>
+        <div class="player-number">{index + 1}</div>
+        <h3 class="player-name left-align">
+            {#if rosterPlayer.starPlayer}
+                {rosterPlayer.player.position}
+            {:else}
+                <input
+                    aria-labelledby="name-header"
+                    placeholder="Player Name"
+                    bind:value={$roster.players[index].playerName}
+                />
+            {/if}
+        </h3>
+        <div class="player-position left-align">
+            {#if rosterPlayer.starPlayer}
+                Star Player
+            {:else}
+                {rosterPlayer.player.position}
+                {#if danger}
+                    <span class="danger">
+                        <i class="material-icons">warning</i>
+                        {numberOfPlayerType}/{maxOfPlayerType}
+                    </span>
+                {/if}
+                {#if (rosterPlayer.alterations?.advancements || 0) < 6}
+                    <span class="add-skill">
+                        <MaterialButton
+                            hoverText="Player advancement"
+                            symbol="elevator"
+                            clickFunction={toggleShowSkills}
+                        />
+                    </span>
+                {/if}
+            {/if}
+        </div>
     </div>
-    <div>
-        <table>
-            <tr>
-                <td>MA</td>
-                <td>ST</td>
-                <td>AG</td>
-                <td>PA</td>
-                <td>AV</td>
-            </tr>
-            <tr>
-                {#each rosterPlayer.player.playerStats as stat, i}
-                    <td>{`${stat === 0 ? '-' : i > 1 ? `${stat}+` : stat}`}</td>
-                {/each}
-            </tr>
-        </table>
-    </div>
-    <!-- <div class="player-name left-align">
-        {#if rosterPlayer.starPlayer}
-            {rosterPlayer.player.position}
-        {:else}
-            <input
-                aria-labelledby="name-header"
-                placeholder="Player Name"
-                bind:value={$roster.players[index].playerName} />
-        {/if}
-    </div> -->
-    <div class="controls left-align">
+    <!-- <div class="controls left-align">
         <div class="flex-container">
             {#if index > 0}
                 <MaterialButton
+                    hoverText="Move player up"
                     symbol="arrow_circle_up"
-                    clickFunction={moveUp} />
+                    clickFunction={moveUp}
+                />
             {/if}
             {#if index < $roster.players.length - 1}
                 <MaterialButton
+                    hoverText="Move player down"
                     symbol="arrow_circle_down"
-                    clickFunction={moveDown} />
+                    clickFunction={moveDown}
+                />
             {/if}
             <MaterialButton
+                hoverText="Remove player"
                 symbol="delete_forever"
-                clickFunction={removePlayer} />
+                clickFunction={() => removePlayer(false)}
+            />
+            {#if $roster.mode === 'league'}
+                <MaterialButton
+                    hoverText="Fire player (no refund)"
+                    symbol="local_fire_department"
+                    clickFunction={() => removePlayer(true)}
+                />
+            {/if}
+        </div>
+    </div> -->
+    <div class="content">
+        <div class="player-characteristics">
+            {#each rosterPlayer.player.playerStats as stat, i}
+                <!-- <div
+                    class:improved={alteredStats[i] > 0}
+                    class:degraded={alteredStats[i] < 0}
+                >
+                    <span>{characteristics[i]}</span>
+                    {getStat(stat, i)}
+                </div> -->
+                <StatBlock
+                    char={characteristics[i]}
+                    value={getStat(stat, i)}
+                    change={alteredStats[i]}
+                />
+            {/each}
+        </div>
+
+        <div class="skills">
+            <div class="skills-title">SKILLS:</div>
+            {#if playerSkillIds.length > 0}
+                <SkillElement {playerSkillIds} />
+            {:else}
+                None
+            {/if}
+        </div>
+
+        <div>
+            {#if $roster.players[index]?.alterations?.spp !== undefined}
+                <input
+                    class="spp-input"
+                    type="number"
+                    aria-label="unspent spp"
+                    placeholder="?"
+                    bind:value={$roster.players[index].alterations.spp}
+                />
+            {:else}0{/if}
+        </div>
+        {#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
+            <div>
+                <input
+                    type="checkbox"
+                    aria-labelledby="mng-header"
+                    bind:checked={$roster.players[index].alterations.mng}
+                />
+            </div>
+            <div>
+                <input
+                    class="spp-input"
+                    type="number"
+                    aria-label="Niggling Injuries"
+                    placeholder="?"
+                    bind:value={$roster.players[index].alterations.ni}
+                />
+            </div>
+            <div>
+                <input
+                    type="checkbox"
+                    aria-labelledby="tr-header"
+                    bind:checked={$roster.players[index].alterations.tr}
+                />
+            </div>
+        {:else if $roster.mode !== 'exhibition' && rosterPlayer.starPlayer}
+            <div>-</div>
+            <div>-</div>
+            <div>-</div>
+        {/if}
+        <div class="cost-area">
+            <div>Hiring Fee: {playerCostString()}</div>
+            <div>Current Value: {currentCost},000 GP</div>
         </div>
     </div>
-    <div class="player-position left-align">
-        {#if rosterPlayer.starPlayer}
-            Star Player
-        {:else}
-            {rosterPlayer.player.position}
-            {#if danger}
-                <span class="danger">
-                    <i class="material-icons">warning</i>
-                    {numberOfPlayerType}/{maxOfPlayerType}
-                </span>
-            {/if}
-        {/if}
-    </div>
+    {#if !rosterPlayer.starPlayer && showAddSkills && (rosterPlayer.alterations?.advancements || 0) < 6}
+        <div>
+            <div colspan="16">
+                <AddSkill {index} />
+            </div>
+        </div>
+    {/if}
+</section>
 
-    <div class="left-align">
-        <SkillElement {playerSkillIds} />
-        {#if !rosterPlayer.starPlayer}
-            <span class="add-skill">
-                <MaterialButton
-                    symbol={showAddSkills ? 'cancel' : 'add_circle'}
-                    clickFunction={toggleShowSkills} />
-            </span>
-        {/if}
-    </div>
-    <div>{playerCostString()}</div>
-    <div>
-        {#if $roster.players[index]?.alterations?.spp !== undefined}
-            <input
-                class="spp-input"
-                type="number"
-                aria-labelledby="spp-header"
-                placeholder="?"
-                bind:value={$roster.players[index].alterations.spp} />
-        {:else}0{/if}
-    </div>
-    <div>0</div>
-    <div>0</div>
-    <div>0</div>
-    <div>{playerCostString()}</div>
-</div>
-{#if !rosterPlayer.starPlayer && showAddSkills}
-    <tr>
-        <td colspan="16">
-            <AddSkill {index} />
-        </td>
-    </tr>
-{/if}
+<style lang="scss">
+    @import '../styles/colour';
+    @import '../styles/font';
+    input {
+        border: 0;
+        border-radius: 0;
+        background: none;
+    }
+    div {
+        input {
+            margin-bottom: 0;
+        }
+    }
+    .player-card {
+        // border: 2px solid;
+        border-radius: 25px;
+        // padding: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+            0 6px 6px rgba(0, 0, 0, 0.23);
+        position: relative;
+        min-width: 300px;
+    }
+    .header {
+        background-color: $main-colour;
+        color: white;
+        border-radius: 25px 25px 0 0;
+        padding: 10px;
+        h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        input {
+            padding: 0;
+            color: white;
+
+            &::placeholder {
+                color: #ccc;
+            }
+        }
+    }
+    .content {
+        // padding: 10px;
+    }
+    .player-number {
+        width: 20px;
+        line-height: 20px;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 12px;
+        right: 10px;
+        top: 10px;
+        background-color: white;
+        color: $main-colour;
+        position: absolute;
+        border: 1;
+    }
+    .player-characteristics {
+        display: flex;
+    }
+    .left-align {
+        text-align: left;
+    }
+    .flex-container {
+        display: flex;
+    }
+    .danger {
+        i {
+            vertical-align: text-bottom;
+        }
+    }
+    .add-skill {
+        vertical-align: middle;
+        display: inline-block;
+        margin-top: -1px;
+    }
+    .spp-input {
+        width: 60px;
+        text-align: center;
+        margin-right: -15px;
+    }
+
+    .skills {
+        padding: 10px;
+        &-title {
+            color: $main-colour;
+            font-family: $display-font;
+        }
+    }
+
+    @media print {
+        .flex-container {
+            display: none;
+        }
+        .player-name {
+            border-right: 0;
+        }
+        .controls {
+            border-left: 0;
+        }
+        .add-skill {
+            display: none;
+        }
+    }
+</style>

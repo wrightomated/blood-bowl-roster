@@ -5,6 +5,10 @@
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
     import Export from './export.svelte';
+    import TempCard from './tempCard.svelte';
+    import RosterPlayerCard from './rosterPlayerCard.svelte';
+    import { rosterViewMode } from '../store/rosterDisplayMode.store';
+    import RosterDelete from './rosterDelete.svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -35,6 +39,45 @@
     <RosterSave />
 </div>
 <Export />
+<RosterDelete />
+{#if $rosterViewMode === 'grid'}
+    <div class="player-cards">
+        {#each $roster.players as _, index}
+            <RosterPlayerCard {index} />
+        {/each}
+        {#if $roster.players.length < 16}
+            <div class="add-player-row">
+                <div class="left-align">
+                    <input
+                        aria-labelledby="name-header"
+                        placeholder="Player Name"
+                        bind:value={newName}
+                        class="name-input"
+                    />
+                </div>
+                <div class="left-align">
+                    <MaterialButton
+                        hoverText="Add new player"
+                        symbol="add_circle"
+                        clickFunction={addPlayer}
+                    />
+                </div>
+                <div class="position left-align">
+                    <select
+                        aria-labelledby="position-header"
+                        bind:value={selected}
+                    >
+                        {#each playerTypes as playerType}
+                            <option value={playerType}>
+                                {playerType.position}
+                            </option>
+                        {/each}
+                    </select>
+                </div>
+            </div>
+        {/if}
+    </div>
+{/if}
 <div class="table-container">
     <table>
         <thead>
@@ -116,6 +159,13 @@
     .sub-heading-box {
         display: flex;
         align-items: flex-end;
+    }
+    .player-cards {
+        display: grid;
+        align-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        column-gap: 10px;
+        row-gap: 15px;
     }
     .table-container {
         max-width: 100%;
