@@ -13,11 +13,12 @@
 
 <style lang="scss">
     @import '../../styles/colour';
+    @import '../../styles/font';
     .characteristic {
         height: 50px;
         width: 50px;
         position: relative;
-        border: 1px solid $main-colour;
+        border: 2px solid $main-colour;
         border-top: 0;
         margin-right: 5px;
         text-align: center;
@@ -32,8 +33,9 @@
         padding: 2px;
     }
     .value {
-        margin-top: 20px;
-        font-size: 20px;
+        margin-top: 22px;
+        font-size: 16px;
+        font-family: $display-font;
     }
     .improved {
         color: green;

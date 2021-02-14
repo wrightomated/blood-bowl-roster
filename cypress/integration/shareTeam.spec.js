@@ -14,7 +14,7 @@ context('Test that a team can be copied', () => {
         cy.get('.name-input').type('Tallboy');
         cy.get('.left-align > .symbol-control > .material-icons').click();
         cy.get('.tables').click();
-        cy.get('.symbol-control:nth-child(4) > .material-icons').click();
+        cy.get('.symbol-control:nth-child(5) > .material-icons').click();
         cy.get('#code-input').click();
         cy.get('.share-box:nth-child(1)').click();
         cy.get('#url-input').click();

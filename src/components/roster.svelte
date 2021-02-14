@@ -9,6 +9,7 @@
     import RosterPlayerCard from './rosterPlayerCard.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';
+    import AddPlayerCard from './playerCard/addPlayerCard.svelte';
 
     export let playerTypes: Player[];
     let selected: Player;
@@ -46,114 +47,88 @@
             <RosterPlayerCard {index} />
         {/each}
         {#if $roster.players.length < 16}
-            <div class="add-player-row">
-                <div class="left-align">
-                    <input
-                        aria-labelledby="name-header"
-                        placeholder="Player Name"
-                        bind:value={newName}
-                        class="name-input"
-                    />
-                </div>
-                <div class="left-align">
-                    <MaterialButton
-                        hoverText="Add new player"
-                        symbol="add_circle"
-                        clickFunction={addPlayer}
-                    />
-                </div>
-                <div class="position left-align">
-                    <select
-                        aria-labelledby="position-header"
-                        bind:value={selected}
-                    >
-                        {#each playerTypes as playerType}
-                            <option value={playerType}>
-                                {playerType.position}
-                            </option>
-                        {/each}
-                    </select>
-                </div>
-            </div>
+            <AddPlayerCard {playerTypes} />
         {/if}
     </div>
-{/if}
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <td />
-                <td class="left-align" colspan="2" id="name-header">Name</td>
-                <td class="left-align" id="position-header">Position</td>
-                <td>MA</td>
-                <td>ST</td>
-                <td>AG</td>
-                <td>PA</td>
-                <td>AV</td>
-                <td class="skills">Skills</td>
-                <td>Hiring Fee</td>
-                <td id="spp-header">Unspent Spp</td>
-                {#if $roster.mode !== 'exhibition'}
-                    <td id="mng-header" title="Miss next game">Mng</td>
-                    <td>Ni</td>
-                    <td id="tr-header" title="Temporarily Retiring">TR</td>
-                {/if}
-                <td>Current Value</td>
-            </tr>
-        </thead>
-        <tbody>
-            {#each $roster.players as _, index}
-                <RosterRow {index} />
-            {/each}
-            {#if $roster.players.length < 16}
-                <tr class="add-player-row">
+{:else}
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
                     <td />
-                    <td class="left-align">
-                        <input
-                            aria-labelledby="name-header"
-                            placeholder="Player Name"
-                            bind:value={newName}
-                            class="name-input"
-                        />
-                    </td>
-                    <td class="left-align">
-                        <MaterialButton
-                            hoverText="Add new player"
-                            symbol="add_circle"
-                            clickFunction={addPlayer}
-                        />
-                    </td>
-                    <td class="position left-align">
-                        <select
-                            aria-labelledby="position-header"
-                            bind:value={selected}
-                        >
-                            {#each playerTypes as playerType}
-                                <option value={playerType}>
-                                    {playerType.position}
-                                </option>
-                            {/each}
-                        </select>
-                    </td>
-                    <td />
-                    <td />
-                    <td />
-                    <td />
-                    <td />
-                    <td />
-                    <td />
-                    <td />
+                    <td class="left-align" colspan="2" id="name-header">Name</td
+                    >
+                    <td class="left-align" id="position-header">Position</td>
+                    <td>MA</td>
+                    <td>ST</td>
+                    <td>AG</td>
+                    <td>PA</td>
+                    <td>AV</td>
+                    <td class="skills">Skills</td>
+                    <td>Hiring Fee</td>
+                    <td id="spp-header">Unspent Spp</td>
                     {#if $roster.mode !== 'exhibition'}
-                        <td />
-                        <td />
-                        <td />
+                        <td id="mng-header" title="Miss next game">Mng</td>
+                        <td>Ni</td>
+                        <td id="tr-header" title="Temporarily Retiring">TR</td>
                     {/if}
-                    <td />
+                    <td>Current Value</td>
                 </tr>
-            {/if}
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                {#each $roster.players as _, index}
+                    <RosterRow {index} />
+                {/each}
+                {#if $roster.players.length < 16}
+                    <tr class="add-player-row">
+                        <td />
+                        <td class="left-align">
+                            <input
+                                aria-labelledby="name-header"
+                                placeholder="Player Name"
+                                bind:value={newName}
+                                class="name-input"
+                            />
+                        </td>
+                        <td class="left-align">
+                            <MaterialButton
+                                hoverText="Add new player"
+                                symbol="add_circle"
+                                clickFunction={addPlayer}
+                            />
+                        </td>
+                        <td class="position left-align">
+                            <select
+                                aria-labelledby="position-header"
+                                bind:value={selected}
+                            >
+                                {#each playerTypes as playerType}
+                                    <option value={playerType}>
+                                        {playerType.position}
+                                    </option>
+                                {/each}
+                            </select>
+                        </td>
+                        <td />
+                        <td />
+                        <td />
+                        <td />
+                        <td />
+                        <td />
+                        <td />
+                        <td />
+                        {#if $roster.mode !== 'exhibition'}
+                            <td />
+                            <td />
+                            <td />
+                        {/if}
+                        <td />
+                    </tr>
+                {/if}
+            </tbody>
+        </table>
+    </div>
+{/if}
 
 <style lang="scss">
     .sub-heading-box {
@@ -162,10 +137,12 @@
     }
     .player-cards {
         display: grid;
-        align-items: center;
+        align-items: start;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        // grid-auto-rows: 1fr;
         column-gap: 10px;
         row-gap: 15px;
+        margin-bottom: 20px;
     }
     .table-container {
         max-width: 100%;

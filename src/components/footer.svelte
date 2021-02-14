@@ -11,6 +11,23 @@
     };
 </script>
 
+<footer>
+    <p>
+        No cookies are used on this website. Local storage is used for storing
+        saved and current rosters.
+        <!-- <span on:click={toggleLocalStorage}>Delete local storage.</span> -->
+    </p>
+    <p>
+        Rule references and player names are property of Games Workshop. This
+        site is not affiliated with Games Workshop. I just think they're neat.
+    </p>
+    <p>
+        This is a work in progres.
+        <a href="mailto:bbrosterapp@gmail.com">Email</a>
+        for all queries, concerns and suggestions.
+    </p>
+</footer>
+
 <style lang="scss">
     @import '../styles/colour';
     p {
@@ -34,20 +51,3 @@
         }
     }
 </style>
-
-<footer>
-    <p>
-        No cookies are used on this website. Local storage is used for storing
-        saved and current rosters.
-        <span on:click={toggleLocalStorage}>Delete local storage.</span>
-    </p>
-    <p>
-        Rule references and player names are property of Games Workshop. This
-        site is not affiliated with Games Workshop. I just think they're neat.
-    </p>
-    <p>
-        This is a work in progres.
-        <a href="mailto:bbrosterapp@gmail.com">Email</a>
-        for all queries, concerns and suggestions.
-    </p>
-</footer>

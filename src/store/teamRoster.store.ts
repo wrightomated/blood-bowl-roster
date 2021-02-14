@@ -7,6 +7,7 @@ import { stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
+import { savedRosterIndex } from './saveDirectory.store';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -128,6 +129,7 @@ function createRoster() {
                 const loadedRoster =
                     rosterFromCode(rosterCode) || getEmptyRoster();
                 currentTeam.setCurrentTeamWithCode(rosterCode);
+                savedRosterIndex.newId();
                 return { ...loadedRoster };
             }),
         changeRosterMode: (mode: RosterMode) =>
