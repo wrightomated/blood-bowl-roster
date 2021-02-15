@@ -24,9 +24,6 @@
         $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
-    // $: playerSkillIds = rosterPlayer.player.skills.concat(
-    //     rosterPlayer?.alterations?.extraSkills || [],
-    // );
     $: currentCost =
         rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
             ? 0
@@ -243,6 +240,7 @@
         border: 0;
         border-radius: 0;
         background: none;
+        font-size: 16px;
     }
     div {
         input {
@@ -251,11 +249,8 @@
     }
     .player-card {
         border-radius: 25px;
-        // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
-        //     0 6px 6px rgba(0, 0, 0, 0.23);
         position: relative;
         min-width: 300px;
-        // max-width: 800px;
         height: 100%;
         border: 2px solid $main-colour;
     }
@@ -269,7 +264,6 @@
         border: 2px solid $main-colour;
         h3 {
             margin: 0;
-            font-size: 20px;
         }
 
         input {

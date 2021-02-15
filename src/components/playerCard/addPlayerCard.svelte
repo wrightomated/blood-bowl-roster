@@ -41,11 +41,6 @@
         </div>
     </div>
     <div class="add-sign-container">
-        <!-- <MaterialButton
-            hoverText="Add new player"
-            symbol="add_circle"
-            clickFunction={addPlayer}
-        /> -->
         <button class="add-sign" on:click={addPlayer} title="Add New Player"
             ><i class="material-icons icon">add_circle</i></button
         >
@@ -71,7 +66,7 @@
         background-color: $main-colour;
         h3 {
             margin: 0;
-            font-size: 20px;
+            font-size: 16px;
             color: white;
         }
 
@@ -83,9 +78,19 @@
             }
         }
         select {
-            margin: 8px 0;
+            margin: 5px 0;
             background-color: $main-colour;
             color: white;
+            font-size: 16px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFFFFF'><polygon points='0,0 100,0 50,50'/></svg>")
+                no-repeat;
+            background-size: 12px;
+            background-position: 97% 72%;
+            padding-right: 20px;
+            background-repeat: no-repeat;
         }
     }
     button {
