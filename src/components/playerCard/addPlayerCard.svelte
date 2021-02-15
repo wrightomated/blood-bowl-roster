@@ -78,7 +78,7 @@
             }
         }
         select {
-            margin: 5px 0;
+            margin: 6px 0;
             background-color: $main-colour;
             color: white;
             font-size: 16px;
