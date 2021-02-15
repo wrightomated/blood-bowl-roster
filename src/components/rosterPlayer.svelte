@@ -9,11 +9,11 @@
         characteristicMaxValue,
         characteristicMinValue,
     } from '../data/statOrder.data';
+    import { showSkillButtons } from '../store/showSkillButtons.store';
 
     export let index: number;
 
-    let showAddSkills: boolean = false;
-
+    $: showAddSkills = $showSkillButtons[index];
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === rosterPlayer.player.id,
@@ -65,7 +65,9 @@
     };
 
     const toggleShowSkills = () => {
-        showAddSkills = !showAddSkills;
+        showSkillButtons.set(
+            $showSkillButtons.map((x, i) => (i === index ? !x : x)),
+        );
     };
 
     const getStat = (stat: number, i: number) => {
@@ -154,15 +156,13 @@
                     {numberOfPlayerType}/{maxOfPlayerType}
                 </span>
             {/if}
-            {#if (rosterPlayer.alterations?.advancements || 0) < 6}
-                <span class="add-skill">
-                    <MaterialButton
-                        hoverText="Player advancement"
-                        symbol="elevator"
-                        clickFunction={toggleShowSkills}
-                    />
-                </span>
-            {/if}
+            <span class="add-skill">
+                <MaterialButton
+                    hoverText="Player advancement"
+                    symbol="elevator"
+                    clickFunction={toggleShowSkills}
+                />
+            </span>
         {/if}
     </td>
 
@@ -218,7 +218,7 @@
 
     <td>{currentCost},000</td>
 </tr>
-{#if !rosterPlayer.starPlayer && showAddSkills && (rosterPlayer.alterations?.advancements || 0) < 6}
+{#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
     <tr>
         <td colspan="16">
             <AddSkill {index} />
