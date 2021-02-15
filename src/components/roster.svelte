@@ -5,7 +5,6 @@
     import RosterSave from './rosterSave.svelte';
     import MaterialButton from './materialButton.svelte';
     import Export from './export.svelte';
-    import TempCard from './tempCard.svelte';
     import RosterPlayerCard from './rosterPlayerCard.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';

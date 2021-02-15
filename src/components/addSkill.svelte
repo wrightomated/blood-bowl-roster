@@ -9,12 +9,11 @@
     import type { RosterPlayerRecord } from '../models/roster.model';
     import type { SkillCategory } from '../models/skill.model';
     import { categoryToName } from '../models/skill.model';
+    import { rosterViewMode } from '../store/rosterDisplayMode.store';
+    import { showSkillButtons } from '../store/showSkillButtons.store';
     import { roster } from '../store/teamRoster.store';
 
     export let index: number;
-    export let showButtons: boolean;
-
-    // let showButtons: boolean = true;
     let showPrimary: boolean = false;
     let showSecondary: boolean = false;
     let showRandom: boolean = false;
@@ -60,6 +59,9 @@
         };
         roster.updatePlayer(newPlayer, index);
         cancel();
+        showSkillButtons.set(
+            $showSkillButtons.map((x, i) => (i === index ? false : x)),
+        );
     };
 
     const addCharacteristic = (charIndex: number) => {
@@ -79,6 +81,9 @@
         };
         roster.updatePlayer(newPlayer, index);
         cancel();
+        showSkillButtons.set(
+            $showSkillButtons.map((x, i) => (i === index ? false : x)),
+        );
     };
 
     const addInjury = (charIndex: number) => {
@@ -93,74 +98,49 @@
         };
         roster.updatePlayer(newPlayer, index);
         cancel();
+        showSkillButtons.set(
+            $showSkillButtons.map((x, i) => (i === index ? false : x)),
+        );
     };
 
-    const selectPrimary = () => {
-        showPrimary = true;
-        showSecondary = false;
-        showRandom = false;
-        showButtons = false;
-        showCharacteristics = false;
-        showInjuries = false;
-    };
-    const randomPrimary = () => {
-        showPrimary = true;
-        showSecondary = false;
-        showRandom = true;
-        showButtons = false;
-        showCharacteristics = false;
-        showInjuries = false;
-    };
-    const selectSecondary = () => {
-        showPrimary = false;
-        showSecondary = true;
-        showRandom = false;
-        showButtons = false;
-        showCharacteristics = false;
-        showInjuries = false;
-    };
-    const randomSecondary = () => {
-        showPrimary = false;
-        showSecondary = true;
-        showRandom = true;
-        showButtons = false;
-        showCharacteristics = false;
-        showInjuries = false;
-    };
-    const randomCharacteristic = () => {
-        showPrimary = false;
-        showSecondary = false;
-        showRandom = true;
-        showButtons = false;
-        showCharacteristics = true;
-        showInjuries = false;
-        die = 0;
-    };
-    const injuries = () => {
-        showPrimary = false;
-        showSecondary = false;
-        showRandom = false;
-        showButtons = false;
-        showCharacteristics = false;
-        showInjuries = true;
-        die = 0;
-    };
     const cancel = () => {
         showPrimary = false;
         showSecondary = false;
         showRandom = false;
-        showButtons = true;
         showCharacteristics = false;
         showInjuries = false;
         die = 0;
     };
-    const roll = () => {
-        die = Math.floor(Math.random() * Math.floor(15)) + 1;
+    const selectPrimary = () => {
+        cancel();
+        showPrimary = true;
     };
-    const rollD6 = () => {
-        die = Math.floor(Math.random() * Math.floor(5)) + 1;
+    const randomPrimary = () => {
+        cancel();
+        showPrimary = true;
+        showRandom = true;
     };
-
+    const selectSecondary = () => {
+        cancel();
+        showSecondary = true;
+    };
+    const randomSecondary = () => {
+        cancel();
+        showSecondary = true;
+        showRandom = true;
+    };
+    const randomCharacteristic = () => {
+        cancel();
+        showRandom = true;
+        showCharacteristics = true;
+    };
+    const injuries = () => {
+        cancel();
+        showInjuries = true;
+    };
+    const roll = (dn: number) => {
+        die = Math.floor(Math.random() * Math.floor(dn)) + 1;
+    };
     const allowedSkills = (dice: number) => {
         switch (dice) {
             case 1:
@@ -280,53 +260,55 @@
     };
 </script>
 
-<div class="container">
+<div class="container" class:grid-view={$rosterViewMode === 'grid'}>
     <div>
-        <button
-            class:selected={showPrimary && showRandom}
-            on:click={randomPrimary}
-            >Random Primary <span class="spp-font"
-                >{advancementCosts.ranPri[
-                    rosterPlayer.alterations?.advancements || 0
-                ]}spp</span
-            ></button
-        >
-        <button
-            on:click={selectPrimary}
-            class:selected={showPrimary && !showRandom}
-            >Select Primary <span class="spp-font"
-                >{advancementCosts.priOrRanSec[
-                    rosterPlayer.alterations?.advancements || 0
-                ]}spp</span
-            ></button
-        >
-        <button
-            on:click={randomSecondary}
-            class:selected={showSecondary && showRandom}
-            >Random Secondary <span class="spp-font"
-                >{advancementCosts.priOrRanSec[
-                    rosterPlayer.alterations?.advancements || 0
-                ]}spp</span
-            ></button
-        >
-        <button
-            on:click={selectSecondary}
-            class:selected={showSecondary && !showRandom}
-            >Select Secondary <span class="spp-font"
-                >{advancementCosts.sec[
-                    rosterPlayer.alterations?.advancements || 0
-                ]}spp</span
-            ></button
-        >
-        <button
-            on:click={randomCharacteristic}
-            class:selected={showCharacteristics}
-            >Random Characteristic <span class="spp-font"
-                >{advancementCosts.char[
-                    rosterPlayer.alterations?.advancements || 0
-                ]}spp</span
-            ></button
-        >
+        {#if (rosterPlayer.alterations?.advancements || 0) < 6}
+            <button
+                class:selected={showPrimary && showRandom}
+                on:click={randomPrimary}
+                >Random Primary <span class="spp-font"
+                    >{advancementCosts.ranPri[
+                        rosterPlayer.alterations?.advancements || 0
+                    ]}spp</span
+                ></button
+            >
+            <button
+                on:click={selectPrimary}
+                class:selected={showPrimary && !showRandom}
+                >Select Primary <span class="spp-font"
+                    >{advancementCosts.priOrRanSec[
+                        rosterPlayer.alterations?.advancements || 0
+                    ]}spp</span
+                ></button
+            >
+            <button
+                on:click={randomSecondary}
+                class:selected={showSecondary && showRandom}
+                >Random Secondary <span class="spp-font"
+                    >{advancementCosts.priOrRanSec[
+                        rosterPlayer.alterations?.advancements || 0
+                    ]}spp</span
+                ></button
+            >
+            <button
+                on:click={selectSecondary}
+                class:selected={showSecondary && !showRandom}
+                >Select Secondary <span class="spp-font"
+                    >{advancementCosts.sec[
+                        rosterPlayer.alterations?.advancements || 0
+                    ]}spp</span
+                ></button
+            >
+            <button
+                on:click={randomCharacteristic}
+                class:selected={showCharacteristics}
+                >Random Characteristic <span class="spp-font"
+                    >{advancementCosts.char[
+                        rosterPlayer.alterations?.advancements || 0
+                    ]}spp</span
+                ></button
+            >
+        {/if}
         <button
             on:click={injuries}
             class="injury-button"
@@ -372,7 +354,7 @@
     {#if showCharacteristics}
         <fieldset>
             <legend> Characteristic </legend>
-            <button class="dice" on:click={roll}
+            <button class="dice" on:click={() => roll(16)}
                 >{die ? die : 'Roll D16'}</button
             >
             {#each characteristics as chara, i}
@@ -387,7 +369,7 @@
     {#if showInjuries}
         <fieldset class="injury-fieldset">
             <legend> Lasting Injury </legend>
-            <button class="injury-button" on:click={rollD6}
+            <button class="injury-button" on:click={() => roll(6)}
                 >{die ? die : 'Roll D6'}</button
             >
             {#each characteristics as chara, i}
@@ -410,6 +392,10 @@
         left: 0;
         top: 0;
         max-width: calc(100vw - 16px);
+    }
+    .grid-view {
+        margin: 1em;
+        max-width: 100%;
     }
     button {
         border-radius: 10px;

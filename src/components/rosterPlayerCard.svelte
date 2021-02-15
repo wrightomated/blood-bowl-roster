@@ -11,10 +11,9 @@
         characteristics,
     } from '../data/statOrder.data';
     import StatBlock from './playerCard/statBlock.svelte';
+    import { showSkillButtons } from '../store/showSkillButtons.store';
 
     export let index: number;
-
-    let showAddSkills: boolean = false;
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
@@ -64,7 +63,9 @@
     };
 
     const toggleShowSkills = () => {
-        showAddSkills = !showAddSkills;
+        showSkillButtons.set(
+            $showSkillButtons.map((x, i) => (i === index ? !x : x)),
+        );
     };
 
     const getStat = (stat: number, i: number) => {
@@ -140,7 +141,7 @@
                         clickFunction={() => removePlayer(true)}
                     />
                 {/if}
-                {#if !rosterPlayer.starPlayer && (rosterPlayer.alterations?.advancements || 0) < 6}
+                {#if !rosterPlayer.starPlayer}
                     <MaterialButton
                         hoverText="Player advancement"
                         symbol="elevator"
@@ -160,7 +161,7 @@
             />
         {/each}
     </div>
-    {#if !rosterPlayer.starPlayer && showAddSkills && (rosterPlayer.alterations?.advancements || 0) < 6}
+    {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
         <div>
             <AddSkill {index} />
         </div>
