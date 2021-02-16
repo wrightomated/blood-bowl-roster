@@ -18,7 +18,7 @@
         height: 50px;
         width: 50px;
         position: relative;
-        border: 2px solid $main-colour;
+        border: 2px solid $secondary-colour;
         border-top: 0;
         margin-right: 5px;
         text-align: center;
@@ -28,7 +28,7 @@
         left: 0;
         top: -1px;
         font-size: 12px;
-        background: $main-colour;
+        background: $secondary-colour;
         color: white;
         padding: 2px;
     }

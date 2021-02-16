@@ -1,6 +1,6 @@
 <header>
     <h1>BB Roster</h1>
-    <p>Build and grow your Blood Bowl teams.</p>
+    <p>Build and grow your Blood Bowl 2020 teams.</p>
 </header>
 
 <style lang="scss">

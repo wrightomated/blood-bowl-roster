@@ -13,7 +13,6 @@
 
     export let index: number;
 
-    $: showAddSkills = $showSkillButtons[index];
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === rosterPlayer.player.id,
@@ -26,10 +25,13 @@
         rosterPlayer?.alterations?.extraSkills || [],
     );
     $: currentCost =
-        rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
+        rosterPlayer?.alterations?.mng ||
+        rosterPlayer?.alterations?.tr ||
+        ((rosterPlayer.player.id === 56 || rosterPlayer.player.id === 73) &&
+        $roster.mode !== 'exhibition'
             ? 0
-            : rosterPlayer.player.cost +
-              (rosterPlayer.alterations?.valueChange || 0);
+            : rosterPlayer.player.cost) +
+            (rosterPlayer.alterations?.valueChange || 0);
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
