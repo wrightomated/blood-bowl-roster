@@ -24,7 +24,13 @@
     $: currentTotal = $roster.players
         .filter((p) => !p?.starPlayer)
         .filter((p) => !p?.alterations.tr && !p?.alterations.mng)
-        .map((x) => x.player.cost + (x?.alterations?.valueChange || 0))
+        .map(
+            (x) =>
+                ((x.player.id === 56 || x.player.id === 73) &&
+                $roster.mode !== 'exhibition'
+                    ? 0
+                    : x.player.cost) + (x?.alterations?.valueChange || 0),
+        )
         .reduce((a, b) => a + b, 0);
 
     const noEmptyTreasury = () => {

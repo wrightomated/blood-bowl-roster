@@ -24,10 +24,13 @@
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
     $: currentCost =
-        rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
+        rosterPlayer?.alterations?.mng ||
+        rosterPlayer?.alterations?.tr ||
+        ((rosterPlayer.player.id === 56 || rosterPlayer.player.id === 73) &&
+        $roster.mode !== 'exhibition'
             ? 0
-            : rosterPlayer.player.cost +
-              (rosterPlayer.alterations?.valueChange || 0);
+            : rosterPlayer.player.cost) +
+            (rosterPlayer.alterations?.valueChange || 0);
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
@@ -100,8 +103,8 @@
     };
 </script>
 
-<section class="player-card">
-    <div class="header">
+<section class="player-card" class:danger>
+    <div class="header" class:danger>
         <div class="player-number">{index + 1}</div>
         <h3 class="player-name left-align">
             {#if rosterPlayer.starPlayer}
@@ -121,13 +124,10 @@
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
-                    </p>
-                    {#if danger}
-                        <span class="danger">
-                            <i class="material-icons">warning</i>
+                        {#if danger}
                             {numberOfPlayerType}/{maxOfPlayerType}
-                        </span>
-                    {/if}
+                        {/if}
+                    </p>
                 {/if}
                 <MaterialButton
                     hoverText="Remove player"
@@ -253,16 +253,19 @@
         position: relative;
         min-width: 300px;
         height: 100%;
-        border: 2px solid $main-colour;
+        border: 2px solid $secondary-colour;
+        &.danger {
+            border-color: $main-colour;
+        }
     }
     .header {
-        background-color: $main-colour;
+        background-color: $secondary-colour;
         color: white;
         border-radius: 20px 20px 0 0;
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
-        border: 2px solid $main-colour;
+        border: 2px solid $secondary-colour;
         h3 {
             margin: 0;
         }
@@ -274,6 +277,10 @@
             &::placeholder {
                 color: #ddd;
             }
+        }
+        &.danger {
+            background-color: $main-colour;
+            border-color: $main-colour;
         }
     }
     .content {
@@ -288,7 +295,7 @@
         right: 10px;
         top: 10px;
         background-color: white;
-        color: $main-colour;
+        color: $secondary-colour;
         position: absolute;
         border: 1;
     }
@@ -302,11 +309,6 @@
     }
     .flex-container {
         display: flex;
-    }
-    .danger {
-        i {
-            vertical-align: text-bottom;
-        }
     }
 
     .spp-input {

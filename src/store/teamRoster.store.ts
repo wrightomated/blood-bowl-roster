@@ -18,6 +18,9 @@ function createRoster() {
         subscribe,
         addPlayer: (player: RosterPlayerRecord) =>
             update((store) => {
+                if (store.players.length >= 16) {
+                    return store;
+                }
                 return {
                     ...store,
                     players: store.players.concat([player]),
