@@ -34,12 +34,6 @@
         text-align: left;
         font-size: small;
     }
-    span {
-        color: $main-colour;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
     footer {
         border-top: 1px solid $secondary-colour;
         margin-top: 2em;
