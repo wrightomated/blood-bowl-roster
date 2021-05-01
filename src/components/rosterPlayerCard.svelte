@@ -24,13 +24,13 @@
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
     $: currentCost =
-        rosterPlayer?.alterations?.mng ||
+        (rosterPlayer?.alterations?.mng ||
         rosterPlayer?.alterations?.tr ||
         ((rosterPlayer.player.id === 56 || rosterPlayer.player.id === 73) &&
-        $roster.mode !== 'exhibition'
+            $roster.mode !== 'exhibition')
             ? 0
             : rosterPlayer.player.cost) +
-            (rosterPlayer.alterations?.valueChange || 0);
+        (rosterPlayer.alterations?.valueChange || 0);
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
@@ -229,7 +229,7 @@
         </p>
         <p class="current-value">
             <span class="mini-title">Current Value:</span>
-            {currentCost},000
+            {currentCost}{currentCost > 0 ? ',000' : ''}
         </p>
     </div>
 </section>

@@ -818,7 +818,7 @@ const rElf: Player = {
     secondary: ['P', 'S'],
 };
 const rTroll: Player = {
-    ...trainedTroll,
+    ...untrainedTroll,
     position: 'Renegade Troll',
     id: 89,
     secondary: ['A', 'G', 'M'],
