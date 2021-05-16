@@ -27,9 +27,7 @@ const inducementToString = (inducements: ExtraRosterInfo) => {
 };
 
 const playerToString = (rp: RosterPlayerRecord) => {
-    const alterations = `${
-        !rp?.starPlayer ? pAlterations(rp.alterations) : ''
-    }`;
+    const alterations = `${rp?.starPlayer ? '' : pAlterations(rp.alterations)}`;
     return `p${rp.player.id}${alterations}`;
 };
 

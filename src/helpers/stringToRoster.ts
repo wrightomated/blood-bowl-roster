@@ -1,10 +1,12 @@
 import { playerCatalogue } from '../data/players.data';
 import { starPlayers } from '../data/starPlayer.data';
 import { teamData } from '../data/teams.data';
+import type { Player } from '../models/player.model';
 import type {
     ExtraRosterInfo,
     PlayerAlterations,
     Roster,
+    RosterPlayerRecord,
 } from '../models/roster.model';
 import type { RosterMode } from '../store/rosterMode.store';
 
@@ -35,7 +37,9 @@ const expandPlayers = (players: string[]) => {
     return players.map((p) => expandPlayer(p));
 };
 
-const expandPlayer = (playerString: string) => {
+const expandPlayer: (playerString: string) => RosterPlayerRecord = (
+    playerString,
+) => {
     const [id, ...other] = itemsInString(playerString);
     const nId = parseInt(id);
     const starPlayer = nId >= 200;
@@ -43,7 +47,9 @@ const expandPlayer = (playerString: string) => {
     const alterations = constructAlterations(other);
 
     const obj = { player, playerName: starPlayer ? player.position : '' };
-    if (starPlayer) {
+    if (nId === 0) {
+        return { ...obj, deleted: true, alterations };
+    } else if (starPlayer) {
         return { ...obj, starPlayer: true };
     } else {
         return { ...obj, alterations };
@@ -51,7 +57,9 @@ const expandPlayer = (playerString: string) => {
 };
 
 const findPlayer = (id: number) => {
-    if (id >= 200) {
+    if (id === 0) {
+        return deletedPlayer();
+    } else if (id >= 200) {
         return starPlayers.starPlayers.find((p) => p.id === id);
     } else {
         return playerCatalogue.players.find((p) => p.id === id);
@@ -166,4 +174,14 @@ const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (
 
 const getMode: (modeMatch: string) => RosterMode = (modeMatch) => {
     return getNumber(modeMatch) === 0 ? 'league' : 'exhibition';
+};
+
+export const deletedPlayer: () => Player = () => {
+    return {
+        id: 0,
+        position: '',
+        playerStats: [0, 0, 0, 0, 0],
+        cost: 0,
+        skills: [],
+    };
 };

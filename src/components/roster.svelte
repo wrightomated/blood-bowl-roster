@@ -3,25 +3,14 @@
     import RosterRow from './rosterPlayer.svelte';
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
-    import MaterialButton from './materialButton.svelte';
     import Export from './export.svelte';
     import RosterPlayerCard from './rosterPlayerCard.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
+    import AddPlayerToRoster from './addPlayerToRoster.svelte';
 
     export let playerTypes: Player[];
-    let selected: Player;
-    let newName: string = '';
-
-    const addPlayer = () => {
-        roster.addPlayer({
-            playerName: newName,
-            player: { ...selected },
-            alterations: { spp: 0, ni: 0 },
-        });
-        newName = '';
-    };
 </script>
 
 <div class="team-name-container">
@@ -42,11 +31,16 @@
 <RosterDelete />
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
-        {#each $roster.players as _, index}
-            <RosterPlayerCard {index} />
+        {#each $roster.players as player, index}
+            {#if !player?.deleted}
+                <RosterPlayerCard {index} />
+            {:else}
+                <AddPlayerCard {playerTypes} {index} />
+            {/if}
         {/each}
+
         {#if $roster.players.length < 16}
-            <AddPlayerCard {playerTypes} />
+            <AddPlayerCard {playerTypes} index={$roster.players.length} />
         {/if}
     </div>
 {:else}
@@ -75,54 +69,18 @@
                 </tr>
             </thead>
             <tbody>
-                {#each $roster.players as _, index}
-                    <RosterRow {index} />
+                {#each $roster.players as player, index}
+                    {#if !player?.deleted}
+                        <RosterRow {index} />
+                    {:else}
+                        <AddPlayerToRoster {playerTypes} {index} />
+                    {/if}
                 {/each}
-                {#if $roster.players.length < 16}
-                    <tr class="add-player-row">
-                        <td />
-                        <td class="left-align">
-                            <input
-                                aria-labelledby="name-header"
-                                placeholder="Player Name"
-                                bind:value={newName}
-                                class="name-input"
-                            />
-                        </td>
-                        <td class="left-align">
-                            <MaterialButton
-                                hoverText="Add new player"
-                                symbol="add_circle"
-                                clickFunction={addPlayer}
-                            />
-                        </td>
-                        <td class="position left-align">
-                            <select
-                                aria-labelledby="position-header"
-                                bind:value={selected}
-                            >
-                                {#each playerTypes as playerType}
-                                    <option value={playerType}>
-                                        {playerType.position}
-                                    </option>
-                                {/each}
-                            </select>
-                        </td>
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        <td />
-                        {#if $roster.mode !== 'exhibition'}
-                            <td />
-                            <td />
-                            <td />
-                        {/if}
-                        <td />
-                    </tr>
+                {#if $roster.players.filter((p) => !p.deleted).length < 16}
+                    <AddPlayerToRoster
+                        {playerTypes}
+                        index={$roster.players.length}
+                    />
                 {/if}
             </tbody>
         </table>
@@ -138,7 +96,6 @@
         display: grid;
         align-items: start;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        // grid-auto-rows: 1fr;
         column-gap: 10px;
         row-gap: 15px;
         margin-bottom: 20px;
@@ -197,9 +154,6 @@
         }
         .table-container {
             overflow: inherit;
-        }
-        .add-player-row {
-            display: none;
         }
     }
 </style>
