@@ -15,6 +15,7 @@ export interface Roster {
 
 export interface RosterPlayerRecord {
     player: Player;
+    playerNumber?: number;
     playerName: string;
     starPlayer?: boolean;
     alterations?: PlayerAlterations;
