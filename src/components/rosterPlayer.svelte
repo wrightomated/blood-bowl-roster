@@ -177,7 +177,11 @@
     <td class="left-align">
         <SkillElement {playerSkillIds} />
     </td>
-    <td>{playerCostString()}</td>
+    <td
+        >{rosterPlayer.player.cost > 0
+            ? `${rosterPlayer.player.cost},000`
+            : '-'}</td
+    >
     <td>
         {#if $roster.players[index]?.alterations?.spp !== undefined}
             <input
