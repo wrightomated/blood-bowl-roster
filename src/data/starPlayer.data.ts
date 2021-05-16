@@ -261,13 +261,13 @@ const akhorne: StarPlayer = {
     specialRules: ['Blind Rage'],
 };
 const frankNStein: StarPlayer = {
-    id: 225,
+    id: 226,
     position: "Frank 'N' Stein",
     playerStats: [4, 5, 4, 0, 10],
     playsFor: ['Old World Classic', 'Sylvanian Spotlight'],
     skills: [51, 71, 55, 77, 58, 60],
     cost: 250,
-    specialRules: ['Blind Rage'],
+    specialRules: ['Brutal Block'],
 };
 
 export const starPlayers = {
