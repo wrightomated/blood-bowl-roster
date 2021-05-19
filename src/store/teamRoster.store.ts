@@ -9,6 +9,8 @@ import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 
+const maxRosterPlayers = 16;
+
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
         getDefaultRoster(),
@@ -18,7 +20,10 @@ function createRoster() {
         subscribe,
         addPlayer: (player: RosterPlayerRecord, index?: number) =>
             update((store) => {
-                if (store.players.filter((p) => !p.deleted).length >= 16) {
+                if (
+                    store.players.filter((p) => !p.deleted).length >=
+                    maxRosterPlayers
+                ) {
                     return store;
                 }
                 return {
@@ -208,8 +213,11 @@ const addPlayerToPlayers: (
     newPlayer: RosterPlayerRecord,
     index?: number,
 ) => RosterPlayerRecord[] = (players, newPlayer, index) => {
-    const indexToAdd = index || players.findIndex((p) => p.deleted);
-    return indexToAdd > 0 && indexToAdd < players.length
+    const indexToAdd =
+        index < maxRosterPlayers ? index : players.findIndex((p) => p.deleted);
+    console.log(index, indexToAdd);
+
+    return indexToAdd >= 0 && indexToAdd < players.length
         ? players.map((p, i) => (i === indexToAdd ? newPlayer : p))
         : players.concat([newPlayer]);
 };
@@ -220,7 +228,11 @@ const deletePlayersFromPlayers: (
 ) => RosterPlayerRecord[] = (players, playerIndicesToRemove) => {
     const newPlayers = players.map((p, i) =>
         playerIndicesToRemove.includes(i)
-            ? { ...p, deleted: true, player: deletedPlayer() }
+            ? {
+                  ...p,
+                  deleted: true,
+                  player: deletedPlayer(),
+              }
             : p,
     );
     while (newPlayers[newPlayers.length - 1]?.deleted) {

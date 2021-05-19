@@ -101,10 +101,15 @@ const getModeInt = (mode: RosterMode) => {
 };
 
 export const rosterToString = (roster: Roster) => {
-    const extraS = extraToString(roster.extra);
-    const inducementS = inducementToString(roster.inducements);
-    const players = roster.players.map((x) => playerToString(x)).join('');
-    return `t${roster.teamId}t${roster.treasury}m${getModeInt(
-        roster.mode,
-    )}${extraS}${inducementS}${players}I${getNameString(roster)}`;
+    try {
+        const extraS = extraToString(roster.extra);
+        const inducementS = inducementToString(roster.inducements);
+        const players = roster.players.map((x) => playerToString(x)).join('');
+        return `t${roster.teamId}t${roster.treasury}m${getModeInt(
+            roster.mode,
+        )}${extraS}${inducementS}${players}I${getNameString(roster)}`;
+    } catch (error) {
+        console.error('Could not convert roster to string', error);
+        return 'Error';
+    }
 };

@@ -76,7 +76,7 @@
                         <AddPlayerToRoster {playerTypes} {index} />
                     {/if}
                 {/each}
-                {#if $roster.players.filter((p) => !p.deleted).length < 16}
+                {#if $roster.players.length < 16}
                     <AddPlayerToRoster
                         {playerTypes}
                         index={$roster.players.length}
