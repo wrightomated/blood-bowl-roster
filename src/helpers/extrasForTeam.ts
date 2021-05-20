@@ -13,8 +13,8 @@ export const extrasForTeam: (
             cost: team.reroll.cost,
             max: team.reroll.max,
         },
-        { extraString: 'assistant_coaches' as ExtraString, cost: 10, max: 12 },
-        { extraString: 'cheerleaders' as ExtraString, cost: 10, max: 10 },
+        { extraString: 'assistant_coaches' as ExtraString, cost: 10, max: 6 },
+        { extraString: 'cheerleaders' as ExtraString, cost: 10, max: 12 },
         {
             extraString: 'dedicated_fans' as ExtraString,
             cost: 10,

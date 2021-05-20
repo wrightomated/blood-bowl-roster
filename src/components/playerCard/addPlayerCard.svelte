@@ -4,6 +4,7 @@
     import { roster } from '../../store/teamRoster.store';
 
     export let playerTypes: Player[];
+    export let index: number;
     let selected: Player;
     let newName: string = '';
     let amount: number = 1;
@@ -22,11 +23,14 @@
                 ? maxOfPlayerType
                 : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
-            roster.addPlayer({
-                playerName: newName,
-                player: { ...selected },
-                alterations: { spp: 0, ni: 0 },
-            });
+            roster.addPlayer(
+                {
+                    playerName: newName,
+                    player: { ...selected },
+                    alterations: { spp: 0, ni: 0 },
+                },
+                numberOfPlayers === 1 ? index : undefined,
+            );
             newName = '';
         }
         amount = 1;
@@ -35,6 +39,7 @@
 
 <div class="player-card">
     <div class="header">
+        <div class="player-number">{index + 1}</div>
         <div>
             <h3>
                 <input
@@ -73,12 +78,14 @@
 
 <style lang="scss">
     @import '../../styles/colour';
+    @import '../../styles/font';
     .player-card {
         border-radius: 25px;
         position: relative;
         min-width: 300px;
         max-width: 600px;
         border: 2px solid $secondary-colour;
+        height: 100%;
     }
     .header {
         padding: 10px;
@@ -147,5 +154,18 @@
             height: 32px;
             text-align: center;
         }
+    }
+    .player-number {
+        width: 25px;
+        line-height: 25px;
+        border-radius: 50%;
+        font-family: $display-font;
+        text-align: center;
+        font-size: 14px;
+        right: 10px;
+        top: 10px;
+        background-color: white;
+        color: $secondary-colour;
+        position: absolute;
     }
 </style>

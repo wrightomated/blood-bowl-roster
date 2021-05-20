@@ -4,7 +4,6 @@
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './materialButton.svelte';
-    // import type { StarPlayer } from '../models/player.model';
 
     let selectedId: number;
 
@@ -24,13 +23,20 @@
     const getSelected = (id) => {
         return starPlayers.starPlayers.find((x) => x.id === id);
     };
+
     const addStarPlayer = () => {
+        const addTwo = getSelected(selectedId).twoForOne;
+        if ($roster.players.length + 2 > 16) {
+            return;
+        }
+
         roster.addPlayer({
             player: getSelected(selectedId),
             playerName: getSelected(selectedId).position,
             starPlayer: true,
         });
-        if (getSelected(selectedId).twoForOne) {
+
+        if (addTwo) {
             const twoForPlayer = starPlayers.starPlayers.find(
                 (x) => x.id === getSelected(selectedId).twoForOne,
             );
@@ -42,7 +48,7 @@
         }
         setTimeout(() => {
             // This is a hack until I work out why the binding isn't updated when the options array change
-            selectedId = filteredStarPlayers[0].id;
+            selectedId = filteredStarPlayers?.[0]?.id;
         }, 2);
     };
 </script>
@@ -50,25 +56,32 @@
 <tr>
     <td class="left-align">
         Star Player:
-        <select
-            aria-label="star player name"
-            class="star-player-select"
-            bind:value={selectedId}>
-            {#each filteredStarPlayers as star (star.id)}
-                <option value={star.id}>{star.displayName}</option>
-            {/each}
-        </select>
+        {#if filteredStarPlayers.length > 0}
+            <select
+                aria-label="star player name"
+                class="star-player-select"
+                bind:value={selectedId}
+            >
+                {#each filteredStarPlayers as star (star.id)}
+                    <option value={star.id}>{star.displayName}</option>
+                {/each}
+            </select>
+        {/if}
     </td>
-    <td>{$roster.players.filter((x) => x.starPlayer).length} / 2</td>
+    <td
+        >{$roster.players.filter((x) => x.starPlayer && !x.deleted).length} / 2</td
+    >
     <td>{getSelected(selectedId)?.cost || 0},000</td>
     <td>
-        <div class="add-star">
-            <MaterialButton
-                hoverText="Add star player"
-                symbol="add_circle"
-                clickFunction={addStarPlayer}
-            />
-        </div>
+        {#if filteredStarPlayers.length > 0 && $roster.players.filter((x) => x.starPlayer && !x.deleted).length < 2}
+            <div class="add-star">
+                <MaterialButton
+                    hoverText="Add star player"
+                    symbol="add_circle"
+                    clickFunction={addStarPlayer}
+                />
+            </div>
+        {/if}
     </td>
 </tr>
 

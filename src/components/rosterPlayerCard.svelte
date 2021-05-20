@@ -22,7 +22,8 @@
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
             ?.max || 0;
-    $: danger = numberOfPlayerType > maxOfPlayerType;
+    $: danger =
+        !rosterPlayer.starPlayer && numberOfPlayerType > maxOfPlayerType;
     $: currentCost =
         (rosterPlayer?.alterations?.mng ||
         rosterPlayer?.alterations?.tr ||
@@ -105,7 +106,9 @@
 
 <section class="player-card" class:danger>
     <div class="header" class:danger>
-        <div class="player-number">{index + 1}</div>
+        <div>
+            <div class="player-number">{index + 1}</div>
+        </div>
         <h3 class="player-name left-align">
             {#if rosterPlayer.starPlayer}
                 {rosterPlayer.player.position}
@@ -146,6 +149,20 @@
                         hoverText="Player advancement"
                         symbol="elevator"
                         clickFunction={toggleShowSkills}
+                    />
+                {/if}
+                {#if index > 0}
+                    <MaterialButton
+                        hoverText="Move player up"
+                        symbol="arrow_circle_up"
+                        clickFunction={moveUp}
+                    />
+                {/if}
+                {#if index < $roster.players.length - 1}
+                    <MaterialButton
+                        hoverText="Move player down"
+                        symbol="arrow_circle_down"
+                        clickFunction={moveDown}
                     />
                 {/if}
             </div>
@@ -287,17 +304,17 @@
         padding: 10px;
     }
     .player-number {
-        width: 20px;
-        line-height: 20px;
+        width: 25px;
+        line-height: 25px;
         border-radius: 50%;
+        font-family: $display-font;
         text-align: center;
-        font-size: 12px;
+        font-size: 14px;
         right: 10px;
         top: 10px;
         background-color: white;
         color: $secondary-colour;
         position: absolute;
-        border: 1;
     }
     .player-characteristics {
         display: flex;

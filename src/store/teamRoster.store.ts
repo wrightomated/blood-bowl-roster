@@ -3,11 +3,13 @@ import type { Writable } from 'svelte/store';
 
 import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
-import { stringToRoster } from '../helpers/stringToRoster';
+import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
+
+const maxRosterPlayers = 16;
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -16,14 +18,17 @@ function createRoster() {
 
     return {
         subscribe,
-        addPlayer: (player: RosterPlayerRecord) =>
+        addPlayer: (player: RosterPlayerRecord, index?: number) =>
             update((store) => {
-                if (store.players.length >= 16) {
+                if (
+                    store.players.filter((p) => !p.deleted).length >=
+                    maxRosterPlayers
+                ) {
                     return store;
                 }
                 return {
                     ...store,
-                    players: store.players.concat([player]),
+                    players: addPlayerToPlayers(store.players, player, index),
                     treasury: store.treasury - player.player.cost,
                 };
             }),
@@ -38,9 +43,7 @@ function createRoster() {
                               .map((p) => p.player.cost)
                               .reduce((a, b) => a + b, 0)
                         : store.treasury,
-                    players: store.players.filter(
-                        (_, i) => !indices.includes(i),
-                    ),
+                    players: deletePlayersFromPlayers(store.players, indices),
                 };
             }),
         updatePlayer: (player: RosterPlayerRecord, index: number) =>
@@ -124,11 +127,11 @@ function createRoster() {
                 };
             }),
         loadRoster: (rosterKey: string) =>
-            update((store) => {
+            update((_store) => {
                 return { ...getSavedRoster(rosterKey) };
             }),
         codeToRoster: (rosterCode: string) =>
-            update((store) => {
+            update((_store) => {
                 const loadedRoster =
                     rosterFromCode(rosterCode) || getEmptyRoster();
                 currentTeam.setCurrentTeamWithCode(rosterCode);
@@ -203,6 +206,39 @@ const getDefaultRoster: () => Roster = () => {
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster()
     );
+};
+
+const addPlayerToPlayers: (
+    players: RosterPlayerRecord[],
+    newPlayer: RosterPlayerRecord,
+    index?: number,
+) => RosterPlayerRecord[] = (players, newPlayer, index) => {
+    const indexToAdd =
+        index < maxRosterPlayers ? index : players.findIndex((p) => p.deleted);
+
+    return indexToAdd >= 0 && indexToAdd < players.length
+        ? players.map((p, i) => (i === indexToAdd ? newPlayer : p))
+        : players.concat([newPlayer]);
+};
+
+const deletePlayersFromPlayers: (
+    players: RosterPlayerRecord[],
+    playerIndicesToRemove: number[],
+) => RosterPlayerRecord[] = (players, playerIndicesToRemove) => {
+    const newPlayers = players.map((p, i) =>
+        playerIndicesToRemove.includes(i)
+            ? {
+                  ...p,
+                  deleted: true,
+                  player: deletedPlayer(),
+              }
+            : p,
+    );
+    while (newPlayers[newPlayers.length - 1]?.deleted) {
+        newPlayers.pop();
+    }
+
+    return newPlayers;
 };
 
 export const roster = createRoster();
