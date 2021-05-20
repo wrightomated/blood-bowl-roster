@@ -68,10 +68,12 @@
             </select>
         {/if}
     </td>
-    <td>{$roster.players.filter((x) => x.starPlayer).length} / 2</td>
+    <td
+        >{$roster.players.filter((x) => x.starPlayer && !x.deleted).length} / 2</td
+    >
     <td>{getSelected(selectedId)?.cost || 0},000</td>
     <td>
-        {#if filteredStarPlayers.length > 0}
+        {#if filteredStarPlayers.length > 0 && $roster.players.filter((x) => x.starPlayer && !x.deleted).length < 2}
             <div class="add-star">
                 <MaterialButton
                     hoverText="Add star player"

@@ -63,9 +63,12 @@
         </tr>
     </thead>
     <tbody>
-        {#if $roster.mode === 'league' && Object.keys($roster.inducements).length > 0}
+        {#if showAllInducements}
+            <StarPlayerInducement />
+        {/if}
+        {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
             <tr>
-                <td colspan="3">Remove all (no refund)</td>
+                <td colspan="3">Remove all inducements below (no refund)</td>
                 <td>
                     <MaterialButton
                         hoverText="Remove all inducements"
@@ -75,10 +78,9 @@
                 >
             </tr>
         {/if}
+
         {#each filteredInducements as ind}
-            {#if ind.displayName === 'Star Player' && showAllInducements}
-                <StarPlayerInducement />
-            {:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
+            {#if ind.displayName === 'Star Player'}{:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
                 <tr>
                     <td class="inducement__display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>

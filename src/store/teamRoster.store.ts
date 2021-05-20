@@ -215,7 +215,6 @@ const addPlayerToPlayers: (
 ) => RosterPlayerRecord[] = (players, newPlayer, index) => {
     const indexToAdd =
         index < maxRosterPlayers ? index : players.findIndex((p) => p.deleted);
-    console.log(index, indexToAdd);
 
     return indexToAdd >= 0 && indexToAdd < players.length
         ? players.map((p, i) => (i === indexToAdd ? newPlayer : p))
