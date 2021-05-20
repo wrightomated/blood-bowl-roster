@@ -60,7 +60,7 @@ context('Team creation', () => {
         cy.get('.create-team').click();
         cy.get('.inducement__toggle .material-icons').click();
         cy.get('.star-player-select').select('Zolcath the Zoat');
-        cy.get('tr:nth-child(11) .material-icons').click();
+        cy.get('.add-star').click();
         cy.get('.player-name').should('have.text', 'Zolcath the Zoat');
     })
 });
