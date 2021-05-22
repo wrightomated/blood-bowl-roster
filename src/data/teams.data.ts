@@ -44,6 +44,7 @@ export const teamData: TeamList = {
             apothecary: true,
             tier: 2,
             specialRules: ['Favoured of...'],
+            maxBigGuys: 1,
         },
         {
             name: 'Dark Elf',
@@ -221,6 +222,7 @@ export const teamData: TeamList = {
             apothecary: true,
             tier: 1,
             specialRules: ['Old World Classic'],
+            maxBigGuys: 1,
         },
         {
             name: 'Orc',
@@ -305,6 +307,7 @@ export const teamData: TeamList = {
             apothecary: true,
             tier: 2,
             specialRules: ['Bribery and Corruption', 'Underworld Challenge'],
+            maxBigGuys: 1,
         },
         {
             name: 'Wood Elf',
@@ -340,6 +343,7 @@ export const teamData: TeamList = {
             apothecary: true,
             tier: 2,
             specialRules: ['Favoured of...'],
+            maxBigGuys: 3,
         },
         {
             name: 'Amazon',
