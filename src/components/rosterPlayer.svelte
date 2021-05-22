@@ -21,6 +21,10 @@
         $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
             ?.max || 0;
     $: danger = numberOfPlayerType > maxOfPlayerType;
+    $: tooManyBigGuys =
+        rosterPlayer.player.bigGuy &&
+        $currentTeam.maxBigGuys <
+            $roster.players.filter((x) => x.player.bigGuy).length;
     $: playerSkillIds = rosterPlayer.player.skills.concat(
         rosterPlayer?.alterations?.extraSkills || [],
     );
@@ -164,6 +168,13 @@
                     symbol="elevator"
                     clickFunction={toggleShowSkills}
                 />
+            </span>
+        {/if}
+        {#if tooManyBigGuys}
+            <br />
+            <span class="danger">
+                {$roster.players.filter((x) => x.player.bigGuy)
+                    .length}/{$currentTeam.maxBigGuys} Big Guys
             </span>
         {/if}
     </td>

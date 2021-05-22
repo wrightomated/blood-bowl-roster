@@ -47,6 +47,7 @@ const ogre: Player = {
     skills: [66, 71, 55, 60, 86],
     primary: ['S'],
     secondary: ['A', 'G'],
+    bigGuy: true,
 };
 
 const goblinBruiserLineman: Player = {
@@ -77,6 +78,7 @@ const trainedTroll: Player = {
     skills: [63, 711, 55, 75, 76, 77, 86],
     primary: ['S'],
     secondary: ['A', 'G', 'P'],
+    bigGuy: true,
 };
 
 const beastmanRunnerLineman: Player = {
@@ -128,6 +130,7 @@ const minotaur: Player = {
     skills: [71, 17, 30, 55, 60, 88],
     primary: ['M', 'S'],
     secondary: ['A', 'G'],
+    bigGuy: true,
 };
 
 const darkElfLineman: Player = {
@@ -375,6 +378,7 @@ const treeman: Player = {
     skills: [55, 58, 59, 84, 60, 86, 87],
     primary: ['S'],
     secondary: ['A', 'G', 'P'],
+    bigGuy: true,
 };
 
 const humanLineman: Player = {
@@ -680,6 +684,7 @@ const ratOgre: Player = {
     skills: [61, 17, 71, 55, 33],
     primary: ['S'],
     secondary: ['A', 'G', 'M'],
+    bigGuy: true,
 };
 const snotlingLineman: Player = {
     id: 73,

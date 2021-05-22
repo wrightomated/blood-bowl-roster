@@ -6,6 +6,7 @@ export interface Team {
     apothecary: boolean;
     tier: TeamTier;
     specialRules: TeamSpecialRule[];
+    maxBigGuys?: number;
 }
 
 export interface TeamList {

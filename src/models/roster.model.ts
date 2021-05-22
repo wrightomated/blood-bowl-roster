@@ -21,11 +21,6 @@ export interface RosterPlayerRecord {
     alterations?: PlayerAlterations;
 }
 
-// export interface EmptyPlayer {
-//     deleted: true;
-//     player: { cost: 0 };
-// }
-
 export interface ExtraRosterInfo {
     [key: string]: number;
 }
