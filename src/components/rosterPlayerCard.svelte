@@ -24,6 +24,10 @@
             ?.max || 0;
     $: danger =
         !rosterPlayer.starPlayer && numberOfPlayerType > maxOfPlayerType;
+    $: tooManyBigGuys =
+        rosterPlayer.player.bigGuy &&
+        $currentTeam.maxBigGuys <
+            $roster.players.filter((x) => x.player.bigGuy).length;
     $: currentCost =
         (rosterPlayer?.alterations?.mng ||
         rosterPlayer?.alterations?.tr ||
@@ -178,12 +182,20 @@
             />
         {/each}
     </div>
+
     {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
         <div>
             <AddSkill {index} />
         </div>
     {/if}
     <div class="content">
+        {#if tooManyBigGuys}
+            <p class="big-guys">
+                <i class="material-icons">warning</i>
+                {$roster.players.filter((x) => x.player.bigGuy)
+                    .length}/{$currentTeam.maxBigGuys} Big Guys
+            </p>
+        {/if}
         <div class="skills">
             <p class="mini-title">SKILLS:</p>
             {#if rosterPlayer.player.skills.length + (rosterPlayer?.alterations?.extraSkills?.length || 0) > 0}
@@ -336,6 +348,17 @@
         color: $main-colour;
         font-family: $display-font;
         margin: 0;
+        i {
+            vertical-align: text-bottom;
+        }
+    }
+
+    .big-guys {
+        color: $main-colour;
+        font-family: $display-font;
+        i {
+            vertical-align: text-bottom;
+        }
     }
 
     .extraDetails {
