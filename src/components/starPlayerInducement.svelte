@@ -3,7 +3,7 @@
     import { currentTeam } from '../store/currentTeam.store';
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
     import { roster } from '../store/teamRoster.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
 
     let selectedId: number;
 

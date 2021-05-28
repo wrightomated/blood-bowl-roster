@@ -11,7 +11,7 @@
         showAvailablePlayers,
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
     import { rosterMode } from '../store/rosterMode.store';
 
     export let teamList: Team[];

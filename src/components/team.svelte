@@ -7,7 +7,7 @@
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
     import TeamSelector from './teamSelector.svelte';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
     import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import StarPlayers from './starPlayers.svelte';

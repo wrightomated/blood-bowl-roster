@@ -2,7 +2,7 @@
     import type { Player } from '../models/player.model';
 
     import { roster } from '../store/teamRoster.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
 
     export let playerTypes: Player[];
     export let index: number;
