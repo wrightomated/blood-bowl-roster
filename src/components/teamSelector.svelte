@@ -119,6 +119,12 @@
         }}
     />
 
+    <ToggleButton
+        options={['elevens', 'sevens']}
+        selected={(mode) => {
+            console.log(mode);
+        }}
+    />
     <div class="button-container">
         {#each sortedTeam as team}
             <button
