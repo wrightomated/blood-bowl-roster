@@ -13,11 +13,13 @@
     } from '../store/showPlayerList.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { rosterMode } from '../store/rosterMode.store';
+    import ToggleButton from './uiComponents/toggleButton.svelte';
 
     export let teamList: Team[];
 
     let rosterCode: string;
     let includeNaf: boolean = true;
+
     const nafTeams = [28, 29];
 
     $: showTeams = $teamSelectionOpen;
@@ -110,14 +112,13 @@
 {/if}
 
 {#if showTeams && !$teamLoadOpen}
-    <button
-        on:click={() => rosterMode.set('league')}
-        class:selected={$rosterMode === 'league'}>League</button
-    >
-    <button
-        on:click={() => rosterMode.set('exhibition')}
-        class:selected={$rosterMode === 'exhibition'}>Exhibition</button
-    >
+    <ToggleButton
+        options={['league', 'exhibition']}
+        selected={(mode) => {
+            rosterMode.set(mode);
+        }}
+    />
+
     <div class="button-container">
         {#each sortedTeam as team}
             <button
