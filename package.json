@@ -1,6 +1,12 @@
 {
-  "name": "BBRoster",
+  "name": "bbroster",
   "version": "1.0.5",
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/wrightomated/blood-bowl-roster",
+  "author": {
+    "name": "James Wright",
+    "email": "bbroster@gmail.com"
+  },
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w --host 0.0.0.0",
