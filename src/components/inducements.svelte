@@ -2,7 +2,7 @@
     import { inducementData } from '../data/inducements.data';
     import type { Team } from '../models/team.model';
     import { roster } from '../store/teamRoster.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     export let selectedTeam: Team;
 

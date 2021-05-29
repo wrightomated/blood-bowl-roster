@@ -4,7 +4,7 @@
     import type { Team } from '../models/team.model';
     import Inducements from './inducements.svelte';
     import { extrasForTeam } from '../helpers/extrasForTeam';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
 
     export let selectedTeam: Team;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
     import SkillElement from './skillElement.svelte';
     import { currentTeam } from '../store/currentTeam.store';
     import type { StarPlayer } from '../models/player.model';
