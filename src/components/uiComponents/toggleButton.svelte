@@ -1,7 +1,7 @@
 <script lang="ts">
     export let options: string[];
     export let selected: Function;
-    let selectedIndex: number = 0;
+    export let selectedIndex: number = 0;
 </script>
 
 <div class="toggle">
