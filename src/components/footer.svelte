@@ -22,9 +22,10 @@
         site is not affiliated with Games Workshop. I just think they're neat.
     </p>
     <p>
-        This is a work in progres.
+        This is a work in progress.
         <a href="mailto:bbrosterapp@gmail.com">Email</a>
-        for all queries, concerns and suggestions.
+        for all queries, concerns and suggestions or raise an issue in
+        <a href="https://github.com/wrightomated/blood-bowl-roster">github</a>.
     </p>
 </footer>
 

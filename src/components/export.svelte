@@ -4,7 +4,7 @@
     import { showExport } from '../store/showExport.store';
     import { roster } from '../store/teamRoster.store';
 
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
 
     const baseUrl = 'https://bbroster.com';
 

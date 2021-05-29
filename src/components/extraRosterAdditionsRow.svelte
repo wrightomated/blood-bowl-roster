@@ -1,6 +1,6 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
     import type { Extra } from '../models/extra.model';
 
     export let extra: Extra;

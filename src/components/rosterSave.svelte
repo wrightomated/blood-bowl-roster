@@ -1,7 +1,7 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
-    import MaterialButton from './materialButton.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
     import { showExport } from '../store/showExport.store';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showDelete } from '../store/showDelete.store';
