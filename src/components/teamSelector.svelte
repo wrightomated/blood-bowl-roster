@@ -14,6 +14,7 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { rosterMode } from '../store/rosterMode.store';
     import ToggleButton from './uiComponents/toggleButton.svelte';
+    import { teamFormat } from '../store/teamFormat.store';
 
     export let teamList: Team[];
 
@@ -121,8 +122,8 @@
 
     <ToggleButton
         options={['elevens', 'sevens']}
-        selected={(mode) => {
-            console.log(mode);
+        selected={(format) => {
+            teamFormat.set(format);
         }}
     />
     <div class="button-container">

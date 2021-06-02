@@ -6,7 +6,7 @@ import type { Roster } from '../models/roster.model';
 
 const createSavedRosterIndex = () => {
     const { subscribe, update }: Writable<RosterIndex> = writable(
-        JSON.parse(localStorage.getItem('rosterIndex')) || {
+        getRosterFromStorage() || {
             currentIndex: 0,
             index: [],
             count: 0,
@@ -37,19 +37,23 @@ const createSavedRosterIndex = () => {
                 removeRosterFromStorage(store.currentIndex);
                 return {
                     ...store,
-                    index: store.index.filter((x) => store.currentIndex !== x.id)
+                    index: store.index.filter(
+                        (x) => store.currentIndex !== x.id,
+                    ),
                 };
             }),
-        updateCurrentIndex: (indexNumber: number) => 
+        updateCurrentIndex: (indexNumber: number) =>
             update((store) => {
                 return {
                     ...store,
-                    currentIndex: indexNumber
+                    currentIndex: indexNumber,
                 };
             }),
-        
     };
 };
+
+const getRosterFromStorage = () =>
+    JSON.parse(localStorage.getItem('rosterIndex'));
 
 const removeRosterFromStorage = (id: number) => {
     localStorage.removeItem(storageKeyFromId(id));

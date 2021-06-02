@@ -117,6 +117,7 @@
         &__display-name {
             text-align: left;
         }
+
         &__toggle {
             background: white;
             color: black;
