@@ -4,30 +4,33 @@
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
+    import type { Inducement } from '../models/inducement.model';
     export let selectedTeam: Team;
 
     let showAllInducements = false;
     const filteredInducements = inducementData.inducements
-        .filter((ind) =>
-            ind?.requiresApothecary
-                ? ind.requiresApothecary === selectedTeam.apothecary
-                : ind?.requiresSpecialRule
-                ? selectedTeam.specialRules.includes(ind.requiresSpecialRule)
-                : $roster.format === 'elevens' || ind.sevensMax !== 0,
+        .filter((inducement: Inducement) =>
+            inducement?.requiresApothecary
+                ? inducement.requiresApothecary === selectedTeam.apothecary
+                : inducement?.requiresSpecialRule
+                ? selectedTeam.specialRules.includes(
+                      inducement.requiresSpecialRule,
+                  )
+                : $roster.format === 'elevens' || inducement.sevensMax !== 0,
         )
-        .map((x) => ({
-            ...x,
+        .map((inducement: Inducement) => ({
+            ...inducement,
             cost: selectedTeam.specialRules.includes(
-                x?.reducedCost?.specialRule,
+                inducement?.reducedCost?.specialRule,
             )
-                ? x.reducedCost.cost
-                : $roster.format === 'sevens' && x.sevensCost
-                ? x.sevensCost
-                : x.cost,
+                ? inducement.reducedCost.cost
+                : $roster.format === 'sevens' && inducement.sevensCost
+                ? inducement.sevensCost
+                : inducement.cost,
             max:
-                $roster.format === 'elevens' || !x.sevensMax
-                    ? x.max
-                    : x.sevensMax,
+                $roster.format === 'elevens' || !inducement.sevensMax
+                    ? inducement.max
+                    : inducement.sevensMax,
         }));
 
     const addInducement = (key: string) => {
