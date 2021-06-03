@@ -18,12 +18,15 @@
                 ? selectedTeam.specialRules.includes(x.requiresSpecialRule)
                 : true,
         )
+        .filter((ind) => $roster.format === 'elevens' || ind.sevensMax !== 0)
         .map((x) => ({
             ...x,
             cost: selectedTeam.specialRules.includes(
                 x?.reducedCost?.specialRule,
             )
                 ? x.reducedCost.cost
+                : $roster.format === 'sevens' && x.sevensCost
+                ? x.sevensCost
                 : x.cost,
         }));
 

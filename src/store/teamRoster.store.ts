@@ -8,12 +8,14 @@ import { currentTeam } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
+import { getGameTypeSettings } from '../data/gameType.data';
+import type { TeamFormat } from './teamFormat.store';
 
 const maxRosterPlayers = 16;
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
-        getDefaultRoster(),
+        getDefaultRoster()
     );
 
     return {
@@ -72,7 +74,11 @@ function createRoster() {
                     ...store,
                     treasury:
                         store.treasury -
-                        inducementCost(inducementKey, store.teamId),
+                        inducementCost(
+                            store.format,
+                            inducementKey,
+                            store.teamId
+                        ),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -87,7 +93,11 @@ function createRoster() {
                     ...store,
                     treasury:
                         store.treasury +
-                        inducementCost(inducementKey, store.teamId),
+                        inducementCost(
+                            store.format,
+                            inducementKey,
+                            store.teamId
+                        ),
                     inducements: {
                         ...store.inducements,
                         [inducementKey]: store?.inducements?.[inducementKey]
@@ -146,6 +156,7 @@ function createRoster() {
             teamId: number;
             teamType: TeamName;
             mode: RosterMode;
+            format: TeamFormat;
             fans: number;
         }) => set(getEmptyRoster(options)),
         set,
@@ -157,7 +168,11 @@ const getEmptyRoster: (options?: {
     teamType: TeamName;
     fans: number;
     mode: RosterMode;
+    format: TeamFormat;
 }) => Roster = (options) => {
+    console.log(options, 'whoop');
+    console.log('whiiis');
+    const gameSettings = getGameTypeSettings(options?.format);
     return {
         teamId: options?.teamId || 0,
         players: [],
@@ -165,8 +180,9 @@ const getEmptyRoster: (options?: {
         teamType: options?.teamType || ('' as TeamName),
         extra: { dedicated_fans: options?.fans || 0 },
         inducements: {},
-        treasury: 1000,
+        treasury: gameSettings?.startingTreasury || 1000,
         mode: options?.mode,
+        format: options?.format || 'elevens',
     };
 };
 
@@ -183,7 +199,7 @@ const switchTwoElements = (arr: any[], index1: number, index2: number) => {
         return arr;
     }
     return arr.map((x, i, a) =>
-        i === index1 ? a[index2] : i === index2 ? a[index1] : x,
+        i === index1 ? a[index2] : i === index2 ? a[index1] : x
     );
 };
 
@@ -211,7 +227,7 @@ const getDefaultRoster: () => Roster = () => {
 const addPlayerToPlayers: (
     players: RosterPlayerRecord[],
     newPlayer: RosterPlayerRecord,
-    index?: number,
+    index?: number
 ) => RosterPlayerRecord[] = (players, newPlayer, index) => {
     const indexToAdd =
         index < maxRosterPlayers ? index : players.findIndex((p) => p.deleted);
@@ -223,7 +239,7 @@ const addPlayerToPlayers: (
 
 const deletePlayersFromPlayers: (
     players: RosterPlayerRecord[],
-    playerIndicesToRemove: number[],
+    playerIndicesToRemove: number[]
 ) => RosterPlayerRecord[] = (players, playerIndicesToRemove) => {
     const newPlayers = players.map((p, i) =>
         playerIndicesToRemove.includes(i)
@@ -232,7 +248,7 @@ const deletePlayersFromPlayers: (
                   deleted: true,
                   player: deletedPlayer(),
               }
-            : p,
+            : p
     );
     while (newPlayers[newPlayers.length - 1]?.deleted) {
         newPlayers.pop();

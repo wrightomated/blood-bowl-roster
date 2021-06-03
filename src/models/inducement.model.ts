@@ -9,6 +9,7 @@ export interface Inducement {
     requiresSpecialRule?: TeamSpecialRule;
     requiresApothecary?: boolean;
     sevensCost?: number;
+    sevensMax?: number;
 }
 
 export interface InducementCostReduction {
