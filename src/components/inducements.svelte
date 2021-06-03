@@ -8,17 +8,13 @@
 
     let showAllInducements = false;
     const filteredInducements = inducementData.inducements
-        .filter((x) =>
-            x?.requiresApothecary
-                ? x.requiresApothecary === selectedTeam.apothecary
-                : true,
+        .filter((ind) =>
+            ind?.requiresApothecary
+                ? ind.requiresApothecary === selectedTeam.apothecary
+                : ind?.requiresSpecialRule
+                ? selectedTeam.specialRules.includes(ind.requiresSpecialRule)
+                : $roster.format === 'elevens' || ind.sevensMax !== 0,
         )
-        .filter((x) =>
-            x?.requiresSpecialRule
-                ? selectedTeam.specialRules.includes(x.requiresSpecialRule)
-                : true,
-        )
-        .filter((ind) => $roster.format === 'elevens' || ind.sevensMax !== 0)
         .map((x) => ({
             ...x,
             cost: selectedTeam.specialRules.includes(
@@ -28,6 +24,10 @@
                 : $roster.format === 'sevens' && x.sevensCost
                 ? x.sevensCost
                 : x.cost,
+            max:
+                $roster.format === 'elevens' || !x.sevensMax
+                    ? x.max
+                    : x.sevensMax,
         }));
 
     const addInducement = (key: string) => {
