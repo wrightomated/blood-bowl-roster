@@ -51,11 +51,6 @@
     const moveDown = () => {
         roster.movePlayerDown(index);
     };
-    const playerCostString = () => {
-        return rosterPlayer.player.cost > 0
-            ? `${rosterPlayer.player.cost},000`
-            : '-';
-    };
     const removeTwoForOne = (firePlayer: boolean) => {
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
@@ -254,7 +249,9 @@
 
         <p>
             <span class="mini-title">Hiring Fee:</span>
-            {playerCostString()}
+            {rosterPlayer.player.cost > 0
+                ? `${rosterPlayer.player.cost},000`
+                : '-'}
         </p>
         <p class="current-value">
             <span class="mini-title">Current Value:</span>

@@ -52,14 +52,6 @@
         </div>
 
         <div class="player-details">
-            <select aria-label="New Player Position" bind:value={selected}>
-                {#each playerTypes as playerType}
-                    <option value={playerType}>
-                        {playerType.position}
-                    </option>
-                {/each}
-            </select>
-            x
             <input
                 aria-label="Amount"
                 type="number"
@@ -67,9 +59,18 @@
                 min="0"
                 max={maxOfPlayerType - numberOfPlayerType}
             />
+            x
+            <select aria-label="New Player Position" bind:value={selected}>
+                {#each playerTypes as playerType}
+                    <option value={playerType}>
+                        {playerType.position}
+                    </option>
+                {/each}
+            </select>
         </div>
     </div>
-    <div class="add-sign-container">
+
+    <div class="player-card__content">
         <button class="add-sign" on:click={addPlayers} title="Add New Player"
             ><i class="material-icons icon">add_circle</i></button
         >
@@ -86,6 +87,11 @@
         max-width: 600px;
         border: 2px solid $secondary-colour;
         height: 100%;
+        background-color: $secondary-colour;
+
+        &__content {
+            min-height: 100px;
+        }
     }
     .header {
         padding: 10px;
@@ -97,6 +103,7 @@
         background-color: $secondary-colour;
         h3 {
             margin: 0;
+            margin-bottom: 8px;
             font-size: 16px;
             color: white;
         }
@@ -140,10 +147,10 @@
     }
     .icon {
         font-size: 60px;
-    }
-    .add-sign-container {
-        text-align: center;
-        margin: 20px 0;
+        color: white;
+        position: absolute;
+        top: 50%;
+        left: calc(50% - 30px);
     }
     .player-details {
         color: white;

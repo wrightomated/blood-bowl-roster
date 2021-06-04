@@ -18,10 +18,11 @@ const elevensGame: GameTypeSettings = {
 };
 
 export const getGameTypeSettings = (teamFormat: TeamFormat) => {
-    if (teamFormat === 'elevens') {
-        return elevensGame;
-    }
     if (teamFormat === 'sevens') {
         return sevensGame;
     }
+    return elevensGame;
 };
+
+export const getMaxPlayers = (teamFormat: TeamFormat) =>
+    getGameTypeSettings(teamFormat).maxPlayers;

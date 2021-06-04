@@ -69,7 +69,7 @@
         </tr>
     </thead>
     <tbody>
-        {#if showAllInducements}
+        {#if showAllInducements && $roster.format !== 'sevens'}
             <StarPlayerInducement />
         {/if}
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}

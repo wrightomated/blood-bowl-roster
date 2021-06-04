@@ -9,6 +9,7 @@
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
+    import { getMaxPlayers } from '../data/gameType.data';
 
     export let playerTypes: Player[];
 </script>
@@ -39,7 +40,7 @@
             {/if}
         {/each}
 
-        {#if $roster.players.length < 16}
+        {#if $roster.players.length < getMaxPlayers($roster.format)}
             <AddPlayerCard {playerTypes} index={$roster.players.length} />
         {/if}
     </div>
@@ -76,7 +77,7 @@
                         <AddPlayerToRoster {playerTypes} {index} />
                     {/if}
                 {/each}
-                {#if $roster.players.length < 16}
+                {#if $roster.players.length < getMaxPlayers($roster.format)}
                     <AddPlayerToRoster
                         {playerTypes}
                         index={$roster.players.length}

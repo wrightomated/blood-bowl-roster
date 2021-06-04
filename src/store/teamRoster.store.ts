@@ -8,10 +8,8 @@ import { currentTeam } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
-import { getGameTypeSettings } from '../data/gameType.data';
+import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import type { TeamFormat } from './teamFormat.store';
-
-const maxRosterPlayers = 16;
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -24,13 +22,18 @@ function createRoster() {
             update((store) => {
                 if (
                     store.players.filter((p) => !p.deleted).length >=
-                    maxRosterPlayers
+                    getMaxPlayers(store?.format)
                 ) {
                     return store;
                 }
                 return {
                     ...store,
-                    players: addPlayerToPlayers(store.players, player, index),
+                    players: addPlayerToPlayers(
+                        store.players,
+                        player,
+                        getMaxPlayers(store?.format),
+                        index
+                    ),
                     treasury: store.treasury - player.player.cost,
                 };
             }),
@@ -170,8 +173,6 @@ const getEmptyRoster: (options?: {
     mode: RosterMode;
     format: TeamFormat;
 }) => Roster = (options) => {
-    console.log(options, 'whoop');
-    console.log('whiiis');
     const gameSettings = getGameTypeSettings(options?.format);
     return {
         teamId: options?.teamId || 0,
@@ -227,10 +228,11 @@ const getDefaultRoster: () => Roster = () => {
 const addPlayerToPlayers: (
     players: RosterPlayerRecord[],
     newPlayer: RosterPlayerRecord,
+    maxPlayers: number,
     index?: number
-) => RosterPlayerRecord[] = (players, newPlayer, index) => {
+) => RosterPlayerRecord[] = (players, newPlayer, maxPlayers, index) => {
     const indexToAdd =
-        index < maxRosterPlayers ? index : players.findIndex((p) => p.deleted);
+        index < maxPlayers ? index : players.findIndex((p) => p.deleted);
 
     return indexToAdd >= 0 && indexToAdd < players.length
         ? players.map((p, i) => (i === indexToAdd ? newPlayer : p))
