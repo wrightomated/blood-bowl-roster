@@ -1,5 +1,5 @@
-name: End-to-end tests
-on: [push]
+name: Pull request e2e
+on: [pull_request]
 jobs:
     cypress-run:
         runs-on: ubuntu-18.04
@@ -8,5 +8,13 @@ jobs:
               uses: actions/checkout@v1
             # Install NPM dependencies, cache them correctly
             # and run all Cypress tests
+            - name: Get deployment base url
+              if: ${{github.event.number}}
+              run: echo "base_url=https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/" >> $GITHUB_ENV
+            - name: Check env
+              run: echo ${{env.base_url}}
             - name: Cypress run
               uses: cypress-io/github-action@v2
+              if: ${{github.event.number}}
+              env:
+                  CYPRESS_BASE_URL: ${{env.base_url}}
