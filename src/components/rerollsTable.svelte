@@ -8,7 +8,7 @@
 
     export let selectedTeam: Team;
 
-    const extras = extrasForTeam(selectedTeam.id, $roster.mode);
+    const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
     let showTreasury = false;
 
     $: teamTotal = $roster.players
@@ -16,7 +16,11 @@
         .map((x) => x.player.cost + (x?.alterations?.valueChange || 0))
         .reduce((a, b) => a + b, 0);
 
-    $: teamExtrasTotal = extrasForTeam(selectedTeam.id, $roster.mode)
+    $: teamExtrasTotal = extrasForTeam(
+        selectedTeam.id,
+        $roster.mode,
+        $roster.format,
+    )
         .filter((e) => e.extraString !== 'dedicated_fans')
         .map((e) => $roster.extra[e.extraString] * e.cost || 0)
         .reduce((a, b) => a + b, 0);

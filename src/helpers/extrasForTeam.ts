@@ -1,26 +1,38 @@
+import { getGameTypeSettings } from '../data/gameType.data';
 import { teamData } from '../data/teams.data';
 import type { Extra, ExtraString } from '../models/extra.model';
+import type { TeamFormat } from '../models/gameType.model';
 import type { RosterMode } from '../store/rosterMode.store';
 
 export const extrasForTeam: (
     teamId: number,
     rosterMode: RosterMode,
-) => Extra[] = (teamId, rosterMode) => {
+    teamFormat: TeamFormat
+) => Extra[] = (teamId, rosterMode, teamFormat) => {
     const team = teamData.teams.find((x) => x.id === teamId);
+    const gameSettings = getGameTypeSettings(teamFormat);
     return [
         {
             extraString: 'rerolls' as ExtraString,
-            cost: team.reroll.cost,
-            max: team.reroll.max,
+            cost: team.reroll.cost * gameSettings.rerollDetails.costMultiplier,
+            max: gameSettings.rerollDetails.max,
         },
-        { extraString: 'assistant_coaches' as ExtraString, cost: 10, max: 6 },
-        { extraString: 'cheerleaders' as ExtraString, cost: 10, max: 12 },
         {
+            ...gameSettings.assistantCoaches,
+            extraString: 'assistant_coaches' as ExtraString,
+        },
+        {
+            ...gameSettings.cheerleaders,
+            extraString: 'cheerleaders' as ExtraString,
+        },
+        {
+            ...gameSettings.dedicatedFans,
             extraString: 'dedicated_fans' as ExtraString,
-            cost: 10,
-            max: 6,
             min: rosterMode === 'exhibition' ? 0 : 1,
         },
-        { extraString: 'apothecary' as ExtraString, cost: 50, max: 1 },
+        {
+            ...gameSettings.apothecary,
+            extraString: 'apothecary' as ExtraString,
+        },
     ].filter((x) => x.extraString !== 'apothecary' || team.apothecary);
 };

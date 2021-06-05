@@ -3,7 +3,16 @@ export interface GameType {
     maxPlayers: number;
     minPlayers: number;
     startingTreasury: number;
-    inducements: any;
+    rerollDetails: { costMultiplier: number; max: number };
+    assistantCoaches: RosterExtra;
+    cheerleaders: RosterExtra;
+    apothecary: RosterExtra;
+    dedicatedFans: RosterExtra;
 }
+
+type RosterExtra = {
+    cost: number;
+    max: number;
+};
 
 export type TeamFormat = 'sevens' | 'elevens';

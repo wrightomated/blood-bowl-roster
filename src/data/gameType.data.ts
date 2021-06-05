@@ -6,7 +6,11 @@ const sevensGame: GameTypeSettings = {
     maxPlayers: 11,
     minPlayers: 7,
     startingTreasury: 600,
-    inducements: [],
+    rerollDetails: { costMultiplier: 2, max: 6 },
+    assistantCoaches: { cost: 20, max: 3 },
+    cheerleaders: { cost: 20, max: 6 },
+    apothecary: { cost: 80, max: 1 },
+    dedicatedFans: { cost: 20, max: 6 },
 };
 
 const elevensGame: GameTypeSettings = {
@@ -14,7 +18,11 @@ const elevensGame: GameTypeSettings = {
     maxPlayers: 16,
     minPlayers: 11,
     startingTreasury: 1000,
-    inducements: [],
+    rerollDetails: { costMultiplier: 1, max: 8 },
+    assistantCoaches: { cost: 10, max: 6 },
+    cheerleaders: { cost: 10, max: 12 },
+    apothecary: { cost: 50, max: 1 },
+    dedicatedFans: { cost: 10, max: 6 },
 };
 
 export const getGameTypeSettings = (teamFormat: TeamFormat) => {
@@ -26,3 +34,9 @@ export const getGameTypeSettings = (teamFormat: TeamFormat) => {
 
 export const getMaxPlayers = (teamFormat: TeamFormat) =>
     getGameTypeSettings(teamFormat).maxPlayers;
+
+// rerollDetails: { costMultiplier: number; max: number };
+// assistantCoaches: RosterExtra;
+// cheerleaders: RosterExtra;
+// apothecary: RosterExtra;
+// dedicatedFans: RosterExtra;
