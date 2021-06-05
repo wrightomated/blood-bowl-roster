@@ -13,6 +13,6 @@ jobs:
               run: echo "nice"
             - name: Cypress run
               uses: cypress-io/github-action@v2
-
-              # env:
-              #     CYPRESS_BASE_URL: 'https://deploy-preview-${{refs/pull/:prNumber/merge}}--bbroster.netlify.app/'
+              if: ${{github.event.number}}
+              env:
+                  CYPRESS_BASE_URL: 'https://deploy-preview-{{ github.event.number }}--bbroster.netlify.app/'
