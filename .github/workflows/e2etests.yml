@@ -1,5 +1,5 @@
-name: End-to-end tests
-on: [push]
+name: Pull request e2e
+on: [push, pull-request]
 jobs:
     cypress-run:
         runs-on: ubuntu-18.04
