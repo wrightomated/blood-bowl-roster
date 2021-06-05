@@ -1,5 +1,5 @@
 name: Pull request e2e
-on: [push, pull-request]
+on: [push, pull_request]
 jobs:
     cypress-run:
         runs-on: ubuntu-18.04
