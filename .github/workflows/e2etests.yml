@@ -12,9 +12,9 @@ jobs:
               if: ${{github.event.number}}
               run: echo ::set-output name=baseUrl::"https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/"
             - name: Check env
-              run: echo $BASE_URL
+              run: echo ${{baseUrl}}
             - name: Cypress run
               uses: cypress-io/github-action@v2
               if: ${{github.event.number}}
-#               env:
-#                   CYPRESS_BASE_URL: $BASE_URL
+              env:
+                  CYPRESS_BASE_URL: ${{baseUrl}}
