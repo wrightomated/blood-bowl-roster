@@ -1,5 +1,5 @@
 name: Pull request e2e
-on: [push, pull_request]
+on: [pull_request]
 jobs:
     cypress-run:
         runs-on: ubuntu-18.04
@@ -10,9 +10,11 @@ jobs:
             # and run all Cypress tests
             - name: Check pr
               if: ${{github.event.number}}
-              run: echo "nice"
+              run: echo "BASEURL=https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/"
+              run: echo BASEURL
             - name: Cypress run
               uses: cypress-io/github-action@v2
-              # if: ${{github.event.number}}
+              if: ${{github.event.number}}
+      
               # env:
               #     CYPRESS_BASE_URL: 'https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/'
