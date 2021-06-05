@@ -1,5 +1,5 @@
 name: End-to-end tests
-on: [pull-request]
+on: [push]
 jobs:
     cypress-run:
         runs-on: ubuntu-18.04
@@ -10,5 +10,7 @@ jobs:
             # and run all Cypress tests
             - name: Cypress run
               uses: cypress-io/github-action@v2
-              env:
-                  CYPRESS_BASE_URL: 'https://deploy-preview-${{refs/pull/:prNumber/merge}}--bbroster.netlify.app/'
+              if: ${{refs/pull/:prNumber/merge == 2}}
+              run: echo "nice"
+              # env:
+              #     CYPRESS_BASE_URL: 'https://deploy-preview-${{refs/pull/:prNumber/merge}}--bbroster.netlify.app/'
