@@ -1,5 +1,5 @@
 name: End-to-end tests
-on: [pull_request]
+on: [push]
 jobs:
     cypress-run:
         runs-on: ubuntu-18.04
@@ -9,10 +9,10 @@ jobs:
             # Install NPM dependencies, cache them correctly
             # and run all Cypress tests
             - name: Check pr
-              if: ${{github.event.number == 21}}
+              if: ${{github.event.number}}
               run: echo "nice"
             - name: Cypress run
               uses: cypress-io/github-action@v2
-              if: ${{github.event.number}}
-              env:
-                  CYPRESS_BASE_URL: 'https://deploy-preview-{{ github.event.number }}--bbroster.netlify.app/'
+              # if: ${{github.event.number}}
+              # env:
+              #     CYPRESS_BASE_URL: 'https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/'
