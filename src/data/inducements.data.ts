@@ -1,24 +1,5 @@
 import type { Inducement } from '../models/inducement.model';
 
-// const inducementNames = {
-//     i1: 'Temp Agency Cheerleader',
-//     i2: 'Part-time Assistant Coach',
-//     i3: 'Weather Mage',
-//     i4: 'Bloodweiser Keg',
-//     i5: 'Special Play',
-//     i6: 'Extra Team Training',
-//     i7: 'Bribe',
-//     i8: 'Wandering Apothecary',
-//     i9: 'Mortuary Assistant',
-//     i10: 'Plague Doctor',
-//     i11: 'Riotous Rookies',
-//     i12: 'Halfling Master Chef',
-//     i13: 'Mercenary Player',
-//     i14: 'Star Player',
-//     i15: '(In)Famous Coaching Staff: Josef Bugman',
-//     i16: 'Wizard: Hireling Sports-Wizard',
-//     i17: 'Biased Referee'}
-
 export const inducementData: { inducements: Inducement[] } = {
     inducements: [
         {

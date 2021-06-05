@@ -41,6 +41,13 @@
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
             (rosterPlayer?.alterations?.injuries?.[i] || 0),
     );
+    $: nonLinemen = $currentTeam.players
+        .filter((p) => p.max < 12)
+        .map((x) => x.id);
+    $: sevensSpecialistsAmount =
+        $roster.format === 'sevens' &&
+        nonLinemen.includes(rosterPlayer.player.id) &&
+        $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     const removePlayer = (firePlayer: boolean) => {
         removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
@@ -50,11 +57,6 @@
     };
     const moveDown = () => {
         roster.movePlayerDown(index);
-    };
-    const playerCostString = () => {
-        return rosterPlayer.player.cost > 0
-            ? `${rosterPlayer.player.cost},000`
-            : '-';
     };
     const removeTwoForOne = (firePlayer: boolean) => {
         if (rosterPlayer.starPlayer) {
@@ -176,6 +178,10 @@
                 {$roster.players.filter((x) => x.player.bigGuy)
                     .length}/{$currentTeam.maxBigGuys} Big Guys
             </span>
+        {/if}
+        {#if sevensSpecialistsAmount > 4}
+            <br />
+            <span class="danger">{sevensSpecialistsAmount}/4 Specialists</span>
         {/if}
     </td>
 

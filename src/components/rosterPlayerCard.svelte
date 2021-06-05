@@ -41,6 +41,13 @@
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
             (rosterPlayer?.alterations?.injuries?.[i] || 0),
     );
+    $: nonLinemen = $currentTeam.players
+        .filter((p) => p.max < 12)
+        .map((x) => x.id);
+    $: sevensSpecialistsAmount =
+        $roster.format === 'sevens' &&
+        nonLinemen.includes(rosterPlayer.player.id) &&
+        $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     const removePlayer = (firePlayer: boolean) => {
         removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
@@ -189,6 +196,12 @@
                 <i class="material-icons">warning</i>
                 {$roster.players.filter((x) => x.player.bigGuy)
                     .length}/{$currentTeam.maxBigGuys} Big Guys
+            </p>
+        {/if}
+        {#if sevensSpecialistsAmount > 4}
+            <p class="sevens-over-four">
+                <i class="material-icons">warning</i>
+                {sevensSpecialistsAmount} / 4 Specialists
             </p>
         {/if}
         <div class="skills">
@@ -350,7 +363,8 @@
         }
     }
 
-    .big-guys {
+    .big-guys,
+    .sevens-over-four {
         color: $main-colour;
         font-family: $display-font;
         i {
