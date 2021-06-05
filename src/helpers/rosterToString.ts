@@ -5,6 +5,7 @@ import type {
     RosterPlayerRecord,
 } from '../models/roster.model';
 import type { RosterMode } from '../store/rosterMode.store';
+import type { TeamFormat } from '../store/teamFormat.store';
 
 const extraToString = (extra: ExtraRosterInfo) => {
     const map = {
@@ -100,13 +101,19 @@ const getModeInt = (mode: RosterMode) => {
     return mode === 'league' ? 0 : 1;
 };
 
+const getFormatInt = (format: TeamFormat) => {
+    return format === 'sevens' ? 1 : 0;
+};
+
 export const rosterToString = (roster: Roster) => {
     try {
         const extraS = extraToString(roster.extra);
         const inducementS = inducementToString(roster.inducements);
         const players = roster.players.map((x) => playerToString(x)).join('');
         return `t${roster.teamId}t${roster.treasury}m${getModeInt(
-            roster.mode,
+            roster.mode
+        )}f${getFormatInt(
+            roster.format
         )}${extraS}${inducementS}${players}I${getNameString(roster)}`;
     } catch (error) {
         console.error('Could not convert roster to string', error);

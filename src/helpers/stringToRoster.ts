@@ -9,6 +9,11 @@ import type {
     RosterPlayerRecord,
 } from '../models/roster.model';
 import type { RosterMode } from '../store/rosterMode.store';
+import type { TeamFormat } from '../store/teamFormat.store';
+
+/*
+t1t0m0d1r2 p1 p1 p1 p1 p4 p4 p2 p3 p4 p4 p5 I The%20Altdorf%20Deamons:Bob
+*/
 
 export const stringToRoster = (code: string) => {
     const [rosterString, ...rest] = code.split('I');
@@ -19,14 +24,17 @@ export const stringToRoster = (code: string) => {
     const roster: Roster = {
         teamId,
         extra: stringToExtra(
-            extras.filter((x) => !x.includes('i') && !x.includes('m')),
+            extras.filter(
+                (x) => !x.includes('i') && !x.includes('m') && !x.includes('f')
+            )
         ),
         players: expandPlayers(players),
         teamName: '',
         teamType: teamData.teams.find((t) => t.id === teamId).name,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
-        mode: getMode(extras.filter((x) => x.includes('m'))?.[0] || 'm1'),
+        mode: getMode(extras.find((x) => x.includes('m')) || 'm1'),
+        format: getFormat(extras.find((x) => x.includes('f')) || 'f0'),
     };
     return rosterNames.length > 0
         ? addNamesToRoster(roster, rosterNames)
@@ -38,7 +46,7 @@ const expandPlayers = (players: string[]) => {
 };
 
 const expandPlayer: (playerString: string) => RosterPlayerRecord = (
-    playerString,
+    playerString
 ) => {
     const [id, ...other] = itemsInString(playerString);
     const nId = parseInt(id);
@@ -128,7 +136,7 @@ const skillArray = (skillString: string) => {
 };
 
 const stringToExtra: (extras: string[]) => ExtraRosterInfo = (extras) => {
-    const map = {
+    const charToExtraMap = {
         r: 'rerolls',
         a: 'assistant_coaches',
         c: 'cheerleaders',
@@ -137,7 +145,8 @@ const stringToExtra: (extras: string[]) => ExtraRosterInfo = (extras) => {
     };
     const extraObject = {};
     extras.forEach(
-        (match) => (extraObject[map[match.charAt(0)]] = getNumber(match)),
+        (match) =>
+            (extraObject[charToExtraMap[match.charAt(0)]] = getNumber(match))
     );
     return extraObject;
 };
@@ -156,7 +165,7 @@ const decodeName = (name: string) => {
 
 const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (
     roster,
-    rosterNames,
+    rosterNames
 ) => {
     const [teamName, ...playerNames] = rosterNames
         .split(':')
@@ -167,13 +176,17 @@ const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (
         players: roster.players.map((p, i) =>
             !p.starPlayer && playerNames?.[i]
                 ? { ...p, playerName: playerNames[i] }
-                : p,
+                : p
         ),
     };
 };
 
 const getMode: (modeMatch: string) => RosterMode = (modeMatch) => {
     return getNumber(modeMatch) === 0 ? 'league' : 'exhibition';
+};
+
+const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
+    return getNumber(modeMatch) === 0 ? 'elevens' : 'sevens';
 };
 
 export const deletedPlayer: () => Player = () => {

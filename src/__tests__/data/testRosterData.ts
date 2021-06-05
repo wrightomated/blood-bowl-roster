@@ -3,6 +3,7 @@ import type { Roster } from '../../models/roster.model';
 export const testRoster = {
     teamId: 1,
     mode: 'exhibition',
+    format: 'elevens',
     players: [
         {
             playerName: 'Bob',
@@ -139,6 +140,7 @@ export const testRoster = {
             player: {
                 id: 5,
                 position: 'Ogre',
+                bigGuy: true,
                 playerStats: [5, 5, 4, 5, 10],
                 cost: 140,
                 skills: [66, 71, 55, 60, 86],
@@ -158,6 +160,7 @@ export const testRoster = {
 export const inducementAndStarPlayer = {
     teamId: 22,
     mode: 'exhibition',
+    format: 'elevens',
     players: [
         {
             player: {
@@ -183,6 +186,7 @@ export const inducementAndStarPlayer = {
 export const playerSkills = {
     teamId: 25,
     mode: 'exhibition',
+    format: 'elevens',
     players: [
         {
             player: {
@@ -214,6 +218,7 @@ export const playerSkills = {
 export const noTeamName: Roster = {
     teamId: 2,
     mode: 'exhibition',
+    format: 'elevens',
     players: [
         {
             playerName: 'Bob',
@@ -249,9 +254,9 @@ export const noTeamName: Roster = {
     treasury: 1000,
 };
 
-export const inducementAndStarPlayerString = 't22t10m1d1y1i8.1p224I';
+export const inducementAndStarPlayerString = 't22t10m1f0d1y1i8.1p224I';
 
 export const testRosterString =
-    't1t1000m1d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:Bob::::::Bill';
+    't1t1000m1f0d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:Bob::::::Bill';
 
-export const playerSkillsString = 't25t20m1d1p104s1n1e21.55t1c10-101I';
+export const playerSkillsString = 't25t20m1f0d1p104s1n1e21.55t1c10-101I';

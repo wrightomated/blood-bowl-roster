@@ -1,4 +1,5 @@
 import type { RosterMode } from '../store/rosterMode.store';
+import type { TeamFormat } from '../store/teamFormat.store';
 import type { Player } from './player.model';
 import type { TeamName } from './team.model';
 
@@ -11,6 +12,7 @@ export interface Roster {
     inducements: ExtraRosterInfo;
     treasury?: number;
     mode?: RosterMode;
+    format?: TeamFormat;
 }
 
 export interface RosterPlayerRecord {

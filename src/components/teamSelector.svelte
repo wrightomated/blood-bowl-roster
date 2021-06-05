@@ -14,6 +14,8 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { rosterMode } from '../store/rosterMode.store';
     import ToggleButton from './uiComponents/toggleButton.svelte';
+    import { teamFormat } from '../store/teamFormat.store';
+    import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
 
     export let teamList: Team[];
@@ -23,6 +25,7 @@
 
     const nafTeams = [28, 29];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
+    const teamFormats: TeamFormat[] = ['elevens', 'sevens'];
 
     $: showTeams = $teamSelectionOpen;
 
@@ -56,7 +59,9 @@
             teamType: $currentTeam.name,
             mode: $rosterMode,
             fans: $rosterMode === 'exhibition' ? 0 : 1,
+            format: $teamFormat,
         });
+
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
@@ -122,6 +127,13 @@
         }}
     />
 
+    <ToggleButton
+        options={teamFormats}
+        selectedIndex={teamFormats.indexOf($teamFormat)}
+        selected={(format) => {
+            teamFormat.set(format);
+        }}
+    />
     <div class="button-container">
         {#each sortedTeam as team}
             <button

@@ -4,27 +4,33 @@
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
+    import type { Inducement } from '../models/inducement.model';
     export let selectedTeam: Team;
 
     let showAllInducements = false;
     const filteredInducements = inducementData.inducements
-        .filter((x) =>
-            x?.requiresApothecary
-                ? x.requiresApothecary === selectedTeam.apothecary
-                : true,
+        .filter((inducement: Inducement) =>
+            inducement?.requiresApothecary
+                ? inducement.requiresApothecary === selectedTeam.apothecary
+                : inducement?.requiresSpecialRule
+                ? selectedTeam.specialRules.includes(
+                      inducement.requiresSpecialRule,
+                  )
+                : $roster.format === 'elevens' || inducement.sevensMax !== 0,
         )
-        .filter((x) =>
-            x?.requiresSpecialRule
-                ? selectedTeam.specialRules.includes(x.requiresSpecialRule)
-                : true,
-        )
-        .map((x) => ({
-            ...x,
+        .map((inducement: Inducement) => ({
+            ...inducement,
             cost: selectedTeam.specialRules.includes(
-                x?.reducedCost?.specialRule,
+                inducement?.reducedCost?.specialRule,
             )
-                ? x.reducedCost.cost
-                : x.cost,
+                ? inducement.reducedCost.cost
+                : $roster.format === 'sevens' && inducement.sevensCost
+                ? inducement.sevensCost
+                : inducement.cost,
+            max:
+                $roster.format === 'elevens' || !inducement.sevensMax
+                    ? inducement.max
+                    : inducement.sevensMax,
         }));
 
     const addInducement = (key: string) => {
@@ -63,7 +69,7 @@
         </tr>
     </thead>
     <tbody>
-        {#if showAllInducements}
+        {#if showAllInducements && $roster.format !== 'sevens'}
             <StarPlayerInducement />
         {/if}
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
@@ -117,6 +123,7 @@
         &__display-name {
             text-align: left;
         }
+
         &__toggle {
             background: white;
             color: black;

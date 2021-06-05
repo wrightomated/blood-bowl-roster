@@ -8,6 +8,8 @@ export interface Inducement {
     max: number;
     requiresSpecialRule?: TeamSpecialRule;
     requiresApothecary?: boolean;
+    sevensCost?: number;
+    sevensMax?: number;
 }
 
 export interface InducementCostReduction {
