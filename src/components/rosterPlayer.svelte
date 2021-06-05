@@ -46,6 +46,7 @@
         .map((x) => x.id);
     $: sevensSpecialistsAmount =
         $roster.format === 'sevens' &&
+        nonLinemen.includes(rosterPlayer.player.id) &&
         $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     const removePlayer = (firePlayer: boolean) => {
