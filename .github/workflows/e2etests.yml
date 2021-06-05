@@ -10,7 +10,7 @@ jobs:
             # and run all Cypress tests
             - name: Check pr
               if: ${{github.event.number}}
-              run: echo ::set-output name=$BASE_URL::"https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/"
+              run: echo ::set-output name=baseUrl::"https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/"
             - name: Check env
               run: echo $BASE_URL
             - name: Cypress run
