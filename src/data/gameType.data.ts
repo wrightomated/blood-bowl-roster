@@ -34,9 +34,3 @@ export const getGameTypeSettings = (teamFormat: TeamFormat) => {
 
 export const getMaxPlayers = (teamFormat: TeamFormat) =>
     getGameTypeSettings(teamFormat).maxPlayers;
-
-// rerollDetails: { costMultiplier: number; max: number };
-// assistantCoaches: RosterExtra;
-// cheerleaders: RosterExtra;
-// apothecary: RosterExtra;
-// dedicatedFans: RosterExtra;
