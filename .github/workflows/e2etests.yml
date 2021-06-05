@@ -9,7 +9,7 @@ jobs:
             # Install NPM dependencies, cache them correctly
             # and run all Cypress tests
             - name: Check pr
-              if: ${{refs/pull/:prNumber/merge == 2}}
+              if: ${{github.event.number == 21}}
               run: echo "nice"
             - name: Cypress run
               uses: cypress-io/github-action@v2
