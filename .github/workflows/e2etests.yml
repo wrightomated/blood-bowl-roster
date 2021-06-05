@@ -10,11 +10,11 @@ jobs:
             # and run all Cypress tests
             - name: Check pr
               if: ${{github.event.number}}
-              run: echo BASEURL=https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/
+              run: echo https://deploy-preview-${{ github.event.number }}--bbroster.netlify.app/ >> $BASE_URL
             - name: Check env
-              run: echo BASEUR
+              run: echo $BASE_URL
             - name: Cypress run
               uses: cypress-io/github-action@v2
               if: ${{github.event.number}}
 #               env:
-#                   CYPRESS_BASE_URL: BASEURL
+#                   CYPRESS_BASE_URL: $BASE_URL
