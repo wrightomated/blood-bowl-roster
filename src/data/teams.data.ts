@@ -330,7 +330,7 @@ export const teamData: TeamList = {
             players: [
                 { id: 83, max: 12 },
                 { id: 84, max: 1 },
-                { id: 85, max: 4 },
+                { id: 85, max: 1 },
                 { id: 86, max: 1 },
                 { id: 87, max: 1 },
                 { id: 88, max: 1 },
