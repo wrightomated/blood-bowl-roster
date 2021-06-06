@@ -793,7 +793,7 @@ const rGoblin: Player = {
     ...goblinLineman,
     position: 'Renegade Goblin',
     id: 85,
-    skills: [620],
+    skills: [620, 4, 78, 81],
     primary: ['A', 'M'],
     secondary: ['G', 'P'],
 };
