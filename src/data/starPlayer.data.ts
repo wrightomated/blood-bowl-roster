@@ -98,7 +98,7 @@ const grim: StarPlayer = {
 };
 const hakflem: StarPlayer = {
     id: 210,
-    position: 'Hakflam Skuttlespike',
+    position: 'Hakflem Skuttlespike',
     playerStats: [9, 3, 2, 3, 8],
     playsFor: ['Favoured of Nurgle', 'Favoured of...', 'Underworld Challenge'],
     skills: [4, 28, 71, 33, 35],
