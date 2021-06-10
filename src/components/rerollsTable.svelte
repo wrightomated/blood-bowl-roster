@@ -19,7 +19,7 @@
     $: teamExtrasTotal = extrasForTeam(
         selectedTeam.id,
         $roster.mode,
-        $roster.format,
+        $roster.format
     )
         .filter((e) => e.extraString !== 'dedicated_fans')
         .map((e) => $roster.extra[e.extraString] * e.cost || 0)
@@ -33,7 +33,7 @@
                 ((x.player.id === 56 || x.player.id === 73) &&
                 $roster.mode !== 'exhibition'
                     ? 0
-                    : x.player.cost) + (x?.alterations?.valueChange || 0),
+                    : x.player.cost) + (x?.alterations?.valueChange || 0)
         )
         .reduce((a, b) => a + b, 0);
 
@@ -121,6 +121,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-top: 1em;
+        align-items: flex-start;
     }
     .treasury {
         width: 80px;
