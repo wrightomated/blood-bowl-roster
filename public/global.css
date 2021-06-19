@@ -72,7 +72,6 @@ tr {
     padding: 10px;
     text-align: center;
     border-right: 1px solid #ddd;
-    /* border: 1px solid #ccc; */
 }
 tr:nth-of-type(even) {
     background: #eee;

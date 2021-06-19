@@ -14,7 +14,6 @@
     export let index: number;
     let playerName = $roster.players[index].playerName;
     const updatePlayerName = (node, binding) => {
-        console.log(node, binding);
         return {
             update: (name: string) => {
                 roster.updatePlayerName(index, name);

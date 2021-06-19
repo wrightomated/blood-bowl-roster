@@ -15,7 +15,6 @@
 
     let teamName = $roster.teamName;
     const updateTeamName = (node, binding) => {
-        console.log(node, binding);
         return {
             update: (value) => {
                 roster.updateTeamName(value);

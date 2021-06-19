@@ -7,8 +7,8 @@
     import { showDelete } from '../store/showDelete.store';
 
     const saveRoster = () => {
-        savedRosterIndex.addRoster($roster);
         roster.setSaved();
+        savedRosterIndex.addRoster($roster);
     };
 
     const toggleDelete = () => showDelete.set(!$showDelete);

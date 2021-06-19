@@ -77,7 +77,7 @@
             localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
         currentTeam.set(
-            teamList.find((t) => t.id === loadedRoster?.teamId || currentTeam)
+            teamList.find((t) => t.id === loadedRoster?.teamId) || $currentTeam
         );
         roster.loadRoster(`savedRoster${savedRoster.id}`);
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
