@@ -17,6 +17,11 @@
     import { teamFormat } from '../store/teamFormat.store';
     import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
+    import {
+        unsavedRoster,
+        unsavedRosterName,
+    } from '../store/unsavedRoster.store';
+    import { systemNotificationMessage } from '../store/systemNotification.store';
 
     export let teamList: Team[];
 
@@ -69,11 +74,22 @@
 
     const loadTeam = (savedRoster: { id: any; name?: string }) => {
         const loadedRoster: Roster = JSON.parse(
-            localStorage.getItem(`savedRoster${savedRoster.id}`),
+            localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
-        currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
+        currentTeam.set(
+            teamList.find((t) => t.id === loadedRoster?.teamId || currentTeam)
+        );
         roster.loadRoster(`savedRoster${savedRoster.id}`);
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
+        toggleLoad();
+    };
+
+    const loadUnsavedTeam = () => {
+        currentTeam.set(teamList.find((t) => t.id === $unsavedRoster.teamId));
+        roster.set($unsavedRoster);
+        savedRosterIndex.newId();
+        unsavedRoster.removeUnsavedRoster();
+        systemNotificationMessage.set('');
         toggleLoad();
     };
 
@@ -135,15 +151,6 @@
         }}
     />
     <div class="button-container">
-        {#each sortedTeam as team}
-            <button
-                class="team-button"
-                class:selected={$currentTeam.id === team.id}
-                on:click={() => newTeam(team.id)}
-                >{team.name}
-                <span>{tierToNumeral(team.tier)}</span></button
-            >
-        {/each}
         <div class="tier-selector">
             Filter tiers:
             <button
@@ -168,12 +175,28 @@
                 class="filter-button">N</button
             >
         </div>
+        {#each sortedTeam as team}
+            <button
+                class="team-button"
+                class:selected={$currentTeam.id === team.id}
+                on:click={() => newTeam(team.id)}
+                >{team.name}
+                <span>{tierToNumeral(team.tier)}</span
+                >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
+                    >{/if}</button
+            >
+        {/each}
     </div>
     <button class="create-team" on:click={() => createTeam()}>Create</button>
 {/if}
 
 {#if $teamLoadOpen}
     <div class="button-container">
+        {#if $unsavedRosterName}
+            <button on:click={loadUnsavedTeam}
+                >Unsaved: {$unsavedRosterName}</button
+            >
+        {/if}
         {#each $savedRosterIndex.index as savedRoster, i}
             <button
                 class="saved-team-button"
@@ -249,9 +272,14 @@
         text-align: center;
         margin: 0 auto;
         border: 2px solid $secondary-colour;
+
+        &:hover {
+            border-color: $secondary-background-colour;
+        }
     }
     .tier-selector {
         margin-top: 1em;
+        margin-bottom: 1em;
     }
     .code-box {
         display: flex;

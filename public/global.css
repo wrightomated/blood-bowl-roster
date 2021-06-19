@@ -65,12 +65,14 @@ input:disabled {
 
 table {
     border-collapse: collapse;
+    border: 1px solid #ddd;
 }
 td,
 tr {
     padding: 10px;
     text-align: center;
-    border: 1px solid #ccc;
+    border-right: 1px solid #ddd;
+    /* border: 1px solid #ccc; */
 }
 tr:nth-of-type(even) {
     background: #eee;
@@ -79,6 +81,9 @@ thead {
     background-color: #970f0c;
     color: white;
     text-transform: uppercase;
+}
+thead td {
+    border: none;
 }
 
 @media print {

@@ -10,6 +10,8 @@ import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import type { TeamFormat } from './teamFormat.store';
+import { unsavedRoster } from './unsavedRoster.store';
+import { systemNotificationMessage } from './systemNotification.store';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -28,6 +30,7 @@ function createRoster() {
                 }
                 return {
                     ...store,
+                    saved: false,
                     players: addPlayerToPlayers(
                         store.players,
                         player,
@@ -41,6 +44,7 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     treasury: !firePlayer
                         ? store.treasury +
                           store.players
@@ -55,12 +59,13 @@ function createRoster() {
             update((store) => {
                 const updatedPlayers = [...store.players];
                 updatedPlayers[index] = player;
-                return { ...store, players: updatedPlayers };
+                return { ...store, saved: false, players: updatedPlayers };
             }),
         movePlayerUp: (index: number) =>
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     players: switchTwoElements(store.players, index, index - 1),
                 };
             }),
@@ -68,6 +73,7 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     players: switchTwoElements(store.players, index, index + 1),
                 };
             }),
@@ -75,6 +81,7 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     treasury:
                         store.treasury -
                         inducementCost(
@@ -94,6 +101,7 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     treasury:
                         store.treasury +
                         inducementCost(
@@ -111,12 +119,13 @@ function createRoster() {
             }),
         removeAllInducements: () =>
             update((store) => {
-                return { ...store, inducements: {} };
+                return { ...store, saved: false, inducements: {} };
             }),
         addExtra: (extraKey: string, extraCost: number) =>
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     treasury: store.treasury - extraCost,
                     extra: {
                         ...store.extra,
@@ -130,6 +139,7 @@ function createRoster() {
             update((store) => {
                 return {
                     ...store,
+                    saved: false,
                     treasury: store.treasury + extraCost,
                     extra: {
                         ...store.extra,
@@ -140,20 +150,41 @@ function createRoster() {
                 };
             }),
         loadRoster: (rosterKey: string) =>
-            update((_store) => {
-                return { ...getSavedRoster(rosterKey) };
+            update((store) => {
+                unsavedRoster.saveUnsavedRoster(store);
+                return getSavedRoster(rosterKey) || store;
             }),
         codeToRoster: (rosterCode: string) =>
-            update((_store) => {
-                const loadedRoster =
-                    rosterFromCode(rosterCode) || getEmptyRoster();
-                currentTeam.setCurrentTeamWithCode(rosterCode);
-                savedRosterIndex.newId();
-                return { ...loadedRoster };
+            update((store) => {
+                const decodedRoster = rosterFromCode(rosterCode);
+                if (decodedRoster) {
+                    currentTeam.setCurrentTeamWithCode(rosterCode);
+                    savedRosterIndex.newId();
+                    unsavedRoster.saveUnsavedRoster(store);
+                    return decodedRoster;
+                }
+                systemNotificationMessage.set(
+                    'The inputted code could not be loaded.'
+                );
+                return store;
             }),
         changeRosterMode: (mode: RosterMode) =>
             update((store) => {
-                return { ...store, mode };
+                return { ...store, saved: false, mode };
+            }),
+        updateTeamName: (teamName: string) =>
+            update((store) => {
+                return { ...store, saved: false, teamName };
+            }),
+        updatePlayerName: (index: number, playerName: string) =>
+            update((store) => {
+                return {
+                    ...store,
+                    saved: false,
+                    players: store.players.map((p, i) =>
+                        index === i ? { ...p, playerName: playerName } : p
+                    ),
+                };
             }),
         reset: (options?: {
             teamId: number;
@@ -161,7 +192,20 @@ function createRoster() {
             mode: RosterMode;
             format: TeamFormat;
             fans: number;
-        }) => set(getEmptyRoster(options)),
+        }) => {
+            update((store) => {
+                unsavedRoster.saveUnsavedRoster(store);
+                return getEmptyRoster(options);
+            });
+        },
+        setSaved: () => {
+            update((store) => {
+                return {
+                    ...store,
+                    saved: true,
+                };
+            });
+        },
         set,
     };
 }
@@ -184,12 +228,19 @@ const getEmptyRoster: (options?: {
         treasury: gameSettings?.startingTreasury || 1000,
         mode: options?.mode,
         format: options?.format || 'elevens',
+        saved: true,
     };
 };
 
 const getSavedRoster: (rosterKey: string) => Roster = (rosterKey: string) => {
-    const rosterString = localStorage.getItem(rosterKey);
-    return rosterString ? JSON.parse(rosterString) : null;
+    try {
+        const rosterString = localStorage.getItem(rosterKey);
+        return JSON.parse(rosterString);
+    } catch {
+        console.log('k');
+        systemNotificationMessage.set('Error retrieving saved roster.');
+        return null;
+    }
 };
 
 const switchTwoElements = (arr: any[], index1: number, index2: number) => {
@@ -209,7 +260,7 @@ const rosterFromQueryString = () => {
     return rosterFromCode(code);
 };
 
-const rosterFromCode = (code: string) => {
+const rosterFromCode: (code: string) => Roster | null = (code) => {
     try {
         return stringToRoster(code);
     } catch (error) {
@@ -218,8 +269,19 @@ const rosterFromCode = (code: string) => {
 };
 
 const getDefaultRoster: () => Roster = () => {
+    const retrievedRoster = rosterFromQueryString();
+
+    if (retrievedRoster) {
+        try {
+            const currentRoster: Roster = JSON.parse(
+                localStorage.getItem('roster')
+            );
+            if (!currentRoster.saved)
+                unsavedRoster.saveUnsavedRoster(currentRoster);
+        } catch (error) {}
+    }
     return (
-        rosterFromQueryString() ||
+        retrievedRoster ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster()
     );

@@ -17,7 +17,7 @@
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
-        (x) => x.player.id === rosterPlayer.player.id,
+        (x) => x.player.id === rosterPlayer.player.id
     ).length;
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
@@ -39,7 +39,7 @@
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
-            (rosterPlayer?.alterations?.injuries?.[i] || 0),
+            (rosterPlayer?.alterations?.injuries?.[i] || 0)
     );
     $: nonLinemen = $currentTeam.players
         .filter((p) => p.max < 12)
@@ -62,7 +62,7 @@
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
             const tfoIndex = $roster.players.findIndex(
-                (p) => p.player.id === twoForOne,
+                (p) => p.player.id === twoForOne
             );
             if (twoForOne) {
                 roster.removePlayer([index, tfoIndex], firePlayer);
@@ -74,7 +74,7 @@
 
     const toggleShowSkills = () => {
         showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? !x : x)),
+            $showSkillButtons.map((x, i) => (i === index ? !x : x))
         );
     };
 
@@ -358,9 +358,6 @@
         color: $main-colour;
         font-family: $display-font;
         margin: 0;
-        i {
-            vertical-align: text-bottom;
-        }
     }
 
     .big-guys,

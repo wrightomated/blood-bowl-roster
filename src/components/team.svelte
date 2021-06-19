@@ -16,6 +16,7 @@
         showAvailablePlayers,
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
+    import SystemNotification from './systemNotification.svelte';
 
     const teamList = teamData.teams;
 
@@ -80,6 +81,7 @@
             </table>
         </div>
     {/if}
+
     <div class="header-container">
         <caption class="team-star-player-caption" on:click={toggleStarPlayers}>
             {`${selectedTeam.name} Team Star Players`}

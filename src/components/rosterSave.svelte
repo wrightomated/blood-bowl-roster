@@ -6,43 +6,30 @@
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showDelete } from '../store/showDelete.store';
 
-    let saved = false;
-    let rosterCleared = false;
-
     const saveRoster = () => {
         savedRosterIndex.addRoster($roster);
-        saved = true;
+        roster.setSaved();
     };
 
-    // const clearRoster = () => {
-    //     roster.reset();
-    //     savedRosterIndex.removeRoster();
-    //     rosterCleared = true;
-    // };
     const toggleDelete = () => showDelete.set(!$showDelete);
 
     const toggleExport = () => showExport.set(!$showExport);
-
-    roster.subscribe((x) => {
-        saved = false;
-        rosterCleared = false;
-    });
 </script>
 
-{#if !saved}
+{#if !$roster.saved}
     <MaterialButton
         hoverText="Save team"
         symbol="save"
         clickFunction={() => saveRoster()}
     />
 {:else}<i class="material-icons saved">check_circle</i>{/if}
-{#if !rosterCleared}
-    <MaterialButton
-        hoverText="Delete team forever"
-        symbol="delete_forever"
-        clickFunction={toggleDelete}
-    />
-{/if}
+
+<MaterialButton
+    hoverText="Delete team forever"
+    symbol="delete_forever"
+    clickFunction={toggleDelete}
+/>
+
 <MaterialButton
     hoverText="Toggle view"
     symbol={$rosterViewMode === 'grid' ? 'table_rows' : 'grid_view'}

@@ -12,6 +12,16 @@
     import { getMaxPlayers } from '../data/gameType.data';
 
     export let playerTypes: Player[];
+
+    let teamName = $roster.teamName;
+    const updateTeamName = (node, binding) => {
+        console.log(node, binding);
+        return {
+            update: (value) => {
+                roster.updateTeamName(value);
+            },
+        };
+    };
 </script>
 
 <div class="team-name-container">
@@ -20,7 +30,8 @@
             aria-label="team name"
             placeholder="Team Name"
             id="team-name"
-            bind:value={$roster.teamName}
+            bind:value={teamName}
+            use:updateTeamName={teamName}
         />
     </h2>
 </div>
