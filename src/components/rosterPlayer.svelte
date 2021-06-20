@@ -15,7 +15,7 @@
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
-        (x) => x.player.id === rosterPlayer.player.id,
+        (x) => x.player.id === rosterPlayer.player.id
     ).length;
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === rosterPlayer.player.id)
@@ -26,20 +26,21 @@
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
     $: playerSkillIds = rosterPlayer.player.skills.concat(
-        rosterPlayer?.alterations?.extraSkills || [],
+        rosterPlayer?.alterations?.extraSkills || []
     );
     $: currentCost =
-        (rosterPlayer?.alterations?.mng ||
-        rosterPlayer?.alterations?.tr ||
-        ((rosterPlayer.player.id === 56 || rosterPlayer.player.id === 73) &&
-            $roster.mode !== 'exhibition')
+        rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
             ? 0
-            : rosterPlayer.player.cost) +
-        (rosterPlayer.alterations?.valueChange || 0);
+            : ((rosterPlayer.player.id === 56 ||
+                  rosterPlayer.player.id === 73) &&
+              $roster.mode !== 'exhibition'
+                  ? 0
+                  : rosterPlayer.player.cost) +
+              (rosterPlayer.alterations?.valueChange || 0);
     $: alteredStats = characteristicMaxValue.map(
         (_, i) =>
             (rosterPlayer?.alterations?.statChange?.[i] || 0) -
-            (rosterPlayer?.alterations?.injuries?.[i] || 0),
+            (rosterPlayer?.alterations?.injuries?.[i] || 0)
     );
     $: nonLinemen = $currentTeam.players
         .filter((p) => p.max < 12)
@@ -62,7 +63,7 @@
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
             const tfoIndex = $roster.players.findIndex(
-                (p) => p.player.id === twoForOne,
+                (p) => p.player.id === twoForOne
             );
             if (twoForOne) {
                 roster.removePlayer([index, tfoIndex], firePlayer);
@@ -74,7 +75,7 @@
 
     const toggleShowSkills = () => {
         showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? !x : x)),
+            $showSkillButtons.map((x, i) => (i === index ? !x : x))
         );
     };
 
