@@ -172,20 +172,20 @@ function createRoster() {
             update((store) => {
                 return { ...store, saved: false, mode };
             }),
-        updateTeamName: (teamName: string) =>
-            update((store) => {
-                return { ...store, saved: false, teamName };
-            }),
-        updatePlayerName: (index: number, playerName: string) =>
-            update((store) => {
-                return {
-                    ...store,
-                    saved: false,
-                    players: store.players.map((p, i) =>
-                        index === i ? { ...p, playerName: playerName } : p
-                    ),
-                };
-            }),
+        // updateTeamName: (teamName: string) =>
+        //     update((store) => {
+        //         return { ...store, saved: false, teamName };
+        //     }),
+        // updatePlayerName: (index: number, playerName: string) =>
+        //     update((store) => {
+        //         return {
+        //             ...store,
+        //             saved: false,
+        //             players: store.players.map((p, i) =>
+        //                 index === i ? { ...p, playerName: playerName } : p
+        //             ),
+        //         };
+        //     }),
         reset: (options?: {
             teamId: number;
             teamType: TeamName;
@@ -206,7 +206,10 @@ function createRoster() {
                 };
             });
         },
-        set,
+        set: (value: Roster) => {
+            const newRoster = { ...value, saved: false };
+            set(newRoster);
+        },
     };
 }
 

@@ -12,14 +12,6 @@
     import { showSkillButtons } from '../store/showSkillButtons.store';
 
     export let index: number;
-    let playerName = $roster.players[index].playerName;
-    const updatePlayerName = (node, binding) => {
-        return {
-            update: (name: string) => {
-                roster.updatePlayerName(index, name);
-            },
-        };
-    };
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
@@ -127,8 +119,7 @@
             <input
                 aria-labelledby="name-header"
                 placeholder="Player Name"
-                bind:value={playerName}
-                use:updatePlayerName={playerName}
+                bind:value={$roster.players[index].playerName}
             />
         {/if}
     </td>
