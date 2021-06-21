@@ -73,9 +73,16 @@
     };
 
     const loadTeam = (savedRoster: { id: any; name?: string }) => {
-        const loadedRoster: Roster = JSON.parse(
-            localStorage.getItem(`savedRoster${savedRoster.id}`)
-        );
+        let loadedRoster: Roster;
+        try {
+            loadedRoster = JSON.parse(
+                localStorage.getItem(`savedRoster${savedRoster.id}`)
+            );
+        } catch (error) {
+            systemNotificationMessage.set('Error loading team.');
+            return;
+        }
+
         currentTeam.set(
             teamList.find((t) => t.id === loadedRoster?.teamId) || $currentTeam
         );

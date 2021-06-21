@@ -172,20 +172,6 @@ function createRoster() {
             update((store) => {
                 return { ...store, saved: false, mode };
             }),
-        // updateTeamName: (teamName: string) =>
-        //     update((store) => {
-        //         return { ...store, saved: false, teamName };
-        //     }),
-        // updatePlayerName: (index: number, playerName: string) =>
-        //     update((store) => {
-        //         return {
-        //             ...store,
-        //             saved: false,
-        //             players: store.players.map((p, i) =>
-        //                 index === i ? { ...p, playerName: playerName } : p
-        //             ),
-        //         };
-        //     }),
         reset: (options?: {
             teamId: number;
             teamType: TeamName;
@@ -240,7 +226,6 @@ const getSavedRoster: (rosterKey: string) => Roster = (rosterKey: string) => {
         const rosterString = localStorage.getItem(rosterKey);
         return JSON.parse(rosterString);
     } catch {
-        console.log('k');
         systemNotificationMessage.set('Error retrieving saved roster.');
         return null;
     }
