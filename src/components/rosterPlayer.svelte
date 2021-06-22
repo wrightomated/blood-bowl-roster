@@ -113,7 +113,6 @@
     };
 
     const changeNumber = () => {
-        // console.log(value);
         if (
             !Number.isInteger(playerNumber) ||
             playerNumber > getMaxPlayers($roster?.format) ||

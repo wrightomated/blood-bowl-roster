@@ -12,8 +12,10 @@
     } from '../data/statOrder.data';
     import StatBlock from './playerCard/statBlock.svelte';
     import { showSkillButtons } from '../store/showSkillButtons.store';
+    import { getMaxPlayers } from '../data/gameType.data';
 
     export let index: number;
+    let playerNumber = index + 1;
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
@@ -109,13 +111,23 @@
                     : alt;
         }
     };
+
+    const changeNumber = () => {
+        if (
+            !Number.isInteger(playerNumber) ||
+            playerNumber > getMaxPlayers($roster?.format) ||
+            playerNumber < 1
+        ) {
+            playerNumber = index + 1;
+        } else {
+            roster.updatePlayerNumber(index, playerNumber);
+            playerNumber = index + 1;
+        }
+    };
 </script>
 
 <section class="player-card" class:danger>
     <div class="header" class:danger>
-        <div>
-            <div class="player-number">{index + 1}</div>
-        </div>
         <h3 class="player-name left-align">
             {#if rosterPlayer.starPlayer}
                 {rosterPlayer.player.position}
@@ -127,6 +139,17 @@
                 />
             {/if}
         </h3>
+        <div>
+            <input
+                class="player-number"
+                aria-label="Player Number"
+                type="number"
+                min="1"
+                max={getMaxPlayers($roster.format)}
+                on:blur={changeNumber}
+                bind:value={playerNumber}
+            />
+        </div>
         <div class="player-position left-align">
             <div class="flex-container">
                 {#if rosterPlayer.starPlayer}
@@ -338,6 +361,19 @@
         background-color: white;
         color: $secondary-colour;
         position: absolute;
+        text-align: center;
+
+        /* Chrome, Safari, Edge, Opera */
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        &[type='number'] {
+            -moz-appearance: textfield;
+            color: $secondary-colour;
+        }
     }
     .player-characteristics {
         display: flex;
