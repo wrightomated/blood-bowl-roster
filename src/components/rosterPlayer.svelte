@@ -10,8 +10,10 @@
         characteristicMinValue,
     } from '../data/statOrder.data';
     import { showSkillButtons } from '../store/showSkillButtons.store';
+    import { getMaxPlayers } from '../data/gameType.data';
 
     export let index: number;
+    let playerNumber = index + 1;
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
@@ -109,10 +111,34 @@
                     : alt;
         }
     };
+
+    const changeNumber = () => {
+        // console.log(value);
+        if (
+            !Number.isInteger(playerNumber) ||
+            playerNumber > getMaxPlayers($roster?.format) ||
+            playerNumber < 1
+        ) {
+            playerNumber = index + 1;
+        } else {
+            roster.updatePlayerNumber(index, playerNumber);
+            playerNumber = index + 1;
+        }
+    };
 </script>
 
 <tr>
-    <td>{index + 1}</td>
+    <td>
+        <input
+            class="player-number"
+            aria-label="Player Number"
+            type="number"
+            min="1"
+            max={getMaxPlayers($roster.format)}
+            on:blur={changeNumber}
+            bind:value={playerNumber}
+        /></td
+    >
     <td class="player-name left-align">
         {#if rosterPlayer.starPlayer}
             {rosterPlayer.player.position}
@@ -283,6 +309,20 @@
         width: 60px;
         text-align: center;
         margin-right: -15px;
+    }
+    .player-number {
+        width: 30px;
+        text-align: center;
+        /* Chrome, Safari, Edge, Opera */
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        &[type='number'] {
+            -moz-appearance: textfield;
+        }
     }
     .improved {
         color: green;

@@ -10,7 +10,7 @@
     let amount: number = 1;
 
     $: numberOfPlayerType = $roster.players.filter(
-        (x) => x.player.id === selected?.id || 0,
+        (x) => x.player.id === selected?.id || 0
     ).length;
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === selected?.id)?.max || 0;
@@ -29,7 +29,7 @@
                     player: { ...selected },
                     alterations: { spp: 0, ni: 0 },
                 },
-                numberOfPlayers === 1 ? index : undefined,
+                numberOfPlayers === 1 ? index : undefined
             );
             newName = '';
         }

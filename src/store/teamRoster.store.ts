@@ -155,6 +155,39 @@ function createRoster() {
             update((store) => {
                 return { ...store, mode };
             }),
+        updatePlayerNumber: (currentIndex: number, desired: number) => {
+            update((store) => {
+                if (
+                    !Number.isInteger(desired) ||
+                    desired > getMaxPlayers(store?.format) ||
+                    desired < 1
+                ) {
+                    return store;
+                }
+
+                const desiredIndex = desired - 1;
+                const numberOfPlayers = store.players.length;
+                let updatedPlayers: RosterPlayerRecord[] = store.players;
+                if (desiredIndex >= store.players.length) {
+                    updatedPlayers = Array(desired)
+                        .fill({
+                            deleted: true,
+                            playerName: '',
+                            alterations: { spp: 0, ni: 0 },
+                            player: deletedPlayer(),
+                        })
+                        .map((p, i) =>
+                            i < numberOfPlayers ? store.players[i] : p
+                        );
+                }
+                const players = switchTwoElements(
+                    updatedPlayers,
+                    currentIndex,
+                    desiredIndex
+                );
+                return { ...store, players };
+            });
+        },
         reset: (options?: {
             teamId: number;
             teamType: TeamName;

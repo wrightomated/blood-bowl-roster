@@ -16,7 +16,7 @@
                 player: { ...selected },
                 alterations: { spp: 0, ni: 0 },
             },
-            index,
+            index
         );
         newName = '';
     };
@@ -72,6 +72,9 @@
         border: 0;
         border-radius: 0;
         background: none;
+    }
+    .name-input {
+        padding: 10px 0;
     }
     @media print {
         .add-player-row {
