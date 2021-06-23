@@ -10,7 +10,7 @@
     let amount: number = 1;
 
     $: numberOfPlayerType = $roster.players.filter(
-        (x) => x.player.id === selected?.id || 0,
+        (x) => x.player.id === selected?.id || 0
     ).length;
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === selected?.id)?.max || 0;
@@ -29,7 +29,7 @@
                     player: { ...selected },
                     alterations: { spp: 0, ni: 0 },
                 },
-                numberOfPlayers === 1 ? index : undefined,
+                numberOfPlayers === 1 ? index : undefined
             );
             newName = '';
         }
@@ -85,9 +85,9 @@
         position: relative;
         min-width: 300px;
         max-width: 600px;
-        border: 2px solid $secondary-colour;
+        border: 2px solid $secondary-background-colour;
         height: 100%;
-        background-color: $secondary-colour;
+        background-color: $secondary-background-colour;
 
         &__content {
             min-height: 100px;
@@ -99,37 +99,37 @@
         min-height: 52px;
         border-radius: 25px;
         border-radius: 20px 20px 0 0;
-        border: 2px solid $secondary-colour;
-        background-color: $secondary-colour;
+        border: 2px solid $secondary-background-colour;
+        background-color: $secondary-background-colour;
         h3 {
             margin: 0;
             margin-bottom: 8px;
             font-size: 16px;
-            color: white;
+            color: #333;
         }
 
         input {
             padding: 0;
-            color: white;
+            color: #555;
             &::placeholder {
-                color: #ddd;
+                color: #555;
             }
         }
         select {
             margin: 6px 0;
             background-color: $secondary-colour;
-            color: white;
+            color: #333;
             font-size: 16px;
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23FFFFFF'><polygon points='0,0 100,0 50,50'/></svg>")
+            background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23333333'><polygon points='0,0 100,0 50,50'/></svg>")
                 no-repeat;
             background-size: 12px;
             background-position: 97% 72%;
             padding-right: 20px;
             background-repeat: no-repeat;
-            border-color: white;
+            border-color: #333;
         }
     }
     button {
@@ -145,17 +145,21 @@
         border-radius: 0;
         background: none;
     }
-    .icon {
-        font-size: 60px;
-        color: white;
+    .add-sign {
         position: absolute;
         top: 50%;
         left: calc(50% - 30px);
+        height: 60px;
+        width: 60px;
+    }
+    .icon {
+        font-size: 60px;
+        color: #555;
     }
     .player-details {
-        color: white;
+        color: #333;
         input {
-            border: 1px solid white;
+            border: 1px solid #333;
             font-size: 16px;
             width: 40px;
             height: 32px;
@@ -172,7 +176,7 @@
         right: 10px;
         top: 10px;
         background-color: white;
-        color: $secondary-colour;
+        color: #555;
         position: absolute;
     }
 </style>
