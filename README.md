@@ -20,6 +20,12 @@ Navigate to [localhost:5000](http://localhost:5000). You should see the app runn
 
 If you're using [Visual Studio Code](https://code.visualstudio.com/) [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) is pretty handy.
 
+If you want to serve your development build to the local network use:
+
+```bash
+npm run dev:serve
+```
+
 ## Building and running in production mode
 
 To create an optimised version of the app:

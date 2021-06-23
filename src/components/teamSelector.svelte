@@ -69,7 +69,7 @@
 
     const loadTeam = (savedRoster: { id: any; name?: string }) => {
         const loadedRoster: Roster = JSON.parse(
-            localStorage.getItem(`savedRoster${savedRoster.id}`),
+            localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
         currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
         roster.loadRoster(`savedRoster${savedRoster.id}`);
@@ -260,6 +260,7 @@
 
         input {
             margin-right: 8px;
+            font-size: 16px;
         }
     }
 </style>

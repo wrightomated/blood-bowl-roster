@@ -111,6 +111,9 @@
         input {
             padding: 0;
             color: #555;
+            border: 0;
+            border-radius: 0;
+            background: none;
             &::placeholder {
                 color: #555;
             }
@@ -140,11 +143,6 @@
         font: inherit;
         cursor: pointer;
     }
-    input {
-        border: 0;
-        border-radius: 0;
-        background: none;
-    }
     .add-sign {
         position: absolute;
         top: 50%;
@@ -172,7 +170,7 @@
         border-radius: 50%;
         font-family: $display-font;
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
         right: 10px;
         top: 10px;
         background-color: white;

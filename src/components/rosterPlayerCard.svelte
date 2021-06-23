@@ -382,7 +382,7 @@
         border-radius: 50%;
         font-family: $display-font;
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
         right: 10px;
         top: 10px;
         background-color: white;
@@ -422,9 +422,6 @@
         color: $main-colour;
         font-family: $display-font;
         margin: 0;
-        i {
-            vertical-align: text-bottom;
-        }
     }
 
     .big-guys,
