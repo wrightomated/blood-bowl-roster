@@ -39,7 +39,7 @@
 
 <div class="player-card">
     <div class="header">
-        <div class="player-number">{index + 1}</div>
+        <div class="player-number" />
         <div>
             <h3>
                 <input

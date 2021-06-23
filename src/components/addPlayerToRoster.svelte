@@ -23,7 +23,7 @@
 </script>
 
 <tr class="add-player-row">
-    <td class="player-number">{index + 1 || ''}</td>
+    <td class="player-number" />
     <td class="left-align">
         <input
             aria-labelledby="name-header"
@@ -79,7 +79,6 @@
     select {
         margin: 0;
         color: #333;
-        // font-size: 16px;
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
