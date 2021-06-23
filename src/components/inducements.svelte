@@ -14,14 +14,14 @@
                 ? inducement.requiresApothecary === selectedTeam.apothecary
                 : inducement?.requiresSpecialRule
                 ? selectedTeam.specialRules.includes(
-                      inducement.requiresSpecialRule,
+                      inducement.requiresSpecialRule
                   )
-                : $roster.format === 'elevens' || inducement.sevensMax !== 0,
+                : $roster.format === 'elevens' || inducement.sevensMax !== 0
         )
         .map((inducement: Inducement) => ({
             ...inducement,
             cost: selectedTeam.specialRules.includes(
-                inducement?.reducedCost?.specialRule,
+                inducement?.reducedCost?.specialRule
             )
                 ? inducement.reducedCost.cost
                 : $roster.format === 'sevens' && inducement.sevensCost
@@ -86,7 +86,7 @@
         {/if}
 
         {#each filteredInducements as ind}
-            {#if ind.displayName === 'Star Player'}{:else if $roster.inducements?.[ind.id] > 0 || showAllInducements}
+            {#if (ind.displayName !== 'Star Player' && $roster.inducements?.[ind.id] > 0) || showAllInducements}
                 <tr>
                     <td class="inducement__display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>

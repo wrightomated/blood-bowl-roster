@@ -10,7 +10,7 @@
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
         $currentTeam,
-        $roster.players.map((x) => x.player.id),
+        $roster.players.map((x) => x.player.id)
     ).map((x, _, a) => {
         let displayName = x.position;
         if (x?.twoForOne) {
@@ -38,7 +38,7 @@
 
         if (addTwo) {
             const twoForPlayer = starPlayers.starPlayers.find(
-                (x) => x.id === getSelected(selectedId).twoForOne,
+                (x) => x.id === getSelected(selectedId).twoForOne
             );
             roster.addPlayer({
                 player: twoForPlayer,
@@ -86,6 +86,9 @@
 </tr>
 
 <style lang="scss">
+    .star-player-select {
+        font-size: 16px;
+    }
     .left-align {
         text-align: left;
     }

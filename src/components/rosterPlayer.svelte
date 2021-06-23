@@ -309,6 +309,10 @@
         border: 0;
         border-radius: 0;
         background: none;
+
+        @media screen and (max-width: 450px) {
+            font-size: 16px;
+        }
     }
     td {
         input {

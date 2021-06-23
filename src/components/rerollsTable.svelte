@@ -125,5 +125,6 @@
     }
     .treasury {
         width: 80px;
+        font-size: 16px;
     }
 </style>
