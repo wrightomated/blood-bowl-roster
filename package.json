@@ -13,6 +13,7 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w",
+        "dev:serve": "HOST=0.0.0.0 npm run dev",
         "start": "sirv public",
         "validate": "svelte-check",
         "test": "jest",
