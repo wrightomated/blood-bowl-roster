@@ -124,6 +124,32 @@
             playerNumber = index + 1;
         }
     };
+
+    const blurOnEscapeOrEnter = (node: HTMLInputElement) => {
+        const handleKey = (event) => {
+            if (
+                (event.key === 'Escape' || event.key === 'Enter') &&
+                node &&
+                typeof node.blur === 'function'
+            ) {
+                if (
+                    event.key === 'Escape' &&
+                    node.classList.contains('player-number')
+                ) {
+                    playerNumber = index + 1;
+                }
+                node.blur();
+            }
+        };
+
+        node.addEventListener('keyup', handleKey);
+
+        return {
+            destroy() {
+                node.removeEventListener('keyup', handleKey);
+            },
+        };
+    };
 </script>
 
 <tr>
@@ -136,6 +162,7 @@
             max={getMaxPlayers($roster.format)}
             on:blur={changeNumber}
             bind:value={playerNumber}
+            use:blurOnEscapeOrEnter
         /></td
     >
     <td class="player-name left-align">
@@ -146,6 +173,7 @@
                 aria-labelledby="name-header"
                 placeholder="Player Name"
                 bind:value={$roster.players[index].playerName}
+                use:blurOnEscapeOrEnter
             />
         {/if}
     </td>

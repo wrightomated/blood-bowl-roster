@@ -124,6 +124,32 @@
             playerNumber = index + 1;
         }
     };
+
+    const blurOnEscapeOrEnter = (node: HTMLInputElement) => {
+        const handleKey = (event) => {
+            if (
+                (event.key === 'Escape' || event.key === 'Enter') &&
+                node &&
+                typeof node.blur === 'function'
+            ) {
+                if (
+                    event.key === 'Escape' &&
+                    node.classList.contains('player-number')
+                ) {
+                    playerNumber = index + 1;
+                }
+                node.blur();
+            }
+        };
+
+        node.addEventListener('keyup', handleKey);
+
+        return {
+            destroy() {
+                node.removeEventListener('keyup', handleKey);
+            },
+        };
+    };
 </script>
 
 <section class="player-card" class:danger>
@@ -148,6 +174,7 @@
                 max={getMaxPlayers($roster.format)}
                 on:blur={changeNumber}
                 bind:value={playerNumber}
+                use:blurOnEscapeOrEnter
             />
         </div>
         <div class="player-position left-align">
