@@ -12,6 +12,11 @@
     import { getMaxPlayers } from '../data/gameType.data';
 
     export let playerTypes: Player[];
+    $: nextPlayerIndex =
+        $roster.players.findIndex((p) => p.deleted) >= 0
+            ? $roster.players.findIndex((p) => p.deleted)
+            : $roster.players.length;
+    $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
 </script>
 
 <div class="team-name-container">
@@ -35,13 +40,11 @@
         {#each $roster.players as player, index}
             {#if !player?.deleted}
                 <RosterPlayerCard {index} />
-            {:else}
-                <AddPlayerCard {playerTypes} {index} />
             {/if}
         {/each}
 
-        {#if $roster.players.length < getMaxPlayers($roster.format)}
-            <AddPlayerCard {playerTypes} index={$roster.players.length} />
+        {#if activePlayersNumber < getMaxPlayers($roster.format)}
+            <AddPlayerCard {playerTypes} index={nextPlayerIndex} />
         {/if}
     </div>
 {:else}
@@ -73,15 +76,10 @@
                 {#each $roster.players as player, index}
                     {#if !player?.deleted}
                         <RosterRow {index} />
-                    {:else}
-                        <AddPlayerToRoster {playerTypes} {index} />
                     {/if}
                 {/each}
-                {#if $roster.players.length < getMaxPlayers($roster.format)}
-                    <AddPlayerToRoster
-                        {playerTypes}
-                        index={$roster.players.length}
-                    />
+                {#if activePlayersNumber < getMaxPlayers($roster.format)}
+                    <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />
                 {/if}
             </tbody>
         </table>
