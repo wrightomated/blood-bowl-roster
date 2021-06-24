@@ -13,6 +13,7 @@ export interface Roster {
     treasury?: number;
     mode?: RosterMode;
     format?: TeamFormat;
+    saved?: boolean;
 }
 
 export interface RosterPlayerRecord {
