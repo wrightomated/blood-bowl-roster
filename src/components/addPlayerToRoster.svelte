@@ -2,11 +2,12 @@
     import type { Player } from '../models/player.model';
 
     import { roster } from '../store/teamRoster.store';
+    import SkillElement from './skillElement.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
 
     export let playerTypes: Player[];
     export let index: number;
-    let selected: Player;
+    let selected: Player = playerTypes[0];
     let newName: string = '';
 
     const addPlayer = () => {
@@ -48,13 +49,13 @@
             {/each}
         </select>
     </td>
-    <td />
-    <td />
-    <td />
-    <td />
-    <td />
-    <td />
-    <td />
+    {#each selected.playerStats as stat, index}
+        <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
+    {/each}
+    <td class="left-align">
+        <SkillElement playerSkillIds={selected.skills} />
+    </td>
+    <td>{selected.cost},000</td>
     <td />
     {#if $roster.mode !== 'exhibition'}
         <td />

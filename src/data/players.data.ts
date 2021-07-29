@@ -519,7 +519,7 @@ const rotterLineman: Player = {
 const pestigor: Player = {
     id: 53,
     position: 'Pestigor',
-    playerStats: [6, 3, 4, 4, 9],
+    playerStats: [6, 3, 3, 4, 9],
     cost: 75,
     skills: [30, 73, 77],
     primary: ['G', 'M', 'S'],
@@ -651,7 +651,7 @@ const skavenClanratLineman: Player = {
 };
 const skavenThrower: Player = {
     id: 69,
-    position: 'Thower',
+    position: 'Thrower',
     playerStats: [7, 3, 3, 2, 8],
     cost: 85,
     skills: [46, 22],
