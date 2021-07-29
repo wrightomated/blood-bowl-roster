@@ -651,7 +651,7 @@ const skavenClanratLineman: Player = {
 };
 const skavenThrower: Player = {
     id: 69,
-    position: 'Thower',
+    position: 'Thrower',
     playerStats: [7, 3, 3, 2, 8],
     cost: 85,
     skills: [46, 22],
