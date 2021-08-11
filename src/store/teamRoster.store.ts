@@ -11,6 +11,8 @@ import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import type { TeamFormat } from './teamFormat.store';
 
+export const maxPlayerNumber = 16;
+
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
         getDefaultRoster()
@@ -31,7 +33,7 @@ function createRoster() {
                     players: addPlayerToPlayers(
                         store.players,
                         player,
-                        getMaxPlayers(store?.format),
+                        maxPlayerNumber,
                         index
                     ),
                     treasury: store.treasury - player.player.cost,
@@ -159,7 +161,7 @@ function createRoster() {
             update((store) => {
                 if (
                     !Number.isInteger(desired) ||
-                    desired > getMaxPlayers(store?.format) ||
+                    desired > maxPlayerNumber ||
                     desired < 1
                 ) {
                     return store;

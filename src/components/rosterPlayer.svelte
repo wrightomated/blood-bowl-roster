@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { roster } from '../store/teamRoster.store';
+    import { maxPlayerNumber, roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import SkillElement from './skillElement.svelte';
     import { currentTeam } from '../store/currentTeam.store';
@@ -10,7 +10,7 @@
         characteristicMinValue,
     } from '../data/statOrder.data';
     import { showSkillButtons } from '../store/showSkillButtons.store';
-    import { getMaxPlayers } from '../data/gameType.data';
+    // import { getMaxPlayers } from '../data/gameType.data';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -115,7 +115,7 @@
     const changeNumber = () => {
         if (
             !Number.isInteger(playerNumber) ||
-            playerNumber > getMaxPlayers($roster?.format) ||
+            playerNumber > maxPlayerNumber ||
             playerNumber < 1
         ) {
             playerNumber = index + 1;
@@ -159,7 +159,7 @@
             aria-label="Player Number"
             type="number"
             min="1"
-            max={getMaxPlayers($roster.format)}
+            max={maxPlayerNumber}
             on:blur={changeNumber}
             bind:value={playerNumber}
             use:blurOnEscapeOrEnter
