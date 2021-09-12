@@ -319,8 +319,8 @@ const pogoer: Player = {
     playerStats: [7, 2, 3, 5, 8],
     cost: 75,
     skills: [4, 74, 81],
-    primary: ['S'],
-    secondary: ['A', 'G'],
+    primary: ['A'],
+    secondary: ['G', 'P', 'S'],
 };
 
 const ooligan: Player = {
