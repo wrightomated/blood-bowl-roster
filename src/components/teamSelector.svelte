@@ -135,15 +135,6 @@
         }}
     />
     <div class="button-container">
-        <!-- {#each sortedTeam as team}
-            <button
-                class="team-button"
-                class:selected={$currentTeam.id === team.id}
-                on:click={() => newTeam(team.id)}
-                >{team.name}
-                <span>{tierToNumeral(team.tier)}</span></button
-            >
-        {/each} -->
         <div class="tier-selector">
             Filter tiers:
             <button
