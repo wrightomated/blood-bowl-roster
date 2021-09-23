@@ -78,7 +78,6 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
         },
         { id: 'i13', displayName: 'Mercenary Player', cost: 30, max: 16 },
-        { id: 'i14', displayName: 'Star Player', cost: 0, max: 2 },
         {
             id: 'i15',
             displayName: '(In)Famous Coaching Staff: Josef Bugman',

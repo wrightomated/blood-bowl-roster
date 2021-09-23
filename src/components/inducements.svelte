@@ -54,19 +54,11 @@
                 QTY
             </td>
             <td on:click={toggleShowAllInducements}>Cost</td>
-            <td class="inducement__toggle">
-                <MaterialButton
-                    hoverText="Toggle Inducements"
-                    symbol={showAllInducements
-                        ? 'arrow_drop_up'
-                        : 'arrow_drop_down'}
-                    clickFunction={toggleShowAllInducements}
-                />
-            </td>
+            <td class="inducement__toggle" />
         </tr>
     </thead>
     <tbody>
-        {#if showAllInducements && $roster.format !== 'sevens'}
+        {#if $roster.format !== 'sevens'}
             <StarPlayerInducement />
         {/if}
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
@@ -112,6 +104,20 @@
                 </tr>
             {/if}
         {/each}
+
+        <tr
+            ><td colspan="4">
+                <MaterialButton
+                    hoverText={showAllInducements
+                        ? 'Hide inducements'
+                        : 'Show inducements'}
+                    symbol={showAllInducements
+                        ? 'arrow_drop_up'
+                        : 'arrow_drop_down'}
+                    clickFunction={toggleShowAllInducements}
+                /></td
+            ></tr
+        >
     </tbody>
 </table>
 
