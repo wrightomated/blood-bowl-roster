@@ -5,19 +5,16 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { Inducement } from '../models/inducement.model';
+    import { filterInducement } from '../helpers/inducementFilter';
     export let selectedTeam: Team;
 
     let showAllInducements = false;
     const filteredInducements = inducementData.inducements
-        .filter((inducement: Inducement) =>
-            inducement?.requiresApothecary
-                ? inducement.requiresApothecary === selectedTeam.apothecary
-                : inducement?.requiresSpecialRule
-                ? selectedTeam.specialRules.includes(
-                      inducement.requiresSpecialRule
-                  )
-                : $roster.format === 'elevens' || inducement.sevensMax !== 0
+        .filter(
+            (inducement) =>
+                $roster.format === 'elevens' || inducement.sevensMax !== 0
         )
+        .filter((inducement) => filterInducement(inducement, selectedTeam))
         .map((inducement: Inducement) => ({
             ...inducement,
             cost: selectedTeam.specialRules.includes(

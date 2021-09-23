@@ -3,7 +3,7 @@ export interface Team {
     id: number;
     players: Array<TeamPlayer>;
     reroll: TeamReroll;
-    apothecary: boolean;
+    allowedApothecary: boolean;
     tier: TeamTier;
     specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
