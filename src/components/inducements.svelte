@@ -5,19 +5,16 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { Inducement } from '../models/inducement.model';
+    import { filterInducement } from '../helpers/inducementFilter';
     export let selectedTeam: Team;
 
     let showAllInducements = false;
     const filteredInducements = inducementData.inducements
-        .filter((inducement: Inducement) =>
-            inducement?.requiresApothecary
-                ? inducement.requiresApothecary === selectedTeam.apothecary
-                : inducement?.requiresSpecialRule
-                ? selectedTeam.specialRules.includes(
-                      inducement.requiresSpecialRule
-                  )
-                : $roster.format === 'elevens' || inducement.sevensMax !== 0
+        .filter(
+            (inducement) =>
+                $roster.format === 'elevens' || inducement.sevensMax !== 0
         )
+        .filter((inducement) => filterInducement(inducement, selectedTeam))
         .map((inducement: Inducement) => ({
             ...inducement,
             cost: selectedTeam.specialRules.includes(
@@ -57,19 +54,21 @@
                 QTY
             </td>
             <td on:click={toggleShowAllInducements}>Cost</td>
-            <td class="inducement__toggle">
-                <MaterialButton
-                    hoverText="Toggle Inducements"
+            <td class="inducement__toggle"
+                ><MaterialButton
+                    hoverText={showAllInducements
+                        ? 'Hide inducements'
+                        : 'Show inducements'}
                     symbol={showAllInducements
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
                     clickFunction={toggleShowAllInducements}
-                />
-            </td>
+                /></td
+            >
         </tr>
     </thead>
     <tbody>
-        {#if showAllInducements && $roster.format !== 'sevens'}
+        {#if $roster.format !== 'sevens'}
             <StarPlayerInducement />
         {/if}
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
@@ -115,6 +114,20 @@
                 </tr>
             {/if}
         {/each}
+
+        <tr
+            ><td colspan="4">
+                <MaterialButton
+                    hoverText={showAllInducements
+                        ? 'Hide inducements'
+                        : 'Show inducements'}
+                    symbol={showAllInducements
+                        ? 'arrow_drop_up'
+                        : 'arrow_drop_down'}
+                    clickFunction={toggleShowAllInducements}
+                /></td
+            ></tr
+        >
     </tbody>
 </table>
 

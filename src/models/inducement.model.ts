@@ -1,4 +1,4 @@
-import type { TeamSpecialRule } from './team.model';
+import type { TeamSpecialRule, TeamTier } from './team.model';
 
 export interface Inducement {
     id: string;
@@ -6,10 +6,11 @@ export interface Inducement {
     cost: number;
     reducedCost?: InducementCostReduction;
     max: number;
-    requiresSpecialRule?: TeamSpecialRule;
+    requiresSpecialRule?: TeamSpecialRule | TeamSpecialRule[];
     requiresApothecary?: boolean;
     sevensCost?: number;
     sevensMax?: number;
+    requiresTier?: TeamTier;
 }
 
 export interface InducementCostReduction {
