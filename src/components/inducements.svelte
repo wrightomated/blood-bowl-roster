@@ -54,7 +54,17 @@
                 QTY
             </td>
             <td on:click={toggleShowAllInducements}>Cost</td>
-            <td class="inducement__toggle" />
+            <td class="inducement__toggle"
+                ><MaterialButton
+                    hoverText={showAllInducements
+                        ? 'Hide inducements'
+                        : 'Show inducements'}
+                    symbol={showAllInducements
+                        ? 'arrow_drop_up'
+                        : 'arrow_drop_down'}
+                    clickFunction={toggleShowAllInducements}
+                /></td
+            >
         </tr>
     </thead>
     <tbody>
