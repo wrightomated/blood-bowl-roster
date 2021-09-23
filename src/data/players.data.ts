@@ -1235,6 +1235,42 @@ const slannBlitzer: Player = {
     primary: ['G', 'A', 'S'],
     secondary: ['P'],
 };
+const bloodbornMarauderLineman: Player = {
+    position: 'Bloodborn Marauder',
+    id: 140,
+    cost: 50,
+    playerStats: [6, 3, 3, 4, 8],
+    skills: [17],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const khorngor: Player = {
+    position: 'Khorngor',
+    id: 141,
+    cost: 70,
+    playerStats: [6, 3, 3, 4, 9],
+    skills: [30, 54],
+    primary: ['G', 'A', 'S'],
+    secondary: ['P'],
+};
+const bloodseeker: Player = {
+    position: 'Bloodseeker',
+    id: 142,
+    cost: 110,
+    playerStats: [5, 4, 4, 6, 10],
+    skills: [17],
+    primary: ['G', 'S'],
+    secondary: ['A'],
+};
+const khorneBigGuy: Player = {
+    position: 'Unknown Big Guy',
+    id: 143,
+    cost: 180,
+    playerStats: [6, 5, 5, 0, 10],
+    skills: [26, 17, 30, 54, 71, 88, 77],
+    primary: ['S'],
+    secondary: ['G', 'A'],
+};
 export const playerCatalogue: PlayerCatalogue = {
     players: [
         imperialLineman,
@@ -1376,5 +1412,9 @@ export const playerCatalogue: PlayerCatalogue = {
         slannLineman,
         slannCatcher,
         slannBlitzer,
+        bloodbornMarauderLineman,
+        khorngor,
+        bloodseeker,
+        khorneBigGuy,
     ],
 };

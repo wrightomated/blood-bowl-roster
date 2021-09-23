@@ -54,7 +54,8 @@ export type TeamName =
     | 'Tomb Kings'
     | 'Vampire'
     | 'Daemons of Khorne'
-    | 'Slann';
+    | 'Slann'
+    | 'Khorne';
 
 export type TeamSpecialRule =
     | 'Badlands Brawl'
@@ -69,4 +70,5 @@ export type TeamSpecialRule =
     | 'Lustrian Superleague'
     | 'Masters of Undeath'
     | 'Sylvanian Spotlight'
-    | 'Low Cost Linemen';
+    | 'Low Cost Linemen'
+    | 'Favoured of Khorne';
