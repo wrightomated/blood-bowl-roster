@@ -34,5 +34,5 @@ export const extrasForTeam: (
             ...gameSettings.apothecary,
             extraString: 'apothecary' as ExtraString,
         },
-    ].filter((x) => x.extraString !== 'apothecary' || team.apothecary);
+    ].filter((x) => x.extraString !== 'apothecary' || team.allowedApothecary);
 };
