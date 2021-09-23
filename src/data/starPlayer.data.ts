@@ -269,6 +269,15 @@ const frankNStein: StarPlayer = {
     cost: 250,
     specialRules: ['Brutal Block'],
 };
+const whilhelmChaney: StarPlayer = {
+    id: 227,
+    position: 'Wilhelm Chaney',
+    playerStats: [8, 4, 3, 4, 9],
+    playsFor: ['Sylvanian Spotlight'],
+    skills: [1, 26, 17, 71, 77, 24],
+    cost: 220,
+    specialRules: ['Savage Mauling'],
+};
 
 export const starPlayers = {
     starPlayers: [
@@ -299,5 +308,6 @@ export const starPlayers = {
         zolcath,
         akhorne,
         frankNStein,
+        whilhelmChaney,
     ],
 };

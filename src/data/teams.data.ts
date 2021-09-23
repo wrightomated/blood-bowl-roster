@@ -461,5 +461,19 @@ export const teamData: TeamList = {
             tier: 2,
             specialRules: ['Lustrian Superleague'],
         },
+        {
+            name: 'Khorne',
+            id: 30,
+            players: [
+                { id: 140, max: 16 },
+                { id: 141, max: 4 },
+                { id: 142, max: 4 },
+                { id: 143, max: 1 },
+            ],
+            reroll: { cost: 70, max: 8 },
+            apothecary: true,
+            tier: 2,
+            specialRules: ['Favoured of...', 'Favoured of Khorne'],
+        },
     ],
 };

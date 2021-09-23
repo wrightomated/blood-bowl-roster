@@ -56,7 +56,7 @@ context('Team creation', () => {
     it('Should add star player', () => {
         cy.visit('/');
         cy.get('.new-team').click();
-        cy.get('.team-button:nth-child(16)').click();
+        cy.get('.team-button:nth-child(17)').click();
         cy.get('.create-team').click();
         cy.get('.inducement__toggle .material-icons').click();
         cy.get('.star-player-select').select('Zolcath the Zoat');
