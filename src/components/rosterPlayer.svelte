@@ -10,6 +10,7 @@
         characteristicMinValue,
     } from '../data/statOrder.data';
     import { showSkillButtons } from '../store/showSkillButtons.store';
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     // import { getMaxPlayers } from '../data/gameType.data';
 
     export let index: number;
@@ -124,32 +125,6 @@
             playerNumber = index + 1;
         }
     };
-
-    const blurOnEscapeOrEnter = (node: HTMLInputElement) => {
-        const handleKey = (event) => {
-            if (
-                (event.key === 'Escape' || event.key === 'Enter') &&
-                node &&
-                typeof node.blur === 'function'
-            ) {
-                if (
-                    event.key === 'Escape' &&
-                    node.classList.contains('player-number')
-                ) {
-                    playerNumber = index + 1;
-                }
-                node.blur();
-            }
-        };
-
-        node.addEventListener('keyup', handleKey);
-
-        return {
-            destroy() {
-                node.removeEventListener('keyup', handleKey);
-            },
-        };
-    };
 </script>
 
 <tr>
@@ -260,6 +235,7 @@
                 type="number"
                 aria-labelledby="spp-header"
                 placeholder="?"
+                use:blurOnEscapeOrEnter
                 bind:value={$roster.players[index].alterations.spp}
             />
         {:else}0{/if}
@@ -284,6 +260,7 @@
             ><input
                 type="checkbox"
                 aria-labelledby="tr-header"
+                use:blurOnEscapeOrEnter
                 bind:checked={$roster.players[index].alterations.tr}
             /></td
         >

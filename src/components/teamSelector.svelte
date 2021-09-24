@@ -17,6 +17,7 @@
     import { teamFormat } from '../store/teamFormat.store';
     import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     export let teamList: Team[];
 
@@ -189,6 +190,7 @@
                 id="code-input"
                 placeholder="Input Code"
                 bind:value={rosterCode}
+                use:blurOnEscapeOrEnter
             />
             <MaterialButton
                 hoverText="Enter code"

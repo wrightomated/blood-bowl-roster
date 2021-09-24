@@ -12,6 +12,7 @@
     } from '../data/statOrder.data';
     import StatBlock from './playerCard/statBlock.svelte';
     import { showSkillButtons } from '../store/showSkillButtons.store';
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -123,32 +124,6 @@
             playerNumber = index + 1;
         }
     };
-
-    const blurOnEscapeOrEnter = (node: HTMLInputElement) => {
-        const handleKey = (event) => {
-            if (
-                (event.key === 'Escape' || event.key === 'Enter') &&
-                node &&
-                typeof node.blur === 'function'
-            ) {
-                if (
-                    event.key === 'Escape' &&
-                    node.classList.contains('player-number')
-                ) {
-                    playerNumber = index + 1;
-                }
-                node.blur();
-            }
-        };
-
-        node.addEventListener('keyup', handleKey);
-
-        return {
-            destroy() {
-                node.removeEventListener('keyup', handleKey);
-            },
-        };
-    };
 </script>
 
 <section class="player-card" class:danger>
@@ -160,6 +135,7 @@
                 <input
                     aria-label="player name"
                     placeholder="Player Name"
+                    use:blurOnEscapeOrEnter
                     bind:value={$roster.players[index].playerName}
                 />
             {/if}
@@ -274,6 +250,7 @@
                         class="spp-input"
                         type="number"
                         placeholder="?"
+                        use:blurOnEscapeOrEnter
                         bind:value={$roster.players[index].alterations.spp}
                     />
                 </label>
@@ -285,6 +262,7 @@
                     <input
                         type="checkbox"
                         class="checkbox"
+                        use:blurOnEscapeOrEnter
                         bind:checked={$roster.players[index].alterations.mng}
                     />
                 </label>
@@ -295,6 +273,7 @@
                         class="spp-input"
                         type="number"
                         placeholder="?"
+                        use:blurOnEscapeOrEnter
                         bind:value={$roster.players[index].alterations.ni}
                     />
                 </label>
@@ -304,6 +283,7 @@
                     <input
                         type="checkbox"
                         class="checkbox"
+                        use:blurOnEscapeOrEnter
                         bind:checked={$roster.players[index].alterations.tr}
                     />
                 </label>
