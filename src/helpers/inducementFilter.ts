@@ -5,10 +5,6 @@ export const filterInducement = (
     inducement: Inducement,
     selectedTeam: Team
 ) => {
-    const a = filterApothecary(inducement, selectedTeam);
-    const b = requiresSpecialRule(inducement, selectedTeam);
-    console.log(`apoc: ${a} special: ${b}`, JSON.stringify(inducement));
-
     return (
         filterApothecary(inducement, selectedTeam) &&
         requiresSpecialRule(inducement, selectedTeam) &&

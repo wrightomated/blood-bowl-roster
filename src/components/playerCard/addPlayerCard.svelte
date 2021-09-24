@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
+
     import type { Player } from '../../models/player.model';
     import { currentTeam } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
@@ -47,6 +49,7 @@
                     placeholder="New Player Name"
                     bind:value={newName}
                     class="name-input"
+                    use:blurOnEscapeOrEnter
                 />
             </h3>
         </div>
@@ -56,8 +59,9 @@
                 aria-label="Amount"
                 type="number"
                 bind:value={amount}
-                min="0"
+                min="1"
                 max={maxOfPlayerType - numberOfPlayerType}
+                use:blurOnEscapeOrEnter
             />
             x
             <select aria-label="New Player Position" bind:value={selected}>

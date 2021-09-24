@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
+
     import { rosterToString } from '../helpers/rosterToString';
 
     import { showExport } from '../store/showExport.store';
@@ -39,7 +41,11 @@
     <div class="container">
         <div class="share-box">
             <label for="url-input">Share Url:</label>
-            <input id="url-input" value="{baseUrl}?code={code}" />
+            <input
+                id="url-input"
+                value="{baseUrl}?code={code}"
+                use:blurOnEscapeOrEnter
+            />
             {#if !urlCoppied}
                 <MaterialButton
                     hoverText="Copy Url"
@@ -50,7 +56,7 @@
         </div>
         <div class="share-box">
             <label for="code-input">Export Code:</label>
-            <input id="code-input" value={code} />
+            <input id="code-input" value={code} use:blurOnEscapeOrEnter />
             {#if !codeCoppied}
                 <MaterialButton
                     hoverText="Copy Code"

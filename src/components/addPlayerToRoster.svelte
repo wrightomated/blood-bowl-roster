@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
+
     import type { Player } from '../models/player.model';
 
     import { roster } from '../store/teamRoster.store';
@@ -31,6 +33,7 @@
             placeholder="Player Name"
             bind:value={newName}
             class="name-input"
+            use:blurOnEscapeOrEnter
         />
     </td>
     <td class="left-align">
