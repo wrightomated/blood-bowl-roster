@@ -67,9 +67,6 @@
             <th>Treasury</th>
             <td>
                 <Treasury />
-                <!-- {($roster?.treasury || 0)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000 -->
             </td>
         </tr>
     </table>
