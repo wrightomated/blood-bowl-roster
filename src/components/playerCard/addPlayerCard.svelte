@@ -28,9 +28,9 @@
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
             const extraSkills = journeyman
-                ? $roster.format === 'elevens'
-                    ? [71]
-                    : [710]
+                ? $roster.format === 'sevens'
+                    ? [710]
+                    : [71]
                 : undefined;
             let newPlayer: RosterPlayerRecord = {
                 playerName: newName,

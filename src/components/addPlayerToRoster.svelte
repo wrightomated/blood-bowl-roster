@@ -44,7 +44,7 @@
     };
 
     const journeymanSkills: () => number[] = () =>
-        $roster.format === 'elevens' ? [71] : [710];
+        $roster.format === 'sevens' ? [710] : [71];
 </script>
 
 <tr class="add-player-row">
