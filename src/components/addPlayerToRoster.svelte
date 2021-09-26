@@ -20,7 +20,7 @@
 
     const addPlayer = () => {
         const { journeyman, ...player } = selected;
-        const extraSkills = journeyman ? journeymanSkills() : [];
+        const extraSkills = journeyman ? journeymanSkills() : undefined;
         roster.addPlayer(
             {
                 playerName: newName,

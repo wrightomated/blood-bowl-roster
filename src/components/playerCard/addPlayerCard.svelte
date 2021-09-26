@@ -31,7 +31,7 @@
                 ? $roster.format === 'elevens'
                     ? [71]
                     : [710]
-                : [];
+                : undefined;
             let newPlayer: RosterPlayerRecord = {
                 playerName: newName,
                 player,
