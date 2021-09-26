@@ -4,13 +4,11 @@
     import type { Team } from '../models/team.model';
     import Inducements from './inducements.svelte';
     import { extrasForTeam } from '../helpers/extrasForTeam';
-    import MaterialButton from './uiComponents/materialButton.svelte';
     import Treasury from './treasury.svelte';
 
     export let selectedTeam: Team;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
-    let showTreasury = false;
 
     $: teamTotal = $roster.players
         .filter((p) => !p?.starPlayer)
