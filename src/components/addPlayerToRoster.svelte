@@ -83,7 +83,7 @@
     <td class="left-align">
         <SkillElement playerSkillIds={selectedSkills} />
     </td>
-    <td>{selected.cost},000</td>
+    <td>{!selected?.journeyman ? `${selected.cost},000` : '-'}</td>
     <td />
     {#if $roster.mode !== 'exhibition'}
         <td />
