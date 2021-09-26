@@ -39,7 +39,11 @@ function createRoster() {
                         maxPlayerNumber,
                         index
                     ),
-                    treasury: store.treasury - player.player.cost,
+                    treasury:
+                        store.treasury -
+                        (player?.alterations?.journeyman
+                            ? 0
+                            : player.player.cost),
                 };
             }),
         removePlayer: (indices: number[], firePlayer: boolean) =>
@@ -227,6 +231,10 @@ function createRoster() {
                 };
             });
         },
+        updateTreasury: (change: number) =>
+            update((store) => {
+                return { ...store, treasury: store.treasury + change };
+            }),
         set: (value: Roster) => {
             const newRoster = { ...value, saved: false };
             set(newRoster);

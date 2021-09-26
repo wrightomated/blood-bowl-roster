@@ -12,6 +12,7 @@
     } from '../data/statOrder.data';
     import StatBlock from './playerCard/statBlock.svelte';
     import { showSkillButtons } from '../store/showSkillButtons.store';
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -124,30 +125,22 @@
         }
     };
 
-    const blurOnEscapeOrEnter = (node: HTMLInputElement) => {
-        const handleKey = (event) => {
-            if (
-                (event.key === 'Escape' || event.key === 'Enter') &&
-                node &&
-                typeof node.blur === 'function'
-            ) {
-                if (
-                    event.key === 'Escape' &&
-                    node.classList.contains('player-number')
-                ) {
-                    playerNumber = index + 1;
-                }
-                node.blur();
-            }
-        };
-
-        node.addEventListener('keyup', handleKey);
-
-        return {
-            destroy() {
-                node.removeEventListener('keyup', handleKey);
+    const buyJourneyman = () => {
+        const extraSkills = rosterPlayer.alterations.extraSkills.filter(
+            (id) => id !== 71 && id !== 710
+        );
+        roster.updatePlayer(
+            {
+                ...rosterPlayer,
+                alterations: {
+                    ...rosterPlayer.alterations,
+                    extraSkills,
+                    journeyman: false,
+                },
             },
-        };
+            index
+        );
+        roster.updateTreasury(-rosterPlayer.player.cost);
     };
 </script>
 
@@ -160,6 +153,7 @@
                 <input
                     aria-label="player name"
                     placeholder="Player Name"
+                    use:blurOnEscapeOrEnter
                     bind:value={$roster.players[index].playerName}
                 />
             {/if}
@@ -177,9 +171,11 @@
             />
         </div>
         <div class="player-position left-align">
-            <div class="flex-container">
+            <div class="player-controls">
                 {#if rosterPlayer.starPlayer}
                     <p>Star Player</p>
+                {:else if rosterPlayer?.alterations?.journeyman}
+                    <p>Journeyman</p>
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
@@ -200,6 +196,7 @@
                         clickFunction={() => removePlayer(true)}
                     />
                 {/if}
+
                 {#if !rosterPlayer.starPlayer}
                     <MaterialButton
                         hoverText="Player advancement"
@@ -207,7 +204,14 @@
                         clickFunction={toggleShowSkills}
                     />
                 {/if}
-                {#if index > 0}
+                {#if rosterPlayer?.alterations?.journeyman}
+                    <MaterialButton
+                        hoverText="Purchase journeyman"
+                        symbol="paid"
+                        clickFunction={buyJourneyman}
+                    />
+                {/if}
+                <!-- {#if index > 0}
                     <MaterialButton
                         hoverText="Move player up"
                         symbol="arrow_circle_up"
@@ -220,7 +224,7 @@
                         symbol="arrow_circle_down"
                         clickFunction={moveDown}
                     />
-                {/if}
+                {/if} -->
             </div>
         </div>
     </div>
@@ -274,6 +278,7 @@
                         class="spp-input"
                         type="number"
                         placeholder="?"
+                        use:blurOnEscapeOrEnter
                         bind:value={$roster.players[index].alterations.spp}
                     />
                 </label>
@@ -285,6 +290,7 @@
                     <input
                         type="checkbox"
                         class="checkbox"
+                        use:blurOnEscapeOrEnter
                         bind:checked={$roster.players[index].alterations.mng}
                     />
                 </label>
@@ -295,6 +301,7 @@
                         class="spp-input"
                         type="number"
                         placeholder="?"
+                        use:blurOnEscapeOrEnter
                         bind:value={$roster.players[index].alterations.ni}
                     />
                 </label>
@@ -304,6 +311,7 @@
                     <input
                         type="checkbox"
                         class="checkbox"
+                        use:blurOnEscapeOrEnter
                         bind:checked={$roster.players[index].alterations.tr}
                     />
                 </label>
@@ -312,7 +320,8 @@
 
         <p>
             <span class="mini-title">Hiring Fee:</span>
-            {rosterPlayer.player.cost > 0
+            {rosterPlayer.player.cost > 0 &&
+            !rosterPlayer?.alterations?.journeyman
                 ? `${rosterPlayer.player.cost},000`
                 : '-'}
         </p>
@@ -409,7 +418,7 @@
     .left-align {
         text-align: left;
     }
-    .flex-container {
+    .player-controls {
         display: flex;
     }
 
@@ -457,7 +466,7 @@
     }
 
     @media print {
-        .flex-container {
+        .player-controls {
             display: none;
         }
         .player-name {

@@ -10,6 +10,7 @@
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
     import { getMaxPlayers } from '../data/gameType.data';
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     export let playerTypes: Player[];
     $: nextPlayerIndex =
@@ -26,6 +27,7 @@
             placeholder="Team Name"
             id="team-name"
             bind:value={$roster.teamName}
+            use:blurOnEscapeOrEnter
         />
     </h2>
 </div>

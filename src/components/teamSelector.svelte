@@ -22,6 +22,7 @@
         unsavedRosterName,
     } from '../store/unsavedRoster.store';
     import { systemNotificationMessage } from '../store/systemNotification.store';
+    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     export let teamList: Team[];
 
@@ -217,6 +218,7 @@
                 id="code-input"
                 placeholder="Input Code"
                 bind:value={rosterCode}
+                use:blurOnEscapeOrEnter
             />
             <MaterialButton
                 hoverText="Enter code"
