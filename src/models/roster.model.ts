@@ -37,4 +37,5 @@ export interface PlayerAlterations {
     valueChange?: number; // v
     advancements?: number; // a
     injuries?: number[]; // i
+    journeyman?: boolean; // j
 }

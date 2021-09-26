@@ -114,6 +114,9 @@ const constructAlterations = (other: string[]) => {
             case 'i':
                 alterations['injuries'] = statChangeArray(o);
                 break;
+            case 'j':
+                alterations['journeyman'] = true;
+                break;
             default:
                 break;
         }

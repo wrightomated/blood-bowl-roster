@@ -2,6 +2,8 @@
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     import type { Player } from '../models/player.model';
+    import type { Team } from '../models/team.model';
+    import { currentTeam } from '../store/currentTeam.store';
 
     import { roster } from '../store/teamRoster.store';
     import SkillElement from './skillElement.svelte';
@@ -9,20 +11,40 @@
 
     export let playerTypes: Player[];
     export let index: number;
-    let selected: Player = playerTypes[0];
+    let selected: Player & { journeyman?: boolean } = playerTypes[0];
     let newName: string = '';
 
+    $: selectedSkills = selected?.journeyman
+        ? [...selected.skills, ...journeymanSkills()]
+        : selected.skills;
+
     const addPlayer = () => {
+        const { journeyman, ...player } = selected;
+        const extraSkills = journeyman ? journeymanSkills() : undefined;
         roster.addPlayer(
             {
                 playerName: newName,
-                player: { ...selected },
-                alterations: { spp: 0, ni: 0 },
+                player,
+                alterations: { spp: 0, ni: 0, journeyman, extraSkills },
             },
             index
         );
         newName = '';
     };
+
+    const journeymanType: () => Player & { journeyman: boolean } = () => {
+        const journeymanId = ($currentTeam as Team).players.find(
+            (p) => p.max === 16 || p.max === 12
+        ).id;
+        const journeymanPlayer = playerTypes.find((p) => p.id === journeymanId);
+        return {
+            ...journeymanPlayer,
+            journeyman: true,
+        };
+    };
+
+    const journeymanSkills: () => number[] = () =>
+        $roster.format === 'elevens' ? [71] : [710];
 </script>
 
 <tr class="add-player-row">
@@ -50,13 +72,16 @@
                     {playerType.position}
                 </option>
             {/each}
+            {#if $roster.mode !== 'exhibition'}
+                <option value={journeymanType()}> Journeyman </option>
+            {/if}
         </select>
     </td>
     {#each selected.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
     {/each}
     <td class="left-align">
-        <SkillElement playerSkillIds={selected.skills} />
+        <SkillElement playerSkillIds={selectedSkills} />
     </td>
     <td>{selected.cost},000</td>
     <td />
