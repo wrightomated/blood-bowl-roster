@@ -14,7 +14,7 @@
     let selected: Player & { journeyman?: boolean } = playerTypes[0];
     let newName: string = '';
 
-    $: selectedSkills = selected.journeyman
+    $: selectedSkills = selected?.journeyman
         ? [...selected.skills, ...journeymanSkills()]
         : selected.skills;
 

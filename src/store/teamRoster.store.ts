@@ -38,7 +38,7 @@ function createRoster() {
                     ),
                     treasury:
                         store.treasury -
-                        (player.alterations.journeyman
+                        (player?.alterations?.journeyman
                             ? 0
                             : player.player.cost),
                 };

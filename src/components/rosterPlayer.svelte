@@ -202,7 +202,7 @@
     <td class="player-position left-align">
         {#if rosterPlayer.starPlayer}
             Star Player
-        {:else if rosterPlayer.alterations.journeyman}
+        {:else if rosterPlayer?.alterations?.journeyman}
             Journeyman
             <span class="add-skill">
                 <MaterialButton
@@ -250,7 +250,7 @@
         <SkillElement {playerSkillIds} />
     </td>
     <td
-        >{rosterPlayer.player.cost > 0 && !rosterPlayer.alterations.journeyman
+        >{rosterPlayer.player.cost > 0 && !rosterPlayer?.alterations?.journeyman
             ? `${rosterPlayer.player.cost},000`
             : '-'}</td
     >
