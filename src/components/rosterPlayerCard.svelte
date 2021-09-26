@@ -124,6 +124,24 @@
             playerNumber = index + 1;
         }
     };
+
+    const buyJourneyman = () => {
+        const extraSkills = rosterPlayer.alterations.extraSkills.filter(
+            (id) => id !== 71 && id !== 710
+        );
+        roster.updatePlayer(
+            {
+                ...rosterPlayer,
+                alterations: {
+                    ...rosterPlayer.alterations,
+                    extraSkills,
+                    journeyman: false,
+                },
+            },
+            index
+        );
+        roster.updateTreasury(-rosterPlayer.player.cost);
+    };
 </script>
 
 <section class="player-card" class:danger>
@@ -153,7 +171,7 @@
             />
         </div>
         <div class="player-position left-align">
-            <div class="flex-container">
+            <div class="player-controls">
                 {#if rosterPlayer.starPlayer}
                     <p>Star Player</p>
                 {:else if rosterPlayer.alterations.journeyman}
@@ -178,6 +196,7 @@
                         clickFunction={() => removePlayer(true)}
                     />
                 {/if}
+
                 {#if !rosterPlayer.starPlayer}
                     <MaterialButton
                         hoverText="Player advancement"
@@ -185,7 +204,14 @@
                         clickFunction={toggleShowSkills}
                     />
                 {/if}
-                {#if index > 0}
+                {#if rosterPlayer.alterations.journeyman}
+                    <MaterialButton
+                        hoverText="Purchase journeyman"
+                        symbol="paid"
+                        clickFunction={buyJourneyman}
+                    />
+                {/if}
+                <!-- {#if index > 0}
                     <MaterialButton
                         hoverText="Move player up"
                         symbol="arrow_circle_up"
@@ -198,7 +224,7 @@
                         symbol="arrow_circle_down"
                         clickFunction={moveDown}
                     />
-                {/if}
+                {/if} -->
             </div>
         </div>
     </div>
@@ -392,7 +418,7 @@
     .left-align {
         text-align: left;
     }
-    .flex-container {
+    .player-controls {
         display: flex;
     }
 
@@ -440,7 +466,7 @@
     }
 
     @media print {
-        .flex-container {
+        .player-controls {
             display: none;
         }
         .player-name {

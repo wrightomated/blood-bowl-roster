@@ -38,7 +38,9 @@ function createRoster() {
                     ),
                     treasury:
                         store.treasury -
-                        (player.player.journeyman ? 0 : player.player.cost),
+                        (player.alterations.journeyman
+                            ? 0
+                            : player.player.cost),
                 };
             }),
         removePlayer: (indices: number[], firePlayer: boolean) =>
@@ -199,6 +201,10 @@ function createRoster() {
             format: TeamFormat;
             fans: number;
         }) => set(getEmptyRoster(options)),
+        updateTreasury: (change: number) =>
+            update((store) => {
+                return { ...store, treasury: store.treasury + change };
+            }),
         set,
     };
 }

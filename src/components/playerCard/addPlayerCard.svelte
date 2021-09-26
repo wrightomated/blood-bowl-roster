@@ -90,7 +90,9 @@
                         {playerType.position}
                     </option>
                 {/each}
-                <option value={journeymanType()}> Journeyman </option>
+                {#if $roster.mode !== 'exhibition'}
+                    <option value={journeymanType()}> Journeyman </option>
+                {/if}
             </select>
         </div>
     </div>

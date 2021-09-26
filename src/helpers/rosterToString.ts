@@ -60,6 +60,10 @@ const pAlterations = (alts: PlayerAlterations) => {
                     return charAndNumber('v', alts[x]);
                 case 'advancements':
                     return charAndNumber('a', alts[x]);
+                case 'journeyman':
+                    if (alts[x]) {
+                        return `j1`;
+                    }
                 default:
                     break;
             }

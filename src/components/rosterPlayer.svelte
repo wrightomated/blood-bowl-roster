@@ -11,7 +11,6 @@
     } from '../data/statOrder.data';
     import { showSkillButtons } from '../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-    // import { getMaxPlayers } from '../data/gameType.data';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -125,6 +124,24 @@
             playerNumber = index + 1;
         }
     };
+
+    const buyJourneyman = () => {
+        const extraSkills = rosterPlayer.alterations.extraSkills.filter(
+            (id) => id !== 71 && id !== 710
+        );
+        roster.updatePlayer(
+            {
+                ...rosterPlayer,
+                alterations: {
+                    ...rosterPlayer.alterations,
+                    extraSkills,
+                    journeyman: false,
+                },
+            },
+            index
+        );
+        roster.updateTreasury(-rosterPlayer.player.cost);
+    };
 </script>
 
 <tr>
@@ -186,7 +203,14 @@
         {#if rosterPlayer.starPlayer}
             Star Player
         {:else if rosterPlayer.alterations.journeyman}
-            <p>Journeyman</p>
+            Journeyman
+            <span class="add-skill">
+                <MaterialButton
+                    hoverText="Purchase journeyman"
+                    symbol="paid"
+                    clickFunction={buyJourneyman}
+                />
+            </span>
         {:else}
             {rosterPlayer.player.position}
             {#if danger}
