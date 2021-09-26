@@ -185,6 +185,8 @@
     <td class="player-position left-align">
         {#if rosterPlayer.starPlayer}
             Star Player
+        {:else if rosterPlayer.alterations.journeyman}
+            <p>Journeyman</p>
         {:else}
             {rosterPlayer.player.position}
             {#if danger}
@@ -224,7 +226,7 @@
         <SkillElement {playerSkillIds} />
     </td>
     <td
-        >{rosterPlayer.player.cost > 0
+        >{rosterPlayer.player.cost > 0 && !rosterPlayer.alterations.journeyman
             ? `${rosterPlayer.player.cost},000`
             : '-'}</td
     >

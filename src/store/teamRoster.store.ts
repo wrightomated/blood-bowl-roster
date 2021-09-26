@@ -36,7 +36,9 @@ function createRoster() {
                         maxPlayerNumber,
                         index
                     ),
-                    treasury: store.treasury - player.player.cost,
+                    treasury:
+                        store.treasury -
+                        (player.player.journeyman ? 0 : player.player.cost),
                 };
             }),
         removePlayer: (indices: number[], firePlayer: boolean) =>

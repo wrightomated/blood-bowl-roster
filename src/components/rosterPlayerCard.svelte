@@ -156,6 +156,8 @@
             <div class="flex-container">
                 {#if rosterPlayer.starPlayer}
                     <p>Star Player</p>
+                {:else if rosterPlayer.alterations.journeyman}
+                    <p>Journeyman</p>
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
@@ -292,7 +294,8 @@
 
         <p>
             <span class="mini-title">Hiring Fee:</span>
-            {rosterPlayer.player.cost > 0
+            {rosterPlayer.player.cost > 0 &&
+            !rosterPlayer.alterations.journeyman
                 ? `${rosterPlayer.player.cost},000`
                 : '-'}
         </p>

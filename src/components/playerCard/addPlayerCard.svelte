@@ -1,13 +1,14 @@
 <script lang="ts">
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
-
     import type { Player } from '../../models/player.model';
+    import type { RosterPlayerRecord } from '../../models/roster.model';
+    import type { Team } from '../../models/team.model';
     import { currentTeam } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
 
     export let playerTypes: Player[];
     export let index: number;
-    let selected: Player;
+    let selected: Player & { journeyman?: boolean };
     let newName: string = '';
     let amount: number = 1;
 
@@ -25,17 +26,36 @@
                 ? maxOfPlayerType
                 : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
+            const { journeyman, ...player } = selected;
+            const extraSkills = journeyman
+                ? $roster.format === 'elevens'
+                    ? [71]
+                    : [710]
+                : [];
+            let newPlayer: RosterPlayerRecord = {
+                playerName: newName,
+                player,
+                alterations: { spp: 0, ni: 0, journeyman, extraSkills },
+            };
+
             roster.addPlayer(
-                {
-                    playerName: newName,
-                    player: { ...selected },
-                    alterations: { spp: 0, ni: 0 },
-                },
+                newPlayer,
                 numberOfPlayers === 1 ? index : undefined
             );
             newName = '';
         }
         amount = 1;
+    };
+
+    const journeymanType: () => Player & { journeyman: boolean } = () => {
+        const journeymanId = ($currentTeam as Team).players.find(
+            (p) => p.max === 16 || p.max === 12
+        ).id;
+        const journeymanPlayer = playerTypes.find((p) => p.id === journeymanId);
+        return {
+            ...journeymanPlayer,
+            journeyman: true,
+        };
     };
 </script>
 
@@ -70,6 +90,7 @@
                         {playerType.position}
                     </option>
                 {/each}
+                <option value={journeymanType()}> Journeyman </option>
             </select>
         </div>
     </div>
