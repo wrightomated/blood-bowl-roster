@@ -29,6 +29,9 @@ export const extrasForTeam: (
             ...gameSettings.dedicatedFans,
             extraString: 'dedicated_fans' as ExtraString,
             min: rosterMode === 'exhibition' ? 0 : 1,
+            max:
+                gameSettings.dedicatedFans.max +
+                (rosterMode === 'exhibition' ? 0 : 1),
         },
         {
             ...gameSettings.apothecary,
