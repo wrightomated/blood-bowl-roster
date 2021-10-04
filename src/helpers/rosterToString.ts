@@ -33,6 +33,7 @@ const playerToString = (rp: RosterPlayerRecord) => {
 };
 
 const pAlterations = (alts: PlayerAlterations) => {
+    console.log(alts);
     return Object.keys(alts)
         .map((x) => {
             switch (x) {

@@ -2,6 +2,7 @@
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     import type { Player } from '../models/player.model';
+    import type { PlayerAlterations } from '../models/roster.model';
     import type { Team } from '../models/team.model';
     import { currentTeam } from '../store/currentTeam.store';
 
@@ -21,11 +22,21 @@
     const addPlayer = () => {
         const { journeyman, ...player } = selected;
         const extraSkills = journeyman ? journeymanSkills() : undefined;
+        let alterations: PlayerAlterations = { spp: 0, ni: 0 };
+
+        if (journeyman) {
+            alterations = { ...alterations, journeyman };
+        }
+
+        if (extraSkills) {
+            alterations = { ...alterations, extraSkills };
+        }
+
         roster.addPlayer(
             {
                 playerName: newName,
                 player,
-                alterations: { spp: 0, ni: 0, journeyman, extraSkills },
+                alterations: { spp: 0, ni: 0 },
             },
             index
         );
