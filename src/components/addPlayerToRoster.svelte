@@ -36,7 +36,7 @@
             {
                 playerName: newName,
                 player,
-                alterations: { spp: 0, ni: 0 },
+                alterations,
             },
             index
         );
