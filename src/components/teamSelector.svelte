@@ -105,6 +105,7 @@
     <button
         class:cancel={showTeams}
         class="new-team"
+        data-cy="new-team"
         on:click={() => toggleTeam()}
         >{!showTeams ? 'New Team' : 'Cancel'}
     </button>
@@ -172,7 +173,11 @@
             >
         {/each}
     </div>
-    <button class="create-team" on:click={() => createTeam()}>Create</button>
+    <button
+        class="create-team"
+        data-cy="create-team"
+        on:click={() => createTeam()}>Create</button
+    >
 {/if}
 
 {#if $teamLoadOpen}

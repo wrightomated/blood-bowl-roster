@@ -50,13 +50,19 @@
                 <MaterialButton
                     hoverText="Copy Url"
                     symbol="content_copy"
+                    cyData="copy-share-url"
                     clickFunction={() => copyLink(toggleUrlCopy, '#url-input')}
                 />
             {:else}<i class="material-icons saved">check_circle</i>{/if}
         </div>
         <div class="share-box">
             <label for="code-input">Export Code:</label>
-            <input id="code-input" value={code} use:blurOnEscapeOrEnter />
+            <input
+                id="code-input"
+                data-cy="code-input"
+                value={code}
+                use:blurOnEscapeOrEnter
+            />
             {#if !codeCoppied}
                 <MaterialButton
                     hoverText="Copy Code"

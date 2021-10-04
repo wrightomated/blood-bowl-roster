@@ -40,7 +40,11 @@
 
 {#if selectedTeam}
     <div class="header-container">
-        <caption class="team-player-caption" on:click={togglePlayers}>
+        <caption
+            class="team-player-caption"
+            data-cy="selected-team-caption"
+            on:click={togglePlayers}
+        >
             {`${selectedTeam.name} Team Players`}
         </caption>
         <MaterialButton

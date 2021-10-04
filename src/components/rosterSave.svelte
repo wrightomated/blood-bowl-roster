@@ -53,6 +53,7 @@
     hoverText="Share team"
     symbol={$showExport ? 'link_off' : 'link'}
     clickFunction={toggleExport}
+    cyData="share-team"
 />
 
 <style lang="scss">
