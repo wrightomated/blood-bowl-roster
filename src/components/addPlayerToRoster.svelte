@@ -96,7 +96,7 @@
     </td>
     <td>{!selected?.journeyman ? `${selected.cost},000` : '-'}</td>
     <td />
-    {#if $roster.mode !== 'exhibition'}
+    {#if $roster.mode !== 'exhibition' && $roster.format === 'elevens'}
         <td />
         <td />
         <td />

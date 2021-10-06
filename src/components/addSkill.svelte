@@ -31,20 +31,22 @@
     $: availableSkills = skillCatalogue.filter(
         (x) =>
             !rosterPlayer.alterations?.extraSkills?.includes(x.id) &&
-            !rosterPlayer.player.skills.includes(x.id),
+            !rosterPlayer.player.skills.includes(x.id)
     );
 
     $: primarySkills = availableSkills.filter((s) =>
-        rosterPlayer.player.primary.includes(s.category),
+        rosterPlayer.player.primary.includes(s.category)
     );
     $: secondarySkills = availableSkills.filter((s) =>
-        rosterPlayer.player.secondary.includes(s.category),
+        rosterPlayer.player.secondary.includes(s.category)
     );
 
     const addSkill = (skillId: number) => {
-        const extraSkills = (
-            rosterPlayer.alterations.extraSkills || []
-        ).concat([skillId]);
+        const extraSkills = (rosterPlayer.alterations.extraSkills || []).concat(
+            [skillId]
+        );
+        const sevensExtraSkillTax =
+            $roster.format === 'elevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
         const newPlayer: RosterPlayerRecord = {
             ...rosterPlayer,
             alterations: {
@@ -54,13 +56,14 @@
                 advancements: (rosterPlayer.alterations?.advancements || 0) + 1,
                 valueChange:
                     (rosterPlayer.alterations?.valueChange || 0) +
-                    skillIncreaseCost(),
+                    skillIncreaseCost() +
+                    sevensExtraSkillTax,
             },
         };
         roster.updatePlayer(newPlayer, index);
         cancel();
         showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? false : x)),
+            $showSkillButtons.map((x, i) => (i === index ? false : x))
         );
     };
 
@@ -82,7 +85,7 @@
         roster.updatePlayer(newPlayer, index);
         cancel();
         showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? false : x)),
+            $showSkillButtons.map((x, i) => (i === index ? false : x))
         );
     };
 
@@ -99,7 +102,7 @@
         roster.updatePlayer(newPlayer, index);
         cancel();
         showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? false : x)),
+            $showSkillButtons.map((x, i) => (i === index ? false : x))
         );
     };
 
@@ -189,7 +192,7 @@
 
     const twoIncrements = (p) => {
         return (p?.alterations?.statChange || [0, 0, 0, 0, 0]).map((x, i) =>
-            x >= 2 ? characteristics[i] : x,
+            x >= 2 ? characteristics[i] : x
         );
     };
 
@@ -266,55 +269,65 @@
             <button
                 class:selected={showPrimary && showRandom}
                 on:click={randomPrimary}
-                >Random Primary <span class="spp-font"
+                >Random Primary <span
+                    class="spp-font"
+                    class:hide={$roster.format === 'sevens'}
                     >{advancementCosts.ranPri[
                         rosterPlayer.alterations?.advancements || 0
                     ]}spp</span
                 ></button
             >
-            <button
-                on:click={selectPrimary}
-                class:selected={showPrimary && !showRandom}
-                >Select Primary <span class="spp-font"
-                    >{advancementCosts.priOrRanSec[
-                        rosterPlayer.alterations?.advancements || 0
-                    ]}spp</span
-                ></button
-            >
+            {#if $roster.format === 'elevens'}
+                <button
+                    on:click={selectPrimary}
+                    class:selected={showPrimary && !showRandom}
+                    >Select Primary <span class="spp-font"
+                        >{advancementCosts.priOrRanSec[
+                            rosterPlayer.alterations?.advancements || 0
+                        ]}spp</span
+                    ></button
+                >
+            {/if}
             <button
                 on:click={randomSecondary}
                 class:selected={showSecondary && showRandom}
-                >Random Secondary <span class="spp-font"
+                >Random Secondary <span
+                    class="spp-font"
+                    class:hide={$roster.format === 'sevens'}
                     >{advancementCosts.priOrRanSec[
                         rosterPlayer.alterations?.advancements || 0
                     ]}spp</span
                 ></button
             >
-            <button
-                on:click={selectSecondary}
-                class:selected={showSecondary && !showRandom}
-                >Select Secondary <span class="spp-font"
-                    >{advancementCosts.sec[
-                        rosterPlayer.alterations?.advancements || 0
-                    ]}spp</span
-                ></button
-            >
-            <button
-                on:click={randomCharacteristic}
-                class:selected={showCharacteristics}
-                >Random Characteristic <span class="spp-font"
-                    >{advancementCosts.char[
-                        rosterPlayer.alterations?.advancements || 0
-                    ]}spp</span
-                ></button
-            >
+            {#if $roster.format === 'elevens'}
+                <button
+                    on:click={selectSecondary}
+                    class:selected={showSecondary && !showRandom}
+                    >Select Secondary <span class="spp-font"
+                        >{advancementCosts.sec[
+                            rosterPlayer.alterations?.advancements || 0
+                        ]}spp</span
+                    ></button
+                >
+                <button
+                    on:click={randomCharacteristic}
+                    class:selected={showCharacteristics}
+                    >Random Characteristic <span class="spp-font"
+                        >{advancementCosts.char[
+                            rosterPlayer.alterations?.advancements || 0
+                        ]}spp</span
+                    ></button
+                >
+            {/if}
         {/if}
-        <button
-            on:click={injuries}
-            class="injury-button"
-            class:selected={showInjuries}
-            >Lasting Injury
-        </button>
+        {#if $roster.format === 'elevens'}
+            <button
+                on:click={injuries}
+                class="injury-button"
+                class:selected={showInjuries}
+                >Lasting Injury
+            </button>
+        {/if}
     </div>
 
     {#if showPrimary}
@@ -431,6 +444,10 @@
         .spp-font {
             font-family: $display-font;
         }
+    }
+
+    .hide {
+        display: none;
     }
 
     .injury-button {
