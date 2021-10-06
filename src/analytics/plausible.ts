@@ -1,5 +1,7 @@
-import type { TeamName } from '../models/team.model';
-
-export const sendNewTeamNameToPlausible = (teamName: TeamName) => {
-    (window as any).plausible('team-name', { props: { teamName } });
+export const sendEventToPlausible = (name: string, props: PlausibleProps) => {
+    (window as any).plausible(name, { props });
 };
+
+interface PlausibleProps {
+    [key: string]: string | number | boolean;
+}
