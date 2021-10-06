@@ -65,11 +65,17 @@
                     <td>AV</td>
                     <td class="skills">Skills</td>
                     <td>Hiring Fee</td>
-                    <td id="spp-header">Unspent Spp</td>
+                    {#if $roster.format === 'elevens'}
+                        <td id="spp-header">Unspent Spp</td>
+                    {/if}
                     {#if $roster.mode !== 'exhibition'}
                         <td id="mng-header" title="Miss next game">Mng</td>
-                        <td>Ni</td>
-                        <td id="tr-header" title="Temporarily Retiring">TR</td>
+                        {#if $roster.format === 'elevens'}
+                            <td>Ni</td>
+                            <td id="tr-header" title="Temporarily Retiring"
+                                >TR</td
+                            >
+                        {/if}
                     {/if}
                     <td>Current Value</td>
                 </tr>

@@ -12,7 +12,8 @@
     const filteredInducements = inducementData.inducements
         .filter(
             (inducement) =>
-                $roster.format === 'elevens' || inducement.sevensMax !== 0
+                ($roster.format === 'elevens' && inducement.max > 0) ||
+                ($roster.format === 'sevens' && inducement.sevensMax !== 0)
         )
         .filter((inducement) => filterInducement(inducement, selectedTeam))
         .map((inducement: Inducement) => ({

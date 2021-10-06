@@ -384,5 +384,12 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             sevensMax: 0,
         },
+        {
+            id: 'i50',
+            displayName: 'Desperate Measures',
+            cost: 50,
+            max: 0,
+            sevensMax: 1,
+        },
     ],
 };
