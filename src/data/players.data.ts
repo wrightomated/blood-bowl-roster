@@ -1231,7 +1231,7 @@ const slannBlitzer: Player = {
     id: 139,
     cost: 110,
     playerStats: [7, 3, 3, 4, 9],
-    skills: [2, 6, 74, 36],
+    skills: [3, 6, 74, 36],
     primary: ['G', 'A', 'S'],
     secondary: ['P'],
 };
