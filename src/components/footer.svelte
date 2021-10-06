@@ -13,8 +13,7 @@
 
 <footer>
     <p>
-        No cookies are used on this website. Local storage is used for storing
-        saved and current rosters.
+        Local storage is used for storing saved and current rosters.
         <!-- <span on:click={toggleLocalStorage}>Delete local storage.</span> -->
     </p>
     <p>
