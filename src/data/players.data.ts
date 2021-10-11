@@ -1263,11 +1263,11 @@ const bloodseeker: Player = {
     secondary: ['A'],
 };
 const khorneBigGuy: Player = {
-    position: 'Unknown Big Guy',
+    position: 'Bloodspawn',
     id: 143,
-    cost: 180,
-    playerStats: [6, 5, 5, 0, 10],
-    skills: [26, 17, 30, 54, 71, 88, 77],
+    cost: 160,
+    playerStats: [5, 5, 4, 0, 9],
+    skills: [26, 17, 71, 55, 88],
     primary: ['S'],
     secondary: ['G', 'A'],
 };
