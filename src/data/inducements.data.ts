@@ -389,7 +389,7 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Desperate Measures',
             cost: 50,
             max: 0,
-            sevensMax: 1,
+            sevensMax: 5,
         },
     ],
 };
