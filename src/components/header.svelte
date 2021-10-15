@@ -5,6 +5,7 @@
 
 <style lang="scss">
     @import '../styles/colour';
+
     header {
         h1 {
             color: $main-colour;
@@ -13,6 +14,11 @@
         }
         p {
             margin-block-start: 0;
+        }
+    }
+    @media print {
+        header {
+            display: none;
         }
     }
 </style>

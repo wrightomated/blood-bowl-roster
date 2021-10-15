@@ -96,4 +96,11 @@
         width: 80px;
         font-size: 16px;
     }
+
+    @media print {
+        .table th,
+        th {
+            background-color: #333;
+        }
+    }
 </style>
