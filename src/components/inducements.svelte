@@ -6,9 +6,9 @@
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { Inducement } from '../models/inducement.model';
     import { filterInducement } from '../helpers/inducementFilter';
+    import { showAllInducements } from '../store/showAllInducements.store';
     export let selectedTeam: Team;
 
-    let showAllInducements = false;
     const filteredInducements = inducementData.inducements
         .filter(
             (inducement) =>
@@ -40,14 +40,14 @@
     };
 
     const toggleShowAllInducements = () => {
-        showAllInducements = !showAllInducements;
+        showAllInducements.set(!$showAllInducements);
     };
     const removeAllInducements = () => {
         roster.removeAllInducements();
     };
 </script>
 
-<table>
+<table class:no-print={$roster.inducements?.length < 1}>
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>
@@ -57,10 +57,10 @@
             <td on:click={toggleShowAllInducements}>Cost</td>
             <td class="inducement__toggle"
                 ><MaterialButton
-                    hoverText={showAllInducements
+                    hoverText={$showAllInducements
                         ? 'Hide inducements'
                         : 'Show inducements'}
-                    symbol={showAllInducements
+                    symbol={$showAllInducements
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
                     clickFunction={toggleShowAllInducements}
@@ -73,7 +73,7 @@
             <StarPlayerInducement />
         {/if}
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
-            <tr>
+            <tr class="no-print">
                 <td colspan="3">Remove all inducements below (no refund)</td>
                 <td>
                     <MaterialButton
@@ -86,7 +86,7 @@
         {/if}
 
         {#each filteredInducements as ind}
-            {#if (ind.displayName !== 'Star Player' && $roster.inducements?.[ind.id] > 0) || showAllInducements}
+            {#if (ind.displayName !== 'Star Player' && $roster.inducements?.[ind.id] > 0) || $showAllInducements}
                 <tr>
                     <td class="inducement__display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
@@ -116,13 +116,13 @@
             {/if}
         {/each}
 
-        <tr
+        <tr class="no-print"
             ><td colspan="4">
                 <MaterialButton
-                    hoverText={showAllInducements
+                    hoverText={$showAllInducements
                         ? 'Hide inducements'
                         : 'Show inducements'}
-                    symbol={showAllInducements
+                    symbol={$showAllInducements
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
                     clickFunction={toggleShowAllInducements}
@@ -151,6 +151,9 @@
         display: flex;
     }
     @media print {
+        .no-print {
+            display: none;
+        }
         .inducement {
             &__control,
             &__toggle {
