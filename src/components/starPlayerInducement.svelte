@@ -53,7 +53,7 @@
     };
 </script>
 
-<tr>
+<tr class="no-print">
     <td class="left-align">
         Star Player:
         {#if filteredStarPlayers.length > 0}
@@ -94,5 +94,10 @@
     }
     .add-star {
         display: flex;
+    }
+    @media print {
+        .no-print {
+            display: none;
+        }
     }
 </style>

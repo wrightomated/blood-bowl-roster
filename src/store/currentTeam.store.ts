@@ -5,11 +5,10 @@ import type { Team } from '../models/team.model';
 
 const currentTeamStore = () => {
     const { subscribe, update, set }: Writable<Team> = writable<Team>(
-        getTeam(),
+        getTeam()
     );
     return {
         subscribe,
-        update,
         set,
         setCurrentTeamWithCode: (code: string) => {
             update((store) => {
