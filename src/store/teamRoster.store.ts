@@ -248,7 +248,8 @@ const switchTwoElements = (arr: any[], index1: number, index2: number) => {
 };
 
 const rosterFromQueryString = () => {
-    const code = window.location.search.substring(1).split('=')[1];
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
     return rosterFromCode(code);
 };
 
