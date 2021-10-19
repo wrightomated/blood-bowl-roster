@@ -17,6 +17,7 @@
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
     import DocumentTitleWriter from './documentTitleWriter.svelte';
+    import { sendEventToPlausible } from '../analytics/plausible';
 
     const teamList = teamData.teams;
 
@@ -28,10 +29,16 @@
 
     const togglePlayers = () => {
         showAvailablePlayers.set(!$showAvailablePlayers);
+        sendEventToPlausible('toggle-players', {
+            players: $showAvailablePlayers,
+        });
     };
 
     const toggleStarPlayers = () => {
         showAvailableStarPlayers.set(!$showAvailableStarPlayers);
+        sendEventToPlausible('toggle-star-players', {
+            players: $showAvailableStarPlayers,
+        });
     };
 </script>
 
