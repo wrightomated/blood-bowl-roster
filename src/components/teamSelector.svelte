@@ -29,11 +29,18 @@
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
     const teamFormats: TeamFormat[] = ['elevens', 'sevens'];
 
+    $: searchTerm = '';
+
     $: showTeams = $teamSelectionOpen;
 
     $: sortedTeam = sortTeam()
         .filter((x) => $filteredTiers.includes(x.tier))
-        .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true));
+        .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true))
+        .filter((x) =>
+            searchTerm
+                ? x.name.toLowerCase().includes(searchTerm.toLowerCase())
+                : x
+        );
 
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
@@ -143,43 +150,53 @@
         }}
     />
     <div class="button-container">
-        <div class="tier-selector">
-            Filter tiers:
+        <div class="filter__tier">
+            Filter:
             <button
                 on:click={() => toggledTiers.toggleTier(1)}
                 class:selected={$filteredTiers.includes(1)}
-                class="filter-button">I</button
+                class="filter__button">I</button
             >
             <button
                 on:click={() => toggledTiers.toggleTier(2)}
                 class:selected={$filteredTiers.includes(2)}
-                class="filter-button">II</button
+                class="filter__button">II</button
             >
             <button
                 on:click={() => toggledTiers.toggleTier(3)}
                 class:selected={$filteredTiers.includes(3)}
-                class="filter-button">III</button
+                class="filter__button">III</button
             >
             <button
                 on:click={toggleNaf}
                 title="Filter NAF teams"
                 class:selected={includeNaf}
-                class="filter-button">N</button
+                class="filter__button">N</button
             >
         </div>
-        {#each sortedTeam as team}
-            <button
-                class="team-button"
-                class:selected={$currentTeam.id === team.id}
-                on:click={() => newTeam(team.id)}
-                >{team.name}
-                <span>{tierToNumeral(team.tier)}</span
-                >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
-                    >{/if}</button
-            >
-        {/each}
+        <label class="filter__search">
+            Search: <input bind:value={searchTerm} placeholder="Query" />
+        </label>
+        <br />
+        <div>
+            {#each sortedTeam as team}
+                <button
+                    class="team-button"
+                    class:selected={$currentTeam.id === team.id}
+                    on:click={() => newTeam(team.id)}
+                    >{team.name}
+                    <span>{tierToNumeral(team.tier)}</span
+                    >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
+                        >{/if}</button
+                >
+            {/each}
+        </div>
     </div>
-    <button class="create-team" on:click={() => createTeam()}>Create</button>
+    <button
+        class="create-team"
+        disabled={!$currentTeam}
+        on:click={() => createTeam()}>Create</button
+    >
 {/if}
 
 {#if $teamLoadOpen}
@@ -216,7 +233,7 @@
         background-color: white;
         color: $secondary-colour;
         padding: 10px;
-        margin: 5px;
+        margin: 4px;
         border: 2px solid $secondary-colour;
 
         &:hover,
@@ -243,32 +260,40 @@
         padding: 10px;
     }
     .team-button {
+        // display: block;
         span {
             font-family: $display-font;
         }
     }
-    .filter-button {
-        font-family: $display-font;
-        border-radius: 50%;
-        font-size: 0.75em;
-        background-color: white;
-        color: $secondary-colour;
-        padding: 0;
-        width: 24px;
-        height: 24px;
-        line-height: 0px;
-        text-align: center;
-        margin: 0 auto;
-        border: 2px solid $secondary-colour;
+    .filter {
+        &__tier {
+            display: inline-block;
+            margin: 1em 4px 1em 4px;
+        }
+        &__button {
+            font-family: $display-font;
+            border-radius: 50%;
+            font-size: 0.75em;
+            background-color: white;
+            color: $secondary-colour;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            line-height: 0px;
+            text-align: center;
+            margin: 0 auto;
+            border: 2px solid $secondary-colour;
 
-        &:hover {
-            border-color: $secondary-background-colour;
+            &:hover {
+                border-color: $secondary-background-colour;
+            }
+        }
+        &__search {
+            display: inline-block;
+            margin: 0 4px 1rem 4px;
         }
     }
-    .tier-selector {
-        margin-top: 1em;
-        margin-bottom: 1em;
-    }
+
     .code-box {
         display: flex;
         padding: 10px;
@@ -277,6 +302,11 @@
         input {
             margin-right: 8px;
             font-size: 16px;
+        }
+    }
+    .create-team {
+        &:disabled {
+            display: none;
         }
     }
 </style>

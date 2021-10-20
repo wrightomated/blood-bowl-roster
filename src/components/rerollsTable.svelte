@@ -5,6 +5,7 @@
     import Inducements from './inducements.svelte';
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
+    import StarPlayerInducement from './starPlayerInducement.svelte';
 
     export let selectedTeam: Team;
 
@@ -68,6 +69,9 @@
             </td>
         </tr>
     </table>
+    {#if $roster.format !== 'sevens'}
+        <StarPlayerInducement />
+    {/if}
     <Inducements {selectedTeam} />
 </div>
 
@@ -92,9 +96,12 @@
         margin-top: 1em;
         align-items: flex-start;
     }
-    .treasury {
-        width: 80px;
-        font-size: 16px;
+
+    @media screen and (max-width: 650px) {
+        .table {
+            margin-right: 0;
+            width: 100%;
+        }
     }
 
     @media print {

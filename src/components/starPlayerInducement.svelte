@@ -53,37 +53,42 @@
     };
 </script>
 
-<tr class="no-print">
-    <td class="left-align">
-        Star Player:
-        {#if filteredStarPlayers.length > 0}
-            <select
-                aria-label="star player name"
-                class="star-player-select"
-                bind:value={selectedId}
-            >
-                {#each filteredStarPlayers as star (star.id)}
-                    <option value={star.id}>{star.displayName}</option>
-                {/each}
-            </select>
-        {/if}
-    </td>
-    <td
-        >{$roster.players.filter((x) => x.starPlayer && !x.deleted).length} / 2</td
-    >
-    <td>{getSelected(selectedId)?.cost || 0},000</td>
-    <td>
-        {#if filteredStarPlayers.length > 0 && $roster.players.filter((x) => x.starPlayer && !x.deleted).length < 2}
-            <div class="add-star">
-                <MaterialButton
-                    hoverText="Add star player"
-                    symbol="add_circle"
-                    clickFunction={addStarPlayer}
-                />
-            </div>
-        {/if}
-    </td>
-</tr>
+<table class="no-print">
+    <thead>
+        <tr>Star Player</tr>
+    </thead>
+    <tr>
+        <td class="left-align">
+            {#if filteredStarPlayers.length > 0}
+                <select
+                    aria-label="star player name"
+                    class="star-player-select"
+                    bind:value={selectedId}
+                >
+                    {#each filteredStarPlayers as star (star.id)}
+                        <option value={star.id}>{star.displayName}</option>
+                    {/each}
+                </select>
+            {/if}
+        </td>
+        <td
+            >{$roster.players.filter((x) => x.starPlayer && !x.deleted).length} /
+            2</td
+        >
+        <td>{getSelected(selectedId)?.cost || 0},000</td>
+        <td>
+            {#if filteredStarPlayers.length > 0 && $roster.players.filter((x) => x.starPlayer && !x.deleted).length < 2}
+                <div class="add-star">
+                    <MaterialButton
+                        hoverText="Add star player"
+                        symbol="add_circle"
+                        clickFunction={addStarPlayer}
+                    />
+                </div>
+            {/if}
+        </td>
+    </tr>
+</table>
 
 <style lang="scss">
     .star-player-select {
