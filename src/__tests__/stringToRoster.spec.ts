@@ -4,6 +4,7 @@ import { rosterToString } from '../helpers/rosterToString';
 import { stringToRoster } from '../helpers/stringToRoster';
 import type { Roster } from '../models/roster.model';
 import {
+    encodedRosterString,
     inducementAndStarPlayer,
     inducementAndStarPlayerString,
     noTeamName,
@@ -25,8 +26,12 @@ test('should convert string into roster', () => {
 
 test('should convert inducement string into roster', () => {
     expect(stringToRoster(inducementAndStarPlayerString)).toEqual(
-        inducementAndStarPlayer,
+        inducementAndStarPlayer
     );
+});
+
+test('should convert encoded colons', () => {
+    expect(stringToRoster(encodedRosterString)).toEqual(testRoster);
 });
 
 test('should convert player skills string into roster', () => {
@@ -36,6 +41,6 @@ test('should convert player skills string into roster', () => {
 test('should convert string into roster into string', () => {
     const roster = noTeamName as Roster;
     expect(stringToRoster(rosterToString(noTeamName as Roster))).toEqual(
-        roster,
+        roster
     );
 });

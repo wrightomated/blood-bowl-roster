@@ -18,6 +18,7 @@
     import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
+    import { sendEventToPlausible } from '../analytics/plausible';
 
     export let teamList: Team[];
 
@@ -66,6 +67,12 @@
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
+
+        sendEventToPlausible('new-team-created', {
+            teamType: $currentTeam.name,
+            rosterMode: $rosterMode,
+            format: $teamFormat,
+        });
     };
 
     const loadTeam = (savedRoster: { id: any; name?: string }) => {

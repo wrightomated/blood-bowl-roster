@@ -33,7 +33,11 @@
     </h2>
 </div>
 <div class="sub-heading-box">
-    <p class="sub-heading">{$roster.teamType} Team</p>
+    <p class="sub-heading">
+        <span class="print-only-team-name"
+            >{$roster.teamName}&nbsp;
+        </span>{$roster.teamType} Team
+    </p>
     <RosterSave />
 </div>
 <Export />
@@ -66,11 +70,17 @@
                     <td>AV</td>
                     <td class="skills">Skills</td>
                     <td>Hiring Fee</td>
-                    <td id="spp-header">Unspent Spp</td>
+                    {#if $roster.format === 'elevens'}
+                        <td id="spp-header">Unspent Spp</td>
+                    {/if}
                     {#if $roster.mode !== 'exhibition'}
                         <td id="mng-header" title="Miss next game">Mng</td>
-                        <td>Ni</td>
-                        <td id="tr-header" title="Temporarily Retiring">TR</td>
+                        {#if $roster.format === 'elevens'}
+                            <td>Ni</td>
+                            <td id="tr-header" title="Temporarily Retiring"
+                                >TR</td
+                            >
+                        {/if}
                     {/if}
                     <td>Current Value</td>
                 </tr>
@@ -147,12 +157,16 @@
     #team-name {
         max-width: 100%;
     }
+    .print-only-team-name {
+        display: none;
+    }
     @media print {
-        h2 {
-            font-size: 14px;
+        .heading {
+            display: none;
         }
-        .team-name-container {
-            page-break-before: always;
+        .print-only-team-name {
+            display: inline-block;
+            font-size: 16px;
         }
         .table-container {
             overflow: inherit;

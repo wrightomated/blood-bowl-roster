@@ -254,18 +254,20 @@
             ? `${rosterPlayer.player.cost},000`
             : '-'}</td
     >
-    <td>
-        {#if $roster.players[index]?.alterations?.spp !== undefined}
-            <input
-                class="spp-input"
-                type="number"
-                aria-labelledby="spp-header"
-                placeholder="?"
-                use:blurOnEscapeOrEnter
-                bind:value={$roster.players[index].alterations.spp}
-            />
-        {:else}0{/if}
-    </td>
+    {#if $roster.format === 'elevens'}
+        <td>
+            {#if $roster.players[index]?.alterations?.spp !== undefined}
+                <input
+                    class="spp-input"
+                    type="number"
+                    aria-labelledby="spp-header"
+                    placeholder="?"
+                    use:blurOnEscapeOrEnter
+                    bind:value={$roster.players[index].alterations.spp}
+                />
+            {:else}0{/if}
+        </td>
+    {/if}
     {#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
         <td
             ><input
@@ -274,22 +276,26 @@
                 bind:checked={$roster.players[index].alterations.mng}
             /></td
         >
-        <td>
-            <input
-                class="spp-input"
-                type="number"
-                aria-label="Niggling Injuries"
-                placeholder="?"
-                bind:value={$roster.players[index].alterations.ni}
-            />
-        </td><td
-            ><input
-                type="checkbox"
-                aria-labelledby="tr-header"
-                use:blurOnEscapeOrEnter
-                bind:checked={$roster.players[index].alterations.tr}
-            /></td
-        >
+        {#if $roster.format === 'elevens'}
+            <td>
+                <input
+                    class="spp-input"
+                    type="number"
+                    aria-label="Niggling Injuries"
+                    placeholder="?"
+                    bind:value={$roster.players[index].alterations.ni}
+                />
+            </td>
+
+            <td
+                ><input
+                    type="checkbox"
+                    aria-labelledby="tr-header"
+                    use:blurOnEscapeOrEnter
+                    bind:checked={$roster.players[index].alterations.tr}
+                /></td
+            >
+        {/if}
     {:else if $roster.mode !== 'exhibition' && rosterPlayer.starPlayer}
         <td>-</td>
         <td>-</td>

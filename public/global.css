@@ -70,6 +70,13 @@ td,
 tr {
     padding: 8px;
     text-align: center;
+}
+th,
+td,
+tr {
+    border: none;
+}
+table {
     border: 1px solid #ccc;
 }
 tr:nth-of-type(even) {
@@ -85,8 +92,16 @@ thead {
     body {
         font-size: 10px;
     }
+    th,
     td,
     tr {
-        padding: 5px;
+        padding: 5px !important;
+        border: none;
+    }
+    thead {
+        background-color: #333 !important;
+    }
+    table {
+        border: 1px solid #333 !important;
     }
 }

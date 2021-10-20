@@ -26,7 +26,7 @@
 
     const addStarPlayer = () => {
         const addTwo = getSelected(selectedId).twoForOne;
-        if ($roster.players.length + 2 > 16) {
+        if ($roster.players.length + 1 > 16) {
             return;
         }
 
@@ -53,7 +53,7 @@
     };
 </script>
 
-<tr>
+<tr class="no-print">
     <td class="left-align">
         Star Player:
         {#if filteredStarPlayers.length > 0}
@@ -96,5 +96,10 @@
     }
     .add-star {
         display: flex;
+    }
+    @media print {
+        .no-print {
+            display: none;
+        }
     }
 </style>

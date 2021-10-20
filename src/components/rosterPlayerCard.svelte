@@ -271,18 +271,20 @@
         </div>
 
         <div class="extraDetails">
-            {#if $roster.players[index]?.alterations?.spp !== undefined}
-                <label
-                    ><span class="mini-title">SPP:</span>
-                    <input
-                        class="spp-input"
-                        type="number"
-                        placeholder="?"
-                        use:blurOnEscapeOrEnter
-                        bind:value={$roster.players[index].alterations.spp}
-                    />
-                </label>
-            {:else if !rosterPlayer.starPlayer}0{/if}
+            {#if $roster.format === 'elevens'}
+                {#if $roster.players[index]?.alterations?.spp !== undefined}
+                    <label
+                        ><span class="mini-title">SPP:</span>
+                        <input
+                            class="spp-input"
+                            type="number"
+                            placeholder="?"
+                            use:blurOnEscapeOrEnter
+                            bind:value={$roster.players[index].alterations.spp}
+                        />
+                    </label>
+                {:else if !rosterPlayer.starPlayer}0{/if}
+            {/if}
 
             {#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
                 <label
@@ -294,27 +296,28 @@
                         bind:checked={$roster.players[index].alterations.mng}
                     />
                 </label>
+                {#if $roster.format === 'elevens'}
+                    <label>
+                        <span class="mini-title">NI:</span>
+                        <input
+                            class="spp-input"
+                            type="number"
+                            placeholder="?"
+                            use:blurOnEscapeOrEnter
+                            bind:value={$roster.players[index].alterations.ni}
+                        />
+                    </label>
 
-                <label>
-                    <span class="mini-title">NI:</span>
-                    <input
-                        class="spp-input"
-                        type="number"
-                        placeholder="?"
-                        use:blurOnEscapeOrEnter
-                        bind:value={$roster.players[index].alterations.ni}
-                    />
-                </label>
-
-                <label>
-                    <span class="mini-title">TR:</span>
-                    <input
-                        type="checkbox"
-                        class="checkbox"
-                        use:blurOnEscapeOrEnter
-                        bind:checked={$roster.players[index].alterations.tr}
-                    />
-                </label>
+                    <label>
+                        <span class="mini-title">TR:</span>
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            use:blurOnEscapeOrEnter
+                            bind:checked={$roster.players[index].alterations.tr}
+                        />
+                    </label>
+                {/if}
             {/if}
         </div>
 

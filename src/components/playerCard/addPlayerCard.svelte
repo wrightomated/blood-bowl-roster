@@ -1,7 +1,10 @@
 <script lang="ts">
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import type { Player } from '../../models/player.model';
-    import type { RosterPlayerRecord } from '../../models/roster.model';
+    import type {
+        PlayerAlterations,
+        RosterPlayerRecord,
+    } from '../../models/roster.model';
     import type { Team } from '../../models/team.model';
     import { currentTeam } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
@@ -27,15 +30,25 @@
                 : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
+            let alterations: PlayerAlterations = { spp: 0, ni: 0 };
             const extraSkills = journeyman
                 ? $roster.format === 'sevens'
                     ? [710]
                     : [71]
                 : undefined;
+
+            if (journeyman) {
+                alterations = { ...alterations, journeyman };
+            }
+
+            if (extraSkills) {
+                alterations = { ...alterations, extraSkills };
+            }
+
             let newPlayer: RosterPlayerRecord = {
                 playerName: newName,
                 player,
-                alterations: { spp: 0, ni: 0, journeyman, extraSkills },
+                alterations,
             };
 
             roster.addPlayer(

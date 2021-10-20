@@ -5,6 +5,8 @@
     import { showExport } from '../store/showExport.store';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showDelete } from '../store/showDelete.store';
+    import { showAllInducements } from '../store/showAllInducements.store';
+    import { sendEventToPlausible } from '../analytics/plausible';
 
     let saved = false;
     let rosterCleared = false;
@@ -22,6 +24,17 @@
     const toggleDelete = () => showDelete.set(!$showDelete);
 
     const toggleExport = () => showExport.set(!$showExport);
+
+    const printPage = () => {
+        sendEventToPlausible('Print');
+        rosterViewMode.set('table');
+        showAllInducements.set(false);
+
+        // Delay for view switch in the event loop
+        setTimeout(() => {
+            window.print();
+        }, 2);
+    };
 
     roster.subscribe((x) => {
         saved = false;
@@ -54,6 +67,11 @@
     symbol={$showExport ? 'link_off' : 'link'}
     clickFunction={toggleExport}
     cyData="share-team"
+/>
+<MaterialButton
+    hoverText="Print roster"
+    symbol="print"
+    clickFunction={printPage}
 />
 
 <style lang="scss">

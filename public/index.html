@@ -22,6 +22,13 @@
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
+        <meta property="og:image" content="https://bbroster.com/bbroster_ograph.png"/>
+        <meta property="og:title" content="BB Roster"/>
+        <meta property="og:description" content="Create team rosters for Blood Bowl 2020. Includes all current teams, star players and inducements. Exhibition and league matches."/>
+        <meta property="og:image:width" content="1200"/>
+        <meta property="og:image:height" content="630"/>
+        <meta property="og:url" content="https://bbroster.com"/>
+        <meta property="og:type" content="website" />
         <script>
             window.onerror = function(message, source, lineno, colno, error) { 
                 const hasFailed = sessionStorage.getItem('failedOnce');
@@ -31,8 +38,8 @@
                     sessionStorage.setItem('failedOnce','true');
                 }
             };</script>
-
         <script defer src="/build/bundle.js"></script>
+        <script defer data-domain="bbroster.com" src="https://plausible.io/js/plausible.js"></script>
     </head>
 
     <body></body>
