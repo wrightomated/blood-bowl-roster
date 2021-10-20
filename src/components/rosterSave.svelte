@@ -44,6 +44,7 @@
 
 {#if !saved}
     <MaterialButton
+        cyData="save-roster"
         hoverText="Save team"
         symbol="save"
         clickFunction={() => saveRoster()}
@@ -66,6 +67,7 @@
     hoverText="Share team"
     symbol={$showExport ? 'link_off' : 'link'}
     clickFunction={toggleExport}
+    cyData="share-team"
 />
 <MaterialButton
     hoverText="Print roster"

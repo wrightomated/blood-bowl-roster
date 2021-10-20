@@ -66,18 +66,24 @@
             placeholder="Player Name"
             bind:value={newName}
             class="name-input"
+            data-cy="new-player-name-input"
             use:blurOnEscapeOrEnter
         />
     </td>
     <td class="left-align">
         <MaterialButton
             hoverText="Add new player"
+            cyData="add-player"
             symbol="add_circle"
             clickFunction={addPlayer}
         />
     </td>
     <td class="position left-align">
-        <select aria-labelledby="position-header" bind:value={selected}>
+        <select
+            aria-labelledby="position-header"
+            bind:value={selected}
+            data-cy="new-player-position-select"
+        >
             {#each playerTypes as playerType}
                 <option value={playerType}>
                     {playerType.position}

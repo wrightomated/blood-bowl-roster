@@ -22,6 +22,7 @@
         <div class="flex-container">
             {#if extraAmount < extra.max}
                 <MaterialButton
+                    cyData={'add-' + extra.extraString.replace('_', '-')}
                     hoverText="Add extra"
                     symbol="add_circle"
                     clickFunction={addExtra}

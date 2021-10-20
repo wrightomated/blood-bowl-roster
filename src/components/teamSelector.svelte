@@ -119,6 +119,7 @@
     <button
         class:cancel={showTeams}
         class="new-team"
+        data-cy="new-team"
         on:click={() => toggleTeam()}
         >{!showTeams ? 'New Team' : 'Cancel'}
     </button>
@@ -127,6 +128,7 @@
 {#if !showTeams}
     <button
         class="load-team-button"
+        data-cy="load-team"
         class:cancel={$teamLoadOpen}
         on:click={() => toggleLoad()}
         >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button
@@ -195,6 +197,7 @@
     <button
         class="create-team"
         disabled={!$currentTeam}
+        data-cy="create-team"
         on:click={() => createTeam()}>Create</button
     >
 {/if}
