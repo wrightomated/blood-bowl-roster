@@ -121,6 +121,7 @@
 {#if !showTeams}
     <button
         class="load-team-button"
+        data-cy="load-team"
         class:cancel={$teamLoadOpen}
         on:click={() => toggleLoad()}
         >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button

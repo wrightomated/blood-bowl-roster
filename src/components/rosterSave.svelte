@@ -44,6 +44,7 @@
 
 {#if !saved}
     <MaterialButton
+        cyData="save-roster"
         hoverText="Save team"
         symbol="save"
         clickFunction={() => saveRoster()}
