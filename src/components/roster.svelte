@@ -26,6 +26,7 @@
             aria-label="team name"
             placeholder="Team Name"
             id="team-name"
+            data-cy="team-name"
             bind:value={$roster.teamName}
             use:blurOnEscapeOrEnter
         />

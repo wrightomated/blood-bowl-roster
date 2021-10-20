@@ -157,7 +157,7 @@
             use:blurOnEscapeOrEnter
         /></td
     >
-    <td class="player-name left-align">
+    <td class="player-name left-align" data-cy={`player-${index}-name`}>
         {#if rosterPlayer.starPlayer}
             {rosterPlayer.player.position}
         {:else}

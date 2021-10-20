@@ -60,6 +60,7 @@
             <select
                 aria-label="star player name"
                 class="star-player-select"
+                data-cy="star-player-select"
                 bind:value={selectedId}
             >
                 {#each filteredStarPlayers as star (star.id)}
@@ -78,6 +79,7 @@
                 <MaterialButton
                     hoverText="Add star player"
                     symbol="add_circle"
+                    cyData="add-star-player"
                     clickFunction={addStarPlayer}
                 />
             </div>
