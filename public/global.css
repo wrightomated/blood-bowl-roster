@@ -88,6 +88,12 @@ thead {
     text-transform: uppercase;
 }
 
+@media screen and (max-width: 783px) {
+    input {
+        font-size: 16px;
+    }
+}
+
 @media print {
     body {
         font-size: 10px;

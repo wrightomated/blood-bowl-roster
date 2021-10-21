@@ -3,13 +3,14 @@
     import type { Team } from '../models/team.model';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
-    import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { Inducement } from '../models/inducement.model';
     import { filterInducement } from '../helpers/inducementFilter';
     import { showAllInducements } from '../store/showAllInducements.store';
     export let selectedTeam: Team;
 
-    const filteredInducements = inducementData.inducements
+    $: searchTerm = '';
+
+    $: filteredInducements = inducementData.inducements
         .filter(
             (inducement) =>
                 ($roster.format === 'elevens' && inducement.max > 0) ||
@@ -29,7 +30,13 @@
                 $roster.format === 'elevens' || !inducement.sevensMax
                     ? inducement.max
                     : inducement.sevensMax,
-        }));
+        }))
+        .filter((i) =>
+            searchTerm
+                ? i.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+                : i
+        )
+        .sort((a, b) => a.displayName.localeCompare(b.displayName));
 
     const addInducement = (key: string) => {
         roster.addInducement(key);
@@ -47,7 +54,10 @@
     };
 </script>
 
-<table class:no-print={$roster.inducements?.length < 1}>
+<table
+    class="inducement-table"
+    class:no-print={$roster.inducements?.length < 1}
+>
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>
@@ -69,9 +79,6 @@
         </tr>
     </thead>
     <tbody>
-        {#if $roster.format !== 'sevens'}
-            <StarPlayerInducement />
-        {/if}
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
             <tr class="no-print">
                 <td colspan="3">Remove all inducements below (no refund)</td>
@@ -84,9 +91,29 @@
                 >
             </tr>
         {/if}
-
+        {#if $showAllInducements}
+            <tr class="no-print"
+                ><td class="inducement__search" colspan="4"
+                    ><input
+                        aria-label="Search inducements"
+                        placeholder="Search inducements"
+                        type="text"
+                        bind:value={searchTerm}
+                    />&nbsp;
+                    <span class="inducement__clear-search">
+                        <MaterialButton
+                            hoverText="Clear"
+                            symbol="clear"
+                            clickFunction={() => {
+                                searchTerm = '';
+                            }}
+                        />
+                    </span>
+                </td>
+            </tr>
+        {/if}
         {#each filteredInducements as ind}
-            {#if (ind.displayName !== 'Star Player' && $roster.inducements?.[ind.id] > 0) || $showAllInducements}
+            {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>
                     <td class="inducement__display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
@@ -115,20 +142,21 @@
                 </tr>
             {/if}
         {/each}
-
-        <tr class="no-print"
-            ><td colspan="4">
-                <MaterialButton
-                    hoverText={$showAllInducements
-                        ? 'Hide inducements'
-                        : 'Show inducements'}
-                    symbol={$showAllInducements
-                        ? 'arrow_drop_up'
-                        : 'arrow_drop_down'}
-                    clickFunction={toggleShowAllInducements}
-                /></td
-            ></tr
-        >
+        {#if $showAllInducements}
+            <tr class="no-print"
+                ><td colspan="4">
+                    <MaterialButton
+                        hoverText={$showAllInducements
+                            ? 'Hide inducements'
+                            : 'Show inducements'}
+                        symbol={$showAllInducements
+                            ? 'arrow_drop_up'
+                            : 'arrow_drop_down'}
+                        clickFunction={toggleShowAllInducements}
+                    /></td
+                ></tr
+            >
+        {/if}
     </tbody>
 </table>
 
@@ -138,11 +166,12 @@
             text-align: left;
         }
 
-        &__toggle {
-            background: white;
-            color: black;
-            border: 0;
+        &__search {
+            // display: flex;
+            // align-items: flex-end;
+            text-align: left;
         }
+
         &__qty {
             min-width: 44px;
         }
@@ -150,7 +179,19 @@
     .flex-container {
         display: flex;
     }
+    table {
+        // width: 500px;
+    }
+
+    @media screen and (max-width: 783px) {
+        table {
+            width: 100%;
+        }
+    }
     @media print {
+        .inducement-table {
+            flex-grow: 1;
+        }
         .no-print {
             display: none;
         }

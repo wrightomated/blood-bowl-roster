@@ -41,7 +41,7 @@
 <style lang="scss">
     .treasury {
         &__container {
-            width: 150px;
+            min-width: 150px;
         }
         &__input {
             border: none;
