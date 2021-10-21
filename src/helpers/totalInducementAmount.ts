@@ -23,16 +23,18 @@ export const inducementCost = (
         (x) => x.id === teamId
     ).specialRules;
     const ind = inducementData.inducements.find((x) => x.id === key);
+
     if (
         ind?.reducedCost &&
         specialRules.includes(ind.reducedCost?.specialRule)
     ) {
         return ind.reducedCost.cost;
     }
+
     return ind?.reducedCost &&
         specialRules.includes(ind.reducedCost?.specialRule)
         ? ind.reducedCost.cost
-        : format === 'sevens'
+        : format === 'sevens' && ind.sevensCost
         ? ind.sevensCost
         : ind.cost;
 };
