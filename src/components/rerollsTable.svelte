@@ -39,12 +39,12 @@
 </script>
 
 <div class="tables">
-    <table class="table">
+    <table class="tables__item">
         {#each extras as extra}
             <ExtraRosterAdditionsRow {extra} />
         {/each}
     </table>
-    <table class="table">
+    <table class="tables__item">
         <tr>
             <th>Team Value</th>
             <td colspan="2">
@@ -64,7 +64,7 @@
 
         <tr>
             <th>Treasury</th>
-            <td>
+            <td class="treasury-cell">
                 <Treasury />
             </td>
         </tr>
@@ -72,22 +72,11 @@
     {#if $roster.format !== 'sevens'}
         <StarPlayerInducement />
     {/if}
+
     <Inducements {selectedTeam} />
 </div>
 
 <style lang="scss">
-    .table {
-        margin-block-end: 1em;
-        margin-right: 1em;
-        th {
-            background-color: #970f0c;
-            color: white;
-            text-align: left;
-            text-transform: uppercase;
-            font-weight: normal;
-            padding: 10px;
-        }
-    }
     .tables {
         width: 100%;
         overflow: auto;
@@ -95,19 +84,46 @@
         flex-wrap: wrap;
         margin-top: 1em;
         align-items: flex-start;
+
+        &__item {
+            margin-block-end: 1em;
+            margin-right: 1em;
+            th {
+                background-color: #970f0c;
+                color: white;
+                text-align: left;
+                text-transform: uppercase;
+                font-weight: normal;
+                padding: 10px;
+            }
+            tr {
+                height: 44px;
+            }
+        }
+    }
+
+    .treasury-cell {
+        border-right: 1px solid #ccc;
     }
 
     @media screen and (max-width: 650px) {
-        .table {
+        .tables__item {
             margin-right: 0;
             width: 100%;
+
+            tr {
+                height: auto;
+            }
         }
     }
 
     @media print {
-        .table th,
+        .tables__item th,
         th {
             background-color: #333;
+        }
+        .treasury-cell {
+            border-right: 1px solid #333;
         }
     }
 </style>

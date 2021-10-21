@@ -176,6 +176,10 @@
     .flex-container {
         display: flex;
     }
+    table {
+        width: 500px;
+    }
+
     @media screen and (max-width: 783px) {
         table {
             width: 100%;

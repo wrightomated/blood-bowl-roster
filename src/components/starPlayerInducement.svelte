@@ -53,9 +53,9 @@
     };
 </script>
 
-<table class="no-print">
+<table class="no-print star-player">
     <thead>
-        <tr>Star Player</tr>
+        <tr><td colspan="4">Star Player</td></tr>
     </thead>
     <tr>
         <td class="left-align">
@@ -93,6 +93,13 @@
 </table>
 
 <style lang="scss">
+    .star-player {
+        margin-block-end: 1em;
+        margin-right: 1em;
+        tr {
+            height: 44px;
+        }
+    }
     .star-player-select {
         font-size: 16px;
     }
@@ -101,6 +108,12 @@
     }
     .add-star {
         display: flex;
+    }
+    @media screen and (max-width: 783px) {
+        .star-player {
+            margin-right: 0;
+            width: 100%;
+        }
     }
     @media print {
         .no-print {
