@@ -54,7 +54,10 @@
     };
 </script>
 
-<table class:no-print={$roster.inducements?.length < 1}>
+<table
+    class="inducement-table"
+    class:no-print={$roster.inducements?.length < 1}
+>
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>
@@ -177,7 +180,7 @@
         display: flex;
     }
     table {
-        width: 500px;
+        // width: 500px;
     }
 
     @media screen and (max-width: 783px) {
@@ -186,6 +189,9 @@
         }
     }
     @media print {
+        .inducement-table {
+            flex-grow: 1;
+        }
         .no-print {
             display: none;
         }
