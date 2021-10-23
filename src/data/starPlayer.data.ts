@@ -279,6 +279,16 @@ const whilhelmChaney: StarPlayer = {
     specialRules: ['Savage Mauling'],
 };
 
+const kreek: StarPlayer = {
+    id: 228,
+    position: 'Kreek, "The Verminator" Rustgouger',
+    playerStats: [6, 5, 4, 0, 9],
+    playsFor: ['Favoured of Nurgle', 'Favoured of...', 'Underworld Challenge'],
+    skills: [61, 17, 71, 55, 33],
+    cost: 170,
+    specialRules: ["I'll be back"],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -309,5 +319,6 @@ export const starPlayers = {
         akhorne,
         frankNStein,
         whilhelmChaney,
+        kreek,
     ],
 };
