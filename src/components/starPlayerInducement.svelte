@@ -26,9 +26,6 @@
 
     const addStarPlayer = () => {
         const addTwo = getSelected(selectedId).twoForOne;
-        if ($roster.players.length + 1 > 16) {
-            return;
-        }
 
         roster.addPlayer({
             player: getSelected(selectedId),
