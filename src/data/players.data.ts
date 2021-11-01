@@ -584,9 +584,9 @@ const orcLineman: Player = {
 const orcThrower: Player = {
     id: 60,
     position: 'Thrower',
-    playerStats: [6, 3, 3, 3, 9],
+    playerStats: [5, 3, 3, 3, 9],
     cost: 65,
-    skills: [62, 46, 22],
+    skills: [620, 46, 22],
     primary: ['G', 'P'],
     secondary: ['A', 'S'],
 };
