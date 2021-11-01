@@ -291,7 +291,7 @@ export const teamData: TeamList = {
             ],
         },
         {
-            name: 'Underworld Denizen',
+            name: 'Underworld Denizens',
             id: 19,
             players: [
                 { id: 125, max: 12 },
