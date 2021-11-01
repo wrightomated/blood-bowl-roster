@@ -282,9 +282,9 @@ const whilhelmChaney: StarPlayer = {
 const kreek: StarPlayer = {
     id: 228,
     position: 'Kreek, "The Verminator" Rustgouger',
-    playerStats: [6, 5, 4, 0, 9],
+    playerStats: [5, 7, 4, 0, 10],
     playsFor: ['Favoured of Nurgle', 'Favoured of...', 'Underworld Challenge'],
-    skills: [61, 17, 71, 55, 33],
+    skills: [64, 71, 55, 72, 33, 79],
     cost: 170,
     specialRules: ["I'll be back"],
 };

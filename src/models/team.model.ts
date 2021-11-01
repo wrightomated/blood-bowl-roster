@@ -44,7 +44,7 @@ export type TeamName =
     | 'Shambling Undead'
     | 'Skaven'
     | 'Snotling'
-    | 'Underworld Denizen'
+    | 'Underworld Denizens'
     | 'Wood Elf'
     | 'Chaos Renegade'
     | 'Amazon'
