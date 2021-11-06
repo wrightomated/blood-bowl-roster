@@ -10,7 +10,7 @@ export const sendEventToAnalytics = (name: string, props?: AnalyticsProps) => {
 
 const googleAnalyticsEvent = (name: string, props: AnalyticsProps = {}) => {
     const gtag = (window as any).gtag;
-    return gtag('event', name, props);
+    gtag('event', name, props);
 };
 
 // export const sendEventToPlausible = (name: string, props?: PlausibleProps) => {
