@@ -18,7 +18,7 @@
     import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-    import { sendEventToPlausible } from '../analytics/plausible';
+    import { sendEventToAnalytics } from '../analytics/plausible';
 
     export let teamList: Team[];
 
@@ -75,7 +75,7 @@
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
 
-        sendEventToPlausible('new-team-created', {
+        sendEventToAnalytics('new-team-created', {
             teamType: $currentTeam.name,
             rosterMode: $rosterMode,
             format: $teamFormat,

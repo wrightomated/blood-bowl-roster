@@ -6,7 +6,7 @@
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showDelete } from '../store/showDelete.store';
     import { showAllInducements } from '../store/showAllInducements.store';
-    import { sendEventToPlausible } from '../analytics/plausible';
+    import { sendEventToAnalytics } from '../analytics/plausible';
 
     let saved = false;
     let rosterCleared = false;
@@ -26,7 +26,7 @@
     const toggleExport = () => showExport.set(!$showExport);
 
     const printPage = () => {
-        sendEventToPlausible('Print');
+        sendEventToAnalytics('Print');
         rosterViewMode.set('table');
         showAllInducements.set(false);
 
