@@ -43,7 +43,11 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 2,
-            specialRules: ['Favoured of...'],
+            specialRules: [
+                'Favoured of...',
+                'Favoured of Khorne',
+                'Favoured of Nurgle',
+            ],
             maxBigGuys: 1,
         },
         {
@@ -445,7 +449,7 @@ export const teamData: TeamList = {
             reroll: { cost: 70, max: 8 },
             allowedApothecary: true,
             tier: 2,
-            specialRules: ['Favoured of...'],
+            specialRules: ['Favoured of...', 'Favoured of Khorne'],
         },
         {
             name: 'Slann',
@@ -470,7 +474,7 @@ export const teamData: TeamList = {
                 { id: 142, max: 4 },
                 { id: 143, max: 1 },
             ],
-            reroll: { cost: 70, max: 8 },
+            reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 2,
             specialRules: ['Favoured of...', 'Favoured of Khorne'],

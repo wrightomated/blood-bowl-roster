@@ -289,6 +289,16 @@ const kreek: StarPlayer = {
     specialRules: ["I'll be back"],
 };
 
+const grashnak: StarPlayer = {
+    id: 229,
+    position: 'Grashnak Blackhoof',
+    playerStats: [6, 6, 4, 0, 9],
+    playsFor: ['Favoured of Khorne', 'Favoured of...'],
+    skills: [17, 30, 60, 55, 71, 88],
+    cost: 240,
+    specialRules: ['Khorne Star'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,

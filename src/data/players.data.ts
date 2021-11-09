@@ -1241,7 +1241,7 @@ const bloodbornMarauderLineman: Player = {
     cost: 50,
     playerStats: [6, 3, 3, 4, 8],
     skills: [17],
-    primary: ['G'],
+    primary: ['G', 'M'],
     secondary: ['A', 'S'],
 };
 const khorngor: Player = {
@@ -1250,8 +1250,8 @@ const khorngor: Player = {
     cost: 70,
     playerStats: [6, 3, 3, 4, 9],
     skills: [30, 54],
-    primary: ['G', 'A', 'S'],
-    secondary: ['P'],
+    primary: ['G', 'M', 'S'],
+    secondary: ['A', 'P'],
 };
 const bloodseeker: Player = {
     position: 'Bloodseeker',
@@ -1259,7 +1259,7 @@ const bloodseeker: Player = {
     cost: 110,
     playerStats: [5, 4, 4, 6, 10],
     skills: [17],
-    primary: ['G', 'S'],
+    primary: ['G', 'M', 'S'],
     secondary: ['A'],
 };
 const khorneBigGuy: Player = {
@@ -1268,7 +1268,7 @@ const khorneBigGuy: Player = {
     cost: 160,
     playerStats: [5, 5, 4, 0, 9],
     skills: [26, 17, 71, 55, 88],
-    primary: ['S'],
+    primary: ['M', 'S'],
     secondary: ['G', 'A'],
 };
 export const playerCatalogue: PlayerCatalogue = {
