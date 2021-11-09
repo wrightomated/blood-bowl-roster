@@ -330,5 +330,6 @@ export const starPlayers = {
         frankNStein,
         whilhelmChaney,
         kreek,
+        grashnak,
     ],
 };
