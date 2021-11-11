@@ -305,7 +305,7 @@ const bryce: StarPlayer = {
     playerStats: [5, 3, 4, 0, 9],
     playsFor: ['Sylvanian Spotlight'],
     skills: [67, 71, 77, 79, 58, 60],
-    cost: 240,
+    cost: 130,
     specialRules: ['Ghostly Flames'],
 };
 
