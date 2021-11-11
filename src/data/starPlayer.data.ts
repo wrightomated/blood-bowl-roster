@@ -299,6 +299,16 @@ const grashnak: StarPlayer = {
     specialRules: ['Khorne Star'],
 };
 
+const bryce: StarPlayer = {
+    id: 230,
+    position: 'Bryce "The Slice" Cambuel',
+    playerStats: [5, 3, 4, 0, 9],
+    playsFor: ['Sylvanian Spotlight'],
+    skills: [67, 71, 77, 79, 58, 60],
+    cost: 240,
+    specialRules: ['Ghostly Flames'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -331,5 +341,6 @@ export const starPlayers = {
         whilhelmChaney,
         kreek,
         grashnak,
+        bryce,
     ],
 };
