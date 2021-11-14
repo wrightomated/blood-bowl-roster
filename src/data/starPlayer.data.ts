@@ -31,7 +31,12 @@ const glartSmarshrip: StarPlayer = {
     id: 203,
     position: 'Glart Smarshrip',
     playerStats: [5, 4, 4, 0, 9],
-    playsFor: ['Favoured of...', 'Favoured of Nurgle', 'Underworld Challenge'],
+    playsFor: [
+        'Favoured of...',
+        'Favoured of Nurgle',
+        'Favoured of Khorne',
+        'Underworld Challenge',
+    ],
     skills: [13, 26, 52, 54, 71, 58],
     cost: 195,
     specialRules: ['Frenzied Rush'],
@@ -100,7 +105,12 @@ const hakflem: StarPlayer = {
     id: 210,
     position: 'Hakflem Skuttlespike',
     playerStats: [9, 3, 2, 3, 8],
-    playsFor: ['Favoured of Nurgle', 'Favoured of...', 'Underworld Challenge'],
+    playsFor: [
+        'Favoured of Nurgle',
+        'Favoured of...',
+        'Favoured of Khorne',
+        'Underworld Challenge',
+    ],
     skills: [4, 28, 71, 33, 35],
     cost: 180,
     specialRules: ['Treacherous'],
@@ -131,7 +141,7 @@ const lordBorak: StarPlayer = {
     id: 213,
     position: 'Lord Borak',
     playerStats: [5, 5, 3, 5, 10],
-    playsFor: ['Favoured of...', 'Favoured of Nurgle'],
+    playsFor: ['Favoured of...', 'Favoured of Nurgle', 'Favoured of Khorne'],
     skills: [13, 151, 71, 55, 10],
     cost: 260,
     specialRules: ['Lord of Chaos'],
@@ -283,7 +293,12 @@ const kreek: StarPlayer = {
     id: 228,
     position: 'Kreek, "The Verminator" Rustgouger',
     playerStats: [5, 7, 4, 0, 10],
-    playsFor: ['Favoured of Nurgle', 'Favoured of...', 'Underworld Challenge'],
+    playsFor: [
+        'Favoured of Nurgle',
+        'Favoured of...',
+        'Favoured of Khorne',
+        'Underworld Challenge',
+    ],
     skills: [64, 71, 55, 72, 33, 79],
     cost: 170,
     specialRules: ["I'll be back"],
@@ -293,10 +308,10 @@ const grashnak: StarPlayer = {
     id: 229,
     position: 'Grashnak Blackhoof',
     playerStats: [6, 6, 4, 0, 9],
-    playsFor: ['Favoured of Khorne', 'Favoured of...'],
+    playsFor: ['Favoured of Khorne', 'Favoured of Nurgle', 'Favoured of...'],
     skills: [17, 30, 60, 55, 71, 88],
     cost: 240,
-    specialRules: ['Khorne Star'],
+    specialRules: ['Gored by the Bull'],
 };
 
 const bryce: StarPlayer = {
@@ -307,6 +322,26 @@ const bryce: StarPlayer = {
     skills: [67, 71, 77, 79, 58, 60],
     cost: 130,
     specialRules: ['Ghostly Flames'],
+};
+
+const scyla: StarPlayer = {
+    id: 231,
+    position: 'Scyla Anfingrimm',
+    playerStats: [5, 5, 4, 0, 10],
+    playsFor: ['Favoured of Khorne', 'Favoured of Nurgle', 'Favoured of...'],
+    skills: [26, 17, 71, 55, 33, 60, 88],
+    cost: 200,
+    specialRules: ['Fury of the Blood God'],
+};
+
+const max: StarPlayer = {
+    id: 232,
+    position: 'Max Spleenripper',
+    playerStats: [5, 4, 4, 0, 9],
+    playsFor: ['Favoured of Khorne', 'Favoured of Nurgle', 'Favoured of...'],
+    skills: [67, 71, 79],
+    cost: 130,
+    specialRules: ['Maximum Carnage'],
 };
 
 export const starPlayers = {
