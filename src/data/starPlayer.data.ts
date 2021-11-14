@@ -377,5 +377,7 @@ export const starPlayers = {
         kreek,
         grashnak,
         bryce,
+        scyla,
+        max,
     ],
 };
