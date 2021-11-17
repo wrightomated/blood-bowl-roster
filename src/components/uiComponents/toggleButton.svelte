@@ -21,8 +21,6 @@
 </div>
 
 <style lang="scss">
-    @import '../../styles/colour';
-
     button {
         background: none;
         color: inherit;

@@ -118,7 +118,6 @@
 </div>
 
 <style lang="scss">
-    @import '../../styles/colour';
     @import '../../styles/font';
     .player-card {
         border-radius: 25px;

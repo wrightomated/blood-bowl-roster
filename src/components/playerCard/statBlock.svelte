@@ -12,7 +12,6 @@
 </div>
 
 <style lang="scss">
-    @import '../../styles/colour';
     @import '../../styles/font';
     .characteristic {
         height: 50px;

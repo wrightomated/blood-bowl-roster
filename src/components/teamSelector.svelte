@@ -28,8 +28,20 @@
     const nafTeams = [28, 29];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
     const teamFormats: TeamFormat[] = ['elevens', 'sevens'];
+    const dungeonBowlColleges: string[] = [
+        'Fire',
+        'Shadow',
+        'Metal',
+        'Light',
+        'Death',
+        'Life',
+        'Beasts',
+        'Heavens',
+    ];
 
     $: searchTerm = '';
+
+    $: dungeonBowl = false;
 
     $: showTeams = $teamSelectionOpen;
 
@@ -55,10 +67,16 @@
             currentTeam.set(teamList.find((x) => x.id === $roster.teamId));
         }
         teamSelectionOpen.set(!showTeams);
+        dungeonBowl = showTeams;
     };
 
     const toggleLoad = () => {
         teamLoadOpen.set(!$teamLoadOpen);
+    };
+
+    const toggleDungeon = () => {
+        dungeonBowl = !dungeonBowl;
+        sendEventToAnalytics('dungeon-bowl');
     };
 
     const createTeam = () => {
@@ -136,70 +154,86 @@
 {/if}
 
 {#if showTeams && !$teamLoadOpen}
-    <ToggleButton
-        options={rosterModes}
-        selectedIndex={rosterModes.indexOf($rosterMode)}
-        selected={(mode) => {
-            rosterMode.set(mode);
-        }}
-    />
+    {#if !dungeonBowl}
+        <ToggleButton
+            options={rosterModes}
+            selectedIndex={rosterModes.indexOf($rosterMode)}
+            selected={(mode) => {
+                rosterMode.set(mode);
+            }}
+        />
 
-    <ToggleButton
-        options={teamFormats}
-        selectedIndex={teamFormats.indexOf($teamFormat)}
-        selected={(format) => {
-            teamFormat.set(format);
-        }}
-    />
-    <div class="button-container">
-        <div class="filter__tier">
-            Filter:
-            <button
-                on:click={() => toggledTiers.toggleTier(1)}
-                class:selected={$filteredTiers.includes(1)}
-                class="filter__button">I</button
-            >
-            <button
-                on:click={() => toggledTiers.toggleTier(2)}
-                class:selected={$filteredTiers.includes(2)}
-                class="filter__button">II</button
-            >
-            <button
-                on:click={() => toggledTiers.toggleTier(3)}
-                class:selected={$filteredTiers.includes(3)}
-                class="filter__button">III</button
-            >
-            <button
-                on:click={toggleNaf}
-                title="Filter NAF teams"
-                class:selected={includeNaf}
-                class="filter__button">N</button
-            >
-        </div>
-        <label class="filter__search">
-            Search: <input bind:value={searchTerm} placeholder="Query" />
-        </label>
-        <br />
-        <div>
-            {#each sortedTeam as team}
+        <ToggleButton
+            options={teamFormats}
+            selectedIndex={teamFormats.indexOf($teamFormat)}
+            selected={(format) => {
+                teamFormat.set(format);
+            }}
+        />
+        <button class="dungeon-bowl-button" on:click={toggleDungeon}
+            >{dungeonBowl ? 'Back' : 'Dungeon Bowl'}
+        </button>
+
+        <div class="button-container">
+            <div class="filter__tier">
+                Filter:
                 <button
-                    class="team-button"
-                    class:selected={$currentTeam.id === team.id}
-                    on:click={() => newTeam(team.id)}
-                    >{team.name}
-                    <span>{tierToNumeral(team.tier)}</span
-                    >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
-                        >{/if}</button
+                    on:click={() => toggledTiers.toggleTier(1)}
+                    class:selected={$filteredTiers.includes(1)}
+                    class="filter__button">I</button
                 >
-            {/each}
+                <button
+                    on:click={() => toggledTiers.toggleTier(2)}
+                    class:selected={$filteredTiers.includes(2)}
+                    class="filter__button">II</button
+                >
+                <button
+                    on:click={() => toggledTiers.toggleTier(3)}
+                    class:selected={$filteredTiers.includes(3)}
+                    class="filter__button">III</button
+                >
+                <button
+                    on:click={toggleNaf}
+                    title="Filter NAF teams"
+                    class:selected={includeNaf}
+                    class="filter__button">N</button
+                >
+            </div>
+            <label class="filter__search">
+                Search: <input bind:value={searchTerm} placeholder="Query" />
+            </label>
+            <br />
+            <div>
+                {#each sortedTeam as team}
+                    <button
+                        class="team-button"
+                        class:selected={$currentTeam.id === team.id}
+                        on:click={() => newTeam(team.id)}
+                        >{team.name}
+                        <span>{tierToNumeral(team.tier)}</span
+                        >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
+                            >{/if}</button
+                    >
+                {/each}
+            </div>
         </div>
-    </div>
-    <button
-        class="create-team"
-        disabled={!$currentTeam}
-        data-cy="create-team"
-        on:click={() => createTeam()}>Create</button
-    >
+        <button
+            class="create-team"
+            disabled={!$currentTeam}
+            data-cy="create-team"
+            on:click={() => createTeam()}>Create</button
+        >
+    {/if}
+    {#if dungeonBowl}
+        <div class="button-container">
+            <h2>DUNGEON BOWL</h2>
+            <p>Well this is a little exciting isn't it.</p>
+            {#each dungeonBowlColleges as college}
+                <button disabled>{college}</button>
+            {/each}
+            <p>Coming soon assuming I don't take root.</p>
+        </div>
+    {/if}
 {/if}
 
 {#if $teamLoadOpen}
@@ -243,6 +277,15 @@
             background-color: var(--secondary-colour);
             color: white;
             border-color: var(--secondary-colour);
+            &:disabled {
+                background-color: white;
+                color: grey;
+                border: none;
+            }
+        }
+        &:disabled {
+            border: none;
+            color: grey;
         }
 
         &.cancel {
