@@ -17,7 +17,7 @@
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
     import DocumentTitleWriter from './documentTitleWriter.svelte';
-    import { sendEventToAnalytics } from '../analytics/plausible';
+    import { sendEventToAnalytics } from '../analytics/analyticsHelper';
 
     const teamList = teamData.teams;
 

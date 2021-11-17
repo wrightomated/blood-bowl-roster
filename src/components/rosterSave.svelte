@@ -6,7 +6,7 @@
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showDelete } from '../store/showDelete.store';
     import { showAllInducements } from '../store/showAllInducements.store';
-    import { sendEventToAnalytics } from '../analytics/plausible';
+    import { sendEventToAnalytics } from '../analytics/analyticsHelper';
 
     let saved = false;
     let rosterCleared = false;

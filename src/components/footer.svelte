@@ -1,21 +1,34 @@
 <script lang="ts">
-    import { localStorageConsent } from '../store/localStorageConsent.store';
+    import { toggleAnalyticsStorage } from '../analytics/analyticsHelper';
 
-    const toggleLocalStorage = () => {
-        const s = $localStorageConsent;
-        if (s) {
-            localStorage.clear();
-        }
-        localStorageConsent.set(!s);
-        location.reload();
+    import { analyticsConsent } from '../store/analyticsConsent.store';
+
+    // import { localStorageConsent } from '../store/localStorageConsent.store';
+
+    // const toggleLocalStorage = () => {
+    //     const s = $localStorageConsent;
+    //     if (s) {
+    //         localStorage.clear();
+    //     }
+    //     localStorageConsent.set(!s);
+    //     location.reload();
+    // };
+
+    const toggleAnalytics = () => {
+        const consent = $analyticsConsent;
+        toggleAnalyticsStorage(consent);
+        analyticsConsent.set(!consent);
     };
 </script>
 
 <footer>
-    <p>
-        Local storage is used for storing saved and current rosters.
-        <!-- <span on:click={toggleLocalStorage}>Delete local storage.</span> -->
-    </p>
+    <p>Google analytics have been added to help make this better.</p>
+    <button on:click={() => toggleAnalytics()}
+        >{$analyticsConsent
+            ? 'Deny Google cookie'
+            : 'Allow Google cookie'}</button
+    >
+
     <p>
         Rule references and player names are property of Games Workshop. This
         site is not affiliated with Games Workshop. I just think they're neat.

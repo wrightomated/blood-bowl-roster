@@ -8,8 +8,15 @@ export const sendEventToAnalytics = (name: string, props?: AnalyticsProps) => {
     // });
 };
 
+export const toggleAnalyticsStorage = (consent: boolean) => {
+    const storageValue = consent ? 'granted' : 'denied';
+    gtag('consent', 'update', {
+        analytics_storage: storageValue,
+    });
+    console.log('analyticsUpdated');
+};
+
 const googleAnalyticsEvent = (name: string, props: AnalyticsProps = {}) => {
-    const gtag = (window as any).gtag;
     gtag('event', name, props);
 };
 
@@ -17,6 +24,8 @@ const googleAnalyticsEvent = (name: string, props: AnalyticsProps = {}) => {
 //     const plausible = (window as any).plausible;
 //     props ? plausible(name, { props }) : plausible(name);
 // };
+
+const gtag = (window as any).gtag;
 
 interface AnalyticsProps {
     [key: string]: string | number | boolean;

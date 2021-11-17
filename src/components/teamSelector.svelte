@@ -17,8 +17,8 @@
     import { teamFormat } from '../store/teamFormat.store';
     import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
+    import { sendEventToAnalytics } from '../analytics/analyticsHelper';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-    import { sendEventToAnalytics } from '../analytics/plausible';
 
     export let teamList: Team[];
 

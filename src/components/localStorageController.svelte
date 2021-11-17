@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { analyticsConsent } from '../store/analyticsConsent.store';
+
     import { currentTeam } from '../store/currentTeam.store';
     import { localStorageConsent } from '../store/localStorageConsent.store';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
@@ -29,5 +31,9 @@
 
     rosterViewMode.subscribe((x) => {
         localStorage.setItem('rosterViewMode', x);
+    });
+
+    analyticsConsent.subscribe((x) => {
+        localStorage.setItem('allowAnalytics', '' + x);
     });
 </script>
