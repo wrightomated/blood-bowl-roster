@@ -5,7 +5,7 @@
         const suffix =
             `${options.teamName ? options.teamName + ' - ' : ''}` +
             options.teamType;
-        const title = `BB Roster - ${suffix}`;
+        const title = `BB Roster${suffix ? ' - ' + suffix : ''}`;
         if (document.title !== title) {
             document.title = title;
         }
