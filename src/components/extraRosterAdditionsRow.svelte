@@ -40,9 +40,8 @@
 </tr>
 
 <style lang="scss">
-    @import '../styles/colour';
     th {
-        background-color: $main-colour;
+        background-color: var(--main-colour);
         color: white;
         text-align: left;
         text-transform: uppercase;

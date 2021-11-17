@@ -125,9 +125,9 @@
         position: relative;
         min-width: 300px;
         max-width: 600px;
-        border: 2px solid $secondary-background-colour;
+        border: 2px solid var(--secondary-background-colour);
         height: 100%;
-        background-color: $secondary-background-colour;
+        background-color: var(--secondary-background-colour);
 
         &__content {
             min-height: 100px;
@@ -139,8 +139,8 @@
         min-height: 52px;
         border-radius: 25px;
         border-radius: 20px 20px 0 0;
-        border: 2px solid $secondary-background-colour;
-        background-color: $secondary-background-colour;
+        border: 2px solid var(--secondary-background-colour);
+        background-color: var(--secondary-background-colour);
         h3 {
             margin: 0;
             margin-bottom: 8px;
@@ -160,7 +160,7 @@
         }
         select {
             margin: 6px 0;
-            background-color: $secondary-colour;
+            background-color: var(--secondary-colour);
             color: #333;
             font-size: 16px;
             -webkit-appearance: none;

@@ -336,7 +336,6 @@
 </section>
 
 <style lang="scss">
-    @import '../styles/colour';
     @import '../styles/font';
     input {
         border: 0;
@@ -354,19 +353,19 @@
         position: relative;
         min-width: 300px;
         height: 100%;
-        border: 2px solid $secondary-colour;
+        border: 2px solid var(--secondary-colour);
         &.danger {
-            border-color: $main-colour;
+            border-color: var(--main-colour);
         }
     }
     .header {
-        background-color: $secondary-colour;
+        background-color: var(--secondary-colour);
         color: white;
         border-radius: 20px 20px 0 0;
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
-        border: 2px solid $secondary-colour;
+        border: 2px solid var(--secondary-colour);
         h3 {
             margin: 0;
         }
@@ -380,8 +379,8 @@
             }
         }
         &.danger {
-            background-color: $main-colour;
-            border-color: $main-colour;
+            background-color: var(--main-colour);
+            border-color: var(--main-colour);
         }
     }
     .content {
@@ -397,7 +396,7 @@
         right: 10px;
         top: 10px;
         background-color: white;
-        color: $secondary-colour;
+        color: var(--secondary-colour);
         position: absolute;
         text-align: center;
 
@@ -410,7 +409,7 @@
         /* Firefox */
         &[type='number'] {
             -moz-appearance: textfield;
-            color: $secondary-colour;
+            color: var(--secondary-colour);
         }
     }
     .player-characteristics {
@@ -430,14 +429,14 @@
     }
 
     .mini-title {
-        color: $main-colour;
+        color: var(--main-colour);
         font-family: $display-font;
         margin: 0;
     }
 
     .big-guys,
     .sevens-over-four {
-        color: $main-colour;
+        color: var(--main-colour);
         font-family: $display-font;
         i {
             vertical-align: text-bottom;

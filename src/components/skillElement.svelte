@@ -17,11 +17,10 @@
 </span>
 
 <style lang="scss">
-    @import '../styles/colour';
     .skills {
         span {
             &:nth-child(even) {
-                color: $main-colour;
+                color: var(--main-colour);
             }
             &::after {
                 content: ', ';

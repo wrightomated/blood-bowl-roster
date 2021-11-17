@@ -4,11 +4,9 @@
 </header>
 
 <style lang="scss">
-    @import '../styles/colour';
-
     header {
         h1 {
-            color: $main-colour;
+            color: var(--main-colour);
             margin-block-end: 0;
             margin-bottom: 0;
         }

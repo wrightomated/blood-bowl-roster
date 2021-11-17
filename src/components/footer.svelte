@@ -31,13 +31,12 @@
 </footer>
 
 <style lang="scss">
-    @import '../styles/colour';
     p {
         text-align: left;
         font-size: small;
     }
     footer {
-        border-top: 1px solid $secondary-colour;
+        border-top: 1px solid var(--secondary-colour);
         margin-top: 2em;
         padding-bottom: 1em;
     }

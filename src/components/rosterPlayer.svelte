@@ -313,7 +313,6 @@
 {/if}
 
 <style lang="scss">
-    @import '../styles/colour';
     input {
         border: 0;
         border-radius: 0;
@@ -335,7 +334,7 @@
         display: flex;
     }
     .danger {
-        color: $main-colour;
+        color: var(--main-colour);
         i {
             vertical-align: text-bottom;
         }
@@ -368,7 +367,7 @@
         color: green;
     }
     .degraded {
-        color: $main-colour;
+        color: var(--main-colour);
     }
     @media print {
         .flex-container {

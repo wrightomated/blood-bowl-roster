@@ -229,37 +229,36 @@
 {/if}
 
 <style lang="scss">
-    @import '../styles/colour';
     @import '../styles/font';
     button {
         border-radius: 10px;
         background-color: white;
-        color: $secondary-colour;
+        color: var(--secondary-colour);
         padding: 10px;
         margin: 4px;
-        border: 2px solid $secondary-colour;
+        border: 2px solid var(--secondary-colour);
 
         &:hover,
         &.selected {
-            background-color: $secondary-colour;
+            background-color: var(--secondary-colour);
             color: white;
-            border-color: $secondary-colour;
+            border-color: var(--secondary-colour);
         }
 
         &.cancel {
-            color: $main-colour;
-            border-color: $main-colour;
+            color: var(--main-colour);
+            border-color: var(--main-colour);
 
             &:hover {
                 color: white;
-                background-color: $main-colour;
+                background-color: var(--main-colour);
             }
         }
     }
 
     .button-container {
         border-radius: 10px;
-        background: $secondary-background-colour;
+        background: var(--secondary-background-colour);
         padding: 10px;
     }
     .team-button {
@@ -278,17 +277,17 @@
             border-radius: 50%;
             font-size: 0.75em;
             background-color: white;
-            color: $secondary-colour;
+            color: var(--secondary-colour);
             padding: 0;
             width: 24px;
             height: 24px;
             line-height: 0px;
             text-align: center;
             margin: 0 auto;
-            border: 2px solid $secondary-colour;
+            border: 2px solid var(--secondary-colour);
 
             &:hover {
-                border-color: $secondary-background-colour;
+                border-color: var(--secondary-background-colour);
             }
         }
         &__search {

@@ -36,19 +36,19 @@
         border-radius: 10px;
         background-color: white;
         margin: 5px;
-        border: 2px solid $secondary-colour;
+        border: 2px solid var(--secondary-colour);
 
         &__button {
             padding: 10px;
-            color: $secondary-colour;
-            border-right: 1px solid $secondary-colour;
+            color: var(--secondary-colour);
+            border-right: 1px solid var(--secondary-colour);
             border-radius: 0;
             text-transform: capitalize;
 
             &--selected {
-                background-color: $secondary-colour;
+                background-color: var(--secondary-colour);
                 color: white;
-                border-color: $secondary-colour;
+                border-color: var(--secondary-colour);
             }
 
             &:first-child {

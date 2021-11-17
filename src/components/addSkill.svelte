@@ -397,7 +397,6 @@
 </div>
 
 <style lang="scss">
-    @import '../styles/colour';
     @import '../styles/font';
     .container {
         text-align: left;
@@ -413,16 +412,16 @@
     button {
         border-radius: 10px;
         background-color: white;
-        color: $secondary-colour;
+        color: var(--secondary-colour);
         padding: 10px;
         margin: 5px;
-        border: 2px solid $secondary-colour;
+        border: 2px solid var(--secondary-colour);
         max-width: calc(50% - 20px);
 
         &:hover {
-            background-color: $secondary-colour;
+            background-color: var(--secondary-colour);
             color: white;
-            border-color: $secondary-colour;
+            border-color: var(--secondary-colour);
 
             &:disabled {
                 background-color: white;
@@ -437,7 +436,7 @@
         }
 
         &.selected {
-            background-color: $secondary-colour;
+            background-color: var(--secondary-colour);
             color: white;
         }
 
@@ -451,8 +450,8 @@
     }
 
     .injury-button {
-        color: $main-colour;
-        border: 2px solid $main-colour;
+        color: var(--main-colour);
+        border: 2px solid var(--main-colour);
 
         &:disabled {
             border: none;
@@ -460,15 +459,15 @@
         }
 
         &.selected {
-            background-color: $main-colour;
+            background-color: var(--main-colour);
             color: white;
-            border-color: $main-colour;
+            border-color: var(--main-colour);
         }
 
         &:hover {
-            background-color: $main-colour;
+            background-color: var(--main-colour);
             color: white;
-            border-color: $main-colour;
+            border-color: var(--main-colour);
 
             &:disabled {
                 background-color: white;
@@ -481,16 +480,16 @@
         padding: 1em;
         border-radius: 10px;
         border: 2px solid;
-        border-color: $secondary-colour;
+        border-color: var(--secondary-colour);
         margin-top: 1em;
         legend {
-            color: $secondary-colour;
+            color: var(--secondary-colour);
         }
 
         &.injury-fieldset {
-            border-color: $main-colour;
+            border-color: var(--main-colour);
             legend {
-                color: $main-colour;
+                color: var(--main-colour);
             }
         }
     }

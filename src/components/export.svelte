@@ -76,10 +76,9 @@
 {/if}
 
 <style lang="scss">
-    @import '../styles/colour';
     .container {
         border-radius: 10px;
-        background: $secondary-background-colour;
+        background: var(--secondary-background-colour);
         padding: 10px;
         margin-bottom: 1em;
     }

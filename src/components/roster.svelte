@@ -103,6 +103,7 @@
     .sub-heading-box {
         display: flex;
         align-items: flex-end;
+        gap: 8px;
     }
     .player-cards {
         display: grid;
