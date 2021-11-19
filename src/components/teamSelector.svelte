@@ -19,6 +19,7 @@
     import type { RosterMode } from '../store/rosterMode.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { sendEventToAnalytics } from '../analytics/plausible';
+    import Button from './uiComponents/button.svelte';
 
     export let teamList: Team[];
 
@@ -134,22 +135,14 @@
 </script>
 
 {#if !$teamLoadOpen}
-    <button
-        class:cancel={showTeams}
-        class="new-team"
-        data-cy="new-team"
-        on:click={() => toggleTeam()}
-        >{!showTeams ? 'New Team' : 'Cancel'}
-    </button>
+    <Button cancel={showTeams} clickFunction={toggleTeam} cyData="new-team"
+        >{!showTeams ? 'New Team' : 'Cancel'}</Button
+    >
 {/if}
 
 {#if !showTeams}
-    <button
-        class="load-team-button"
-        data-cy="load-team"
-        class:cancel={$teamLoadOpen}
-        on:click={() => toggleLoad()}
-        >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button
+    <Button cancel={$teamLoadOpen} clickFunction={toggleLoad} cyData="load-team"
+        >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</Button
     >
 {/if}
 
@@ -170,9 +163,9 @@
                 teamFormat.set(format);
             }}
         />
-        <button class="dungeon-bowl-button" on:click={toggleDungeon}
-            >{dungeonBowl ? 'Back' : 'Dungeon Bowl'}
-        </button>
+        <Button clickFunction={toggleDungeon}
+            >{dungeonBowl ? 'Back' : 'Dungeon Bowl'}</Button
+        >
 
         <div class="button-container">
             <div class="filter__tier">
@@ -205,14 +198,15 @@
             <br />
             <div>
                 {#each sortedTeam as team}
-                    <button
-                        class="team-button"
-                        class:selected={$currentTeam.id === team.id}
-                        on:click={() => newTeam(team.id)}
+                    <Button
+                        selected={$currentTeam.id === team.id}
+                        clickFunction={() => newTeam(team.id)}
                         >{team.name}
-                        <span>{tierToNumeral(team.tier)}</span
-                        >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
-                            >{/if}</button
+                        <span class="display-font"
+                            >{tierToNumeral(team.tier)}</span
+                        >{#if nafTeams.includes(team.id)}<span
+                                class="display-font">&nbsp;N</span
+                            >{/if}</Button
                     >
                 {/each}
             </div>
@@ -229,7 +223,7 @@
             <h2>DUNGEON BOWL</h2>
             <p>Well this is a little exciting isn't it.</p>
             {#each dungeonBowlColleges as college}
-                <button disabled>{college}</button>
+                <Button disabled>{college}</Button>
             {/each}
             <p>Coming soon assuming I don't take root.</p>
         </div>
@@ -264,52 +258,16 @@
 
 <style lang="scss">
     @import '../styles/font';
-    button {
-        border-radius: 10px;
-        background-color: white;
-        color: var(--secondary-colour);
-        padding: 10px;
-        margin: 4px;
-        border: 2px solid var(--secondary-colour);
-
-        &:hover,
-        &.selected {
-            background-color: var(--secondary-colour);
-            color: white;
-            border-color: var(--secondary-colour);
-            &:disabled {
-                background-color: white;
-                color: grey;
-                border: none;
-            }
-        }
-        &:disabled {
-            border: none;
-            color: grey;
-        }
-
-        &.cancel {
-            color: var(--main-colour);
-            border-color: var(--main-colour);
-
-            &:hover {
-                color: white;
-                background-color: var(--main-colour);
-            }
-        }
-    }
 
     .button-container {
         border-radius: 10px;
         background: var(--secondary-background-colour);
         padding: 10px;
     }
-    .team-button {
-        // display: block;
-        span {
-            font-family: $display-font;
-        }
+    .display-font {
+        font-family: $display-font;
     }
+
     .filter {
         &__tier {
             display: inline-block;
