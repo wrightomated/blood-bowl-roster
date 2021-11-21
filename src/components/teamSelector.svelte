@@ -194,7 +194,7 @@
 
 {#if $teamLoadOpen}
     <h2 class="page-title">Load Team</h2>
-    <div class="button-container">
+    <div class="button-container" data-cy="load-team-box">
         {#each $savedRosterIndex.index as savedRoster, i}
             <Button clickFunction={() => loadTeam(savedRoster)}
                 >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button

@@ -47,7 +47,7 @@ context('Team creation', () => {
 
         cy.getBySel('menu-button').click();
         cy.getBySel('load-team').click();
-        cy.contains(teamName).click();
+        cy.getBySel('load-team-box').contains(teamName).click();
         cy.getBySel('team-name').should('have.value', teamName);
     });
 

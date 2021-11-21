@@ -55,7 +55,7 @@
     </header>
     <div class="menu__buttons" class:menu__buttons--hidden={!isOpen}>
         {#if $roster.teamType}
-            <Button cyData="current-team" clickFunction={currentTeam}
+            <Button clickFunction={currentTeam}
                 >Current Team{$roster.teamName
                     ? ': ' + $roster.teamName
                     : ''}</Button
