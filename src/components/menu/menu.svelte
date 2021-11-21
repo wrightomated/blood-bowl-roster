@@ -136,6 +136,7 @@
         }
     }
     .overlay {
+        z-index: 6;
         position: fixed;
         width: 100%;
         height: 100%;
