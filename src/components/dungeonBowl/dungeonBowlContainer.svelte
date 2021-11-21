@@ -37,6 +37,6 @@
         color: var(--main-colour);
         text-align: center;
         font-size: 32px;
-        margin-top: 32px;
+        margin-top: 48px;
     }
 </style>
