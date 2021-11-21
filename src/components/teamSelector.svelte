@@ -162,7 +162,7 @@
             >
         </div>
         <label class="filter__search">
-            Search: <input bind:value={searchTerm} placeholder="Team name" />
+            Search: <input bind:value={searchTerm} placeholder="Team type" />
         </label>
         <br />
         <div>
@@ -181,7 +181,7 @@
                 >
             {/each}
             {#if sortedTeam.length === 0}
-                <p>No matches</p>
+                <p class="no-matches">No matches</p>
             {/if}
         </div>
     </div>
@@ -237,6 +237,9 @@
     }
     .display-font {
         font-family: $display-font;
+    }
+    .no-matches {
+        margin-left: 4px;
     }
 
     .filter {
