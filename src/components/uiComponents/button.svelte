@@ -16,38 +16,8 @@
 >
 
 <style lang="scss">
+    @use "../../styles/mixins/roundedButton";
     .button {
-        border-radius: 10px;
-        background-color: white;
-        color: var(--secondary-colour);
-        padding: 10px;
-        margin: 4px;
-        border: 2px solid var(--secondary-colour);
-
-        &:hover,
-        &.selected {
-            background-color: var(--secondary-colour);
-            color: white;
-            border-color: var(--secondary-colour);
-            &:disabled {
-                background-color: white;
-                color: grey;
-                border: none;
-            }
-        }
-        &:disabled {
-            border: none;
-            color: grey;
-        }
-
-        &.cancel {
-            color: var(--main-colour);
-            border-color: var(--main-colour);
-
-            &:hover {
-                color: white;
-                background-color: var(--main-colour);
-            }
-        }
+        @include roundedButton.rounded-button;
     }
 </style>

@@ -3,6 +3,7 @@
 context('Test that a team can be copied', () => {
     it('should create a share link', () => {
         cy.visit('/');
+        cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Chaos Chosen').click();
         cy.getBySel('create-team').click();

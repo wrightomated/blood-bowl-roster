@@ -18,6 +18,8 @@
     } from '../store/showPlayerList.store';
     import DocumentTitleWriter from './documentTitleWriter.svelte';
     import { sendEventToAnalytics } from '../analytics/plausible';
+    import DungeonBowlContainer from './dungeonBowl/dungeonBowlContainer.svelte';
+    import { showDungeonBowl } from '../store/showDungeonBowl.store';
 
     const teamList = teamData.teams;
 
@@ -46,81 +48,84 @@
 <DocumentTitleWriter />
 
 <span class="no-print">
+    <DungeonBowlContainer />
     <TeamSelector {teamList} />
 </span>
 
 {#if selectedTeam}
-    <span class="no-print">
-        <div class="header-container">
-            <caption
-                class="team-player-caption"
-                data-cy="selected-team-caption"
-                on:click={togglePlayers}
-            >
-                {`${selectedTeam.name} Team Players`}
-            </caption>
-            <MaterialButton
-                hoverText={$showAvailablePlayers
-                    ? 'Hide available players'
-                    : 'Show available players'}
-                symbol={$showAvailablePlayers
-                    ? 'arrow_drop_up'
-                    : 'arrow_drop_down'}
-                clickFunction={togglePlayers}
-            />
-        </div>
-        {#if $showAvailablePlayers}
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <td>QTY</td>
-                            <td class="left-align">Position</td>
-                            <td>Cost</td>
-                            <td>MA</td>
-                            <td>ST</td>
-                            <td>AG</td>
-                            <td>PA</td>
-                            <td>AV</td>
-                            <td class="skills-header left-align">Skills</td>
-                            <td>Primary</td>
-                            <td>Secondary</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#each selectedTeam.players as teamPlayer}
-                            <PlayerRow
-                                max={teamPlayer.max}
-                                player={playerById(teamPlayer.id)}
-                            />
-                        {/each}
-                    </tbody>
-                </table>
+    {#if $teamSelectionOpen}
+        <span class="no-print">
+            <div class="header-container">
+                <caption
+                    class="team-player-caption"
+                    data-cy="selected-team-caption"
+                    on:click={togglePlayers}
+                >
+                    {`${selectedTeam.name} Team Players`}
+                </caption>
+                <MaterialButton
+                    hoverText={$showAvailablePlayers
+                        ? 'Hide available players'
+                        : 'Show available players'}
+                    symbol={$showAvailablePlayers
+                        ? 'arrow_drop_up'
+                        : 'arrow_drop_down'}
+                    clickFunction={togglePlayers}
+                />
             </div>
-        {/if}
-        <div class="header-container">
-            <caption
-                class="team-star-player-caption"
-                on:click={toggleStarPlayers}
-            >
-                {`${selectedTeam.name} Team Star Players`}
-            </caption>
-            <MaterialButton
-                hoverText={$showAvailableStarPlayers
-                    ? 'Hide available star players'
-                    : 'Show available star players'}
-                symbol={$showAvailableStarPlayers
-                    ? 'arrow_drop_up'
-                    : 'arrow_drop_down'}
-                clickFunction={toggleStarPlayers}
-            />
-        </div>
-        {#if $showAvailableStarPlayers}
-            <StarPlayers />
-        {/if}
-    </span>
+            {#if $showAvailablePlayers}
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>QTY</td>
+                                <td class="left-align">Position</td>
+                                <td>Cost</td>
+                                <td>MA</td>
+                                <td>ST</td>
+                                <td>AG</td>
+                                <td>PA</td>
+                                <td>AV</td>
+                                <td class="skills-header left-align">Skills</td>
+                                <td>Primary</td>
+                                <td>Secondary</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each selectedTeam.players as teamPlayer}
+                                <PlayerRow
+                                    max={teamPlayer.max}
+                                    player={playerById(teamPlayer.id)}
+                                />
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
+            {/if}
+            <div class="header-container">
+                <caption
+                    class="team-star-player-caption"
+                    on:click={toggleStarPlayers}
+                >
+                    {`${selectedTeam.name} Team Star Players`}
+                </caption>
+                <MaterialButton
+                    hoverText={$showAvailableStarPlayers
+                        ? 'Hide available star players'
+                        : 'Show available star players'}
+                    symbol={$showAvailableStarPlayers
+                        ? 'arrow_drop_up'
+                        : 'arrow_drop_down'}
+                    clickFunction={toggleStarPlayers}
+                />
+            </div>
+            {#if $showAvailableStarPlayers}
+                <StarPlayers />
+            {/if}
+        </span>
+    {/if}
 
-    {#if !$teamSelectionOpen && !$teamLoadOpen && $roster.teamType}
+    {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
         <Roster
             playerTypes={selectedTeam.players.map((x) => playerById(x.id))}
         />

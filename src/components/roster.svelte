@@ -123,24 +123,26 @@
         background: none;
     }
     .heading {
-        font-size: large;
-        margin-block-end: 0;
+        margin-top: 48px;
+        margin-block-end: 16px;
 
         input {
             display: block;
             font-family: 'Roboto Slab', serif;
             font-weight: 600;
-            font-size: 32px;
+            font-size: 48px;
             -webkit-padding: 0;
             padding: 0;
             box-sizing: inherit;
             border: none;
             color: #970f0c;
             margin: 0;
-            text-align: left;
+            text-align: center;
+            width: 100%;
 
             @media screen and (max-width: 450px) {
-                font-size: 24px;
+                font-size: 32px;
+                margin-top: 32px;
             }
         }
     }
@@ -155,9 +157,7 @@
     .skills {
         min-width: 200px;
     }
-    #team-name {
-        max-width: 100%;
-    }
+
     .print-only-team-name {
         display: none;
     }
