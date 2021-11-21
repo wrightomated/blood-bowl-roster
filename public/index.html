@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="Description" content="Create team rosters for Blood Bowl 2020. Includes all current teams, star players and inducements. Exhibition and league matches.">
 
-        <title>BB Roster</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="Description"
+        content="Create team rosters for Blood Bowl 2020. Includes all current teams, star players and inducements. Exhibition and league matches.">
 
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab:wght@600&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="/global.css" />
-        <link rel="stylesheet" href="/build/bundle.css" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <meta property="og:image" content="https://bbroster.com/bbroster_ograph.png"/>
-        <meta property="og:title" content="BB Roster"/>
-        <meta property="og:description" content="Create team rosters for Blood Bowl 2020. Includes all current teams, star players and inducements. Exhibition and league matches."/>
-        <meta property="og:image:width" content="1200"/>
-        <meta property="og:image:height" content="630"/>
-        <meta property="og:url" content="https://bbroster.com"/>
-        <meta property="og:type" content="website" />
-        <script>
-            window.onerror = function(message, source, lineno, colno, error) { 
-                const hasFailed = sessionStorage.getItem('failedOnce');
-                if (!hasFailed) {
-                    localStorage.clear(); 
-                    location.reload();
-                    sessionStorage.setItem('failedOnce','true');
-                }
-            };</script>
-        <script defer src="/build/bundle.js"></script>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XBRPVZ8KZV"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+    <title>BB Roster</title>
 
-            gtag('config', 'G-XBRPVZ8KZV');
-        </script>
-    </head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Slab:wght@600&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block" rel="stylesheet" />
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href="/build/bundle.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta property="og:image" content="https://bbroster.com/bbroster_ograph.png" />
+    <meta property="og:title" content="BB Roster" />
+    <meta property="og:description"
+        content="Create team rosters for Blood Bowl 2020. Includes all current teams, star players and inducements. Exhibition and league matches." />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://bbroster.com" />
+    <meta property="og:type" content="website" />
 
-    <body></body>
+    <script defer src="/build/bundle.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XBRPVZ8KZV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-XBRPVZ8KZV');
+    </script>
+    <script>
+        window.onerror = function (message, source, lineno, colno, error) {
+            const hasFailed = sessionStorage.getItem('failedOnce');
+            gtag('event', 'exception', {
+                'description': 'error_description',
+                'fatal': true
+            });
+            if (!hasFailed) {
+                localStorage.clear();
+                location.reload();
+                sessionStorage.setItem('failedOnce', 'true');
+            }
+        };</script>
+</head>
+
+<body></body>
+
 </html>
