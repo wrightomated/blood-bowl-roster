@@ -1,18 +1,14 @@
 <script lang="ts">
     import { sendEventToAnalytics } from '../../analytics/plausible';
-    import { teamIndex } from '../../data/teamIndex.data';
-
     import { showDungeonBowl } from '../../store/showDungeonBowl.store';
-
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
-
     import { teamSelectionOpen } from '../../store/teamSelectionOpen.store';
 
     import Button from '../uiComponents/button.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
 
-    // have menu store
+    // have menu store?
     let isOpen = false;
     const toggleDrawer = () => {
         isOpen = !isOpen;
@@ -121,14 +117,12 @@
         &__buttons {
             display: flex;
             padding: 16px;
-            // margin-top: 20px;
             &--hidden {
                 display: none;
             }
         }
         @media screen and (max-width: 783px) {
             &__drawer {
-                // position: fixed;
                 height: 100%;
                 top: -101%;
 

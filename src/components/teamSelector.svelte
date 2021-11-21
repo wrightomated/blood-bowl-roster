@@ -118,18 +118,6 @@
     };
 </script>
 
-<!-- {#if !$teamLoadOpen}
-    <Button cancel={showTeams} clickFunction={toggleTeam} cyData="new-team"
-        >{!showTeams ? 'New Team' : 'Cancel'}</Button
-    >
-{/if} -->
-
-<!-- {#if !showTeams}
-    <Button cancel={$teamLoadOpen} clickFunction={toggleLoad} cyData="load-team"
-        >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</Button
-    >
-{/if} -->
-
 {#if showTeams && !$teamLoadOpen}
     <h2 class="page-title">Create New Team</h2>
     <ToggleButton
