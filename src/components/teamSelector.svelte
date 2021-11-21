@@ -19,6 +19,9 @@
     import type { RosterMode } from '../store/rosterMode.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { sendEventToAnalytics } from '../analytics/plausible';
+    import Button from './uiComponents/button.svelte';
+    import { flip } from 'svelte/animate';
+    import { scale } from 'svelte/transition';
 
     export let teamList: Team[];
 
@@ -28,20 +31,8 @@
     const nafTeams = [28, 29];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
     const teamFormats: TeamFormat[] = ['elevens', 'sevens'];
-    const dungeonBowlColleges: string[] = [
-        'Fire',
-        'Shadow',
-        'Metal',
-        'Light',
-        'Death',
-        'Life',
-        'Beasts',
-        'Heavens',
-    ];
 
     $: searchTerm = '';
-
-    $: dungeonBowl = false;
 
     $: showTeams = $teamSelectionOpen;
 
@@ -67,16 +58,10 @@
             currentTeam.set(teamList.find((x) => x.id === $roster.teamId));
         }
         teamSelectionOpen.set(!showTeams);
-        dungeonBowl = showTeams;
     };
 
     const toggleLoad = () => {
         teamLoadOpen.set(!$teamLoadOpen);
-    };
-
-    const toggleDungeon = () => {
-        dungeonBowl = !dungeonBowl;
-        sendEventToAnalytics('dungeon-bowl');
     };
 
     const createTeam = () => {
@@ -133,116 +118,86 @@
     };
 </script>
 
-{#if !$teamLoadOpen}
-    <button
-        class:cancel={showTeams}
-        class="new-team"
-        data-cy="new-team"
-        on:click={() => toggleTeam()}
-        >{!showTeams ? 'New Team' : 'Cancel'}
-    </button>
-{/if}
+{#if showTeams && !$teamLoadOpen}
+    <h2 class="page-title">Create New Team</h2>
+    <ToggleButton
+        options={rosterModes}
+        selectedIndex={rosterModes.indexOf($rosterMode)}
+        selected={(mode) => {
+            rosterMode.set(mode);
+        }}
+    />
 
-{#if !showTeams}
-    <button
-        class="load-team-button"
-        data-cy="load-team"
-        class:cancel={$teamLoadOpen}
-        on:click={() => toggleLoad()}
-        >{!$teamLoadOpen ? 'Load Team' : 'Cancel'}</button
+    <ToggleButton
+        options={teamFormats}
+        selectedIndex={teamFormats.indexOf($teamFormat)}
+        selected={(format) => {
+            teamFormat.set(format);
+        }}
+    />
+
+    <div class="button-container">
+        <div class="filter__tier">
+            Filter:
+            <button
+                on:click={() => toggledTiers.toggleTier(1)}
+                class:selected={$filteredTiers.includes(1)}
+                class="filter__button">I</button
+            >
+            <button
+                on:click={() => toggledTiers.toggleTier(2)}
+                class:selected={$filteredTiers.includes(2)}
+                class="filter__button">II</button
+            >
+            <button
+                on:click={() => toggledTiers.toggleTier(3)}
+                class:selected={$filteredTiers.includes(3)}
+                class="filter__button">III</button
+            >
+            <button
+                on:click={toggleNaf}
+                title="Filter NAF teams"
+                class:selected={includeNaf}
+                class="filter__button">N</button
+            >
+        </div>
+        <label class="filter__search">
+            Search: <input bind:value={searchTerm} placeholder="Team type" />
+        </label>
+        <br />
+        <div>
+            {#each sortedTeam as team (team.id)}
+                <button
+                    class="team-buton"
+                    animate:flip={{ duration: 200 }}
+                    transition:scale|local={{ duration: 200 }}
+                    class:selected={$currentTeam.id === team.id}
+                    on:click={() => newTeam(team.id)}
+                    >{team.name}
+                    <span class="display-font">{tierToNumeral(team.tier)}</span
+                    >{#if nafTeams.includes(team.id)}<span class="display-font"
+                            >&nbsp;N</span
+                        >{/if}</button
+                >
+            {/each}
+            {#if sortedTeam.length === 0}
+                <p class="no-matches">No matches</p>
+            {/if}
+        </div>
+    </div>
+    <Button
+        clickFunction={createTeam}
+        cyData="create-team"
+        disabled={!$currentTeam}>Create</Button
     >
 {/if}
 
-{#if showTeams && !$teamLoadOpen}
-    {#if !dungeonBowl}
-        <ToggleButton
-            options={rosterModes}
-            selectedIndex={rosterModes.indexOf($rosterMode)}
-            selected={(mode) => {
-                rosterMode.set(mode);
-            }}
-        />
-
-        <ToggleButton
-            options={teamFormats}
-            selectedIndex={teamFormats.indexOf($teamFormat)}
-            selected={(format) => {
-                teamFormat.set(format);
-            }}
-        />
-        <button class="dungeon-bowl-button" on:click={toggleDungeon}
-            >{dungeonBowl ? 'Back' : 'Dungeon Bowl'}
-        </button>
-
-        <div class="button-container">
-            <div class="filter__tier">
-                Filter:
-                <button
-                    on:click={() => toggledTiers.toggleTier(1)}
-                    class:selected={$filteredTiers.includes(1)}
-                    class="filter__button">I</button
-                >
-                <button
-                    on:click={() => toggledTiers.toggleTier(2)}
-                    class:selected={$filteredTiers.includes(2)}
-                    class="filter__button">II</button
-                >
-                <button
-                    on:click={() => toggledTiers.toggleTier(3)}
-                    class:selected={$filteredTiers.includes(3)}
-                    class="filter__button">III</button
-                >
-                <button
-                    on:click={toggleNaf}
-                    title="Filter NAF teams"
-                    class:selected={includeNaf}
-                    class="filter__button">N</button
-                >
-            </div>
-            <label class="filter__search">
-                Search: <input bind:value={searchTerm} placeholder="Query" />
-            </label>
-            <br />
-            <div>
-                {#each sortedTeam as team}
-                    <button
-                        class="team-button"
-                        class:selected={$currentTeam.id === team.id}
-                        on:click={() => newTeam(team.id)}
-                        >{team.name}
-                        <span>{tierToNumeral(team.tier)}</span
-                        >{#if nafTeams.includes(team.id)}<span>&nbsp;N</span
-                            >{/if}</button
-                    >
-                {/each}
-            </div>
-        </div>
-        <button
-            class="create-team"
-            disabled={!$currentTeam}
-            data-cy="create-team"
-            on:click={() => createTeam()}>Create</button
-        >
-    {/if}
-    {#if dungeonBowl}
-        <div class="button-container">
-            <h2>DUNGEON BOWL</h2>
-            <p>Well this is a little exciting isn't it.</p>
-            {#each dungeonBowlColleges as college}
-                <button disabled>{college}</button>
-            {/each}
-            <p>Coming soon assuming I don't take root.</p>
-        </div>
-    {/if}
-{/if}
-
 {#if $teamLoadOpen}
-    <div class="button-container">
+    <h2 class="page-title">Load Team</h2>
+    <div class="button-container" data-cy="load-team-box">
         {#each $savedRosterIndex.index as savedRoster, i}
-            <button
-                class="saved-team-button"
-                on:click={() => loadTeam(savedRoster)}
-                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</button
+            <Button clickFunction={() => loadTeam(savedRoster)}
+                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
             >
         {/each}
         <div class="code-box">
@@ -263,53 +218,30 @@
 {/if}
 
 <style lang="scss">
+    @use "../styles/mixins/roundedButton";
     @import '../styles/font';
-    button {
-        border-radius: 10px;
-        background-color: white;
-        color: var(--secondary-colour);
-        padding: 10px;
-        margin: 4px;
-        border: 2px solid var(--secondary-colour);
 
-        &:hover,
-        &.selected {
-            background-color: var(--secondary-colour);
-            color: white;
-            border-color: var(--secondary-colour);
-            &:disabled {
-                background-color: white;
-                color: grey;
-                border: none;
-            }
-        }
-        &:disabled {
-            border: none;
-            color: grey;
-        }
-
-        &.cancel {
-            color: var(--main-colour);
-            border-color: var(--main-colour);
-
-            &:hover {
-                color: white;
-                background-color: var(--main-colour);
-            }
-        }
+    .page-title {
+        color: var(--main-colour);
+        text-align: center;
+        font-size: 32px;
+        margin-top: 32px;
     }
 
     .button-container {
+        margin-top: 8px;
+        margin-bottom: 8px;
         border-radius: 10px;
         background: var(--secondary-background-colour);
-        padding: 10px;
+        padding: 8px;
     }
-    .team-button {
-        // display: block;
-        span {
-            font-family: $display-font;
-        }
+    .display-font {
+        font-family: $display-font;
     }
+    .no-matches {
+        margin-left: 4px;
+    }
+
     .filter {
         &__tier {
             display: inline-block;
@@ -332,6 +264,11 @@
             &:hover {
                 border-color: var(--secondary-background-colour);
             }
+            &.selected {
+                background-color: var(--secondary-colour);
+                color: white;
+                border-color: var(--secondary-colour);
+            }
         }
         &__search {
             display: inline-block;
@@ -349,9 +286,7 @@
             font-size: 16px;
         }
     }
-    .create-team {
-        &:disabled {
-            display: none;
-        }
+    .team-buton {
+        @include roundedButton.rounded-button;
     }
 </style>

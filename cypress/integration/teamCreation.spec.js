@@ -5,6 +5,7 @@ context('Team creation', () => {
     it('should create, save and load team', () => {
         const teamName = 'Altdorf Daemons';
         cy.visit('/');
+        cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Black Orc').click();
         cy.getBySel('selected-team-caption').should('have.text', 'Black Orc Team Players');
@@ -39,18 +40,20 @@ context('Team creation', () => {
             expect(localStorage.getItem('savedRoster1')).to.eq(expectedRoster);
         });
 
+        cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Black Orc').click();
         cy.getBySel('selected-team-caption').should('have.text', 'Black Orc Team Players');
-        cy.getBySel('new-team').click(); // cancel
+
+        cy.getBySel('menu-button').click();
         cy.getBySel('load-team').click();
-        cy.contains(teamName).click();
-        cy.getBySel('selected-team-caption').should('have.text', 'Imperial Nobility Team Players');
+        cy.getBySel('load-team-box').contains(teamName).click();
         cy.getBySel('team-name').should('have.value', teamName);
     });
 
     it('Should add star player', () => {
         cy.visit('/');
+        cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Lizardmen').click();
         cy.getBySel('create-team').click();
