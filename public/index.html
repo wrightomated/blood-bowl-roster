@@ -42,7 +42,7 @@
         window.onerror = function (message, source, lineno, colno, error) {
             const hasFailed = sessionStorage.getItem('failedOnce');
             gtag('event', 'exception', {
-                'description': 'error_description',
+                'description': message,
                 'fatal': true
             });
             if (!hasFailed) {
