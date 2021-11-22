@@ -147,7 +147,11 @@ function createRoster() {
             }),
         loadRoster: (rosterKey: string) =>
             update((_store) => {
-                return { ...getSavedRoster(rosterKey) };
+                const savedRoster = getSavedRoster(rosterKey);
+                return {
+                    ...savedRoster,
+                    format: savedRoster?.format || 'elevens',
+                };
             }),
         codeToRoster: (rosterCode: string) =>
             update((_store) => {
@@ -262,11 +266,14 @@ const rosterFromCode = (code: string) => {
 };
 
 const getDefaultRoster: () => Roster = () => {
-    return (
+    const defaultRoster =
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
-        getEmptyRoster()
-    );
+        getEmptyRoster();
+    return {
+        ...defaultRoster,
+        format: defaultRoster?.format || 'elevens',
+    };
 };
 
 const addPlayerToPlayers: (
