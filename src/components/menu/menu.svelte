@@ -40,19 +40,19 @@
     };
 </script>
 
-<span class="menu__icon" class:menu__icon--close={isOpen}>
-    <MaterialButton
-        cyData="menu-button"
-        symbol={isOpen ? 'close' : 'menu'}
-        hoverText={isOpen ? 'Close menu' : 'Open menu'}
-        clickFunction={toggleDrawer}
-    />
-</span>
-
+<header class="header" class:header--drawer-open={isOpen}>
+    <div class="menu__icon" class:menu__icon--close={isOpen}>
+        <MaterialButton
+            cyData="menu-button"
+            symbol={isOpen ? 'close' : 'menu'}
+            hoverText={isOpen ? 'Close menu' : 'Open menu'}
+            clickFunction={toggleDrawer}
+        />
+    </div>
+    <h1>BB Roster</h1>
+</header>
+<div class="spacer" class:spacer--show={isOpen} />
 <nav class="menu__drawer" class:menu__drawer--open={isOpen}>
-    <header>
-        <h1>BB Roster</h1>
-    </header>
     <div class="menu__buttons" class:menu__buttons--hidden={!isOpen}>
         {#if $roster.teamType}
             <Button clickFunction={currentTeam}
@@ -68,33 +68,49 @@
         >
     </div>
 </nav>
+
 <div class="overlay" on:click={toggleDrawer} class:overlay--visible={isOpen} />
 
 <style lang="scss">
-    header {
+    :root {
+        --header-height: 60px;
+    }
+    .header {
+        position: relative;
         z-index: 8;
         width: 100%;
         text-align: center;
         border-bottom: var(--secondary-colour) 2px solid;
         background-color: white;
+        display: flex;
+        align-items: center;
+        &--drawer-open {
+            position: fixed;
+        }
         h1 {
             margin: 12px 0;
             color: var(--main-colour);
         }
+        @media print {
+            display: none;
+        }
+    }
+    .spacer {
+        height: 63px;
+        display: none;
+
+        &--show {
+            display: block;
+        }
     }
     .menu {
         &__icon {
-            position: absolute;
-            top: 16px;
-            left: 8px;
             z-index: 9;
             height: 24px;
             width: 24px;
             border-radius: 50%;
             background-color: white;
-            &--close {
-                position: fixed;
-            }
+            margin: 0 12px;
             @media print {
                 display: none;
             }
@@ -105,18 +121,19 @@
             width: 100%;
             position: fixed;
             left: 0;
-            top: -334px;
+            top: -124px;
             transition: transform 250ms ease-in-out;
             background: white;
-            height: 135px;
+            height: 124px;
             border-bottom: 2px solid var(--secondary-colour);
             &--open {
-                transform: translateY(334px);
+                transform: translateY(124px);
             }
         }
         &__buttons {
             display: flex;
             padding: 16px;
+            margin-top: 52px;
             &--hidden {
                 display: none;
             }
@@ -143,9 +160,14 @@
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.33);
-        display: none;
+        transition: opacity 250ms ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+        display: block;
+
         &--visible {
-            display: block;
+            visibility: visible;
+            opacity: 1;
         }
     }
 </style>

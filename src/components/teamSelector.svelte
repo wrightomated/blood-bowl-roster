@@ -218,14 +218,15 @@
 {/if}
 
 <style lang="scss">
-    @use "../styles/mixins/roundedButton";
+    @use '../styles/mixins/roundedButton';
     @import '../styles/font';
 
     .page-title {
         color: var(--main-colour);
         text-align: center;
         font-size: 32px;
-        margin-top: 48px;
+        margin-block-start: 16px;
+        margin-block-end: 24px;
     }
 
     .button-container {

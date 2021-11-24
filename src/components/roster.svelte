@@ -27,6 +27,7 @@
             placeholder="Team Name"
             id="team-name"
             data-cy="team-name"
+            class="heading__input"
             bind:value={$roster.teamName}
             use:blurOnEscapeOrEnter
         />
@@ -123,10 +124,10 @@
         background: none;
     }
     .heading {
-        margin-top: 48px;
-        margin-block-end: 16px;
+        margin-top: 16px;
+        margin-block-end: 32px;
 
-        input {
+        &__input {
             display: block;
             font-family: 'Roboto Slab', serif;
             font-weight: 600;
@@ -139,11 +140,22 @@
             margin: 0;
             text-align: center;
             width: 100%;
-
-            @media screen and (max-width: 450px) {
+        }
+    }
+    @media screen and (max-width: 800px) {
+        .heading {
+            margin-block-end: 24px;
+            &__input {
                 font-size: 32px;
-                margin-top: 32px;
             }
+        }
+    }
+    @media screen and (max-width: 450px) {
+        .heading {
+            &__input {
+                font-size: 20px;
+            }
+            margin-block-end: 16px;
         }
     }
     .sub-heading {
