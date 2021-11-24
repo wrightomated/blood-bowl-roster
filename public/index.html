@@ -43,6 +43,7 @@
             const hasFailed = sessionStorage.getItem('failedOnce');
             gtag('event', 'exception', {
                 'description': message,
+                'error': JSON.stringify(error),
                 'fatal': true
             });
             if (!hasFailed) {
