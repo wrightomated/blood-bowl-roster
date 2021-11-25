@@ -4,6 +4,7 @@
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
     import { teamSelectionOpen } from '../../store/teamSelectionOpen.store';
+    import { currentTeam } from '../../store/currentTeam.store';
 
     import Button from '../uiComponents/button.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
@@ -13,11 +14,12 @@
     const toggleDrawer = () => {
         isOpen = !isOpen;
     };
-    const currentTeam = () => {
+    const loadCurrentTeam = () => {
         teamSelectionOpen.set(false);
         teamLoadOpen.set(false);
         showDungeonBowl.set(false);
         isOpen = false;
+        currentTeam.setCurrentTeamWithId($roster.teamId);
     };
     const newTeam = () => {
         teamSelectionOpen.set(true);
@@ -55,7 +57,7 @@
 <nav class="menu__drawer" class:menu__drawer--open={isOpen}>
     <div class="menu__buttons" class:menu__buttons--hidden={!isOpen}>
         {#if $roster.teamType}
-            <Button clickFunction={currentTeam}
+            <Button clickFunction={loadCurrentTeam}
                 >Current Team{$roster.teamName
                     ? ': ' + $roster.teamName
                     : ''}</Button
