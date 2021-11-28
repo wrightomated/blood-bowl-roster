@@ -3,6 +3,16 @@
     --secondary-colour: #1a3f7f;
     --secondary-background-colour: #eeeeee;
     --neutral: #ccc;
+    --fire: #d65a22;
+    --shadow: #424344;
+    --metal: #7e807f;
+    --light: #4d77c9;
+    --death: #ac40c2;
+    --life: #1d8858;
+    --beasts: #bf8106;
+    --heavens: #d4d6d5;
+
+    --display-font: 'Roboto Slab', serif;
 }
 
 html,
