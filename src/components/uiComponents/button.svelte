@@ -16,7 +16,7 @@
 >
 
 <style lang="scss">
-    @use "../../styles/mixins/roundedButton";
+    @use '../../styles/mixins/roundedButton';
     .button {
         @include roundedButton.rounded-button;
     }
