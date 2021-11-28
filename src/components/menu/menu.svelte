@@ -3,11 +3,15 @@
     import { showDungeonBowl } from '../../store/showDungeonBowl.store';
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
-    import { teamSelectionOpen } from '../../store/teamSelectionOpen.store';
+    import {
+        showNewTeamDialogue,
+        teamSelectionOpen,
+    } from '../../store/teamSelectionOpen.store';
     import { currentTeam } from '../../store/currentTeam.store';
 
     import Button from '../uiComponents/button.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
+    import { teamFormat } from '../../store/teamFormat.store';
 
     // have menu store?
     let isOpen = false;
@@ -16,19 +20,22 @@
     };
     const loadCurrentTeam = () => {
         teamSelectionOpen.set(false);
+        showNewTeamDialogue.set(false);
         teamLoadOpen.set(false);
         showDungeonBowl.set(false);
         isOpen = false;
         currentTeam.setCurrentTeamWithId($roster.teamId);
     };
     const newTeam = () => {
-        teamSelectionOpen.set(true);
+        teamSelectionOpen.set($teamFormat !== 'dungeon bowl');
+        showNewTeamDialogue.set(true);
         teamLoadOpen.set(false);
-        showDungeonBowl.set(false);
+        showDungeonBowl.set($teamFormat === 'dungeon bowl');
         isOpen = false;
     };
     const loadTeam = () => {
         teamLoadOpen.set(true);
+        showNewTeamDialogue.set(false);
         teamSelectionOpen.set(false);
         showDungeonBowl.set(false);
         isOpen = false;
@@ -65,9 +72,9 @@
         {/if}
         <Button cyData="new-team" clickFunction={newTeam}>New Team</Button>
         <Button cyData="load-team" clickFunction={loadTeam}>Load Team</Button>
-        <Button cyData="dungeon-bowl" clickFunction={dungeonBowl}
+        <!-- <Button cyData="dungeon-bowl" clickFunction={dungeonBowl}
             >Dungeon Bowl</Button
-        >
+        > -->
     </div>
 </nav>
 

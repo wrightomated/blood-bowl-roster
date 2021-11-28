@@ -2,7 +2,10 @@
     import type { Team, TeamTier } from '../models/team.model';
     import { currentTeam } from '../store/currentTeam.store';
     import { roster } from '../store/teamRoster.store';
-    import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
+    import {
+        teamSelectionOpen,
+        showNewTeamDialogue,
+    } from '../store/teamSelectionOpen.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import type { Roster } from '../models/roster.model';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
@@ -22,6 +25,7 @@
     import Button from './uiComponents/button.svelte';
     import { flip } from 'svelte/animate';
     import { scale } from 'svelte/transition';
+    import { showDungeonBowl } from '../store/showDungeonBowl.store';
 
     export let teamList: Team[];
 
@@ -30,11 +34,9 @@
 
     const nafTeams = [28, 29];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
-    const teamFormats: TeamFormat[] = ['elevens', 'sevens'];
+    const teamFormats: TeamFormat[] = ['elevens', 'sevens', 'dungeon bowl'];
 
     $: searchTerm = '';
-
-    $: showTeams = $teamSelectionOpen;
 
     $: sortedTeam = sortTeam()
         .filter((x) => $filteredTiers.includes(x.tier))
@@ -53,12 +55,12 @@
         currentTeam.set(teamList.find((x) => x.id === index));
     };
 
-    const toggleTeam = () => {
-        if (showTeams && $roster.teamId) {
-            currentTeam.set(teamList.find((x) => x.id === $roster.teamId));
-        }
-        teamSelectionOpen.set(!showTeams);
-    };
+    // const toggleTeam = () => {
+    //     if (showTeams && $roster.teamId) {
+    //         currentTeam.set(teamList.find((x) => x.id === $roster.teamId));
+    //     }
+    //     teamSelectionOpen.set(!showTeams);
+    // };
 
     const toggleLoad = () => {
         teamLoadOpen.set(!$teamLoadOpen);
@@ -116,9 +118,15 @@
     const toggleNaf = () => {
         includeNaf = !includeNaf;
     };
+
+    const toggleDungeonBowl = (show: boolean) => {
+        teamLoadOpen.set(false);
+        teamSelectionOpen.set(!show);
+        showDungeonBowl.set(show);
+    };
 </script>
 
-{#if showTeams && !$teamLoadOpen}
+{#if !$teamLoadOpen && $showNewTeamDialogue}
     <h2 class="page-title">Create New Team</h2>
     <ToggleButton
         options={rosterModes}
@@ -133,63 +141,69 @@
         selectedIndex={teamFormats.indexOf($teamFormat)}
         selected={(format) => {
             teamFormat.set(format);
+            toggleDungeonBowl(format === 'dungeon bowl');
         }}
     />
-
-    <div class="button-container">
-        <div class="filter__tier">
-            Filter:
-            <button
-                on:click={() => toggledTiers.toggleTier(1)}
-                class:selected={$filteredTiers.includes(1)}
-                class="filter__button">I</button
-            >
-            <button
-                on:click={() => toggledTiers.toggleTier(2)}
-                class:selected={$filteredTiers.includes(2)}
-                class="filter__button">II</button
-            >
-            <button
-                on:click={() => toggledTiers.toggleTier(3)}
-                class:selected={$filteredTiers.includes(3)}
-                class="filter__button">III</button
-            >
-            <button
-                on:click={toggleNaf}
-                title="Filter NAF teams"
-                class:selected={includeNaf}
-                class="filter__button">N</button
-            >
-        </div>
-        <label class="filter__search">
-            Search: <input bind:value={searchTerm} placeholder="Team type" />
-        </label>
-        <br />
-        <div>
-            {#each sortedTeam as team (team.id)}
+    {#if $teamSelectionOpen}
+        <div class="button-container">
+            <div class="filter__tier">
+                Filter:
                 <button
-                    class="team-buton"
-                    animate:flip={{ duration: 200 }}
-                    transition:scale|local={{ duration: 200 }}
-                    class:selected={$currentTeam.id === team.id}
-                    on:click={() => newTeam(team.id)}
-                    >{team.name}
-                    <span class="display-font">{tierToNumeral(team.tier)}</span
-                    >{#if nafTeams.includes(team.id)}<span class="display-font"
-                            >&nbsp;N</span
-                        >{/if}</button
+                    on:click={() => toggledTiers.toggleTier(1)}
+                    class:selected={$filteredTiers.includes(1)}
+                    class="filter__button">I</button
                 >
-            {/each}
-            {#if sortedTeam.length === 0}
-                <p class="no-matches">No matches</p>
-            {/if}
+                <button
+                    on:click={() => toggledTiers.toggleTier(2)}
+                    class:selected={$filteredTiers.includes(2)}
+                    class="filter__button">II</button
+                >
+                <button
+                    on:click={() => toggledTiers.toggleTier(3)}
+                    class:selected={$filteredTiers.includes(3)}
+                    class="filter__button">III</button
+                >
+                <button
+                    on:click={toggleNaf}
+                    title="Filter NAF teams"
+                    class:selected={includeNaf}
+                    class="filter__button">N</button
+                >
+            </div>
+            <label class="filter__search">
+                Search: <input
+                    bind:value={searchTerm}
+                    placeholder="Team type"
+                />
+            </label>
+            <br />
+            <div>
+                {#each sortedTeam as team (team.id)}
+                    <button
+                        class="team-buton"
+                        animate:flip={{ duration: 200 }}
+                        transition:scale|local={{ duration: 200 }}
+                        class:selected={$currentTeam.id === team.id}
+                        on:click={() => newTeam(team.id)}
+                        >{team.name}
+                        <span class="display-font"
+                            >{tierToNumeral(team.tier)}</span
+                        >{#if nafTeams.includes(team.id)}<span
+                                class="display-font">&nbsp;N</span
+                            >{/if}</button
+                    >
+                {/each}
+                {#if sortedTeam.length === 0}
+                    <p class="no-matches">No matches</p>
+                {/if}
+            </div>
         </div>
-    </div>
-    <Button
-        clickFunction={createTeam}
-        cyData="create-team"
-        disabled={!$currentTeam}>Create</Button
-    >
+        <Button
+            clickFunction={createTeam}
+            cyData="create-team"
+            disabled={!$currentTeam}>Create</Button
+        >
+    {/if}
 {/if}
 
 {#if $teamLoadOpen}

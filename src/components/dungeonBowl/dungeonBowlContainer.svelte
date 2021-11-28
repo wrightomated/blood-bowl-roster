@@ -2,7 +2,6 @@
     import { dungeonBowlColleges } from '../../data/dungeonBowlColleges.data';
 
     import { showDungeonBowl } from '../../store/showDungeonBowl.store';
-    import Button from '../uiComponents/button.svelte';
     import DungeonBowlCollegeCard from './dungeonBowlCollegeCard.svelte';
 
     $: selectedCollege = dungeonBowlColleges.colleges[0];
@@ -10,7 +9,6 @@
 </script>
 
 {#if $showDungeonBowl}
-    <h2 class="page-title">Dungeon Bowl</h2>
     <div>
         <h3>Under Constuction</h3>
         <div class="college-buttons">
@@ -32,13 +30,7 @@
     @use '../../styles/mixins/roundedButton';
     $colleges: 'fire', 'shadow', 'metal', 'light', 'death', 'life', 'beasts',
         'heavens';
-    .page-title {
-        color: var(--main-colour);
-        text-align: center;
-        font-size: 32px;
-        margin-block-start: 16px;
-        margin-block-end: 24px;
-    }
+
     .college-cards {
         display: flex;
     }
