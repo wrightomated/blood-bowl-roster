@@ -4,7 +4,10 @@
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import { roster } from '../store/teamRoster.store';
-    import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
+    import {
+        showNewTeamDialogue,
+        teamSelectionOpen,
+    } from '../store/teamSelectionOpen.store';
 
     const setLocalStorageObject = (key: string, value: object) => {
         localStorage.setItem(key, JSON.stringify(value));
@@ -16,6 +19,7 @@
         }
         if (!x.teamType) {
             teamSelectionOpen.set(true);
+            showNewTeamDialogue.set(true);
         }
     });
 

@@ -26,8 +26,6 @@
     import { flip } from 'svelte/animate';
     import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
-    import { dbCollegeToTeam } from '../models/dungeonBowl.model';
-    import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 
     export let teamList: Team[];
 
@@ -56,13 +54,6 @@
     const newTeam = (index: number) => {
         currentTeam.setCurrentTeamWithId(index);
     };
-
-    // const toggleTeam = () => {
-    //     if (showTeams && $roster.teamId) {
-    //         currentTeam.set(teamList.find((x) => x.id === $roster.teamId));
-    //     }
-    //     teamSelectionOpen.set(!showTeams);
-    // };
 
     const toggleLoad = () => {
         teamLoadOpen.set(!$teamLoadOpen);
@@ -95,17 +86,6 @@
             localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
         currentTeam.setCurrentTeamWithId(loadedRoster.teamId);
-        // if (savedRoster.id < 100) {
-        //     currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
-        // } else {
-        //     currentTeam.set(
-        //         dbCollegeToTeam(
-        //             dungeonBowlColleges.colleges.find(
-        //                 (c) => c.id === loadedRoster.teamId
-        //             )
-        //         )
-        //     );
-        // }
 
         roster.loadRoster(`savedRoster${savedRoster.id}`);
         teamSelectionOpen.set(false);
