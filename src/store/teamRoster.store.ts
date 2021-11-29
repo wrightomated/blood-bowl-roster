@@ -271,6 +271,7 @@ const getDefaultRoster: () => Roster = () => {
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
+    currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
     return {
         ...defaultRoster,
         format: defaultRoster?.format || 'elevens',
