@@ -11,6 +11,7 @@
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
     import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
+    import { teamFormat } from '../store/teamFormat.store';
 
     export let playerTypes: Player[];
     $: nextPlayerIndex =
@@ -32,6 +33,11 @@
             use:blurOnEscapeOrEnter
         />
     </h2>
+    {#if $roster.format === 'dungeon bowl'}
+        <p class="dungeon-bowl-callout">
+            <strong>Dungeon Bowl: The work in progress roster.</strong>
+        </p>
+    {/if}
 </div>
 <div class="sub-heading-box">
     <p class="sub-heading">
@@ -172,6 +178,10 @@
 
     .print-only-team-name {
         display: none;
+    }
+
+    .dungeon-bowl-callout {
+        text-align: center;
     }
     @media print {
         .heading {
