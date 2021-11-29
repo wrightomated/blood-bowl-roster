@@ -1,12 +1,13 @@
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../store/teamFormat.store';
+import type { CollegeName } from './dungeonBowl.model';
 import type { Player } from './player.model';
 import type { TeamName } from './team.model';
 
 export interface Roster {
     teamId: number;
     teamName: string;
-    teamType: TeamName;
+    teamType: TeamName | CollegeName;
     players: RosterPlayerRecord[];
     extra?: ExtraRosterInfo;
     inducements: ExtraRosterInfo;

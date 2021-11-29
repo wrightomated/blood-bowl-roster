@@ -1,16 +1,48 @@
 <script lang="ts">
     import { dungeonBowlColleges } from '../../data/dungeonBowlColleges.data';
+    import { dbCollegeToTeam } from '../../models/dungeonBowl.model';
+    import { currentTeam } from '../../store/currentTeam.store';
+    import { rosterMode } from '../../store/rosterMode.store';
+    import { savedRosterIndex } from '../../store/saveDirectory.store';
 
     import { showDungeonBowl } from '../../store/showDungeonBowl.store';
-    import Button from '../uiComponents/button.svelte';
+    import {
+        showAvailablePlayers,
+        showAvailableStarPlayers,
+    } from '../../store/showPlayerList.store';
+    import { teamFormat } from '../../store/teamFormat.store';
+    import { roster } from '../../store/teamRoster.store';
+    import {
+        showNewTeamDialogue,
+        teamSelectionOpen,
+    } from '../../store/teamSelectionOpen.store';
     import DungeonBowlCollegeCard from './dungeonBowlCollegeCard.svelte';
 
     $: selectedCollege = dungeonBowlColleges.colleges[0];
-    const selectCollege = (college) => (selectedCollege = college);
+    const selectCollege = (college) => {
+        (selectedCollege = college), setCurrentTeam(college);
+    };
+    const newTeam = () => {
+        savedRosterIndex.newId();
+        roster.reset({
+            teamId: selectedCollege.id,
+            teamType: selectedCollege.name,
+            mode: $rosterMode,
+            fans: 0,
+            format: $teamFormat,
+        });
+        teamSelectionOpen.set(false);
+        showAvailablePlayers.set(false);
+        showAvailableStarPlayers.set(false);
+        showDungeonBowl.set(false);
+        showNewTeamDialogue.set(false);
+    };
+    const setCurrentTeam = (college) => {
+        currentTeam.set(dbCollegeToTeam(college));
+    };
 </script>
 
 {#if $showDungeonBowl}
-    <h2 class="page-title">Dungeon Bowl</h2>
     <div>
         <h3>Under Constuction</h3>
         <div class="college-buttons">
@@ -26,26 +58,26 @@
     </div>
 
     <DungeonBowlCollegeCard college={selectedCollege} />
+
+    <button class="create-team-button" on:click={newTeam}>Create</button>
 {/if}
 
 <style lang="scss">
     @use '../../styles/mixins/roundedButton';
     $colleges: 'fire', 'shadow', 'metal', 'light', 'death', 'life', 'beasts',
         'heavens';
-    .page-title {
-        color: var(--main-colour);
-        text-align: center;
-        font-size: 32px;
-        margin-block-start: 16px;
-        margin-block-end: 24px;
-    }
+
     .college-cards {
         display: flex;
     }
 
+    .create-team-button {
+        @include roundedButton.rounded-button;
+        margin-top: 12px;
+    }
+
     .college-button {
         @include roundedButton.rounded-button;
-        // color: #333;
         &:hover {
             color: white;
         }

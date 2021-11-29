@@ -1,3 +1,4 @@
+import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 import { playerCatalogue } from '../data/players.data';
 import { starPlayers } from '../data/starPlayer.data';
 import { teamData } from '../data/teams.data';
@@ -31,7 +32,11 @@ export const stringToRoster = (code: string) => {
         ),
         players: expandPlayers(players),
         teamName: '',
-        teamType: teamData.teams.find((t) => t.id === teamId).name,
+        teamType:
+            teamId < 100
+                ? teamData.teams.find((t) => t.id === teamId).name
+                : dungeonBowlColleges.colleges.find((t) => t.id === teamId)
+                      .name,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
         mode: getMode(extras.find((x) => x.includes('m')) || 'm1'),
@@ -190,7 +195,11 @@ const getMode: (modeMatch: string) => RosterMode = (modeMatch) => {
 };
 
 const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
-    return getNumber(modeMatch) === 0 ? 'elevens' : 'sevens';
+    return {
+        0: 'elevens',
+        1: 'sevens',
+        2: 'dungeon bowl',
+    }[getNumber(modeMatch)] as TeamFormat;
 };
 
 export const deletedPlayer: () => Player = () => {

@@ -48,8 +48,8 @@
 <DocumentTitleWriter />
 
 <span class="no-print">
-    <DungeonBowlContainer />
     <TeamSelector {teamList} />
+    <DungeonBowlContainer />
 </span>
 
 {#if selectedTeam}

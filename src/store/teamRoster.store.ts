@@ -10,6 +10,7 @@ import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import type { TeamFormat } from './teamFormat.store';
+import type { CollegeName } from '../models/dungeonBowl.model';
 
 export const maxPlayerNumber = 16;
 
@@ -200,7 +201,7 @@ function createRoster() {
         },
         reset: (options?: {
             teamId: number;
-            teamType: TeamName;
+            teamType: TeamName | CollegeName;
             mode: RosterMode;
             format: TeamFormat;
             fans: number;
@@ -215,7 +216,7 @@ function createRoster() {
 
 const getEmptyRoster: (options?: {
     teamId: number;
-    teamType: TeamName;
+    teamType: TeamName | CollegeName;
     fans: number;
     mode: RosterMode;
     format: TeamFormat;
@@ -270,6 +271,7 @@ const getDefaultRoster: () => Roster = () => {
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
+    currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
     return {
         ...defaultRoster,
         format: defaultRoster?.format || 'elevens',

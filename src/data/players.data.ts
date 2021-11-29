@@ -2,7 +2,7 @@ import type { Player, PlayerCatalogue } from '../models/player.model';
 
 const imperialLineman: Player = {
     id: 1,
-    position: 'Imperial Retainer Lineman',
+    position: 'Imperial Lineman',
     playerStats: [6, 3, 4, 4, 8],
     cost: 45,
     skills: [16],
@@ -83,7 +83,7 @@ const trainedTroll: Player = {
 
 const beastmanRunnerLineman: Player = {
     id: 9,
-    position: 'Beastman Runner Lineman',
+    position: 'Beastman Lineman',
     playerStats: [6, 3, 3, 4, 9],
     cost: 60,
     skills: [30],
@@ -145,7 +145,7 @@ const darkElfLineman: Player = {
 
 const darkElfRunner: Player = {
     id: 15,
-    position: 'Runner',
+    position: 'Dark Elf Runner',
     playerStats: [7, 3, 2, 3, 8],
     cost: 80,
     skills: [40],
@@ -155,7 +155,7 @@ const darkElfRunner: Player = {
 
 const darkElfBlitzer: Player = {
     id: 16,
-    position: 'Blitzer',
+    position: 'Dark Elf Blitzer',
     playerStats: [7, 3, 2, 4, 9],
     cost: 100,
     skills: [13],
@@ -185,7 +185,7 @@ const witchElf: Player = {
 
 const dwarfBlockerLineman: Player = {
     id: 19,
-    position: 'Dwarf Blocker Lineman',
+    position: 'Dwarf Lineman',
     playerStats: [4, 3, 4, 5, 10],
     cost: 70,
     skills: [13, 23, 60],
@@ -195,7 +195,7 @@ const dwarfBlockerLineman: Player = {
 
 const dwarfRunner: Player = {
     id: 20,
-    position: 'Runner',
+    position: 'Dwarf Runner',
     playerStats: [6, 3, 3, 4, 9],
     cost: 85,
     skills: [22, 60],
@@ -205,7 +205,7 @@ const dwarfRunner: Player = {
 
 const dwarfBlitzer: Player = {
     id: 21,
-    position: 'Blitzer',
+    position: 'Dwarf Blitzer',
     playerStats: [5, 3, 3, 4, 10],
     cost: 80,
     skills: [13, 60],
@@ -235,7 +235,7 @@ const deathroller: Player = {
 
 const unionLineman: Player = {
     id: 24,
-    position: 'Lineman',
+    position: 'Union Lineman',
     playerStats: [6, 3, 2, 4, 8],
     cost: 60,
     skills: [],
@@ -245,7 +245,7 @@ const unionLineman: Player = {
 
 const unionThrower: Player = {
     id: 25,
-    position: 'Thrower',
+    position: 'Union Thrower',
     playerStats: [6, 3, 2, 2, 8],
     cost: 75,
     skills: [46],
@@ -255,7 +255,7 @@ const unionThrower: Player = {
 
 const unionCatcher: Player = {
     id: 26,
-    position: 'Catcher',
+    position: 'Union Catcher',
     playerStats: [8, 3, 2, 4, 8],
     cost: 100,
     skills: [1, 44],
@@ -265,7 +265,7 @@ const unionCatcher: Player = {
 
 const unionBlitzer: Player = {
     id: 27,
-    position: 'Blitzer',
+    position: 'Union Blitzer',
     playerStats: [7, 3, 2, 3, 9],
     cost: 115,
     skills: [13, 9],
@@ -352,7 +352,7 @@ const halflingHopefulLineman: Player = {
 };
 const heftys: Player = {
     id: 36,
-    position: 'Halfling Heftys',
+    position: 'Halfling Hefty',
     playerStats: [5, 2, 3, 3, 8],
     cost: 50,
     skills: [4, 16, 81],
@@ -393,7 +393,7 @@ const humanLineman: Player = {
 
 const humanThrower: Player = {
     id: 40,
-    position: 'Thrower',
+    position: 'Human Thrower',
     playerStats: [6, 3, 3, 2, 9],
     cost: 80,
     skills: [46, 22],
@@ -403,7 +403,7 @@ const humanThrower: Player = {
 
 const humanCatcher: Player = {
     id: 41,
-    position: 'Catcher',
+    position: 'Human Catcher',
     playerStats: [8, 2, 3, 5, 8],
     cost: 65,
     skills: [1, 4],
@@ -413,7 +413,7 @@ const humanCatcher: Player = {
 
 const humanBlitzer: Player = {
     id: 42,
-    position: 'Blitzer',
+    position: 'Human Blitzer',
     playerStats: [7, 3, 3, 4, 9],
     cost: 85,
     skills: [13],
@@ -423,7 +423,7 @@ const humanBlitzer: Player = {
 
 const skinkRunnerLineman: Player = {
     id: 43,
-    position: 'Skink Runner Lineman',
+    position: 'Skink Lineman',
     playerStats: [8, 2, 3, 4, 8],
     cost: 60,
     skills: [4, 81],
@@ -583,7 +583,7 @@ const orcLineman: Player = {
 };
 const orcThrower: Player = {
     id: 60,
-    position: 'Thrower',
+    position: 'Orc Thrower',
     playerStats: [5, 3, 3, 3, 9],
     cost: 65,
     skills: [620, 46, 22],
@@ -642,7 +642,7 @@ const mummy: Player = {
 };
 const skavenClanratLineman: Player = {
     id: 68,
-    position: 'Skaven Clanrat Lineman',
+    position: 'Skaven Lineman',
     playerStats: [7, 3, 3, 4, 8],
     cost: 50,
     skills: [],
@@ -651,7 +651,7 @@ const skavenClanratLineman: Player = {
 };
 const skavenThrower: Player = {
     id: 69,
-    position: 'Thrower',
+    position: 'Skaven Thrower',
     playerStats: [7, 3, 3, 2, 8],
     cost: 85,
     skills: [46, 22],
@@ -669,7 +669,7 @@ const gutterRunner: Player = {
 };
 const skavenBlitzer: Player = {
     id: 71,
-    position: 'Blitzer',
+    position: 'Skaven Blitzer',
     playerStats: [7, 3, 3, 5, 9],
     cost: 90,
     skills: [13],
@@ -742,7 +742,7 @@ const woodElfLineman: Player = {
 };
 const weThrower: Player = {
     id: 79,
-    position: 'Thrower',
+    position: 'Wood Elf Thrower',
     playerStats: [7, 3, 2, 2, 8],
     cost: 95,
     skills: [46],
@@ -751,7 +751,7 @@ const weThrower: Player = {
 };
 const weCatcher: Player = {
     id: 80,
-    position: 'Catcher',
+    position: 'Wood Elf Catcher',
     playerStats: [8, 2, 2, 4, 8],
     cost: 90,
     skills: [1, 4],
@@ -913,7 +913,7 @@ const enslavedMin: Player = {
     secondary: ['A', 'G', 'M'],
 };
 const hELineman: Player = {
-    position: 'Lineman',
+    position: 'High Elf Lineman',
     id: 100,
     cost: 70,
     playerStats: [6, 3, 2, 4, 9],
@@ -922,7 +922,7 @@ const hELineman: Player = {
     secondary: ['P', 'S'],
 };
 const heThrower: Player = {
-    position: 'Thrower',
+    position: 'High Elf Thrower',
     id: 101,
     cost: 100,
     playerStats: [6, 3, 2, 2, 9],
@@ -931,7 +931,7 @@ const heThrower: Player = {
     secondary: ['S'],
 };
 const heCatcher: Player = {
-    position: 'Catcher',
+    position: 'High Elf Catcher',
     id: 102,
     cost: 90,
     playerStats: [8, 3, 2, 5, 8],
@@ -940,7 +940,7 @@ const heCatcher: Player = {
     secondary: ['S'],
 };
 const heBlitzer: Player = {
-    position: 'Blitzer',
+    position: 'High Elf Blitzer',
     id: 103,
     cost: 100,
     playerStats: [7, 3, 2, 4, 9],

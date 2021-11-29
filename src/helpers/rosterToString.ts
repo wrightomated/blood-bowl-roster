@@ -106,7 +106,11 @@ const getModeInt = (mode: RosterMode) => {
 };
 
 const getFormatInt = (format: TeamFormat) => {
-    return format === 'sevens' ? 1 : 0;
+    return {
+        elevens: 0,
+        sevens: 1,
+        'dungeon bowl': 2,
+    }[format];
 };
 
 export const rosterToString = (roster: Roster) => {

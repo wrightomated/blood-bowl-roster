@@ -1,14 +1,23 @@
 import { getGameTypeSettings } from '../data/gameType.data';
 import { teamData } from '../data/teams.data';
 import type { Extra, ExtraString } from '../models/extra.model';
-import type { TeamFormat } from '../models/gameType.model';
 import type { RosterMode } from '../store/rosterMode.store';
+import type { TeamFormat } from '../store/teamFormat.store';
 
 export const extrasForTeam: (
     teamId: number,
     rosterMode: RosterMode,
     teamFormat: TeamFormat
 ) => Extra[] = (teamId, rosterMode, teamFormat) => {
+    if (teamFormat === 'dungeon bowl') {
+        return [
+            {
+                extraString: 'rerolls' as ExtraString,
+                cost: 50,
+                max: 8,
+            },
+        ];
+    }
     const team = teamData.teams.find((x) => x.id === teamId);
     const gameSettings = getGameTypeSettings(teamFormat);
     return [

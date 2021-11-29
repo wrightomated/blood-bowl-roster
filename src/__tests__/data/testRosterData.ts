@@ -9,7 +9,7 @@ export const testRoster = {
             playerName: 'Bob',
             player: {
                 id: 1,
-                position: 'Imperial Retainer Lineman',
+                position: 'Imperial Lineman',
                 playerStats: [6, 3, 4, 4, 8],
                 cost: 45,
                 skills: [16],
@@ -22,7 +22,7 @@ export const testRoster = {
             playerName: '',
             player: {
                 id: 1,
-                position: 'Imperial Retainer Lineman',
+                position: 'Imperial Lineman',
                 playerStats: [6, 3, 4, 4, 8],
                 cost: 45,
                 skills: [16],
@@ -35,7 +35,7 @@ export const testRoster = {
             playerName: '',
             player: {
                 id: 1,
-                position: 'Imperial Retainer Lineman',
+                position: 'Imperial Lineman',
                 playerStats: [6, 3, 4, 4, 8],
                 cost: 45,
                 skills: [16],
@@ -48,7 +48,7 @@ export const testRoster = {
             playerName: '',
             player: {
                 id: 1,
-                position: 'Imperial Retainer Lineman',
+                position: 'Imperial Lineman',
                 playerStats: [6, 3, 4, 4, 8],
                 cost: 45,
                 skills: [16],

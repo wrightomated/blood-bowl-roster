@@ -6,8 +6,9 @@
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
+    import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
 
-    export let selectedTeam: Team;
+    export let selectedTeam: Team | DungeonBowlTeam;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
 
@@ -69,11 +70,12 @@
             </td>
         </tr>
     </table>
-    {#if $roster.format !== 'sevens'}
+    {#if $roster.format === 'elevens'}
         <StarPlayerInducement />
     {/if}
-
-    <Inducements {selectedTeam} />
+    {#if $roster.format !== 'dungeon bowl'}
+        <Inducements {selectedTeam} />
+    {/if}
 </div>
 
 <style lang="scss">

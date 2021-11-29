@@ -2,11 +2,12 @@ import { writable } from 'svelte/store';
 import { teamData } from '../data/teams.data';
 import type { Writable } from 'svelte/store';
 import type { Team } from '../models/team.model';
+import { dbCollegeToTeam, DungeonBowlTeam } from '../models/dungeonBowl.model';
+import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 
 const currentTeamStore = () => {
-    const { subscribe, update, set }: Writable<Team> = writable<Team>(
-        getTeam()
-    );
+    const { subscribe, update, set }: Writable<Team | DungeonBowlTeam> =
+        writable<Team | DungeonBowlTeam>(getTeam());
     return {
         subscribe,
         set,
@@ -37,7 +38,12 @@ const getTeamFromCode = (code: string) => {
 };
 
 const getTeamFromId = (id: number) => {
-    return teamData.teams.find((x) => x.id === id);
+    if (id < 100) {
+        return teamData.teams.find((x) => x.id === id);
+    }
+    return dbCollegeToTeam(
+        dungeonBowlColleges.colleges.find((x) => x.id === id)
+    );
 };
 
 const getTeamFromStorage = () => {
