@@ -127,6 +127,9 @@
             &--open {
                 transform: translateY(124px);
             }
+            @media print {
+                display: none;
+            }
         }
         &__buttons {
             display: flex;
