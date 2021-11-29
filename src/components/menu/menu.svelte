@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { sendEventToAnalytics } from '../../analytics/plausible';
     import { showDungeonBowl } from '../../store/showDungeonBowl.store';
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
@@ -40,13 +39,6 @@
         showDungeonBowl.set(false);
         isOpen = false;
     };
-    const dungeonBowl = () => {
-        teamLoadOpen.set(false);
-        teamSelectionOpen.set(false);
-        showDungeonBowl.set(true);
-        sendEventToAnalytics('dungeon-bowl');
-        isOpen = false;
-    };
 </script>
 
 <header class="header" class:header--drawer-open={isOpen}>
@@ -72,9 +64,6 @@
         {/if}
         <Button cyData="new-team" clickFunction={newTeam}>New Team</Button>
         <Button cyData="load-team" clickFunction={loadTeam}>Load Team</Button>
-        <!-- <Button cyData="dungeon-bowl" clickFunction={dungeonBowl}
-            >Dungeon Bowl</Button
-        > -->
     </div>
 </nav>
 

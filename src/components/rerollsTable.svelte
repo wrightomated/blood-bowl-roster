@@ -69,11 +69,12 @@
             </td>
         </tr>
     </table>
-    {#if $roster.format !== 'sevens'}
+    {#if $roster.format === 'elevens'}
         <StarPlayerInducement />
     {/if}
-
-    <Inducements {selectedTeam} />
+    {#if $roster.format !== 'dungeon bowl'}
+        <Inducements {selectedTeam} />
+    {/if}
 </div>
 
 <style lang="scss">

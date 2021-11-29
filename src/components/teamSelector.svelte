@@ -26,6 +26,8 @@
     import { flip } from 'svelte/animate';
     import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
+    import { dbCollegeToTeam } from '../models/dungeonBowl.model';
+    import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 
     export let teamList: Team[];
 
@@ -52,7 +54,7 @@
     };
 
     const newTeam = (index: number) => {
-        currentTeam.set(teamList.find((x) => x.id === index));
+        currentTeam.setCurrentTeamWithId(index);
     };
 
     // const toggleTeam = () => {
@@ -79,6 +81,7 @@
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
+        showNewTeamDialogue.set(false);
 
         sendEventToAnalytics('new-team-created', {
             teamType: $currentTeam.name,
@@ -91,10 +94,25 @@
         const loadedRoster: Roster = JSON.parse(
             localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
-        currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
+        currentTeam.setCurrentTeamWithId(loadedRoster.teamId);
+        // if (savedRoster.id < 100) {
+        //     currentTeam.set(teamList.find((t) => t.id === loadedRoster.teamId));
+        // } else {
+        //     currentTeam.set(
+        //         dbCollegeToTeam(
+        //             dungeonBowlColleges.colleges.find(
+        //                 (c) => c.id === loadedRoster.teamId
+        //             )
+        //         )
+        //     );
+        // }
+
         roster.loadRoster(`savedRoster${savedRoster.id}`);
-        savedRosterIndex.updateCurrentIndex(savedRoster.id);
-        toggleLoad();
+        teamSelectionOpen.set(false);
+        showAvailablePlayers.set(false);
+        showAvailableStarPlayers.set(false);
+        showNewTeamDialogue.set(false);
+        teamLoadOpen.set(false);
     };
 
     const tierToNumeral = (tier: TeamTier) => {

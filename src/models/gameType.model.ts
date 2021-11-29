@@ -1,3 +1,5 @@
+import type { TeamFormat } from '../store/teamFormat.store';
+
 export interface GameType {
     teamFormat: TeamFormat;
     maxPlayers: number;
@@ -14,5 +16,3 @@ type RosterExtra = {
     cost: number;
     max: number;
 };
-
-export type TeamFormat = 'sevens' | 'elevens';
