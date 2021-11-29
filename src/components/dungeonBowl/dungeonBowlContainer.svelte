@@ -59,7 +59,7 @@
 
     <DungeonBowlCollegeCard college={selectedCollege} />
 
-    <button on:click={newTeam}>Make the team</button>
+    <button class="create-team-button" on:click={newTeam}>Create</button>
 {/if}
 
 <style lang="scss">
@@ -71,9 +71,13 @@
         display: flex;
     }
 
+    .create-team-button {
+        @include roundedButton.rounded-button;
+        margin-top: 12px;
+    }
+
     .college-button {
         @include roundedButton.rounded-button;
-        // color: #333;
         &:hover {
             color: white;
         }

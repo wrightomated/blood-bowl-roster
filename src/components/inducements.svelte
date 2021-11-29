@@ -167,8 +167,6 @@
         }
 
         &__search {
-            // display: flex;
-            // align-items: flex-end;
             text-align: left;
         }
 
@@ -178,9 +176,6 @@
     }
     .flex-container {
         display: flex;
-    }
-    table {
-        // width: 500px;
     }
 
     @media screen and (max-width: 783px) {
