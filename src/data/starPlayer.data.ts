@@ -112,7 +112,7 @@ const hakflem: StarPlayer = {
         'Underworld Challenge',
     ],
     skills: [4, 28, 71, 33, 35],
-    cost: 180,
+    cost: 210,
     specialRules: ['Treacherous'],
 };
 const helmut: StarPlayer = {
@@ -166,7 +166,7 @@ const morg: StarPlayer = {
     playsFor: [],
     doesNotPlayFor: ['Sylvanian Spotlight'],
     skills: [13, 71, 551, 60, 86],
-    cost: 340,
+    cost: 380,
     specialRules: ['The Ballista'],
 };
 const roxanna: StarPlayer = {
