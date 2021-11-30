@@ -7,6 +7,7 @@
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
+    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -70,6 +71,9 @@
             </td>
         </tr>
     </table>
+    {#if $roster.format === 'dungeon bowl'}
+        <DungeonBowlPlayerCount />
+    {/if}
     {#if $roster.format === 'elevens'}
         <StarPlayerInducement />
     {/if}
