@@ -199,7 +199,7 @@
         <Button
             clickFunction={createTeam}
             cyData="create-team"
-            disabled={!$currentTeam}>Create</Button
+            disabled={!$currentTeam || $currentTeam.id > 100}>Create</Button
         >
     {/if}
 {/if}
