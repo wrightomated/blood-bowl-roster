@@ -1,3 +1,4 @@
+import { sendEventToAnalytics } from '../analytics/plausible';
 import { getGameTypeSettings } from '../data/gameType.data';
 import { teamData } from '../data/teams.data';
 import type { Extra, ExtraString } from '../models/extra.model';
@@ -9,15 +10,32 @@ export const extrasForTeam: (
     rosterMode: RosterMode,
     teamFormat: TeamFormat
 ) => Extra[] = (teamId, rosterMode, teamFormat) => {
-    if (teamFormat === 'dungeon bowl') {
-        return [
-            {
-                extraString: 'rerolls' as ExtraString,
-                cost: 50,
-                max: 8,
-            },
-        ];
+    try {
+        if (teamFormat === 'dungeon bowl') {
+            return [
+                {
+                    extraString: 'rerolls' as ExtraString,
+                    cost: 50,
+                    max: 8,
+                },
+            ];
+        }
+        return getExtras(teamId, rosterMode, teamFormat);
+    } catch (error) {
+        sendEventToAnalytics('exception', {
+            description: 'Problem creating extras for team',
+            error: error,
+            fatal: true,
+        });
+        return [];
     }
+};
+
+const getExtras = (
+    teamId: number,
+    rosterMode: RosterMode,
+    teamFormat: TeamFormat
+) => {
     const team = teamData.teams.find((x) => x.id === teamId);
     const gameSettings = getGameTypeSettings(teamFormat);
     return [

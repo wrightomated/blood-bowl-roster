@@ -40,17 +40,26 @@
     </script>
     <script>
         window.onerror = function (message, source, lineno, colno, error) {
-            const hasFailed = sessionStorage.getItem('failedOnce');
             gtag('event', 'exception', {
                 'description': message,
                 'error': error,
                 'fatal': true
             });
-            if (!hasFailed) {
-                localStorage.clear();
-                location.reload();
-                sessionStorage.setItem('failedOnce', 'true');
-            }
+
+            localStorage.removeItem('selectedTeam');
+            localStorage.setItem('roster', JSON.stringify({
+                teamId: 0,
+                players: [],
+                teamName: '',
+                teamType: '',
+                extra: { dedicated_fans: 0, rerolls: 0 },
+                inducements: {},
+                treasury: 1000,
+                mode: 'exhibition',
+                format: 'elevens'
+            })
+            )
+            location.reload();
         };</script>
 </head>
 
