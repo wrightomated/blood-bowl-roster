@@ -23,6 +23,7 @@
     import { sendEventToAnalytics } from '../analytics/plausible';
     import DungeonBowlContainer from './dungeonBowl/dungeonBowlContainer.svelte';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
+    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
 
     const teamList = teamData.teams;
 
@@ -130,6 +131,9 @@
         <Roster
             playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
         />
+        {#if $roster.format === 'dungeon bowl'}
+            <DungeonBowlPlayerCount />
+        {/if}
         <RerollsTable selectedTeam={$currentTeam} />
     {/if}
 {/if}
