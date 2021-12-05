@@ -1,7 +1,10 @@
 <script lang="ts">
     import { dungeonBowlColleges } from '../../data/dungeonBowlColleges.data';
     import { dbCollegeToTeam } from '../../models/dungeonBowl.model';
-    import { currentTeam } from '../../store/currentTeam.store';
+    import {
+        currentTeam,
+        currentTeamIsDungeonBowl,
+    } from '../../store/currentTeam.store';
     import { rosterMode } from '../../store/rosterMode.store';
     import { savedRosterIndex } from '../../store/saveDirectory.store';
 
@@ -17,20 +20,23 @@
         teamSelectionOpen,
     } from '../../store/teamSelectionOpen.store';
     import DungeonBowlCollegeCard from './dungeonBowlCollegeCard.svelte';
+    import Button from '../uiComponents/button.svelte';
 
-    $: selectedCollege = dungeonBowlColleges.colleges[0];
     const selectCollege = (college) => {
-        (selectedCollege = college), setCurrentTeam(college);
+        setCurrentTeam(college);
     };
     const newTeam = () => {
         savedRosterIndex.newId();
-        roster.reset({
-            teamId: selectedCollege.id,
-            teamType: selectedCollege.name,
-            mode: $rosterMode,
-            fans: 0,
-            format: $teamFormat,
-        });
+        if ($currentTeamIsDungeonBowl) {
+            roster.reset({
+                teamId: $currentTeam?.id,
+                teamType: $currentTeam.name,
+                mode: $rosterMode,
+                fans: 0,
+                format: $teamFormat,
+            });
+        }
+
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
@@ -49,7 +55,7 @@
             {#each dungeonBowlColleges.colleges as college}
                 <button
                     class="college-button college-button--{college.name.toLowerCase()}"
-                    class:selected={selectedCollege.name === college.name}
+                    class:selected={$currentTeam?.name === college.name}
                     on:click={() => selectCollege(college)}
                     >{college.name}</button
                 >
@@ -57,9 +63,17 @@
         </div>
     </div>
 
-    <DungeonBowlCollegeCard college={selectedCollege} />
+    {#if $currentTeamIsDungeonBowl}
+        <DungeonBowlCollegeCard
+            college={dungeonBowlColleges.colleges.find(
+                (x) => x.id === $currentTeam.id
+            ) || dungeonBowlColleges.colleges[0]}
+        />
+    {/if}
 
-    <button class="create-team-button" on:click={newTeam}>Create</button>
+    <Button clickFunction={newTeam} disabled={!$currentTeamIsDungeonBowl}
+        >Create</Button
+    >
 {/if}
 
 <style lang="scss">
@@ -69,11 +83,6 @@
 
     .college-cards {
         display: flex;
-    }
-
-    .create-team-button {
-        @include roundedButton.rounded-button;
-        margin-top: 12px;
     }
 
     .college-button {

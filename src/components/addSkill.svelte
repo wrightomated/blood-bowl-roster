@@ -1,7 +1,7 @@
 <script lang="ts">
     import { advancementCosts } from '../data/advancementCost.data';
 
-    import { skillCatalogue } from '../data/skills.data';
+    import { dungeonBowlSkillIds, skillCatalogue } from '../data/skills.data';
     import {
         characteristicMaxValue,
         characteristics,
@@ -28,11 +28,17 @@
 
     $: rosterPlayer = $roster.players[index];
 
-    $: availableSkills = skillCatalogue.filter(
-        (x) =>
-            !rosterPlayer.alterations?.extraSkills?.includes(x.id) &&
-            !rosterPlayer.player.skills.includes(x.id)
-    );
+    $: availableSkills = skillCatalogue
+        .filter((x) =>
+            $roster.format === 'dungeon bowl'
+                ? !dungeonBowlSkillIds.excluded.includes(x.id)
+                : !dungeonBowlSkillIds.included.includes(x.id)
+        )
+        .filter(
+            (x) =>
+                !rosterPlayer.alterations?.extraSkills?.includes(x.id) &&
+                !rosterPlayer.player.skills.includes(x.id)
+        );
 
     $: primarySkills = availableSkills.filter((s) =>
         rosterPlayer.player.primary.includes(s.category)
@@ -46,7 +52,7 @@
             [skillId]
         );
         const sevensExtraSkillTax =
-            $roster.format === 'elevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
+            $roster.format !== 'sevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
         const newPlayer: RosterPlayerRecord = {
             ...rosterPlayer,
             alterations: {
@@ -277,7 +283,7 @@
                     ]}spp</span
                 ></button
             >
-            {#if $roster.format === 'elevens'}
+            {#if $roster.format !== 'sevens'}
                 <button
                     on:click={selectPrimary}
                     class:selected={showPrimary && !showRandom}
@@ -299,7 +305,7 @@
                     ]}spp</span
                 ></button
             >
-            {#if $roster.format === 'elevens'}
+            {#if $roster.format !== 'sevens'}
                 <button
                     on:click={selectSecondary}
                     class:selected={showSecondary && !showRandom}
@@ -320,7 +326,7 @@
                 >
             {/if}
         {/if}
-        {#if $roster.format === 'elevens'}
+        {#if $roster.format !== 'sevens'}
             <button
                 on:click={injuries}
                 class="injury-button"

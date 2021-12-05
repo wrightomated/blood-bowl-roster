@@ -25,11 +25,26 @@ const elevensGame: GameTypeSettings = {
     dedicatedFans: { cost: 10, max: 6 },
 };
 
+const dungeonBowlGame: GameTypeSettings = {
+    teamFormat: 'dungeon bowl',
+    maxPlayers: 16,
+    minPlayers: 11,
+    startingTreasury: 1000,
+    rerollDetails: { costMultiplier: 1, max: 8 },
+    assistantCoaches: { cost: 10, max: 0 },
+    cheerleaders: { cost: 10, max: 0 },
+    apothecary: { cost: 50, max: 0 },
+    dedicatedFans: { cost: 10, max: 0 },
+};
+
 export const getGameTypeSettings = (teamFormat: TeamFormat) => {
-    if (teamFormat === 'sevens') {
-        return sevensGame;
-    }
-    return elevensGame;
+    return (
+        {
+            sevens: sevensGame,
+            elevens: elevensGame,
+            'dungeon bowl': dungeonBowlGame,
+        }[teamFormat] || elevensGame
+    );
 };
 
 export const getMaxPlayers = (teamFormat: TeamFormat) =>

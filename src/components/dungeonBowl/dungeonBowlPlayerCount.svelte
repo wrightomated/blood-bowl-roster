@@ -1,13 +1,9 @@
 <script lang="ts">
     import { dungeonBowlColleges } from '../../data/dungeonBowlColleges.data';
 
-    import type {
-        DungeonBowlCollege,
-        PlayerGroup,
-    } from '../../models/dungeonBowl.model';
+    import type { PlayerGroup } from '../../models/dungeonBowl.model';
     import { roster } from '../../store/teamRoster.store';
 
-    // export let college: import('../../models/dungeonBowl.model').DungeonBowlCollege;
     $: college = dungeonBowlColleges.colleges.find(
         (x) => x.id === $roster.teamId
     );
@@ -19,7 +15,7 @@
         ).length;
 </script>
 
-<div>
+<div class="player-count__container">
     {#each Object.keys(college.players) as playerGroup}
         <div
             class="player-count__player-row"
@@ -40,6 +36,12 @@
 
 <style lang="scss">
     .player-count {
+        &__container {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 16px;
+        }
         &__player-group {
             text-transform: capitalize;
             font-family: var(--display-font);

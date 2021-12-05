@@ -271,7 +271,7 @@
         </div>
 
         <div class="extraDetails">
-            {#if $roster.format === 'elevens'}
+            {#if $roster.format !== 'sevens'}
                 {#if $roster.players[index]?.alterations?.spp !== undefined}
                     <label
                         ><span class="mini-title">SPP:</span>
@@ -296,7 +296,7 @@
                         bind:checked={$roster.players[index].alterations.mng}
                     />
                 </label>
-                {#if $roster.format === 'elevens'}
+                {#if $roster.format !== 'sevens'}
                     <label>
                         <span class="mini-title">NI:</span>
                         <input

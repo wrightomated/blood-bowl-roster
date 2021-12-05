@@ -1,6 +1,9 @@
 <script lang="ts">
     import type { Team, TeamTier } from '../models/team.model';
-    import { currentTeam } from '../store/currentTeam.store';
+    import {
+        currentTeam,
+        currentTeamIsDungeonBowl,
+    } from '../store/currentTeam.store';
     import { roster } from '../store/teamRoster.store';
     import {
         teamSelectionOpen,
@@ -85,8 +88,8 @@
         const loadedRoster: Roster = JSON.parse(
             localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
+        savedRosterIndex.updateCurrentIndex(savedRoster.id);
         currentTeam.setCurrentTeamWithId(loadedRoster.teamId);
-
         roster.loadRoster(`savedRoster${savedRoster.id}`);
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
@@ -122,6 +125,11 @@
         teamSelectionOpen.set(!show);
         showDungeonBowl.set(show);
     };
+
+    function changeFormat(format: any) {
+        teamFormat.set(format);
+        toggleDungeonBowl(format === 'dungeon bowl');
+    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
@@ -138,8 +146,7 @@
         options={teamFormats}
         selectedIndex={teamFormats.indexOf($teamFormat)}
         selected={(format) => {
-            teamFormat.set(format);
-            toggleDungeonBowl(format === 'dungeon bowl');
+            changeFormat(format);
         }}
     />
     {#if $teamSelectionOpen}
@@ -199,7 +206,7 @@
         <Button
             clickFunction={createTeam}
             cyData="create-team"
-            disabled={!$currentTeam || $currentTeam.id > 100}>Create</Button
+            disabled={!$currentTeam || $currentTeamIsDungeonBowl}>Create</Button
         >
     {/if}
 {/if}

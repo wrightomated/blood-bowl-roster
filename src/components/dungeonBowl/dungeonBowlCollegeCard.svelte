@@ -4,6 +4,7 @@
     import type { DungeonBowlCollege } from '../../models/dungeonBowl.model';
 
     export let college: DungeonBowlCollege;
+
     const getPlayerPosition = (id: number) =>
         playerCatalogue.players.find((p) => p.id === id).position;
 </script>
@@ -31,11 +32,12 @@
     $colleges: 'fire', 'shadow', 'metal', 'light', 'death', 'life', 'beasts',
         'heavens';
     .college-card {
-        margin-top: 8px;
+        margin-top: 12px;
         border-radius: 25px;
         position: relative;
         height: 100%;
         min-width: 100px;
+        margin-bottom: 12px;
 
         @each $college in $colleges {
             &--#{$college} {

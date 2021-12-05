@@ -10,6 +10,7 @@ export interface Inducement {
     requiresApothecary?: boolean;
     sevensCost?: number;
     sevensMax?: number;
+    dungeonBowlMax?: number;
     requiresTier?: TeamTier;
 }
 

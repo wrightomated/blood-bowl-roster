@@ -66,8 +66,16 @@ export const skillCatalogue: Skill[] = [
     { id: 61, name: 'Animal Savagery', category: 'T' },
     { id: 62, name: 'Animosity', category: 'T' },
     { id: 620, name: 'Animosity (all team-mates)', category: 'T' },
-    { id: 621, name: 'Animosity (all Dwarf and Halfling team-mates)', category: 'T' },
-    { id: 622, name: 'Animosity (all Dwarf and Human team-mates)', category: 'T' },
+    {
+        id: 621,
+        name: 'Animosity (all Dwarf and Halfling team-mates)',
+        category: 'T',
+    },
+    {
+        id: 622,
+        name: 'Animosity (all Dwarf and Human team-mates)',
+        category: 'T',
+    },
     { id: 623, name: 'Animosity (Underworld Goblin Linemen)', category: 'T' },
     { id: 624, name: 'Animosity (Orc Lineman)', category: 'T' },
     { id: 625, name: 'Animosity (Big Un Blocker)', category: 'T' },
@@ -99,4 +107,14 @@ export const skillCatalogue: Skill[] = [
     { id: 86, name: 'Throw Team-mate', category: 'T' },
     { id: 87, name: 'Timmm-ber!', category: 'T' },
     { id: 88, name: 'Unchannelled Fury', category: 'T' },
+    // Dungeon bowl skills
+    { id: 89, name: 'Portal Navigator', category: 'G' },
+    { id: 90, name: 'Give and Go', category: 'P' },
+    { id: 91, name: 'Portal Passer', category: 'P' },
+    { id: 92, name: 'Wall Thrower', category: 'P' },
 ];
+
+export const dungeonBowlSkillIds = {
+    included: [89, 90, 91, 92],
+    excluded: [18, 38, 39, 42],
+};
