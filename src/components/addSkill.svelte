@@ -1,7 +1,7 @@
 <script lang="ts">
     import { advancementCosts } from '../data/advancementCost.data';
 
-    import { skillCatalogue } from '../data/skills.data';
+    import { dungeonBowlSkillIds, skillCatalogue } from '../data/skills.data';
     import {
         characteristicMaxValue,
         characteristics,
@@ -28,11 +28,17 @@
 
     $: rosterPlayer = $roster.players[index];
 
-    $: availableSkills = skillCatalogue.filter(
-        (x) =>
-            !rosterPlayer.alterations?.extraSkills?.includes(x.id) &&
-            !rosterPlayer.player.skills.includes(x.id)
-    );
+    $: availableSkills = skillCatalogue
+        .filter((x) =>
+            $roster.format === 'dungeon bowl'
+                ? !dungeonBowlSkillIds.excluded.includes(x.id)
+                : !dungeonBowlSkillIds.included.includes(x.id)
+        )
+        .filter(
+            (x) =>
+                !rosterPlayer.alterations?.extraSkills?.includes(x.id) &&
+                !rosterPlayer.player.skills.includes(x.id)
+        );
 
     $: primarySkills = availableSkills.filter((s) =>
         rosterPlayer.player.primary.includes(s.category)

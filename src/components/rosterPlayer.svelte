@@ -254,7 +254,7 @@
             ? `${rosterPlayer.player.cost},000`
             : '-'}</td
     >
-    {#if $roster.format === 'elevens'}
+    {#if $roster.format !== 'sevens'}
         <td>
             {#if $roster.players[index]?.alterations?.spp !== undefined}
                 <input
@@ -276,7 +276,7 @@
                 bind:checked={$roster.players[index].alterations.mng}
             /></td
         >
-        {#if $roster.format === 'elevens'}
+        {#if $roster.format !== 'sevens'}
             <td>
                 <input
                     class="spp-input"

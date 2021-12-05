@@ -33,11 +33,6 @@
             use:blurOnEscapeOrEnter
         />
     </h2>
-    {#if $roster.format === 'dungeon bowl'}
-        <p class="dungeon-bowl-callout">
-            <strong>Dungeon Bowl: The work in progress roster.</strong>
-        </p>
-    {/if}
 </div>
 <div class="sub-heading-box">
     <p class="sub-heading">
@@ -77,12 +72,12 @@
                     <td>AV</td>
                     <td class="skills">Skills</td>
                     <td>Hiring Fee</td>
-                    {#if $roster.format === 'elevens'}
+                    {#if $roster.format !== 'sevens'}
                         <td id="spp-header">Unspent Spp</td>
                     {/if}
                     {#if $roster.mode !== 'exhibition'}
                         <td id="mng-header" title="Miss next game">Mng</td>
-                        {#if $roster.format === 'elevens'}
+                        {#if $roster.format !== 'sevens'}
                             <td>Ni</td>
                             <td id="tr-header" title="Temporarily Retiring"
                                 >TR</td
