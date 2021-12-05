@@ -2,7 +2,10 @@
     import { roster } from '../store/teamRoster.store';
     import { playerCatalogue } from '../data/players.data';
     import { teamData } from '../data/teams.data';
-    import { currentTeam } from '../store/currentTeam.store';
+    import {
+        currentTeam,
+        currentTeamIsDungeonBowl,
+    } from '../store/currentTeam.store';
     import PlayerRow from './player.svelte';
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
@@ -22,8 +25,6 @@
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
 
     const teamList = teamData.teams;
-
-    $: selectedTeam = $currentTeam;
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);
@@ -52,8 +53,8 @@
     <DungeonBowlContainer />
 </span>
 
-{#if selectedTeam}
-    {#if $teamSelectionOpen}
+{#if $currentTeam}
+    {#if $teamSelectionOpen && !$currentTeamIsDungeonBowl}
         <span class="no-print">
             <div class="header-container">
                 <caption
@@ -61,7 +62,7 @@
                     data-cy="selected-team-caption"
                     on:click={togglePlayers}
                 >
-                    {`${selectedTeam.name} Team Players`}
+                    {`${$currentTeam.name} Team Players`}
                 </caption>
                 <MaterialButton
                     hoverText={$showAvailablePlayers
@@ -92,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {#each selectedTeam.players as teamPlayer}
+                            {#each $currentTeam.players as teamPlayer}
                                 <PlayerRow
                                     max={teamPlayer.max}
                                     player={playerById(teamPlayer.id)}
@@ -107,7 +108,7 @@
                     class="team-star-player-caption"
                     on:click={toggleStarPlayers}
                 >
-                    {`${selectedTeam.name} Team Star Players`}
+                    {`${$currentTeam.name} Team Star Players`}
                 </caption>
                 <MaterialButton
                     hoverText={$showAvailableStarPlayers
@@ -127,9 +128,9 @@
 
     {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
         <Roster
-            playerTypes={selectedTeam.players.map((x) => playerById(x.id))}
+            playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
         />
-        <RerollsTable {selectedTeam} />
+        <RerollsTable selectedTeam={$currentTeam} />
     {/if}
 {/if}
 

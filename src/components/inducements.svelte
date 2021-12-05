@@ -6,37 +6,51 @@
     import type { Inducement } from '../models/inducement.model';
     import { filterInducement } from '../helpers/inducementFilter';
     import { showAllInducements } from '../store/showAllInducements.store';
-    export let selectedTeam: Team;
+    import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
+
+    export let selectedTeam: Team | DungeonBowlTeam;
 
     $: searchTerm = '';
 
-    $: filteredInducements = inducementData.inducements
-        .filter(
-            (inducement) =>
-                ($roster.format === 'elevens' && inducement.max > 0) ||
-                ($roster.format === 'sevens' && inducement.sevensMax !== 0)
-        )
-        .filter((inducement) => filterInducement(inducement, selectedTeam))
-        .map((inducement: Inducement) => ({
-            ...inducement,
-            cost: selectedTeam.specialRules.includes(
-                inducement?.reducedCost?.specialRule
-            )
-                ? inducement.reducedCost.cost
-                : $roster.format === 'sevens' && inducement.sevensCost
-                ? inducement.sevensCost
-                : inducement.cost,
-            max:
-                $roster.format === 'elevens' || !inducement.sevensMax
-                    ? inducement.max
-                    : inducement.sevensMax,
-        }))
-        .filter((i) =>
-            searchTerm
-                ? i.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-                : i
-        )
-        .sort((a, b) => a.displayName.localeCompare(b.displayName));
+    // TODO: refactor this, this is too long
+    $: filteredInducements =
+        $roster.format === 'dungeon bowl'
+            ? inducementData.inducements
+                  .filter((inducement) => inducement?.dungeonBowlMax > 0)
+                  .map((i) => ({ ...i, max: i.dungeonBowlMax }))
+            : inducementData.inducements
+                  .filter(
+                      (inducement) =>
+                          ($roster.format === 'elevens' &&
+                              inducement.max > 0) ||
+                          ($roster.format === 'sevens' &&
+                              inducement.sevensMax !== 0)
+                  )
+                  .filter((inducement) =>
+                      filterInducement(inducement, selectedTeam as Team)
+                  )
+                  .map((inducement: Inducement) => ({
+                      ...inducement,
+                      cost: (selectedTeam as Team).specialRules.includes(
+                          inducement?.reducedCost?.specialRule
+                      )
+                          ? inducement.reducedCost.cost
+                          : $roster.format === 'sevens' && inducement.sevensCost
+                          ? inducement.sevensCost
+                          : inducement.cost,
+                      max:
+                          $roster.format === 'elevens' || !inducement.sevensMax
+                              ? inducement.max
+                              : inducement.sevensMax,
+                  }))
+                  .filter((i) =>
+                      searchTerm
+                          ? i.displayName
+                                .toLowerCase()
+                                .includes(searchTerm.toLowerCase())
+                          : i
+                  )
+                  .sort((a, b) => a.displayName.localeCompare(b.displayName));
 
     const addInducement = (key: string) => {
         roster.addInducement(key);

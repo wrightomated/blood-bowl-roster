@@ -46,7 +46,7 @@
             [skillId]
         );
         const sevensExtraSkillTax =
-            $roster.format === 'elevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
+            $roster.format !== 'sevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
         const newPlayer: RosterPlayerRecord = {
             ...rosterPlayer,
             alterations: {
@@ -277,7 +277,7 @@
                     ]}spp</span
                 ></button
             >
-            {#if $roster.format === 'elevens'}
+            {#if $roster.format !== 'sevens'}
                 <button
                     on:click={selectPrimary}
                     class:selected={showPrimary && !showRandom}
@@ -299,7 +299,7 @@
                     ]}spp</span
                 ></button
             >
-            {#if $roster.format === 'elevens'}
+            {#if $roster.format !== 'sevens'}
                 <button
                     on:click={selectSecondary}
                     class:selected={showSecondary && !showRandom}
@@ -320,7 +320,7 @@
                 >
             {/if}
         {/if}
-        {#if $roster.format === 'elevens'}
+        {#if $roster.format !== 'sevens'}
             <button
                 on:click={injuries}
                 class="injury-button"

@@ -10,7 +10,7 @@ const createSavedRosterIndex = () => {
             currentIndex: 0,
             index: [],
             count: 0,
-        },
+        }
     );
     return {
         subscribe,
@@ -38,7 +38,7 @@ const createSavedRosterIndex = () => {
                 return {
                     ...store,
                     index: store.index.filter(
-                        (x) => store.currentIndex !== x.id,
+                        (x) => store.currentIndex !== x.id
                     ),
                 };
             }),

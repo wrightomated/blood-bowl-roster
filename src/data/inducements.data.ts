@@ -33,6 +33,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 8,
             sevensCost: 150,
+            dungeonBowlMax: 8,
         },
         {
             id: 'i7',
@@ -40,6 +41,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 50 },
             max: 3,
+            dungeonBowlMax: 3,
         },
         {
             id: 'i8',
@@ -390,6 +392,14 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 50,
             max: 0,
             sevensMax: 5,
+        },
+        {
+            id: 'i51',
+            displayName: 'College Wizard',
+            cost: 100,
+            max: 0,
+            sevensMax: 0,
+            dungeonBowlMax: 1,
         },
     ],
 };

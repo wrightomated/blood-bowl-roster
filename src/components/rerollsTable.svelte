@@ -77,9 +77,8 @@
     {#if $roster.format === 'elevens'}
         <StarPlayerInducement />
     {/if}
-    {#if $roster.format !== 'dungeon bowl'}
-        <Inducements {selectedTeam} />
-    {/if}
+
+    <Inducements {selectedTeam} />
 </div>
 
 <style lang="scss">

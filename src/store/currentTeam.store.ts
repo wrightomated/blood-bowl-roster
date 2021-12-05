@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 import { teamData } from '../data/teams.data';
 import type { Writable } from 'svelte/store';
 import type { Team } from '../models/team.model';
@@ -56,3 +56,7 @@ const getTeam = () => {
 };
 
 export const currentTeam = currentTeamStore();
+export const currentTeamIsDungeonBowl = derived(
+    currentTeam,
+    ($currentTeam) => $currentTeam.id >= 100
+);

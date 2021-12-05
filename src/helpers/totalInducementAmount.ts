@@ -19,9 +19,8 @@ export const inducementCost = (
     key: string,
     teamId: number
 ) => {
-    const specialRules: TeamSpecialRule[] = teamData.teams.find(
-        (x) => x.id === teamId
-    ).specialRules;
+    const specialRules: TeamSpecialRule[] =
+        teamData.teams.find((x) => x.id === teamId)?.specialRules || [];
     const ind = inducementData.inducements.find((x) => x.id === key);
 
     if (
