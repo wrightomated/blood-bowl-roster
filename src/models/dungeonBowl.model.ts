@@ -62,19 +62,25 @@ export interface CollegeCharacteristics {
 
 export const dbCollegeToTeam: (college: DungeonBowlCollege) => DungeonBowlTeam =
     (college) => {
-        return {
-            name: college.name,
-            id: college.id,
-            characteristics: college.characteristics,
-            players: convertPlayers(college.players),
-            reroll: {
-                cost: 50,
-                max: 8,
-            },
-            specialRules: [],
-            tier: 1,
-            allowedApothecary: false,
-        };
+        let team: DungeonBowlTeam;
+        try {
+            team = {
+                name: college.name,
+                id: college.id,
+                characteristics: college.characteristics,
+                players: convertPlayers(college.players),
+                reroll: {
+                    cost: 50,
+                    max: 8,
+                },
+                specialRules: [],
+                tier: 1,
+                allowedApothecary: false,
+            };
+        } catch (error) {
+            team = null;
+        }
+        return team;
     };
 
 const convertPlayers = (players: DBCollegePlayers) => {

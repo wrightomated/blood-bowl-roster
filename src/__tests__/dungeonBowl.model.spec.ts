@@ -61,3 +61,7 @@ test('should convert dungeon bowl college into team', () => {
         allowedApothecary: false,
     });
 });
+
+test('should return null with a malformed team', () => {
+    expect(dbCollegeToTeam(null)).toBeNull();
+});
