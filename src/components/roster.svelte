@@ -118,6 +118,7 @@
     .table-container {
         max-width: 100%;
         overflow-x: auto;
+        margin-bottom: 20px;
     }
     input {
         border: 0;
