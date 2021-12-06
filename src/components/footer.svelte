@@ -12,21 +12,14 @@
 </script>
 
 <footer>
-    <p>
-        Local storage is used for storing saved and current rosters.
-        <!-- <span on:click={toggleLocalStorage}>Delete local storage.</span> -->
-    </p>
+    <p>Local storage is used for storing saved and current rosters.</p>
     <p>
         Rule references and player names are property of Games Workshop. This
         site is not affiliated with Games Workshop. I just think they're neat.
     </p>
     <p>
         This is a work in progress. For all queries, concerns and suggestions
-        please <a href="mailto:bbrosterapp@gmail.com">email</a>
-        or
-        <a href="https://github.com/wrightomated/blood-bowl-roster/issues"
-            >raise an issue on github</a
-        >.
+        please <a href="mailto:bbrosterapp@gmail.com">email</a>.
     </p>
 </footer>
 
