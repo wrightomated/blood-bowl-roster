@@ -42,6 +42,7 @@
             border-right: 1px solid var(--secondary-colour);
             border-radius: 0;
             text-transform: capitalize;
+            margin: 0;
 
             &--selected {
                 background-color: var(--secondary-colour);
