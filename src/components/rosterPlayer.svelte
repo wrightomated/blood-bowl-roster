@@ -27,15 +27,16 @@
         rosterPlayer.player.bigGuy &&
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
-    $: playerSkillIds = rosterPlayer.player.skills.concat(
-        rosterPlayer?.alterations?.extraSkills || []
-    );
+    $: playerSkillIds = rosterPlayer.player.skills
+        .filter((x) => ($roster.format === 'dungeon bowl' ? x : x))
+        .concat(rosterPlayer?.alterations?.extraSkills || []);
     $: currentCost =
         rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
             ? 0
             : ((rosterPlayer.player.id === 56 ||
                   rosterPlayer.player.id === 73) &&
-              $roster.mode !== 'exhibition'
+              $roster.mode !== 'exhibition' &&
+              $roster.format !== 'dungeon bowl'
                   ? 0
                   : rosterPlayer.player.cost) +
               (rosterPlayer.alterations?.valueChange || 0);

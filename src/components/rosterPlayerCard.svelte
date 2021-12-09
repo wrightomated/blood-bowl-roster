@@ -35,7 +35,8 @@
             ? 0
             : ((rosterPlayer.player.id === 56 ||
                   rosterPlayer.player.id === 73) &&
-              $roster.mode !== 'exhibition'
+              $roster.mode !== 'exhibition' &&
+              $roster.format !== 'dungeon bowl'
                   ? 0
                   : rosterPlayer.player.cost) +
               (rosterPlayer.alterations?.valueChange || 0);
