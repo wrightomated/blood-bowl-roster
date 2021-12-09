@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { dbIgnoredSkills } from '../data/dungeonBowlIgnoredSkills';
+
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     import type { Player } from '../models/player.model';
@@ -16,8 +18,8 @@
     let newName: string = '';
 
     $: selectedSkills = selected?.journeyman
-        ? [...selected.skills, ...journeymanSkills()]
-        : selected.skills;
+        ? [...filteredSkills(selected.skills), ...journeymanSkills()]
+        : filteredSkills(selected.skills);
 
     const addPlayer = () => {
         const { journeyman, ...player } = selected;
@@ -35,7 +37,7 @@
         roster.addPlayer(
             {
                 playerName: newName,
-                player,
+                player: { ...player, skills: filteredSkills(player.skills) },
                 alterations,
             },
             index
@@ -52,6 +54,12 @@
             ...journeymanPlayer,
             journeyman: true,
         };
+    };
+
+    const filteredSkills: (skills: number[]) => number[] = (skills) => {
+        return $roster.format === 'dungeon bowl'
+            ? skills.filter((skillId) => !dbIgnoredSkills.includes(skillId))
+            : skills;
     };
 
     const journeymanSkills: () => number[] = () =>
