@@ -32,7 +32,8 @@
         .map(
             (x) =>
                 ((x.player.id === 56 || x.player.id === 73) &&
-                $roster.mode !== 'exhibition'
+                $roster.mode !== 'exhibition' &&
+                $roster.format !== 'dungeon bowl'
                     ? 0
                     : x.player.cost) + (x?.alterations?.valueChange || 0)
         )
