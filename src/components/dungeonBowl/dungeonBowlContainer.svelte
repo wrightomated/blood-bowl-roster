@@ -21,6 +21,7 @@
     } from '../../store/teamSelectionOpen.store';
     import DungeonBowlCollegeCard from './dungeonBowlCollegeCard.svelte';
     import Button from '../uiComponents/button.svelte';
+    import { sendEventToAnalytics } from '../../analytics/plausible';
 
     const selectCollege = (college) => {
         setCurrentTeam(college);
@@ -42,6 +43,11 @@
         showAvailableStarPlayers.set(false);
         showDungeonBowl.set(false);
         showNewTeamDialogue.set(false);
+        sendEventToAnalytics('new-team-created', {
+            teamType: $currentTeam.name,
+            rosterMode: $rosterMode,
+            format: $teamFormat,
+        });
     };
     const setCurrentTeam = (college) => {
         currentTeam.set(dbCollegeToTeam(college));
