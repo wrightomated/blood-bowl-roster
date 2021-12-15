@@ -11,9 +11,10 @@
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
     import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-    import { teamFormat } from '../store/teamFormat.store';
+    import { filteredTableColumns } from '../store/filteredTableColumns.store';
 
     export let playerTypes: Player[];
+
     $: nextPlayerIndex =
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
@@ -61,30 +62,15 @@
         <table>
             <thead>
                 <tr>
-                    <td />
-                    <td class="left-align" colspan="2" id="name-header">Name</td
-                    >
-                    <td class="left-align" id="position-header">Position</td>
-                    <td>MA</td>
-                    <td>ST</td>
-                    <td>AG</td>
-                    <td>PA</td>
-                    <td>AV</td>
-                    <td class="skills">Skills</td>
-                    <td>Hiring Fee</td>
-                    {#if $roster.format !== 'sevens'}
-                        <td id="spp-header">Unspent Spp</td>
-                    {/if}
-                    {#if $roster.mode !== 'exhibition'}
-                        <td id="mng-header" title="Miss next game">Mng</td>
-                        {#if $roster.format !== 'sevens'}
-                            <td>Ni</td>
-                            <td id="tr-header" title="Temporarily Retiring"
-                                >TR</td
-                            >
-                        {/if}
-                    {/if}
-                    <td>Current Value</td>
+                    {#each $filteredTableColumns as c}
+                        <td
+                            class={c.elementClass}
+                            id={c.elementId}
+                            colspan={c.colspan || 1}
+                            title={c.title || c.name}
+                            >{c.hideName ? '' : c.name}</td
+                        >
+                    {/each}
                 </tr>
             </thead>
             <tbody>

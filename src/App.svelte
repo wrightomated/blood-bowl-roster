@@ -2,9 +2,11 @@
     import Footer from './components/footer.svelte';
     import Menu from './components/menu/menu.svelte';
     import Team from './components/team.svelte';
+    import Modal from './components/uiComponents/modal.svelte';
 </script>
 
 <Menu />
+<!-- <Modal /> -->
 <main>
     <Team />
     <Footer />
