@@ -43,7 +43,10 @@
             gtag('event', 'exception', {
                 'description': message,
                 'error': error,
-                'fatal': true
+                'fatal': true,
+                source,
+                lineno,
+                colno
             });
 
             localStorage.removeItem('selectedTeam');
