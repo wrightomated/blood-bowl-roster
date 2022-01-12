@@ -1,10 +1,8 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
-    import RosterRow from './rosterPlayer.svelte';
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
     import Export from './export.svelte';
-    import RosterPlayerCard from './rosterPlayerCard.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
@@ -12,6 +10,8 @@
     import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
+    import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
+    import RosterPlayerCard from './rosterPlayer/rosterPlayerCard.svelte';
 
     export let playerTypes: Player[];
 
@@ -64,11 +64,11 @@
                 <tr>
                     {#each $filteredTableColumns as c}
                         <td
-                            class={c.elementClass}
-                            id={c.elementId}
+                            class={c.headerDetails?.elementClass}
+                            id={c.headerDetails?.elementId}
                             colspan={c.colspan || 1}
                             title={c.title || c.name}
-                            >{c.hideName ? '' : c.name}</td
+                            >{c.headerDetails?.hideName ? '' : c.name}</td
                         >
                     {/each}
                 </tr>
@@ -76,7 +76,7 @@
             <tbody>
                 {#each $roster.players as player, index}
                     {#if !player?.deleted}
-                        <RosterRow {index} />
+                        <RosterPlayerRow {index} />
                     {/if}
                 {/each}
                 {#if activePlayersNumber < getMaxPlayers($roster.format)}
