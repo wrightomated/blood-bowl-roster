@@ -92,6 +92,11 @@
 {/if}
 
 <style lang="scss">
+    td {
+        input {
+            margin-bottom: 0;
+        }
+    }
     .add-skill {
         vertical-align: middle;
         display: inline-block;

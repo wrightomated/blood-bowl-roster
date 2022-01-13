@@ -1,7 +1,12 @@
 import PlayerNumber from '../components/rosterPlayer/playerNumber.svelte';
 import PlayerName from '../components/rosterPlayer/playerName.svelte';
-import PlayerControls from '../components/rosterPlayer/PlayerControls.svelte';
-import PlayerPosition from '../components/rosterPlayer/PlayerPosition.svelte';
+import PlayerControls from '../components/rosterPlayer/playerControls.svelte';
+import PlayerPosition from '../components/rosterPlayer/playerPosition.svelte';
+import PlayerCharacteristic from '../components/rosterPlayer/playerCharacteristic.svelte';
+import PlayerNumberInput from '../components/rosterPlayer/playerNumberInput.svelte';
+import PlayerCheckbox from '../components/rosterPlayer/playerCheckbox.svelte';
+import SkillElement from '../components/skillElement.svelte';
+import TextElement from '../components/uiComponents/textElement.svelte';
 import type { ColumnDetails } from '../models/rosterTableColumns.model';
 
 export const columnDetails: ColumnDetails[] = [
@@ -29,7 +34,7 @@ export const columnDetails: ColumnDetails[] = [
     },
     {
         id: 3,
-        name: 'Name',
+        name: 'Controls',
         headerDetails: {
             hideName: true,
         },
@@ -54,26 +59,41 @@ export const columnDetails: ColumnDetails[] = [
         id: 5,
         name: 'MA',
         title: 'Movement Allowance',
+        rowDetails: {
+            component: PlayerCharacteristic,
+        },
     },
     {
         id: 6,
         name: 'ST',
         title: 'Strength',
+        rowDetails: {
+            component: PlayerCharacteristic,
+        },
     },
     {
         id: 7,
         name: 'AG',
         title: 'Agility',
+        rowDetails: {
+            component: PlayerCharacteristic,
+        },
     },
     {
         id: 8,
         name: 'PA',
         title: 'Passing',
+        rowDetails: {
+            component: PlayerCharacteristic,
+        },
     },
     {
         id: 9,
         name: 'AV',
         title: 'Armour Value',
+        rowDetails: {
+            component: PlayerCharacteristic,
+        },
     },
     {
         id: 10,
@@ -81,16 +101,26 @@ export const columnDetails: ColumnDetails[] = [
         headerDetails: {
             elementClass: 'skills',
         },
+        rowDetails: {
+            tdClass: 'left-align',
+            component: SkillElement,
+        },
     },
     {
         id: 11,
         name: 'Hiring Fee',
+        rowDetails: {
+            component: TextElement,
+        },
     },
     {
         id: 12,
         name: 'Unspent Spp',
         headerDetails: {
             elementId: 'spp-header',
+        },
+        rowDetails: {
+            component: PlayerNumberInput,
         },
         disallowedRosterFormats: ['sevens'],
     },
@@ -101,12 +131,18 @@ export const columnDetails: ColumnDetails[] = [
         headerDetails: {
             elementId: 'mng-header',
         },
+        rowDetails: {
+            component: PlayerCheckbox,
+        },
         disallowedRosterModes: ['exhibition'],
     },
     {
         id: 14,
         name: 'NI',
         title: 'Niggling Injury',
+        rowDetails: {
+            component: PlayerNumberInput,
+        },
         disallowedRosterModes: ['exhibition'],
         disallowedRosterFormats: ['sevens'],
     },
@@ -114,6 +150,9 @@ export const columnDetails: ColumnDetails[] = [
         id: 15,
         name: 'TR',
         title: 'Temporarily Retiring',
+        rowDetails: {
+            component: PlayerCheckbox,
+        },
         disallowedRosterModes: ['exhibition'],
         disallowedRosterFormats: ['sevens'],
     },
@@ -121,5 +160,8 @@ export const columnDetails: ColumnDetails[] = [
         id: 16,
         name: 'Current Value',
         title: 'Current Value',
+        rowDetails: {
+            component: TextElement,
+        },
     },
 ];

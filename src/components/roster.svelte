@@ -12,6 +12,7 @@
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
     import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
     import RosterPlayerCard from './rosterPlayer/rosterPlayerCard.svelte';
+    import ColumnControl from './columnControl.svelte';
 
     export let playerTypes: Player[];
 
@@ -21,6 +22,8 @@
             : $roster.players.length;
     $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
 </script>
+
+<ColumnControl />
 
 <div class="team-name-container">
     <h2 class="heading">
@@ -68,7 +71,11 @@
                             id={c.headerDetails?.elementId}
                             colspan={c.colspan || 1}
                             title={c.title || c.name}
-                            >{c.headerDetails?.hideName ? '' : c.name}</td
+                            >{c.headerDetails?.hideName
+                                ? ''
+                                : c?.customName
+                                ? c.customName
+                                : c.name}</td
                         >
                     {/each}
                 </tr>
