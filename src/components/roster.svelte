@@ -23,8 +23,6 @@
     $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
 </script>
 
-<ColumnControl />
-
 <div class="team-name-container">
     <h2 class="heading">
         <input

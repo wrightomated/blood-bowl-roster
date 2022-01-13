@@ -6,9 +6,13 @@
     export let alteration: string;
 </script>
 
-<input
-    type="checkbox"
-    aria-labelledby="{alteration}-header"
-    use:blurOnEscapeOrEnter
-    bind:checked={$roster.players[index].alterations[alteration]}
-/>
+{#if $roster.players[index].alterations !== undefined}
+    <input
+        type="checkbox"
+        aria-labelledby="{alteration}-header"
+        use:blurOnEscapeOrEnter
+        bind:checked={$roster.players[index].alterations[alteration]}
+    />
+{:else}
+    -
+{/if}

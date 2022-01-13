@@ -7,7 +7,7 @@
 </script>
 
 {#if rosterPlayer.starPlayer}
-    {rosterPlayer.player.position}
+    <span data-cy={`player-${index}-name`}>{rosterPlayer.player.position}</span>
 {:else}
     <input
         data-cy={`player-${index}-name`}
