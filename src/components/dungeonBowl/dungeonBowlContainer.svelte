@@ -56,7 +56,7 @@
 
 {#if $showDungeonBowl}
     <div>
-        <h3>Under Constuction</h3>
+        <h3>Colleges</h3>
         <div class="college-buttons">
             {#each dungeonBowlColleges.colleges as college}
                 <button
