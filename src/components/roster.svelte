@@ -36,6 +36,7 @@
         />
     </h2>
 </div>
+
 <div class="sub-heading-box">
     <p class="sub-heading">
         <span class="print-only-team-name"
@@ -46,6 +47,7 @@
 </div>
 <Export />
 <RosterDelete />
+
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
         {#each $roster.players as player, index}

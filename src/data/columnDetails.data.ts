@@ -48,7 +48,7 @@ export const columnDetails: ColumnDetails[] = [
         name: 'Position',
         headerDetails: {
             elementId: 'position-header',
-            elementClass: 'left-align',
+            elementClass: 'left-align position',
         },
         rowDetails: {
             tdClass: 'left-align',

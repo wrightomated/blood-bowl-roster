@@ -1,5 +1,6 @@
 <script lang="ts">
     import { dbIgnoredSkills } from '../data/dungeonBowlIgnoredSkills';
+    import { characteristics } from '../data/statOrder.data';
 
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
@@ -7,6 +8,7 @@
     import type { PlayerAlterations } from '../models/roster.model';
     import type { Team } from '../models/team.model';
     import { currentTeam } from '../store/currentTeam.store';
+    import { filteredTableColumns } from '../store/filteredTableColumns.store';
 
     import { roster } from '../store/teamRoster.store';
     import SkillElement from './skillElement.svelte';
@@ -64,58 +66,57 @@
 
     const journeymanSkills: () => number[] = () =>
         $roster.format === 'sevens' ? [710] : [71];
+
+    const getCharacteristic: (c: string) => string = (c) => {
+        const cIndex = characteristics.indexOf(c);
+        const stat = selected.playerStats[cIndex];
+        return `${stat === 0 ? '-' : cIndex > 1 ? `${stat}+` : stat}`;
+    };
 </script>
 
-<tr class="add-player-row">
-    <td class="player-number" />
-    <td class="left-align">
-        <input
-            aria-labelledby="name-header"
-            placeholder="Player Name"
-            bind:value={newName}
-            class="name-input"
-            data-cy="new-player-name-input"
-            use:blurOnEscapeOrEnter
-        />
-    </td>
-    <td class="left-align">
-        <MaterialButton
-            hoverText="Add new player"
-            cyData="add-player"
-            symbol="add_circle"
-            clickFunction={addPlayer}
-        />
-    </td>
-    <td class="position left-align">
-        <select
-            aria-labelledby="position-header"
-            bind:value={selected}
-            data-cy="new-player-position-select"
-        >
-            {#each playerTypes as playerType}
-                <option value={playerType}>
-                    {playerType.position}
-                </option>
-            {/each}
-            {#if $roster.mode !== 'exhibition'}
-                <option value={journeymanType()}> Journeyman </option>
+<tr>
+    {#each $filteredTableColumns as c}
+        <td class={c.rowDetails?.tdClass}>
+            {#if c.name === 'Name'}
+                <input
+                    aria-labelledby="name-header"
+                    placeholder="Player Name"
+                    bind:value={newName}
+                    class="name-input"
+                    data-cy="new-player-name-input"
+                    use:blurOnEscapeOrEnter
+                />
+            {:else if c.name === 'Position'}
+                <select
+                    aria-labelledby="position-header"
+                    bind:value={selected}
+                    data-cy="new-player-position-select"
+                >
+                    {#each playerTypes as playerType}
+                        <option value={playerType}>
+                            {playerType.position}
+                        </option>
+                    {/each}
+                    {#if $roster.mode !== 'exhibition'}
+                        <option value={journeymanType()}> Journeyman </option>
+                    {/if}
+                </select>
+            {:else if c.name === 'Controls'}
+                <MaterialButton
+                    hoverText="Add new player"
+                    cyData="add-player"
+                    symbol="add_circle"
+                    clickFunction={addPlayer}
+                />
+            {:else if characteristics.includes(c.name)}
+                {getCharacteristic(c.name)}
+            {:else if c.name === 'Skills'}
+                <SkillElement playerSkillIds={selectedSkills} />
+            {:else if c.name === 'Hiring Fee'}
+                {!selected?.journeyman ? `${selected.cost},000` : '-'}
             {/if}
-        </select>
-    </td>
-    {#each selected.playerStats as stat, index}
-        <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
+        </td>
     {/each}
-    <td class="left-align">
-        <SkillElement playerSkillIds={selectedSkills} />
-    </td>
-    <td>{!selected?.journeyman ? `${selected.cost},000` : '-'}</td>
-    <td />
-    {#if $roster.mode !== 'exhibition' && $roster.format !== 'sevens'}
-        <td />
-        <td />
-        <td />
-    {/if}
-    <td />
 </tr>
 
 <style lang="scss">
@@ -149,11 +150,6 @@
     }
     .position {
         padding: calc(1em / 2);
-    }
-    .player-number {
-        @media screen and (max-width: 450px) {
-            font-size: 16px;
-        }
     }
     @media print {
         .add-player-row {
