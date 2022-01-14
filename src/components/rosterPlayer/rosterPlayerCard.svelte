@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { maxPlayerNumber, roster } from '../store/teamRoster.store';
-    import MaterialButton from './uiComponents/materialButton.svelte';
-    import SkillElement from './skillElement.svelte';
-    import { currentTeam } from '../store/currentTeam.store';
-    import type { StarPlayer } from '../models/player.model';
-    import AddSkill from './addSkill.svelte';
+    import { maxPlayerNumber, roster } from '../../store/teamRoster.store';
+    import MaterialButton from '../uiComponents/materialButton.svelte';
+    import SkillElement from '../skillElement.svelte';
+    import { currentTeam } from '../../store/currentTeam.store';
+    import type { StarPlayer } from '../../models/player.model';
+    import AddSkill from '../addSkill.svelte';
     import {
         characteristicMaxValue,
         characteristicMinValue,
         characteristics,
-    } from '../data/statOrder.data';
-    import StatBlock from './playerCard/statBlock.svelte';
-    import { showSkillButtons } from '../store/showSkillButtons.store';
-    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
+    } from '../../data/statOrder.data';
+    import StatBlock from '../playerCard/statBlock.svelte';
+    import { showSkillButtons } from '../../store/showSkillButtons.store';
+    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -337,7 +337,7 @@
 </section>
 
 <style lang="scss">
-    @import '../styles/font';
+    @import '../../styles/font';
     input {
         border: 0;
         border-radius: 0;

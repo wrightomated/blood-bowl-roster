@@ -1,19 +1,21 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
-    import RosterRow from './rosterPlayer.svelte';
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
     import Export from './export.svelte';
-    import RosterPlayerCard from './rosterPlayerCard.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
     import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-    import { teamFormat } from '../store/teamFormat.store';
+    import { filteredTableColumns } from '../store/filteredTableColumns.store';
+    import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
+    import RosterPlayerCard from './rosterPlayer/rosterPlayerCard.svelte';
+    import ColumnControl from './columnControl.svelte';
 
     export let playerTypes: Player[];
+
     $: nextPlayerIndex =
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
@@ -34,6 +36,7 @@
         />
     </h2>
 </div>
+
 <div class="sub-heading-box">
     <p class="sub-heading">
         <span class="print-only-team-name"
@@ -44,6 +47,7 @@
 </div>
 <Export />
 <RosterDelete />
+
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
         {#each $roster.players as player, index}
@@ -61,36 +65,25 @@
         <table>
             <thead>
                 <tr>
-                    <td />
-                    <td class="left-align" colspan="2" id="name-header">Name</td
-                    >
-                    <td class="left-align" id="position-header">Position</td>
-                    <td>MA</td>
-                    <td>ST</td>
-                    <td>AG</td>
-                    <td>PA</td>
-                    <td>AV</td>
-                    <td class="skills">Skills</td>
-                    <td>Hiring Fee</td>
-                    {#if $roster.format !== 'sevens'}
-                        <td id="spp-header">Unspent Spp</td>
-                    {/if}
-                    {#if $roster.mode !== 'exhibition'}
-                        <td id="mng-header" title="Miss next game">Mng</td>
-                        {#if $roster.format !== 'sevens'}
-                            <td>Ni</td>
-                            <td id="tr-header" title="Temporarily Retiring"
-                                >TR</td
-                            >
-                        {/if}
-                    {/if}
-                    <td>Current Value</td>
+                    {#each $filteredTableColumns as c}
+                        <td
+                            class={c.headerDetails?.elementClass}
+                            id={c.headerDetails?.elementId}
+                            colspan={c.colspan || 1}
+                            title={c.title || c.name}
+                            >{c.headerDetails?.hideName
+                                ? ''
+                                : c?.customName
+                                ? c.customName
+                                : c.name}</td
+                        >
+                    {/each}
                 </tr>
             </thead>
             <tbody>
                 {#each $roster.players as player, index}
                     {#if !player?.deleted}
-                        <RosterRow {index} />
+                        <RosterPlayerRow {index} />
                     {/if}
                 {/each}
                 {#if activePlayersNumber < getMaxPlayers($roster.format)}
