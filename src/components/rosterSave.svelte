@@ -7,6 +7,7 @@
     import { showDelete } from '../store/showDelete.store';
     import { showAllInducements } from '../store/showAllInducements.store';
     import { sendEventToAnalytics } from '../analytics/plausible';
+    import { columnControlsOpen } from '../store/columnControls.store';
 
     let saved = false;
     let rosterCleared = false;
@@ -35,6 +36,9 @@
             window.print();
         }, 2);
     };
+
+    const toggleColumnControls = () =>
+        columnControlsOpen.set(!$columnControlsOpen);
 
     roster.subscribe((x) => {
         saved = false;
@@ -74,6 +78,13 @@
     symbol="print"
     clickFunction={printPage}
 />
+{#if $rosterViewMode === 'table'}
+    <MaterialButton
+        hoverText="Roster Settings"
+        symbol="settings"
+        clickFunction={toggleColumnControls}
+    />
+{/if}
 
 <style lang="scss">
     .saved {
