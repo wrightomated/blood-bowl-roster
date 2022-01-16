@@ -13,6 +13,8 @@
     import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
     import RosterPlayerCard from './rosterPlayer/rosterPlayerCard.svelte';
     import ColumnControl from './columnControl.svelte';
+    import Modal from './uiComponents/modal.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
 
     export let playerTypes: Player[];
 
@@ -75,8 +77,8 @@
                                 ? ''
                                 : c?.customName
                                 ? c.customName
-                                : c.name}</td
-                        >
+                                : c.name}
+                        </td>
                     {/each}
                 </tr>
             </thead>
