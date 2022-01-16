@@ -12,8 +12,7 @@
 <p>
     Hide, rearrange and create new columns. Changes <strong
         >will not be saved</strong
-    > and can't be shared at the moment. This feature is currently under development
-    so it will change and hopefully improve.
+    > and can't be shared at the moment. This feature is currently under development.
 </p>
 <div class="controls">
     {#each $tableColumns as c (c.id)}
