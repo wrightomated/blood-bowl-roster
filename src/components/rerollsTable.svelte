@@ -7,6 +7,8 @@
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
+    import { inducementData } from '../data/inducements.data';
+    import { calculateInducementTotal } from '../helpers/totalInducementAmount';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -26,18 +28,23 @@
         .map((e) => $roster.extra[e.extraString] * e.cost || 0)
         .reduce((a, b) => a + b, 0);
 
-    $: currentTotal = $roster.players
-        .filter((p) => !p?.starPlayer)
-        .filter((p) => !p?.alterations.tr && !p?.alterations.mng)
-        .map(
-            (x) =>
-                ((x.player.id === 56 || x.player.id === 73) &&
-                $roster.mode !== 'exhibition' &&
-                $roster.format !== 'dungeon bowl'
-                    ? 0
-                    : x.player.cost) + (x?.alterations?.valueChange || 0)
-        )
-        .reduce((a, b) => a + b, 0);
+    $: currentTotal =
+        $roster.players
+            .filter((p) => !p?.alterations?.tr && !p?.alterations?.mng)
+            .map(
+                (x) =>
+                    ((x.player.id === 56 || x.player.id === 73) &&
+                    $roster.mode !== 'exhibition' &&
+                    $roster.format !== 'dungeon bowl'
+                        ? 0
+                        : x.player.cost) + (x?.alterations?.valueChange || 0)
+            )
+            .reduce((a, b) => a + b, 0) +
+        calculateInducementTotal(
+            $roster.inducements,
+            $roster.teamId,
+            $roster.format
+        );
 </script>
 
 <div class="tables">
