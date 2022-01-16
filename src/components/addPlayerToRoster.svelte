@@ -74,7 +74,7 @@
     };
 </script>
 
-<tr>
+<tr class="add-player-row">
     {#each $filteredTableColumns as c}
         <td class={c.rowDetails?.tdClass}>
             {#if c.name === 'Name'}
