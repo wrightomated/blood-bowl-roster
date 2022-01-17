@@ -344,6 +344,20 @@ const max: StarPlayer = {
     specialRules: ['Maximum Carnage'],
 };
 
+const barikFarblast: StarPlayer = {
+    id: 233,
+    position: 'Barik Farblast',
+    playerStats: [6, 3, 4, 3, 9],
+    playsFor: [
+        'Halfling Thimble Cup',
+        'Old World Classic',
+        'Worlds Edge Superleague',
+    ],
+    skills: [42, 71, 46, 79, 59, 22, 60],
+    cost: 80,
+    specialRules: ['Blast It!'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -379,5 +393,6 @@ export const starPlayers = {
         bryce,
         scyla,
         max,
+        barikFarblast,
     ],
 };
