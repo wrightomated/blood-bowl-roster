@@ -1,5 +1,4 @@
 import type { DungeonBowlCollege } from '../models/dungeonBowl.model';
-import type { Team } from '../models/team.model';
 
 const collegeOfFire: DungeonBowlCollege = {
     name: 'Fire',

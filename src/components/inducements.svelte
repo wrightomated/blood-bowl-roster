@@ -93,7 +93,7 @@
         </tr>
     </thead>
     <tbody>
-        {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
+        {#if Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
             <tr class="no-print">
                 <td colspan="3">Remove all inducements below (no refund)</td>
                 <td>
