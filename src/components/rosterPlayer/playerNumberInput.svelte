@@ -11,6 +11,7 @@
         type="number"
         aria-labelledby="{alteration}-header"
         placeholder="?"
+        inputmode="numeric"
         use:blurOnEscapeOrEnter
         bind:value={$roster.players[index].alterations[alteration]}
     />

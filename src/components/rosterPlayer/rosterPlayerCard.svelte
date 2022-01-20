@@ -165,6 +165,7 @@
                 aria-label="Player Number"
                 type="number"
                 min="1"
+                inputmode="numeric"
                 max={maxPlayerNumber}
                 on:blur={changeNumber}
                 bind:value={playerNumber}
@@ -280,6 +281,7 @@
                             class="spp-input"
                             type="number"
                             placeholder="?"
+                            inputmode="numeric"
                             use:blurOnEscapeOrEnter
                             bind:value={$roster.players[index].alterations.spp}
                         />
@@ -304,6 +306,7 @@
                             class="spp-input"
                             type="number"
                             placeholder="?"
+                            inputmode="numeric"
                             use:blurOnEscapeOrEnter
                             bind:value={$roster.players[index].alterations.ni}
                         />
