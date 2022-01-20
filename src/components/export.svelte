@@ -45,6 +45,7 @@
                 id="url-input"
                 value="{baseUrl}?code={code}"
                 use:blurOnEscapeOrEnter
+                readonly
             />
             {#if !urlCoppied}
                 <MaterialButton
@@ -62,6 +63,7 @@
                 data-cy="code-input"
                 value={code}
                 use:blurOnEscapeOrEnter
+                readonly
             />
             {#if !codeCoppied}
                 <MaterialButton

@@ -30,6 +30,7 @@
             aria-label="treasury"
             bind:value={$roster.treasury}
             type="number"
+            inputmode="numeric"
             class="treasury__input"
             autofocus
             on:blur={() => noEmptyTreasury()}

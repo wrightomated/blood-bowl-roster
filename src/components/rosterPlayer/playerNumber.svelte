@@ -23,6 +23,7 @@
     class="player-number"
     aria-label="Player Number"
     type="number"
+    inputmode="numeric"
     min="1"
     max={maxPlayerNumber}
     on:blur={changeNumber}
