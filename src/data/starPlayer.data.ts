@@ -205,7 +205,7 @@ const lucien: StarPlayer = {
     position: 'Lucian Swift',
     playerStats: [7, 3, 2, 5, 9],
     playsFor: ['Elven Kingdoms League'],
-    skills: [13, 71, 23],
+    skills: [13, 71, 55, 23],
     cost: 340,
     specialRules: ['Two for One'],
     twoForOne: 220,
