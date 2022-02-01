@@ -43,10 +43,10 @@ const glartSmarshrip: StarPlayer = {
 };
 const glorielSummerbloom: StarPlayer = {
     id: 204,
-    position: 'Glorial Summerbloom',
+    position: 'Gloriel Summerbloom',
     playerStats: [7, 2, 2, 2, 8],
     playsFor: ['Elven Kingdoms League'],
-    skills: [37, 4, 711, 9, 22],
+    skills: [37, 4, 711, 46, 9, 22],
     cost: 150,
     specialRules: ['Shot to Nothing'],
 };
