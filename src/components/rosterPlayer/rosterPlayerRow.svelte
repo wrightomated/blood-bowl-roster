@@ -10,9 +10,9 @@
 
     $: rosterPlayer = $roster.players[index];
 
-    $: playerSkillIds = rosterPlayer.player.skills
-        .filter((x) => ($roster.format === 'dungeon bowl' ? x : x))
-        .concat(rosterPlayer?.alterations?.extraSkills || []);
+    // $: playerSkillIds = rosterPlayer.player.skills
+    //     .filter((x) => ($roster.format === 'dungeon bowl' ? x : x))
+    //     .concat(rosterPlayer?.alterations?.extraSkills || []);
     $: currentCost =
         rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
             ? 0
@@ -33,7 +33,10 @@
         }
         return (
             {
-                Skills: { playerSkillIds },
+                Skills: {
+                    playerSkillIds: rosterPlayer?.player?.skills,
+                    extraSkillIds: rosterPlayer?.alterations?.extraSkills || [],
+                },
                 'Hiring Fee': {
                     text:
                         rosterPlayer.player.cost > 0 &&
