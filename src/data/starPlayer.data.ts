@@ -358,6 +358,26 @@ const barikFarblast: StarPlayer = {
     specialRules: ['Blast It!'],
 };
 
+const bomberDribblesnot: StarPlayer = {
+    id: 234,
+    position: 'Bomber Dribblesnot',
+    playerStats: [6, 2, 3, 3, 8],
+    playsFor: ['Badlands Brawl', 'Underworld Challenge'],
+    skills: [37, 65, 4, 71, 78, 79, 81],
+    cost: 50,
+    specialRules: ['Kaboom!'],
+};
+
+const fungusTheLoon: StarPlayer = {
+    id: 235,
+    position: 'Fungus the Loon',
+    playerStats: [4, 7, 3, 0, 8],
+    playsFor: ['Badlands Brawl', 'Underworld Challenge'],
+    skills: [64, 55, 71, 72, 79, 81],
+    cost: 80,
+    specialRules: ['Whirling Dervish!'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -394,5 +414,7 @@ export const starPlayers = {
         scyla,
         max,
         barikFarblast,
+        bomberDribblesnot,
+        fungusTheLoon,
     ],
 };

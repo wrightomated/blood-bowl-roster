@@ -10,9 +10,6 @@
 
     $: rosterPlayer = $roster.players[index];
 
-    // $: playerSkillIds = rosterPlayer.player.skills
-    //     .filter((x) => ($roster.format === 'dungeon bowl' ? x : x))
-    //     .concat(rosterPlayer?.alterations?.extraSkills || []);
     $: currentCost =
         rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
             ? 0
