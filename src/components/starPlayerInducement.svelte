@@ -4,21 +4,27 @@
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
+    import type { Team } from '../models/team.model';
 
     let selectedId: number;
 
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
-        $currentTeam,
+        $currentTeam as Team,
         $roster.players.map((x) => x.player.id)
-    ).map((x, _, a) => {
-        let displayName = x.position;
-        if (x?.twoForOne) {
-            const other = a.find((p) => p.id === x?.twoForOne);
-            displayName = x.position + ' & ' + other.position;
-        }
-        return { ...x, displayName: displayName };
-    });
+    )
+        .map((x, _, a) => {
+            let displayName = x.position;
+            if (x?.twoForOne) {
+                const other = a.find((p) => p.id === x?.twoForOne);
+                if (other.id < x.id) {
+                    return { ...x, displayName: 'ignoreThis' };
+                }
+                displayName = x.position + ' & ' + other.position;
+            }
+            return { ...x, displayName };
+        })
+        .filter((x) => x.displayName !== 'ignoreThis');
 
     const getSelected = (id) => {
         return starPlayers.starPlayers.find((x) => x.id === id);

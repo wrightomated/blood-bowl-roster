@@ -3,22 +3,13 @@
     import { currentTeam } from '../store/currentTeam.store';
     import StarPlayerRow from './starPlayerRow.svelte';
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
+    import type { Team } from '../models/team.model';
 
-    $: filteredStarPlayers = filterStarPlayers(starPlayers, $currentTeam);
+    $: filteredStarPlayers = filterStarPlayers(
+        starPlayers,
+        $currentTeam as Team
+    );
 </script>
-
-<style lang="scss">
-    .skills-header {
-        min-width: 200px;
-    }
-    .left-align {
-        text-align: left;
-    }
-    .table-container {
-        max-width: 100%;
-        overflow-x: auto;
-    }
-</style>
 
 <div class="table-container">
     <table>
@@ -42,3 +33,16 @@
         </tbody>
     </table>
 </div>
+
+<style lang="scss">
+    .skills-header {
+        min-width: 200px;
+    }
+    .left-align {
+        text-align: left;
+    }
+    .table-container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+</style>
