@@ -22,7 +22,7 @@
                 }
                 displayName = x.position + ' & ' + other.position;
             }
-            return { ...x, displayName: displayName };
+            return { ...x, displayName };
         })
         .filter((x) => x !== 'ignoreThis');
 
