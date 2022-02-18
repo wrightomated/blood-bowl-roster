@@ -18,13 +18,13 @@
             if (x?.twoForOne) {
                 const other = a.find((p) => p.id === x?.twoForOne);
                 if (other.id < x.id) {
-                    return 'ignoreThis';
+                    return { ...x, displayName: 'ignoreThis' };
                 }
                 displayName = x.position + ' & ' + other.position;
             }
             return { ...x, displayName };
         })
-        .filter((x) => x !== 'ignoreThis');
+        .filter((x) => x.displayName !== 'ignoreThis');
 
     const getSelected = (id) => {
         return starPlayers.starPlayers.find((x) => x.id === id);
