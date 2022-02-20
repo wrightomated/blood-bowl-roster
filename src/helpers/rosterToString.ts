@@ -5,7 +5,7 @@ import type {
     RosterPlayerRecord,
 } from '../models/roster.model';
 import type { RosterMode } from '../store/rosterMode.store';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 const extraToString = (extra: ExtraRosterInfo) => {
     const map = {

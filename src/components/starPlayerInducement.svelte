@@ -118,9 +118,4 @@
             width: 100%;
         }
     }
-    @media print {
-        .no-print {
-            display: none;
-        }
-    }
 </style>

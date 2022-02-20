@@ -1,4 +1,4 @@
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 export interface GameType {
     teamFormat: TeamFormat;

@@ -1,5 +1,5 @@
 import type { GameType as GameTypeSettings } from '../models/gameType.model';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 const sevensGame: GameTypeSettings = {
     teamFormat: 'sevens',

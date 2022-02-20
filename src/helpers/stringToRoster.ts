@@ -10,7 +10,7 @@ import type {
     RosterPlayerRecord,
 } from '../models/roster.model';
 import type { RosterMode } from '../store/rosterMode.store';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 /*
 t1t0m0d1r2 p1 p1 p1 p1 p4 p4 p2 p3 p4 p4 p5 I The%20Altdorf%20Deamons:Bob

@@ -158,10 +158,4 @@
             font-family: $display-font;
         }
     }
-
-    @media print {
-        .no-print {
-            display: none;
-        }
-    }
 </style>

@@ -12,9 +12,8 @@
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
     import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
     import RosterPlayerCard from './rosterPlayer/rosterPlayerCard.svelte';
-    import ColumnControl from './columnControl.svelte';
-    import Modal from './uiComponents/modal.svelte';
-    import MaterialButton from './uiComponents/materialButton.svelte';
+    import Pill from './uiComponents/pill.svelte';
+    import { getTeamFormatShortDisplay } from '../types/teamFormat';
 
     export let playerTypes: Player[];
 
@@ -38,12 +37,24 @@
         />
     </h2>
 </div>
+<span class="no-print">
+    <div class="pill-box">
+        <Pill text={$roster.teamType + ' Team'} />
+        <Pill text={getTeamFormatShortDisplay($roster.format)} />
+        <Pill text={$roster.mode} />
+    </div>
+</span>
 
 <div class="sub-heading-box">
-    <p class="sub-heading">
-        <span class="print-only-team-name"
-            >{$roster.teamName}&nbsp;
-        </span>{$roster.teamType} Team
+    <p class="sub-heading print-only print-only--larger">{$roster.teamName}</p>
+    <p class="sub-heading print-only">
+        {$roster.teamType} Team
+    </p>
+    <p class="sub-heading print-only" title={$roster.format}>
+        {getTeamFormatShortDisplay($roster.format)}
+    </p>
+    <p class="sub-heading print-only" title={$roster.mode}>
+        {$roster.mode}
     </p>
     <RosterSave />
 </div>
@@ -114,6 +125,12 @@
         max-width: 100%;
         overflow-x: auto;
     }
+    .pill-box {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-block-end: 32px;
+    }
     input {
         border: 0;
         border-radius: 0;
@@ -121,11 +138,11 @@
     }
     .heading {
         margin-top: 16px;
-        margin-block-end: 32px;
+        margin-block-end: 0;
 
         &__input {
             display: block;
-            font-family: 'Roboto Slab', serif;
+            font-family: var(--display-font);
             font-weight: 600;
             font-size: 48px;
             -webkit-padding: 0;
@@ -140,10 +157,12 @@
     }
     @media screen and (max-width: 800px) {
         .heading {
-            margin-block-end: 24px;
             &__input {
                 font-size: 32px;
             }
+        }
+        .pill-box {
+            margin-block-end: 24px;
         }
     }
     @media screen and (max-width: 450px) {
@@ -151,13 +170,19 @@
             &__input {
                 font-size: 20px;
             }
+        }
+        .pill-box {
             margin-block-end: 16px;
         }
     }
     .sub-heading {
         margin-block-end: 4px;
-        font-family: 'Roboto Slab', serif;
-        margin-right: 12px;
+        font-family: var(--display-font);
+        text-transform: capitalize;
+
+        &--format {
+            color: var(--main-colour);
+        }
     }
     .left-align {
         text-align: left;
@@ -166,7 +191,7 @@
         min-width: 200px;
     }
 
-    .print-only-team-name {
+    .print-only {
         display: none;
     }
 
@@ -177,9 +202,11 @@
         .heading {
             display: none;
         }
-        .print-only-team-name {
+        .print-only {
             display: inline-block;
-            font-size: 16px;
+            &--larger {
+                font-size: 16px;
+            }
         }
         .table-container {
             overflow: inherit;

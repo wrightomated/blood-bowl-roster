@@ -1,5 +1,5 @@
 import type { RosterMode } from '../store/rosterMode.store';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
 import type { Player } from './player.model';
 import type { TeamName } from './team.model';
