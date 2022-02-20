@@ -9,8 +9,8 @@ import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
-import type { TeamFormat } from './teamFormat.store';
 import type { CollegeName } from '../models/dungeonBowl.model';
+import type { TeamFormat } from '../types/teamFormat';
 
 export const maxPlayerNumber = 16;
 

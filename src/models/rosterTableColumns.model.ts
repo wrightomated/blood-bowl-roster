@@ -1,6 +1,5 @@
-import type { SvelteComponent, SvelteComponentTyped } from 'svelte';
 import type { RosterMode } from '../store/rosterMode.store';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 export type TableColumnName =
     | 'Number'

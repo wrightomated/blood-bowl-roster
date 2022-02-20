@@ -3,7 +3,7 @@ import { getGameTypeSettings } from '../data/gameType.data';
 import { teamData } from '../data/teams.data';
 import type { Extra, ExtraString } from '../models/extra.model';
 import type { RosterMode } from '../store/rosterMode.store';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 export const extrasForTeam: (
     teamId: number,

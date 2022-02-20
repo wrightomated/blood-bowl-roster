@@ -126,4 +126,7 @@ thead {
     table {
         border: 1px solid #333 !important;
     }
+    .no-print {
+        display: none;
+    }
 }

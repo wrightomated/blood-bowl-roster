@@ -21,7 +21,6 @@
     import { rosterMode } from '../store/rosterMode.store';
     import ToggleButton from './uiComponents/toggleButton.svelte';
     import { teamFormat } from '../store/teamFormat.store';
-    import type { TeamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { sendEventToAnalytics } from '../analytics/plausible';
@@ -29,6 +28,7 @@
     import { flip } from 'svelte/animate';
     import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
+    import type { TeamFormat } from '../types/teamFormat';
 
     export let teamList: Team[];
 

@@ -201,9 +201,6 @@
         .inducement-table {
             flex-grow: 1;
         }
-        .no-print {
-            display: none;
-        }
         .inducement {
             &__control,
             &__toggle {

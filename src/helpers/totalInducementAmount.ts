@@ -2,7 +2,7 @@ import { inducementData } from '../data/inducements.data';
 import { teamData } from '../data/teams.data';
 import type { ExtraRosterInfo } from '../models/roster.model';
 import type { TeamSpecialRule } from '../models/team.model';
-import type { TeamFormat } from '../store/teamFormat.store';
+import type { TeamFormat } from '../types/teamFormat';
 
 export const calculateInducementTotal = (
     inducements: ExtraRosterInfo,
