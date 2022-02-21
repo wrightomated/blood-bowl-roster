@@ -11,7 +11,7 @@ context('Test that a skill can be added to a player', () => {
         cy.getBySel('player-0-advancement').click();
         cy.getBySel('random-primary').click();
         cy.contains('Block').click();
-        cy.getBySel('player-0-skills').should('have.text', 'Block');
+        cy.getBySel('player-0-skills').should('include.text', 'Block');
         cy.getBySel('current-tv').should('have.text', '60,000');
     });
 
