@@ -62,7 +62,7 @@
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{currentTotal +
                 teamExtrasTotal
                     ? ',000'
-                    : 0}
+                    : ''}
             </td>
         </tr>
         <tr>
@@ -73,7 +73,7 @@
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{currentTotal +
                 teamExtrasTotal
                     ? ',000'
-                    : 0}
+                    : ''}
             </td>
         </tr>
 
