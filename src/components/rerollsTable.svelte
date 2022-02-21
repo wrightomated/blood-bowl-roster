@@ -59,7 +59,10 @@
             <td colspan="2">
                 {(teamTotal + teamExtrasTotal)
                     .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{currentTotal +
+                teamExtrasTotal
+                    ? ',000'
+                    : 0}
             </td>
         </tr>
         <tr>
@@ -67,7 +70,10 @@
             <td data-cy="current-tv" colspan="2">
                 {(currentTotal + teamExtrasTotal)
                     .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{currentTotal +
+                teamExtrasTotal
+                    ? ',000'
+                    : 0}
             </td>
         </tr>
 
