@@ -76,6 +76,7 @@
             hoverText="Player advancement"
             symbol="elevator"
             clickFunction={toggleShowSkills}
+            cyData={`player-${index}-advancement`}
         />
     </span>
 {/if}

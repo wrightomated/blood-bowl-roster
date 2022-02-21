@@ -301,6 +301,7 @@ const deletePlayersFromPlayers: (
             ? {
                   ...p,
                   deleted: true,
+                  alterations: { spp: 0, ni: 0 },
                   player: deletedPlayer(),
               }
             : p
