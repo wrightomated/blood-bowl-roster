@@ -48,6 +48,7 @@
         />
     {/if}
     <MaterialButton
+        cyData={`player-${index}-remove`}
         hoverText="Remove player"
         symbol="delete_forever"
         clickFunction={() => removePlayer(false)}

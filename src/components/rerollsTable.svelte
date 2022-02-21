@@ -64,7 +64,7 @@
         </tr>
         <tr>
             <th>Current TV</th>
-            <td colspan="2">
+            <td data-cy="current-tv" colspan="2">
                 {(currentTotal + teamExtrasTotal)
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')},000

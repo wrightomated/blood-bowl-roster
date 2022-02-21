@@ -273,6 +273,7 @@
     <div>
         {#if (rosterPlayer.alterations?.advancements || 0) < 6}
             <button
+                data-cy="random-primary"
                 class:selected={showPrimary && showRandom}
                 on:click={randomPrimary}
                 >Random Primary <span

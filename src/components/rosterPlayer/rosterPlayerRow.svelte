@@ -33,6 +33,7 @@
                 Skills: {
                     playerSkillIds: rosterPlayer?.player?.skills,
                     extraSkillIds: rosterPlayer?.alterations?.extraSkills || [],
+                    cyData: `player-${index}-skills`,
                 },
                 'Hiring Fee': {
                     text:
