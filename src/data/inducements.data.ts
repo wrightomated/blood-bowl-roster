@@ -284,7 +284,7 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Biased Referee',
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
-            max: 2,
+            max: 1,
             sevensMax: 0,
         },
         {
