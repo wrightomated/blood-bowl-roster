@@ -29,25 +29,9 @@
     <meta property="og:type" content="website" />
 
     <script defer src="/build/bundle.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XBRPVZ8KZV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-XBRPVZ8KZV');
-    </script>
     <script>
         window.onerror = function (message, source, lineno, colno, error) {
-            gtag('event', 'exception', {
-                'description': message,
-                'error': error,
-                'fatal': true,
-                source,
-                lineno,
-                colno
-            });
+            console.error(error);
 
             localStorage.removeItem('selectedTeam');
             localStorage.setItem('roster', JSON.stringify({

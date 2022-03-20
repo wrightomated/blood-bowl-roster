@@ -1,5 +1,5 @@
 export const sendEventToAnalytics = (name: string, props?: AnalyticsProps) => {
-    googleAnalyticsEvent(name, props);
+    // googleAnalyticsEvent(name, props);
     // const gtag = (window as any).gtag;
     // props ? gtag('event', name, { props }) : plausible(name);
     // gtag('event', 'screen_view', {
