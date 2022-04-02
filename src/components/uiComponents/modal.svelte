@@ -1,10 +1,24 @@
 <script lang="ts">
     import { columnControlsOpen } from '../../store/columnControls.store';
+    import { modalState } from '../../store/modal.store';
+    import { overlayVisible } from '../../store/overlayVisible.store';
     import MaterialButton from './materialButton.svelte';
-    const closeModal = () => columnControlsOpen.set(false);
+
+    $: $overlayVisible, overlayChanged();
+
+    const overlayChanged = () => {
+        if (!$overlayVisible && $modalState.isOpen) {
+            modalState.set({ ...$modalState, isOpen: false });
+        }
+    };
+
+    const closeModal = () => {
+        modalState.set({ ...$modalState, isOpen: false });
+        overlayVisible.set(false);
+    };
 </script>
 
-<div class="modal" class:closed={!$columnControlsOpen}>
+<div class="modal" class:closed={!$modalState.isOpen}>
     <div class="close">
         <MaterialButton
             symbol="close"
@@ -12,13 +26,8 @@
             clickFunction={closeModal}
         />
     </div>
-    <slot />
+    <svelte:component this={$modalState.component} />
 </div>
-<div
-    class="overlay"
-    class:overlay--visible={$columnControlsOpen}
-    on:click={closeModal}
-/>
 
 <style lang="scss">
     .close {
@@ -39,24 +48,5 @@
         min-width: 300px;
         padding: 40px;
         border-radius: 25px;
-    }
-
-    .overlay {
-        z-index: 10;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.33);
-        transition: opacity 250ms ease-in-out;
-        opacity: 0;
-        visibility: hidden;
-        display: block;
-
-        &--visible {
-            visibility: visible;
-            opacity: 1;
-        }
     }
 </style>

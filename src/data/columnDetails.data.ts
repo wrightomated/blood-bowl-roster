@@ -150,6 +150,9 @@ export const columnDetails: ColumnDetails[] = [
         id: 15,
         name: 'TR',
         title: 'Temporarily Retiring',
+        headerDetails: {
+            elementId: 'tr-header',
+        },
         rowDetails: {
             component: PlayerCheckbox,
         },

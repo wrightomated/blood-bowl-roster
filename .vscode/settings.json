@@ -2,5 +2,10 @@
     "svelte.language-server.runtime": "/usr/local/bin/node",
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
-    "cSpell.enableFiletypes": ["svelte"]
+    "cSpell.enableFiletypes": [
+        "svelte"
+    ],
+    "cSpell.words": [
+        "bbroster"
+    ]
 }

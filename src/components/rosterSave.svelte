@@ -8,6 +8,9 @@
     import { showAllInducements } from '../store/showAllInducements.store';
     import { sendEventToAnalytics } from '../analytics/plausible';
     import { columnControlsOpen } from '../store/columnControls.store';
+    import { overlayVisible } from '../store/overlayVisible.store';
+    import { modalState } from '../store/modal.store';
+    import ColumnControl from './columnControl.svelte';
 
     let saved = false;
     let rosterCleared = false;
@@ -17,11 +20,6 @@
         saved = true;
     };
 
-    // const clearRoster = () => {
-    //     roster.reset();
-    //     savedRosterIndex.removeRoster();
-    //     rosterCleared = true;
-    // };
     const toggleDelete = () => showDelete.set(!$showDelete);
 
     const toggleExport = () => showExport.set(!$showExport);
@@ -37,8 +35,14 @@
         }, 2);
     };
 
-    const toggleColumnControls = () =>
-        columnControlsOpen.set(!$columnControlsOpen);
+    const toggleColumnControls = () => {
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            component: ColumnControl,
+        });
+        overlayVisible.set(true);
+    };
 
     roster.subscribe((x) => {
         saved = false;

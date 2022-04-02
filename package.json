@@ -26,6 +26,7 @@
         "@babel/preset-env": "^7.12.11",
         "@rollup/plugin-commonjs": "^16.0.0",
         "@rollup/plugin-node-resolve": "^10.0.0",
+        "@rollup/plugin-replace": "^4.0.0",
         "@rollup/plugin-typescript": "^6.0.0",
         "@testing-library/jest-dom": "^5.11.8",
         "@testing-library/svelte": "^3.0.3",
@@ -50,6 +51,7 @@
         "typescript": "^3.9.7"
     },
     "dependencies": {
+        "firebase": "^9.6.9",
         "sirv-cli": "^1.0.0"
     },
     "jest": {
