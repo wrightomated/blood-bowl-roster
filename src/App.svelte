@@ -8,6 +8,7 @@
     import Overlay from './components/uiComponents/overlay.svelte';
     import { modalState } from './store/modal.store';
     import { overlayVisible } from './store/overlayVisible.store';
+    import { onMount } from 'svelte';
     import LoginForm from './components/auth/loginForm.svelte';
 
     const showModal = (component: string) => {
@@ -18,13 +19,17 @@
         });
         overlayVisible.set(true);
     };
+    onMount(async () => {
+        await import('./components/auth/firebase.service').then((firebase) => {
+            firebase.init();
+        });
+    });
 </script>
 
 <Modal />
 <Overlay />
 <Menu />
 
-<!-- <Modal /> -->
 <main>
     <button on:click={() => showModal('login')}>login</button>
     <button on:click={() => showModal('register')}>register</button>

@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { createUser, sendVerificationEmail } from './firebase.service';
+    // import { sendVerificationEmail } from './firebase.service';
 
     $: emailV = '';
     $: passwordV = '';
-    async function register(e: MouseEvent) {
+    async function login(e: MouseEvent) {
         e.preventDefault();
         try {
-            await createUser(emailV, passwordV);
+            // await loginFirebase(emailV, passwordV);
         } catch (error) {
             console.log({ error });
             if (error?.code === 'auth/email-already-in-use') {
@@ -34,7 +34,7 @@
         bind:value={passwordV}
     />
     <br />
-    <button on:click={register}>Register</button>
+    <button on:click={login}>Register</button>
 </form>
 <button on:click={() => sendVerificationEmail()}>Send email</button>
 

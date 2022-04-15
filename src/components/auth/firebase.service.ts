@@ -1,14 +1,13 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
+import { FirebaseApp, initializeApp } from 'firebase/app';
 import {
     getAuth,
-    createUserWithEmailAndPassword,
     User,
     sendEmailVerification,
+    Auth,
+    signInWithEmailAndPassword,
 } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-// let __bbroster: any;
 const firebaseConfig = {
     apiKey: '__bbroster.env.FIREBASE_API_KEY',
     authDomain: '__bbroster.env.FIREBASE_AUTH_DOMAIN',
@@ -18,12 +17,21 @@ const firebaseConfig = {
     appId: '__bbroster.env.FIREBASE_APP_ID',
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+let app: FirebaseApp;
+export let auth: Auth;
 
-export async function createUser(email: string, password: string) {
-    return createUserWithEmailAndPassword(auth, email, password);
+// Initialize Firebase
+export function init() {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+}
+
+// export async function createUser(email: string, password: string) {
+//     return createUserWithEmailAndPassword(auth, email, password);
+// }
+
+export async function signInWithEmail(email: string, password: string) {
+    return signInWithEmailAndPassword(auth, email, password);
 }
 
 export function getCurrentUser(): User {

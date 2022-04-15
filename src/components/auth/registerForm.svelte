@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { createUser, sendVerificationEmail } from './firebase.service';
+    // import { createUser, sendVerificationEmail } from './firebase.service';
 
     $: emailV = '';
     $: passwordV = '';
@@ -7,7 +7,9 @@
     async function register(e: MouseEvent) {
         e.preventDefault();
         try {
-            await createUser(emailV, passwordV);
+            await import('./createUser').then((x) =>
+                x.createUser(emailV, passwordV)
+            );
         } catch (error) {
             console.log({ error });
             if (error?.code === 'auth/email-already-in-use') {
