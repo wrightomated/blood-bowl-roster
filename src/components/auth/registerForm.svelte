@@ -42,7 +42,6 @@
         placeholder="password"
         bind:value={passwordV}
     />
-    <br />
     <button on:click={register}>Register</button>
 </form>
 <button on:click={() => sendVerificationEmail()}>Send email</button>
@@ -58,7 +57,7 @@
 
     input {
         font-size: 16px;
-        margin-bottom: 8px;
+        margin-bottom: 16px;
     }
 
     label {

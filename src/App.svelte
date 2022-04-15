@@ -1,6 +1,4 @@
 <script lang="ts">
-    import ColumnControl from './components/columnControl.svelte';
-
     import Footer from './components/footer.svelte';
     import Menu from './components/menu/menu.svelte';
     import Team from './components/team.svelte';

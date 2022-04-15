@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { columnControlsOpen } from '../../store/columnControls.store';
     import { modalState } from '../../store/modal.store';
     import { overlayVisible } from '../../store/overlayVisible.store';
     import MaterialButton from './materialButton.svelte';
