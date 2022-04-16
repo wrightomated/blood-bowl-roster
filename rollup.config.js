@@ -8,6 +8,9 @@ import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import replace from '@rollup/plugin-replace';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -45,6 +48,7 @@ export default {
     },
     plugins: [
         replace({
+            preventAssignment: true,
             // needs to be cleaned up
             '__bbroster.env.FIREBASE_API_KEY': process.env.FIREBASE_API_KEY,
             '__bbroster.env.FIREBASE_AUTH_DOMAIN':

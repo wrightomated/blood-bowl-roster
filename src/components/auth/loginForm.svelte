@@ -1,50 +1,83 @@
 <script lang="ts">
-    // import { sendVerificationEmail } from './firebase.service';
+    import { showSpinner } from '../../store/showSpinner.store';
+
+    import FootballSpinner from '../uiComponents/footballSpinner.svelte';
 
     $: emailV = '';
     $: passwordV = '';
-    async function login(e: MouseEvent) {
+    let formTouched = false;
+    let wrongCombination = false;
+    async function login(e: Event) {
+        showSpinner.set(true);
         e.preventDefault();
         try {
-            // await loginFirebase(emailV, passwordV);
+            await import('./firebaseAuth.service').then((service) =>
+                service.signInWithEmail(emailV, passwordV)
+            );
         } catch (error) {
             console.log({ error });
-            if (error?.code === 'auth/email-already-in-use') {
-                console.log('email in use');
+            if (error?.code === 'auth/wrong-password') {
+                wrongCombination = true;
             }
+        } finally {
+            showSpinner.set(false);
         }
     }
+    const touchForm = () => {
+        formTouched = true;
+    };
 </script>
 
-<form class="login-form">
-    <label for="email">Email:</label>
-    <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="email"
-        bind:value={emailV}
-    />
-    <label for="password">Password:</label>
-    <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="password"
-        bind:value={passwordV}
-    />
-    <br />
-    <button on:click={login}>Register</button>
-</form>
-<button on:click={() => sendVerificationEmail()}>Send email</button>
+{#if $showSpinner}
+    <FootballSpinner />
+    <p>Logging in</p>
+{:else}
+    <form
+        class="login-form"
+        class:login-form--touched={formTouched}
+        on:submit|preventDefault={login}
+    >
+        <p>Log into your account.</p>
+        <label for="email">Email:</label>
+        <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="your email address"
+            bind:value={emailV}
+            required
+        />
+        <label for="password">Password:</label>
+        <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="your password"
+            bind:value={passwordV}
+            required
+            minlength="6"
+        />
+        <br />
+        {#if wrongCombination}
+            <p class="error"><strong>Incorrect email or password.</strong></p>
+        {/if}
+        <button on:focus={touchForm}>Login</button>
+    </form>
+{/if}
 
+<!-- <button on:click={() => sendVerificationEmail()}>Send email</button> -->
 <style lang="scss">
     @use '../../styles/mixins/roundedButton';
-    form {
+    .login-form {
         display: flex;
         flex-direction: column;
         max-width: 320px;
         padding: 20px;
+        &--touched {
+            input:invalid {
+                border-color: var(--main-colour);
+            }
+        }
     }
 
     input {
@@ -58,5 +91,9 @@
 
     button {
         @include roundedButton.rounded-button;
+    }
+
+    .error {
+        color: var(--main-colour);
     }
 </style>

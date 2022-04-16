@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import {
     getAuth,
@@ -6,7 +5,12 @@ import {
     sendEmailVerification,
     Auth,
     signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    updateProfile,
 } from 'firebase/auth';
+import { currentUserStore } from '../../store/currentUser.store';
 
 const firebaseConfig = {
     apiKey: '__bbroster.env.FIREBASE_API_KEY',
@@ -17,18 +21,37 @@ const firebaseConfig = {
     appId: '__bbroster.env.FIREBASE_APP_ID',
 };
 
-let app: FirebaseApp;
+export let app: FirebaseApp;
 export let auth: Auth;
 
 // Initialize Firebase
 export function init() {
-    app = initializeApp(firebaseConfig);
+    app = initializeApp(firebaseConfig, {
+        name: 'BBRosterAuth',
+        automaticDataCollectionEnabled: false,
+    });
     auth = getAuth(app);
+    onAuthStateChanged(auth, (currentUser: User) => {
+        currentUserStore.set(currentUser);
+        import('./firebaseDB.service').then((service) => service.initDb());
+    });
 }
 
-// export async function createUser(email: string, password: string) {
-//     return createUserWithEmailAndPassword(auth, email, password);
-// }
+export async function createUser(
+    email: string,
+    password: string,
+    displayName: string
+) {
+    return createUserWithEmailAndPassword(auth, email, password).then(
+        (user) => {
+            updateProfile(user.user, { displayName });
+        }
+    );
+}
+
+export async function logout() {
+    return signOut(auth);
+}
 
 export async function signInWithEmail(email: string, password: string) {
     return signInWithEmailAndPassword(auth, email, password);

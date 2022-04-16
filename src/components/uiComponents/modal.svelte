@@ -44,8 +44,10 @@
         transform: translateX(-50%);
         z-index: 11;
         background-color: white;
-        min-width: 300px;
+        min-width: 240px;
         padding: 40px;
         border-radius: 25px;
+        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+            0 6px 10px 4px rgba(60, 64, 67, 0.15);
     }
 </style>

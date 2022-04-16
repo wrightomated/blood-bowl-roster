@@ -1,65 +1,111 @@
 <script lang="ts">
-    // import { createUser, sendVerificationEmail } from './firebase.service';
+    import { showSpinner } from '../../store/showSpinner.store';
+    import { savedRosterIndex } from '../../store/saveDirectory.store';
+    import FootballSpinner from '../uiComponents/footballSpinner.svelte';
 
     $: emailV = '';
     $: passwordV = '';
     $: usernameV = '';
-    async function register(e: MouseEvent) {
+    $: updateSavedRosters = true;
+    let formTouched = false;
+    let emailError = '';
+
+    async function register(e: Event) {
+        showSpinner.set(true);
         e.preventDefault();
+        emailError = '';
         try {
-            await import('./createUser').then((x) =>
-                x.createUser(emailV, passwordV)
+            await import('./firebaseAuth.service').then((service) =>
+                service.createUser(emailV, passwordV, usernameV)
             );
         } catch (error) {
             console.log({ error });
             if (error?.code === 'auth/email-already-in-use') {
-                console.log('email in use');
+                emailError = emailV;
             }
+        } finally {
+            showSpinner.set(false);
         }
     }
+    const touchForm = () => {
+        formTouched = true;
+    };
 </script>
 
-<form class="registration-form">
-    <label for="username">Username:</label>
-    <input
-        type="text"
-        name="username"
-        id="username"
-        placeholder="username"
-        bind:value={usernameV}
-    />
-    <label for="email">Email:</label>
-    <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="email"
-        bind:value={emailV}
-    />
-    <label for="password">Password:</label>
-    <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="password"
-        bind:value={passwordV}
-    />
-    <button on:click={register}>Register</button>
-</form>
-<button on:click={() => sendVerificationEmail()}>Send email</button>
+{#if $showSpinner}
+    <FootballSpinner />
+    <p>Creating user</p>
+{:else}
+    <form
+        class="registration-form"
+        class:registration-form--touched={formTouched}
+        on:submit|preventDefault={register}
+    >
+        <label for="username">Display name:</label>
+        <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="your display name"
+            bind:value={usernameV}
+            required
+        />
+        <br />
+        <label for="email">Email:</label>
+        <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="your email address"
+            bind:value={emailV}
+            required
+        />
+        {#if emailError}
+            <p class="error"><strong>{emailError} already in use.</strong></p>
+        {/if}
+        <br />
+        <label for="password">Password:</label>
+        <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="your password"
+            bind:value={passwordV}
+            required
+            minlength="6"
+        />
+        <br />
+
+        {#if $savedRosterIndex.index.length > 0}
+            <label for="upload-lists">Upload saved rosters:</label>
+            <input
+                type="checkbox"
+                id="upload-lists"
+                name="upload-lists"
+                bind:checked={updateSavedRosters}
+            />
+            <br />
+        {/if}
+        <button on:focus={touchForm}>Register</button>
+    </form>
+{/if}
 
 <style lang="scss">
     @use '../../styles/mixins/roundedButton';
-    form {
+    .registration-form {
         display: flex;
         flex-direction: column;
         max-width: 320px;
         padding: 20px;
+        &--touched {
+            input:invalid {
+                border-color: var(--main-colour);
+            }
+        }
     }
 
     input {
         font-size: 16px;
-        margin-bottom: 16px;
     }
 
     label {
@@ -68,5 +114,9 @@
 
     button {
         @include roundedButton.rounded-button;
+    }
+
+    .error {
+        color: var(--main-colour);
     }
 </style>
