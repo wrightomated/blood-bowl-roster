@@ -1271,6 +1271,61 @@ const khorneBigGuy: Player = {
     primary: ['M', 'S'],
     secondary: ['G', 'A'],
 };
+const norseRaiderLineman: Player = {
+    position: 'Norse Raider Lineman',
+    id: 144,
+    cost: 50,
+    playerStats: [6, 3, 3, 4, 8],
+    skills: [13, 93, 60],
+    primary: ['G'],
+    secondary: ['A', 'P', 'S'],
+};
+const norseBerserker: Player = {
+    position: 'Norse Berserker',
+    id: 145,
+    cost: 90,
+    playerStats: [6, 3, 3, 5, 8],
+    skills: [13, 17, 6],
+    primary: ['G', 'S'],
+    secondary: ['A', 'P'],
+};
+const norseValkyrie: Player = {
+    position: 'Valkyrie',
+    id: 146,
+    cost: 95,
+    playerStats: [7, 3, 3, 3, 8],
+    skills: [1, 14, 46, 21],
+    primary: ['A', 'G', 'P'],
+    secondary: ['S'],
+};
+const norseUlfwerner: Player = {
+    position: 'Ulfwerner',
+    id: 147,
+    cost: 105,
+    playerStats: [6, 4, 4, 0, 9],
+    skills: [17],
+    primary: ['G', 'S'],
+    secondary: ['A'],
+};
+const norseYhetee: Player = {
+    position: 'Yhetee',
+    id: 148,
+    cost: 140,
+    playerStats: [5, 5, 4, 0, 9],
+    skills: [26, 27, 17, 71, 88],
+    primary: ['S'],
+    secondary: ['A', 'G'],
+};
+const norseBeerBoar: Player = {
+    position: 'Beer Boar',
+    id: 149,
+    cost: 20,
+    playerStats: [5, 1, 3, 0, 6],
+    skills: [4, 72, 94, 81, 85],
+    primary: [],
+    secondary: ['A'],
+};
+
 export const playerCatalogue: PlayerCatalogue = {
     players: [
         imperialLineman,
@@ -1416,5 +1471,11 @@ export const playerCatalogue: PlayerCatalogue = {
         khorngor,
         bloodseeker,
         khorneBigGuy,
+        norseBerserker,
+        norseRaiderLineman,
+        norseBeerBoar,
+        norseValkyrie,
+        norseUlfwerner,
+        norseYhetee,
     ],
 };

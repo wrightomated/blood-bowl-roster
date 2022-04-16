@@ -378,6 +378,36 @@ const fungusTheLoon: StarPlayer = {
     specialRules: ['Whirling Dervish!'],
 };
 
+const ivarEriksson: StarPlayer = {
+    id: 236,
+    position: 'Ivar Eriksson',
+    playerStats: [6, 4, 3, 4, 9],
+    playsFor: ['Old World Classic'],
+    skills: [13, 53, 711, 23],
+    cost: 245,
+    specialRules: ['Raiding Party'],
+};
+
+const skrorgSnowpelt: StarPlayer = {
+    id: 237,
+    position: 'Skrorg Snowpelt',
+    playerStats: [5, 5, 4, 0, 9],
+    playsFor: ['Old World Classic'],
+    skills: [26, 27, 54, 71, 55],
+    cost: 250,
+    specialRules: ['Pump Up the Crowd'],
+};
+
+const thorssonStoutmead: StarPlayer = {
+    id: 238,
+    position: 'Thorsson Stoutmead',
+    playerStats: [6, 3, 4, 3, 8],
+    playsFor: ['Old World Classic'],
+    skills: [13, 93, 71, 60],
+    cost: 170,
+    specialRules: ['Beer Barrel Bash!'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -416,5 +446,8 @@ export const starPlayers = {
         barikFarblast,
         bomberDribblesnot,
         fungusTheLoon,
+        ivarEriksson,
+        skrorgSnowpelt,
+        thorssonStoutmead,
     ],
 };
