@@ -6,6 +6,5 @@
 /cypress/plugins
 /cypress/screenshots
 
-.env
 .DS_Store
 .env
