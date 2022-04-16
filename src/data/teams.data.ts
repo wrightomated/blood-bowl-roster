@@ -396,7 +396,7 @@ export const teamData: TeamList = {
             specialRules: ['Elven Kingdoms League'],
         },
         {
-            name: 'Norse',
+            name: 'Norse (ToL)',
             id: 25,
             players: [
                 { id: 104, max: 12 },
@@ -478,6 +478,22 @@ export const teamData: TeamList = {
             allowedApothecary: true,
             tier: 2,
             specialRules: ['Favoured of...', 'Favoured of Khorne'],
+        },
+        {
+            name: 'Norse',
+            id: 31,
+            players: [
+                { id: 144, max: 16 },
+                { id: 149, max: 2 },
+                { id: 145, max: 2 },
+                { id: 146, max: 2 },
+                { id: 147, max: 2 },
+                { id: 148, max: 1 },
+            ],
+            reroll: { cost: 60, max: 8 },
+            allowedApothecary: true,
+            tier: 1,
+            specialRules: ['Old World Classic'],
         },
     ],
 };
