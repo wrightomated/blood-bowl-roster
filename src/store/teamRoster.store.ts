@@ -1,6 +1,8 @@
 import { writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 
+import { nanoid } from 'nanoid';
+
 import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
@@ -146,13 +148,10 @@ function createRoster() {
                     },
                 };
             }),
-        loadRoster: (rosterKey: string) =>
+        loadRoster: (rosterToLoad: Roster) =>
             update((_store) => {
-                const savedRoster = getSavedRoster(rosterKey);
-                return {
-                    ...savedRoster,
-                    format: savedRoster?.format || 'elevens',
-                };
+                currentTeam.setCurrentTeamWithId(rosterToLoad.teamId);
+                return rosterToLoad;
             }),
         codeToRoster: (rosterCode: string) =>
             update((_store) => {
@@ -223,6 +222,7 @@ const getEmptyRoster: (options?: {
 }) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format);
     return {
+        rosterId: nanoid(),
         teamId: options?.teamId || 0,
         players: [],
         teamName: '',
@@ -233,11 +233,6 @@ const getEmptyRoster: (options?: {
         mode: options?.mode,
         format: options?.format || 'elevens',
     };
-};
-
-const getSavedRoster: (rosterKey: string) => Roster = (rosterKey: string) => {
-    const rosterString = localStorage.getItem(rosterKey);
-    return rosterString ? JSON.parse(rosterString) : null;
 };
 
 const switchTwoElements = (arr: any[], index1: number, index2: number) => {
@@ -255,6 +250,7 @@ const switchTwoElements = (arr: any[], index1: number, index2: number) => {
 const rosterFromQueryString = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    window.history.replaceState({}, '', '/');
     return rosterFromCode(code);
 };
 
@@ -271,6 +267,9 @@ const getDefaultRoster: () => Roster = () => {
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
+    if (!defaultRoster.rosterId) {
+        defaultRoster.rosterId = nanoid();
+    }
     currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
     return {
         ...defaultRoster,

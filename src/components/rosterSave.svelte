@@ -10,14 +10,30 @@
     import { overlayVisible } from '../store/overlayVisible.store';
     import { modalState } from '../store/modal.store';
     import ColumnControl from './columnControl.svelte';
+    import { currentUserStore } from '../store/currentUser.store';
 
     let saved = false;
+    let syncing = false;
     let rosterCleared = false;
 
-    const saveRoster = () => {
-        savedRosterIndex.addRoster($roster);
-        saved = true;
-    };
+    async function saveRoster() {
+        if ($currentUserStore) {
+            syncing = true;
+            try {
+                await import('./auth/firebaseDB.service').then((service) =>
+                    service.uploadRoster($roster)
+                );
+                saved = true;
+            } catch (error) {
+                console.error(error);
+            } finally {
+                syncing = false;
+            }
+        } else {
+            savedRosterIndex.addRoster($roster);
+            saved = true;
+        }
+    }
 
     const toggleDelete = () => showDelete.set(!$showDelete);
 
@@ -49,14 +65,16 @@
     });
 </script>
 
-{#if !saved}
+{#if !saved && !syncing}
     <MaterialButton
         cyData="save-roster"
         hoverText="Save team"
         symbol="save"
         clickFunction={() => saveRoster()}
     />
-{:else}<i class="material-icons saved">check_circle</i>{/if}
+{:else if syncing}
+    <i class="material-icons syncing" title="Saving team">sync</i>
+{:else}<i class="material-icons saved" title="Team saved">check_circle</i>{/if}
 {#if !rosterCleared}
     <MaterialButton
         hoverText="Delete team forever"
@@ -95,9 +113,25 @@
         margin-bottom: 3px;
     }
 
+    .syncing {
+        animation-name: spin;
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
     @media print {
         :host {
             display: none;
+        }
+    }
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
         }
     }
 </style>

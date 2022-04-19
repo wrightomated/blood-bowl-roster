@@ -8,7 +8,8 @@ export interface DungeonBowlTeam {
         cost: number;
         max: number;
     };
-    // Needed so everything doesn't break. TODO: refactor
+    /** Needed in dungeon bowl team so team based logic doesn't break, dungeon bowl teams don't have special rules */
+    // TODO: refactor
     specialRules: [];
     maxBigGuys?: number;
     tier: number;

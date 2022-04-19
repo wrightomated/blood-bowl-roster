@@ -6,7 +6,6 @@
 
     import Overlay from './components/uiComponents/overlay.svelte';
     import { onMount } from 'svelte';
-    import UploadRoster from './components/auth/uploadRoster.svelte';
 
     onMount(async () => {
         await import('./components/auth/firebaseAuth.service').then(
@@ -20,7 +19,6 @@
 <Modal />
 <Overlay />
 <Menu />
-<UploadRoster />
 
 <main>
     <Team />

@@ -2,7 +2,7 @@
     import { roster } from '../store/teamRoster.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
-    const numberFomat = new Intl.NumberFormat();
+    const numberFormat = new Intl.NumberFormat();
 
     const noEmptyTreasury = () => {
         editTreasury = !editTreasury;
@@ -21,7 +21,7 @@
 <div class="treasury__container">
     {#if !editTreasury}
         <div on:click={toggleNumber} on:focus={toggleNumber} tabindex="0">
-            {numberFomat.format($roster.treasury)}{$roster.treasury === 0
+            {numberFormat.format($roster.treasury)}{$roster.treasury === 0
                 ? ''
                 : ',000'}
         </div>

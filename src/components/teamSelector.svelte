@@ -10,7 +10,7 @@
         showNewTeamDialogue,
     } from '../store/teamSelectionOpen.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
-    import type { Roster } from '../models/roster.model';
+    import type { Roster, RosterPreview } from '../models/roster.model';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import { filteredTiers, toggledTiers } from '../store/filterTier.store';
     import {
@@ -29,6 +29,13 @@
     import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import type { TeamFormat } from '../types/teamFormat';
+    import { currentUserStore } from '../store/currentUser.store';
+    import type { RosterIndex } from '../models/rosterIndex.model';
+    import FootballSpinner from './uiComponents/footballSpinner.svelte';
+    import Pill from './uiComponents/pill.svelte';
+    import { getTeamFormatShortDisplay } from '../types/teamFormat';
+    import RosterPreviewCard from './uiComponents/rosterPreviewCard.svelte';
+    import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
 
     export let teamList: Team[];
 
@@ -50,6 +57,15 @@
                 : x
         );
 
+    const getRosterIndex = async () => {
+        try {
+            const dbService = await import('./auth/firebaseDB.service');
+            const rosterIndex = await dbService.getRosterIndex();
+            return rosterIndex.data() as { [key: string]: RosterPreview };
+        } catch {
+            throw new Error('');
+        }
+    };
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
@@ -89,13 +105,22 @@
             localStorage.getItem(`savedRoster${savedRoster.id}`)
         );
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
-        currentTeam.setCurrentTeamWithId(loadedRoster.teamId);
-        roster.loadRoster(`savedRoster${savedRoster.id}`);
+
+        // TODO: change this for database
+        roster.loadRoster(getSavedRosterFromLocalStorage(savedRoster.id));
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
         showNewTeamDialogue.set(false);
         teamLoadOpen.set(false);
+    };
+
+    const loadRoster = async () => {
+        if ($currentUserStore) {
+            // User is logged in so get from database
+        } else {
+            // Get from local storage
+        }
     };
 
     const tierToNumeral = (tier: TeamTier) => {
@@ -214,11 +239,6 @@
 {#if $teamLoadOpen}
     <h2 class="page-title">Load Team</h2>
     <div class="button-container" data-cy="load-team-box">
-        {#each $savedRosterIndex.index as savedRoster, i}
-            <Button clickFunction={() => loadTeam(savedRoster)}
-                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
-            >
-        {/each}
         <div class="code-box">
             <input
                 aria-label="Input code"
@@ -234,6 +254,26 @@
             />
         </div>
     </div>
+    <!-- Refactor to it's own component -->
+    {#if $currentUserStore}
+        {#await getRosterIndex()}
+            <FootballSpinner />
+        {:then rosterPreviews}
+            <div class="team-previews">
+                {#each Object.values(rosterPreviews) as preview, i}
+                    <RosterPreviewCard {preview} />
+                {/each}
+            </div>
+        {:catch}
+            <p style="color: red">Something went wrong.</p>
+        {/await}
+    {:else}
+        {#each $savedRosterIndex.index as savedRoster, i}
+            <Button clickFunction={() => loadTeam(savedRoster)}
+                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
+            >
+        {/each}
+    {/if}
 {/if}
 
 <style lang="scss">
@@ -306,7 +346,17 @@
             font-size: 16px;
         }
     }
+    .pill-box {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-block-end: 32px;
+    }
     .team-buton {
         @include roundedButton.rounded-button;
+    }
+    .team-previews {
+        display: flex;
+        gap: 16px;
     }
 </style>

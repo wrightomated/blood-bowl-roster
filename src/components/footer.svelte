@@ -1,16 +1,3 @@
-<script lang="ts">
-    import { localStorageConsent } from '../store/localStorageConsent.store';
-
-    const toggleLocalStorage = () => {
-        const s = $localStorageConsent;
-        if (s) {
-            localStorage.clear();
-        }
-        localStorageConsent.set(!s);
-        location.reload();
-    };
-</script>
-
 <footer>
     <p>Local storage is used for storing saved and current rosters.</p>
     <p>

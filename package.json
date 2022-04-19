@@ -53,6 +53,7 @@
     },
     "dependencies": {
         "firebase": "^9.6.9",
+        "nanoid": "^3.3.2",
         "sirv-cli": "^1.0.0"
     },
     "jest": {

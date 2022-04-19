@@ -2,6 +2,7 @@
     import { showSpinner } from '../../store/showSpinner.store';
     import { savedRosterIndex } from '../../store/saveDirectory.store';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
+    import { getRostersForUpload } from '../../helpers/localToFirebase';
 
     $: emailV = '';
     $: passwordV = '';
@@ -18,6 +19,10 @@
             await import('./firebaseAuth.service').then((service) =>
                 service.createUser(emailV, passwordV, usernameV)
             );
+            await import('./firebaseDB.service').then((service) => {
+                const rosters = getRostersForUpload();
+                service.uploadRosters(rosters);
+            });
         } catch (error) {
             console.log({ error });
             if (error?.code === 'auth/email-already-in-use') {
