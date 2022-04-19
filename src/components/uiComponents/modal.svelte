@@ -18,13 +18,15 @@
 </script>
 
 <div class="modal" class:closed={!$modalState.isOpen}>
-    <div class="close">
-        <MaterialButton
-            symbol="close"
-            hoverText="Close Modal"
-            clickFunction={closeModal}
-        />
-    </div>
+    {#if $modalState.canClose}
+        <div class="close">
+            <MaterialButton
+                symbol="close"
+                hoverText="Close Modal"
+                clickFunction={closeModal}
+            />
+        </div>
+    {/if}
     <svelte:component this={$modalState.component} />
 </div>
 

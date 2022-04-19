@@ -1,4 +1,11 @@
+<script>
+    export let loadingText = '';
+</script>
+
 <i class="material-icons spinner">sports_football</i>
+{#if loadingText}
+    <p>{loadingText}</p>
+{/if}
 
 <style lang="scss">
     .spinner {

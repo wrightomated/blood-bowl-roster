@@ -1,11 +1,19 @@
 <script lang="ts">
     import { overlayVisible } from '../../store/overlayVisible.store';
+    import { modalState } from '../../store/modal.store';
+
+    function onOverlayClick() {
+        // Refactor to be more generic
+        if ($modalState.canClose) {
+            overlayVisible.set(false);
+        }
+    }
 </script>
 
 <div
     class="overlay"
     class:overlay--visible={$overlayVisible}
-    on:click={() => overlayVisible.set(false)}
+    on:click={onOverlayClick}
 />
 
 <style lang="scss">

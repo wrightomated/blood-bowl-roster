@@ -3,6 +3,8 @@
     import { savedRosterIndex } from '../../store/saveDirectory.store';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
     import { getRostersForUpload } from '../../helpers/localToFirebase';
+    import { modalState } from '../../store/modal.store';
+    import { currentUserStore } from '../../store/currentUser.store';
 
     $: emailV = '';
     $: passwordV = '';
@@ -10,15 +12,19 @@
     $: updateSavedRosters = true;
     let formTouched = false;
     let emailError = '';
+    let loadingText = '';
 
     async function register(e: Event) {
+        modalState.enableClose(false);
         showSpinner.set(true);
         e.preventDefault();
         emailError = '';
         try {
+            loadingText = 'Creating account.';
             await import('./firebaseAuth.service').then((service) =>
                 service.createUser(emailV, passwordV, usernameV)
             );
+            loadingText = 'Uploading saved rosters.';
             await import('./firebaseDB.service').then((service) => {
                 const rosters = getRostersForUpload();
                 service.uploadRosters(rosters);
@@ -29,6 +35,7 @@
                 emailError = emailV;
             }
         } finally {
+            modalState.enableClose(true);
             showSpinner.set(false);
         }
     }
@@ -38,8 +45,9 @@
 </script>
 
 {#if $showSpinner}
-    <FootballSpinner />
-    <p>Creating user</p>
+    <FootballSpinner loadingText="Registering user" />
+{:else if $currentUserStore}
+    <h3>Successfully registered!</h3>
 {:else}
     <form
         class="registration-form"
@@ -81,7 +89,7 @@
         />
         <br />
 
-        {#if $savedRosterIndex.index.length > 0}
+        <!-- {#if $savedRosterIndex.index.length > 0}
             <label for="upload-lists">Upload saved rosters:</label>
             <input
                 type="checkbox"
@@ -90,7 +98,7 @@
                 bind:checked={updateSavedRosters}
             />
             <br />
-        {/if}
+        {/if} -->
         <button on:focus={touchForm}>Register</button>
     </form>
 {/if}

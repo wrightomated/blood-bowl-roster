@@ -3,6 +3,7 @@
 context('Team creation', () => {
     it('should create, save and load team', () => {
         const teamName = 'Altdorf Daemons';
+        let rosterId = '';
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
@@ -49,10 +50,12 @@ context('Team creation', () => {
                 expect(localStorage.getItem('rosterIndex')).to.eq(
                     '{"currentIndex":1,"index":[{"id":1,"name":"Altdorf Daemons"}],"count":1}'
                 );
-                const { roster1Id, ...roster1NoId } = JSON.parse(
+            })
+            .should(() => {
+                const { rosterId, ...rosterNoId } = JSON.parse(
                     localStorage.getItem('roster')
                 );
-                expect(roster1NoId).to.deep.equal(expectedRoster);
+                expect(rosterNoId).to.deep.equal(expectedRoster);
             });
 
         cy.getBySel('menu-button').click();

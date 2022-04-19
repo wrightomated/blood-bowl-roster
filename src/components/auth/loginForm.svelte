@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { currentUserStore } from '../../store/currentUser.store';
+
     import { showSpinner } from '../../store/showSpinner.store';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
@@ -29,8 +31,10 @@
 </script>
 
 {#if $showSpinner}
-    <FootballSpinner />
+    <FootballSpinner loadingText="Logging in." />
     <p>Logging in</p>
+{:else if $currentUserStore}
+    <h3>Successfully logged in!</h3>
 {:else}
     <form
         class="login-form"

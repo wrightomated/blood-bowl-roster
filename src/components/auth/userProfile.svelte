@@ -6,6 +6,7 @@
     import LoginForm from './loginForm.svelte';
     import Button from '../uiComponents/button.svelte';
     import { menuDrawerOpen } from '../../store/menuDrawer.store';
+    import LoggedOut from './loggedOut.svelte';
 
     let logOutEnabled = true;
     const showModal = (component: string) => {
@@ -20,8 +21,14 @@
 
     const signUserOut = async () => {
         logOutEnabled = false;
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            component: LoggedOut,
+        });
         const firebase = await import('./firebaseAuth.service');
         await firebase.logout();
+
         menuDrawerOpen.set(false);
     };
 </script>
