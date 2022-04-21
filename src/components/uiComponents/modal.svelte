@@ -1,19 +1,15 @@
 <script lang="ts">
     import { modalState } from '../../store/modal.store';
-    import { overlayVisible } from '../../store/overlayVisible.store';
     import MaterialButton from './materialButton.svelte';
 
-    $: $overlayVisible, overlayChanged();
-
-    const overlayChanged = () => {
-        if (!$overlayVisible && $modalState.isOpen) {
-            modalState.set({ ...$modalState, isOpen: false });
+    function onOverlayClick() {
+        if ($modalState.canClose) {
+            modalState.close();
         }
-    };
+    }
 
     const closeModal = () => {
-        modalState.set({ ...$modalState, isOpen: false });
-        overlayVisible.set(false);
+        modalState.close();
     };
 </script>
 
@@ -27,8 +23,17 @@
             />
         </div>
     {/if}
-    <svelte:component this={$modalState.component} />
+    <svelte:component
+        this={$modalState.component}
+        {...$modalState.componentProps}
+    />
 </div>
+
+<div
+    class="overlay"
+    class:overlay--visible={$modalState.isOpen}
+    on:click={onOverlayClick}
+/>
 
 <style lang="scss">
     .close {
@@ -51,5 +56,23 @@
         border-radius: 25px;
         box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
+    }
+    .overlay {
+        z-index: 10;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.33);
+        transition: opacity 250ms ease-in-out;
+        opacity: 0;
+        visibility: hidden;
+        display: block;
+
+        &--visible {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 </style>

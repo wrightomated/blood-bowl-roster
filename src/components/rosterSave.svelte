@@ -7,7 +7,6 @@
     import { showDelete } from '../store/showDelete.store';
     import { showAllInducements } from '../store/showAllInducements.store';
     import { sendEventToAnalytics } from '../analytics/plausible';
-    import { overlayVisible } from '../store/overlayVisible.store';
     import { modalState } from '../store/modal.store';
     import ColumnControl from './columnControl.svelte';
     import { currentUserStore } from '../store/currentUser.store';
@@ -56,7 +55,6 @@
             isOpen: true,
             component: ColumnControl,
         });
-        overlayVisible.set(true);
     };
 
     roster.subscribe((x) => {

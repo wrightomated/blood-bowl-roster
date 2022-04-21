@@ -7,6 +7,7 @@ import {
     deleteDoc,
     updateDoc,
     deleteField,
+    DocumentSnapshot,
 } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import {
@@ -31,7 +32,9 @@ export async function getRoster(rosterId: string) {
     return getDoc(rosterRef);
 }
 
-export async function getRosterIndex() {
+export async function getRosterIndex(): Promise<
+    DocumentSnapshot<{ [key: string]: RosterPreview }>
+> {
     const rosterIndexRef = getRosterIndexRef();
     return getDoc(rosterIndexRef);
 }

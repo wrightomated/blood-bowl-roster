@@ -10,7 +10,6 @@
         showNewTeamDialogue,
     } from '../store/teamSelectionOpen.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
-    import type { Roster, RosterPreview } from '../models/roster.model';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import { filteredTiers, toggledTiers } from '../store/filterTier.store';
     import {
@@ -30,10 +29,7 @@
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import type { TeamFormat } from '../types/teamFormat';
     import { currentUserStore } from '../store/currentUser.store';
-    import type { RosterIndex } from '../models/rosterIndex.model';
     import FootballSpinner from './uiComponents/footballSpinner.svelte';
-    import Pill from './uiComponents/pill.svelte';
-    import { getTeamFormatShortDisplay } from '../types/teamFormat';
     import RosterPreviewCard from './uiComponents/rosterPreviewCard.svelte';
     import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
 
@@ -61,7 +57,7 @@
         try {
             const dbService = await import('./auth/firebaseDB.service');
             const rosterIndex = await dbService.getRosterIndex();
-            return rosterIndex.data() as { [key: string]: RosterPreview };
+            return rosterIndex.data();
         } catch {
             throw new Error('');
         }
@@ -101,9 +97,6 @@
     };
 
     const loadTeam = (savedRoster: { id: any; name?: string }) => {
-        const loadedRoster: Roster = JSON.parse(
-            localStorage.getItem(`savedRoster${savedRoster.id}`)
-        );
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
 
         // TODO: change this for database
@@ -113,14 +106,6 @@
         showAvailableStarPlayers.set(false);
         showNewTeamDialogue.set(false);
         teamLoadOpen.set(false);
-    };
-
-    const loadRoster = async () => {
-        if ($currentUserStore) {
-            // User is logged in so get from database
-        } else {
-            // Get from local storage
-        }
     };
 
     const tierToNumeral = (tier: TeamTier) => {
@@ -253,27 +238,27 @@
                 clickFunction={inputCode}
             />
         </div>
+        {#if $currentUserStore}
+            {#await getRosterIndex()}
+                <FootballSpinner />
+            {:then rosterPreviews}
+                <div class="team-previews">
+                    {#each Object.values(rosterPreviews) as preview, i}
+                        <RosterPreviewCard {preview} />
+                    {/each}
+                </div>
+            {:catch}
+                <p style="color: red">Something went wrong.</p>
+            {/await}
+        {:else}
+            {#each $savedRosterIndex.index as savedRoster, i}
+                <Button clickFunction={() => loadTeam(savedRoster)}
+                    >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
+                >
+            {/each}
+        {/if}
     </div>
     <!-- Refactor to it's own component -->
-    {#if $currentUserStore}
-        {#await getRosterIndex()}
-            <FootballSpinner />
-        {:then rosterPreviews}
-            <div class="team-previews">
-                {#each Object.values(rosterPreviews) as preview, i}
-                    <RosterPreviewCard {preview} />
-                {/each}
-            </div>
-        {:catch}
-            <p style="color: red">Something went wrong.</p>
-        {/await}
-    {:else}
-        {#each $savedRosterIndex.index as savedRoster, i}
-            <Button clickFunction={() => loadTeam(savedRoster)}
-                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
-            >
-        {/each}
-    {/if}
 {/if}
 
 <style lang="scss">
@@ -358,5 +343,6 @@
     .team-previews {
         display: flex;
         gap: 16px;
+        margin: 16px;
     }
 </style>

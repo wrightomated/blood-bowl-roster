@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
-import { overlayVisible } from './overlayVisible.store';
 
 function createModalState() {
     const { subscribe, set, update } = writable<ModalState>({
         isOpen: false,
         component: undefined,
         canClose: true,
+        componentProps: {},
     });
 
     return {
@@ -18,8 +18,13 @@ function createModalState() {
             }),
         close: () =>
             update((store) => {
-                overlayVisible.set(false);
-                return { ...store, isOpen: false };
+                return {
+                    ...store,
+                    isOpen: false,
+                    canClose: true,
+                    component: undefined,
+                    componentProps: {},
+                };
             }),
     };
 }
@@ -29,5 +34,6 @@ export const modalState = createModalState();
 export interface ModalState {
     isOpen: boolean;
     component: any;
+    componentProps: any;
     canClose: boolean;
 }

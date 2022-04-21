@@ -1,7 +1,6 @@
 <script lang="ts">
     import { currentUserStore } from '../../store/currentUser.store';
     import { modalState } from '../../store/modal.store';
-    import { overlayVisible } from '../../store/overlayVisible.store';
     import RegisterForm from './registerForm.svelte';
     import LoginForm from './loginForm.svelte';
     import Button from '../uiComponents/button.svelte';
@@ -16,7 +15,6 @@
             isOpen: true,
             component: component === 'register' ? RegisterForm : LoginForm,
         });
-        overlayVisible.set(true);
     };
 
     const signUserOut = async () => {
@@ -26,7 +24,6 @@
             isOpen: true,
             component: LoggedOut,
         });
-        overlayVisible.set(true);
         const firebase = await import('./firebaseAuth.service');
         await firebase.logout();
         menuDrawerOpen.set(false);

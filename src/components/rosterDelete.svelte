@@ -1,18 +1,27 @@
 <script lang="ts">
+    import { currentUserStore } from '../store/currentUser.store';
+
     import { savedRosterIndex } from '../store/saveDirectory.store';
 
     import { showDelete } from '../store/showDelete.store';
     import { roster } from '../store/teamRoster.store';
 
-    const clearRoster = () => {
+    async function clearRoster() {
+        if ($currentUserStore) {
+        }
         roster.reset();
         savedRosterIndex.removeRoster();
         toggleDelete();
-    };
+    }
 
-    const toggleDelete = () => {
+    async function deleteRoster() {
+        const service = await import('./auth/firebaseDB.service');
+        await service.deleteRoster($roster?.rosterId);
+    }
+
+    function toggleDelete() {
         showDelete.set(!$showDelete);
-    };
+    }
 </script>
 
 {#if $showDelete}

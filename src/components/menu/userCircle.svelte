@@ -13,7 +13,7 @@
 <style lang="scss">
     .initial {
         font-family: var(--display-font);
-        color: var(--main-colour);
+        color: var(--secondary-colour);
         background-color: white;
         border-radius: 50%;
         width: 28px;
@@ -21,11 +21,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid;
+        border: 2px solid;
 
         &:hover {
-            background-color: var(--main-colour);
+            background-color: var(--secondary-colour);
             color: white;
+            border-color: var(--secondary-colour);
         }
     }
     i {
