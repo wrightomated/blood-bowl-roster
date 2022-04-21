@@ -19,6 +19,13 @@
         animation-timing-function: linear;
     }
 
+    p {
+        text-align: center;
+        font-family: var(--display-font);
+        font-size: 20px;
+        color: var(--main-colour);
+    }
+
     @keyframes spin {
         from {
             transform: rotate(0deg);

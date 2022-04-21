@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { overlayVisible } from './overlayVisible.store';
 
 function createModalState() {
     const { subscribe, set, update } = writable<ModalState>({
@@ -14,6 +15,11 @@ function createModalState() {
         enableClose: (canClose: boolean) =>
             update((store) => {
                 return { ...store, canClose };
+            }),
+        close: () =>
+            update((store) => {
+                overlayVisible.set(false);
+                return { ...store, isOpen: false };
             }),
     };
 }

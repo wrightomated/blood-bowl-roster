@@ -1,18 +1,22 @@
 <script lang="ts">
     import { showSpinner } from '../../store/showSpinner.store';
-    import { savedRosterIndex } from '../../store/saveDirectory.store';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
     import { getRostersForUpload } from '../../helpers/localToFirebase';
     import { modalState } from '../../store/modal.store';
     import { currentUserStore } from '../../store/currentUser.store';
+    import Button from '../uiComponents/button.svelte';
+    import { onMount } from 'svelte';
 
     $: emailV = '';
     $: passwordV = '';
     $: usernameV = '';
-    $: updateSavedRosters = true;
     let formTouched = false;
     let emailError = '';
     let loadingText = '';
+
+    onMount(() => {
+        document.getElementById('username')?.focus();
+    });
 
     async function register(e: Event) {
         modalState.enableClose(false);
@@ -45,9 +49,12 @@
 </script>
 
 {#if $showSpinner}
-    <FootballSpinner loadingText="Registering user" />
+    <FootballSpinner {loadingText} />
 {:else if $currentUserStore}
-    <h3>Successfully registered!</h3>
+    <div class="logged-in">
+        <p>Successfully Registered!</p>
+        <Button clickFunction={() => modalState.close()}>Okay</Button>
+    </div>
 {:else}
     <form
         class="registration-form"
@@ -131,5 +138,13 @@
 
     .error {
         color: var(--main-colour);
+    }
+
+    .logged-in {
+        text-align: center;
+        p {
+            font-family: var(--display-font);
+            font-size: 20px;
+        }
     }
 </style>

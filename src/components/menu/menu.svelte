@@ -3,6 +3,7 @@
     import { menuDrawerOpen } from '../../store/menuDrawer.store';
     import MenuItems from './menuItems.svelte';
     import UserProfile from '../auth/userProfile.svelte';
+    import UserCircle from './userCircle.svelte';
 
     let menuComponent: typeof MenuItems | typeof UserProfile;
 
@@ -31,9 +32,9 @@
         />
     </div>
     <h1>BB Roster</h1>
-    <button class="profile" title="User Profile" on:click={toggleUserProfile}
-        ><i class="material-icons">account_circle</i></button
-    >
+    <button class="profile" title="User Profile" on:click={toggleUserProfile}>
+        <UserCircle />
+    </button>
 </header>
 <div class="spacer" class:spacer--show={$menuDrawerOpen} />
 <nav class="menu__drawer" class:menu__drawer--open={$menuDrawerOpen}>
@@ -77,20 +78,15 @@
         }
     }
     .profile {
-        margin: 2px 12px 0 auto;
+        margin: 0px 12px 0 auto;
         background: none;
-        color: inherit;
         border: none;
         padding: 0;
         font: inherit;
         cursor: pointer;
         color: var(--shadow);
-        :hover {
-            color: var(--secondary-colour);
-        }
-
-        i {
-            font-size: 36px;
+        &:hover {
+            color: var(--main-colour);
         }
     }
     .spacer {

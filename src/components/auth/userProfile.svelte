@@ -26,10 +26,11 @@
             isOpen: true,
             component: LoggedOut,
         });
+        overlayVisible.set(true);
         const firebase = await import('./firebaseAuth.service');
         await firebase.logout();
-
         menuDrawerOpen.set(false);
+        logOutEnabled = true;
     };
 </script>
 

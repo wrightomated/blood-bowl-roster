@@ -1,7 +1,11 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+
     import { currentUserStore } from '../../store/currentUser.store';
+    import { modalState } from '../../store/modal.store';
 
     import { showSpinner } from '../../store/showSpinner.store';
+    import Button from '../uiComponents/button.svelte';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
 
@@ -9,7 +13,13 @@
     $: passwordV = '';
     let formTouched = false;
     let wrongCombination = false;
+
+    onMount(() => {
+        document.getElementById('email')?.focus();
+    });
+
     async function login(e: Event) {
+        modalState.enableClose(false);
         showSpinner.set(true);
         e.preventDefault();
         try {
@@ -22,19 +32,22 @@
                 wrongCombination = true;
             }
         } finally {
+            modalState.enableClose(true);
             showSpinner.set(false);
         }
     }
-    const touchForm = () => {
+    function touchForm() {
         formTouched = true;
-    };
+    }
 </script>
 
 {#if $showSpinner}
     <FootballSpinner loadingText="Logging in." />
-    <p>Logging in</p>
 {:else if $currentUserStore}
-    <h3>Successfully logged in!</h3>
+    <div class="logged-in">
+        <p>Successfully logged in!</p>
+        <Button clickFunction={() => modalState.close()}>Okay</Button>
+    </div>
 {:else}
     <form
         class="login-form"
@@ -97,7 +110,19 @@
         @include roundedButton.rounded-button;
     }
 
+    h3 {
+        text-align: center;
+    }
+
     .error {
         color: var(--main-colour);
+    }
+
+    .logged-in {
+        text-align: center;
+        p {
+            font-family: var(--display-font);
+            font-size: 20px;
+        }
     }
 </style>
