@@ -93,7 +93,7 @@ export async function deleteRoster(rosterId: string) {
 
     try {
         await updateDoc(rosterIndexRef, {
-            capital: deleteField(),
+            [rosterId]: deleteField(),
         });
         await deleteDoc(rosterRef);
     } catch (error) {
