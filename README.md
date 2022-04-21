@@ -1,6 +1,6 @@
 # BBRoster
 
-A simple web app to keep track of Bloodbowl 2020 teams made with [Svelte](https://svelte.dev). Initially it was exploration into svelte. I haven't consciously adheared to any software development principles as it has been a form of relaxation for me. Feel free to fork and all that open source good stuff. Open source was never a consideration but here we are!
+A simple web app to keep track of Bloodbowl 2020 teams made with [Svelte](https://svelte.dev). 
 
 ## Get started
 
