@@ -103,7 +103,7 @@
         });
     };
 
-    const loadTeam = (savedRoster: { id: any; name?: string }) => {
+    const loadTeam = (savedRoster: { id: number; name?: string }) => {
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
 
         // TODO: change this for database
