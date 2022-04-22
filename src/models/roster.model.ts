@@ -18,6 +18,8 @@ export interface Roster {
     format?: TeamFormat;
 }
 
+export type RosterPreviews = { [key: string]: RosterPreview };
+
 export type RosterPreview = Omit<Roster, 'players' | 'extra' | 'inducements'>;
 
 export function getRosterPreview(roster: Roster): RosterPreview {

@@ -10,6 +10,7 @@
     import { modalState } from '../store/modal.store';
     import ColumnControl from './columnControl.svelte';
     import { currentUserStore } from '../store/currentUser.store';
+    import { rosterCache } from '../store/rosterCache.store';
 
     let saved = false;
     let syncing = false;
@@ -23,6 +24,8 @@
                     service.uploadRoster($roster)
                 );
                 saved = true;
+                rosterCache.invalidateRoster($roster.rosterId);
+                rosterCache.invalidateRosterPreviews();
             } catch (error) {
                 console.error(error);
             } finally {

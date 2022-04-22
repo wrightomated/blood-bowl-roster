@@ -14,7 +14,10 @@ import {
     getRosterPreview,
     Roster,
     RosterPreview,
+    RosterPreviews,
 } from '../../models/roster.model';
+import { get as getValueFromStore } from 'svelte/store';
+import { rosterCache } from '../../store/rosterCache.store';
 
 let db: Firestore;
 let auth, app;
@@ -27,13 +30,15 @@ export async function initDb() {
     db = getFirestore(app);
 }
 
-export async function getRoster(rosterId: string) {
+export async function getRoster(
+    rosterId: string
+): Promise<DocumentSnapshot<Roster>> {
     const rosterRef = getRosterRef(rosterId);
     return getDoc(rosterRef);
 }
 
-export async function getRosterIndex(): Promise<
-    DocumentSnapshot<{ [key: string]: RosterPreview }>
+export async function gerRosterPreviews(): Promise<
+    DocumentSnapshot<RosterPreviews>
 > {
     const rosterIndexRef = getRosterIndexRef();
     return getDoc(rosterIndexRef);
@@ -48,15 +53,23 @@ export async function uploadRoster(inputRoster: Roster) {
 
     const batch = writeBatch(db);
 
-    batch.set(
-        rosterIndexRef,
-        {
-            [roster.rosterId]: rosterPreview,
-        },
-        { merge: true }
-    );
+    if (
+        getValueFromStore(rosterCache)?.rosterPreviews?.cachedItem?.[
+            roster.rosterId
+        ] !== rosterPreview
+    ) {
+        batch.set(
+            rosterIndexRef,
+            {
+                [roster.rosterId]: rosterPreview,
+            },
+            { merge: true }
+        );
+        rosterCache.invalidateRosterPreviews();
+    }
 
     batch.set(rosterRef, roster);
+    rosterCache.invalidateRoster(roster.rosterId);
 
     return batch.commit();
 }
@@ -96,6 +109,7 @@ export async function deleteRoster(rosterId: string) {
             [rosterId]: deleteField(),
         });
         await deleteDoc(rosterRef);
+        rosterCache.invalidateRosterPreviews();
     } catch (error) {
         console.error(error);
     }
@@ -114,7 +128,3 @@ function addIdToRoster(roster: Roster): Roster {
         ? roster
         : { ...roster, rosterId: nanoid() };
 }
-
-type RosterIndex = {
-    [key: string]: RosterPreview;
-};

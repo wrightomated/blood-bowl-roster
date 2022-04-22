@@ -32,6 +32,7 @@
     import FootballSpinner from './uiComponents/footballSpinner.svelte';
     import RosterPreviewCard from './uiComponents/rosterPreviewCard.svelte';
     import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
+    import { rosterCache } from '../store/rosterCache.store';
 
     export let teamList: Team[];
 
@@ -53,15 +54,21 @@
                 : x
         );
 
-    const getRosterIndex = async () => {
+    // This should be in a service of some type
+    async function getRosterPreviews() {
+        if ($rosterCache.rosterPreviews.valid) {
+            return $rosterCache.rosterPreviews.cachedItem;
+        }
         try {
             const dbService = await import('./auth/firebaseDB.service');
-            const rosterIndex = await dbService.getRosterIndex();
-            return rosterIndex.data();
+            const rosterPreviewDocument = await dbService.gerRosterPreviews();
+            const rosterPreviews = rosterPreviewDocument.data();
+            rosterCache.cacheRosterPreviews(rosterPreviews);
+            return rosterPreviews;
         } catch {
             throw new Error('');
         }
-    };
+    }
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
@@ -239,7 +246,7 @@
             />
         </div>
         {#if $currentUserStore}
-            {#await getRosterIndex()}
+            {#await getRosterPreviews()}
                 <FootballSpinner />
             {:then rosterPreviews}
                 <div class="team-previews">
