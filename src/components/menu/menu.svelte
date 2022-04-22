@@ -135,7 +135,7 @@
                 display: none;
             }
             &--reversed {
-                flex-direction: row-reverse;
+                justify-content: flex-end;
             }
         }
         @media screen and (max-width: 783px) {

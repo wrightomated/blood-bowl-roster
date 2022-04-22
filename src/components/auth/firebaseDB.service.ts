@@ -13,7 +13,6 @@ import { nanoid } from 'nanoid';
 import {
     getRosterPreview,
     Roster,
-    RosterPreview,
     RosterPreviews,
 } from '../../models/roster.model';
 import { get as getValueFromStore } from 'svelte/store';
@@ -30,9 +29,7 @@ export async function initDb() {
     db = getFirestore(app);
 }
 
-export async function getRoster(
-    rosterId: string
-): Promise<DocumentSnapshot<Roster>> {
+export async function getRoster(rosterId: string) {
     const rosterRef = getRosterRef(rosterId);
     return getDoc(rosterRef);
 }

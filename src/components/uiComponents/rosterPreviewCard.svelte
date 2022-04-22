@@ -29,7 +29,9 @@
         });
         try {
             const service = await import('../auth/firebaseDB.service');
-            const rosterToLoad = (await service.getRoster(rosterId)).data();
+            const rosterToLoad = (
+                await service.getRoster(rosterId)
+            ).data() as Roster;
             roster.loadRoster(rosterToLoad);
             rosterCache.cacheRoster(rosterToLoad);
             teamLoadOpen.set(false);
