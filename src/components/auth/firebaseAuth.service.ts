@@ -11,6 +11,7 @@ import {
     updateProfile,
 } from 'firebase/auth';
 import { currentUserStore } from '../../store/currentUser.store';
+import { rosterCache } from '../../store/rosterCache.store';
 
 const firebaseConfig = {
     apiKey: '__bbroster.env.FIREBASE_API_KEY',
@@ -32,6 +33,7 @@ export function init() {
     });
     auth = getAuth(app);
     onAuthStateChanged(auth, (currentUser: User) => {
+        rosterCache.clearCache();
         currentUserStore.set(currentUser);
         import('./firebaseDB.service').then((service) => service.initDb());
     });

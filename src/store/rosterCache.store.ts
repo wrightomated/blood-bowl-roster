@@ -3,7 +3,7 @@ import type { Writable } from 'svelte/store';
 import type { Roster, RosterPreviews } from '../models/roster.model';
 
 function createRosterCache() {
-    const { subscribe, update }: Writable<RosterCache> = writable(
+    const { subscribe, set, update }: Writable<RosterCache> = writable(
         getEmptyCache()
     );
 
@@ -57,6 +57,7 @@ function createRosterCache() {
                     },
                 };
             }),
+        clearCache: () => set(getEmptyCache()),
     };
 }
 
