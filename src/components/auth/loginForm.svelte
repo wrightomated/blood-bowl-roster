@@ -12,13 +12,14 @@
     $: emailV = '';
     $: passwordV = '';
     let formTouched = false;
-    let wrongCombination = false;
+    let errorText = '';
 
     onMount(() => {
         document.getElementById('email')?.focus();
     });
 
     async function login(e: Event) {
+        errorText = '';
         modalState.enableClose(false);
         showSpinner.set(true);
         e.preventDefault();
@@ -28,8 +29,13 @@
             );
         } catch (error) {
             console.log({ error });
-            if (error?.code === 'auth/wrong-password') {
-                wrongCombination = true;
+            if (
+                error?.code === 'auth/wrong-password' ||
+                error?.code === 'auth/user-not-found'
+            ) {
+                errorText = 'Incorrect username or password.';
+            } else {
+                errorText = 'Something went wrong';
             }
         } finally {
             modalState.enableClose(true);
@@ -75,8 +81,8 @@
             minlength="6"
         />
         <br />
-        {#if wrongCombination}
-            <p class="error"><strong>Incorrect email or password.</strong></p>
+        {#if errorText}
+            <p class="error"><strong>{errorText}</strong></p>
         {/if}
         <button on:focus={touchForm}>Login</button>
     </form>

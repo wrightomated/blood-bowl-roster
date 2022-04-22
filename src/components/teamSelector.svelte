@@ -342,7 +342,9 @@
     }
     .team-previews {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 16px;
-        margin: 16px;
+        margin: 16px 8px;
     }
 </style>
