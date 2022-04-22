@@ -33,6 +33,7 @@
     import RosterPreviewCard from './uiComponents/rosterPreviewCard.svelte';
     import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
     import { rosterCache } from '../store/rosterCache.store';
+    import type { RosterPreviews } from '../models/roster.model';
 
     export let teamList: Team[];
 
@@ -147,6 +148,12 @@
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
     }
+
+    function sortedPreviews(rosterPreviews: RosterPreviews) {
+        return Object.values(rosterPreviews).sort((a, b) =>
+            a.teamName.localeCompare(b.teamName)
+        );
+    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
@@ -250,7 +257,7 @@
                 <FootballSpinner />
             {:then rosterPreviews}
                 <div class="team-previews">
-                    {#each Object.values(rosterPreviews) as preview, i}
+                    {#each sortedPreviews(rosterPreviews) as preview}
                         <RosterPreviewCard {preview} />
                     {/each}
                 </div>
