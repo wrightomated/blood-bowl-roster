@@ -1,5 +1,4 @@
 <footer>
-    <p>Local storage is used for storing saved and current rosters.</p>
     <p>
         Rule references and player names are property of Games Workshop. This
         site is not affiliated with Games Workshop. I just think they're neat.
