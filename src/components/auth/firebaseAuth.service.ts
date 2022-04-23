@@ -1,4 +1,5 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
 import {
     getAuth,
     User,
@@ -33,6 +34,16 @@ export function init() {
         automaticDataCollectionEnabled: false,
     });
     auth = getAuth(app);
+    if (
+        firebaseConfig?.measurementId &&
+        // Rollup replace will replace the env variable with the string 'undefined' if not in the env file
+        firebaseConfig.measurementId !== 'undefined'
+    ) {
+        import('../../analytics/firebaseAnalytics').then((service) =>
+            service.init(app)
+        );
+    }
+
     onAuthStateChanged(auth, (currentUser: User) => {
         rosterCache.clearCache();
         currentUserStore.set(currentUser);
