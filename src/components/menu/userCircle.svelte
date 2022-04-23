@@ -3,9 +3,12 @@
 </script>
 
 {#if $currentUserStore}
-    <div class="initial">
-        {$currentUserStore.displayName?.charAt(0)?.toUpperCase() || '?'}
-    </div>
+    {#if $currentUserStore.displayName}
+        <div class="initial">
+            {$currentUserStore.displayName?.charAt(0)?.toUpperCase() || '?'}
+        </div>
+    {:else}
+        <i class="material-icons">person</i>{/if}
 {:else}
     <i class="material-icons">account_circle</i>
 {/if}
