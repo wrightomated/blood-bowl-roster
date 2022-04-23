@@ -1,5 +1,4 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 import {
     getAuth,
     User,
@@ -56,10 +55,8 @@ export async function createUser(
     password: string,
     displayName: string
 ) {
-    return createUserWithEmailAndPassword(auth, email, password).then(
-        (user) => {
-            updateProfile(user.user, { displayName });
-        }
+    return createUserWithEmailAndPassword(auth, email, password).then((user) =>
+        updateProfile(user.user, { displayName })
     );
 }
 

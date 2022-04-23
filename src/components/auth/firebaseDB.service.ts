@@ -22,6 +22,7 @@ let db: Firestore;
 let auth, app;
 
 export async function initDb() {
+    if (db) return;
     await import('./firebaseAuth.service').then((service) => {
         app = service.app;
         auth = service.auth;
