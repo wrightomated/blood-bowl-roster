@@ -1,43 +1,35 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-
-    import { currentUserStore } from '../../store/currentUser.store';
     import { modalState } from '../../store/modal.store';
 
     import { showSpinner } from '../../store/showSpinner.store';
     import Button from '../uiComponents/button.svelte';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
-    import ResetPassword from './resetPassword.svelte';
+    import LoginForm from './loginForm.svelte';
 
     $: emailV = '';
-    $: passwordV = '';
     let formTouched = false;
+    let emailSent = false;
     let errorText = '';
 
     onMount(() => {
         document.getElementById('email')?.focus();
     });
 
-    async function login(e: Event) {
+    async function sendResetEmail(e: Event) {
         errorText = '';
         modalState.enableClose(false);
         showSpinner.set(true);
         e.preventDefault();
         try {
             await import('./firebaseAuth.service').then((service) =>
-                service.signInWithEmail(emailV, passwordV)
+                service.resetPassword(emailV)
             );
+            emailSent = true;
         } catch (error) {
-            console.log({ error });
-            if (
-                error?.code === 'auth/wrong-password' ||
-                error?.code === 'auth/user-not-found'
-            ) {
-                errorText = 'Incorrect username or password.';
-            } else {
-                errorText = 'Something went wrong';
-            }
+            console.error({ error });
+            errorText = 'Something went wrong';
         } finally {
             modalState.enableClose(true);
             showSpinner.set(false);
@@ -46,29 +38,29 @@
     function touchForm() {
         formTouched = true;
     }
-    function passwordReset() {
+    function showLogin() {
         modalState.set({
             ...$modalState,
             isOpen: true,
-            component: ResetPassword,
+            component: LoginForm,
         });
     }
 </script>
 
 {#if $showSpinner}
-    <FootballSpinner loadingText="Logging in." />
-{:else if $currentUserStore}
+    <FootballSpinner loadingText="Sending reset password email" />
+{:else if emailSent}
     <div class="logged-in">
-        <p>Successfully logged in!</p>
-        <Button clickFunction={() => modalState.close()}>Okay</Button>
+        <p>Email sent!</p>
+        <Button clickFunction={showLogin}>Login</Button>
     </div>
 {:else}
     <form
         class="login-form"
         class:login-form--touched={formTouched}
-        on:submit|preventDefault={login}
+        on:submit|preventDefault={sendResetEmail}
     >
-        <p>Log into your account.</p>
+        <p>Reset your password.</p>
         <label for="email">Email:</label>
         <input
             type="email"
@@ -78,25 +70,12 @@
             bind:value={emailV}
             required
         />
-        <label for="password">Password:</label>
-        <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="your password"
-            bind:value={passwordV}
-            required
-            minlength="6"
-        />
         <br />
         {#if errorText}
             <p class="error"><strong>{errorText}</strong></p>
         {/if}
-        <button class="login-button" on:focus={touchForm}>Login</button>
+        <button on:focus={touchForm}>Send Reset Email</button>
     </form>
-    <button class="reset-password" on:click={passwordReset}
-        >Forgot password?</button
-    >
 {/if}
 
 <!-- <button on:click={() => sendVerificationEmail()}>Send email</button> -->
@@ -123,7 +102,7 @@
         font-family: var(--display-font);
     }
 
-    .login-button {
+    button {
         @include roundedButton.rounded-button;
     }
 
@@ -141,13 +120,5 @@
             font-family: var(--display-font);
             font-size: 20px;
         }
-    }
-    .reset-password {
-        text-align: center;
-        border: none;
-        background: none;
-        text-decoration: underline;
-        color: var(--secondary-colour);
-        width: 100%;
     }
 </style>
