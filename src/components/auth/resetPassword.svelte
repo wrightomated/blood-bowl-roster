@@ -51,8 +51,8 @@
     <FootballSpinner loadingText="Sending reset password email" />
 {:else if emailSent}
     <div class="logged-in">
-        <p>Successfully logged in!</p>
-        <Button clickFunction={showLogin}>Back to login.</Button>
+        <p>Email sent!</p>
+        <Button clickFunction={showLogin}>Login</Button>
     </div>
 {:else}
     <form
