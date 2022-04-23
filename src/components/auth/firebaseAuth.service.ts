@@ -20,6 +20,7 @@ const firebaseConfig = {
     storageBucket: '__bbroster.env.FIREBASE_STORAGE_BUCKET',
     messagingSenderId: '__bbroster.env.FIREBASE_MESSAGING_SENDER_ID',
     appId: '__bbroster.env.FIREBASE_APP_ID',
+    measurementId: '__bbroster.env.FIREBASE_MEASUREMENT_ID',
 };
 
 export let app: FirebaseApp;

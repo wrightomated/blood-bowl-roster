@@ -59,6 +59,8 @@ export default {
             '__bbroster.env.FIREBASE_MESSAGING_SENDER_ID':
                 process.env.FIREBASE_MESSAGING_SENDER_ID,
             '__bbroster.env.FIREBASE_APP_ID': process.env.FIREBASE_APP_ID,
+            '__bbroster.env.FIREBASE_MEASUREMENT_ID':
+                process.env.FIREBASE_MEASUREMENT_ID,
         }),
         svelte({
             preprocess: sveltePreprocess(),
