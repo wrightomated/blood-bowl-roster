@@ -150,9 +150,10 @@
     }
 
     function sortedPreviews(rosterPreviews: RosterPreviews) {
-        return Object.values(rosterPreviews).sort((a, b) =>
-            a.teamName.localeCompare(b.teamName)
-        );
+        if (!rosterPreviews) return [];
+        const previews = Object.values(rosterPreviews);
+        if (previews.length === 0) return [];
+        return previews.sort((a, b) => a.teamName.localeCompare(b.teamName));
     }
 </script>
 
