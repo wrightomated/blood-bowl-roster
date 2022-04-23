@@ -4,7 +4,7 @@
 
 {#if $currentUserStore}
     <div class="initial">
-        {$currentUserStore.displayName?.charAt(0)?.toUpperCase()}
+        {$currentUserStore.displayName?.charAt(0)?.toUpperCase() || '?'}
     </div>
 {:else}
     <i class="material-icons">account_circle</i>
