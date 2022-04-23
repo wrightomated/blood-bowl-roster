@@ -1,16 +1,22 @@
 /// <reference types="cypress" />
 
 context('Team creation', () => {
-    const expectedRoster = '{"teamId":1,"players":[{"playerName":"Bob","player":{"id":1,"position":"Imperial Lineman","playerStats":[6,3,4,4,8],"cost":45,"skills":[16],"primary":["G"],"secondary":["A","S"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":1,"position":"Imperial Lineman","playerStats":[6,3,4,4,8],"cost":45,"skills":[16],"primary":["G"],"secondary":["A","S"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":1,"position":"Imperial Lineman","playerStats":[6,3,4,4,8],"cost":45,"skills":[16],"primary":["G"],"secondary":["A","S"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":1,"position":"Imperial Lineman","playerStats":[6,3,4,4,8],"cost":45,"skills":[16],"primary":["G"],"secondary":["A","S"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":2,"position":"Imperial Thrower","playerStats":[6,3,3,3,9],"cost":75,"skills":[46,47],"primary":["G","P"],"secondary":["A","S"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":3,"position":"Noble Blitzer","playerStats":[7,3,3,4,9],"cost":105,"skills":[13,1],"primary":["A","G"],"secondary":["P","S"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":4,"position":"Bodyguard","playerStats":[6,3,3,5,9],"cost":90,"skills":[58,24],"primary":["G","S"],"secondary":["A"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":4,"position":"Bodyguard","playerStats":[6,3,3,5,9],"cost":90,"skills":[58,24],"primary":["G","S"],"secondary":["A"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":4,"position":"Bodyguard","playerStats":[6,3,3,5,9],"cost":90,"skills":[58,24],"primary":["G","S"],"secondary":["A"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":4,"position":"Bodyguard","playerStats":[6,3,3,5,9],"cost":90,"skills":[58,24],"primary":["G","S"],"secondary":["A"]},"alterations":{"spp":0,"ni":0}},{"playerName":"","player":{"id":5,"position":"Ogre","playerStats":[5,5,4,5,10],"cost":140,"skills":[66,71,55,60,86],"primary":["S"],"secondary":["A","G"],"bigGuy":true},"alterations":{"spp":0,"ni":0}}],"teamName":"Altdorf Daemons","teamType":"Imperial Nobility","extra":{"dedicated_fans":1,"rerolls":2},"inducements":{},"treasury":0,"mode":"league","format":"elevens"}';
     it('should create, save and load team', () => {
         const teamName = 'Altdorf Daemons';
+        let rosterId = '';
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Black Orc').click();
-        cy.getBySel('selected-team-caption').should('have.text', 'Black Orc Team Players');
+        cy.getBySel('selected-team-caption').should(
+            'have.text',
+            'Black Orc Team Players'
+        );
         cy.contains('Imperial Nobility').click();
-        cy.getBySel('selected-team-caption').should('have.text', 'Imperial Nobility Team Players');
+        cy.getBySel('selected-team-caption').should(
+            'have.text',
+            'Imperial Nobility Team Players'
+        );
         cy.getBySel('create-team').click();
 
         cy.getBySel('team-name').type(teamName);
@@ -34,16 +40,31 @@ context('Team creation', () => {
         cy.getBySel('add-player').click();
         cy.getBySel('add-rerolls').click();
         cy.getBySel('add-rerolls').click();
-        cy.getBySel('save-roster').click().should(() => {
-            expect(localStorage.getItem('roster')).to.eq(expectedRoster);
-            expect(localStorage.getItem('rosterIndex')).to.eq('{"currentIndex":1,"index":[{"id":1,"name":"Altdorf Daemons"}],"count":1}');
-            expect(localStorage.getItem('savedRoster1')).to.eq(expectedRoster);
-        });
+        cy.getBySel('save-roster')
+            .click()
+            .should(() => {
+                const { rosterId, ...rosterNoId } = JSON.parse(
+                    localStorage.getItem('roster')
+                );
+                expect(rosterNoId).to.deep.equal(expectedRoster);
+                expect(localStorage.getItem('rosterIndex')).to.eq(
+                    '{"currentIndex":1,"index":[{"id":1,"name":"Altdorf Daemons"}],"count":1}'
+                );
+            })
+            .should(() => {
+                const { rosterId, ...rosterNoId } = JSON.parse(
+                    localStorage.getItem('roster')
+                );
+                expect(rosterNoId).to.deep.equal(expectedRoster);
+            });
 
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Black Orc').click();
-        cy.getBySel('selected-team-caption').should('have.text', 'Black Orc Team Players');
+        cy.getBySel('selected-team-caption').should(
+            'have.text',
+            'Black Orc Team Players'
+        );
 
         cy.getBySel('menu-button').click();
         cy.getBySel('load-team').click();
@@ -60,5 +81,162 @@ context('Team creation', () => {
         cy.getBySel('star-player-select').select('Zolcath the Zoat');
         cy.getBySel('add-star-player').click();
         cy.getBySel('player-0-name').should('have.text', 'Zolcath the Zoat');
-    })
+    });
 });
+
+const expectedRoster = {
+    teamId: 1,
+    players: [
+        {
+            playerName: 'Bob',
+            player: {
+                id: 1,
+                position: 'Imperial Lineman',
+                playerStats: [6, 3, 4, 4, 8],
+                cost: 45,
+                skills: [16],
+                primary: ['G'],
+                secondary: ['A', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 1,
+                position: 'Imperial Lineman',
+                playerStats: [6, 3, 4, 4, 8],
+                cost: 45,
+                skills: [16],
+                primary: ['G'],
+                secondary: ['A', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 1,
+                position: 'Imperial Lineman',
+                playerStats: [6, 3, 4, 4, 8],
+                cost: 45,
+                skills: [16],
+                primary: ['G'],
+                secondary: ['A', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 1,
+                position: 'Imperial Lineman',
+                playerStats: [6, 3, 4, 4, 8],
+                cost: 45,
+                skills: [16],
+                primary: ['G'],
+                secondary: ['A', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 2,
+                position: 'Imperial Thrower',
+                playerStats: [6, 3, 3, 3, 9],
+                cost: 75,
+                skills: [46, 47],
+                primary: ['G', 'P'],
+                secondary: ['A', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 3,
+                position: 'Noble Blitzer',
+                playerStats: [7, 3, 3, 4, 9],
+                cost: 105,
+                skills: [13, 1],
+                primary: ['A', 'G'],
+                secondary: ['P', 'S'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 4,
+                position: 'Bodyguard',
+                playerStats: [6, 3, 3, 5, 9],
+                cost: 90,
+                skills: [58, 24],
+                primary: ['G', 'S'],
+                secondary: ['A'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 4,
+                position: 'Bodyguard',
+                playerStats: [6, 3, 3, 5, 9],
+                cost: 90,
+                skills: [58, 24],
+                primary: ['G', 'S'],
+                secondary: ['A'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 4,
+                position: 'Bodyguard',
+                playerStats: [6, 3, 3, 5, 9],
+                cost: 90,
+                skills: [58, 24],
+                primary: ['G', 'S'],
+                secondary: ['A'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 4,
+                position: 'Bodyguard',
+                playerStats: [6, 3, 3, 5, 9],
+                cost: 90,
+                skills: [58, 24],
+                primary: ['G', 'S'],
+                secondary: ['A'],
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+        {
+            playerName: '',
+            player: {
+                id: 5,
+                position: 'Ogre',
+                playerStats: [5, 5, 4, 5, 10],
+                cost: 140,
+                skills: [66, 71, 55, 60, 86],
+                primary: ['S'],
+                secondary: ['A', 'G'],
+                bigGuy: true,
+            },
+            alterations: { spp: 0, ni: 0 },
+        },
+    ],
+    teamName: 'Altdorf Daemons',
+    teamType: 'Imperial Nobility',
+    extra: { dedicated_fans: 1, rerolls: 2 },
+    inducements: {},
+    treasury: 0,
+    mode: 'league',
+    format: 'elevens',
+};

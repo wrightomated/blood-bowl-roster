@@ -1,23 +1,38 @@
 <script lang="ts">
-    import { columnControlsOpen } from '../../store/columnControls.store';
+    import { modalState } from '../../store/modal.store';
     import MaterialButton from './materialButton.svelte';
-    const closeModal = () => columnControlsOpen.set(false);
+
+    function onOverlayClick() {
+        if ($modalState.canClose) {
+            modalState.close();
+        }
+    }
+
+    const closeModal = () => {
+        modalState.close();
+    };
 </script>
 
-<div class="modal" class:closed={!$columnControlsOpen}>
-    <div class="close">
-        <MaterialButton
-            symbol="close"
-            hoverText="Close Modal"
-            clickFunction={closeModal}
-        />
-    </div>
-    <slot />
+<div class="modal" class:closed={!$modalState.isOpen}>
+    {#if $modalState.canClose}
+        <div class="close">
+            <MaterialButton
+                symbol="close"
+                hoverText="Close Modal"
+                clickFunction={closeModal}
+            />
+        </div>
+    {/if}
+    <svelte:component
+        this={$modalState.component}
+        {...$modalState.componentProps}
+    />
 </div>
+
 <div
     class="overlay"
-    class:overlay--visible={$columnControlsOpen}
-    on:click={closeModal}
+    class:overlay--visible={$modalState.isOpen}
+    on:click={onOverlayClick}
 />
 
 <style lang="scss">
@@ -36,11 +51,12 @@
         transform: translateX(-50%);
         z-index: 11;
         background-color: white;
-        min-width: 300px;
+        min-width: 240px;
         padding: 40px;
         border-radius: 25px;
+        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+            0 6px 10px 4px rgba(60, 64, 67, 0.15);
     }
-
     .overlay {
         z-index: 10;
         position: fixed;

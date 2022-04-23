@@ -10,7 +10,6 @@
         showNewTeamDialogue,
     } from '../store/teamSelectionOpen.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
-    import type { Roster } from '../models/roster.model';
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import { filteredTiers, toggledTiers } from '../store/filterTier.store';
     import {
@@ -29,6 +28,12 @@
     import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import type { TeamFormat } from '../types/teamFormat';
+    import { currentUserStore } from '../store/currentUser.store';
+    import FootballSpinner from './uiComponents/footballSpinner.svelte';
+    import RosterPreviewCard from './uiComponents/rosterPreviewCard.svelte';
+    import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
+    import { rosterCache } from '../store/rosterCache.store';
+    import type { RosterPreviews } from '../models/roster.model';
 
     export let teamList: Team[];
 
@@ -50,6 +55,21 @@
                 : x
         );
 
+    // This should be in a service of some type
+    async function getRosterPreviews() {
+        if ($rosterCache.rosterPreviews.valid) {
+            return $rosterCache.rosterPreviews.cachedItem;
+        }
+        try {
+            const dbService = await import('./auth/firebaseDB.service');
+            const rosterPreviewDocument = await dbService.gerRosterPreviews();
+            const rosterPreviews = rosterPreviewDocument.data();
+            rosterCache.cacheRosterPreviews(rosterPreviews);
+            return rosterPreviews;
+        } catch {
+            throw new Error('');
+        }
+    }
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
@@ -84,13 +104,11 @@
         });
     };
 
-    const loadTeam = (savedRoster: { id: any; name?: string }) => {
-        const loadedRoster: Roster = JSON.parse(
-            localStorage.getItem(`savedRoster${savedRoster.id}`)
-        );
+    const loadTeam = (savedRoster: { id: number; name?: string }) => {
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
-        currentTeam.setCurrentTeamWithId(loadedRoster.teamId);
-        roster.loadRoster(`savedRoster${savedRoster.id}`);
+
+        // TODO: change this for database
+        roster.loadRoster(getSavedRosterFromLocalStorage(savedRoster.id));
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
@@ -129,6 +147,12 @@
     function changeFormat(format: any) {
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
+    }
+
+    function sortedPreviews(rosterPreviews: RosterPreviews) {
+        return Object.values(rosterPreviews).sort((a, b) =>
+            a.teamName.localeCompare(b.teamName)
+        );
     }
 </script>
 
@@ -214,11 +238,6 @@
 {#if $teamLoadOpen}
     <h2 class="page-title">Load Team</h2>
     <div class="button-container" data-cy="load-team-box">
-        {#each $savedRosterIndex.index as savedRoster, i}
-            <Button clickFunction={() => loadTeam(savedRoster)}
-                >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
-            >
-        {/each}
         <div class="code-box">
             <input
                 aria-label="Input code"
@@ -233,7 +252,27 @@
                 clickFunction={inputCode}
             />
         </div>
+        {#if $currentUserStore}
+            {#await getRosterPreviews()}
+                <FootballSpinner />
+            {:then rosterPreviews}
+                <div class="team-previews">
+                    {#each sortedPreviews(rosterPreviews) as preview}
+                        <RosterPreviewCard {preview} />
+                    {/each}
+                </div>
+            {:catch}
+                <p style="color: red">Something went wrong.</p>
+            {/await}
+        {:else}
+            {#each $savedRosterIndex.index as savedRoster, i}
+                <Button clickFunction={() => loadTeam(savedRoster)}
+                    >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
+                >
+            {/each}
+        {/if}
     </div>
+    <!-- Refactor to it's own component -->
 {/if}
 
 <style lang="scss">
@@ -306,7 +345,20 @@
             font-size: 16px;
         }
     }
+    .pill-box {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-block-end: 32px;
+    }
     .team-buton {
         @include roundedButton.rounded-button;
+    }
+    .team-previews {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin: 16px 8px;
     }
 </style>

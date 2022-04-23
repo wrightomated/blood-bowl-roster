@@ -5,6 +5,8 @@ import type { Player } from './player.model';
 import type { TeamName } from './team.model';
 
 export interface Roster {
+    /** Used for firebase storage */
+    rosterId?: string;
     teamId: number;
     teamName: string;
     teamType: TeamName | CollegeName;
@@ -14,6 +16,15 @@ export interface Roster {
     treasury?: number;
     mode?: RosterMode;
     format?: TeamFormat;
+}
+
+export type RosterPreviews = { [key: string]: RosterPreview };
+
+export type RosterPreview = Omit<Roster, 'players' | 'extra' | 'inducements'>;
+
+export function getRosterPreview(roster: Roster): RosterPreview {
+    const { players, extra, inducements, ...preview } = roster;
+    return preview;
 }
 
 export interface RosterPlayerRecord {

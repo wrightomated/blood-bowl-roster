@@ -1,73 +1,57 @@
 <script lang="ts">
-    import { showDungeonBowl } from '../../store/showDungeonBowl.store';
-    import { teamLoadOpen } from '../../store/teamLoadOpen.store';
-    import { roster } from '../../store/teamRoster.store';
-    import {
-        showNewTeamDialogue,
-        teamSelectionOpen,
-    } from '../../store/teamSelectionOpen.store';
-    import { currentTeam } from '../../store/currentTeam.store';
-
-    import Button from '../uiComponents/button.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
-    import { teamFormat } from '../../store/teamFormat.store';
+    import { menuDrawerOpen } from '../../store/menuDrawer.store';
+    import MenuItems from './menuItems.svelte';
+    import UserProfile from '../auth/userProfile.svelte';
+    import UserCircle from './userCircle.svelte';
 
-    // have menu store?
-    let isOpen = false;
-    const toggleDrawer = () => {
-        isOpen = !isOpen;
+    let menuComponent: typeof MenuItems | typeof UserProfile;
+
+    const toggleNavMenu = () => {
+        menuComponent = MenuItems;
+        menuDrawerOpen.set(!$menuDrawerOpen);
     };
-    const loadCurrentTeam = () => {
-        teamSelectionOpen.set(false);
-        showNewTeamDialogue.set(false);
-        teamLoadOpen.set(false);
-        showDungeonBowl.set(false);
-        isOpen = false;
-        currentTeam.setCurrentTeamWithId($roster.teamId);
+
+    const toggleUserProfile = () => {
+        menuComponent = UserProfile;
+        menuDrawerOpen.set(!$menuDrawerOpen);
     };
-    const newTeam = () => {
-        teamSelectionOpen.set($teamFormat !== 'dungeon bowl');
-        showNewTeamDialogue.set(true);
-        teamLoadOpen.set(false);
-        showDungeonBowl.set($teamFormat === 'dungeon bowl');
-        isOpen = false;
-    };
-    const loadTeam = () => {
-        teamLoadOpen.set(true);
-        showNewTeamDialogue.set(false);
-        teamSelectionOpen.set(false);
-        showDungeonBowl.set(false);
-        isOpen = false;
+
+    const closeDrawer = () => {
+        menuDrawerOpen.set(false);
     };
 </script>
 
-<header class="header" class:header--drawer-open={isOpen}>
-    <div class="menu__icon" class:menu__icon--close={isOpen}>
+<header class="header" class:header--drawer-open={$menuDrawerOpen}>
+    <div class="menu__icon" class:menu__icon--close={$menuDrawerOpen}>
         <MaterialButton
             cyData="menu-button"
-            symbol={isOpen ? 'close' : 'menu'}
-            hoverText={isOpen ? 'Close menu' : 'Open menu'}
-            clickFunction={toggleDrawer}
+            symbol={$menuDrawerOpen ? 'close' : 'menu'}
+            hoverText={$menuDrawerOpen ? 'Close menu' : 'Open menu'}
+            clickFunction={toggleNavMenu}
         />
     </div>
     <h1>BB Roster</h1>
+    <button class="profile" title="User Profile" on:click={toggleUserProfile}>
+        <UserCircle />
+    </button>
 </header>
-<div class="spacer" class:spacer--show={isOpen} />
-<nav class="menu__drawer" class:menu__drawer--open={isOpen}>
-    <div class="menu__buttons" class:menu__buttons--hidden={!isOpen}>
-        {#if $roster.teamType}
-            <Button clickFunction={loadCurrentTeam}
-                >Current Team{$roster.teamName
-                    ? ': ' + $roster.teamName
-                    : ''}</Button
-            >
-        {/if}
-        <Button cyData="new-team" clickFunction={newTeam}>New Team</Button>
-        <Button cyData="load-team" clickFunction={loadTeam}>Load Team</Button>
+<div class="spacer" class:spacer--show={$menuDrawerOpen} />
+<nav class="menu__drawer" class:menu__drawer--open={$menuDrawerOpen}>
+    <div
+        class="menu__buttons"
+        class:menu__buttons--hidden={!$menuDrawerOpen}
+        class:menu__buttons--reversed={menuComponent === UserProfile}
+    >
+        <svelte:component this={menuComponent} />
     </div>
 </nav>
 
-<div class="overlay" on:click={toggleDrawer} class:overlay--visible={isOpen} />
+<div
+    class="overlay"
+    on:click={closeDrawer}
+    class:overlay--visible={$menuDrawerOpen}
+/>
 
 <style lang="scss">
     :root {
@@ -91,6 +75,18 @@
         }
         @media print {
             display: none;
+        }
+    }
+    .profile {
+        margin: 0px 12px 0 auto;
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        color: var(--shadow);
+        &:hover {
+            color: var(--main-colour);
         }
     }
     .spacer {
@@ -137,6 +133,9 @@
             margin-top: 52px;
             &--hidden {
                 display: none;
+            }
+            &--reversed {
+                justify-content: flex-end;
             }
         }
         @media screen and (max-width: 783px) {
