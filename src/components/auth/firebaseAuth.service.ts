@@ -81,3 +81,9 @@ export async function sendVerificationEmail() {
         return;
     }
 }
+
+export async function resetPassword(email: string) {
+    return import('./resetPassword').then((service) =>
+        service.resetPassword(auth, email)
+    );
+}
