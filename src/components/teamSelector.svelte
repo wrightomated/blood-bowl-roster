@@ -257,6 +257,9 @@
             {#await getRosterPreviews()}
                 <FootballSpinner />
             {:then rosterPreviews}
+                <h3 class="signed-in-heading">
+                    Teams of {$currentUserStore.displayName}
+                </h3>
                 <div class="team-previews">
                     {#each sortedPreviews(rosterPreviews) as preview}
                         <RosterPreviewCard {preview} />
@@ -266,6 +269,7 @@
                 <p style="color: red">Something went wrong.</p>
             {/await}
         {:else}
+            <h3>Locally stored teams</h3>
             {#each $savedRosterIndex.index as savedRoster, i}
                 <Button clickFunction={() => loadTeam(savedRoster)}
                     >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
@@ -361,5 +365,8 @@
         justify-content: center;
         gap: 16px;
         margin: 16px 8px;
+    }
+    .signed-in-heading {
+        text-align: center;
     }
 </style>
