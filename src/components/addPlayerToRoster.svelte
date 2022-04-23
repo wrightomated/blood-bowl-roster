@@ -137,8 +137,7 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23333333'><polygon points='0,0 100,0 50,50'/></svg>")
-            no-repeat;
+        background: url('/assets/images/dropdown.svg') no-repeat;
         background-size: 12px;
         background-position: 97% 72%;
         padding-right: 20px;
