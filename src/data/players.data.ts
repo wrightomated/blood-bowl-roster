@@ -1299,7 +1299,7 @@ const norseValkyrie: Player = {
     secondary: ['S'],
 };
 const norseUlfwerner: Player = {
-    position: 'Ulfwerner',
+    position: 'Ulfwerener',
     id: 147,
     cost: 105,
     playerStats: [6, 4, 4, 0, 9],
