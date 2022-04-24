@@ -9,6 +9,7 @@
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { inducementData } from '../data/inducements.data';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
+    import RosterStatusToggle from './rosterStatusToggle.svelte';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -48,6 +49,7 @@
 </script>
 
 <div class="tables">
+    <RosterStatusToggle />
     <table class="tables__item">
         {#each extras as extra}
             <ExtraRosterAdditionsRow {extra} />
