@@ -14,6 +14,7 @@
     import RosterPlayerCard from './rosterPlayer/rosterPlayerCard.svelte';
     import Pill from './uiComponents/pill.svelte';
     import { getTeamFormatShortDisplay } from '../types/teamFormat';
+    import RosterStatusToggle from './rosterStatusToggle.svelte';
 
     export let playerTypes: Player[];
 
@@ -106,6 +107,7 @@
         </table>
     </div>
 {/if}
+<RosterStatusToggle />
 
 <style lang="scss">
     .sub-heading-box {

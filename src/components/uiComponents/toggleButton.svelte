@@ -33,7 +33,7 @@
         display: inline-block;
         border-radius: 10px;
         background-color: white;
-        margin: 5px;
+        margin: 4px;
         border: 2px solid var(--secondary-colour);
 
         &__button {
@@ -61,7 +61,7 @@
         }
     }
     @media print {
-        button {
+        .toggle {
             display: none;
         }
     }

@@ -7,7 +7,7 @@
     const noEmptyTreasury = () => {
         editTreasury = !editTreasury;
         if (!$roster.treasury && $roster.treasury !== 0) {
-            roster.set({ ...$roster, treasury: 0 });
+            roster.updateTreasury(0);
         }
     };
 

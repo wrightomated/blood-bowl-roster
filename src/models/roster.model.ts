@@ -16,6 +16,7 @@ export interface Roster {
     treasury?: number;
     mode?: RosterMode;
     format?: TeamFormat;
+    leagueRosterStatus?: LeagueRosterStatus;
 }
 
 export type RosterPreviews = { [key: string]: RosterPreview };
@@ -51,3 +52,5 @@ export interface PlayerAlterations {
     injuries?: number[]; // i
     journeyman?: boolean; // j
 }
+
+export type LeagueRosterStatus = 'draft' | 'commenced';
