@@ -217,6 +217,7 @@ function createRoster() {
             update((store) => {
                 return { ...store, treasury: store.treasury + change };
             }),
+        set,
     };
 }
 
