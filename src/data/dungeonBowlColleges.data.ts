@@ -230,11 +230,15 @@ const collegeOfBeasts: DungeonBowlCollege = {
         },
         blockers: {
             max: 4,
-            playerIds: [10],
+            playerIds: [10, 147],
         },
         bigGuys: {
             max: 3,
-            playerIds: [13, 46, 72, 143],
+            playerIds: [13, 46, 72, 143, 148],
+        },
+        special: {
+            max: 2,
+            playerIds: [149],
         },
     },
 };
@@ -251,11 +255,11 @@ const collegeOfHeavens: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [43],
+            playerIds: [43, 144],
         },
         blitzers: {
             max: 4,
-            playerIds: [3],
+            playerIds: [3, 145],
         },
         throwers: {
             max: 2,
@@ -267,7 +271,7 @@ const collegeOfHeavens: DungeonBowlCollege = {
         },
         special: {
             max: 2,
-            playerIds: [44],
+            playerIds: [44, 146],
         },
     },
 };
