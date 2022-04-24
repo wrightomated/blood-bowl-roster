@@ -239,4 +239,5 @@ const expectedRoster = {
     treasury: 0,
     mode: 'league',
     format: 'elevens',
+    leagueRosterStatus: 'draft',
 };
