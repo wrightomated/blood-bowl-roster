@@ -107,6 +107,7 @@
         </table>
     </div>
 {/if}
+<RosterStatusToggle />
 
 <style lang="scss">
     .sub-heading-box {

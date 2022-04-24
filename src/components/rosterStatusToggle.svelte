@@ -6,11 +6,19 @@
 </script>
 
 {#if $roster.leagueRosterStatus}
-    <ToggleButton
-        options={leagueStatus}
-        selectedIndex={leagueStatus.indexOf($roster.leagueRosterStatus)}
-        selected={(status) => {
-            roster.changeLeagueRosterStatus(status);
-        }}
-    />
+    <div>
+        <ToggleButton
+            options={leagueStatus}
+            selectedIndex={leagueStatus.indexOf($roster.leagueRosterStatus)}
+            selected={(status) => {
+                roster.changeLeagueRosterStatus(status);
+            }}
+        />
+    </div>
 {/if}
+
+<style>
+    div {
+        margin-top: 12px;
+    }
+</style>
