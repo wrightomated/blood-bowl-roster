@@ -7,7 +7,6 @@
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
-    import { inducementData } from '../data/inducements.data';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
 
     export let selectedTeam: Team | DungeonBowlTeam;

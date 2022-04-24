@@ -11,6 +11,7 @@
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
 
     import { roster } from '../store/teamRoster.store';
+    import Characteristic from './rosterPlayer/characteristic.svelte';
     import SkillElement from './skillElement.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
 
@@ -66,12 +67,6 @@
 
     const journeymanSkills: () => number[] = () =>
         $roster.format === 'sevens' ? [710] : [71];
-
-    const getCharacteristic: (c: string) => string = (c) => {
-        const cIndex = characteristics.indexOf(c);
-        const stat = selected.playerStats[cIndex];
-        return `${stat === 0 ? '-' : cIndex > 1 ? `${stat}+` : stat}`;
-    };
 </script>
 
 <tr class="add-player-row">
@@ -109,7 +104,10 @@
                     clickFunction={addPlayer}
                 />
             {:else if characteristics.includes(c.name)}
-                {getCharacteristic(c.name)}
+                <Characteristic
+                    characteristic={c.name}
+                    playerStats={selected.playerStats}
+                />
             {:else if c.name === 'Skills'}
                 <SkillElement playerSkillIds={selectedSkills} />
             {:else if c.name === 'Hiring Fee'}

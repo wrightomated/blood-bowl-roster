@@ -3,7 +3,11 @@ import type { Writable } from 'svelte/store';
 
 import { nanoid } from 'nanoid';
 
-import type { Roster, RosterPlayerRecord } from '../models/roster.model';
+import type {
+    LeagueRosterStatus,
+    Roster,
+    RosterPlayerRecord,
+} from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
 import { currentTeam } from './currentTeam.store';
@@ -165,6 +169,10 @@ function createRoster() {
             update((store) => {
                 return { ...store, mode };
             }),
+        changeLeagueRosterStatus: (leagueRosterStatus: LeagueRosterStatus) =>
+            update((store) => {
+                return { ...store, leagueRosterStatus };
+            }),
         updatePlayerNumber: (currentIndex: number, desired: number) => {
             update((store) => {
                 if (
@@ -232,6 +240,7 @@ const getEmptyRoster: (options?: {
         treasury: gameSettings?.startingTreasury || 1000,
         mode: options?.mode,
         format: options?.format || 'elevens',
+        leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
     };
 };
 
@@ -263,12 +272,15 @@ const rosterFromCode = (code: string) => {
 };
 
 const getDefaultRoster: () => Roster = () => {
-    const defaultRoster =
+    const defaultRoster: Roster =
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
     if (!defaultRoster.rosterId) {
         defaultRoster.rosterId = nanoid();
+    }
+    if (defaultRoster.mode === 'league' && !defaultRoster.leagueRosterStatus) {
+        defaultRoster.leagueRosterStatus = 'draft';
     }
     currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
     return {

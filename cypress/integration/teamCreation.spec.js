@@ -3,7 +3,6 @@
 context('Team creation', () => {
     it('should create, save and load team', () => {
         const teamName = 'Altdorf Daemons';
-        let rosterId = '';
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
@@ -239,4 +238,5 @@ const expectedRoster = {
     treasury: 0,
     mode: 'league',
     format: 'elevens',
+    leagueRosterStatus: 'draft',
 };
