@@ -254,7 +254,7 @@ const collegeOfHeavens: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [43, 144],
+            playerIds: [43, 152],
         },
         blitzers: {
             max: 4,

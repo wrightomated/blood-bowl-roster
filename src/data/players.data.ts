@@ -1335,6 +1335,11 @@ const dbSnotling: Player = {
     id: 151,
     skills: snotlingLineman.skills.filter((x) => x !== 85),
 };
+const dbNorseLineman: Player = {
+    ...norseRaiderLineman,
+    id: 152,
+    skills: norseRaiderLineman.skills.filter((x) => x !== 60),
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1489,5 +1494,6 @@ export const playerCatalogue: PlayerCatalogue = {
         norseYhetee,
         dbGnoblarLineman,
         dbSnotling,
+        dbNorseLineman,
     ],
 };
