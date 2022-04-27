@@ -1338,7 +1338,8 @@ const dbSnotling: Player = {
 const dbNorseLineman: Player = {
     ...norseRaiderLineman,
     id: 152,
-    skills: norseRaiderLineman.skills.filter((x) => x !== 60),
+    skills: [13, 93],
+    secondary: ['A', 'S'],
 };
 
 export const playerCatalogue: PlayerCatalogue = {
