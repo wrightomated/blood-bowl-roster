@@ -1325,6 +1325,16 @@ const norseBeerBoar: Player = {
     primary: [],
     secondary: ['A'],
 };
+const dbGnoblarLineman: Player = {
+    ...gnoblarLineman,
+    id: 150,
+    skills: gnoblarLineman.skills.filter((x) => x !== 85),
+};
+const dbSnotling: Player = {
+    ...snotlingLineman,
+    id: 151,
+    skills: snotlingLineman.skills.filter((x) => x !== 85),
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1477,5 +1487,7 @@ export const playerCatalogue: PlayerCatalogue = {
         norseValkyrie,
         norseUlfwerner,
         norseYhetee,
+        dbGnoblarLineman,
+        dbSnotling,
     ],
 };
