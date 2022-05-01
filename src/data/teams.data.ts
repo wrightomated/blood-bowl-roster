@@ -493,7 +493,12 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 1,
-            specialRules: ['Old World Classic'],
+            specialRules: [
+                'Old World Classic',
+                'Favoured of Khorne',
+                'Favoured of Nurgle',
+                'Favoured of...',
+            ],
         },
     ],
 };
