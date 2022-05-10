@@ -8,7 +8,6 @@
     aria-labelledby="name-header"
     placeholder="?"
     bind:value={textValue}
-    style={`width: ${textValue.length + 3}ch`}
     use:blurOnEscapeOrEnter
 />
 
