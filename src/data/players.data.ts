@@ -1333,7 +1333,6 @@ const dbGnoblarLineman: Player = {
 const dbSnotling: Player = {
     ...snotlingLineman,
     id: 151,
-    skills: snotlingLineman.skills.filter((x) => x !== 85),
 };
 const dbNorseLineman: Player = {
     ...norseRaiderLineman,

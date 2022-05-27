@@ -353,7 +353,7 @@ const barikFarblast: StarPlayer = {
         'Old World Classic',
         'Worlds Edge Superleague',
     ],
-    skills: [42, 71, 46, 79, 59, 22, 60],
+    skills: [42, 71, 46, 79, 38, 22, 60],
     cost: 80,
     specialRules: ['Blast It!'],
 };
