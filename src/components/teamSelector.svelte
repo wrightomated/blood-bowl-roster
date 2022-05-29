@@ -102,6 +102,8 @@
             rosterMode: $rosterMode,
             format: $teamFormat,
         });
+
+        document.body.scrollIntoView();
     };
 
     const loadTeam = (savedRoster: { id: number; name?: string }) => {
