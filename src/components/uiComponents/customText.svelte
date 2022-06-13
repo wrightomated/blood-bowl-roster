@@ -1,25 +1,24 @@
 <script lang="ts">
-    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
-
     $: textValue = '';
 </script>
 
-<input
+<span
+    class="custom-text"
     aria-labelledby="name-header"
-    placeholder="?"
-    bind:value={textValue}
-    style={`width: ${textValue.length + 3}ch`}
-    use:blurOnEscapeOrEnter
+    contenteditable="true"
+    bind:innerHTML={textValue}
+    placeholder="Edit"
 />
 
 <style lang="scss">
-    input {
-        border: 0;
-        border-radius: 0;
-        background: none;
-
+    .custom-text {
         @media screen and (max-width: 450px) {
             font-size: 16px;
         }
+    }
+    [contenteditable='true']:empty:before {
+        content: attr(placeholder);
+        pointer-events: none;
+        display: block; /* For Firefox */
     }
 </style>
