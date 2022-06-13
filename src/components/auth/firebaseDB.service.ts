@@ -44,6 +44,9 @@ export async function gerRosterPreviews(): Promise<
 
 export async function uploadRoster(inputRoster: Roster) {
     const roster: Roster = addIdToRoster(inputRoster);
+    Object.keys(roster).forEach(
+        (key) => roster[key] === undefined && delete roster[key]
+    );
 
     const rosterIndexRef = getRosterIndexRef();
     const rosterRef = getRosterRef(roster.rosterId.toString());
