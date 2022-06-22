@@ -13,7 +13,7 @@ const collegeOfFire: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [19, 56, 140],
+            playerIds: [19, 150, 140],
         },
         runners: {
             max: 2,
