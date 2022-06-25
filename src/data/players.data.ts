@@ -1328,7 +1328,6 @@ const norseBeerBoar: Player = {
 const dbGnoblarLineman: Player = {
     ...gnoblarLineman,
     id: 150,
-    skills: gnoblarLineman.skills.filter((x) => x !== 85),
 };
 const dbSnotling: Player = {
     ...snotlingLineman,
