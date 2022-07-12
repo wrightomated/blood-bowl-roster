@@ -24,7 +24,7 @@
     import DungeonBowlContainer from './dungeonBowl/dungeonBowlContainer.svelte';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
-    import GameHistory from './gameHistory/gameHistory.svelte';
+    import GameHistory from './gameHistory/gameHistoryTable.svelte';
 
     const teamList = teamData.teams;
 

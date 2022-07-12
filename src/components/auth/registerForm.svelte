@@ -67,6 +67,7 @@
             name="username"
             id="username"
             placeholder="your display name"
+            autocomplete="username"
             bind:value={usernameV}
             required
         />
@@ -77,6 +78,7 @@
             name="email"
             id="email"
             placeholder="your email address"
+            autocomplete="email"
             bind:value={emailV}
             required
         />

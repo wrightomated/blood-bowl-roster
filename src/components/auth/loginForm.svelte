@@ -76,6 +76,7 @@
             id="email"
             placeholder="your email address"
             bind:value={emailV}
+            autocomplete="email"
             required
         />
         <label for="password">Password:</label>
@@ -85,6 +86,7 @@
             id="password"
             placeholder="your password"
             bind:value={passwordV}
+            autocomplete="new-password"
             required
             minlength="6"
         />

@@ -1,8 +1,20 @@
 <script lang="ts">
+    import { modalState } from '../../store/modal.store';
+
     import { roster } from '../../store/teamRoster.store';
+    import NewMatchRecord from './newMatchRecord.svelte';
 
     function addMatch() {
-        roster.addMatch();
+        // roster.addMatch();
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: NewMatchRecord,
+            // componentProps: {
+            //     loadingText: `Loading ${preview?.teamName || 'roster'}`,
+            // },
+        });
     }
 </script>
 

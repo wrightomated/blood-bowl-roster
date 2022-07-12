@@ -67,6 +67,7 @@
             name="email"
             id="email"
             placeholder="your email address"
+            autocomplete="email"
             bind:value={emailV}
             required
         />
