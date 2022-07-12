@@ -408,6 +408,17 @@ const thorssonStoutmead: StarPlayer = {
     specialRules: ['Beer Barrel Bash!'],
 };
 
+//Boa Kon’ssstriktr
+const boa: StarPlayer = {
+    id: 239,
+    position: 'Boa Kon’ssstriktr',
+    playerStats: [6, 0, 0, 0, 0],
+    playsFor: ['Lustrian Superleague'],
+    skills: [4, 8, 9],
+    cost: 0,
+    specialRules: ['Look Into My Eyes'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -449,5 +460,6 @@ export const starPlayers = {
         ivarEriksson,
         skrorgSnowpelt,
         thorssonStoutmead,
+        boa,
     ],
 };
