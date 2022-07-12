@@ -1,19 +1,86 @@
 <script lang="ts">
-    let content: string[] = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
+    import { roster } from '../../store/teamRoster.store';
+
+    function addMatch() {
+        roster.addMatch();
+    }
 </script>
 
-<div>
-    {#each content as c}
-        <span contenteditable="true" bind:innerHTML={c} />
-    {/each}
-</div>
+{#if $roster.gameHistory}
+    <h2>Match History</h2>
+    <div class="history__table">
+        <table>
+            <thead>
+                <tr>
+                    <td>Opponent</td>
+                    <td>League Fixture/<br />Friendly</td>
+                    <td>Fan Factor</td>
+                    <td>Petty Cash</td>
+                    <td>Inducements Hired</td>
+                    <td>New Current<br /> Team Value</td>
+                    <td>W/L/D</td>
+                    <td>Score</td>
+                    <td>Winnings</td>
+                    <td>League Points</td>
+                    <td>Notes</td>
+                </tr>
+            </thead>
+            <tbody>
+                {#each $roster.gameHistory as row}
+                    <tr>
+                        {#each row as entry}
+                            <td
+                                class="history__cell"
+                                contenteditable="true"
+                                bind:innerHTML={entry}
+                            />
+                        {/each}
+                    </tr>
+                {/each}
+                <tr class="no-print">
+                    <td colspan="11"
+                        ><button on:click={addMatch}>Add Match</button></td
+                    >
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{/if}
 
-<style>
-    div {
-        display: flex;
+<style lang="scss">
+    .history {
+        &__table {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        &__cell {
+            border: 1px solid #ccc;
+            &:empty {
+                &::before {
+                    font-family: 'Material Icons';
+                    content: 'edit';
+                    color: var(--metal);
+                    font-size: 16px;
+                }
+                &:focus::before {
+                    content: '';
+                }
+            }
+        }
     }
-    span {
-        margin-right: 8px;
-        padding: 4px;
+    @media print {
+        h2 {
+            page-break-before: always;
+        }
+        .history {
+            &__cell {
+                border: 1px solid #ccc;
+                &:empty {
+                    &::before {
+                        content: '';
+                    }
+                }
+            }
+        }
     }
 </style>

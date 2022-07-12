@@ -1,6 +1,7 @@
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
+import type { GameHistory } from './gameHistory.model';
 import type { Player } from './player.model';
 import type { TeamName } from './team.model';
 
@@ -17,6 +18,7 @@ export interface Roster {
     mode?: RosterMode;
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
+    gameHistory?: string[][];
 }
 
 export type RosterPreviews = { [key: string]: RosterPreview };

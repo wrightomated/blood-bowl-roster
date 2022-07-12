@@ -217,6 +217,16 @@ function createRoster() {
             update((store) => {
                 return { ...store, treasury: store.treasury + change };
             }),
+        addMatch: () =>
+            update((store) => {
+                return {
+                    ...store,
+                    gameHistory: [
+                        ...store.gameHistory,
+                        ['', '', '', '', '', '', '', '', '', '', ''],
+                    ],
+                };
+            }),
         set,
     };
 }
@@ -241,6 +251,7 @@ const getEmptyRoster: (options?: {
         mode: options?.mode,
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
+        gameHistory: [],
     };
 };
 
@@ -286,6 +297,7 @@ const getDefaultRoster: () => Roster = () => {
     return {
         ...defaultRoster,
         format: defaultRoster?.format || 'elevens',
+        gameHistory: defaultRoster?.gameHistory || [],
     };
 };
 

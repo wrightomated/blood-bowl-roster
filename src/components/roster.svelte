@@ -15,7 +15,6 @@
     import Pill from './uiComponents/pill.svelte';
     import { getTeamFormatShortDisplay } from '../types/teamFormat';
     import RosterStatusToggle from './rosterStatusToggle.svelte';
-    import GameHistory from './gameHistory/gameHistory.svelte';
 
     export let playerTypes: Player[];
 
@@ -109,7 +108,6 @@
     </div>
 {/if}
 <RosterStatusToggle />
-<GameHistory />
 
 <style lang="scss">
     .sub-heading-box {
