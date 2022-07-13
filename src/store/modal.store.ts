@@ -1,9 +1,10 @@
 import { writable } from 'svelte/store';
+import NewMatchRecord from '../components/gameHistory/newMatchRecord.svelte';
 
 function createModalState() {
     const { subscribe, set, update } = writable<ModalState>({
-        isOpen: false,
-        component: undefined,
+        isOpen: true,
+        component: NewMatchRecord,
         canClose: true,
         componentProps: {},
     });
