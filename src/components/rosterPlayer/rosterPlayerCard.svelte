@@ -399,7 +399,7 @@
         font-size: 16px;
         right: 10px;
         top: 10px;
-        background-color: white;
+        background-color: var(--background);
         color: var(--secondary-colour);
         position: absolute;
         text-align: center;

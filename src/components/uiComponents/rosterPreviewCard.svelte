@@ -72,7 +72,7 @@
         height: 100%;
         text-align: center;
         font-family: var(--display-font);
-        background-color: white;
+        background-color: var(--background);
         box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
         padding: 12px;

@@ -50,7 +50,7 @@
         top: 10%;
         transform: translateX(-50%);
         z-index: 11;
-        background-color: white;
+        background-color: var(--background);
         min-width: 240px;
         padding: 40px;
         border-radius: 25px;

@@ -317,7 +317,7 @@
             font-family: $display-font;
             border-radius: 50%;
             font-size: 0.75em;
-            background-color: white;
+            background-color: var(--background);
             color: var(--secondary-colour);
             padding: 0;
             width: 24px;

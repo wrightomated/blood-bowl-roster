@@ -418,7 +418,7 @@
     }
     button {
         border-radius: 10px;
-        background-color: white;
+        background-color: var(--background);
         color: var(--secondary-colour);
         padding: 10px;
         margin: 5px;
@@ -431,7 +431,7 @@
             border-color: var(--secondary-colour);
 
             &:disabled {
-                background-color: white;
+                background-color: var(--background);
                 color: grey;
                 border: none;
             }
@@ -477,7 +477,7 @@
             border-color: var(--main-colour);
 
             &:disabled {
-                background-color: white;
+                background-color: var(--background);
                 color: grey;
                 border: none;
             }

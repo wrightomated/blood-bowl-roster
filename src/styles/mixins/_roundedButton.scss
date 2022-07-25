@@ -1,6 +1,6 @@
 @mixin rounded-button {
     border-radius: 10px;
-    background-color: white;
+    background-color: var(--background);
     color: var(--secondary-colour);
     padding: 10px;
     margin: 4px;
@@ -12,7 +12,7 @@
         color: white;
         border-color: var(--secondary-colour);
         &:disabled {
-            background-color: white;
+            background-color: var(--background);
             color: grey;
             border: none;
         }

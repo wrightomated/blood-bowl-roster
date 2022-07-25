@@ -63,7 +63,7 @@
         width: 100%;
         text-align: center;
         border-bottom: var(--secondary-colour) 2px solid;
-        background-color: white;
+        background-color: var(--background);
         display: flex;
         align-items: center;
         &--drawer-open {
@@ -103,7 +103,7 @@
             height: 24px;
             width: 24px;
             border-radius: 50%;
-            background-color: white;
+            background-color: var(--background);
             margin: 0 12px;
             @media print {
                 display: none;

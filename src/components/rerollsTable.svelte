@@ -104,7 +104,7 @@
             margin-block-end: 1em;
             margin-right: 1em;
             th {
-                background-color: #970f0c;
+                background-color: var(--main-colour);
                 color: white;
                 text-align: left;
                 text-transform: uppercase;
@@ -118,7 +118,7 @@
     }
 
     .treasury-cell {
-        border-right: 1px solid #ccc;
+        border-right: 1px solid var(--neutral);
     }
 
     @media screen and (max-width: 650px) {

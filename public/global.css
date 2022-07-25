@@ -3,6 +3,9 @@
     --secondary-colour: #1a3f7f;
     --secondary-background-colour: #eeeeee;
     --neutral: #ccc;
+    --background: #ffffff;
+    
+    /* Colleges */
     --fire: #d65a22;
     --shadow: #424344;
     --metal: #7e807f;
@@ -67,7 +70,7 @@ textarea {
     -webkit-padding: 0.4em 0;
     padding: 0.4em;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid var(--neutral);
     border-radius: 2px;
 }
 
@@ -76,7 +79,7 @@ input:placeholder-shown {
 }
 
 input:disabled {
-    color: #ccc;
+    color: var(--neutral);
 }
 
 table {
@@ -93,13 +96,13 @@ tr {
     border: none;
 }
 table {
-    border: 1px solid #ccc;
+    border: 1px solid var(--neutral);
 }
 tr:nth-of-type(even) {
     background: #eee;
 }
 thead {
-    background-color: #970f0c;
+    background-color: var(--main-colour);
     color: white;
     text-transform: uppercase;
 }

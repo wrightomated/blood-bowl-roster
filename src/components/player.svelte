@@ -28,7 +28,7 @@
 
 <style>
     .danger {
-        color: #970f0c;
+        color: var(--main-colour);
     }
     .left-align {
         text-align: left;

@@ -9,9 +9,9 @@
         width: calc(100% - 16px);
         padding: 8px;
         text-align: center;
-        border-bottom: #ccc 1px solid;
+        border-bottom: var(--neutral) 1px solid;
         margin-bottom: 16px;
-        background-color: white;
+        background-color: var(--background);
         h1 {
             color: var(--main-colour);
             margin-block-end: 0;

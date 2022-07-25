@@ -17,7 +17,7 @@
     .initial {
         font-family: var(--display-font);
         color: var(--secondary-colour);
-        background-color: white;
+        background-color: var(--background);
         border-radius: 50%;
         width: 28px;
         height: 28px;

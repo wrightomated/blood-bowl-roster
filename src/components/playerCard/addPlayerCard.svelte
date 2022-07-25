@@ -220,7 +220,7 @@
         font-size: 16px;
         right: 10px;
         top: 10px;
-        background-color: white;
+        background-color: var(--background);
         color: #555;
         position: absolute;
     }
