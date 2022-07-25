@@ -1,5 +1,5 @@
 export type WeatherType =
-    | 'weather'
+    | 'default'
     | 'spring'
     | 'summer'
     | 'autumn'
@@ -7,7 +7,7 @@ export type WeatherType =
     | 'subterranean'
     | 'primordial'
     | 'graveyard'
-    | 'desolate wasteland'
+    | 'desolate'
     | 'mountainous'
     | 'coastal'
     | 'desert';

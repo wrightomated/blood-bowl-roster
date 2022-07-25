@@ -2,7 +2,7 @@ import type { WeatherTable } from '../models/weather.model';
 
 export const weatherTables: WeatherTable[] = [
     {
-        type: 'weather',
+        type: 'default',
         results: {
             '2': 'Sweltering Heat',
             '3': 'Very Sunny',
@@ -74,7 +74,7 @@ export const weatherTables: WeatherTable[] = [
         },
     },
     {
-        type: 'desolate wasteland',
+        type: 'desolate',
         results: {
             '2': 'Tremors',
             '3': 'Pouring Rain',

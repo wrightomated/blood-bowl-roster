@@ -1,5 +1,6 @@
 <script lang="ts">
     import { inducementData } from '../../data/inducements.data';
+    import { weatherTables } from '../../data/weatherData.data';
 
     import { roster } from '../../store/teamRoster.store';
     $: opponentScore = 0;
@@ -7,7 +8,7 @@
     ``;
     $: result =
         playerScore === opponentScore
-            ? 'Drawer'
+            ? 'Draw'
             : playerScore > opponentScore
             ? 'Win'
             : 'Loss';
@@ -19,86 +20,131 @@
             );
         }
     );
+
+    const tables = weatherTables;
 </script>
 
-<h2>New Match</h2>
+<section class="new-match">
+    <h2>New Match</h2>
 
-<form>
-    <div class="label-input">
+    <form class="new-match__form">
         <label for="opponent">Opponent:</label>
-        <input type="text" id="opponent" />
-    </div>
+        <input type="text" id="opponent" autocomplete="off" />
 
-    <div class="label-input">
-        <label for="was-league-match">League Match:</label>
-        <input type="checkbox" name="was-league-match" id="was-league-match" />
-    </div>
-
-    <label for="fan-factor">Fan Factor:</label>
-    <input
-        type="number"
-        id="fan-factor"
-        value={$roster.extra['dedicated_fans'] || 0}
-    />
-
-    <label for="petty-cash">Petty Cash</label>
-    <input type="text" id="petty-cash" />
-
-    <label for="inducements-hired">Inducements Hired</label>
-    <p>{inducements.join(', ')}</p>
-
-    <label for="new-ctv">New Current Team Value</label>
-    <input type="number" id="new-ctv" />
-
-    <!-- <label for="result">Result:</label>
-    <select name="" id="">
-        <option value="u">-----</option>
-        <option value="w">Win</option>
-        <option value="l">Loss</option>
-        <option value="d">Drawer</option>
-    </select> -->
-
-    <label for="score">Result:</label>
-    <input type="number" name="player-score" id="" bind:value={playerScore} /> -
-    <input type="number" name="opponent-score" bind:value={opponentScore} />
-    <p>{result}</p>
-
-    <label for="winnings">Winnings</label>
-    <input type="number" name="winnings" id="winnings" autocomplete="off" />
-    <label for="league-points">League Points</label>
-    <input type="number" id="league-points" name="league-points" />
-
-    <label for="notes">Notes</label>
-    <textarea name="notes" id="notes" cols="30" rows="10" />
-
-    <div class="digits">
         <div class="label-input">
-            <label for="casualties">Casualties:</label>
-            <input type="number" name="casualties" id="casualties" value="0" />
+            <label for="was-league-match">League Match:</label>
+            <input
+                type="checkbox"
+                name="was-league-match"
+                id="was-league-match"
+            />
         </div>
-        <div class="label-input">
-            <label for="touchdowns">Touchdowns:</label>
-            <input type="number" name="touchdowns" id="touchdowns" value="0" />
-        </div>
-        <div class="label-input">
-            <label for="passes">Passes:</label>
-            <input type="number" name="passes" id="passes" value="0" />
-        </div>
-        <div class="label-input">
-            <label for="kills">Kills:</label>
-            <input type="number" name="kills" id="kills" value="0" />
-        </div>
-    </div>
 
-    <label for="weather">Weather</label>
-    <input type="text" name="weather" id="weather" />
-    <label for="ball">Ball</label>
-    <input type="text" name="ball" id="ball" />
-    <label for="stadium">Stadium</label>
-    <input type="text" name="stadium" id="stadium" />
-</form>
+        <label for="fan-factor">Fan Factor:</label>
+        <input
+            type="number"
+            id="fan-factor"
+            value={$roster.extra['dedicated_fans'] || 0}
+        />
+
+        <label for="petty-cash">Petty Cash</label>
+        <input type="number" autocomplete="off" id="petty-cash" />
+
+        <label for="inducements-hired">Inducements Hired</label>
+        <p>{inducements.join(', ')}</p>
+
+        <label for="new-ctv">New Current Team Value</label>
+        <input type="number" id="new-ctv" />
+
+        <label for="score">Result:</label>
+        <input
+            type="number"
+            name="player-score"
+            min="0"
+            id=""
+            bind:value={playerScore}
+        />
+        -
+        <input
+            type="number"
+            min="0"
+            name="opponent-score"
+            bind:value={opponentScore}
+        />
+        <p>{result}</p>
+
+        <label for="winnings">Winnings</label>
+        <input type="number" name="winnings" id="winnings" autocomplete="off" />
+        <label for="league-points">League Points</label>
+        <input type="number" id="league-points" name="league-points" />
+
+        <div class="digits">
+            <div class="label-input">
+                <label for="casualties">Casualties:</label>
+                <input
+                    type="number"
+                    name="casualties"
+                    id="casualties"
+                    value="0"
+                    min="0"
+                />
+            </div>
+            <div class="label-input">
+                <label for="touchdowns">Touchdowns:</label>
+                <input
+                    type="number"
+                    name="touchdowns"
+                    id="touchdowns"
+                    value="0"
+                    min="0"
+                />
+            </div>
+            <div class="label-input">
+                <label for="passes">Passes:</label>
+                <input
+                    type="number"
+                    name="passes"
+                    id="passes"
+                    value="0"
+                    min="0"
+                />
+            </div>
+            <div class="label-input">
+                <label for="kills">Kills:</label>
+                <input
+                    type="number"
+                    name="kills"
+                    id="kills"
+                    value="0"
+                    min="0"
+                />
+            </div>
+        </div>
+
+        <label for="weather">Weather</label>
+        <select name="weather" id="weather">
+            {#each tables as table}
+                <option value={table.type}>{table.type}</option>
+            {/each}
+        </select>
+        <label for="ball">Ball</label>
+        <input type="text" name="ball" id="ball" />
+        <label for="stadium">Stadium</label>
+        <input type="text" name="stadium" id="stadium" />
+
+        <label for="notes">Notes</label>
+        <textarea name="notes" id="notes" cols="30" rows="10" />
+
+        <button>Add</button>
+    </form>
+</section>
 
 <style lang="scss">
+    .new-match {
+        &__form {
+            display: grid;
+        }
+    }
     // input {
     //     border: 0;
     //     border-radius: 0;
@@ -116,6 +162,11 @@
 
         & input {
             max-width: 40px;
+        }
+    }
+    select[name='weather'] {
+        option {
+            text-transform: capitalize;
         }
     }
 </style>
