@@ -17,12 +17,26 @@
     import RosterStatusToggle from './rosterStatusToggle.svelte';
 
     export let playerTypes: Player[];
+    let mainColour = '#970f0c';
+    let secondaryColour = '#1a3f7f';
 
     $: nextPlayerIndex =
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
     $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
+
+    function setMainColour(c) {
+        console.log({ c });
+        let root = document.querySelector(':root');
+        (root as any).style.setProperty('--main-colour', mainColour);
+    }
+
+    function setSecondaryColour(c) {
+        console.log({ c });
+        let root = document.querySelector(':root');
+        (root as any).style.setProperty('--secondary-colour', secondaryColour);
+    }
 </script>
 
 <div class="team-name-container">
@@ -61,6 +75,20 @@
 </div>
 <Export />
 <RosterDelete />
+<input
+    type="color"
+    name="main"
+    id="main-picker"
+    bind:value={mainColour}
+    on:input={(x) => setMainColour(x)}
+/>
+<input
+    type="color"
+    name="secondary"
+    id="secondary-picker"
+    bind:value={secondaryColour}
+    on:change={(x) => setSecondaryColour(x)}
+/>
 
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">

@@ -4,7 +4,8 @@
     --secondary-background-colour: #eeeeee;
     --neutral: #ccc;
     --background: #ffffff;
-    
+    --text-colour: #333333;
+
     /* Colleges */
     --fire: #d65a22;
     --shadow: #424344;
@@ -16,6 +17,24 @@
     --heavens: #d4d6d5;
 
     --display-font: 'Roboto Slab', serif;
+
+    /* --main-colour: #c16f6d; */
+    /* --main-colour: #009688; */
+    /* --secondary-colour: #1a3f7f; */
+    /* --secondary-colour: #009688;
+    --secondary-background-colour: #0a1933;
+    --neutral: #ccc;
+    --background: #050d19;
+    --text-colour: #aaa;
+    --fire: #d65a22;
+    --shadow: #424344;
+    --metal: #7e807f;
+    --light: #4d77c9;
+    --death: #ac40c2;
+    --life: #1d8858;
+    --beasts: #bf8106;
+    --heavens: #d4d6d5;
+    --display-font: 'Roboto Slab', serif; */
 }
 
 html,
@@ -26,7 +45,8 @@ body {
 }
 
 body {
-    color: #333;
+    color: var(--text-colour);
+    background-color: var(--background);
     margin: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -99,7 +119,7 @@ table {
     border: 1px solid var(--neutral);
 }
 tr:nth-of-type(even) {
-    background: #eee;
+    background: var(--secondary-background-colour);
 }
 thead {
     background-color: var(--main-colour);

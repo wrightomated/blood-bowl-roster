@@ -8,11 +8,6 @@
 
 <style>
     .pill {
-        /* display: inline-block;
-        background-color: var(--main-colour); */
-        /* color: white; */
-        /* padding: 8px;
-        border-radius: 12px; */
         text-transform: capitalize;
         font-weight: bold;
         font-family: var(--display-font);

@@ -117,7 +117,7 @@
             left: 0;
             top: -124px;
             transition: transform 250ms ease-in-out;
-            background: white;
+            background-color: var(--background);
             height: 124px;
             border-bottom: 2px solid var(--secondary-colour);
             &--open {
