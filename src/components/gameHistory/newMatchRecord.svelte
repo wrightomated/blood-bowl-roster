@@ -3,8 +3,8 @@
     import { weatherTables } from '../../data/weatherData.data';
 
     import { roster } from '../../store/teamRoster.store';
-    $: opponentScore = 0;
-    $: playerScore = 0;
+    let opponentScore = 0;
+    let playerScore = 0;
     ``;
     $: result =
         playerScore === opponentScore
@@ -20,6 +20,10 @@
             );
         }
     );
+
+    function addMatch() {
+        roster.addMatch();
+    }
 
     const tables = weatherTables;
 </script>
@@ -135,7 +139,7 @@
         <label for="notes">Notes</label>
         <textarea name="notes" id="notes" cols="30" rows="10" />
 
-        <button>Add</button>
+        <button on:click={addMatch}>Add</button>
     </form>
 </section>
 

@@ -223,7 +223,20 @@ function createRoster() {
                     ...store,
                     gameHistory: [
                         ...store.gameHistory,
-                        ['', '', '', '', '', '', '', '', '', '', ''],
+                        {
+                            id: 1,
+                            opponent: '',
+                            leagueOrFriendly: '',
+                            'fan factor': '',
+                            'petty cash': '',
+                            'inducements hired': '',
+                            'new current team value': '',
+                            'w/l/d': '',
+                            score: '',
+                            winnings: '',
+                            'league points': '',
+                            notes: '',
+                        },
                     ],
                 };
             }),

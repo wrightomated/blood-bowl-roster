@@ -18,7 +18,7 @@ export interface Roster {
     mode?: RosterMode;
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
-    gameHistory?: string[][];
+    gameHistory?: GameHistory;
 }
 
 export type RosterPreviews = { [key: string]: RosterPreview };

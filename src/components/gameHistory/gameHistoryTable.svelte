@@ -16,6 +16,20 @@
             // },
         });
     }
+
+    const keys = [
+        'opponent',
+        'leagueOrFriendly',
+        'fan factor',
+        'petty cash',
+        'inducements hired',
+        'new current team value',
+        'w/l/d',
+        'score',
+        'winnings',
+        'league points',
+        'notes',
+    ];
 </script>
 
 {#if $roster.gameHistory}
@@ -40,11 +54,11 @@
             <tbody>
                 {#each $roster.gameHistory as row}
                     <tr>
-                        {#each row as entry}
+                        {#each keys as key}
                             <td
                                 class="history__cell"
                                 contenteditable="true"
-                                bind:innerHTML={entry}
+                                bind:innerHTML={row[key]}
                             />
                         {/each}
                     </tr>
