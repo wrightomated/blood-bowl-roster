@@ -33,15 +33,15 @@ export function init() {
         automaticDataCollectionEnabled: false,
     });
     auth = getAuth(app);
-    // if (
-    //     firebaseConfig?.measurementId &&
-    //     // Rollup replace will replace the env variable with the string 'undefined' if not in the env file
-    //     firebaseConfig.measurementId !== 'undefined'
-    // ) {
-    //     import('../../analytics/firebaseAnalytics').then((service) =>
-    //         service.init(app)
-    //     );
-    // }
+    if (
+        firebaseConfig?.measurementId &&
+        // Rollup replace will replace the env variable with the string 'undefined' if not in the env file
+        firebaseConfig.measurementId !== 'undefined'
+    ) {
+        import('../../analytics/firebaseAnalytics').then((service) =>
+            service.init(app)
+        );
+    }
 
     onAuthStateChanged(auth, (currentUser: User) => {
         rosterCache.clearCache();
