@@ -287,7 +287,7 @@ const rosterFromQueryString = () => {
     return rosterFromCode(code);
 };
 
-const rosterFromCode = (code: string) => {
+const rosterFromCode = (code: string | null) => {
     try {
         return stringToRoster(code);
     } catch (error) {
@@ -321,9 +321,11 @@ const addPlayerToPlayers: (
     index?: number
 ) => RosterPlayerRecord[] = (players, newPlayer, maxPlayers, index) => {
     const indexToAdd =
-        index < maxPlayers ? index : players.findIndex((p) => p.deleted);
+        index && index < maxPlayers
+            ? index
+            : players.findIndex((p) => p.deleted);
 
-    return indexToAdd >= 0 && indexToAdd < players.length
+    return indexToAdd && indexToAdd >= 0 && indexToAdd < players.length
         ? players.map((p, i) => (i === indexToAdd ? newPlayer : p))
         : players.concat([newPlayer]);
 };

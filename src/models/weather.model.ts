@@ -12,11 +12,13 @@ export type WeatherType =
     | 'coastal'
     | 'desert';
 
-export type WeatherResult = {
-    [key: string]: string;
-};
+/**
+ * 2d6 result
+ * 4 - 10 is no weather
+ */
+export type WeatherRollResult = Record<`${2 | 3 | 11 | 12}`, string>;
 
 export type WeatherTable = {
     type: WeatherType;
-    results: WeatherResult;
+    results: WeatherRollResult;
 };
