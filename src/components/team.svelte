@@ -25,6 +25,7 @@
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import GameHistory from './gameHistory/gameHistoryTable.svelte';
+    import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
 
     const teamList = teamData.teams;
 
@@ -136,7 +137,8 @@
             <DungeonBowlPlayerCount />
         {/if}
         <RerollsTable selectedTeam={$currentTeam} />
-        <GameHistory />
+        <!-- <GameHistory /> -->
+        <MatchHistoryRecords />
     {/if}
 {/if}
 

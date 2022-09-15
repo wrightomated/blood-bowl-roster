@@ -43,7 +43,7 @@ export function init() {
         );
     }
 
-    onAuthStateChanged(auth, (currentUser: User) => {
+    onAuthStateChanged(auth, (currentUser: User | null) => {
         rosterCache.clearCache();
         currentUserStore.set(currentUser);
         import('./firebaseDB.service').then((service) => service.initDb());
@@ -68,7 +68,7 @@ export async function signInWithEmail(email: string, password: string) {
     return signInWithEmailAndPassword(auth, email, password);
 }
 
-export function getCurrentUser(): User {
+export function getCurrentUser(): User | null {
     return auth.currentUser;
 }
 

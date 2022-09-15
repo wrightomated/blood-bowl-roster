@@ -16,7 +16,7 @@
     }
     footer {
         border-top: 1px solid var(--secondary-colour);
-        margin-top: 2em;
+        margin: 2em 8px 0 8px;
         padding-bottom: 1em;
     }
     @media print {

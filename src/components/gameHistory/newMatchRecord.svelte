@@ -35,6 +35,9 @@
         <label for="opponent">Opponent:</label>
         <input type="text" id="opponent" autocomplete="off" />
 
+        <label for="opponent">Date:</label>
+        <input type="date" id="date" autocomplete="off" />
+
         <div class="label-input">
             <label for="was-league-match">League Match:</label>
             <input
@@ -49,6 +52,7 @@
             type="number"
             id="fan-factor"
             value={$roster.extra['dedicated_fans'] || 0}
+            autocomplete="off"
         />
 
         <label for="petty-cash">Petty Cash</label>
@@ -58,7 +62,7 @@
         <p>{inducements.join(', ')}</p>
 
         <label for="new-ctv">New Current Team Value</label>
-        <input type="number" id="new-ctv" />
+        <input type="number" id="new-ctv" autocomplete="off" />
 
         <label for="score">Result:</label>
         <input
@@ -67,6 +71,7 @@
             min="0"
             id=""
             bind:value={playerScore}
+            autocomplete="off"
         />
         -
         <input
@@ -74,13 +79,19 @@
             min="0"
             name="opponent-score"
             bind:value={opponentScore}
+            autocomplete="off"
         />
         <p>{result}</p>
 
         <label for="winnings">Winnings</label>
         <input type="number" name="winnings" id="winnings" autocomplete="off" />
         <label for="league-points">League Points</label>
-        <input type="number" id="league-points" name="league-points" />
+        <input
+            type="number"
+            id="league-points"
+            name="league-points"
+            autocomplete="off"
+        />
 
         <div class="digits">
             <div class="label-input">

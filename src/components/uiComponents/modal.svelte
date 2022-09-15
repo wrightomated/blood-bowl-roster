@@ -59,6 +59,7 @@
     }
     .modal {
         position: fixed;
+        // width: 100%;
         left: 50%;
         top: 5vh;
         transform: translateX(-50%);

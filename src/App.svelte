@@ -22,11 +22,13 @@
 
 <main>
     <Team />
-    <Footer />
 </main>
+<Footer />
 
 <style lang="scss">
     main {
         padding: 8px;
+        max-width: 1600px;
+        margin: 0 auto;
     }
 </style>

@@ -3,10 +3,12 @@
     export let clickFunction: Function;
     export let hoverText: string;
     export let cyData: string = undefined;
+    export let pushRight: boolean = undefined;
 </script>
 
 <button
     class="symbol-control"
+    class:pushRight
     on:click={() => clickFunction()}
     data-cy={cyData}
     title={hoverText}><i class="material-icons">{symbol}</i></button
@@ -18,8 +20,12 @@
         color: inherit;
         border: none;
         padding: 0;
+        height: 24px;
         font: inherit;
         cursor: pointer;
+    }
+    .pushRight {
+        margin-left: auto;
     }
     @media print {
         button {
