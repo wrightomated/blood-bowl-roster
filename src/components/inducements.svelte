@@ -107,22 +107,24 @@
         {/if}
         {#if $showAllInducements}
             <tr class="no-print"
-                ><td class="inducement__search" colspan="4"
-                    ><input
-                        aria-label="Search inducements"
-                        placeholder="Search inducements"
-                        type="text"
-                        bind:value={searchTerm}
-                    />&nbsp;
-                    <span class="inducement__clear-search">
-                        <MaterialButton
-                            hoverText="Clear"
-                            symbol="clear"
-                            clickFunction={() => {
-                                searchTerm = '';
-                            }}
+                ><td colspan="4">
+                    <div class="inducement__search">
+                        <input
+                            aria-label="Search inducements"
+                            placeholder="Search inducements"
+                            type="text"
+                            bind:value={searchTerm}
                         />
-                    </span>
+                        <span class="inducement__clear-search">
+                            <MaterialButton
+                                hoverText="Clear"
+                                symbol="clear"
+                                clickFunction={() => {
+                                    searchTerm = '';
+                                }}
+                            />
+                        </span>
+                    </div>
                 </td>
             </tr>
         {/if}
@@ -181,7 +183,13 @@
         }
 
         &__search {
-            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        &__clear-search {
+            height: 24px;
         }
 
         &__qty {
