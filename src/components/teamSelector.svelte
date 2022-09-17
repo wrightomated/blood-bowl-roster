@@ -325,7 +325,7 @@
             line-height: 0px;
             text-align: center;
             margin: 0 auto;
-            border: 2px solid var(--secondary-colour);
+            border: var(--secondary-border);
 
             &:hover {
                 border-color: var(--secondary-background-colour);

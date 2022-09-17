@@ -1,13 +1,18 @@
 <script lang="ts">
+    import Button from '../uiComponents/button.svelte';
     import MatchHistoryCard from './matchHistoryCard.svelte';
 </script>
 
 <div class="match-history no-print">
     <h2>Match History</h2>
+    <Button>New Match</Button>
     <div class="matches">
         <MatchHistoryCard opponentName="Bob" />
-        <MatchHistoryCard opponentName="Alberto the great Alberto the great" />
-        <MatchHistoryCard opponentName="Alfonse" />
+        <MatchHistoryCard
+            opponentName="Alberto the great Alberto the great"
+            open={false}
+        />
+        <MatchHistoryCard opponentName="Alfonse" open={false} />
     </div>
 </div>
 

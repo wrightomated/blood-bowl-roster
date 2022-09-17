@@ -17,7 +17,7 @@
         height: 50px;
         width: 50px;
         position: relative;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         border-top: 0;
         margin-right: 5px;
         text-align: center;

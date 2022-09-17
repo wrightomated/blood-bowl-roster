@@ -4,7 +4,7 @@
  *      -> Attribute
  */
 
-import { D6Result, TwoD6Result } from './dice.model';
+import type { D6Result, TwoD6Result } from './dice.model';
 
 export type StadiumCategory =
     | 'Unusual Playing Surface'

@@ -137,7 +137,7 @@
             <DungeonBowlPlayerCount />
         {/if}
         <RerollsTable selectedTeam={$currentTeam} />
-        <!-- <GameHistory /> -->
+        <GameHistory />
         <MatchHistoryRecords />
     {/if}
 {/if}

@@ -1,4 +1,4 @@
-import { Stadium, StadiumTable } from '../models/stadia.model';
+import type { Stadium, StadiumTable } from '../models/stadium.model';
 
 const unusual: Stadium = {
     category: 'Unusual Playing Surface',

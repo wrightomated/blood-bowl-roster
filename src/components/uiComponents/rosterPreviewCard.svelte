@@ -81,7 +81,7 @@
         &:hover {
             cursor: pointer;
 
-            border: 2px solid var(--secondary-colour);
+            border: var(--secondary-border);
         }
     }
 

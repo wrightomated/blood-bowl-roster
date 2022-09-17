@@ -4,7 +4,7 @@
     color: var(--secondary-colour);
     padding: 10px;
     margin: 4px;
-    border: 2px solid var(--secondary-colour);
+    border: var(--secondary-border);
 
     &:hover,
     &.selected {

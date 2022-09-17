@@ -422,7 +422,7 @@
         color: var(--secondary-colour);
         padding: 10px;
         margin: 5px;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         max-width: calc(50% - 20px);
 
         &:hover {

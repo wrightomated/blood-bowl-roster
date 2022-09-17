@@ -1,6 +1,12 @@
 <script lang="ts">
+    import { balls } from '../../data/ball.data';
+
     import { inducementData } from '../../data/inducements.data';
     import { weatherTables } from '../../data/weatherData.data';
+    import {
+        inducementAndStarsInRoster,
+        inducementsSummary,
+    } from '../../store/currentInducements.store';
 
     import { roster } from '../../store/teamRoster.store';
     let opponentScore = 0;
@@ -12,14 +18,6 @@
             : playerScore > opponentScore
             ? 'Win'
             : 'Loss';
-    $: inducements = Object.entries($roster.inducements).map(
-        ([key, number]) => {
-            return (
-                (number > 1 ? `${number} x ` : ``) +
-                inducementData.inducements.find((i) => i.id === key).displayName
-            );
-        }
-    );
 
     function addMatch() {
         roster.addMatch();
@@ -59,7 +57,8 @@
         <input type="number" autocomplete="off" id="petty-cash" />
 
         <label for="inducements-hired">Inducements Hired</label>
-        <p>{inducements.join(', ')}</p>
+        <p>{$inducementsSummary.join(', ')}</p>
+        <p>{JSON.stringify($inducementAndStarsInRoster)}</p>
 
         <label for="new-ctv">New Current Team Value</label>
         <input type="number" id="new-ctv" autocomplete="off" />
@@ -143,7 +142,12 @@
             {/each}
         </select>
         <label for="ball">Ball</label>
-        <input type="text" name="ball" id="ball" />
+        <select name="ball" id="ball">
+            {#each balls as ball}
+                <option value={ball.id}>{ball.ballName}</option>
+            {/each}
+        </select>
+
         <label for="stadium">Stadium</label>
         <input type="text" name="stadium" id="stadium" />
 

@@ -40,9 +40,9 @@
 </div>
 <span class="no-print">
     <div class="pill-box">
-        <Pill text={$roster.teamType + ' Team'} />
-        <Pill text={getTeamFormatShortDisplay($roster.format)} />
-        <Pill text={$roster.mode} />
+        <Pill>{$roster.teamType + ' Team'}</Pill>
+        <Pill>{getTeamFormatShortDisplay($roster.format)}</Pill>
+        <Pill>{$roster.mode}</Pill>
     </div>
 </span>
 

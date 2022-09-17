@@ -357,7 +357,7 @@
         position: relative;
         min-width: 300px;
         height: 100%;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         &.danger {
             border-color: var(--main-colour);
         }
@@ -369,7 +369,7 @@
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         h3 {
             margin: 0;
         }

@@ -13,6 +13,8 @@
     --heavens: #d4d6d5;
 
     --display-font: 'Roboto Slab', serif;
+
+    --secondary-border: 2px solid var(--secondary-colour);
 }
 
 html,
@@ -26,8 +28,7 @@ body {
     color: #333;
     margin: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    font-family: 'PT Sans', sans-serif;
     font-size: 14px;
 }
 
