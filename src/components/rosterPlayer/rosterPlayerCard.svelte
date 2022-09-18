@@ -426,6 +426,7 @@
     }
     .player-controls {
         display: flex;
+        align-items: center;
     }
 
     .spp-input {

@@ -4,7 +4,10 @@
     import MatchHistoryInfo from './matchHistoryInfo.svelte';
 
     export let opponentName: string;
-    export let open = true;
+    export let open = false;
+    export let score: [number, number] = [0, 0];
+
+    $: result = score[0] === score[1] ? 'D' : score[0] > score[1] ? 'W' : 'L';
 
     let date1 = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
 
@@ -13,13 +16,13 @@
     }
 </script>
 
-<section class="match-record-card" class:closed={!open}>
+<section class="match-record-card" class:closed={!open} on:click={toggleBody}>
     <div class="match-date">{date1.toLocaleDateString(undefined)}</div>
-    <header class="header" on:click={toggleBody}>
-        <div class="result">W</div>
+    <header class="header">
+        <div class="result">{result}</div>
         <div>vs</div>
         <div class="opponent-name">{opponentName}</div>
-        <div class="score">3 - 0</div>
+        <div class="score">{score[0]} - {score[1]}</div>
         <Pill variant="filled">League</Pill>
         <i class="material-icons" title={open ? 'Shrink' : 'Expand'}
             >{open ? 'arrow_drop_up' : 'arrow_drop_down'}</i
@@ -46,21 +49,11 @@
         border-radius: 25px;
         position: relative;
         width: calc(100% - var(--l-offset) - 48px);
-        // height: 100%;
         border: var(--secondary-border);
         margin-left: var(--l-offset);
         margin-top: var(--t-offset);
-        transition: max-height 0.1s linear;
 
         padding: 8px 16px 8px 36px;
-        max-height: 200px;
-        // &.danger {
-        //     border-color: var(--main-colour);
-        // }
-
-        &.closed {
-            max-height: 75px;
-        }
     }
     .result {
         position: absolute;
@@ -85,7 +78,6 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        cursor: pointer;
 
         *:last-child {
             margin-left: auto;

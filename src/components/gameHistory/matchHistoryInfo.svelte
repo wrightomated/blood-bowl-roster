@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { quintOut } from 'svelte/easing';
+    import { slide } from 'svelte/transition';
     import { inducementAndStarsInRoster } from '../../store/currentInducements.store';
     import Pill from '../uiComponents/pill.svelte';
 
@@ -7,7 +9,7 @@
     //     .join(',');
 </script>
 
-<div class="body">
+<div class="body" transition:slide={{ duration: 200, easing: quintOut }}>
     <!-- <div>League Match</div> -->
 
     <div>Petty Cash: 30k</div>

@@ -100,8 +100,6 @@
     }
     .add-skill {
         vertical-align: middle;
-        display: inline-block;
-        margin-top: -1px;
     }
     .danger {
         color: var(--main-colour);

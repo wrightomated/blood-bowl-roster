@@ -24,5 +24,6 @@
         color: white;
         border-radius: 12px;
         padding: 2px 6px;
+        font-size: 12px;
     }
 </style>

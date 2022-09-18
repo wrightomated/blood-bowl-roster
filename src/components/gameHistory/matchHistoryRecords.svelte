@@ -7,12 +7,9 @@
     <h2>Match History</h2>
     <Button>New Match</Button>
     <div class="matches">
-        <MatchHistoryCard opponentName="Bob" />
-        <MatchHistoryCard
-            opponentName="Alberto the great Alberto the great"
-            open={false}
-        />
-        <MatchHistoryCard opponentName="Alfonse" open={false} />
+        <MatchHistoryCard opponentName="Bob" score={[3, 0]} />
+        <MatchHistoryCard opponentName="Alberto The Great" open={false} />
+        <MatchHistoryCard opponentName="Alfonse" open={false} score={[0, 1]} />
     </div>
 </div>
 

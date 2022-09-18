@@ -14,11 +14,11 @@
 
     modalState.subscribe((state) => {
         if (state.isOpen) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.height = '100%';
+            // document.body.style.overflow = 'hidden';
+            // document.body.style.height = '100%';
         } else {
-            document.body.style.overflow = 'auto';
-            document.body.style.height = 'auto';
+            // document.body.style.overflow = 'auto';
+            // document.body.style.height = 'auto';
         }
     });
 </script>
@@ -58,7 +58,7 @@
         display: none;
     }
     .modal {
-        position: fixed;
+        position: absolute;
         // width: 100%;
         left: 50%;
         top: 5vh;
@@ -75,7 +75,7 @@
         }
     }
     .content {
-        max-height: 70vh;
+        // max-height: 70vh;
         overflow-y: auto;
         padding: 20px;
     }
