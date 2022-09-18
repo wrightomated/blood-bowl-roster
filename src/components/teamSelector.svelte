@@ -39,6 +39,7 @@
 
     let rosterCode: string;
     let includeNaf: boolean = true;
+    let includeRetired: boolean = false;
 
     const nafTeams = [28, 29];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
@@ -49,6 +50,7 @@
     $: sortedTeam = sortTeam()
         .filter((x) => $filteredTiers.includes(x.tier))
         .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true))
+        .filter((x) => !x?.retired || (x.retired && includeRetired))
         .filter((x) =>
             searchTerm
                 ? x.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -140,6 +142,10 @@
         includeNaf = !includeNaf;
     };
 
+    const toggleRetired = () => {
+        includeRetired = !includeRetired;
+    };
+
     const toggleDungeonBowl = (show: boolean) => {
         teamLoadOpen.set(false);
         teamSelectionOpen.set(!show);
@@ -200,6 +206,12 @@
                     title="Filter NAF teams"
                     class:selected={includeNaf}
                     class="filter__button">N</button
+                >
+                <button
+                    on:click={toggleRetired}
+                    title="Filter superseded teams"
+                    class:selected={includeRetired}
+                    class="filter__button">S</button
                 >
             </div>
             <label class="filter__search">

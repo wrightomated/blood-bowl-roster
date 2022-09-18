@@ -5,6 +5,7 @@
     padding: 10px;
     margin: 4px;
     border: var(--secondary-border);
+    transition: background-color 100ms linear;
 
     &:hover,
     &.selected {
