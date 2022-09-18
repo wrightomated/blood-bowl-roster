@@ -410,6 +410,7 @@ export const teamData: TeamList = {
             allowedApothecary: true,
             tier: 1,
             specialRules: ['Lustrian Superleague', 'Old World Classic'],
+            retired: true,
         },
         {
             name: 'Tomb Kings',
@@ -450,6 +451,7 @@ export const teamData: TeamList = {
             allowedApothecary: true,
             tier: 2,
             specialRules: ['Favoured of...', 'Favoured of Khorne'],
+            retired: true,
         },
         {
             name: 'Slann',

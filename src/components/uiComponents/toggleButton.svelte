@@ -27,6 +27,7 @@
         border: none;
         padding: 0;
         font: inherit;
+        transition: background-color 100ms linear;
     }
 
     .toggle {

@@ -7,6 +7,7 @@ export interface Team {
     tier: TeamTier;
     specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
+    retired?: boolean;
 }
 
 export interface TeamList {
