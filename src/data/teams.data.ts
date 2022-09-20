@@ -1,4 +1,21 @@
-import type { TeamList } from '../models/team.model';
+import type { TeamList, TeamSpecialRule } from '../models/team.model';
+
+export const chaosSpecialRules: TeamSpecialRule[] = [
+    'Favoured of Chaos Undivided',
+    'Favoured of Khorne',
+    'Favoured of Nurgle',
+    'Favoured of Slaanesh',
+    'Favoured of Tzeentch',
+];
+
+export enum PickedSpecialRule {
+    'Old World Classic' = 1,
+    'Favoured of Chaos Undivided',
+    'Favoured of Khorne',
+    'Favoured of Nurgle',
+    'Favoured of Slaanesh',
+    'Favoured of Tzeentch',
+}
 
 export const teamData: TeamList = {
     teams: [
@@ -43,11 +60,8 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 2,
-            specialRules: [
-                'Favoured of...',
-                'Favoured of Khorne',
-                'Favoured of Nurgle',
-            ],
+            specialRules: [],
+            pickSpecialRule: chaosSpecialRules,
             maxBigGuys: 1,
         },
         {
@@ -346,7 +360,8 @@ export const teamData: TeamList = {
             reroll: { cost: 70, max: 8 },
             allowedApothecary: true,
             tier: 2,
-            specialRules: ['Favoured of...'],
+            specialRules: [],
+            pickSpecialRule: chaosSpecialRules,
             maxBigGuys: 3,
         },
         {
@@ -375,11 +390,8 @@ export const teamData: TeamList = {
             reroll: { cost: 70, max: 8 },
             allowedApothecary: true,
             tier: 1,
-            specialRules: [
-                'Badlands Brawl',
-                'Favoured of...',
-                'Worlds Edge Superleague',
-            ],
+            specialRules: ['Badlands Brawl', 'Worlds Edge Superleague'],
+            pickSpecialRule: chaosSpecialRules,
         },
         {
             name: 'High Elf',
@@ -450,7 +462,7 @@ export const teamData: TeamList = {
             reroll: { cost: 70, max: 8 },
             allowedApothecary: true,
             tier: 2,
-            specialRules: ['Favoured of...', 'Favoured of Khorne'],
+            specialRules: ['Favoured of Khorne'],
             retired: true,
         },
         {
@@ -479,7 +491,7 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 2,
-            specialRules: ['Favoured of...', 'Favoured of Khorne'],
+            specialRules: ['Favoured of Khorne'],
         },
         {
             name: 'Norse',
@@ -495,11 +507,11 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 1,
-            specialRules: [
+            specialRules: [],
+            pickSpecialRule: [
                 'Old World Classic',
+                'Favoured of Chaos Undivided',
                 'Favoured of Khorne',
-                'Favoured of Nurgle',
-                'Favoured of...',
             ],
         },
     ],

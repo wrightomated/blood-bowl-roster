@@ -7,6 +7,7 @@
     import { filterInducement } from '../helpers/inducementFilter';
     import { showAllInducements } from '../store/showAllInducements.store';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
+    import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -18,6 +19,7 @@
             ? inducementData.inducements
                   .filter((inducement) => inducement?.dungeonBowlMax > 0)
                   .map((i) => ({ ...i, max: i.dungeonBowlMax }))
+                  .sort((a, b) => a.displayName.localeCompare(b.displayName))
             : inducementData.inducements
                   .filter(
                       (inducement) =>
@@ -27,11 +29,14 @@
                               inducement.sevensMax !== 0)
                   )
                   .filter((inducement) =>
-                      filterInducement(inducement, selectedTeam as Team)
+                      filterInducement(inducement, {
+                          ...(selectedTeam as Team),
+                          specialRules: $rosterSpecialRules,
+                      })
                   )
                   .map((inducement: Inducement) => ({
                       ...inducement,
-                      cost: (selectedTeam as Team).specialRules.includes(
+                      cost: $rosterSpecialRules.includes(
                           inducement?.reducedCost?.specialRule
                       )
                           ? inducement.reducedCost.cost
@@ -105,7 +110,7 @@
                 >
             </tr>
         {/if}
-        {#if $showAllInducements}
+        {#if $showAllInducements && $roster.format !== 'dungeon bowl'}
             <tr class="no-print"
                 ><td colspan="4">
                     <div class="inducement__search">

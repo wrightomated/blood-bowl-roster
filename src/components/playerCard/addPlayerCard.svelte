@@ -83,7 +83,6 @@
 
 <div class="player-card">
     <div class="header">
-        <div class="player-number" />
         <div>
             <h3>
                 <input
@@ -99,6 +98,7 @@
         <div class="player-details">
             <input
                 aria-label="Amount"
+                class="multiplier"
                 type="number"
                 bind:value={amount}
                 min="1"
@@ -166,21 +166,6 @@
                 color: #555;
             }
         }
-        select {
-            margin: 6px 0;
-            background-color: var(--secondary-colour);
-            color: #333;
-            font-size: 16px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background: url('/assets/images/dropdown.svg') no-repeat;
-            background-size: 12px;
-            background-position: 97% 72%;
-            padding-right: 20px;
-            background-repeat: no-repeat;
-            border-color: #333;
-        }
     }
     button {
         background: none;
@@ -204,24 +189,16 @@
     .player-details {
         color: #333;
         input {
-            border: 1px solid #333;
-            font-size: 16px;
+            border: 1px solid #ccc;
+            font-size: 12px;
             width: 40px;
-            height: 32px;
+            height: 30px;
             text-align: center;
+            border-radius: 12px;
+
+            @media screen and (max-width: 783px) {
+                font-size: 16px;
+            }
         }
-    }
-    .player-number {
-        width: 25px;
-        line-height: 25px;
-        border-radius: 50%;
-        font-family: $display-font;
-        text-align: center;
-        font-size: 16px;
-        right: 10px;
-        top: 10px;
-        background-color: white;
-        color: #555;
-        position: absolute;
     }
 </style>

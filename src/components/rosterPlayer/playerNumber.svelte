@@ -45,6 +45,7 @@
     .player-number {
         width: 30px;
         text-align: center;
+        font-style: italic;
         /* Chrome, Safari, Edge, Opera */
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {

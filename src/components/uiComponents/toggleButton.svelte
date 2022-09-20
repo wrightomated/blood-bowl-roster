@@ -45,10 +45,14 @@
             text-transform: capitalize;
             margin: 0;
 
-            &--selected {
+            &--selected,
+            &:hover {
                 background-color: var(--secondary-colour);
                 color: white;
                 border-color: var(--secondary-colour);
+            }
+            &:hover {
+                box-shadow: 0 5px 15px #185b88b2 inset;
             }
 
             &:first-child {

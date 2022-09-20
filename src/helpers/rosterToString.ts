@@ -14,6 +14,7 @@ const extraToString = (extra: ExtraRosterInfo) => {
         cheerleaders: 'c',
         dedicated_fans: 'd',
         apothecary: 'y',
+        special_rule: 's',
     };
 
     return Object.keys(extra)

@@ -15,6 +15,7 @@
     import Pill from './uiComponents/pill.svelte';
     import { getTeamFormatShortDisplay } from '../types/teamFormat';
     import RosterStatusToggle from './rosterStatusToggle.svelte';
+    import SpecialRuleSelector from './specialRuleSelector.svelte';
 
     export let playerTypes: Player[];
 
@@ -41,10 +42,12 @@
 <span class="no-print">
     <div class="pill-box">
         <Pill text={$roster.teamType + ' Team'} />
+
         <Pill text={getTeamFormatShortDisplay($roster.format)} />
         <Pill text={$roster.mode} />
     </div>
 </span>
+<SpecialRuleSelector />
 
 <div class="sub-heading-box">
     <p class="sub-heading print-only print-only--larger">{$roster.teamName}</p>

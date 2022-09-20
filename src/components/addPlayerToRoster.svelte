@@ -129,22 +129,7 @@
             font-size: 16px;
         }
     }
-    select {
-        margin: 0;
-        color: #333;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background: url('/assets/images/dropdown.svg') no-repeat;
-        background-size: 12px;
-        background-position: 97% 72%;
-        padding-right: 20px;
-        background-repeat: no-repeat;
-        border-color: #333;
-        @media screen and (max-width: 450px) {
-            font-size: 16px;
-        }
-    }
+
     .position {
         padding: calc(1em / 2);
     }

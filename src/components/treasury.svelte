@@ -43,6 +43,9 @@
     .treasury {
         &__container {
             min-width: 150px;
+            div {
+                font-style: italic;
+            }
         }
         &__input {
             border: none;

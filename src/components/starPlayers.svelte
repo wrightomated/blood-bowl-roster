@@ -1,13 +1,12 @@
 <script lang="ts">
     import { starPlayers } from '../data/starPlayer.data';
-    import { currentTeam } from '../store/currentTeam.store';
+    import { teamCreationSpecialRules } from '../store/rosterSpecialRules.store';
     import StarPlayerRow from './starPlayerRow.svelte';
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
-    import type { Team } from '../models/team.model';
 
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
-        $currentTeam as Team
+        $teamCreationSpecialRules
     );
 </script>
 
