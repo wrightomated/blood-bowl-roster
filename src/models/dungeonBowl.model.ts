@@ -1,4 +1,4 @@
-import { TeamSpecialRule } from './team.model';
+import type { TeamSpecialRule } from './team.model';
 
 /** Used to be compatible with normal rosters */
 export interface DungeonBowlTeam {

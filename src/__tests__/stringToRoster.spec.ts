@@ -4,6 +4,12 @@ import { rosterToString } from '../helpers/rosterToString';
 import { stringToRoster } from '../helpers/stringToRoster';
 import type { Roster } from '../models/roster.model';
 import {
+    norseNoSpecialRuleRoster,
+    norseNoSpecialRuleString,
+    norseSpecialRuleRoster,
+    norseSpecialRuleString,
+} from './data/specialRuleData';
+import {
     encodedRosterString,
     inducementAndStarPlayer,
     inducementAndStarPlayerString,
@@ -43,4 +49,18 @@ test('should convert string into roster into string', () => {
     expect(stringToRoster(rosterToString(noTeamName as Roster))).toEqual(
         roster
     );
+});
+
+describe('Special rule', () => {
+    test('should convert a team with no special rule picked successfully', () => {
+        expect(stringToRoster(norseNoSpecialRuleString)).toEqual(
+            norseNoSpecialRuleRoster
+        );
+    });
+
+    test('should convert a team with a special rule', () => {
+        expect(stringToRoster(norseSpecialRuleString)).toEqual(
+            norseSpecialRuleRoster
+        );
+    });
 });

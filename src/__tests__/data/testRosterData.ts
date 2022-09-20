@@ -209,7 +209,7 @@ export const playerSkills = {
         },
     ],
     teamName: '',
-    teamType: 'Norse',
+    teamType: 'Norse (ToL)',
     extra: { dedicated_fans: 1 },
     inducements: {},
     treasury: 20,
