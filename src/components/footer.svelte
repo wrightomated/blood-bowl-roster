@@ -1,10 +1,7 @@
 <footer>
     <p class="blog-link">
         <strong
-            ><a
-                href="https://blog.bbroster.com"
-                target="_blank"
-                title="BB Roster Blog"
+            ><a href="https://blog.bbroster.com" title="BB Roster Blog"
                 >BBRoster update notes and news <i class="material-icons"
                     >open_in_new</i
                 ></a
