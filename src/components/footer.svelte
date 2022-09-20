@@ -1,4 +1,16 @@
 <footer>
+    <p class="blog-link">
+        <strong
+            ><a
+                href="https://blog.bbroster.com"
+                target="_blank"
+                title="BB Roster Blog"
+                >BBRoster update notes and news <i class="material-icons"
+                    >open_in_new</i
+                ></a
+            ></strong
+        >
+    </p>
     <p>
         Rule references and player names are property of Games Workshop. This
         site is not affiliated with Games Workshop. I just think they're neat.
@@ -10,6 +22,14 @@
 </footer>
 
 <style lang="scss">
+    .blog-link {
+        text-decoration: underline;
+        i {
+            font-size: 12px;
+            text-decoration: underline;
+            color: var(--secondary-colour);
+        }
+    }
     p {
         text-align: left;
         font-size: small;
