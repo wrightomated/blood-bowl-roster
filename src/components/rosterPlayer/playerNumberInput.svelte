@@ -15,7 +15,7 @@
         use:blurOnEscapeOrEnter
         bind:value={$roster.players[index].alterations[alteration]}
     />
-{:else}0{/if}
+{:else}-{/if}
 
 <style lang="scss">
     input {
@@ -25,6 +25,7 @@
         width: 60px;
         text-align: center;
         margin-right: -15px;
+        font-style: italic;
 
         @media screen and (max-width: 450px) {
             font-size: 16px;

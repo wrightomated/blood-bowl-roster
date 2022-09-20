@@ -5,12 +5,13 @@
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import type { Team } from '../models/team.model';
+    import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
 
     let selectedId: number;
 
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
-        $currentTeam as Team,
+        $rosterSpecialRules,
         $roster.players.map((x) => x.player.id)
     )
         .map((x, _, a) => {
@@ -102,9 +103,6 @@
         tr {
             height: 44px;
         }
-    }
-    .star-player-select {
-        font-size: 16px;
     }
     .left-align {
         text-align: left;

@@ -1,3 +1,5 @@
+import { TeamSpecialRule } from './team.model';
+
 /** Used to be compatible with normal rosters */
 export interface DungeonBowlTeam {
     name: CollegeName;
@@ -10,10 +12,11 @@ export interface DungeonBowlTeam {
     };
     /** Needed in dungeon bowl team so team based logic doesn't break, dungeon bowl teams don't have special rules */
     // TODO: refactor
-    specialRules: [];
+    specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
     tier: number;
     allowedApothecary: boolean;
+    pickSpecialRule?: TeamSpecialRule[];
 }
 
 export interface DungeonBowlCollege {

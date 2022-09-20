@@ -2,7 +2,7 @@ import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
 import type { Player } from './player.model';
-import type { TeamName } from './team.model';
+import type { TeamName, TeamSpecialRule } from './team.model';
 
 export interface Roster {
     /** Used for firebase storage */
@@ -11,7 +11,8 @@ export interface Roster {
     teamName: string;
     teamType: TeamName | CollegeName;
     players: RosterPlayerRecord[];
-    extra?: ExtraRosterInfo;
+    /** Extra info in relation to the game */
+    extra?: RosterExtraRecords;
     inducements: ExtraRosterInfo;
     treasury?: number;
     mode?: RosterMode;
@@ -36,6 +37,16 @@ export interface RosterPlayerRecord {
     alterations?: PlayerAlterations;
 }
 
+export type RosterExtraRecords = Partial<Record<RosterExtra, number>>;
+
+export type RosterExtra =
+    | 'rerolls' // r
+    | 'assistant_coaches' // a
+    | 'cheerleaders' // c
+    | 'dedicated_fans' // d
+    | 'apothecary' // y
+    | 'special_rule'; // s
+
 export interface ExtraRosterInfo {
     [key: string]: number;
 }
@@ -54,3 +65,12 @@ export interface PlayerAlterations {
 }
 
 export type LeagueRosterStatus = 'draft' | 'commenced';
+
+export type NewRosterOptions = {
+    teamId: number;
+    teamType: TeamName | CollegeName;
+    mode: RosterMode;
+    format: TeamFormat;
+    fans: number;
+    specialRule?: TeamSpecialRule;
+};

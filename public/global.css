@@ -1,6 +1,7 @@
 :root {
     --main-colour: #970f0c;
     --secondary-colour: #1a3f7f;
+    --sc-l60: #6b96e1;
     --secondary-background-colour: #eeeeee;
     --neutral: #ccc;
     --fire: #d65a22;
@@ -71,6 +72,21 @@ textarea {
     border-radius: 2px;
 }
 
+select {
+    margin: 0;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('/assets/images/dropdown.svg') no-repeat;
+    background-size: 12px;
+    background-position: 97% 72%;
+    padding-right: 24px;
+    background-repeat: no-repeat;
+    border-color: #ccc;
+    border-radius: 12px;
+}
+
 input:placeholder-shown {
     font-style: italic;
 }
@@ -105,7 +121,8 @@ thead {
 }
 
 @media screen and (max-width: 783px) {
-    input {
+    input,
+    select {
         font-size: 16px;
     }
 }
