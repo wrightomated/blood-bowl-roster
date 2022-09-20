@@ -8,6 +8,7 @@ export interface Team {
     specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
     retired?: boolean;
+    pickSpecialRule?: TeamSpecialRule[];
 }
 
 export interface TeamList {
@@ -73,4 +74,7 @@ export type TeamSpecialRule =
     | 'Masters of Undeath'
     | 'Sylvanian Spotlight'
     | 'Low Cost Linemen'
-    | 'Favoured of Khorne';
+    | 'Favoured of Khorne'
+    | 'Favoured of Chaos Undivided'
+    | 'Favoured of Slaanesh'
+    | 'Favoured of Tzeentch';

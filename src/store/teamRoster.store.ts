@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 
 import type {
     LeagueRosterStatus,
+    NewRosterOptions,
     Roster,
     RosterPlayerRecord,
 } from '../models/roster.model';
@@ -15,8 +16,7 @@ import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
-import type { CollegeName } from '../models/dungeonBowl.model';
-import type { TeamFormat } from '../types/teamFormat';
+import { PickedSpecialRule } from '../data/teams.data';
 
 export const maxPlayerNumber = 16;
 
@@ -206,16 +206,17 @@ function createRoster() {
                 return { ...store, players };
             });
         },
-        reset: (options?: {
-            teamId: number;
-            teamType: TeamName | CollegeName;
-            mode: RosterMode;
-            format: TeamFormat;
-            fans: number;
-        }) => set(getEmptyRoster(options)),
+        reset: (options?: NewRosterOptions) => set(getEmptyRoster(options)),
         updateTreasury: (change: number) =>
             update((store) => {
-                return { ...store, treasury: store.treasury + change };
+                return { ...store, treasury: (store?.treasury || 0) + change };
+            }),
+        updateSpecialRule: (specialRule: number) =>
+            update((store) => {
+                return {
+                    ...store,
+                    extra: { ...store.extra, special_rule: specialRule },
+                };
             }),
         addMatch: () =>
             update((store) => {
@@ -244,15 +245,9 @@ function createRoster() {
     };
 }
 
-const getEmptyRoster: (options?: {
-    teamId: number;
-    teamType: TeamName | CollegeName;
-    fans: number;
-    mode: RosterMode;
-    format: TeamFormat;
-}) => Roster = (options) => {
-    const gameSettings = getGameTypeSettings(options?.format);
-    return {
+const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
+    const gameSettings = getGameTypeSettings(options?.format || 'elevens');
+    const emptyRoster: Roster = {
         rosterId: nanoid(),
         teamId: options?.teamId || 0,
         players: [],
@@ -266,6 +261,15 @@ const getEmptyRoster: (options?: {
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
         gameHistory: [],
     };
+
+    if (options?.specialRule) {
+        emptyRoster.extra = {
+            ...emptyRoster.extra,
+            special_rule: PickedSpecialRule[options?.specialRule],
+        };
+    }
+
+    return emptyRoster;
 };
 
 const switchTwoElements = (arr: any[], index1: number, index2: number) => {

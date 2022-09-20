@@ -1,5 +1,5 @@
 @mixin rounded-button {
-    border-radius: 10px;
+    border-radius: 12px;
     background-color: white;
     color: var(--secondary-colour);
     padding: 10px;
@@ -17,6 +17,9 @@
             color: grey;
             border: none;
         }
+    }
+    &:hover {
+        box-shadow: 0 5px 15px #185b88b2 inset;
     }
     &:disabled {
         border: none;

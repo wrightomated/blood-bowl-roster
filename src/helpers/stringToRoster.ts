@@ -23,6 +23,7 @@ export const stringToRoster = (code: string) => {
     const [teamDetails, ...players] = rosterString.split('p');
     const [id, treasury, ...extras] = itemsInString(teamDetails);
     const teamId = getNumber(id);
+
     const roster: Roster = {
         teamId,
         extra: stringToExtra(
@@ -32,11 +33,7 @@ export const stringToRoster = (code: string) => {
         ),
         players: expandPlayers(players),
         teamName: '',
-        teamType:
-            teamId < 100
-                ? teamData.teams.find((t) => t.id === teamId).name
-                : dungeonBowlColleges.colleges.find((t) => t.id === teamId)
-                      .name,
+        teamType: getTeamType(teamId),
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
         mode: getMode(extras.find((x) => x.includes('m')) || 'm1'),
@@ -60,7 +57,7 @@ const expandPlayer: (playerString: string) => RosterPlayerRecord = (
     const player = findPlayer(nId);
     const alterations = constructAlterations(other);
 
-    const obj = { player, playerName: starPlayer ? player.position : '' };
+    const obj = { player, playerName: starPlayer ? player?.position : '' };
     if (nId === 0) {
         return { ...obj, deleted: true, alterations };
     } else if (starPlayer) {
@@ -131,10 +128,8 @@ const constructAlterations = (other: string[]) => {
 };
 
 const statChangeArray = (statString: string) => {
-    return statString
-        .substring(1)
-        .match(/-?\d/g)
-        .map((x) => parseInt(x, 10));
+    const matchArray = statString.substring(1).match(/-?\d/g) ?? [];
+    return matchArray.map((x) => parseInt(x, 10));
 };
 
 const skillArray = (skillString: string) => {
@@ -151,6 +146,7 @@ const stringToExtra: (extras: string[]) => ExtraRosterInfo = (extras) => {
         c: 'cheerleaders',
         d: 'dedicated_fans',
         y: 'apothecary',
+        s: 'special_rule',
     };
     const extraObject = {};
     extras.forEach(
@@ -161,7 +157,7 @@ const stringToExtra: (extras: string[]) => ExtraRosterInfo = (extras) => {
 };
 
 const itemsInString = (rosterSection: string) => {
-    return rosterSection.match(/[a-z]?[\d.-]+/g);
+    return rosterSection.match(/[a-z]?[\d.-]+/g) ?? [];
 };
 
 const getNumber = (match: string) => {
@@ -200,6 +196,15 @@ const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
         1: 'sevens',
         2: 'dungeon bowl',
     }[getNumber(modeMatch)] as TeamFormat;
+};
+
+const getTeamType = (teamId: number) => {
+    const teamType =
+        teamId < 100
+            ? teamData.teams.find((t) => t.id === teamId)?.name
+            : dungeonBowlColleges.colleges.find((t) => t.id === teamId)?.name;
+    if (!teamType) throw new Error('No team type found');
+    return teamType;
 };
 
 export const deletedPlayer: () => Player = () => {

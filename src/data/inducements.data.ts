@@ -1,4 +1,5 @@
 import type { Inducement } from '../models/inducement.model';
+import { chaosSpecialRules } from './teams.data';
 
 export const inducementData: { inducements: Inducement[] } = {
     inducements: [
@@ -107,10 +108,9 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             sevensMax: 0,
             requiresSpecialRule: [
-                'Favoured of Khorne',
-                'Favoured of Nurgle',
                 'Favoured of...',
                 'Underworld Challenge',
+                ...chaosSpecialRules,
             ],
         },
         {
@@ -186,9 +186,8 @@ export const inducementData: { inducements: Inducement[] } = {
             sevensMax: 0,
             requiresSpecialRule: [
                 'Favoured of...',
-                'Favoured of Nurgle',
-                'Favoured of Khorne',
                 'Underworld Challenge',
+                ...chaosSpecialRules,
             ],
         },
         {
@@ -199,9 +198,8 @@ export const inducementData: { inducements: Inducement[] } = {
             sevensMax: 0,
             requiresSpecialRule: [
                 'Elven Kingdoms League',
-                'Favoured of Khorne',
-                'Favoured of Nurgle',
                 'Favoured of...',
+                ...chaosSpecialRules,
             ],
         },
         {

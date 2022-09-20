@@ -34,6 +34,8 @@
     import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
     import { rosterCache } from '../store/rosterCache.store';
     import type { RosterPreviews } from '../models/roster.model';
+    import SelectSpecialRule from './selectSpecialRule.svelte';
+    import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
 
     export let teamList: Team[];
 
@@ -78,6 +80,12 @@
 
     const newTeam = (index: number) => {
         currentTeam.setCurrentTeamWithId(index);
+
+        teamSelectionSpecialRule.set(
+            $currentTeam?.pickSpecialRule
+                ? $currentTeam?.pickSpecialRule[0]
+                : undefined
+        );
     };
 
     const toggleLoad = () => {
@@ -92,6 +100,7 @@
             mode: $rosterMode,
             fans: $rosterMode === 'exhibition' ? 0 : 1,
             format: $teamFormat,
+            specialRule: $teamSelectionSpecialRule,
         });
 
         teamSelectionOpen.set(false);
@@ -241,7 +250,12 @@
                     <p class="no-matches">No matches</p>
                 {/if}
             </div>
+            {#if $currentTeam?.pickSpecialRule}
+                <SelectSpecialRule />
+            {/if}
         </div>
+
+        <div />
         <Button
             clickFunction={createTeam}
             cyData="create-team"
