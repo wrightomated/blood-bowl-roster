@@ -2,13 +2,20 @@
     import { dbIgnoredSkills } from '../../data/dungeonBowlIgnoredSkills';
 
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
+    import {
+        journeymanPosition,
+        journeymanSkills,
+    } from '../../helpers/journeymenHelper';
     import type { Player } from '../../models/player.model';
     import type {
         PlayerAlterations,
         RosterPlayerRecord,
     } from '../../models/roster.model';
     import type { Team } from '../../models/team.model';
-    import { currentTeam } from '../../store/currentTeam.store';
+    import {
+        currentTeam,
+        journeymenTypes,
+    } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
 
     export let playerTypes: Player[];
@@ -35,9 +42,7 @@
             let alterations: PlayerAlterations = { spp: 0, ni: 0 };
             let skills: number[] = player.skills;
             const extraSkills = journeyman
-                ? $roster.format === 'sevens'
-                    ? [710]
-                    : [71]
+                ? journeymanSkills($roster.format)
                 : undefined;
 
             if (journeyman) {
@@ -66,18 +71,8 @@
             );
             newName = '';
         }
+        // Reset amount for next player selection
         amount = 1;
-    };
-
-    const journeymanType: () => Player & { journeyman: boolean } = () => {
-        const journeymanId = ($currentTeam as Team).players.find(
-            (p) => p.max === 16 || p.max === 12
-        ).id;
-        const journeymanPlayer = playerTypes.find((p) => p.id === journeymanId);
-        return {
-            ...journeymanPlayer,
-            journeyman: true,
-        };
     };
 </script>
 
@@ -113,7 +108,11 @@
                     </option>
                 {/each}
                 {#if $roster.mode !== 'exhibition'}
-                    <option value={journeymanType()}> Journeyman </option>
+                    {#each $journeymenTypes as journeymanType}
+                        <option value={journeymanType}>
+                            {journeymanPosition(journeymanType.position)}
+                        </option>
+                    {/each}
                 {/if}
             </select>
         </div>
