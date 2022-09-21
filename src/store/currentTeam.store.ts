@@ -1,9 +1,11 @@
 import { derived, writable } from 'svelte/store';
 import { teamData } from '../data/teams.data';
-import type { Writable } from 'svelte/store';
+import type { Writable, Readable } from 'svelte/store';
 import type { Team } from '../models/team.model';
 import { dbCollegeToTeam, DungeonBowlTeam } from '../models/dungeonBowl.model';
 import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
+import type { Player } from '../models/player.model';
+import { playerById } from '../helpers/playerCatalogueHelpers';
 
 const currentTeamStore = () => {
     const { subscribe, update, set }: Writable<Team | DungeonBowlTeam> =
@@ -60,3 +62,19 @@ export const currentTeamIsDungeonBowl = derived(
     currentTeam,
     ($currentTeam) => $currentTeam.id >= 100
 );
+export const playerTypes = derived(currentTeam, ($currentTeam) =>
+    $currentTeam.players.map((player) => playerById(player.id))
+);
+export const journeymenTypes: Readable<(Player & { journeyman: boolean })[]> =
+    derived(currentTeam, ($currentTeam) => {
+        const journeyMen = $currentTeam.players
+            .filter((p) => p.max === 16 || p.max === 12)
+            .map((player) => {
+                const journeymanPlayer = playerById(player.id);
+                return {
+                    ...journeymanPlayer,
+                    journeyman: true,
+                };
+            });
+        return journeyMen;
+    });
