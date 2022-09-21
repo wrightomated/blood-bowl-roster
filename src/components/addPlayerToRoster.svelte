@@ -6,14 +6,17 @@
 
     import type { Player } from '../models/player.model';
     import type { PlayerAlterations } from '../models/roster.model';
-    import type { Team } from '../models/team.model';
-    import { currentTeam } from '../store/currentTeam.store';
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
 
     import { roster } from '../store/teamRoster.store';
     import Characteristic from './rosterPlayer/characteristic.svelte';
     import SkillElement from './skillElement.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
+    import { journeymenTypes } from '../store/currentTeam.store';
+    import {
+        journeymanPosition,
+        journeymanSkills,
+    } from '../helpers/journeymenHelper';
 
     export let playerTypes: Player[];
     export let index: number;
@@ -21,12 +24,17 @@
     let newName: string = '';
 
     $: selectedSkills = selected?.journeyman
-        ? [...filteredSkills(selected.skills), ...journeymanSkills()]
+        ? [
+              ...filteredSkills(selected.skills),
+              ...journeymanSkills($roster.format),
+          ]
         : filteredSkills(selected.skills);
 
     const addPlayer = () => {
         const { journeyman, ...player } = selected;
-        const extraSkills = journeyman ? journeymanSkills() : undefined;
+        const extraSkills = journeyman
+            ? journeymanSkills($roster.format)
+            : undefined;
         let alterations: PlayerAlterations = { spp: 0, ni: 0 };
 
         if (journeyman) {
@@ -48,25 +56,11 @@
         newName = '';
     };
 
-    const journeymanType: () => Player & { journeyman: boolean } = () => {
-        const journeymanId = ($currentTeam as Team).players.find(
-            (p) => p.max === 16 || p.max === 12
-        ).id;
-        const journeymanPlayer = playerTypes.find((p) => p.id === journeymanId);
-        return {
-            ...journeymanPlayer,
-            journeyman: true,
-        };
-    };
-
     const filteredSkills: (skills: number[]) => number[] = (skills) => {
         return $roster.format === 'dungeon bowl'
             ? skills.filter((skillId) => !dbIgnoredSkills.includes(skillId))
             : skills;
     };
-
-    const journeymanSkills: () => number[] = () =>
-        $roster.format === 'sevens' ? [710] : [71];
 </script>
 
 <tr class="add-player-row">
@@ -93,7 +87,11 @@
                         </option>
                     {/each}
                     {#if $roster.mode !== 'exhibition'}
-                        <option value={journeymanType()}> Journeyman </option>
+                        {#each $journeymenTypes as journeymanType}
+                            <option value={journeymanType}>
+                                {journeymanPosition(journeymanType.position)}
+                            </option>
+                        {/each}
                     {/if}
                 </select>
             {:else if c.name === 'Controls'}

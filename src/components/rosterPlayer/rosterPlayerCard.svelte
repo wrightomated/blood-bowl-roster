@@ -13,6 +13,7 @@
     import StatBlock from '../playerCard/statBlock.svelte';
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
+    import { journeymanPosition } from '../../helpers/journeymenHelper';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -177,7 +178,7 @@
                 {#if rosterPlayer.starPlayer}
                     <p>Star Player</p>
                 {:else if rosterPlayer?.alterations?.journeyman}
-                    <p>Journeyman</p>
+                    <p>{journeymanPosition(rosterPlayer.player.position)}</p>
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
