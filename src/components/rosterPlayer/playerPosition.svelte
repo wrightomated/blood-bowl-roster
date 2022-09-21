@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { journeymanPosition } from '../../helpers/journeymenHelper';
     import { currentTeam } from '../../store/currentTeam.store';
     import { showSkillButtons } from '../../store/showSkillButtons.store';
 
@@ -55,7 +56,7 @@
 {#if rosterPlayer.starPlayer}
     Star Player
 {:else if rosterPlayer?.alterations?.journeyman}
-    Journeyman
+    {journeymanPosition(rosterPlayer.player.position)}
     <span class="add-skill">
         <MaterialButton
             hoverText="Purchase journeyman"
