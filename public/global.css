@@ -70,7 +70,7 @@ textarea {
     padding: 0.4em;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 2px;
+    border-radius: 8px;
 }
 
 select {
@@ -85,7 +85,6 @@ select {
     padding-right: 24px;
     background-repeat: no-repeat;
     border-color: #ccc;
-    border-radius: 12px;
 }
 
 input:placeholder-shown {

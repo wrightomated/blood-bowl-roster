@@ -24,6 +24,9 @@
     &:disabled {
         border: none;
         color: grey;
+        &:hover{
+            box-shadow: none;
+        }
     }
 
     &.cancel {

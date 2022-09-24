@@ -9,7 +9,7 @@
 
     $: result = score[0] === score[1] ? 'D' : score[0] > score[1] ? 'W' : 'L';
 
-    let date1 = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+    let date1 = new Date(Date.UTC(2022, 8, 10, 3, 0, 0));
 
     function toggleBody() {
         open = !open;

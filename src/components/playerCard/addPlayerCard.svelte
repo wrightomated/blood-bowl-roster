@@ -155,7 +155,7 @@
             color: #333;
         }
 
-        input {
+        .name-input {
             padding: 0;
             color: #555;
             border: 0;
@@ -187,13 +187,10 @@
     }
     .player-details {
         color: #333;
-        input {
-            border: 1px solid #ccc;
+        .multiplier {
             font-size: 12px;
-            width: 40px;
             height: 30px;
-            text-align: center;
-            border-radius: 12px;
+            background: none;
 
             @media screen and (max-width: 783px) {
                 font-size: 16px;

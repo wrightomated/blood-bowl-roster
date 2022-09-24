@@ -188,4 +188,7 @@
             text-transform: capitalize;
         }
     }
+    input {
+        margin-bottom: 12px;
+    }
 </style>
