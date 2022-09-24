@@ -14,10 +14,13 @@
     const moveUp = () => {
         roster.movePlayerUp(index);
     };
-    const removePlayer = (firePlayer: boolean) => {
+
+    function removePlayer() {
+        const firePlayer = $roster?.leagueRosterStatus === 'commenced';
         removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
-    };
-    const removeTwoForOne = (firePlayer: boolean) => {
+    }
+
+    function removeTwoForOne(firePlayer: boolean) {
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
             const tfoIndex = $roster.players.findIndex(
@@ -29,7 +32,7 @@
             }
         }
         return false;
-    };
+    }
 </script>
 
 <div class="flex-container">
@@ -39,6 +42,8 @@
             symbol="arrow_circle_up"
             clickFunction={moveUp}
         />
+    {:else}
+        <i class="material-icons no-op">block</i>
     {/if}
     {#if index < $roster.players.length - 1}
         <MaterialButton
@@ -46,24 +51,22 @@
             symbol="arrow_circle_down"
             clickFunction={moveDown}
         />
+    {:else}
+        <i class="material-icons no-op">block</i>
     {/if}
     <MaterialButton
         cyData={`player-${index}-remove`}
         hoverText="Remove player"
         symbol="delete_forever"
-        clickFunction={() => removePlayer(false)}
+        clickFunction={() => removePlayer()}
     />
-    {#if $roster.mode === 'league'}
-        <MaterialButton
-            hoverText="Fire player (no refund)"
-            symbol="local_fire_department"
-            clickFunction={() => removePlayer(true)}
-        />
-    {/if}
 </div>
 
 <style lang="scss">
     .flex-container {
         display: flex;
+    }
+    .no-op {
+        color: #aaa;
     }
 </style>

@@ -54,16 +54,11 @@
         nonLinemen.includes(rosterPlayer.player.id) &&
         $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
-    const removePlayer = (firePlayer: boolean) => {
+    function removePlayer() {
+        const firePlayer = $roster?.leagueRosterStatus === 'commenced';
         removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
-    };
-    const moveUp = () => {
-        roster.movePlayerUp(index);
-    };
-    const moveDown = () => {
-        roster.movePlayerDown(index);
-    };
-    const removeTwoForOne = (firePlayer: boolean) => {
+    }
+    function removeTwoForOne(firePlayer: boolean) {
         if (rosterPlayer.starPlayer) {
             const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
             const tfoIndex = $roster.players.findIndex(
@@ -75,7 +70,7 @@
             }
         }
         return false;
-    };
+    }
 
     const toggleShowSkills = () => {
         showSkillButtons.set(
@@ -190,15 +185,8 @@
                 <MaterialButton
                     hoverText="Remove player"
                     symbol="delete_forever"
-                    clickFunction={() => removePlayer(false)}
+                    clickFunction={() => removePlayer()}
                 />
-                {#if $roster.mode === 'league'}
-                    <MaterialButton
-                        hoverText="Fire player (no refund)"
-                        symbol="local_fire_department"
-                        clickFunction={() => removePlayer(true)}
-                    />
-                {/if}
 
                 {#if !rosterPlayer.starPlayer}
                     <MaterialButton
