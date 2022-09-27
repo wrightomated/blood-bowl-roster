@@ -61,6 +61,7 @@ export interface PlayerAlterations {
     statChange?: number[]; // c
     extraSkills?: number[]; // e
     valueChange?: number; // v
+    /** How many times a player has advanced */
     advancements?: number; // a
     injuries?: number[]; // i
     journeyman?: boolean; // j

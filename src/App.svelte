@@ -18,12 +18,14 @@
 
 <Modal />
 <Overlay />
-<Menu />
 
-<main>
-    <Team />
-</main>
-<Footer />
+<div class="application">
+    <Menu />
+    <main>
+        <Team />
+    </main>
+    <Footer />
+</div>
 
 <style lang="scss">
     main {

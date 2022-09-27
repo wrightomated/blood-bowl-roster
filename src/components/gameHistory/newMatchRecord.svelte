@@ -1,5 +1,6 @@
 <script lang="ts">
     import { balls } from '../../data/ball.data';
+    import { currentUserStore } from '../../store/currentUser.store';
 
     import { inducementData } from '../../data/inducements.data';
     import { weatherTables } from '../../data/weatherData.data';
@@ -9,6 +10,13 @@
     } from '../../store/currentInducements.store';
 
     import { roster } from '../../store/teamRoster.store';
+    import WeatherControl from './individualControls/weatherControl.svelte';
+    import PettyCash from './individualControls/pettyCash.svelte';
+    import { matchHistoryRecordDraft } from '../../store/matchHistoryRecordDraft.store';
+    import { onMount } from 'svelte';
+    onMount(() => {
+        document.getElementById('coach-name')?.focus();
+    });
     let opponentScore = 0;
     let playerScore = 0;
     ``;
@@ -19,22 +27,47 @@
             ? 'Win'
             : 'Loss';
 
-    function addMatch() {
-        roster.addMatch();
+    function addMatch(e) {
+        e.preventDefault;
+        // roster.addMatch();
     }
-
-    const tables = weatherTables;
 </script>
 
 <section class="new-match">
-    <h2>New Match</h2>
+    <header>
+        <h2>New Match</h2>
+        <p>All fields are optional</p>
+    </header>
 
-    <form class="new-match__form">
-        <label for="opponent">Opponent:</label>
-        <input type="text" id="opponent" autocomplete="off" />
+    <form
+        class="new-match__form"
+        on:submit|preventDefault={(e) => {
+            e.preventDefault;
+        }}
+    >
+        <label for="coach-name">Your Coach Name:</label>
+        <input
+            type="text"
+            id="coach-name"
+            autocomplete="off"
+            bind:value={$matchHistoryRecordDraft.playingCoach.name}
+        />
 
-        <label for="opponent">Date:</label>
-        <input type="date" id="date" autocomplete="off" />
+        <label for="opponent">Opponent Coach Name:</label>
+        <input
+            type="text"
+            id="opponent"
+            autocomplete="off"
+            bind:value={$matchHistoryRecordDraft.opponentCoach.name}
+        />
+
+        <label for="opponent">Date of match:</label>
+        <input
+            type="date"
+            id="date"
+            autocomplete="off"
+            bind:value={$matchHistoryRecordDraft.time.date}
+        />
 
         <div class="label-input">
             <label for="was-league-match">League Match:</label>
@@ -42,6 +75,7 @@
                 type="checkbox"
                 name="was-league-match"
                 id="was-league-match"
+                bind:checked={$matchHistoryRecordDraft.isLeagueMatch}
             />
         </div>
 
@@ -49,16 +83,14 @@
         <input
             type="number"
             id="fan-factor"
-            value={$roster.extra['dedicated_fans'] || 0}
+            max="10"
+            min="0"
+            bind:value={$matchHistoryRecordDraft.playingCoach.fanFactor}
             autocomplete="off"
         />
-
-        <label for="petty-cash">Petty Cash</label>
-        <input type="number" autocomplete="off" id="petty-cash" />
-
-        <label for="inducements-hired">Inducements Hired</label>
-        <p>{$inducementsSummary.join(', ')}</p>
-        <p>{JSON.stringify($inducementAndStarsInRoster)}</p>
+        <PettyCash
+            bind:value={$matchHistoryRecordDraft.playingCoach.pettyCash}
+        />
 
         <label for="new-ctv">New Current Team Value</label>
         <input type="number" id="new-ctv" autocomplete="off" />
@@ -71,6 +103,7 @@
             id=""
             bind:value={playerScore}
             autocomplete="off"
+            max="999"
         />
         -
         <input
@@ -79,6 +112,7 @@
             name="opponent-score"
             bind:value={opponentScore}
             autocomplete="off"
+            max="999"
         />
         <p>{result}</p>
 
@@ -90,6 +124,7 @@
             id="league-points"
             name="league-points"
             autocomplete="off"
+            max="999"
         />
 
         <div class="digits">
@@ -134,13 +169,8 @@
                 />
             </div>
         </div>
+        <WeatherControl />
 
-        <label for="weather">Weather</label>
-        <select name="weather" id="weather">
-            {#each tables as table}
-                <option value={table.type}>{table.type}</option>
-            {/each}
-        </select>
         <label for="ball">Ball</label>
         <select name="ball" id="ball">
             {#each balls as ball}
@@ -152,7 +182,14 @@
         <input type="text" name="stadium" id="stadium" />
 
         <label for="notes">Notes</label>
-        <textarea name="notes" id="notes" cols="30" rows="10" />
+        <textarea
+            name="notes"
+            id="notes"
+            cols="30"
+            rows="10"
+            maxlength="512"
+            bind:value={$matchHistoryRecordDraft.notes}
+        />
 
         <button on:click={addMatch}>Add</button>
     </form>
@@ -160,16 +197,14 @@
 
 <style lang="scss">
     .new-match {
+        // width: 90vw;
         &__form {
-            display: grid;
+            // display: flex;
+            // flex-direction: column;
+            // gap: 16px;
         }
     }
-    // input {
-    //     border: 0;
-    //     border-radius: 0;
-    //     background: none;
-    //     font-size: 16px;
-    // }
+
     .label-input {
         display: flex;
         align-items: center;
@@ -177,18 +212,21 @@
     }
     .digits {
         display: flex;
+        flex-wrap: wrap;
         gap: 8px;
 
         & input {
             max-width: 40px;
         }
     }
-    select[name='weather'] {
-        option {
-            text-transform: capitalize;
-        }
+    header {
+        text-align: center;
     }
-    input {
-        margin-bottom: 12px;
+    // input,
+    // select {
+    //     margin-bottom: 12px;
+    // }
+    input[type='checkbox'] {
+        transform: scale(1.5);
     }
 </style>

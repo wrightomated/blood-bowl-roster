@@ -13,10 +13,21 @@
     };
 
     modalState.subscribe((state) => {
+        let application: HTMLElement = document?.querySelector('.application');
         if (state.isOpen) {
-            // document.body.style.overflow = 'hidden';
+            if (application) {
+                application.style.position = 'fixed';
+                application.style.width = '100%';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // document.querySelector('main').style.position = 'fixed';
+            // document.getElementsByTagName('main')
             // document.body.style.height = '100%';
         } else {
+            if (application) {
+                application.style.position = null;
+            }
+            // document.querySelector('main').style.position = 'relative';
             // document.body.style.overflow = 'auto';
             // document.body.style.height = 'auto';
         }
@@ -39,6 +50,7 @@
             {...$modalState.componentProps}
         />
     </div>
+    <div>Nice</div>
 </div>
 
 <div
@@ -59,9 +71,10 @@
     }
     .modal {
         position: absolute;
-        // width: 100%;
+        // width: min(50vw, 780px);
         left: 50%;
         top: 5vh;
+        margin-bottom: 5vh;
         transform: translateX(-50%);
         z-index: 11;
         background-color: white;
@@ -70,6 +83,9 @@
         border-radius: 25px;
         box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
+        @media screen and (min-width: 783px) {
+            min-width: 783px;
+        }
         @media screen and (max-width: 450px) {
             top: 5%;
         }

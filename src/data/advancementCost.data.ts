@@ -4,3 +4,12 @@ export const advancementCosts = {
     sec: [12, 14, 18, 22, 26, 40],
     char: [18, 20, 24, 28, 32, 50],
 };
+
+export const advancementTitle = {
+    1: 'Experienced',
+    2: 'Veteran',
+    3: 'Emerging Star',
+    4: 'Star',
+    5: 'Super Star',
+    6: 'Legend',
+};

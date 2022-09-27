@@ -354,7 +354,9 @@
             border: var(--secondary-border);
 
             &:hover {
-                border-color: var(--secondary-background-colour);
+                box-shadow: 0 4px 12px #4b7d9e inset;
+                background: var(--secondary-colour);
+                color: white;
             }
             &.selected {
                 background-color: var(--secondary-colour);

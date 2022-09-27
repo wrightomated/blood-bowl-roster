@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { currentUserStore } from '../../store/currentUser.store';
+    import { matchHistoryRecordDraft } from '../../store/matchHistoryRecordDraft.store';
     import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
@@ -6,6 +8,7 @@
 
     function addMatch() {
         // roster.addMatch();
+        matchHistoryRecordDraft.newDraft($currentUserStore.displayName);
         modalState.set({
             ...$modalState,
             isOpen: true,

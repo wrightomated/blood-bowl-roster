@@ -14,6 +14,7 @@
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
+    import Pill from '../uiComponents/pill.svelte';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -177,6 +178,9 @@
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
+                        {#if rosterPlayer.alterations.advancements}
+                            {rosterPlayer.alterations.advancements}
+                        {/if}
                         {#if danger}
                             {numberOfPlayerType}/{maxOfPlayerType}
                         {/if}
@@ -229,6 +233,10 @@
             />
         {/each}
     </div>
+    <!-- 
+    {#if rosterPlayer.alterations.advancements as a}
+        <Pill variant='filled'>{advancementTitle[]}</Pill>
+    {/if} -->
 
     {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
         <div>

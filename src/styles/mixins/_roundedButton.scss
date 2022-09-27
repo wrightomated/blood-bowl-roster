@@ -6,6 +6,7 @@
     margin: 4px;
     border: var(--secondary-border);
     transition: background-color 100ms linear;
+    min-width: 48px;
 
     &:hover,
     &.selected {

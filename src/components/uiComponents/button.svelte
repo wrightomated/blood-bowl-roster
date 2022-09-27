@@ -11,6 +11,7 @@
     class:cancel
     class:selected
     {disabled}
+    type="button"
     on:click={() => clickFunction()}
     data-cy={cyData}><slot /></button
 >

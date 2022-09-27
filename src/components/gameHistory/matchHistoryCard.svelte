@@ -16,9 +16,9 @@
     }
 </script>
 
-<section class="match-record-card" class:closed={!open} on:click={toggleBody}>
+<section class="match-record-card" class:closed={!open}>
     <div class="match-date">{date1.toLocaleDateString(undefined)}</div>
-    <header class="header">
+    <header class="header" on:click={toggleBody}>
         <div class="result">{result}</div>
         <div>vs</div>
         <div class="opponent-name">{opponentName}</div>
@@ -78,6 +78,7 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        cursor: pointer;
 
         *:last-child {
             margin-left: auto;
