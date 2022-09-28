@@ -1354,8 +1354,8 @@ const piranhaBlitzer: Player = {
     cost: 90,
     playerStats: [7, 3, 3, 5, 8],
     skills: [4, 95, 6],
-    primary: ['G', 'S'],
-    secondary: ['A', 'S'],
+    primary: ['G', 'A'],
+    secondary: ['S'],
 };
 const pythonThrower: Player = {
     position: 'Python Warrior Thrower',
