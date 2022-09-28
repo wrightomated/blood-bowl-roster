@@ -1339,6 +1339,42 @@ const dbNorseLineman: Player = {
     skills: [13, 93],
     secondary: ['A', 'S'],
 };
+const eagleLinewoman: Player = {
+    position: 'Eagle Warrior Linewoman',
+    id: 153,
+    cost: 50,
+    playerStats: [6, 3, 3, 4, 8],
+    skills: [4],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const piranhaBlitzer: Player = {
+    position: 'Piranha Warrior Blizter',
+    id: 154,
+    cost: 90,
+    playerStats: [7, 3, 3, 5, 8],
+    skills: [4, 95, 6],
+    primary: ['G', 'S'],
+    secondary: ['A', 'S'],
+};
+const pythonThrower: Player = {
+    position: 'Python Warrior Thrower',
+    id: 155,
+    cost: 80,
+    playerStats: [6, 3, 3, 3, 8],
+    skills: [4, 45, 46, 48],
+    primary: ['P', 'G'],
+    secondary: ['S', 'A'],
+};
+const jaguarBlocker: Player = {
+    position: 'Jaguar Warrior Blocker',
+    id: 156,
+    cost: 110,
+    playerStats: [6, 4, 3, 5, 9],
+    skills: [5, 4],
+    primary: ['G', 'S'],
+    secondary: ['A'],
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1494,5 +1530,9 @@ export const playerCatalogue: PlayerCatalogue = {
         dbGnoblarLineman,
         dbSnotling,
         dbNorseLineman,
+        eagleLinewoman,
+        piranhaBlitzer,
+        pythonThrower,
+        jaguarBlocker,
     ],
 };
