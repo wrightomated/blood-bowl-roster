@@ -515,7 +515,7 @@ export const teamData: TeamList = {
             ],
         },
         {
-            name: 'Amazon',
+            name: 'Amazon (Incomplete)',
             id: 32,
             players: [
                 { id: 153, max: 16 },
