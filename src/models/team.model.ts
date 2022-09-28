@@ -58,7 +58,9 @@ export type TeamName =
     | 'Daemons of Khorne'
     | 'Slann'
     | 'Khorne'
-    | 'Norse (ToL)';
+    | 'Norse (ToL)'
+    | 'Amazon (ToL)'
+    | 'Amazon (Incomplete)';
 
 export type TeamSpecialRule =
     | 'Badlands Brawl'

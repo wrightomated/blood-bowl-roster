@@ -404,6 +404,25 @@ const boa: StarPlayer = {
     specialRules: ['Look Into My Eyes'],
 };
 
+const estelle: StarPlayer = {
+    id: 240,
+    position: 'Estelle la Veneaux',
+    playerStats: [0, 0, 0, 0, 0],
+    playsFor: ['Lustrian Superleague'],
+    skills: [27, 53],
+    cost: 0,
+    specialRules: ['Baleful Hex'],
+};
+const glotl: StarPlayer = {
+    id: 241,
+    position: 'Glotl Stop',
+    playerStats: [0, 0, 0, 0, 0],
+    playsFor: ['Lustrian Superleague'],
+    skills: [],
+    cost: 0,
+    specialRules: ['Unkown'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -446,5 +465,7 @@ export const starPlayers = {
         skrorgSnowpelt,
         thorssonStoutmead,
         boa,
+        estelle,
+        glotl,
     ],
 };
