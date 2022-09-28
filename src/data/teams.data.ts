@@ -365,7 +365,7 @@ export const teamData: TeamList = {
             maxBigGuys: 3,
         },
         {
-            name: 'Amazon',
+            name: 'Amazon (ToL)',
             id: 22,
             players: [
                 { id: 92, max: 16 },
@@ -513,6 +513,20 @@ export const teamData: TeamList = {
                 'Favoured of Chaos Undivided',
                 'Favoured of Khorne',
             ],
+        },
+        {
+            name: 'Amazon (Incomplete)',
+            id: 32,
+            players: [
+                { id: 153, max: 16 },
+                { id: 154, max: 2 },
+                { id: 155, max: 2 },
+                { id: 156, max: 2 },
+            ],
+            reroll: { cost: 50, max: 8 },
+            allowedApothecary: true,
+            tier: 1,
+            specialRules: ['Lustrian Superleague'],
         },
     ],
 };
