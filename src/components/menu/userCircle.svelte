@@ -8,9 +8,9 @@
             {$currentUserStore.displayName?.charAt(0)?.toUpperCase() || '?'}
         </div>
     {:else}
-        <i class="material-icons">person</i>{/if}
+        <i class="material-symbols-outlined">person</i>{/if}
 {:else}
-    <i class="material-icons">account_circle</i>
+    <i class="material-symbols-outlined">account_circle</i>
 {/if}
 
 <style lang="scss">

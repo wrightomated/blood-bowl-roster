@@ -147,3 +147,21 @@ thead {
         display: none;
     }
 }
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 1;
+    transition: font-variation-settings 0.1s linear, scale 0.1s linear;
+}
+
+.material-symbols-outlined:hover {
+    font-variation-settings: 'FILL' 0;
+    scale: 1.2;
+}
+
+.no-transition {
+    transition: none;
+}
+.no-transition:hover {
+    scale: 1;
+    font-variation-settings: 'FILL' 1;
+}

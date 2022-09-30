@@ -42,8 +42,8 @@
             symbol="arrow_circle_up"
             clickFunction={moveUp}
         />
-    {:else}
-        <i class="material-icons no-op">block</i>
+    {:else if $roster.players.length > 1}
+        <i class="material-symbols-outlined no-op no-transition">block</i>
     {/if}
     {#if index < $roster.players.length - 1}
         <MaterialButton
@@ -51,8 +51,8 @@
             symbol="arrow_circle_down"
             clickFunction={moveDown}
         />
-    {:else}
-        <i class="material-icons no-op">block</i>
+    {:else if $roster.players.length > 1}
+        <i class="material-symbols-outlined no-op no-transition">block</i>
     {/if}
     <MaterialButton
         cyData={`player-${index}-remove`}

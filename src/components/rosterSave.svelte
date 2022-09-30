@@ -74,8 +74,14 @@
         clickFunction={() => saveRoster()}
     />
 {:else if syncing}
-    <i class="material-icons syncing" title="Saving team">sync</i>
-{:else}<i class="material-icons saved" title="Team saved">check_circle</i>{/if}
+    <i
+        class="material-symbols-outlined syncing no-transition"
+        title="Saving team">sync</i
+    >
+{:else}<i
+        class="material-symbols-outlined saved no-transition"
+        title="Team saved">check_circle</i
+    >{/if}
 {#if !rosterCleared}
     <MaterialButton
         hoverText="Delete team forever"
