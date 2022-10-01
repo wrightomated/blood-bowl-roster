@@ -397,20 +397,20 @@ const thorssonStoutmead: StarPlayer = {
 const boa: StarPlayer = {
     id: 239,
     position: 'Boa Kon’ssstriktr',
-    playerStats: [6, 0, 0, 0, 0],
+    playerStats: [6, 3, 3, 4, 9],
     playsFor: ['Lustrian Superleague'],
-    skills: [4, 8, 9],
-    cost: 0,
+    skills: [4, 69, 71, 33, 8, 9],
+    cost: 200,
     specialRules: ['Look Into My Eyes'],
 };
 
 const estelle: StarPlayer = {
     id: 240,
     position: 'Estelle la Veneaux',
-    playerStats: [0, 0, 0, 0, 0],
+    playerStats: [6, 3, 3, 4, 8],
     playsFor: ['Lustrian Superleague'],
-    skills: [27, 53],
-    cost: 0,
+    skills: [27, 4, 53, 71, 9],
+    cost: 100,
     specialRules: ['Baleful Hex'],
 };
 const glotl: StarPlayer = {

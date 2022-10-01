@@ -155,13 +155,11 @@ thead {
 
 .material-symbols-outlined:hover {
     font-variation-settings: 'FILL' 0;
-    scale: 1.2;
 }
 
 .no-transition {
     transition: none;
 }
 .no-transition:hover {
-    scale: 1;
     font-variation-settings: 'FILL' 1;
 }

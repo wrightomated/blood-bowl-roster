@@ -9,7 +9,7 @@ export const skillCatalogue: Skill[] = [
     { id: 6, name: 'Jump Up', category: 'A' },
     { id: 7, name: 'Leap', category: 'A' },
     { id: 8, name: 'Safe Pair Of Hands', category: 'A' },
-    { id: 9, name: 'Side Step', category: 'A' },
+    { id: 9, name: 'Sidestep', category: 'A' },
     { id: 10, name: 'Sneaky Git', category: 'A' },
     { id: 11, name: 'Sprint', category: 'A' },
     { id: 12, name: 'Sure Feet', category: 'A' },
