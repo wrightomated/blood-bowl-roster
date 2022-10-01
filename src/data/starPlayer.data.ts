@@ -410,17 +410,17 @@ const estelle: StarPlayer = {
     playerStats: [6, 3, 3, 4, 8],
     playsFor: ['Lustrian Superleague'],
     skills: [27, 4, 53, 71, 9],
-    cost: 100,
+    cost: 190,
     specialRules: ['Baleful Hex'],
 };
 const glotl: StarPlayer = {
     id: 241,
     position: 'Glotl Stop',
-    playerStats: [0, 0, 0, 0, 0],
+    playerStats: [6, 6, 5, 0, 10],
     playsFor: ['Lustrian Superleague'],
-    skills: [],
-    cost: 0,
-    specialRules: ['Unkown'],
+    skills: [61, 17, 71, 55, 33, 58, 60],
+    cost: 270,
+    specialRules: ['Primal Savegery!'],
 };
 
 export const starPlayers = {

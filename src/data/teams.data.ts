@@ -377,6 +377,7 @@ export const teamData: TeamList = {
             allowedApothecary: true,
             tier: 1,
             specialRules: ['Lustrian Superleague'],
+            retired: true,
         },
         {
             name: 'Chaos Dwarf',
@@ -515,7 +516,7 @@ export const teamData: TeamList = {
             ],
         },
         {
-            name: 'Amazon (Incomplete)',
+            name: 'Amazon',
             id: 32,
             players: [
                 { id: 153, max: 16 },
@@ -523,7 +524,7 @@ export const teamData: TeamList = {
                 { id: 155, max: 2 },
                 { id: 156, max: 2 },
             ],
-            reroll: { cost: 50, max: 8 },
+            reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 1,
             specialRules: ['Lustrian Superleague'],
