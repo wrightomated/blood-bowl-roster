@@ -418,8 +418,8 @@ const glotl: StarPlayer = {
     position: 'Glotl Stop',
     playerStats: [6, 6, 5, 0, 10],
     playsFor: ['Lustrian Superleague'],
-    skills: [270],
-    cost: 0,
+    skills: [61, 17, 71, 55, 33, 58, 60],
+    cost: 270,
     specialRules: ['Primal Savegery!'],
 };
 
