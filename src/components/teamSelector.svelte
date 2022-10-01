@@ -323,7 +323,7 @@
     .button-container {
         margin-top: 8px;
         margin-bottom: 8px;
-        border-radius: 10px;
+        border-radius: 12px;
         background: var(--secondary-background-colour);
         padding: 8px;
     }

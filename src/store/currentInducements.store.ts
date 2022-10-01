@@ -15,7 +15,7 @@ export const inducementAndStarsInRoster = derived(roster, ($roster) => {
     const starPlayers = $roster.players
         .filter((p) => p.starPlayer)
         .map((p) => [p.playerName, 1]);
-    return starPlayers.concat(inducements);
+    return starPlayers.concat(inducements).filter((i) => i[1] > 0);
 });
 export const inducementsSummary = derived(
     inducementsInRoster,

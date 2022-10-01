@@ -246,14 +246,14 @@
     <div class="content">
         {#if tooManyBigGuys}
             <p class="big-guys">
-                <i class="material-icons">warning</i>
+                <i class="material-symbols-outlined">warning</i>
                 {$roster.players.filter((x) => x.player.bigGuy)
                     .length}/{$currentTeam.maxBigGuys} Big Guys
             </p>
         {/if}
         {#if sevensSpecialistsAmount > 4}
             <p class="sevens-over-four">
-                <i class="material-icons">warning</i>
+                <i class="material-symbols-outlined">warning</i>
                 {sevensSpecialistsAmount} / 4 Specialists
             </p>
         {/if}

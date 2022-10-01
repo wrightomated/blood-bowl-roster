@@ -32,7 +32,7 @@
 
     .toggle {
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 12px;
         background-color: white;
         margin: 4px;
         border: var(--secondary-border);

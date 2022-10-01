@@ -68,7 +68,7 @@
     {rosterPlayer.player.position}
     {#if danger}
         <span class="danger">
-            <i class="material-icons">warning</i>
+            <i class="material-symbols-outlined">warning</i>
             {numberOfPlayerType}/{maxOfPlayerType}
         </span>
     {/if}

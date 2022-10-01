@@ -2,7 +2,7 @@
     export let loadingText = '';
 </script>
 
-<i class="material-icons spinner">sports_football</i>
+<i class="material-symbols-outlined spinner">sports_football</i>
 {#if loadingText}
     <p>{loadingText}</p>
 {/if}

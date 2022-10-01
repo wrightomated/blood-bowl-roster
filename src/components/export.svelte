@@ -54,7 +54,8 @@
                     cyData="copy-share-url"
                     clickFunction={() => copyLink(toggleUrlCopy, '#url-input')}
                 />
-            {:else}<i class="material-icons saved">check_circle</i>{/if}
+            {:else}<i class="material-symbols-outlined saved">check_circle</i
+                >{/if}
         </div>
         <div class="share-box">
             <label for="code-input">Export Code:</label>
@@ -72,14 +73,15 @@
                     clickFunction={() =>
                         copyLink(toggleCodeCopy, '#code-input')}
                 />
-            {:else}<i class="material-icons saved">check_circle</i>{/if}
+            {:else}<i class="material-symbols-outlined saved">check_circle</i
+                >{/if}
         </div>
     </div>
 {/if}
 
 <style lang="scss">
     .container {
-        border-radius: 10px;
+        border-radius: 12px;
         background: var(--secondary-background-colour);
         padding: 10px;
         margin-bottom: 1em;

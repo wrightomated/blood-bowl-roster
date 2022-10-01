@@ -11,7 +11,7 @@
     class:pushRight
     on:click={() => clickFunction()}
     data-cy={cyData}
-    title={hoverText}><i class="material-icons">{symbol}</i></button
+    title={hoverText}><i class="material-symbols-outlined">{symbol}</i></button
 >
 
 <style lang="scss">

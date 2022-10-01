@@ -8,9 +8,15 @@
         }
     }
 
-    const closeModal = () => {
+    function closeModal() {
         modalState.close();
-    };
+    }
+
+    function handleKeydown(event) {
+        if (event?.code === 'Escape') {
+            closeModal();
+        }
+    }
 
     modalState.subscribe((state) => {
         let application: HTMLElement = document?.querySelector('.application');
@@ -34,6 +40,8 @@
     });
 </script>
 
+<svelte:window on:keydown={handleKeydown} />
+
 <div class="modal" class:closed={!$modalState.isOpen}>
     {#if $modalState.canClose}
         <div class="close">
@@ -50,7 +58,6 @@
             {...$modalState.componentProps}
         />
     </div>
-    <div>Nice</div>
 </div>
 
 <div

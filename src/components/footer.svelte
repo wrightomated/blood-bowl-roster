@@ -2,8 +2,8 @@
     <p class="blog-link">
         <strong
             ><a href="https://blog.bbroster.com" title="BB Roster Blog"
-                >BBRoster update notes and news <i class="material-icons"
-                    >open_in_new</i
+                >BBRoster update notes and news <i
+                    class="material-symbols-outlined">open_in_new</i
                 ></a
             ></strong
         >

@@ -120,7 +120,7 @@
 
     <div class="player-card__content">
         <button class="add-sign" on:click={addPlayers} title="Add New Player"
-            ><i class="material-icons icon">add_circle</i></button
+            ><i class="material-symbols-outlined icon">add_circle</i></button
         >
     </div>
 </div>

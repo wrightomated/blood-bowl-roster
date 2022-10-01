@@ -313,7 +313,7 @@ const scyla: StarPlayer = {
     id: 231,
     position: 'Scyla Anfingrimm',
     playerStats: [5, 5, 4, 0, 10],
-    playsFor: ['Favoured of...'],
+    playsFor: ['Favoured of Khorne'],
     skills: [26, 17, 71, 55, 33, 60, 88],
     cost: 200,
     specialRules: ['Fury of the Blood God'],
@@ -323,7 +323,7 @@ const max: StarPlayer = {
     id: 232,
     position: 'Max Spleenripper',
     playerStats: [5, 4, 4, 0, 9],
-    playsFor: ['Favoured of...'],
+    playsFor: ['Favoured of Khorne'],
     skills: [67, 71, 79],
     cost: 130,
     specialRules: ['Maximum Carnage'],
@@ -397,20 +397,20 @@ const thorssonStoutmead: StarPlayer = {
 const boa: StarPlayer = {
     id: 239,
     position: 'Boa Kon’ssstriktr',
-    playerStats: [6, 0, 0, 0, 0],
+    playerStats: [6, 3, 3, 4, 9],
     playsFor: ['Lustrian Superleague'],
-    skills: [4, 8, 9],
-    cost: 0,
+    skills: [4, 69, 71, 33, 8, 9],
+    cost: 200,
     specialRules: ['Look Into My Eyes'],
 };
 
 const estelle: StarPlayer = {
     id: 240,
     position: 'Estelle la Veneaux',
-    playerStats: [0, 0, 0, 0, 0],
+    playerStats: [6, 3, 3, 4, 8],
     playsFor: ['Lustrian Superleague'],
-    skills: [27, 53],
-    cost: 0,
+    skills: [27, 4, 53, 71, 9],
+    cost: 100,
     specialRules: ['Baleful Hex'],
 };
 const glotl: StarPlayer = {

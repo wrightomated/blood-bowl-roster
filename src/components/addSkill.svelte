@@ -417,7 +417,7 @@
         max-width: 100%;
     }
     button {
-        border-radius: 10px;
+        border-radius: 12px;
         background-color: white;
         color: var(--secondary-colour);
         padding: 10px;
@@ -485,7 +485,7 @@
     }
     fieldset {
         padding: 1em;
-        border-radius: 10px;
+        border-radius: 12px;
         border: 2px solid;
         border-color: var(--secondary-colour);
         margin-top: 1em;

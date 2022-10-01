@@ -18,13 +18,13 @@
 
 <section class="match-record-card" class:closed={!open}>
     <div class="match-date">{date1.toLocaleDateString(undefined)}</div>
-    <header class="header" on:click={toggleBody}>
+    <header class="header" class:open on:click={toggleBody}>
         <div class="result">{result}</div>
         <div>vs</div>
         <div class="opponent-name">{opponentName}</div>
         <div class="score">{score[0]} - {score[1]}</div>
         <Pill variant="filled">League</Pill>
-        <i class="material-icons" title={open ? 'Shrink' : 'Expand'}
+        <i class="material-symbols-outlined" title={open ? 'Shrink' : 'Expand'}
             >{open ? 'arrow_drop_up' : 'arrow_drop_down'}</i
         >
 
@@ -46,14 +46,15 @@
         --t-offset: 12px;
     }
     .match-record-card {
-        border-radius: 25px;
+        border-radius: 24px;
         position: relative;
-        width: calc(100% - var(--l-offset) - 48px);
+        width: 100%;
+        width: calc(100% - var(--l-offset));
         border: var(--secondary-border);
         margin-left: var(--l-offset);
         margin-top: var(--t-offset);
 
-        padding: 8px 16px 8px 36px;
+        // padding: 8px 16px 8px 36px;
     }
     .result {
         position: absolute;
@@ -79,6 +80,14 @@
         align-items: center;
         gap: 12px;
         cursor: pointer;
+        padding: 8px 16px 8px 36px;
+        // transition: background-color 0.2s, color 0.2s;
+        // border-radius: 0 20px 0 0;
+
+        // &.open {
+        //     background-color: var(--secondary-colour);
+        //     color: white;
+        // }
 
         *:last-child {
             margin-left: auto;
@@ -97,6 +106,7 @@
     .match-date {
         position: absolute;
         top: -20px;
+        left: 36px;
         font-family: var(--display-font);
     }
 </style>
