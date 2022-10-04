@@ -1,19 +1,8 @@
 <script lang="ts">
-    import { balls } from '../../data/ball.data';
-    import { currentUserStore } from '../../store/currentUser.store';
-
-    import { inducementData } from '../../data/inducements.data';
-    import { weatherTables } from '../../data/weatherData.data';
-    import {
-        inducementAndStarsInRoster,
-        inducementsSummary,
-    } from '../../store/currentInducements.store';
-
-    import { roster } from '../../store/teamRoster.store';
-    import WeatherControl from './individualControls/weatherControl.svelte';
-    import PettyCash from './individualControls/pettyCash.svelte';
     import { matchHistoryRecordDraft } from '../../store/matchHistoryRecordDraft.store';
     import { onMount } from 'svelte';
+    import GameDetails from './individualControls/gameDetails.svelte';
+    import PreGameCalculations from './individualControls/preGameCalculations.svelte';
     onMount(() => {
         document.getElementById('coach-name')?.focus();
     });
@@ -45,57 +34,61 @@
             e.preventDefault;
         }}
     >
-        <label for="coach-name">Your Coach Name:</label>
-        <input
-            type="text"
-            id="coach-name"
-            autocomplete="off"
-            bind:value={$matchHistoryRecordDraft.playingCoach.name}
-        />
+        <GameDetails />
+        <PreGameCalculations />
+        <h3>Other</h3>
 
-        <label for="opponent">Opponent Coach Name:</label>
-        <input
-            type="text"
-            id="opponent"
-            autocomplete="off"
-            bind:value={$matchHistoryRecordDraft.opponentCoach.name}
-        />
-
-        <label for="opponent">Date of match:</label>
-        <input
-            type="date"
-            id="date"
-            autocomplete="off"
-            bind:value={$matchHistoryRecordDraft.time.date}
-        />
-
-        <div class="label-input">
-            <label for="was-league-match">League Match:</label>
-            <input
-                type="checkbox"
-                name="was-league-match"
-                id="was-league-match"
-                bind:checked={$matchHistoryRecordDraft.isLeagueMatch}
-            />
+        <div class="digits">
+            <div class="label-input">
+                <label for="casualties">Casualties:</label>
+                <input
+                    type="number"
+                    name="casualties"
+                    id="casualties"
+                    value="0"
+                    min="0"
+                    max="999"
+                />
+            </div>
+            <div class="label-input">
+                <label for="touchdowns">Touchdowns:</label>
+                <input
+                    type="number"
+                    name="touchdowns"
+                    id="touchdowns"
+                    value="0"
+                    min="0"
+                    max="999"
+                />
+            </div>
+            <div class="label-input">
+                <label for="passes">Passes:</label>
+                <input
+                    type="number"
+                    name="passes"
+                    id="passes"
+                    value="0"
+                    min="0"
+                    max="999"
+                />
+            </div>
+            <div class="label-input">
+                <label for="kills">Kills:</label>
+                <input
+                    type="number"
+                    name="kills"
+                    id="kills"
+                    value="0"
+                    min="0"
+                    max="999"
+                />
+            </div>
         </div>
-
-        <label for="fan-factor">Fan Factor:</label>
-        <input
-            type="number"
-            id="fan-factor"
-            max="10"
-            min="0"
-            bind:value={$matchHistoryRecordDraft.playingCoach.fanFactor}
-            autocomplete="off"
-        />
-        <PettyCash
-            bind:value={$matchHistoryRecordDraft.playingCoach.pettyCash}
-        />
 
         <label for="new-ctv">New Current Team Value</label>
         <input type="number" id="new-ctv" autocomplete="off" />
 
-        <label for="score">Result:</label>
+        <!-- <label for="score">Result:</label>
         <input
             type="number"
             name="player-score"
@@ -114,7 +107,7 @@
             autocomplete="off"
             max="999"
         />
-        <p>{result}</p>
+        <p>{result}</p> -->
 
         <label for="winnings">Winnings</label>
         <input type="number" name="winnings" id="winnings" autocomplete="off" />
@@ -126,60 +119,6 @@
             autocomplete="off"
             max="999"
         />
-
-        <div class="digits">
-            <div class="label-input">
-                <label for="casualties">Casualties:</label>
-                <input
-                    type="number"
-                    name="casualties"
-                    id="casualties"
-                    value="0"
-                    min="0"
-                />
-            </div>
-            <div class="label-input">
-                <label for="touchdowns">Touchdowns:</label>
-                <input
-                    type="number"
-                    name="touchdowns"
-                    id="touchdowns"
-                    value="0"
-                    min="0"
-                />
-            </div>
-            <div class="label-input">
-                <label for="passes">Passes:</label>
-                <input
-                    type="number"
-                    name="passes"
-                    id="passes"
-                    value="0"
-                    min="0"
-                />
-            </div>
-            <div class="label-input">
-                <label for="kills">Kills:</label>
-                <input
-                    type="number"
-                    name="kills"
-                    id="kills"
-                    value="0"
-                    min="0"
-                />
-            </div>
-        </div>
-        <WeatherControl />
-
-        <label for="ball">Ball</label>
-        <select name="ball" id="ball">
-            {#each balls as ball}
-                <option value={ball.id}>{ball.ballName}</option>
-            {/each}
-        </select>
-
-        <label for="stadium">Stadium</label>
-        <input type="text" name="stadium" id="stadium" />
 
         <label for="notes">Notes</label>
         <textarea
@@ -199,8 +138,8 @@
     .new-match {
         // width: 90vw;
         &__form {
-            // display: flex;
-            // flex-direction: column;
+            display: flex;
+            flex-direction: column;
             // gap: 16px;
         }
     }
@@ -215,9 +154,9 @@
         flex-wrap: wrap;
         gap: 8px;
 
-        & input {
-            max-width: 40px;
-        }
+        // & input {
+        //     max-width: 40px;
+        // }
     }
     header {
         text-align: center;
@@ -226,7 +165,4 @@
     // select {
     //     margin-bottom: 12px;
     // }
-    input[type='checkbox'] {
-        transform: scale(1.5);
-    }
 </style>

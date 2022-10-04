@@ -15,6 +15,7 @@
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import Pill from '../uiComponents/pill.svelte';
+    import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
 
     export let index: number;
     let playerNumber = index + 1;
@@ -326,12 +327,12 @@
             <span class="mini-title">Hiring Fee:</span>
             {rosterPlayer.player.cost > 0 &&
             !rosterPlayer?.alterations?.journeyman
-                ? `${rosterPlayer.player.cost},000`
+                ? `${formatNumberInThousands(rosterPlayer.player.cost)}`
                 : '-'}
         </p>
         <p class="current-value">
             <span class="mini-title">Current Value:</span>
-            {currentCost}{currentCost > 0 ? ',000' : ''}
+            {formatNumberInThousands(currentCost)}
         </p>
     </div>
 </section>

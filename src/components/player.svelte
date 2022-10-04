@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { Player } from '../models/player.model';
     import { roster } from '../store/teamRoster.store';
     import { teamSelectionOpen } from '../store/teamSelectionOpen.store';
@@ -15,7 +16,7 @@
         {playerTypeCount}/{max}
     </td>
     <td class="left-align">{player.position}</td>
-    <td>{player.cost},000</td>
+    <td>{formatNumberInThousands(player.cost)}</td>
     {#each player.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
     {/each}

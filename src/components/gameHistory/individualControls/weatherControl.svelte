@@ -43,20 +43,20 @@
             >
         {/each}
     </select>
-    <select
+    <i class="material-symbols-outlined symbol-empty"
+        >{weatherTables.find((x) => x.type === selectedTable).icon}</i
+    >
+
+    <!-- <select
         name="weather-result"
         id="weather-result"
         bind:value={weatherResult}
     >
         {#each weatherTable(selectedTable) as weather}
             <option value={weather[0]}>{weather[1]}</option>
-
-            <!-- <option class="weather-type" value={table.type}
-                >{capitalise(table.type)}</option
-            > -->
         {/each}
     </select>
-    <Die faces={6} rolls={2} on:rolled={updateValue} />
+    <Die faces={6} rolls={2} on:rolled={updateValue} /> -->
 </div>
 
 <style>

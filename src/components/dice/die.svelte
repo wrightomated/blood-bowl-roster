@@ -1,12 +1,13 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import Button from '../uiComponents/button.svelte';
+    // import Button from '../uiComponents/button.svelte';
 
     const dispatch = createEventDispatcher();
 
     export let faces: number;
     export let rolls: number = 1;
     export let result: number = 0;
+    let dice;
 
     $: display = result > 0 ? result : `${rolls || ''}d${faces}`;
 
@@ -23,7 +24,10 @@
     }
 
     function rollAll() {
+        dice.addEventListener('animationend', removeRoll);
+
         result = rollMultiple(rolls, faces);
+        dice.classList.add('roll');
         rolled();
     }
 
@@ -32,9 +36,18 @@
             result,
         });
     }
+
+    function removeRoll() {
+        dice.classList.remove('roll');
+    }
 </script>
 
-{#key display}
-    <Button clickFunction={rollAll}>{display}</Button>
-    <!-- <button class="die" type="button" on:click={rollAll}>{display}</button> -->
-{/key}
+<button type="button" on:click={rollAll} bind:this={dice}>{display}</button>
+
+<!-- <div class="roll" /> -->
+<style lang="scss">
+    @use '../../styles/mixins/roundedButton';
+    button {
+        @include roundedButton.rounded-button;
+    }
+</style>

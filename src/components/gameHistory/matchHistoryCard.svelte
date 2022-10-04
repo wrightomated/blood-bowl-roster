@@ -1,15 +1,19 @@
 <script lang="ts">
+    import type { MatchHistorySummary } from '../../models/matchHistory.model';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import Pill from '../uiComponents/pill.svelte';
     import MatchHistoryInfo from './matchHistoryInfo.svelte';
 
-    export let opponentName: string;
+    export let matchSummary: MatchHistorySummary;
     export let open = false;
-    export let score: [number, number] = [0, 0];
+    // export let score: [number, number] = [0, 0];
+    $: opponentScore = matchSummary.opponent.score;
+    $: score = matchSummary.playerScores.touchdowns;
 
-    $: result = score[0] === score[1] ? 'D' : score[0] > score[1] ? 'W' : 'L';
+    $: result =
+        score === opponentScore ? 'D' : score > opponentScore ? 'W' : 'L';
 
-    let date1 = new Date(Date.UTC(2022, 8, 10, 3, 0, 0));
+    // let date1 = new Date(Date.UTC(2022, 8, 10, 3, 0, 0));
 
     function toggleBody() {
         open = !open;
@@ -17,13 +21,21 @@
 </script>
 
 <section class="match-record-card" class:closed={!open}>
-    <div class="match-date">{date1.toLocaleDateString(undefined)}</div>
+    {#if matchSummary.matchDate}
+        <div class="match-date">
+            {matchSummary.matchDate.toLocaleDateString()}
+        </div>
+    {/if}
+
     <header class="header" class:open on:click={toggleBody}>
         <div class="result">{result}</div>
         <div>vs</div>
-        <div class="opponent-name">{opponentName}</div>
-        <div class="score">{score[0]} - {score[1]}</div>
-        <Pill variant="filled">League</Pill>
+        <div class="opponent-name">{matchSummary.opponent.name}</div>
+        <div class="score">{score} - {opponentScore}</div>
+        {#if matchSummary.isLeagueMatch}
+            <Pill variant="filled">League</Pill>
+        {/if}
+
         <i class="material-symbols-outlined" title={open ? 'Shrink' : 'Expand'}
             >{open ? 'arrow_drop_up' : 'arrow_drop_down'}</i
         >

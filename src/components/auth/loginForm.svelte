@@ -121,10 +121,6 @@
         margin-bottom: 8px;
     }
 
-    label {
-        font-family: var(--display-font);
-    }
-
     .login-button {
         @include roundedButton.rounded-button;
     }

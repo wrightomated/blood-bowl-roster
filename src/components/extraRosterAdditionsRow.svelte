@@ -3,10 +3,12 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import type { Extra } from '../models/extra.model';
     import type { LeagueRosterStatus } from '../models/roster.model';
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
     export let extra: Extra;
 
     $: extraAmount = $roster?.extra[extra.extraString] || extra?.min || 0;
+    $: extraMax = alterExtraMax(extra, $roster.leagueRosterStatus);
     $: extraCost = alterExtraCost(
         extra,
         $roster.leagueRosterStatus,
@@ -33,15 +35,22 @@
         }
         return extra.cost;
     }
+
+    function alterExtraMax(extra: Extra, status: LeagueRosterStatus) {
+        if (extra.extraString !== 'dedicated_fans' || status === 'commenced') {
+            return extra.max;
+        }
+        return extra.max - 1;
+    }
 </script>
 
 <tr>
     <th>{extra.extraString.replace('_', ' ')}</th>
-    <td class="qty">{extraAmount} / {extra.max}</td>
-    <td>{extraCost},000 </td>
+    <td class="qty">{extraAmount} / {extraMax}</td>
+    <td>{formatNumberInThousands(extraCost)}</td>
     <td class="control">
         <div class="flex-container">
-            {#if extraAmount < extra.max && !(extra.extraString === 'rerolls' && $roster.leagueRosterStatus === 'commenced' && $roster.format === 'sevens')}
+            {#if extraAmount < extraMax && !(extra.extraString === 'rerolls' && $roster.leagueRosterStatus === 'commenced' && $roster.format === 'sevens')}
                 <MaterialButton
                     cyData={'add-' + extra.extraString.replace('_', '-')}
                     hoverText="Add extra"

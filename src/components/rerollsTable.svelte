@@ -8,6 +8,7 @@
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -56,23 +57,13 @@
         <tr>
             <th>Team Value</th>
             <td colspan="2">
-                {(teamTotal + teamExtrasTotal)
-                    .toString()
-                    .replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        ','
-                    )}{#if teamTotal + teamExtrasTotal !== 0},000{/if}
+                {formatNumberInThousands(teamTotal + teamExtrasTotal)}
             </td>
         </tr>
         <tr>
             <th>Current TV</th>
             <td data-cy="current-tv" colspan="2">
-                {(currentTotal + teamExtrasTotal)
-                    .toString()
-                    .replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        ','
-                    )}{#if currentTotal + teamExtrasTotal !== 0},000{/if}
+                {formatNumberInThousands(currentTotal + teamExtrasTotal)}
             </td>
         </tr>
 

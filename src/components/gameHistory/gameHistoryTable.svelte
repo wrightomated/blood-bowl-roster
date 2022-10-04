@@ -4,7 +4,6 @@
     import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
-    import NewMatchRecord from './newMatchRecord.svelte';
 
     function addMatch() {
         // roster.addMatch();
@@ -13,7 +12,7 @@
             ...$modalState,
             isOpen: true,
             canClose: true,
-            component: NewMatchRecord,
+            component: 'NewMatchRecord',
             // componentProps: {
             //     loadingText: `Loading ${preview?.teamName || 'roster'}`,
             // },

@@ -157,9 +157,32 @@ thead {
     font-variation-settings: 'FILL' 0;
 }
 
+.symbol-empty {
+    font-variation-settings: 'FILL' 0;
+}
+
 .no-transition {
     transition: none;
 }
 .no-transition:hover {
     font-variation-settings: 'FILL' 1;
+}
+.roll {
+    animation-name: spin;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+label {
+    font-family: var(--display-font);
 }

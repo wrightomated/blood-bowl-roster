@@ -1,12 +1,13 @@
 <script lang="ts">
     import { quintOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
+    import { weatherSymbol } from '../../data/weatherData.data';
     import { inducementAndStarsInRoster } from '../../store/currentInducements.store';
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
-    import Pill from '../uiComponents/pill.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
     const numberFormatter = new Intl.NumberFormat();
+    const weather = 'Morning Dew';
 
     // $: formattedInducements = $inducementAndStarsInRoster
     //     .map((x) => `${x[0]}${x[1] ? ` ${x[1]}` : ''}`)
@@ -16,9 +17,12 @@
 <article class="content" transition:slide={{ duration: 200, easing: quintOut }}>
     <!-- <div>League Match</div> -->
     <div class="match-modifiers">
-        <IconWithCaption icon="sunny" caption="Sunny" />
+        <IconWithCaption
+            icon={weatherSymbol[weather] ?? 'sunny'}
+            caption={weather}
+        />
         <IconWithCaption icon="stadium" caption="Sloping Pitch" />
-        <IconWithCaption icon="sports_football" caption="Soulstone Ball" />
+        <!-- <IconWithCaption icon="sports_football" caption="Soulstone Ball" /> -->
     </div>
     <div class="statistics">
         <TitleWithResult title="Petty Cash" result={30000} />
@@ -77,7 +81,7 @@
         flex: 2;
         padding: 20px;
         border-radius: 12px;
-        background-color: var(--secondary-background-colour);
+        // background-color: var(--secondary-background-colour);
     }
     .additional {
         display: flex;
@@ -92,5 +96,8 @@
         flex: 1;
         display: flex;
         flex-flow: row wrap;
+        border-radius: 12px;
+        color: white;
+        background-color: var(--main-colour);
     }
 </style>

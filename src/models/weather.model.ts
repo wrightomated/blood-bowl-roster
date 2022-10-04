@@ -21,4 +21,5 @@ export type WeatherRollResult = Record<`${2 | 3 | 11 | 12}`, string>;
 export type WeatherTable = {
     type: WeatherType;
     results: WeatherRollResult;
+    icon: string;
 };

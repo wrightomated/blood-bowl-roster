@@ -130,10 +130,6 @@
         font-size: 16px;
     }
 
-    label {
-        font-family: var(--display-font);
-    }
-
     button {
         @include roundedButton.rounded-button;
     }

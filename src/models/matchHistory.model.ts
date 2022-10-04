@@ -1,7 +1,19 @@
 import type { WeatherType } from '../models/weather.model';
-import type { D3Result, D6Result, TwoD6Result } from './dice.model';
+import type { D3Result, D6Result } from './dice.model';
+import type { StadiumCategory } from './stadium.model';
 
 export type MatchStatus = 'pre' | 'playing' | 'post';
+
+export type MatchHistorySummary = {
+    id: string;
+    opponent: {
+        name: string;
+        score: number;
+    };
+    playerScores: GameEventTally;
+    isLeagueMatch?: boolean;
+    matchDate?: Date;
+};
 
 export type MatchHistoryRecord = {
     id?: string;
@@ -12,18 +24,21 @@ export type MatchHistoryRecord = {
     gameEventTally?: GameEventTally;
     weather?: {
         table: WeatherType;
-        result: '2' | '3' | '4 - 10' | '11' | '12';
+        result?: '2' | '3' | '4 - 10' | '11' | '12';
     };
-    /** id of the ball used */
-    ball?: number;
     /** Two rolls for the table */
-    stadium?: [TwoD6Result, D6Result];
+    // stadium?: [TwoD6Result, D6Result];
+    stadium?: {
+        category: StadiumCategory;
+        attribute?: D6Result;
+    };
     time?: { date?: Date };
     notes?: string;
 };
 
 export type MatchHistoryCoach = {
     fairWeatherFans?: D3Result;
+    dedicatedFans?: number;
     fanFactor?: number;
     inducementsHired?: { id: string; amount?: number }[];
     leaguePoints?: number;

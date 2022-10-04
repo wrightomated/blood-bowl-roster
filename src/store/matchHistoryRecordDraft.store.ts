@@ -18,6 +18,7 @@ function newRecord(coachName?: string): MatchHistoryRecord {
         opponentCoach: {},
         weather: { table: 'default', result: '4 - 10' },
         time: {},
+        stadium: { category: 'Nothing out of the Ordinary' },
     };
 }
 

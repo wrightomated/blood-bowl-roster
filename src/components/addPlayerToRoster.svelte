@@ -17,6 +17,7 @@
         journeymanPosition,
         journeymanSkills,
     } from '../helpers/journeymenHelper';
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
     export let playerTypes: Player[];
     export let index: number;
@@ -109,7 +110,9 @@
             {:else if c.name === 'Skills'}
                 <SkillElement playerSkillIds={selectedSkills} />
             {:else if c.name === 'Hiring Fee'}
-                {!selected?.journeyman ? `${selected.cost},000` : '-'}
+                {!selected?.journeyman
+                    ? `${formatNumberInThousands(selected.cost)}`
+                    : '-'}
             {/if}
         </td>
     {/each}

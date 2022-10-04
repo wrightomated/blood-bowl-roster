@@ -1,4 +1,8 @@
-import type { Stadium, StadiumTable } from '../models/stadium.model';
+import type {
+    Stadium,
+    StadiumCategory,
+    StadiumTable,
+} from '../models/stadium.model';
 
 const unusual: Stadium = {
     category: 'Unusual Playing Surface',
@@ -124,7 +128,15 @@ const nothing: Stadium = {
     category: 'Nothing out of the Ordinary',
 };
 
-export const StadiumTableData: StadiumTable = {
+export const categoryMap: Record<StadiumCategory, Stadium> = {
+    'Nothing out of the Ordinary': nothing,
+    'Unusual Playing Surface': unusual,
+    'Rough & Ready Stadium': rough,
+    'Luxury Stadium': luxury,
+    'Local Crowd': localCrowd,
+};
+
+export const stadiumTableData: StadiumTable = {
     2: unusual,
     3: unusual,
     4: rough,

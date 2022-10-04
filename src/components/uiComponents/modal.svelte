@@ -90,11 +90,11 @@
         border-radius: 25px;
         box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
-        @media screen and (min-width: 783px) {
-            min-width: 783px;
+        @media screen and (min-width: 801px) {
+            min-width: 780px;
         }
-        @media screen and (max-width: 450px) {
-            top: 5%;
+        @media screen and (max-width: 800px) {
+            min-width: 96%;
         }
     }
     .content {
