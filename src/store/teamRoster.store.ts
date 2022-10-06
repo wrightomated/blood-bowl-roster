@@ -18,7 +18,7 @@ import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import { PickedSpecialRule } from '../data/teams.data';
 
-export const maxPlayerNumber = 16;
+export const maxPlayerNumber = 99;
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -173,7 +173,7 @@ function createRoster() {
             update((store) => {
                 return { ...store, leagueRosterStatus };
             }),
-        updatePlayerNumber: (currentIndex: number, desired: number) => {
+        updatePlayerNumberAndOrder: (currentIndex: number, desired: number) => {
             update((store) => {
                 if (
                     !Number.isInteger(desired) ||
@@ -203,6 +203,23 @@ function createRoster() {
                     currentIndex,
                     desiredIndex
                 );
+                return { ...store, players };
+            });
+        },
+        updatePlayerNumber: (currentIndex: number, desired: number) => {
+            update((store) => {
+                if (!Number.isInteger(desired) || desired > 99 || desired < 1) {
+                    return store;
+                }
+                const players = store.players;
+                const taken = numberTaken(players, desired);
+
+                if (taken >= 0) {
+                    players[taken].alterations.playerNumber =
+                        players[currentIndex].alterations.playerNumber;
+                }
+                players[currentIndex].alterations.playerNumber = desired;
+
                 return { ...store, players };
             });
         },
@@ -276,10 +293,20 @@ const rosterFromCode = (code: string) => {
 };
 
 const getDefaultRoster: () => Roster = () => {
-    const defaultRoster: Roster =
+    let defaultRoster: Roster =
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
+    const players = defaultRoster.players;
+    if (
+        players.length > 0 &&
+        players.some((p) => !p.alterations.playerNumber)
+    ) {
+        defaultRoster = {
+            ...defaultRoster,
+            players: assignPlayerNumbers(defaultRoster.players),
+        };
+    }
     if (!defaultRoster.rosterId) {
         defaultRoster.rosterId = nanoid();
     }
@@ -299,12 +326,15 @@ const addPlayerToPlayers: (
     maxPlayers: number,
     index?: number
 ) => RosterPlayerRecord[] = (players, newPlayer, maxPlayers, index) => {
+    const playerWithNumber = newPlayer?.alterations?.playerNumber
+        ? newPlayer
+        : assignPlayerNumber(newPlayer, players);
     const indexToAdd =
         index < maxPlayers ? index : players.findIndex((p) => p.deleted);
 
     return indexToAdd >= 0 && indexToAdd < players.length
-        ? players.map((p, i) => (i === indexToAdd ? newPlayer : p))
-        : players.concat([newPlayer]);
+        ? players.map((p, i) => (i === indexToAdd ? playerWithNumber : p))
+        : players.concat([playerWithNumber]);
 };
 
 const deletePlayersFromPlayers: (
@@ -327,5 +357,45 @@ const deletePlayersFromPlayers: (
 
     return newPlayers;
 };
+
+function assignPlayerNumbers(
+    players: RosterPlayerRecord[]
+): RosterPlayerRecord[] {
+    return players.map((p, i) => {
+        if (p?.alterations?.playerNumber) return p;
+        return assignPlayerNumber(i, players);
+    });
+}
+
+function assignPlayerNumber(
+    playerRef: RosterPlayerRecord | number,
+    players: RosterPlayerRecord[]
+): RosterPlayerRecord {
+    const index = typeof playerRef === 'number' ? playerRef : undefined;
+    const player =
+        typeof playerRef === 'number' ? players[playerRef] : playerRef;
+    return {
+        ...player,
+        alterations: {
+            ...player?.alterations,
+            playerNumber: generateEligibleNumber(players, index),
+        },
+    };
+}
+
+function generateEligibleNumber(players: RosterPlayerRecord[], index?: number) {
+    const otherPlayers = players.filter((_p, i) => i !== index);
+    let targetNumber = index ? index + 1 : 1;
+    while (numberTaken(otherPlayers, targetNumber) >= 0) {
+        targetNumber++;
+    }
+    return targetNumber;
+}
+
+function numberTaken(players: RosterPlayerRecord[], desiredNumber: number) {
+    return players.findIndex(
+        (p) => p.alterations.playerNumber === desiredNumber
+    );
+}
 
 export const roster = createRoster();

@@ -62,6 +62,7 @@ export interface PlayerAlterations {
     advancements?: number; // a
     injuries?: number[]; // i
     journeyman?: boolean; // j
+    playerNumber?: number; // x
 }
 
 export type LeagueRosterStatus = 'draft' | 'commenced';
