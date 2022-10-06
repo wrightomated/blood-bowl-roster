@@ -57,13 +57,21 @@ export type GameEventTally = {
     touchdowns: number;
     passes: number;
     kills: number;
+    deflections: number;
+    interceptions: number;
 };
 
 export type GameEvent = {
     eventType: GameEventType;
     playerId?: number;
     time?: Date;
-    turn: number;
+    turn?: number;
 };
 
-export type GameEventType = 'casualty' | 'pass' | 'kill' | 'touchdown';
+export type GameEventType =
+    | 'casualty'
+    | 'pass'
+    | 'kill'
+    | 'touchdown'
+    | 'deflection'
+    | 'interception';

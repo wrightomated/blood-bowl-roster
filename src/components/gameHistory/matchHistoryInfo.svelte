@@ -4,6 +4,7 @@
     import { weatherSymbol } from '../../data/weatherData.data';
     import { inducementAndStarsInRoster } from '../../store/currentInducements.store';
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
+    import Pill from '../uiComponents/pill.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
     const numberFormatter = new Intl.NumberFormat();
@@ -46,11 +47,20 @@
 
     <!-- <div>Inducements:</div> -->
     <div class="additional">
-        <div class="inducements">
+        <div class="inducements-container">
             <h3>Inducements</h3>
-            <div>
+            <div class="inducements">
+                {#if $inducementAndStarsInRoster.length <= 0}None{/if}
                 {#each $inducementAndStarsInRoster as i}
+                    <!-- <Pill variant="filled"
+                        >{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</Pill
+                    > -->
                     <div>{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</div>
+                    <!-- <TitleWithResult
+                        title={`${i[1]}`}
+                        result={i[0]}
+                        background="none"
+                    /> -->
                 {/each}
             </div>
         </div>
@@ -77,10 +87,33 @@
         gap: 8px;
         flex-wrap: wrap;
     }
-    .inducements {
-        flex: 2;
-        padding: 20px;
+    .inducements-container {
+        flex: 3;
         border-radius: 12px;
+        h3 {
+            margin: 12px;
+            text-align: center;
+        }
+    }
+    .inducements {
+        border-radius: 12px;
+        display: flex;
+        flex-flow: row wrap;
+        gap: 8px;
+        div {
+            flex: 1 1 40%;
+            margin: 0;
+            background-color: var(--secondary-background-colour);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            @media screen and (max-width: 600px) {
+                flex-basis: 90%;
+            }
+        }
+        // * {
+        //     margin: 0;
+        // }
         // background-color: var(--secondary-background-colour);
     }
     .additional {

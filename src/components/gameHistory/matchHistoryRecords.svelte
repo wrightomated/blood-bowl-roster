@@ -70,7 +70,7 @@
     {/if}
     <div class="matches">
         {#each matchSummaries as matchSummary}
-            <MatchHistoryCard {matchSummary} />
+            <MatchHistoryCard {matchSummary} open={true} />
         {/each}
         <!--         
         <MatchHistoryCard opponentName="Alberto The Great" open={false} />

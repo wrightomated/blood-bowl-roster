@@ -1,5 +1,5 @@
 import type {
-    ExtraRosterInfo,
+    InducementsRecord,
     PlayerAlterations,
     Roster,
     RosterPlayerRecord,
@@ -7,7 +7,7 @@ import type {
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 
-const extraToString = (extra: ExtraRosterInfo) => {
+const extraToString = (extra: InducementsRecord) => {
     const map = {
         rerolls: 'r',
         assistant_coaches: 'a',
@@ -22,7 +22,7 @@ const extraToString = (extra: ExtraRosterInfo) => {
         .join('');
 };
 
-const inducementToString = (inducements: ExtraRosterInfo) => {
+const inducementToString = (inducements: InducementsRecord) => {
     return Object.keys(inducements)
         .map((x) => (inducements[x] > 0 ? `${x}.${inducements[x]}` : ''))
         .join('');

@@ -4,7 +4,7 @@ import { starPlayers } from '../data/starPlayer.data';
 import { teamData } from '../data/teams.data';
 import type { Player } from '../models/player.model';
 import type {
-    ExtraRosterInfo,
+    InducementsRecord,
     PlayerAlterations,
     Roster,
     RosterPlayerRecord,
@@ -139,7 +139,7 @@ const skillArray = (skillString: string) => {
         .map((x) => parseInt(x, 10));
 };
 
-const stringToExtra: (extras: string[]) => ExtraRosterInfo = (extras) => {
+const stringToExtra: (extras: string[]) => InducementsRecord = (extras) => {
     const charToExtraMap = {
         r: 'rerolls',
         a: 'assistant_coaches',

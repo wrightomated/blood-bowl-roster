@@ -14,7 +14,7 @@ export interface Roster {
     players: RosterPlayerRecord[];
     /** Extra info in relation to the game */
     extra?: RosterExtraRecords;
-    inducements: ExtraRosterInfo;
+    inducements: InducementsRecord;
     treasury?: number;
     mode?: RosterMode;
     format?: TeamFormat;
@@ -22,7 +22,7 @@ export interface Roster {
     gameHistory?: GameHistory;
 }
 
-export type RosterPreviews = { [key: string]: RosterPreview };
+export type RosterPreviews = Record<string, RosterPreview>;
 
 export type RosterPreview = Omit<Roster, 'players' | 'extra' | 'inducements'>;
 
@@ -31,6 +31,10 @@ export function getRosterPreview(roster: Roster): RosterPreview {
     return preview;
 }
 
+/**
+ * Information specific to the roster should exist at this level.
+ * The player object should only contain data of the base player type.
+ */
 export interface RosterPlayerRecord {
     player: Player;
     deleted?: boolean;
@@ -49,10 +53,12 @@ export type RosterExtra =
     | 'apothecary' // y
     | 'special_rule'; // s
 
-export interface ExtraRosterInfo {
-    [key: string]: number;
-}
+export type InducementsRecord = Record<`i${number}`, number>;
 
+/**
+ * Alterations to a base player for this instance of the player in a roster.
+ * Only use lowercase letters for keys in roster -> string
+ */
 export interface PlayerAlterations {
     spp: number; // s
     ni: number; // n
@@ -65,6 +71,7 @@ export interface PlayerAlterations {
     advancements?: number; // a
     injuries?: number[]; // i
     journeyman?: boolean; // j
+    gameRecords?: Record<PlayerGameAchievement, number>; // g
 }
 
 export type LeagueRosterStatus = 'draft' | 'commenced';
@@ -77,3 +84,12 @@ export type NewRosterOptions = {
     fans: number;
     specialRule?: TeamSpecialRule;
 };
+
+export type PlayerGameAchievement =
+    | 'casualty'
+    | 'pass'
+    | 'kill'
+    | 'touchdown'
+    | 'deflection'
+    | 'interception'
+    | 'mvp';

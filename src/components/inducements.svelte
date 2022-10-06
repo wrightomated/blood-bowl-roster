@@ -74,10 +74,7 @@
     };
 </script>
 
-<table
-    class="inducement-table"
-    class:no-print={$roster.inducements?.length < 1}
->
+<table class="inducement-table" class:no-print={!$roster.inducements}>
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>

@@ -1,24 +1,24 @@
 <script lang="ts">
+    import { formatNumber } from '../../../helpers/formatTotalToThousands';
+
     export let title: string;
-    export let result: number;
+    export let result: number | string;
     export let background: 'none' | 'main' | 'secondary' | 'neutral' =
         'neutral';
 
-    const formatter = new Intl.NumberFormat();
+    $: formattedResult =
+        typeof result === 'number' ? formatNumber(result) : result;
 </script>
 
 <div class="container {background}">
     <p>{title}</p>
-    <p class="result">{formatter.format(result)}</p>
+    <p class="result">{formattedResult}</p>
 </div>
 
 <style lang="scss">
     .container {
         flex: 1;
-        // font-family: var(--display-font);
         text-align: center;
-        // margin-top: 8px;
-        // margin-bottom: 8px;
         border-radius: 12px;
         padding: 12px;
 
