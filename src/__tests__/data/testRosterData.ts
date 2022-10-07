@@ -177,7 +177,7 @@ export const inducementAndStarPlayer = {
         },
     ],
     teamName: '',
-    teamType: 'Amazon',
+    teamType: 'Amazon (ToL)',
     extra: { dedicated_fans: 1, apothecary: 1 },
     inducements: { i8: 1 },
     treasury: 10,
