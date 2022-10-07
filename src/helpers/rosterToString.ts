@@ -28,12 +28,14 @@ const inducementToString = (inducements: ExtraRosterInfo) => {
         .join('');
 };
 
-const playerToString = (rp: RosterPlayerRecord) => {
-    const alterations = `${rp?.starPlayer ? '' : pAlterations(rp.alterations)}`;
+const playerToString = (rp: RosterPlayerRecord, index: number) => {
+    const alterations = `${
+        rp?.starPlayer ? '' : pAlterations(rp.alterations, index)
+    }`;
     return `p${rp.player.id}${alterations}`;
 };
 
-const pAlterations = (alts: PlayerAlterations) => {
+const pAlterations = (alts: PlayerAlterations, index: number) => {
     return Object.keys(alts)
         .map((x) => {
             switch (x) {
@@ -67,7 +69,7 @@ const pAlterations = (alts: PlayerAlterations) => {
                     }
                     break;
                 case 'playerNumber':
-                    if (alts[x]) {
+                    if (alts[x] && alts[x] !== index + 1) {
                         return charAndNumber('x', alts[x]);
                     }
                     break;
@@ -124,7 +126,9 @@ export const rosterToString = (roster: Roster) => {
     try {
         const extraS = extraToString(roster.extra);
         const inducementS = inducementToString(roster.inducements);
-        const players = roster.players.map((x) => playerToString(x)).join('');
+        const players = roster.players
+            .map((x, i) => playerToString(x, i))
+            .join('');
         return `t${roster.teamId}t${roster.treasury}m${getModeInt(
             roster.mode
         )}f${getFormatInt(

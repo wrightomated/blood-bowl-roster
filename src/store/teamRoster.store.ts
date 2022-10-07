@@ -286,7 +286,17 @@ const rosterFromQueryString = () => {
 
 const rosterFromCode = (code: string) => {
     try {
-        return stringToRoster(code);
+        let transformedRoster = stringToRoster(code);
+        if (
+            transformedRoster.players.length > 0 &&
+            transformedRoster.players.some((p) => !p.alterations.playerNumber)
+        ) {
+            transformedRoster = {
+                ...transformedRoster,
+                players: assignPlayerNumbers(transformedRoster.players),
+            };
+        }
+        return transformedRoster;
     } catch (error) {
         return null;
     }

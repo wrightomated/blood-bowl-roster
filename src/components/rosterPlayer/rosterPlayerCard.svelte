@@ -144,17 +144,6 @@
         </h3>
         <div>
             <PlayerNumber {index} variant="card" />
-            <!-- <input
-                class="player-number"
-                aria-label="Player Number"
-                type="number"
-                min="1"
-                inputmode="numeric"
-                max={maxPlayerNumber}
-                on:blur={changeNumber}
-                bind:value={playerNumber}
-                use:blurOnEscapeOrEnter
-            /> -->
         </div>
         <div class="player-position left-align">
             <div class="player-controls">
