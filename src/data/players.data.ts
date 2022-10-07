@@ -1375,6 +1375,21 @@ const jaguarBlocker: Player = {
     primary: ['G', 'S'],
     secondary: ['A'],
 };
+const dbPiranhaBlitzer: Player = {
+    ...piranhaBlitzer,
+    id: 157,
+    cost: 85,
+};
+const dbPythonThrower: Player = {
+    ...pythonThrower,
+    id: 158,
+    cost: 75,
+};
+const dbJaguarBlocker: Player = {
+    ...jaguarBlocker,
+    id: 159,
+    cost: 100,
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1534,5 +1549,8 @@ export const playerCatalogue: PlayerCatalogue = {
         piranhaBlitzer,
         pythonThrower,
         jaguarBlocker,
+        dbPiranhaBlitzer,
+        dbPythonThrower,
+        dbJaguarBlocker,
     ],
 };

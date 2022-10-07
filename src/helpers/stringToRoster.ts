@@ -120,6 +120,9 @@ const constructAlterations = (other: string[]) => {
             case 'j':
                 alterations['journeyman'] = true;
                 break;
+            case 'x':
+                alterations['playerNumber'] = getNumber(o);
+                break;
             default:
                 break;
         }

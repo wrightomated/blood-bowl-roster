@@ -77,7 +77,7 @@ export async function sendVerificationEmail() {
     if (user && !user.emailVerified) {
         return sendEmailVerification(user);
     } else {
-        console.log('No current user');
+        console.warn('No current user');
         return;
     }
 }

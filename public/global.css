@@ -111,10 +111,13 @@ tr {
 table {
     border: 1px solid #ccc;
 }
-tr:nth-of-type(even) {
-    background: #eee;
+tr {
+    background-color: white;
 }
-thead {
+tr:nth-of-type(even) {
+    background-color: #eee;
+}
+thead > tr {
     background-color: #970f0c;
     color: white;
     text-transform: uppercase;

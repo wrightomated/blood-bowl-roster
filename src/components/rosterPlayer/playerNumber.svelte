@@ -3,7 +3,8 @@
     import { maxPlayerNumber, roster } from '../../store/teamRoster.store';
 
     export let index: number;
-    let playerNumber = index + 1;
+    export let variant: 'default' | 'card';
+    let playerNumber = updatePlayerNumber();
 
     const changeNumber = () => {
         if (
@@ -11,16 +12,22 @@
             playerNumber > maxPlayerNumber ||
             playerNumber < 1
         ) {
-            playerNumber = index + 1;
+            playerNumber = updatePlayerNumber();
         } else {
             roster.updatePlayerNumber(index, playerNumber);
-            playerNumber = index + 1;
         }
     };
+
+    // TODO: reactive solution for this
+    roster.subscribe((x) => (playerNumber = updatePlayerNumber()));
+
+    function updatePlayerNumber() {
+        return $roster.players[index]?.alterations?.playerNumber;
+    }
 </script>
 
 <input
-    class="player-number"
+    class="player-number player-number--{variant}"
     aria-label="Player Number"
     type="number"
     inputmode="numeric"
@@ -43,7 +50,6 @@
         }
     }
     .player-number {
-        width: 30px;
         text-align: center;
         font-style: italic;
         /* Chrome, Safari, Edge, Opera */
@@ -55,6 +61,20 @@
         /* Firefox */
         &[type='number'] {
             -moz-appearance: textfield;
+        }
+
+        &--card {
+            font-style: normal;
+            width: 25px;
+            line-height: 25px;
+            border-radius: 50%;
+            font-family: var(--display-font);
+            right: 10px;
+            top: 10px;
+            background-color: white;
+            color: var(--secondary-colour);
+            position: absolute;
+            padding: 0;
         }
     }
 </style>

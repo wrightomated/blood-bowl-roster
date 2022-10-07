@@ -72,6 +72,7 @@ export interface PlayerAlterations {
     injuries?: number[]; // i
     journeyman?: boolean; // j
     gameRecords?: Record<PlayerGameAchievement, number>; // g
+    playerNumber?: number; // x
 }
 
 export type LeagueRosterStatus = 'draft' | 'commenced';

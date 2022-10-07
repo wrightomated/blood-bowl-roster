@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { maxPlayerNumber, roster } from '../../store/teamRoster.store';
+    import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import SkillElement from '../skillElement.svelte';
     import { currentTeam } from '../../store/currentTeam.store';
@@ -14,11 +14,10 @@
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
-    import Pill from '../uiComponents/pill.svelte';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
+    import PlayerNumber from './playerNumber.svelte';
 
     export let index: number;
-    let playerNumber = index + 1;
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
@@ -111,19 +110,6 @@
         }
     };
 
-    const changeNumber = () => {
-        if (
-            !Number.isInteger(playerNumber) ||
-            playerNumber > maxPlayerNumber ||
-            playerNumber < 1
-        ) {
-            playerNumber = index + 1;
-        } else {
-            roster.updatePlayerNumber(index, playerNumber);
-            playerNumber = index + 1;
-        }
-    };
-
     const buyJourneyman = () => {
         const extraSkills = rosterPlayer.alterations.extraSkills.filter(
             (id) => id !== 71 && id !== 710
@@ -158,17 +144,7 @@
             {/if}
         </h3>
         <div>
-            <input
-                class="player-number"
-                aria-label="Player Number"
-                type="number"
-                min="1"
-                inputmode="numeric"
-                max={maxPlayerNumber}
-                on:blur={changeNumber}
-                bind:value={playerNumber}
-                use:blurOnEscapeOrEnter
-            />
+            <PlayerNumber {index} variant="card" />
         </div>
         <div class="player-position left-align">
             <div class="player-controls">
@@ -356,6 +332,7 @@
         min-width: 300px;
         height: 100%;
         border: var(--secondary-border);
+        background-color: white;
         &.danger {
             border-color: var(--main-colour);
         }
@@ -387,32 +364,6 @@
     }
     .content {
         padding: 10px;
-    }
-    .player-number {
-        width: 25px;
-        line-height: 25px;
-        border-radius: 50%;
-        font-family: $display-font;
-        text-align: center;
-        font-size: 16px;
-        right: 10px;
-        top: 10px;
-        background-color: white;
-        color: var(--secondary-colour);
-        position: absolute;
-        text-align: center;
-
-        /* Chrome, Safari, Edge, Opera */
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        /* Firefox */
-        &[type='number'] {
-            -moz-appearance: textfield;
-            color: var(--secondary-colour);
-        }
     }
     .player-characteristics {
         display: flex;
