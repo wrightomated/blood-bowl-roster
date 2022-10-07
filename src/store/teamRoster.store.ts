@@ -402,7 +402,7 @@ function generateEligibleNumber(players: RosterPlayerRecord[], index?: number) {
 
 function numberTaken(players: RosterPlayerRecord[], desiredNumber: number) {
     return players.findIndex(
-        (p) => p.alterations.playerNumber === desiredNumber
+        (p) => p?.alterations?.playerNumber === desiredNumber
     );
 }
 
