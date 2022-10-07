@@ -34,7 +34,7 @@
     ];
 </script>
 
-{#if $roster.gameHistory}
+<!-- {#if $roster.gameHistory}
     <h2>Match History</h2>
     <div class="history__table">
         <table>
@@ -73,8 +73,7 @@
             </tbody>
         </table>
     </div>
-{/if}
-
+{/if} -->
 <style lang="scss">
     .history {
         &__table {

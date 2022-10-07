@@ -236,29 +236,7 @@ function createRoster() {
                     extra: { ...store.extra, special_rule: specialRule },
                 };
             }),
-        addMatch: () =>
-            update((store) => {
-                return {
-                    ...store,
-                    gameHistory: [
-                        ...store.gameHistory,
-                        {
-                            id: 1,
-                            opponent: '',
-                            leagueOrFriendly: '',
-                            'fan factor': '',
-                            'petty cash': '',
-                            'inducements hired': '',
-                            'new current team value': '',
-                            'w/l/d': '',
-                            score: '',
-                            winnings: '',
-                            'league points': '',
-                            notes: '',
-                        },
-                    ],
-                };
-            }),
+
         set,
     };
 }
@@ -277,7 +255,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         mode: options?.mode,
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
-        gameHistory: [],
+        matchSummary: [],
     };
 
     if (options?.specialRule) {
@@ -331,11 +309,12 @@ const getDefaultRoster: () => Roster = () => {
         defaultRoster.leagueRosterStatus = 'draft';
     }
     currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
-    return {
+    defaultRoster = {
         ...defaultRoster,
         format: defaultRoster?.format || 'elevens',
-        gameHistory: defaultRoster?.gameHistory || [],
+        matchSummary: defaultRoster?.matchSummary || [],
     };
+    return defaultRoster;
 };
 
 const addPlayerToPlayers: (

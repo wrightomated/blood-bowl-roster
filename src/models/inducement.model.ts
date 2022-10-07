@@ -1,7 +1,7 @@
 import type { TeamSpecialRule, TeamTier } from './team.model';
 
 export interface Inducement {
-    id: string;
+    id: InducementKey;
     displayName: string;
     cost: number;
     reducedCost?: InducementCostReduction;
@@ -18,3 +18,5 @@ export interface InducementCostReduction {
     specialRule?: TeamSpecialRule;
     cost: number;
 }
+
+export type InducementKey = `i${number}`;

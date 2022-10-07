@@ -1,7 +1,8 @@
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
-import type { GameHistory } from './gameHistory.model';
+import type { InducementKey } from './inducement.model';
+import type { MatchHistorySummary } from './matchHistory.model';
 import type { Player } from './player.model';
 import type { TeamName, TeamSpecialRule } from './team.model';
 
@@ -19,7 +20,7 @@ export interface Roster {
     mode?: RosterMode;
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
-    gameHistory?: GameHistory;
+    matchSummary?: MatchHistorySummary[];
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;
@@ -53,7 +54,7 @@ export type RosterExtra =
     | 'apothecary' // y
     | 'special_rule'; // s
 
-export type InducementsRecord = Record<`i${number}`, number>;
+export type InducementsRecord = Record<InducementKey, number>;
 
 /**
  * Alterations to a base player for this instance of the player in a roster.

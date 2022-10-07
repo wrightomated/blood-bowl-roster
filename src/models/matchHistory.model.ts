@@ -10,7 +10,7 @@ export type MatchHistorySummary = {
         name: string;
         score: number;
     };
-    playerScores: GameEventTally;
+    playerScores: Partial<GameEventTally>;
     isLeagueMatch?: boolean;
     matchDate?: Date;
 };
@@ -26,8 +26,6 @@ export type MatchHistoryRecord = {
         table: WeatherType;
         result?: '2' | '3' | '4 - 10' | '11' | '12';
     };
-    /** Two rolls for the table */
-    // stadium?: [TwoD6Result, D6Result];
     stadium?: {
         category: StadiumCategory;
         attribute?: D6Result;
