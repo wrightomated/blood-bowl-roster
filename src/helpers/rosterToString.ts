@@ -65,6 +65,12 @@ const pAlterations = (alts: PlayerAlterations) => {
                     if (alts[x]) {
                         return `j1`;
                     }
+                    break;
+                case 'playerNumber':
+                    if (alts[x]) {
+                        return charAndNumber('x', alts[x]);
+                    }
+                    break;
                 default:
                     break;
             }
