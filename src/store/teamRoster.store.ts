@@ -154,8 +154,9 @@ function createRoster() {
             }),
         loadRoster: (rosterToLoad: Roster) =>
             update((_store) => {
+                const updatedRoster = addPlayerNumbersToRoster(rosterToLoad);
                 currentTeam.setCurrentTeamWithId(rosterToLoad.teamId);
-                return rosterToLoad;
+                return updatedRoster;
             }),
         codeToRoster: (rosterCode: string) =>
             update((_store) => {
@@ -287,16 +288,7 @@ const rosterFromQueryString = () => {
 const rosterFromCode = (code: string) => {
     try {
         let transformedRoster = stringToRoster(code);
-        if (
-            transformedRoster.players.length > 0 &&
-            transformedRoster.players.some((p) => !p.alterations.playerNumber)
-        ) {
-            transformedRoster = {
-                ...transformedRoster,
-                players: assignPlayerNumbers(transformedRoster.players),
-            };
-        }
-        return transformedRoster;
+        return addPlayerNumbersToRoster(transformedRoster);
     } catch (error) {
         return null;
     }
@@ -307,16 +299,7 @@ const getDefaultRoster: () => Roster = () => {
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
-    const players = defaultRoster.players;
-    if (
-        players.length > 0 &&
-        players.some((p) => !p.alterations.playerNumber)
-    ) {
-        defaultRoster = {
-            ...defaultRoster,
-            players: assignPlayerNumbers(defaultRoster.players),
-        };
-    }
+    defaultRoster = addPlayerNumbersToRoster(defaultRoster);
     if (!defaultRoster.rosterId) {
         defaultRoster.rosterId = nanoid();
     }
@@ -391,6 +374,21 @@ function assignPlayerNumber(
             playerNumber: generateEligibleNumber(players, index),
         },
     };
+}
+
+function addPlayerNumbersToRoster(roster: Roster) {
+    const players = roster.players;
+    let newRoster = roster;
+    if (
+        players.length > 0 &&
+        players.some((p) => !p.alterations.playerNumber)
+    ) {
+        newRoster = {
+            ...roster,
+            players: assignPlayerNumbers(roster.players),
+        };
+    }
+    return newRoster;
 }
 
 function generateEligibleNumber(players: RosterPlayerRecord[], index?: number) {
