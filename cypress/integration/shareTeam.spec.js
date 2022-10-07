@@ -32,7 +32,7 @@ context('Test that a team can be copied', () => {
                         secondary: ['A', 'P'],
                     },
                     playerName: 'Erny',
-                    alterations: { spp: 0, ni: 0 },
+                    alterations: { spp: 0, ni: 0, playerNumber: 1 },
                 },
             ],
             teamName: 'The Horns',
@@ -47,6 +47,7 @@ context('Test that a team can be copied', () => {
             const { rosterId, ...rosterNoId } = JSON.parse(
                 localStorage.getItem('roster')
             );
+            console.log(JSON.stringify(rosterNoId, null, 2));
             expect(rosterNoId).to.deep.equal(expectedRoster);
         });
     });

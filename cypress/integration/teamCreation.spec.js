@@ -97,7 +97,7 @@ const expectedRoster = {
                 primary: ['G'],
                 secondary: ['A', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 1 },
         },
         {
             playerName: '',
@@ -110,7 +110,7 @@ const expectedRoster = {
                 primary: ['G'],
                 secondary: ['A', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 2 },
         },
         {
             playerName: '',
@@ -123,7 +123,7 @@ const expectedRoster = {
                 primary: ['G'],
                 secondary: ['A', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 3 },
         },
         {
             playerName: '',
@@ -136,7 +136,7 @@ const expectedRoster = {
                 primary: ['G'],
                 secondary: ['A', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 4 },
         },
         {
             playerName: '',
@@ -149,7 +149,7 @@ const expectedRoster = {
                 primary: ['G', 'P'],
                 secondary: ['A', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 5 },
         },
         {
             playerName: '',
@@ -162,7 +162,7 @@ const expectedRoster = {
                 primary: ['A', 'G'],
                 secondary: ['P', 'S'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 6 },
         },
         {
             playerName: '',
@@ -175,7 +175,7 @@ const expectedRoster = {
                 primary: ['G', 'S'],
                 secondary: ['A'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 7 },
         },
         {
             playerName: '',
@@ -188,7 +188,7 @@ const expectedRoster = {
                 primary: ['G', 'S'],
                 secondary: ['A'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 8 },
         },
         {
             playerName: '',
@@ -201,7 +201,7 @@ const expectedRoster = {
                 primary: ['G', 'S'],
                 secondary: ['A'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 9 },
         },
         {
             playerName: '',
@@ -214,7 +214,7 @@ const expectedRoster = {
                 primary: ['G', 'S'],
                 secondary: ['A'],
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 10 },
         },
         {
             playerName: '',
@@ -228,7 +228,7 @@ const expectedRoster = {
                 secondary: ['A', 'G'],
                 bigGuy: true,
             },
-            alterations: { spp: 0, ni: 0 },
+            alterations: { spp: 0, ni: 0, playerNumber: 11 },
         },
     ],
     teamName: 'Altdorf Daemons',
