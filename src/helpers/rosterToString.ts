@@ -69,7 +69,7 @@ const pAlterations = (alts: PlayerAlterations, index: number) => {
                     }
                     break;
                 case 'playerNumber':
-                    if (alts[x] && alts[x] !== index + 1) {
+                    if (typeof alts[x] === 'number' && alts[x] !== index + 1) {
                         return charAndNumber('x', alts[x]);
                     }
                     break;
