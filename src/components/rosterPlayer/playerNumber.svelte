@@ -4,24 +4,24 @@
 
     export let index: number;
     export let variant: 'default' | 'card';
-    let playerNumber = updatePlayerNumber();
+    let playerNumber = getPlayerNumberAlteration();
 
     const changeNumber = () => {
         if (
             !Number.isInteger(playerNumber) ||
             playerNumber > maxPlayerNumber ||
-            playerNumber < 1
+            playerNumber < 0
         ) {
-            playerNumber = updatePlayerNumber();
+            playerNumber = getPlayerNumberAlteration();
         } else {
             roster.updatePlayerNumber(index, playerNumber);
         }
     };
 
     // TODO: reactive solution for this
-    roster.subscribe((x) => (playerNumber = updatePlayerNumber()));
+    roster.subscribe((x) => (playerNumber = getPlayerNumberAlteration()));
 
-    function updatePlayerNumber() {
+    function getPlayerNumberAlteration() {
         return $roster.players[index]?.alterations?.playerNumber;
     }
 </script>
@@ -31,7 +31,7 @@
     aria-label="Player Number"
     type="number"
     inputmode="numeric"
-    min="1"
+    min="0"
     max={maxPlayerNumber}
     on:blur={changeNumber}
     bind:value={playerNumber}
