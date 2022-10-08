@@ -1,7 +1,9 @@
 <script lang="ts">
     import { dbIgnoredSkills } from '../../data/dungeonBowlIgnoredSkills';
+    import { characteristics } from '../../data/statOrder.data';
 
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
+    import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import {
         journeymanPosition,
         journeymanSkills,
@@ -17,10 +19,12 @@
         journeymenTypes,
     } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
+    import SkillElement from '../skillElement.svelte';
+    import StatBlock from './statBlock.svelte';
 
     export let playerTypes: Player[];
     export let index: number;
-    let selected: Player & { journeyman?: boolean };
+    let selected: Player & { journeyman?: boolean } = playerTypes[0];
     let newName: string = '';
     let amount: number = 1;
 
@@ -116,12 +120,35 @@
                 {/if}
             </select>
         </div>
-    </div>
-
-    <div class="player-card__content">
         <button class="add-sign" on:click={addPlayers} title="Add New Player"
             ><i class="material-symbols-outlined icon">add_circle</i></button
         >
+    </div>
+    <div class="player-characteristics">
+        {#each selected.playerStats as stat, i}
+            <StatBlock
+                char={characteristics[i]}
+                value={'' + stat}
+                change={0}
+                variant="neutral"
+            />
+        {/each}
+    </div>
+    <div class="player-card__content">
+        <div class="skills">
+            <p class="mini-title">SKILLS:</p>
+            {#if selected && selected.skills.length > 0}
+                <SkillElement playerSkillIds={selected.skills} />
+            {:else}
+                None
+            {/if}
+        </div>
+        <p>
+            <span class="mini-title">Hiring Fee:</span>
+            {!selected?.journeyman
+                ? `${formatNumberInThousands(selected.cost)}`
+                : '-'}
+        </p>
     </div>
 </div>
 
@@ -132,12 +159,15 @@
         position: relative;
         min-width: 300px;
         max-width: 600px;
-        border: 2px solid var(--secondary-background-colour);
+        border: 2px solid white;
         height: 100%;
-        background-color: var(--secondary-background-colour);
+        background-color: white;
+        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+            0 6px 10px 4px rgba(60, 64, 67, 0.15);
 
         &__content {
             min-height: 100px;
+            padding: 10px;
         }
     }
     .header {
@@ -146,8 +176,8 @@
         min-height: 52px;
         border-radius: 25px;
         border-radius: 20px 20px 0 0;
-        border: 2px solid var(--secondary-background-colour);
-        background-color: var(--secondary-background-colour);
+        border: 2px solid white;
+        margin-bottom: 6px;
         h3 {
             margin: 0;
             margin-bottom: 8px;
@@ -176,13 +206,11 @@
     }
     .add-sign {
         position: absolute;
-        top: 50%;
-        left: calc(50% - 30px);
-        height: 60px;
-        width: 60px;
+        top: 6px;
+        right: 6px;
     }
     .icon {
-        font-size: 60px;
+        font-size: 32px;
         color: #555;
     }
     .player-details {
@@ -196,5 +224,17 @@
                 font-size: 16px;
             }
         }
+    }
+    .player-characteristics {
+        display: flex;
+        position: relative;
+        left: -2px;
+    }
+    .mini-title {
+        font-family: $display-font;
+        margin: 0;
+    }
+    .skills {
+        margin-bottom: 10px;
     }
 </style>

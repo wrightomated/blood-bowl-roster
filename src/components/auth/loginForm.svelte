@@ -68,7 +68,7 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={login}
     >
-        <p>Log into your account.</p>
+        <h2>Log into your account</h2>
         <label for="email">Email:</label>
         <input
             type="email"
@@ -107,8 +107,9 @@
     .login-form {
         display: flex;
         flex-direction: column;
-        max-width: 320px;
         padding: 20px;
+        margin: 0 auto;
+        max-width: 400px;
         &--touched {
             input:invalid {
                 border-color: var(--main-colour);
@@ -119,6 +120,10 @@
     input {
         font-size: 16px;
         margin-bottom: 8px;
+        height: 48px;
+    }
+    label {
+        margin-bottom: 4px;
     }
 
     .login-button {
@@ -144,8 +149,12 @@
         text-align: center;
         border: none;
         background: none;
-        text-decoration: underline;
+        cursor: pointer;
         color: var(--secondary-colour);
         width: 100%;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 </style>

@@ -50,7 +50,7 @@
         <div class="inducements-container">
             <h3>Inducements</h3>
             <div class="inducements">
-                {#if $inducementAndStarsInRoster.length <= 0}None{/if}
+                {#if $inducementAndStarsInRoster.length <= 0}<p>None</p>{/if}
                 {#each $inducementAndStarsInRoster as i}
                     <!-- <Pill variant="filled"
                         >{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</Pill
@@ -68,6 +68,13 @@
             <TitleWithResult title="Touchdowns" result={3} background="none" />
             <TitleWithResult title="Passes" result={2} background="none" />
             <TitleWithResult title="Casualties" result={1} background="none" />
+            <TitleWithResult title="Deflections" result={0} background="none" />
+            <TitleWithResult
+                title="Interceptions"
+                result={1}
+                background="none"
+            />
+
             <TitleWithResult title="Kills" result={0} background="none" />
         </div>
     </div>
@@ -100,6 +107,10 @@
         display: flex;
         flex-flow: row wrap;
         gap: 8px;
+        p {
+            text-align: center;
+            width: 100%;
+        }
         div {
             flex: 1 1 40%;
             margin: 0;
@@ -127,10 +138,26 @@
     }
     .events {
         flex: 1;
-        display: flex;
-        flex-flow: row wrap;
+        // display: flex;
+        // flex-flow: row wrap;
         border-radius: 12px;
         color: white;
         background-color: var(--main-colour);
+
+        // first break 720 last 600
+        // GROD
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        @media screen and (max-width: 720px) {
+            grid-template-columns: 1fr;
+        }
+        @media screen and (max-width: 450px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media screen and (max-width: 360px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        // grid-template-rows: 12px 12px 12px;
     }
 </style>

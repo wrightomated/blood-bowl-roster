@@ -65,7 +65,12 @@
         border: var(--secondary-border);
         margin-left: var(--l-offset);
         margin-top: var(--t-offset);
+        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+            0 6px 10px 4px rgba(60, 64, 67, 0.15);
 
+        @media screen and (max-width: 450px) {
+            box-shadow: none;
+        }
         // padding: 8px 16px 8px 36px;
     }
     .result {

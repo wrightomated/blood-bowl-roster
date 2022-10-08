@@ -333,6 +333,8 @@
         height: 100%;
         border: var(--secondary-border);
         background-color: white;
+        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+            0 6px 10px 4px rgba(60, 64, 67, 0.15);
         &.danger {
             border-color: var(--main-colour);
         }

@@ -1,20 +1,16 @@
 <script lang="ts">
-    import { matchHistoryRecordDraft } from '../../store/matchHistoryRecordDraft.store';
+    import {
+        matchHistoryRecordDraft,
+        matchHistorySteps,
+    } from '../../store/matchHistoryRecordDraft.store';
     import { onMount } from 'svelte';
     import GameDetails from './individualControls/gameDetails.svelte';
     import PreGameCalculations from './individualControls/preGameCalculations.svelte';
+    import PlayerEvents from './playerEvents.svelte';
+    import { newMatchRecordSteps } from '../../data/matchHistorySteps.data';
     onMount(() => {
         document.getElementById('coach-name')?.focus();
     });
-    let opponentScore = 0;
-    let playerScore = 0;
-    ``;
-    $: result =
-        playerScore === opponentScore
-            ? 'Draw'
-            : playerScore > opponentScore
-            ? 'Win'
-            : 'Loss';
 
     function addMatch(e) {
         e.preventDefault;
@@ -34,59 +30,43 @@
             e.preventDefault;
         }}
     >
-        <GameDetails />
+        {#each $matchHistorySteps as step}
+            <div class="step step--{step.status}">
+                <div class="step-title">
+                    <h3>{step.title}</h3>
+                    {#if step.status === 'complete'}
+                        <i class="material-symbols-outlined checkmark"
+                            >check_circle</i
+                        >
+                    {/if}
+                </div>
+                {#if step.status === 'current'}
+                    <svelte:component this={step.component} />
+                {/if}
+            </div>
+        {/each}
+
+        <div class="button-container">
+            <button on:click={matchHistorySteps.previousStep} type="button"
+                >Previous</button
+            >
+            {#if $matchHistorySteps.find((x) => x.status === 'current')}
+                <button
+                    class="next-button"
+                    on:click={matchHistorySteps.nextStep}
+                    type="button">Next</button
+                >
+            {/if}
+        </div>
+
+        <!-- <GameDetails />
         <PreGameCalculations />
         <h3>Other</h3>
 
-        <div class="digits">
-            <div class="label-input">
-                <label for="casualties">Casualties:</label>
-                <input
-                    type="number"
-                    name="casualties"
-                    id="casualties"
-                    value="0"
-                    min="0"
-                    max="999"
-                />
-            </div>
-            <div class="label-input">
-                <label for="touchdowns">Touchdowns:</label>
-                <input
-                    type="number"
-                    name="touchdowns"
-                    id="touchdowns"
-                    value="0"
-                    min="0"
-                    max="999"
-                />
-            </div>
-            <div class="label-input">
-                <label for="passes">Passes:</label>
-                <input
-                    type="number"
-                    name="passes"
-                    id="passes"
-                    value="0"
-                    min="0"
-                    max="999"
-                />
-            </div>
-            <div class="label-input">
-                <label for="kills">Kills:</label>
-                <input
-                    type="number"
-                    name="kills"
-                    id="kills"
-                    value="0"
-                    min="0"
-                    max="999"
-                />
-            </div>
-        </div>
+        <PlayerEvents /> -->
 
-        <label for="new-ctv">New Current Team Value</label>
-        <input type="number" id="new-ctv" autocomplete="off" />
+        <!-- <label for="new-ctv">New Current Team Value</label>
+        <input type="number" id="new-ctv" autocomplete="off" /> -->
 
         <!-- <label for="score">Result:</label>
         <input
@@ -109,7 +89,7 @@
         />
         <p>{result}</p> -->
 
-        <label for="winnings">Winnings</label>
+        <!-- <label for="winnings">Winnings</label>
         <input type="number" name="winnings" id="winnings" autocomplete="off" />
         <label for="league-points">League Points</label>
         <input
@@ -128,19 +108,35 @@
             rows="10"
             maxlength="512"
             bind:value={$matchHistoryRecordDraft.notes}
-        />
+        /> -->
 
-        <button on:click={addMatch}>Add</button>
+        <!-- <button on:click={addMatch}>Add</button> -->
     </form>
 </section>
 
 <style lang="scss">
+    @use '../../styles/mixins/roundedButton';
+
     .new-match {
         // width: 90vw;
         &__form {
             display: flex;
             flex-direction: column;
             // gap: 16px;
+        }
+    }
+    .step {
+        &-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            h3 {
+                margin: 0;
+            }
+        }
+
+        &--future {
+            color: var(--neutral);
         }
     }
 
@@ -161,8 +157,40 @@
     header {
         text-align: center;
     }
+
+    .button-container {
+        display: flex;
+        margin-top: 16px;
+
+        button {
+            @include roundedButton.rounded-button;
+            padding: 8px;
+            min-width: 80px;
+        }
+
+        // .next-button {
+        //     margin-left: auto;
+        // }
+    }
     // input,
     // select {
     //     margin-bottom: 12px;
     // }
+
+    .checkmark {
+        animation: tick 100ms ease-in;
+
+        &:hover {
+            font-variation-settings: 'FILL' 1;
+        }
+    }
+
+    @keyframes tick {
+        from {
+            font-variation-settings: 'FILL' 0;
+        }
+        to {
+            font-variation-settings: 'FILL' 1;
+        }
+    }
 </style>

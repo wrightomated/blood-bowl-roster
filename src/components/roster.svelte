@@ -121,8 +121,8 @@
         display: grid;
         align-items: start;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        column-gap: 10px;
-        row-gap: 15px;
+        column-gap: 12px;
+        row-gap: 16px;
         margin-bottom: 20px;
     }
     .table-container {

@@ -61,12 +61,19 @@
         class:registration-form--touched={formTouched}
         on:submit|preventDefault={register}
     >
+        <h2>Register your account</h2>
+        <p class="intro-text">
+            Registering an account means you can log in from any device and
+            still have access to all your rosters. Any roster you've currently
+            got stored will be uploaded to your account on registration. There
+            is no cost associated with this.
+        </p>
         <label for="username">Display name:</label>
         <input
             type="text"
             name="username"
             id="username"
-            placeholder="your display name"
+            placeholder="your coach name"
             autocomplete="username"
             bind:value={usernameV}
             required
@@ -77,7 +84,7 @@
             type="email"
             name="email"
             id="email"
-            placeholder="your email address"
+            placeholder="email that you will log in with"
             autocomplete="email"
             bind:value={emailV}
             required
@@ -91,7 +98,7 @@
             type="password"
             name="password"
             id="password"
-            placeholder="your password"
+            placeholder="make it unique"
             bind:value={passwordV}
             required
             minlength="6"
@@ -117,17 +124,27 @@
     .registration-form {
         display: flex;
         flex-direction: column;
-        max-width: 320px;
         padding: 20px;
+        margin: 0 auto;
+        max-width: 400px;
         &--touched {
             input:invalid {
                 border-color: var(--main-colour);
             }
         }
     }
+    .intro-text {
+        margin-top: 0;
+    }
 
     input {
         font-size: 16px;
+        margin-bottom: 8px;
+        height: 48px;
+    }
+
+    label {
+        margin-bottom: 4px;
     }
 
     button {

@@ -1,6 +1,6 @@
-import type { WeatherType } from '../models/weather.model';
 import type { D3Result, D6Result } from './dice.model';
 import type { StadiumCategory } from './stadium.model';
+import type { WeatherType } from './weather.model';
 
 export type MatchStatus = 'pre' | 'playing' | 'post';
 
@@ -73,3 +73,9 @@ export type GameEventType =
     | 'touchdown'
     | 'deflection'
     | 'interception';
+
+export type MatchHistoryStep = {
+    title: string;
+    component: any;
+    status: 'complete' | 'current' | 'future';
+};

@@ -1,9 +1,13 @@
 <script lang="ts">
+    import { quintOut } from 'svelte/easing';
+    import { slide } from 'svelte/transition';
     import { matchHistoryRecordDraft } from '../../../store/matchHistoryRecordDraft.store';
 </script>
 
-<h3>Game Details</h3>
-<div class="game-details">
+<div
+    class="game-details"
+    transition:slide|local={{ duration: 500, easing: quintOut }}
+>
     <div>
         <label for="coach-name">Your Name</label>
         <input
@@ -48,6 +52,7 @@
         gap: 8px;
         justify-content: space-around;
         flex-flow: row wrap;
+        padding: 16px 0;
         > div {
             display: flex;
             flex-direction: column;
@@ -71,6 +76,7 @@
         transform: scale(2);
         margin-top: 10px;
         @media screen and (max-width: 450px) {
+            // width: 50%;
         }
     }
     .league-input {

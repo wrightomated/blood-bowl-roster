@@ -60,7 +60,7 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={sendResetEmail}
     >
-        <p>Reset your password.</p>
+        <h2>Reset your password</h2>
         <label for="email">Email:</label>
         <input
             type="email"
@@ -85,8 +85,9 @@
     .login-form {
         display: flex;
         flex-direction: column;
-        max-width: 320px;
         padding: 20px;
+        margin: 0 auto;
+        max-width: 400px;
         &--touched {
             input:invalid {
                 border-color: var(--main-colour);
@@ -97,12 +98,11 @@
     input {
         font-size: 16px;
         margin-bottom: 8px;
+        height: 48px;
     }
-
     label {
-        font-family: var(--display-font);
+        margin-bottom: 4px;
     }
-
     button {
         @include roundedButton.rounded-button;
     }

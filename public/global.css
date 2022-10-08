@@ -143,6 +143,9 @@ thead > tr {
     thead {
         background-color: #333 !important;
     }
+    thead > tr {
+        background-color: #333;
+    }
     table {
         border: 1px solid #333 !important;
     }

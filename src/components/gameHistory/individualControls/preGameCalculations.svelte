@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { quintOut } from 'svelte/easing';
+    import { slide } from 'svelte/transition';
     import { balls } from '../../../data/ball.data';
     import { matchHistoryRecordDraft } from '../../../store/matchHistoryRecordDraft.store';
     import FanFactorCalc from './fanFactorCalc.svelte';
@@ -8,8 +10,7 @@
     import WeatherControl from './weatherControl.svelte';
 </script>
 
-<div class="pre-game">
-    <h3>Pre-Game Calculations</h3>
+<div class="pre-game" transition:slide={{ duration: 500, easing: quintOut }}>
     <FanFactorCalc />
 
     <PettyCash />
@@ -28,3 +29,9 @@
     <!-- <label for="stadium">Stadium</label>
     <input type="text" name="stadium" id="stadium" /> -->
 </div>
+
+<style>
+    .pre-game {
+        padding: 16px 0;
+    }
+</style>
