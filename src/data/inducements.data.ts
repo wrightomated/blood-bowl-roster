@@ -399,5 +399,12 @@ export const inducementData: { inducements: Inducement[] } = {
             sevensMax: 0,
             dungeonBowlMax: 1,
         },
+        {
+            id: 'i52',
+            displayName: 'Giant Mercenary Player',
+            cost: 350,
+            max: 1,
+            sevensMax: 0,
+        },
     ],
 };

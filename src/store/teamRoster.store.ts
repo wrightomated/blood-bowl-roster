@@ -174,42 +174,9 @@ function createRoster() {
             update((store) => {
                 return { ...store, leagueRosterStatus };
             }),
-        updatePlayerNumberAndOrder: (currentIndex: number, desired: number) => {
-            update((store) => {
-                if (
-                    !Number.isInteger(desired) ||
-                    desired > maxPlayerNumber ||
-                    desired < 1
-                ) {
-                    return store;
-                }
-
-                const desiredIndex = desired - 1;
-                const numberOfPlayers = store.players.length;
-                let updatedPlayers: RosterPlayerRecord[] = store.players;
-                if (desiredIndex >= store.players.length) {
-                    updatedPlayers = Array(desired)
-                        .fill({
-                            deleted: true,
-                            playerName: '',
-                            alterations: { spp: 0, ni: 0 },
-                            player: deletedPlayer(),
-                        })
-                        .map((p, i) =>
-                            i < numberOfPlayers ? store.players[i] : p
-                        );
-                }
-                const players = switchTwoElements(
-                    updatedPlayers,
-                    currentIndex,
-                    desiredIndex
-                );
-                return { ...store, players };
-            });
-        },
         updatePlayerNumber: (currentIndex: number, desired: number) => {
             update((store) => {
-                if (!Number.isInteger(desired) || desired > 99 || desired < 1) {
+                if (!Number.isInteger(desired) || desired > 99 || desired < 0) {
                     return store;
                 }
                 const players = store.players;
@@ -361,7 +328,7 @@ function assignPlayerNumbers(
     players: RosterPlayerRecord[]
 ): RosterPlayerRecord[] {
     return players.map((p, i) => {
-        if (p?.alterations?.playerNumber) return p;
+        if (typeof p.alterations?.playerNumber === 'number') return p;
         return assignPlayerNumber(i, players);
     });
 }
@@ -387,7 +354,7 @@ function addPlayerNumbersToRoster(roster: Roster) {
     let newRoster = roster;
     if (
         players.length > 0 &&
-        players.some((p) => !p.alterations.playerNumber)
+        players.some((p) => typeof p.alterations?.playerNumber !== 'number')
     ) {
         newRoster = {
             ...roster,
