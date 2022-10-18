@@ -2,7 +2,10 @@ import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
 import type { InducementKey } from './inducement.model';
-import type { MatchHistorySummary } from './matchHistory.model';
+import type {
+    MatchHistoryRecord,
+    MatchHistorySummary,
+} from './matchHistory.model';
 import type { Player } from './player.model';
 import type { TeamName, TeamSpecialRule } from './team.model';
 
@@ -21,6 +24,7 @@ export interface Roster {
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
     matchSummary?: MatchHistorySummary[];
+    matchDraft?: MatchHistoryRecord;
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;
@@ -28,7 +32,14 @@ export type RosterPreviews = Record<string, RosterPreview>;
 export type RosterPreview = Omit<Roster, 'players' | 'extra' | 'inducements'>;
 
 export function getRosterPreview(roster: Roster): RosterPreview {
-    const { players, extra, inducements, ...preview } = roster;
+    const {
+        players,
+        extra,
+        inducements,
+        matchDraft,
+        matchSummary,
+        ...preview
+    } = roster;
     return preview;
 }
 
@@ -42,6 +53,8 @@ export interface RosterPlayerRecord {
     playerName: string;
     starPlayer?: boolean;
     alterations?: PlayerAlterations;
+    /** Unique id for every player */
+    playerId?: string;
 }
 
 export type RosterExtraRecords = Partial<Record<RosterExtra, number>>;

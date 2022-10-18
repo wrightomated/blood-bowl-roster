@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { matchHistoryRecordDraft } from '../../../store/matchHistoryRecordDraft.store';
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
     let yourFanCalc: HTMLElement, opFanCalc: HTMLElement;
@@ -14,34 +13,34 @@
     }
 
     function updateYourFanFactor() {
-        $matchHistoryRecordDraft.playingCoach.fanFactor =
+        $roster.matchDraft.playingCoach.fanFactor =
             ($roster.extra.dedicated_fans || 1) +
-            ($matchHistoryRecordDraft.playingCoach.fairWeatherFans || 1);
+            ($roster.matchDraft.playingCoach.fairWeatherFans || 1);
     }
     function updateOpponentFanFactor() {
-        if (!$matchHistoryRecordDraft.opponentCoach.dedicatedFans) {
-            $matchHistoryRecordDraft.opponentCoach.dedicatedFans = 1;
+        if (!$roster.matchDraft.opponentCoach.dedicatedFans) {
+            $roster.matchDraft.opponentCoach.dedicatedFans = 1;
         }
-        if (!$matchHistoryRecordDraft.opponentCoach.fairWeatherFans) {
-            $matchHistoryRecordDraft.opponentCoach.fairWeatherFans = 1;
+        if (!$roster.matchDraft.opponentCoach.fairWeatherFans) {
+            $roster.matchDraft.opponentCoach.fairWeatherFans = 1;
         }
 
-        $matchHistoryRecordDraft.opponentCoach.fanFactor =
-            $matchHistoryRecordDraft.opponentCoach.dedicatedFans +
-            ($matchHistoryRecordDraft.opponentCoach.fairWeatherFans || 1);
+        $roster.matchDraft.opponentCoach.fanFactor =
+            $roster.matchDraft.opponentCoach.dedicatedFans +
+            ($roster.matchDraft.opponentCoach.fairWeatherFans || 1);
     }
 
     function yourRoll(event) {
         const result = event.detail.result;
         if (result) {
-            $matchHistoryRecordDraft.playingCoach.fairWeatherFans = result;
+            $roster.matchDraft.playingCoach.fairWeatherFans = result;
             updateYourFanFactor();
         }
     }
     function opRoll(event) {
         const result = event.detail.result;
         if (result) {
-            $matchHistoryRecordDraft.opponentCoach.fairWeatherFans = result;
+            $roster.matchDraft.opponentCoach.fairWeatherFans = result;
             updateOpponentFanFactor();
         }
     }
@@ -60,8 +59,7 @@
                 min="1"
                 on:change={updateYourFanFactor}
                 on:focus={() => makeOpaque(yourFanCalc)}
-                bind:value={$matchHistoryRecordDraft.playingCoach
-                    .fairWeatherFans}
+                bind:value={$roster.matchDraft.playingCoach.fairWeatherFans}
                 autocomplete="off"
             />
             <Die faces={3} on:rolled={yourRoll} /> =
@@ -71,7 +69,7 @@
             id="your-fan-factor"
             max="10"
             min="2"
-            bind:value={$matchHistoryRecordDraft.playingCoach.fanFactor}
+            bind:value={$roster.matchDraft.playingCoach.fanFactor}
             autocomplete="off"
             on:change={() => makeTransparent(yourFanCalc)}
         />
@@ -87,8 +85,7 @@
                 max="7"
                 min="1"
                 on:change={updateOpponentFanFactor}
-                bind:value={$matchHistoryRecordDraft.opponentCoach
-                    .dedicatedFans}
+                bind:value={$roster.matchDraft.opponentCoach.dedicatedFans}
                 autocomplete="off"
             />
             +
@@ -100,8 +97,7 @@
                 max="3"
                 min="1"
                 on:change={updateOpponentFanFactor}
-                bind:value={$matchHistoryRecordDraft.opponentCoach
-                    .fairWeatherFans}
+                bind:value={$roster.matchDraft.opponentCoach.fairWeatherFans}
                 autocomplete="off"
             />
             <Die faces={3} on:rolled={opRoll} /> =
@@ -111,7 +107,7 @@
             id="op-fan-factor"
             max="10"
             min="2"
-            bind:value={$matchHistoryRecordDraft.opponentCoach.fanFactor}
+            bind:value={$roster.matchDraft.opponentCoach.fanFactor}
             autocomplete="off"
             on:change={() => makeTransparent(opFanCalc)}
         />
@@ -120,14 +116,21 @@
 
 <style lang="scss">
     .fan-factor-calc {
-        text-align: center;
+        // text-align: center;
         display: flex;
         flex: wrap;
-        justify-content: space-around;
+        // justify-content: space-around;
+        gap: 16px;
 
         @media screen and (max-width: 500px) {
             flex-direction: column;
             gap: 8px;
+        }
+
+        > div {
+            border-radius: 12px;
+            padding: 12px;
+            background-color: var(--secondary-background-colour);
         }
     }
 </style>

@@ -1,12 +1,22 @@
 <script lang="ts">
-    import type { MatchHistorySummary } from '../../models/matchHistory.model';
+    import type {
+        MatchHistoryRecord,
+        MatchHistorySummary,
+    } from '../../models/matchHistory.model';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import Pill from '../uiComponents/pill.svelte';
     import MatchHistoryInfo from './matchHistoryInfo.svelte';
 
     export let matchSummary: MatchHistorySummary;
-    export let open = false;
-    // export let score: [number, number] = [0, 0];
+    let open = false;
+    let loading = false;
+
+    let match: MatchHistoryRecord;
+
+    const matchDate = !!matchSummary.matchDate
+        ? new Date(matchSummary.matchDate).toLocaleDateString()
+        : '';
+
     $: opponentScore = matchSummary.opponent.score;
     $: score = matchSummary.playerScores.touchdowns;
 
@@ -15,7 +25,18 @@
 
     // let date1 = new Date(Date.UTC(2022, 8, 10, 3, 0, 0));
 
-    function toggleBody() {
+    async function toggleBody() {
+        if (loading) return;
+
+        if (!match) {
+            loading = true;
+            const service = await import('../auth/firebaseDB.service');
+            const matchDocument = await service.getMatchHistory(
+                matchSummary.id
+            );
+            match = matchDocument.data();
+        }
+        loading = false;
         open = !open;
     }
 </script>
@@ -23,11 +44,11 @@
 <section class="match-record-card" class:closed={!open}>
     {#if matchSummary.matchDate}
         <div class="match-date">
-            {matchSummary.matchDate.toLocaleDateString()}
+            {matchDate}
         </div>
     {/if}
 
-    <header class="header" class:open on:click={toggleBody}>
+    <header class="header" class:open on:click={async () => await toggleBody()}>
         <div class="result">{result}</div>
         <div>vs</div>
         <div class="opponent-name">{matchSummary.opponent.name}</div>
@@ -36,8 +57,15 @@
             <Pill variant="filled">League</Pill>
         {/if}
 
-        <i class="material-symbols-outlined" title={open ? 'Shrink' : 'Expand'}
-            >{open ? 'arrow_drop_up' : 'arrow_drop_down'}</i
+        <i
+            class="material-symbols-outlined"
+            class:loading
+            title={open ? 'Shrink' : 'Expand'}
+            >{loading
+                ? 'autorenew'
+                : open
+                ? 'arrow_drop_up'
+                : 'arrow_drop_down'}</i
         >
 
         <!-- <MaterialButton
@@ -48,7 +76,7 @@
         /> -->
     </header>
     {#if open}
-        <MatchHistoryInfo />
+        <MatchHistoryInfo {match} />
     {/if}
 </section>
 
@@ -125,5 +153,12 @@
         top: -20px;
         left: 36px;
         font-family: var(--display-font);
+    }
+
+    .loading {
+        animation-name: spin;
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
     }
 </style>

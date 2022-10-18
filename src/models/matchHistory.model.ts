@@ -12,7 +12,9 @@ export type MatchHistorySummary = {
     };
     playerScores: Partial<GameEventTally>;
     isLeagueMatch?: boolean;
-    matchDate?: Date;
+    /** yyyy-MM-dd */
+    matchDate?: string;
+    leaguePoints?: number;
 };
 
 export type MatchHistoryRecord = {
@@ -30,7 +32,10 @@ export type MatchHistoryRecord = {
         category: StadiumCategory;
         attribute?: D6Result;
     };
-    time?: { date?: Date };
+    time?: {
+        /** yyyy-MM-dd */
+        date?: string;
+    };
     notes?: string;
 };
 
@@ -48,20 +53,23 @@ export type MatchHistoryCoach = {
     teamCode?: string;
     winnings?: number;
     gameEvents?: GameEvent[];
+    gameEventRecording?: 'total' | 'individual';
+    mvp?: { name: string; number: number; id: string };
 };
 
 export type GameEventTally = {
     casualties: number;
     touchdowns: number;
-    passes: number;
+    completions: number;
     kills: number;
     deflections: number;
     interceptions: number;
+    opponentScore: number;
 };
 
 export type GameEvent = {
     eventType: GameEventType;
-    playerId?: number;
+    playerId?: string;
     time?: Date;
     turn?: number;
 };
@@ -77,5 +85,7 @@ export type GameEventType =
 export type MatchHistoryStep = {
     title: string;
     component: any;
-    status: 'complete' | 'current' | 'future';
+    status: StepStatus;
 };
+
+export type StepStatus = 'complete' | 'current' | 'future';

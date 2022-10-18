@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { quadInOut } from 'svelte/easing';
+    import { fade, slide } from 'svelte/transition';
     import { modalState } from '../../store/modal.store';
     import MaterialButton from './materialButton.svelte';
 
@@ -13,7 +15,7 @@
     }
 
     function handleKeydown(event) {
-        if (event?.code === 'Escape') {
+        if ($modalState.canClose && event?.code === 'Escape') {
             closeModal();
         }
     }
@@ -26,40 +28,35 @@
                 application.style.width = '100%';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            // document.querySelector('main').style.position = 'fixed';
-            // document.getElementsByTagName('main')
-            // document.body.style.height = '100%';
         } else {
             if (application) {
                 application.style.position = null;
             }
-            // document.querySelector('main').style.position = 'relative';
-            // document.body.style.overflow = 'auto';
-            // document.body.style.height = 'auto';
         }
     });
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="modal" class:closed={!$modalState.isOpen}>
-    {#if $modalState.canClose}
-        <div class="close">
-            <MaterialButton
-                symbol="close"
-                hoverText="Close Modal"
-                clickFunction={closeModal}
+{#if $modalState.isOpen}
+    <div class="modal" transition:fade={{ duration: 300, easing: quadInOut }}>
+        {#if $modalState.canClose}
+            <div class="close">
+                <MaterialButton
+                    symbol="close"
+                    hoverText="Close Modal"
+                    clickFunction={closeModal}
+                />
+            </div>
+        {/if}
+        <div class="content">
+            <svelte:component
+                this={$modalState.component}
+                {...$modalState.componentProps}
             />
         </div>
-    {/if}
-    <div class="content">
-        <svelte:component
-            this={$modalState.component}
-            {...$modalState.componentProps}
-        />
     </div>
-</div>
-
+{/if}
 <div
     class="overlay"
     class:overlay--visible={$modalState.isOpen}
@@ -110,7 +107,7 @@
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.33);
-        transition: opacity 250ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
         opacity: 0;
         visibility: hidden;
         display: block;

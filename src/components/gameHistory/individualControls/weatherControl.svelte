@@ -1,34 +1,10 @@
 <script lang="ts">
     import { weatherTables } from '../../../data/weatherData.data';
     import type { WeatherType } from '../../../models/weather.model';
-    import Die from '../../dice/die.svelte';
     let selectedTable: WeatherType = 'default';
-    let perfectConditions = ['4 - 10', 'Perfect Conditions'];
-    let weatherResult = perfectConditions[0];
 
     function capitalise(s: string) {
         return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-    function weatherTable(weatherType: WeatherType) {
-        const results = weatherTables.find(
-            (t) => t.type === weatherType
-        ).results;
-        const entries = Object.entries(results);
-        return [
-            entries[0],
-            entries[1],
-            perfectConditions,
-            entries[2],
-            entries[3],
-        ];
-    }
-    function updateValue(event) {
-        const result = event.detail.result;
-        if (result <= 3 || result >= 11) {
-            weatherResult = result.toString();
-        } else {
-            weatherResult = perfectConditions[0];
-        }
     }
 </script>
 
@@ -43,9 +19,9 @@
             >
         {/each}
     </select>
-    <i class="material-symbols-outlined symbol-empty"
+    <!-- <i class="material-symbols-outlined symbol-empty"
         >{weatherTables.find((x) => x.type === selectedTable).icon}</i
-    >
+    > -->
 
     <!-- <select
         name="weather-result"
@@ -60,7 +36,8 @@
 </div>
 
 <style>
-    select {
+    label {
+        margin-top: 16px;
         margin-bottom: 4px;
     }
     .result {

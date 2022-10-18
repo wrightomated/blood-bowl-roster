@@ -36,6 +36,10 @@
         p {
             margin-block-start: 0;
             margin-block-end: 0;
+
+            &:first-child {
+                text-transform: capitalize;
+            }
         }
 
         .result {

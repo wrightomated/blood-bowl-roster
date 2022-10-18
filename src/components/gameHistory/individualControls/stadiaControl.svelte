@@ -2,11 +2,11 @@
     import { categoryMap, stadiumTableData } from '../../../data/stadium.data';
     import type { D6Result } from '../../../models/dice.model';
     import type { Stadium, StadiumTable } from '../../../models/stadium.model';
-    import { matchHistoryRecordDraft } from '../../../store/matchHistoryRecordDraft.store';
+    import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
 
     $: categories = Object.keys(categoryMap);
-    $: category = $matchHistoryRecordDraft.stadium.category;
+    $: category = $roster.matchDraft.stadium.category;
 
     // let category;
     // let attribute;
@@ -14,13 +14,13 @@
     function updateStadium(event) {
         const result: number = event.detail.result;
         const stadium: Stadium = stadiumTableData[result];
-        $matchHistoryRecordDraft.stadium.category = stadium.category;
-        $matchHistoryRecordDraft.stadium.attribute = undefined;
+        $roster.matchDraft.stadium.category = stadium.category;
+        $roster.matchDraft.stadium.attribute = undefined;
     }
 
     function updateAttribute(event) {
         const result: D6Result = event.detail.result;
-        $matchHistoryRecordDraft.stadium.attribute = result;
+        $roster.matchDraft.stadium.attribute = result;
         // console.log(result);
         // const stadium: Stadium = categoryMap[category];
         // console.log(stadium);
@@ -47,7 +47,7 @@
     <select
         name="stadium-category"
         id="stadium-category"
-        bind:value={$matchHistoryRecordDraft.stadium.category}
+        bind:value={$roster.matchDraft.stadium.category}
     >
         {#each categories as cat}
             <option value={cat}>{cat}</option>
@@ -59,7 +59,7 @@
             name="stadium-attribute"
             id="stadium-attribute"
             aria-label="stadium attribute"
-            bind:value={$matchHistoryRecordDraft.stadium.attribute}
+            bind:value={$roster.matchDraft.stadium.attribute}
         >
             {#each categoryMap[category].attributes as att}
                 <option class="weather-type" value={att.roll}
@@ -85,3 +85,9 @@
     </select>
     <Die faces={6} rolls={2} on:rolled={updateValue} /> -->
 </div>
+
+<style>
+    label {
+        margin-top: 16px;
+    }
+</style>

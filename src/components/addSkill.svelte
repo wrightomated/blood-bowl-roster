@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { quadInOut } from 'svelte/easing';
+    import { slide } from 'svelte/transition';
     import { advancementCosts } from '../data/advancementCost.data';
 
     import { dungeonBowlSkillIds, skillCatalogue } from '../data/skills.data';
@@ -269,7 +271,11 @@
     };
 </script>
 
-<div class="container" class:grid-view={$rosterViewMode === 'grid'}>
+<div
+    class="container"
+    class:grid-view={$rosterViewMode === 'grid'}
+    transition:slide={{ duration: 300, easing: quadInOut }}
+>
     <div>
         {#if (rosterPlayer.alterations?.advancements || 0) < 6}
             <button

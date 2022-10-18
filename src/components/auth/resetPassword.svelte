@@ -6,7 +6,7 @@
     import Button from '../uiComponents/button.svelte';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
-    import LoginForm from './loginForm.svelte';
+    import { getAuthModal } from './getAuthFormModule';
 
     $: emailV = '';
     let formTouched = false;
@@ -38,11 +38,12 @@
     function touchForm() {
         formTouched = true;
     }
-    function showLogin() {
+    async function showLogin() {
+        const component = await getAuthModal('login');
         modalState.set({
             ...$modalState,
             isOpen: true,
-            component: LoginForm,
+            component: component.default,
         });
     }
 </script>
@@ -52,7 +53,11 @@
 {:else if emailSent}
     <div class="logged-in">
         <p>Email sent!</p>
-        <Button clickFunction={showLogin}>Login</Button>
+        <Button
+            clickFunction={async () => {
+                await showLogin();
+            }}>Login</Button
+        >
     </div>
 {:else}
     <form

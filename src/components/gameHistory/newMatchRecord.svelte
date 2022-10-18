@@ -1,21 +1,10 @@
 <script lang="ts">
-    import {
-        matchHistoryRecordDraft,
-        matchHistorySteps,
-    } from '../../store/matchHistoryRecordDraft.store';
     import { onMount } from 'svelte';
-    import GameDetails from './individualControls/gameDetails.svelte';
-    import PreGameCalculations from './individualControls/preGameCalculations.svelte';
-    import PlayerEvents from './playerEvents.svelte';
-    import { newMatchRecordSteps } from '../../data/matchHistorySteps.data';
+    import { matchHistorySteps } from '../../store/matchHistorySteps.store';
+
     onMount(() => {
         document.getElementById('coach-name')?.focus();
     });
-
-    function addMatch(e) {
-        e.preventDefault;
-        // roster.addMatch();
-    }
 </script>
 
 <section class="new-match">
@@ -30,10 +19,12 @@
             e.preventDefault;
         }}
     >
-        {#each $matchHistorySteps as step}
+        {#each $matchHistorySteps as step, i}
             <div class="step step--{step.status}">
                 <div class="step-title">
-                    <h3>{step.title}</h3>
+                    <h3 on:click={() => matchHistorySteps.goToStep(i)}>
+                        {step.title}
+                    </h3>
                     {#if step.status === 'complete'}
                         <i class="material-symbols-outlined checkmark"
                             >check_circle</i
@@ -41,15 +32,20 @@
                     {/if}
                 </div>
                 {#if step.status === 'current'}
-                    <svelte:component this={step.component} />
+                    <div class="component-container">
+                        <svelte:component this={step.component} />
+                    </div>
                 {/if}
             </div>
         {/each}
 
         <div class="button-container">
-            <button on:click={matchHistorySteps.previousStep} type="button"
-                >Previous</button
-            >
+            {#if !$matchHistorySteps.find((x, i) => x.status === 'current' && i === 0)}
+                <button on:click={matchHistorySteps.previousStep} type="button"
+                    >Previous</button
+                >
+            {/if}
+
             {#if $matchHistorySteps.find((x) => x.status === 'current')}
                 <button
                     class="next-button"
@@ -126,6 +122,7 @@
         }
     }
     .step {
+        color: var(--neutral);
         &-title {
             display: flex;
             align-items: center;
@@ -134,9 +131,15 @@
                 margin: 0;
             }
         }
+        &:not(.step--current) {
+            .step-title h3:hover {
+                color: var(--secondary-colour);
+                cursor: pointer;
+            }
+        }
 
-        &--future {
-            color: var(--neutral);
+        &--current {
+            color: #333;
         }
     }
 
@@ -178,7 +181,8 @@
     // }
 
     .checkmark {
-        animation: tick 100ms ease-in;
+        color: var(--secondary-colour);
+        animation: tick 250ms ease-in;
 
         &:hover {
             font-variation-settings: 'FILL' 1;

@@ -1,71 +1,66 @@
 <script lang="ts">
-    import { quintOut } from 'svelte/easing';
+    import { onMount } from 'svelte';
+    import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { weatherSymbol } from '../../data/weatherData.data';
-    import { inducementAndStarsInRoster } from '../../store/currentInducements.store';
+    import { categoryMap } from '../../data/stadium.data';
+    import { weatherSymbol, weatherTables } from '../../data/weatherData.data';
+    import type { MatchHistoryRecord } from '../../models/matchHistory.model';
+
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
-    import Pill from '../uiComponents/pill.svelte';
+    import MatchInducements from './individualControls/matchInducements.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
-    const numberFormatter = new Intl.NumberFormat();
-    const weather = 'Morning Dew';
+    export let match: MatchHistoryRecord;
+    const weather = weatherTables.find((x) => x.type === match.weather.table);
+    const stadium = categoryMap[match.stadium.category].attributes
+        ? categoryMap[match.stadium.category]?.attributes.find(
+              (a) => a.roll === match.stadium.attribute
+          )?.attribute
+        : 'Standard';
 
-    // $: formattedInducements = $inducementAndStarsInRoster
-    //     .map((x) => `${x[0]}${x[1] ? ` ${x[1]}` : ''}`)
-    //     .join(',');
+    const teamEvents = Object.entries(match.gameEventTally)
+        .filter((entry) => entry[0] !== 'opponentScore')
+        .sort((a, b) => a[0].localeCompare(b[0]));
 </script>
 
-<article class="content" transition:slide={{ duration: 200, easing: quintOut }}>
-    <!-- <div>League Match</div> -->
+<article
+    class="content"
+    transition:slide={{ duration: 300, easing: quadInOut }}
+>
     <div class="match-modifiers">
-        <IconWithCaption
-            icon={weatherSymbol[weather] ?? 'sunny'}
-            caption={weather}
-        />
-        <IconWithCaption icon="stadium" caption="Sloping Pitch" />
-        <!-- <IconWithCaption icon="sports_football" caption="Soulstone Ball" /> -->
+        <IconWithCaption icon={weather.icon} caption={weather.type} />
+        <IconWithCaption icon="stadium" caption={stadium} />
     </div>
     <div class="statistics">
-        <TitleWithResult title="Petty Cash" result={30000} />
-        <TitleWithResult title="Fan Factor" result={6} />
-        <TitleWithResult title="League Points" result={2} />
-        <TitleWithResult title="Winnings" result={100000} />
-        <!-- <div>
-            <p>Petty Cash: 30,000</p>
-            <p>Fan factor: 2</p>
-        </div>
-        <div>
-            <p>Winnings: {numberFormatter.format(100000)}</p>
-            <p>League Points: 6</p>
-        </div> -->
+        <TitleWithResult
+            title="Petty Cash"
+            result={match.playingCoach.pettyCash}
+        />
+        <TitleWithResult
+            title="Fan Factor"
+            result={match.playingCoach.fanFactor}
+        />
+        <TitleWithResult
+            title="League Points"
+            result={match.playingCoach.leaguePoints}
+        />
+        <TitleWithResult
+            title="Winnings"
+            result={match.playingCoach.winnings}
+        />
     </div>
 
-    <!-- <div>Petty Cash: 30k</div>
-    <div>League Points: 6</div>
-    <div>Fan factor: 2</div> -->
-    <!-- TODO: Make inducement component -->
-
-    <!-- <div>Inducements:</div> -->
     <div class="additional">
-        <div class="inducements-container">
-            <h3>Inducements</h3>
-            <div class="inducements">
-                {#if $inducementAndStarsInRoster.length <= 0}<p>None</p>{/if}
-                {#each $inducementAndStarsInRoster as i}
-                    <!-- <Pill variant="filled"
-                        >{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</Pill
-                    > -->
-                    <div>{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</div>
-                    <!-- <TitleWithResult
-                        title={`${i[1]}`}
-                        result={i[0]}
-                        background="none"
-                    /> -->
-                {/each}
-            </div>
-        </div>
+        <MatchInducements showTitle={true} />
         <div class="events">
-            <TitleWithResult title="Touchdowns" result={3} background="none" />
+            {#each teamEvents as event}
+                <TitleWithResult
+                    title={event[0]}
+                    result={event[1]}
+                    background="none"
+                />
+            {/each}
+            <!-- <TitleWithResult title="Touchdowns" result={3} background="none" />
             <TitleWithResult title="Passes" result={2} background="none" />
             <TitleWithResult title="Casualties" result={1} background="none" />
             <TitleWithResult title="Deflections" result={0} background="none" />
@@ -75,7 +70,7 @@
                 background="none"
             />
 
-            <TitleWithResult title="Kills" result={0} background="none" />
+            <TitleWithResult title="Kills" result={0} background="none" /> -->
         </div>
     </div>
 </article>
@@ -94,39 +89,7 @@
         gap: 8px;
         flex-wrap: wrap;
     }
-    .inducements-container {
-        flex: 3;
-        border-radius: 12px;
-        h3 {
-            margin: 12px;
-            text-align: center;
-        }
-    }
-    .inducements {
-        border-radius: 12px;
-        display: flex;
-        flex-flow: row wrap;
-        gap: 8px;
-        p {
-            text-align: center;
-            width: 100%;
-        }
-        div {
-            flex: 1 1 40%;
-            margin: 0;
-            background-color: var(--secondary-background-colour);
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 14px;
-            @media screen and (max-width: 600px) {
-                flex-basis: 90%;
-            }
-        }
-        // * {
-        //     margin: 0;
-        // }
-        // background-color: var(--secondary-background-colour);
-    }
+
     .additional {
         display: flex;
         gap: 8px;

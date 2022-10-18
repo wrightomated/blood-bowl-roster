@@ -159,9 +159,9 @@
         position: relative;
         min-width: 300px;
         max-width: 600px;
-        border: 2px solid white;
+        border: 2px solid var(--secondary-background-colour);
         height: 100%;
-        background-color: white;
+        background-color: var(--secondary-background-colour);
         box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
 
@@ -176,7 +176,7 @@
         min-height: 52px;
         border-radius: 25px;
         border-radius: 20px 20px 0 0;
-        border: 2px solid white;
+        border: 2px solid var(--secondary-background-colour);
         margin-bottom: 6px;
         h3 {
             margin: 0;

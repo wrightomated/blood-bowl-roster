@@ -8,7 +8,7 @@
     import Button from '../uiComponents/button.svelte';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
-    import ResetPassword from './resetPassword.svelte';
+    import { getAuthModal } from './getAuthFormModule';
 
     $: emailV = '';
     $: passwordV = '';
@@ -46,11 +46,13 @@
     function touchForm() {
         formTouched = true;
     }
-    function passwordReset() {
+
+    async function passwordReset() {
+        const component = await getAuthModal('reset');
         modalState.set({
             ...$modalState,
             isOpen: true,
-            component: ResetPassword,
+            component: component.default,
         });
     }
 </script>
@@ -96,8 +98,11 @@
         {/if}
         <button class="login-button" on:focus={touchForm}>Login</button>
     </form>
-    <button class="reset-password" on:click={passwordReset}
-        >Forgot password?</button
+    <button
+        class="reset-password"
+        on:click={async () => {
+            await passwordReset();
+        }}>Forgot password?</button
     >
 {/if}
 

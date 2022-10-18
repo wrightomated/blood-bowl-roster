@@ -17,6 +17,10 @@ import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import { PickedSpecialRule } from '../data/teams.data';
+import {
+    matchSummary,
+    updateMatchDraftTotals,
+} from '../helpers/matchHistoryHelpers';
 
 export const maxPlayerNumber = 99;
 
@@ -203,7 +207,29 @@ function createRoster() {
                     extra: { ...store.extra, special_rule: specialRule },
                 };
             }),
-
+        matchDraftToSummary: () =>
+            update((store) => {
+                const { matchDraft, ...rest } = store;
+                return {
+                    ...rest,
+                    matchSummary: [
+                        ...rest.matchSummary,
+                        matchSummary(matchDraft),
+                    ],
+                };
+            }),
+        updateDraftEventTotals: () =>
+            update((store) => {
+                return {
+                    ...store,
+                    matchDraft: updateMatchDraftTotals(store.matchDraft),
+                };
+            }),
+        deleteMatchDraft: () =>
+            update((store) => {
+                const { matchDraft, ...noDraft } = store;
+                return noDraft;
+            }),
         set,
     };
 }
@@ -324,11 +350,20 @@ const deletePlayersFromPlayers: (
     return newPlayers;
 };
 
-function assignPlayerNumbers(
+/**
+ * Add attributes needed in newer versions of bbroster to legacy team objects
+ */
+function assignMissingAttributesToPlayers(
     players: RosterPlayerRecord[]
 ): RosterPlayerRecord[] {
     return players.map((p, i) => {
-        if (typeof p.alterations?.playerNumber === 'number') return p;
+        if (typeof p.alterations?.playerNumber === 'number') {
+            if (p?.playerId) return p;
+            return {
+                ...p,
+                playerId: nanoid(),
+            };
+        }
         return assignPlayerNumber(i, players);
     });
 }
@@ -340,8 +375,10 @@ function assignPlayerNumber(
     const index = typeof playerRef === 'number' ? playerRef : undefined;
     const player =
         typeof playerRef === 'number' ? players[playerRef] : playerRef;
+    const playerId = player?.playerId ?? nanoid();
     return {
         ...player,
+        playerId,
         alterations: {
             ...player?.alterations,
             playerNumber: generateEligibleNumber(players, index),
@@ -358,7 +395,7 @@ function addPlayerNumbersToRoster(roster: Roster) {
     ) {
         newRoster = {
             ...roster,
-            players: assignPlayerNumbers(roster.players),
+            players: assignMissingAttributesToPlayers(roster.players),
         };
     }
     return newRoster;
