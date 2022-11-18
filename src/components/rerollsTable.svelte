@@ -127,10 +127,6 @@
         .tables {
             width: 100%;
         }
-        .tables__item th,
-        th {
-            background-color: #333;
-        }
         .tables__item {
             tr {
                 height: auto;
