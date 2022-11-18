@@ -4,6 +4,7 @@
     import { slide } from 'svelte/transition';
     import type { RosterPlayerRecord } from '../../../models/roster.model';
     import { modalState } from '../../../store/modal.store';
+    // import { modalState } from '../../../store/modal.store';
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
     import Button from '../../uiComponents/button.svelte';
@@ -14,7 +15,7 @@
     let changeDedicatedFans: number = 0;
 
     $: scoreDiff =
-        $roster.matchDraft.gameEventTally.touchdowns -
+        $roster.matchDraft.gameEventTally.touchdown -
         $roster.matchDraft.gameEventTally.opponentScore;
 
     $: result = scoreDiff > 0 ? `Won` : scoreDiff === 0 ? 'Drew' : 'Lost';
@@ -22,7 +23,7 @@
     $: filteredPlayers = $roster?.players?.filter(
         (p) => !p.deleted || !p.starPlayer
     );
-    let selectedPlayer;
+    let mvpSelected;
 
     function winnings(fanFactor, opponentFanFactor, touchdowns) {
         return 10000 * ((fanFactor + opponentFanFactor) / 2 + touchdowns);
@@ -53,11 +54,20 @@
             component: SaveMatchHistory,
         });
     }
+    function selectMvp() {
+        const player = $roster.players.find((p) => p.playerId === mvpSelected);
+        $roster.matchDraft.playingCoach.mvp = {
+            id: mvpSelected,
+            number: player.alterations.playerNumber,
+            name: player.playerName || player.player.position,
+        };
+    }
 
     /** Saves the roster into the database, updates summary and deletes the draft */
 
     onMount(() => {
         roster.updateDraftEventTotals();
+        mvpSelected = $roster.matchDraft?.playingCoach?.mvp?.id;
         if (
             !$roster.matchDraft.playingCoach.winnings &&
             $roster.matchDraft.playingCoach.winnings !== 0
@@ -65,7 +75,7 @@
             $roster.matchDraft.playingCoach.winnings = winnings(
                 $roster.matchDraft.playingCoach.fanFactor,
                 $roster.matchDraft.opponentCoach.fanFactor,
-                $roster.matchDraft.gameEventTally.touchdowns
+                $roster.matchDraft.gameEventTally.touchdown
             );
         }
         if ($roster.matchDraft.playingCoach.leaguePoints === 0) {
@@ -138,7 +148,12 @@
             bind:value={$roster.matchDraft.playingCoach.leaguePoints}
         />
         <label for="choose-mvp">MVP</label>
-        <select id="choose-mvp" name="choose-mvp" bind:value={selectedPlayer}>
+        <select
+            id="choose-mvp"
+            name="choose-mvp"
+            bind:value={mvpSelected}
+            on:change={selectMvp}
+        >
             {#each filteredPlayers as p}
                 <option value={p.playerId}> {playerShort(p)}</option>
             {/each}

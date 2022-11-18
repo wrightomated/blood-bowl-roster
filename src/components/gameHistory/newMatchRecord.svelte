@@ -1,10 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { matchHistorySteps } from '../../store/matchHistorySteps.store';
-
-    onMount(() => {
-        document.getElementById('coach-name')?.focus();
-    });
 </script>
 
 <section class="new-match">
@@ -22,14 +17,15 @@
         {#each $matchHistorySteps as step, i}
             <div class="step step--{step.status}">
                 <div class="step-title">
+                    <i
+                        class="material-symbols-outlined checkmark checkmark--{step.status}"
+                        >{step.status === 'complete'
+                            ? 'check_circle'
+                            : 'circle'}</i
+                    >
                     <h3 on:click={() => matchHistorySteps.goToStep(i)}>
                         {step.title}
                     </h3>
-                    {#if step.status === 'complete'}
-                        <i class="material-symbols-outlined checkmark"
-                            >check_circle</i
-                        >
-                    {/if}
                 </div>
                 {#if step.status === 'current'}
                     <div class="component-container">
@@ -128,7 +124,8 @@
             align-items: center;
             gap: 8px;
             h3 {
-                margin: 0;
+                margin: 4px 0;
+                text-align: center;
             }
         }
         &:not(.step--current) {
@@ -182,10 +179,19 @@
 
     .checkmark {
         color: var(--secondary-colour);
-        animation: tick 250ms ease-in;
+        &--complete {
+            animation: tick 250ms ease-in;
+            &:hover {
+                font-variation-settings: 'FILL' 1;
+            }
+        }
 
-        &:hover {
-            font-variation-settings: 'FILL' 1;
+        &--current,
+        &--future {
+            font-variation-settings: 'FILL' 0;
+            &:hover {
+                font-variation-settings: 'FILL' 0;
+            }
         }
     }
 

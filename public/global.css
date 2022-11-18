@@ -179,6 +179,11 @@ thead > tr {
     animation-iteration-count: 1;
     animation-timing-function: ease-out;
 }
+.boxed-div {
+    border-radius: 12px;
+    padding: 12px;
+    background-color: var(--secondary-background-colour);
+}
 
 @keyframes spin {
     from {

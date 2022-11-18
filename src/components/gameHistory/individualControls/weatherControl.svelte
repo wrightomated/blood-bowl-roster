@@ -8,10 +8,9 @@
     }
 </script>
 
-<label for="weather-table">Weather</label>
-
 <!-- <ToggleButton options={['select', 'roll']} -->
-<div class="result">
+<div class="boxed-div">
+    <label for="weather-table">Weather</label>
     <select name="weather-table" id="weather-table" bind:value={selectedTable}>
         {#each weatherTables as table}
             <option class="weather-type" value={table.type}
@@ -36,12 +35,13 @@
 </div>
 
 <style>
-    label {
-        margin-top: 16px;
-        margin-bottom: 4px;
-    }
-    .result {
+    .boxed-div {
         display: flex;
-        gap: 4px;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+    label {
+        margin-bottom: 4px;
     }
 </style>

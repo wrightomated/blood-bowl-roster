@@ -57,15 +57,7 @@ export type MatchHistoryCoach = {
     mvp?: { name: string; number: number; id: string };
 };
 
-export type GameEventTally = {
-    casualties: number;
-    touchdowns: number;
-    completions: number;
-    kills: number;
-    deflections: number;
-    interceptions: number;
-    opponentScore: number;
-};
+export type GameEventTally = Record<GameEventType | 'opponentScore', number>;
 
 export type GameEvent = {
     eventType: GameEventType;
@@ -76,7 +68,7 @@ export type GameEvent = {
 
 export type GameEventType =
     | 'casualty'
-    | 'pass'
+    | 'completion'
     | 'kill'
     | 'touchdown'
     | 'deflection'

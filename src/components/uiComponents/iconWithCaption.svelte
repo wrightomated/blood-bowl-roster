@@ -1,10 +1,11 @@
 <script lang="ts">
     export let icon: string;
     export let caption: string;
+    export let title: string = null;
 </script>
 
 <div class="container">
-    <i class="material-symbols-outlined icon no-transition">{icon}</i>
+    <i class="material-symbols-outlined icon no-transition" {title}>{icon}</i>
     <p>{caption}</p>
 </div>
 

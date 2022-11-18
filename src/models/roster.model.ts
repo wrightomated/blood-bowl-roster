@@ -85,7 +85,7 @@ export interface PlayerAlterations {
     advancements?: number; // a
     injuries?: number[]; // i
     journeyman?: boolean; // j
-    gameRecords?: Record<PlayerGameAchievement, number>; // g
+    gameRecords?: Partial<Record<PlayerGameAchievement, number>>; // g
     playerNumber?: number; // x
 }
 

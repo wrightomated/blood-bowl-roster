@@ -42,8 +42,9 @@
 <ToggleButton options={['standard', 'deathzone']} selected={selectStadia} />
 
 {#if stadiaTypes === 'standard'}{/if} -->
-<label for="stadium-category">Stadium</label>
-<div class="stadia">
+
+<div class="stadia boxed-div">
+    <label for="stadium-category">Stadium</label>
     <select
         name="stadium-category"
         id="stadium-category"
@@ -55,6 +56,7 @@
     </select>
     <Die faces={6} rolls={2} on:rolled={updateStadium} />
     {#if category && category !== 'Nothing out of the Ordinary'}
+        <br />
         <select
             name="stadium-attribute"
             id="stadium-attribute"
@@ -86,8 +88,11 @@
     <Die faces={6} rolls={2} on:rolled={updateValue} /> -->
 </div>
 
-<style>
-    label {
-        margin-top: 16px;
+<style lang="scss">
+    .stadia {
+        grid-column: span 2;
+        > * {
+            margin-top: 4px;
+        }
     }
 </style>

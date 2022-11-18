@@ -14,16 +14,21 @@
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
     <FanFactorCalc />
-
     <PettyCash />
-
     <WeatherControl />
-
     <StadiaControl />
 </div>
 
-<style>
+<style lang="scss">
     .pre-game {
-        padding: 16px 0;
+        margin: 16px 0;
+        // padding: 16px 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+
+        @media screen and (max-width: 760px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 </style>

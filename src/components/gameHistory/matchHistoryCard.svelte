@@ -18,7 +18,7 @@
         : '';
 
     $: opponentScore = matchSummary.opponent.score;
-    $: score = matchSummary.playerScores.touchdowns;
+    $: score = matchSummary.playerScores.touchdown;
 
     $: result =
         score === opponentScore ? 'D' : score > opponentScore ? 'W' : 'L';

@@ -145,6 +145,7 @@ function getRosterIndexRef() {
 }
 
 function getMatchRecordRef(matchId: string) {
+    console.log('nice' + matchId);
     return doc(db, 'users', auth.currentUser.uid, 'gameRecords', matchId);
 }
 

@@ -20,6 +20,7 @@ import { PickedSpecialRule } from '../data/teams.data';
 import {
     matchSummary,
     updateMatchDraftTotals,
+    updateRosterWithDraft,
 } from '../helpers/matchHistoryHelpers';
 
 export const maxPlayerNumber = 99;
@@ -217,6 +218,18 @@ function createRoster() {
                         matchSummary(matchDraft),
                     ],
                 };
+            }),
+        // Inducements
+        // SPP
+        // MVP
+        // Total winnings
+        matchDraftUpdateRoster: () =>
+            update((store) => {
+                return updateRosterWithDraft(store, {
+                    spp: true,
+                    removeInducements: true,
+                    addWinnings: true,
+                });
             }),
         updateDraftEventTotals: () =>
             update((store) => {

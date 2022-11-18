@@ -1,15 +1,14 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
+    import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
     import type {
         GameEvent,
         GameEventTally,
+        GameEventType,
     } from '../../models/matchHistory.model';
-    import type { Player } from '../../models/player.model';
     import type { RosterPlayerRecord } from '../../models/roster.model';
-    import { matchHistoryRecordDraft } from '../../store/matchHistoryRecordDraft.store';
     import { roster } from '../../store/teamRoster.store';
-    import Button from '../uiComponents/button.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import ToggleButton from '../uiComponents/toggleButton.svelte';
 
@@ -20,21 +19,22 @@
         $roster.matchDraft.playingCoach.gameEventRecording ?? options[0];
 
     let gameEventTally: Partial<GameEventTally> = {
-        touchdowns: 0,
-        completions: 0,
-        casualties: 0,
-        kills: 0,
-        interceptions: 0,
-        deflections: 0,
+        touchdown: 0,
+        completion: 0,
+        casualty: 0,
+        kill: 0,
+        interception: 0,
+        deflection: 0,
     };
-    const singularMap = {
-        touchdowns: 'Touchdown',
-        completions: 'Completion',
-        casualties: 'Casualty',
-        kills: 'Kill',
-        interceptions: 'Interception',
-        deflections: 'Deflection',
+    const singularMap: Record<GameEventType, string> = {
+        touchdown: 'Touchdown',
+        completion: 'Completion',
+        casualty: 'Casualty',
+        kill: 'Kill',
+        interception: 'Interception',
+        deflection: 'Deflection',
     };
+
     let selectedPlayer;
     let turn;
     let selectedEvent;
@@ -50,7 +50,7 @@
         const event: GameEvent = {
             eventType: selectedEvent,
             playerId: selectedPlayer,
-            turn,
+            turn: turn ?? 0,
         };
         if ($roster.matchDraft.playingCoach?.gameEvents?.length > 0) {
             $roster.matchDraft.playingCoach.gameEvents = [...gameEvents, event];
@@ -80,7 +80,7 @@
     in:slide|local={{ duration: 300, easing: quadInOut }}
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
-    <label for="opponent-touchdowns">Opponent Touchdowns</label>
+    <label for="opponent-touchdowns">Opponent's Touchdowns</label>
     <input
         class="opponent-touchdowns"
         type="number"
@@ -101,7 +101,9 @@
         <div class="total-events">
             {#each Object.keys(gameEventTally) as event}
                 <div class="label-input">
-                    <label for="tally-{event}">{event}</label>
+                    <label for="tally-{event}"
+                        >{gameEventPluralMap[event]}</label
+                    >
                     <input
                         type="number"
                         name="tally-{event}"
@@ -190,16 +192,20 @@
     }
     .total-events {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(6, 1fr);
         gap: 8px;
         margin-top: 16px;
         // text-align: ;
+        @media screen and (max-width: 630px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
         @media screen and (max-width: 450px) {
             grid-template-columns: repeat(2, 1fr);
         }
     }
 
     .label-input {
+        text-align: center;
         label {
             text-transform: capitalize;
         }

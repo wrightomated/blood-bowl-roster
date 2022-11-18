@@ -4,6 +4,7 @@
     import { slide } from 'svelte/transition';
     import { categoryMap } from '../../data/stadium.data';
     import { weatherSymbol, weatherTables } from '../../data/weatherData.data';
+    import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
     import type { MatchHistoryRecord } from '../../models/matchHistory.model';
 
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
@@ -11,6 +12,7 @@
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
     export let match: MatchHistoryRecord;
+
     const weather = weatherTables.find((x) => x.type === match.weather.table);
     const stadium = categoryMap[match.stadium.category].attributes
         ? categoryMap[match.stadium.category]?.attributes.find(
@@ -29,6 +31,16 @@
 >
     <div class="match-modifiers">
         <IconWithCaption icon={weather.icon} caption={weather.type} />
+        {#if match.playingCoach.mvp}
+            <IconWithCaption
+                title="MVP"
+                icon="military_tech"
+                caption={match.playingCoach.mvp.name +
+                    ' ' +
+                    match.playingCoach.mvp.number}
+            />
+        {/if}
+
         <IconWithCaption icon="stadium" caption={stadium} />
     </div>
     <div class="statistics">
@@ -55,24 +67,19 @@
         <div class="events">
             {#each teamEvents as event}
                 <TitleWithResult
-                    title={event[0]}
+                    title={gameEventPluralMap[event[0]]}
                     result={event[1]}
                     background="none"
                 />
             {/each}
-            <!-- <TitleWithResult title="Touchdowns" result={3} background="none" />
-            <TitleWithResult title="Passes" result={2} background="none" />
-            <TitleWithResult title="Casualties" result={1} background="none" />
-            <TitleWithResult title="Deflections" result={0} background="none" />
-            <TitleWithResult
-                title="Interceptions"
-                result={1}
-                background="none"
-            />
-
-            <TitleWithResult title="Kills" result={0} background="none" /> -->
         </div>
     </div>
+    {#if match.notes}
+        <div>
+            <h4>Notes</h4>
+            {match.notes}
+        </div>
+    {/if}
 </article>
 
 <style lang="scss">

@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { newMatchRecord } from '../../helpers/matchHistoryHelpers';
+    import {
+        matchSummary,
+        newMatchRecord,
+    } from '../../helpers/matchHistoryHelpers';
     import { currentUserStore } from '../../store/currentUser.store';
     import { modalState } from '../../store/modal.store';
     import { roster } from '../../store/teamRoster.store';
@@ -47,11 +50,13 @@
             {/if}
         </div>
 
-        <div class="matches">
-            {#each $roster.matchSummary as matchSummary}
-                <MatchHistoryCard {matchSummary} />
-            {/each}
-        </div>
+        {#if $roster?.matchSummary}
+            <div class="matches">
+                {#each $roster.matchSummary as matchSummary}
+                    <MatchHistoryCard {matchSummary} />
+                {/each}
+            </div>
+        {/if}
     {:else}
         <p>You must be logged in to record matches.</p>
     {/if}
