@@ -80,8 +80,5 @@
         .control {
             display: none;
         }
-        th {
-            background-color: #333;
-        }
     }
 </style>
