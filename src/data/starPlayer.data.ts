@@ -445,7 +445,7 @@ const dribl: StarPlayer = {
     position: 'Dribl',
     playerStats: [8, 2, 3, 4, 8],
     playsFor: ['Lustrian Superleague'],
-    skills: [4, 71, 9, 81, 15, 10],
+    skills: [15, 4, 71, 9, 10, 81],
     cost: 190,
     twoForOne: 245,
     specialRules: ['A Sneaky Pair'],
