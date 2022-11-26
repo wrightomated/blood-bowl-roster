@@ -1,8 +1,11 @@
 import { nanoid } from 'nanoid';
+import { inducementData } from '../data/inducements.data';
+import { starPlayers } from '../data/starPlayer.data';
 import type {
     GameEvent,
     GameEventTally,
     GameEventType,
+    MatchHistoryInducements,
     MatchHistoryRecord,
     MatchHistorySummary,
 } from '../models/matchHistory.model';
@@ -90,17 +93,53 @@ export function updateRosterWithDraft(
         r.treasury += roster.matchDraft.playingCoach.winnings / 1000;
     }
 
-    r.matchDraft.playingCoach.inducementsHired = Object.entries(
-        r.inducements
-    ).map((i) => ({ id: i[0], amount: i[1] }));
+    r.matchDraft.playingCoach.inducementsHired = getInducementsFromRoster(r);
 
     if (options?.removeInducements) {
         r.inducements = {};
-        r.players;
+        r.players = r.players.filter((p) => !p.starPlayer);
     }
     console.log('end update');
 
     return r;
+}
+
+export function mapHistoryInducementsForDisplay(
+    inducements: MatchHistoryInducements
+): (string | number)[][] {
+    return inducements
+        .map((i) => {
+            const inducementName: string = getInducementName(i.id);
+            if (!inducementName) return null;
+
+            return [inducementName, i.amount ?? 1];
+        })
+        .filter((x) => x);
+}
+
+function getInducementName(id: string) {
+    if (id[0] === 'i') {
+        return inducementData.inducements.find((i) => (i.id = id as any))
+            .displayName;
+    } else if (id[0] === 'p') {
+        return starPlayers.starPlayers.find((p) => p.id === +id.substring(1))
+            .position;
+    }
+    return null;
+}
+
+function getInducementsFromRoster(r: Roster): MatchHistoryInducements {
+    const starPlayers = r.players
+        .filter((p) => p.starPlayer && !p.deleted)
+        .map((p) => ({
+            id: 'p' + p.player.id,
+        }));
+
+    const inducements = Object.entries(r.inducements).map((i) => ({
+        id: i[0],
+        amount: i[1],
+    }));
+    return starPlayers.concat(inducements);
 }
 
 function addEventsToPlayers(

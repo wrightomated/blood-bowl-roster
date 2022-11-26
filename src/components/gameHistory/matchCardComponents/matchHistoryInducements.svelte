@@ -1,18 +1,12 @@
 <script lang="ts">
-    export let inducements: (string | number)[][];
-    export let showTitle: boolean = true;
+    import type { MatchHistoryInducements } from '../../../models/matchHistory.model';
+
+    export let inducements: MatchHistoryInducements;
 </script>
 
+<!-- TODO refactor this and matchInducements to be common -->
 <div class="inducements-container">
-    {#if showTitle}
-        <h3>Inducements</h3>
-    {/if}
-    <div class="inducements">
-        {#if inducements.length <= 0}<p>None</p>{/if}
-        {#each inducements as i}
-            <div>{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</div>
-        {/each}
-    </div>
+    <h3>Inducements</h3>
 </div>
 
 <style lang="scss">

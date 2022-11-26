@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { inducementAndStarsInRoster } from '../../../store/currentInducements.store';
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
     import MatchInducements from './matchInducements.svelte';
@@ -11,7 +12,7 @@
 >
     <!-- <div class="inducements"> -->
     <div>You can safely return to your roster to edit.</div>
-    <MatchInducements />
+    <MatchInducements inducements={$inducementAndStarsInRoster} />
     <!-- </div> -->
     <!-- <button>close</button> -->
 </div>

@@ -119,9 +119,13 @@
 
     const loadTeam = (savedRoster: { id: number; name?: string }) => {
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
+        const retrievedRoster = getSavedRosterFromLocalStorage(savedRoster.id);
+        if (!retrievedRoster) {
+            savedRosterIndex.removeIdFromIndex(savedRoster.id);
+            return;
+        }
 
-        // TODO: change this for database
-        roster.loadRoster(getSavedRosterFromLocalStorage(savedRoster.id));
+        roster.loadRoster(retrievedRoster);
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);

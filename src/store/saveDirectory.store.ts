@@ -42,6 +42,13 @@ const createSavedRosterIndex = () => {
                     ),
                 };
             }),
+        removeIdFromIndex: (id: number) =>
+            update((store) => {
+                return {
+                    ...store,
+                    index: store.index.filter((x) => x.id !== id),
+                };
+            }),
         updateCurrentIndex: (indexNumber: number) =>
             update((store) => {
                 return {

@@ -1,4 +1,8 @@
 <script lang="ts">
+    import {
+        getSavedMatchHistoryFromLocal,
+        saveMatchHistoryToLocal,
+    } from '../../helpers/localStorageHelper';
     import type {
         MatchHistoryRecord,
         MatchHistorySummary,
@@ -30,11 +34,17 @@
 
         if (!match) {
             loading = true;
-            const service = await import('../auth/firebaseDB.service');
-            const matchDocument = await service.getMatchHistory(
-                matchSummary.id
-            );
-            match = matchDocument.data();
+            const localMatch = getSavedMatchHistoryFromLocal(matchSummary.id);
+            if (!!localMatch) {
+                match = localMatch;
+            } else {
+                const service = await import('../auth/firebaseDB.service');
+                const matchDocument = await service.getMatchHistory(
+                    matchSummary.id
+                );
+                match = matchDocument.data();
+                saveMatchHistoryToLocal(matchSummary.id, match);
+            }
         }
         loading = false;
         open = !open;

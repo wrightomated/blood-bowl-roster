@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { saveMatchHistoryToLocal } from '../../helpers/localStorageHelper';
     import { modalState } from '../../store/modal.store';
-    // import { modalState } from '../../store/modal.store';
     import { rosterCache } from '../../store/rosterCache.store';
     import { roster } from '../../store/teamRoster.store';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
@@ -18,25 +18,20 @@
         const matchHistory = $roster.matchDraft;
         const service = await import('../auth/firebaseDB.service');
         try {
-            console.error('Saving match history');
-            console.log(JSON.stringify($roster, null, 2));
             await service.addMatchHistory(matchHistory);
         } catch (error) {
-            console.error('could not save match history innit', error);
-            console.log(JSON.stringify(matchHistory, null, 2));
+            console.error('Error uploading match history', error);
             throw error;
         }
         roster.matchDraftToSummary();
         try {
             await service.uploadRoster($roster);
         } catch (error) {
-            console.error('Could not save roster');
-            console.log(JSON.stringify($roster, null, 2));
+            console.error('Error saving roster after match history update');
             throw error;
         }
-
+        saveMatchHistoryToLocal(matchHistory.id, matchHistory);
         rosterCache.invalidateRoster($roster.rosterId);
-        rosterCache.invalidateRosterPreviews();
         loading = false;
         modalState.update((state) => {
             return {

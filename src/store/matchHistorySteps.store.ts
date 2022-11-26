@@ -51,6 +51,9 @@ const createMatchHistorySteps = () => {
                 });
             });
         },
+        reset: () => {
+            set(newMatchRecordSteps);
+        },
     };
 };
 export const matchHistorySteps = createMatchHistorySteps();

@@ -4,7 +4,10 @@
     import { slide } from 'svelte/transition';
     import { categoryMap } from '../../data/stadium.data';
     import { weatherSymbol, weatherTables } from '../../data/weatherData.data';
-    import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
+    import {
+        gameEventPluralMap,
+        mapHistoryInducementsForDisplay,
+    } from '../../helpers/matchHistoryHelpers';
     import type { MatchHistoryRecord } from '../../models/matchHistory.model';
 
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
@@ -12,6 +15,10 @@
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
     export let match: MatchHistoryRecord;
+
+    const inducements = mapHistoryInducementsForDisplay(
+        match.playingCoach.inducementsHired
+    );
 
     const weather = weatherTables.find((x) => x.type === match.weather.table);
     const stadium = categoryMap[match.stadium.category].attributes
@@ -63,8 +70,17 @@
     </div>
 
     <div class="additional">
-        <MatchInducements showTitle={true} />
-        <div class="events">
+        <!-- {#if match.playingCoach.inducementsHired.length > 0}
+            {#each match.playingCoach.inducementsHired as inducement}
+                <p>{inducement.id}</p>
+            {/each}
+        {/if} -->
+
+        <MatchInducements showTitle={true} {inducements} />
+        <div
+            class="events"
+            class:events--solo={match.playingCoach.inducementsHired.length <= 0}
+        >
             {#each teamEvents as event}
                 <TitleWithResult
                     title={gameEventPluralMap[event[0]]}
@@ -75,7 +91,7 @@
         </div>
     </div>
     {#if match.notes}
-        <div>
+        <div class="match-notes">
             <h4>Notes</h4>
             {match.notes}
         </div>
@@ -108,13 +124,10 @@
     }
     .events {
         flex: 1;
-        // display: flex;
-        // flex-flow: row wrap;
         border-radius: 12px;
         color: white;
         background-color: var(--main-colour);
 
-        // first break 720 last 600
         // GROD
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -125,9 +138,27 @@
         @media screen and (max-width: 450px) {
             grid-template-columns: repeat(3, 1fr);
         }
-        @media screen and (max-width: 360px) {
+        @media screen and (max-width: 420px) {
             grid-template-columns: repeat(2, 1fr);
         }
-        // grid-template-rows: 12px 12px 12px;
+
+        &--solo {
+            @media screen and (min-width: 721px) {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            @media screen and (max-width: 720px) and (min-width: 451px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    }
+    .match-notes {
+        margin-top: 8px;
+        border-radius: 12px;
+        padding: 12px;
+        background-color: var(--secondary-background-colour);
+        h4 {
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
     }
 </style>

@@ -4,6 +4,7 @@
         newMatchRecord,
     } from '../../helpers/matchHistoryHelpers';
     import { currentUserStore } from '../../store/currentUser.store';
+    import { matchHistorySteps } from '../../store/matchHistorySteps.store';
     import { modalState } from '../../store/modal.store';
     import { roster } from '../../store/teamRoster.store';
     import Button from '../uiComponents/button.svelte';
@@ -13,6 +14,7 @@
     async function newMatch() {
         if (!$roster.matchDraft) {
             $roster.matchDraft = newMatchRecord($currentUserStore.displayName);
+            matchHistorySteps.reset();
         }
 
         modalState.set({

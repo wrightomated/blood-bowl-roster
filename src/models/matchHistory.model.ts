@@ -43,7 +43,7 @@ export type MatchHistoryCoach = {
     fairWeatherFans?: D3Result;
     dedicatedFans?: number;
     fanFactor?: number;
-    inducementsHired?: { id: string; amount?: number }[];
+    inducementsHired?: MatchHistoryInducements;
     leaguePoints?: number;
     name?: string;
     newCTV?: number;
@@ -79,5 +79,7 @@ export type MatchHistoryStep = {
     component: any;
     status: StepStatus;
 };
+
+export type MatchHistoryInducements = { id: string; amount?: number }[];
 
 export type StepStatus = 'complete' | 'current' | 'future';
