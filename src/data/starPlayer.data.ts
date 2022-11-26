@@ -443,9 +443,9 @@ const cindy: StarPlayer = {
 const dribl: StarPlayer = {
     id: 244,
     position: 'Dribl',
-    playerStats: [8, 2, 3, 4, 8, 15, 10],
+    playerStats: [8, 2, 3, 4, 8],
     playsFor: ['Lustrian Superleague'],
-    skills: [4, 71, 9, 81],
+    skills: [4, 71, 9, 81, 15, 10],
     cost: 190,
     twoForOne: 245,
     specialRules: ['A Sneaky Pair'],
