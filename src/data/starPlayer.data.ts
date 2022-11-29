@@ -422,6 +422,89 @@ const glotl: StarPlayer = {
     cost: 270,
     specialRules: ['Primal Savegery!'],
 };
+const puggy: StarPlayer = {
+    id: 242,
+    position: 'Puggy Baconbreath',
+    playerStats: [5, 3, 3, 4, 7],
+    playsFor: ['Halfling Thimble Cup', 'Old World Classic'],
+    skills: [13, 4, 711, 44, 78, 81],
+    cost: 120,
+    specialRules: ['Halfling Luck'],
+};
+const cindy: StarPlayer = {
+    id: 243,
+    position: 'Cindy Piewhistle',
+    playerStats: [5, 2, 3, 3, 7],
+    playsFor: ['Halfling Thimble Cup', 'Old World Classic'],
+    skills: [37, 65, 4, 71, 79, 81],
+    cost: 50,
+    specialRules: ['All You Can Eat'],
+};
+const dribl: StarPlayer = {
+    id: 244,
+    position: 'Dribl',
+    playerStats: [8, 2, 3, 4, 8],
+    playsFor: ['Lustrian Superleague'],
+    skills: [15, 4, 71, 9, 10, 81],
+    cost: 190,
+    twoForOne: 245,
+    specialRules: ['A Sneaky Pair'],
+};
+const drul: StarPlayer = {
+    id: 245,
+    position: 'Drull',
+    playerStats: [8, 2, 3, 4, 8],
+    playsFor: ['Lustrian Superleague'],
+    skills: [4, 71, 9, 80, 81],
+    cost: 0,
+    twoForOne: 244,
+    specialRules: ['A Sneaky Pair'],
+};
+const bilerot: StarPlayer = {
+    id: 246,
+    position: 'Bilerot Vomitflesh',
+    playerStats: [4, 5, 4, 6, 10],
+    playsFor: ['Favoured of Nurgle'],
+    skills: [15, 27, 29, 71],
+    cost: 180,
+    specialRules: ['Putrid Regeneration'],
+};
+const ripper: StarPlayer = {
+    id: 247,
+    position: 'Ripper Bolgrot',
+    playerStats: [4, 6, 5, 4, 10],
+    playsFor: ['Badlands Brawl', 'Underworld Challenge'],
+    skills: [52, 71, 55, 77, 86],
+    cost: 250,
+    specialRules: [`Thinking Man's Troll`],
+};
+const nobbla: StarPlayer = {
+    id: 248,
+    position: 'Nobbla Blackwart',
+    playerStats: [6, 2, 3, 0, 8],
+    playsFor: ['Badlands Brawl', 'Underworld Challenge'],
+    skills: [13, 67, 4, 71, 79, 81],
+    cost: 120,
+    specialRules: [`Kick 'em While They're down`],
+};
+const scrappa: StarPlayer = {
+    id: 249,
+    position: 'Scrappa Soreheadt',
+    playerStats: [7, 2, 3, 5, 8],
+    playsFor: ['Badlands Brawl', 'Underworld Challenge'],
+    skills: [15, 4, 71, 74, 78, 11, 81, 12],
+    cost: 0,
+    specialRules: [`Yoink`],
+};
+const withergrasp: StarPlayer = {
+    id: 250,
+    position: 'Withergrasp Doubledrool',
+    playerStats: [6, 3, 4, 4, 9],
+    playsFor: ['Favoured of...'],
+    skills: [71, 33, 23, 34, 35, 24],
+    cost: 170,
+    specialRules: [`Watch Out!`],
+};
 
 export const starPlayers = {
     starPlayers: [
@@ -467,5 +550,14 @@ export const starPlayers = {
         boa,
         estelle,
         glotl,
+        puggy,
+        cindy,
+        dribl,
+        drul,
+        bilerot,
+        ripper,
+        nobbla,
+        scrappa,
+        withergrasp,
     ],
 };
