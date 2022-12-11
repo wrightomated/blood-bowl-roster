@@ -485,16 +485,16 @@ const nobbla: StarPlayer = {
     playsFor: ['Badlands Brawl', 'Underworld Challenge'],
     skills: [13, 67, 4, 71, 79, 81],
     cost: 120,
-    specialRules: [`Kick 'em While They're down`],
+    specialRules: [`Kick 'em While They're down!`],
 };
 const scrappa: StarPlayer = {
     id: 249,
-    position: 'Scrappa Soreheadt',
+    position: 'Scrappa Sorehead',
     playerStats: [7, 2, 3, 5, 8],
     playsFor: ['Badlands Brawl', 'Underworld Challenge'],
     skills: [15, 4, 71, 74, 78, 11, 81, 12],
-    cost: 0,
-    specialRules: [`Yoink`],
+    cost: 130,
+    specialRules: [`Yoink!`],
 };
 const withergrasp: StarPlayer = {
     id: 250,
