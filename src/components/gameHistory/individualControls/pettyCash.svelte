@@ -1,5 +1,8 @@
 <script lang="ts">
     import { roster } from '../../../store/teamRoster.store';
+    function updatePettyCash(event) {
+        roster.setPettyCash(event.target.value);
+    }
 </script>
 
 <div class="petty-cash-box boxed-div">
@@ -12,6 +15,7 @@
         min="0"
         max="9999999"
         bind:value={$roster.matchDraft.playingCoach.pettyCash}
+        on:change={updatePettyCash}
     />
 </div>
 

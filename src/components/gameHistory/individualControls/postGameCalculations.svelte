@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
+    import { filterStarPlayers } from '../../../helpers/starPlayerFilter';
     import type { RosterPlayerRecord } from '../../../models/roster.model';
     import { modalState } from '../../../store/modal.store';
     // import { modalState } from '../../../store/modal.store';
@@ -13,6 +14,7 @@
     let yourFanCalc: HTMLElement;
     let roll: number;
     let changeDedicatedFans: number = 0;
+    let mvpSelected: string;
 
     $: scoreDiff =
         $roster.matchDraft.gameEventTally.touchdown -
@@ -23,10 +25,15 @@
     $: filteredPlayers = $roster?.players?.filter(
         (p) => !p.deleted || !p.starPlayer
     );
-    let mvpSelected;
 
-    function winnings(fanFactor, opponentFanFactor, touchdowns) {
-        return 10000 * ((fanFactor + opponentFanFactor) / 2 + touchdowns);
+    function winnings(
+        fanFactor: number,
+        opponentFanFactor: number,
+        touchdowns: number
+    ) {
+        const winnings =
+            10000 * ((fanFactor + opponentFanFactor) / 2 + touchdowns);
+        return winnings || 0;
     }
 
     function playerShort(player: RosterPlayerRecord) {
@@ -62,16 +69,16 @@
             name: player.playerName || player.player.position,
         };
     }
-
-    /** Saves the roster into the database, updates summary and deletes the draft */
+    function randomMvp(event) {
+        const diceResult = event.detail.result;
+        mvpSelected = filteredPlayers[diceResult - 1].playerId;
+        selectMvp();
+    }
 
     onMount(() => {
         roster.updateDraftEventTotals();
         mvpSelected = $roster.matchDraft?.playingCoach?.mvp?.id;
-        if (
-            !$roster.matchDraft.playingCoach.winnings &&
-            $roster.matchDraft.playingCoach.winnings !== 0
-        ) {
+        if (!$roster.matchDraft.playingCoach.winnings) {
             $roster.matchDraft.playingCoach.winnings = winnings(
                 $roster.matchDraft.playingCoach.fanFactor,
                 $roster.matchDraft.opponentCoach.fanFactor,
@@ -111,7 +118,7 @@
             id="dedicated-fans-change"
         /> -->
         <div>
-            <label for="dedicated-fans-change">Dedicated Fans Change</label>
+            <label for="dedicated-fans-change">Dedicated Fans</label>
             {#if result !== 'Drew'}
                 <span bind:this={yourFanCalc}>
                     {$roster.extra.dedicated_fans}
@@ -147,17 +154,24 @@
             name="league-points"
             bind:value={$roster.matchDraft.playingCoach.leaguePoints}
         />
-        <label for="choose-mvp">MVP</label>
-        <select
-            id="choose-mvp"
-            name="choose-mvp"
-            bind:value={mvpSelected}
-            on:change={selectMvp}
-        >
-            {#each filteredPlayers as p}
-                <option value={p.playerId}> {playerShort(p)}</option>
-            {/each}
-        </select>
+        {#if filteredPlayers.length > 0}
+            <label for="choose-mvp">MVP</label>
+            <select
+                id="choose-mvp"
+                name="choose-mvp"
+                bind:value={mvpSelected}
+                on:change={selectMvp}
+            >
+                {#each filteredPlayers as p}
+                    <option value={p.playerId}> {playerShort(p)}</option>
+                {/each}
+            </select>
+            <Die
+                faces={filteredPlayers.length}
+                defaultDisplay="Random MVP"
+                on:rolled={randomMvp}
+            />
+        {/if}
         <label for="notes">Notes</label>
         <textarea
             name="notes"

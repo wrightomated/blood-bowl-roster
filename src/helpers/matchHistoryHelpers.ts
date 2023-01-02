@@ -8,6 +8,7 @@ import type {
     MatchHistoryInducements,
     MatchHistoryRecord,
     MatchHistorySummary,
+    SaveMatchOptions,
 } from '../models/matchHistory.model';
 import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 
@@ -69,37 +70,33 @@ export function updateMatchDraftTotals(
 
 export function updateRosterWithDraft(
     roster: Roster,
-    options?: {
-        spp: boolean;
-        removeInducements: boolean;
-        addWinnings: boolean;
-    }
+    options: SaveMatchOptions
 ): Roster {
     if (!roster.matchDraft) return roster;
-    console.log('start update');
-    const r = { ...roster };
+    const { pettyCash, ...r } = roster;
 
     if (roster.matchDraft?.playingCoach?.gameEventRecording === 'individual') {
         r.players = addEventsToPlayers(
             roster.matchDraft.playingCoach.gameEvents,
             [...roster.players],
-            !!options?.spp,
+            !!options.updateSpp,
             roster.matchDraft?.playingCoach?.mvp?.id
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
     }
 
-    if (options?.addWinnings && roster.matchDraft?.playingCoach?.winnings) {
+    if (options?.updateTreasury && roster.matchDraft?.playingCoach?.winnings) {
         r.treasury += roster.matchDraft.playingCoach.winnings / 1000;
     }
 
     r.matchDraft.playingCoach.inducementsHired = getInducementsFromRoster(r);
 
-    if (options?.removeInducements) {
+    if (options.removeInducements) {
         r.inducements = {};
+    }
+    if (options.removeStarPlayers) {
         r.players = r.players.filter((p) => !p.starPlayer);
     }
-    console.log('end update');
 
     return r;
 }
@@ -110,17 +107,16 @@ export function mapHistoryInducementsForDisplay(
     return inducements
         .map((i) => {
             const inducementName: string = getInducementName(i.id);
-            if (!inducementName) return null;
+            if (!inducementName || !i.amount) return null;
 
-            return [inducementName, i.amount ?? 1];
+            return [inducementName, i.amount];
         })
         .filter((x) => x);
 }
 
 function getInducementName(id: string) {
     if (id[0] === 'i') {
-        return inducementData.inducements.find((i) => (i.id = id as any))
-            .displayName;
+        return inducementData.inducements.find((i) => i.id === id).displayName;
     } else if (id[0] === 'p') {
         return starPlayers.starPlayers.find((p) => p.id === +id.substring(1))
             .position;
@@ -133,12 +129,14 @@ function getInducementsFromRoster(r: Roster): MatchHistoryInducements {
         .filter((p) => p.starPlayer && !p.deleted)
         .map((p) => ({
             id: 'p' + p.player.id,
+            amount: 1,
         }));
 
     const inducements = Object.entries(r.inducements).map((i) => ({
         id: i[0],
         amount: i[1],
     }));
+
     return starPlayers.concat(inducements);
 }
 
@@ -150,7 +148,6 @@ function addEventsToPlayers(
 ) {
     return players.map((p) => {
         const player = { ...p };
-        console.log(player);
 
         if (events?.length > 0) {
             const playerEvents = events.filter(
@@ -165,8 +162,6 @@ function addEventsToPlayers(
                     ? player.alterations.gameRecords[e.eventType] + 1
                     : 1;
                 if (addSpp) {
-                    console.log(e.eventType);
-                    console.log(eventToSpp[e.eventType]);
                     player.alterations.spp += eventToSpp[e.eventType];
                 }
             });

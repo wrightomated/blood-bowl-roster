@@ -5,11 +5,13 @@
     const dispatch = createEventDispatcher();
 
     export let faces: number;
+    export let defaultDisplay = undefined;
     export let rolls: number = 1;
     export let result: number = 0;
     let dice;
 
-    $: display = result > 0 ? result : `${rolls || ''}d${faces}`;
+    $: display =
+        result > 0 ? result : defaultDisplay || `${rolls || ''}d${faces}`;
 
     function roll(sides: number) {
         return Math.floor(Math.random() * Math.floor(sides)) + 1;

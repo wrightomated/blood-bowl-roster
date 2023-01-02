@@ -80,18 +80,7 @@
     in:slide|local={{ duration: 300, easing: quadInOut }}
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
-    <label for="opponent-touchdowns">Opponent's Touchdowns</label>
-    <input
-        class="opponent-touchdowns"
-        type="number"
-        name="opponent-touchdowns"
-        id="opponent-touchdowns"
-        min="0"
-        max="999"
-        bind:value={$roster.matchDraft.gameEventTally.opponentScore}
-    />
-    <br />
-    <h3>Your player's events</h3>
+    <!-- <h3>Your player's events</h3> -->
     <ToggleButton
         options={['total', 'individual']}
         {selected}
@@ -100,7 +89,7 @@
     {#if option === 'total'}
         <div class="total-events">
             {#each Object.keys(gameEventTally) as event}
-                <div class="label-input">
+                <div>
                     <label for="tally-{event}"
                         >{gameEventPluralMap[event]}</label
                     >
@@ -184,6 +173,17 @@
     {:else}
         <div>No players</div>
     {/if}
+    <br />
+    <label for="opponent-touchdowns">Opponent's Total Touchdowns</label>
+    <input
+        class="opponent-touchdowns"
+        type="number"
+        name="opponent-touchdowns"
+        id="opponent-touchdowns"
+        min="0"
+        max="999"
+        bind:value={$roster.matchDraft.gameEventTally.opponentScore}
+    />
 </div>
 
 <style lang="scss">
@@ -240,6 +240,9 @@
             padding: 12px;
             align-items: center;
             justify-content: space-between;
+            &-type {
+                text-align: left;
+            }
         }
 
         .player-number {

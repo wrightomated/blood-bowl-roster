@@ -20,6 +20,7 @@ export interface Roster {
     extra?: RosterExtraRecords;
     inducements: InducementsRecord;
     treasury?: number;
+    pettyCash?: number;
     mode?: RosterMode;
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;

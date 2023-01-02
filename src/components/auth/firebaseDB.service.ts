@@ -50,15 +50,9 @@ export async function uploadRoster(inputRoster: Roster) {
         (key) => roster[key] === undefined && delete roster[key]
     );
 
-    console.log(JSON.stringify(roster, null, 2));
-
     const rosterIndexRef = getRosterIndexRef();
     const rosterRef = getRosterRef(roster.rosterId.toString());
     const rosterPreview = getRosterPreview(roster);
-
-    console.log(rosterIndexRef);
-    console.log(rosterRef);
-    console.log(rosterPreview);
 
     const batch = writeBatch(db);
 
@@ -145,7 +139,6 @@ function getRosterIndexRef() {
 }
 
 function getMatchRecordRef(matchId: string) {
-    console.log('nice' + matchId);
     return doc(db, 'users', auth.currentUser.uid, 'gameRecords', matchId);
 }
 

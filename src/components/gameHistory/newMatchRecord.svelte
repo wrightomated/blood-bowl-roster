@@ -5,8 +5,24 @@
 <section class="new-match">
     <header>
         <h2>New Match</h2>
-        <p>All fields are optional</p>
+        <!-- <p>All fields are optional</p> -->
     </header>
+    <div class="button-container">
+        {#if !$matchHistorySteps.find((x, i) => x.status === 'current' && i === 0)}
+            <button on:click={matchHistorySteps.previousStep} type="button"
+                >Previous</button
+            >
+        {/if}
+
+        {#if $matchHistorySteps.find((x, i) => x.status === 'current' && i < $matchHistorySteps.length - 1)}
+            <button
+                class="next-button"
+                on:click={matchHistorySteps.nextStep}
+                type="button">Next</button
+            >
+        {/if}
+    </div>
+    <br />
 
     <form
         class="new-match__form"
@@ -34,22 +50,6 @@
                 {/if}
             </div>
         {/each}
-
-        <div class="button-container">
-            {#if !$matchHistorySteps.find((x, i) => x.status === 'current' && i === 0)}
-                <button on:click={matchHistorySteps.previousStep} type="button"
-                    >Previous</button
-                >
-            {/if}
-
-            {#if $matchHistorySteps.find((x) => x.status === 'current')}
-                <button
-                    class="next-button"
-                    on:click={matchHistorySteps.nextStep}
-                    type="button">Next</button
-                >
-            {/if}
-        </div>
 
         <!-- <GameDetails />
         <PreGameCalculations />

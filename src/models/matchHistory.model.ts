@@ -1,5 +1,7 @@
 import type { D3Result, D6Result } from './dice.model';
+import type { CollegeName } from './dungeonBowl.model';
 import type { StadiumCategory } from './stadium.model';
+import type { TeamName } from './team.model';
 import type { WeatherType } from './weather.model';
 
 export type MatchStatus = 'pre' | 'playing' | 'post';
@@ -55,6 +57,7 @@ export type MatchHistoryCoach = {
     gameEvents?: GameEvent[];
     gameEventRecording?: 'total' | 'individual';
     mvp?: { name: string; number: number; id: string };
+    teamType?: TeamName | CollegeName;
 };
 
 export type GameEventTally = Record<GameEventType | 'opponentScore', number>;
@@ -83,3 +86,10 @@ export type MatchHistoryStep = {
 export type MatchHistoryInducements = { id: string; amount?: number }[];
 
 export type StepStatus = 'complete' | 'current' | 'future';
+
+export type SaveMatchOptions = {
+    updateSpp: boolean;
+    updateTreasury: boolean;
+    removeInducements: boolean;
+    removeStarPlayers: boolean;
+};

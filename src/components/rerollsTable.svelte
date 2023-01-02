@@ -8,7 +8,10 @@
     import StarPlayerInducement from './starPlayerInducement.svelte';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
-    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import {
+        formatNumber,
+        formatNumberInThousands,
+    } from '../helpers/formatTotalToThousands';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -73,6 +76,15 @@
                 <Treasury />
             </td>
         </tr>
+
+        {#if $roster.mode === 'league' && typeof $roster.pettyCash === 'number'}
+            <tr>
+                <th>Petty Cash</th>
+                <td class="treasury-cell">
+                    {formatNumber($roster.pettyCash)}
+                </td>
+            </tr>
+        {/if}
     </table>
 
     {#if $roster.format === 'elevens'}

@@ -13,7 +13,12 @@
     });
 
     async function saveMatchHistory() {
-        roster.matchDraftUpdateRoster();
+        roster.matchDraftUpdateRoster({
+            updateSpp: true,
+            removeInducements: true,
+            updateTreasury: true,
+            removeStarPlayers: true,
+        });
 
         const matchHistory = $roster.matchDraft;
         const service = await import('../auth/firebaseDB.service');

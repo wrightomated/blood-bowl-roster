@@ -8,7 +8,8 @@
         <h3>Inducements</h3>
     {/if}
     <div class="inducements">
-        {#if inducements.length <= 0}<p>None</p>{/if}
+        {#if inducements.length <= 0}<span class="inducements--none">None</span
+            >{/if}
         {#each inducements as i}
             <div>{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</div>
         {/each}
@@ -29,7 +30,7 @@
         display: flex;
         flex-flow: row wrap;
         gap: 8px;
-        p {
+        &--none {
             text-align: center;
             width: 100%;
         }
