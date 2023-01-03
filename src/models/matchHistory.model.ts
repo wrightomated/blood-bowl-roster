@@ -45,6 +45,7 @@ export type MatchHistoryCoach = {
     fairWeatherFans?: D3Result;
     dedicatedFans?: number;
     fanFactor?: number;
+    fanChange?: number;
     inducementsHired?: MatchHistoryInducements;
     leaguePoints?: number;
     name?: string;
@@ -87,9 +88,10 @@ export type MatchHistoryInducements = { id: string; amount?: number }[];
 
 export type StepStatus = 'complete' | 'current' | 'future';
 
-export type SaveMatchOptions = {
-    updateSpp: boolean;
-    updateTreasury: boolean;
-    removeInducements: boolean;
-    removeStarPlayers: boolean;
-};
+export type SaveMatchOptions = Record<SaveMatchOption, boolean>;
+
+export type SaveMatchOption =
+    | 'updateSpp'
+    | 'updateTreasury'
+    | 'removeInducements'
+    | 'removeStarPlayers';

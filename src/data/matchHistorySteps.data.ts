@@ -1,5 +1,6 @@
 import AddMatchInducements from '../components/gameHistory/individualControls/addMatchInducements.svelte';
 import GameDetails from '../components/gameHistory/individualControls/gameDetails.svelte';
+import MatchToRosterOptions from '../components/gameHistory/individualControls/matchToRosterOptions.svelte';
 import PostGameCalculations from '../components/gameHistory/individualControls/postGameCalculations.svelte';
 import PreGameCalculations from '../components/gameHistory/individualControls/preGameCalculations.svelte';
 import PlayerEvents from '../components/gameHistory/playerEvents.svelte';
@@ -21,6 +22,11 @@ export const newMatchRecordSteps: MatchHistoryStep[] = [
     {
         title: 'Post-game Calculations',
         component: PostGameCalculations,
+        status: 'future',
+    },
+    {
+        title: 'Save Match History',
+        component: MatchToRosterOptions,
         status: 'future',
     },
 ];

@@ -8,19 +8,23 @@
         <!-- <p>All fields are optional</p> -->
     </header>
     <div class="button-container">
-        {#if !$matchHistorySteps.find((x, i) => x.status === 'current' && i === 0)}
-            <button on:click={matchHistorySteps.previousStep} type="button"
-                >Previous</button
-            >
-        {/if}
+        <button
+            on:click={matchHistorySteps.previousStep}
+            type="button"
+            disabled={!!$matchHistorySteps.find(
+                (x, i) => x.status === 'current' && i === 0
+            )}>Previous</button
+        >
 
-        {#if $matchHistorySteps.find((x, i) => x.status === 'current' && i < $matchHistorySteps.length - 1)}
-            <button
-                class="next-button"
-                on:click={matchHistorySteps.nextStep}
-                type="button">Next</button
-            >
-        {/if}
+        <button
+            disabled={!$matchHistorySteps.find(
+                (x, i) =>
+                    x.status === 'current' && i < $matchHistorySteps.length - 1
+            )}
+            class="next-button"
+            on:click={matchHistorySteps.nextStep}
+            type="button">Next</button
+        >
     </div>
     <br />
 
@@ -161,6 +165,7 @@
     .button-container {
         display: flex;
         margin-top: 16px;
+        justify-content: center;
 
         button {
             @include roundedButton.rounded-button;

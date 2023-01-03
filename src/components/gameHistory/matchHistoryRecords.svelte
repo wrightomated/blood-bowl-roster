@@ -37,32 +37,36 @@
     }
 </script>
 
-<div class="match-history no-print">
-    <!-- <NewMatchRecord /> -->
-    <h2>Match History</h2>
-    {#if $currentUserStore}
-        <div class="button-container">
-            {#if !$roster.matchDraft}
-                <Button clickFunction={newMatch}>New Match</Button>
-            {:else}
-                <Button clickFunction={newMatch}>Continue Record</Button>
-                <Button cancel={true} clickFunction={roster.deleteMatchDraft}
-                    >Delete Draft</Button
-                >
-            {/if}
-        </div>
-
-        {#if $roster?.matchSummary}
-            <div class="matches">
-                {#each $roster.matchSummary as matchSummary}
-                    <MatchHistoryCard {matchSummary} />
-                {/each}
+{#if $roster.mode === 'league'}
+    <div class="match-history no-print">
+        <!-- <NewMatchRecord /> -->
+        <h2>Match History</h2>
+        {#if $currentUserStore}
+            <div class="button-container">
+                {#if !$roster.matchDraft}
+                    <Button clickFunction={newMatch}>New Match</Button>
+                {:else}
+                    <Button clickFunction={newMatch}>Continue Record</Button>
+                    <Button
+                        cancel={true}
+                        clickFunction={roster.deleteMatchDraft}
+                        >Delete Draft</Button
+                    >
+                {/if}
             </div>
+
+            {#if $roster?.matchSummary}
+                <div class="matches">
+                    {#each $roster.matchSummary as matchSummary}
+                        <MatchHistoryCard {matchSummary} />
+                    {/each}
+                </div>
+            {/if}
+        {:else}
+            <p>You must be logged in to record matches.</p>
         {/if}
-    {:else}
-        <p>You must be logged in to record matches.</p>
-    {/if}
-</div>
+    </div>
+{/if}
 
 <style lang="scss">
     .match-history {

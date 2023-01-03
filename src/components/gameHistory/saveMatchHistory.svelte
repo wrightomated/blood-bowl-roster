@@ -50,5 +50,5 @@
 {#if loading}
     <FootballSpinner loadingText="Uploading match history" />
 {:else}
-    Match history updated
+    <h3 class="center">Match history updated</h3>
 {/if}

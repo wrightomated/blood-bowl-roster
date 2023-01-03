@@ -207,7 +207,7 @@ function createRoster() {
             }),
         deleteMatchDraft: () =>
             update((store) => {
-                const { matchDraft, ...noDraft } = store;
+                const { matchDraft, pettyCash, ...noDraft } = store;
                 return noDraft;
             }),
         set,

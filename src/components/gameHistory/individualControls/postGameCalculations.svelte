@@ -2,18 +2,12 @@
     import { onMount } from 'svelte';
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { filterStarPlayers } from '../../../helpers/starPlayerFilter';
     import type { RosterPlayerRecord } from '../../../models/roster.model';
-    import { modalState } from '../../../store/modal.store';
-    // import { modalState } from '../../../store/modal.store';
+
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
-    import Button from '../../uiComponents/button.svelte';
-    import SaveMatchHistory from '../saveMatchHistory.svelte';
+    import DedicatedFansChange from './dedicatedFansChange.svelte';
 
-    let yourFanCalc: HTMLElement;
-    let roll: number;
-    let changeDedicatedFans: number = 0;
     let mvpSelected: string;
 
     $: scoreDiff =
@@ -43,24 +37,7 @@
             (player.playerName || player.player.position)
         );
     }
-    function yourRoll(event) {
-        const diceResult = event.detail.result;
-        roll = event.detail.result;
-        if (result === 'Won' && diceResult >= $roster.extra.dedicated_fans) {
-            changeDedicatedFans = 1;
-        }
-        if (result === 'Lost' && diceResult < $roster.extra.dedicated_fans) {
-            changeDedicatedFans = -1;
-        }
-    }
-    function uploadMatchHistory() {
-        modalState.set({
-            ...$modalState,
-            isOpen: true,
-            canClose: false,
-            component: SaveMatchHistory,
-        });
-    }
+
     function selectMvp() {
         const player = $roster.players.find((p) => p.playerId === mvpSelected);
         $roster.matchDraft.playingCoach.mvp = {
@@ -117,36 +94,8 @@
             name="dedicated-fans-change"
             id="dedicated-fans-change"
         /> -->
-        <div>
-            <label for="dedicated-fans-change">Dedicated Fans</label>
-            {#if result !== 'Drew'}
-                <span bind:this={yourFanCalc}>
-                    {$roster.extra.dedicated_fans}
-                    <!-- {result === 'Won' ? '+' : '-'} -->
-                    <input
-                        type="number"
-                        id="fair-weather-fans"
-                        aria-label="fair weather fans"
-                        max="6"
-                        min="1"
-                        autocomplete="off"
-                        bind:value={roll}
-                    />
-                    <Die faces={6} on:rolled={yourRoll} /> =
-                </span>
-                <!-- <input
-                    type="number"
-                    id="your-fan-factor"
-                    max="10"
-                    min="2"
-                    bind:value={$roster.matchDraft.playingCoach.fanFactor}
-                    autocomplete="off"
-                    on:change={() => makeTransparent(yourFanCalc)}
-                /> -->
-            {:else}
-                No change.
-            {/if}
-        </div>
+        <DedicatedFansChange {result} />
+
         <label for="league-points">League Points</label>
         <input
             type="number"
@@ -175,13 +124,18 @@
         <label for="notes">Notes</label>
         <textarea
             name="notes"
+            class="notes-area"
             id="notes"
             cols="30"
             rows="10"
             maxlength="512"
             bind:value={$roster.matchDraft.notes}
         />
-        <div>Award star player points</div>
-        <Button clickFunction={uploadMatchHistory}>Upload</Button>
     </div>
 </div>
+
+<style lang="scss">
+    .notes-area {
+        width: 100%;
+    }
+</style>

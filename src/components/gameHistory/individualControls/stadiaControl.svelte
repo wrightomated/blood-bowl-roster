@@ -94,5 +94,8 @@
         > * {
             margin-top: 4px;
         }
+        select {
+            background-color: white;
+        }
     }
 </style>
