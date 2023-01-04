@@ -37,7 +37,7 @@
     }
 </script>
 
-{#if $roster.mode === 'league'}
+{#if $roster.mode === 'league' && $roster.format !== 'dungeon bowl'}
     <div class="match-history no-print">
         <!-- <NewMatchRecord /> -->
         <h2>Match History</h2>

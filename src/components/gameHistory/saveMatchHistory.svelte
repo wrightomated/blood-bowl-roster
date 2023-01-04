@@ -9,9 +9,22 @@
 
     export let saveOptions: SaveMatchOptions;
     let loading = true;
+    let success = false;
 
     onMount(async () => {
-        await saveMatchHistory();
+        const backupRoster = $roster;
+        try {
+            await saveMatchHistory();
+        } catch (error) {
+            roster.set(backupRoster);
+            loading = false;
+            modalState.update((state) => {
+                return {
+                    ...state,
+                    canClose: true,
+                };
+            });
+        }
     });
 
     async function saveMatchHistory() {
@@ -34,6 +47,7 @@
         }
         saveMatchHistoryToLocal(matchHistory.id, matchHistory);
         rosterCache.invalidateRoster($roster.rosterId);
+        success = true;
         loading = false;
         modalState.update((state) => {
             return {
@@ -46,6 +60,8 @@
 
 {#if loading}
     <FootballSpinner loadingText="Uploading match history" />
-{:else}
+{:else if success}
     <h3 class="center">Match history updated</h3>
+{:else}
+    <h3>Something went wrong.</h3>
 {/if}
