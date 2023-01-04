@@ -35,7 +35,7 @@
     }
 </script>
 
-<div class="flex-container">
+<div class="flex-container no-print">
     {#if index > 0}
         <MaterialButton
             hoverText="Move player up"

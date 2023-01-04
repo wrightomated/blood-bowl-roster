@@ -6,6 +6,7 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import type { Team } from '../models/team.model';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
     let selectedId: number;
 
@@ -80,7 +81,7 @@
             >{$roster.players.filter((x) => x.starPlayer && !x.deleted).length} /
             2</td
         >
-        <td>{getSelected(selectedId)?.cost || 0},000</td>
+        <td>{formatNumberInThousands(getSelected(selectedId)?.cost) || 0}</td>
         <td>
             {#if filteredStarPlayers.length > 0 && $roster.players.filter((x) => x.starPlayer && !x.deleted).length < 2}
                 <div class="add-star">

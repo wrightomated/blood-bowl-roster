@@ -14,6 +14,8 @@
     --heavens: #d4d6d5;
 
     --display-font: 'Roboto Slab', serif;
+
+    --secondary-border: 2px solid var(--secondary-colour);
 }
 
 html,
@@ -27,8 +29,7 @@ body {
     color: #333;
     margin: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    font-family: 'PT Sans', sans-serif;
     font-size: 14px;
 }
 
@@ -69,7 +70,7 @@ textarea {
     padding: 0.4em;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: 2px;
+    border-radius: 8px;
 }
 
 select {
@@ -84,7 +85,6 @@ select {
     padding-right: 24px;
     background-repeat: no-repeat;
     border-color: #ccc;
-    border-radius: 12px;
 }
 
 input:placeholder-shown {
@@ -143,6 +143,9 @@ thead > tr {
     thead {
         background-color: #333 !important;
     }
+    thead > tr {
+        background-color: #333;
+    }
     table {
         border: 1px solid #333 !important;
     }
@@ -160,9 +163,39 @@ thead > tr {
     font-variation-settings: 'FILL' 0;
 }
 
+.symbol-empty {
+    font-variation-settings: 'FILL' 0;
+}
+
 .no-transition {
     transition: none;
 }
 .no-transition:hover {
     font-variation-settings: 'FILL' 1;
+}
+.roll {
+    animation-name: spin;
+    animation-duration: 500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+}
+.boxed-div {
+    border-radius: 12px;
+    padding: 12px;
+    background-color: var(--secondary-background-colour);
+}
+.center {
+    text-align: center;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+label {
+    font-family: var(--display-font);
 }

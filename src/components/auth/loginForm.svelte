@@ -8,7 +8,7 @@
     import Button from '../uiComponents/button.svelte';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
-    import ResetPassword from './resetPassword.svelte';
+    import { getAuthModal } from './getAuthFormModule';
 
     $: emailV = '';
     $: passwordV = '';
@@ -46,11 +46,13 @@
     function touchForm() {
         formTouched = true;
     }
-    function passwordReset() {
+
+    async function passwordReset() {
+        const component = await getAuthModal('reset');
         modalState.set({
             ...$modalState,
             isOpen: true,
-            component: ResetPassword,
+            component: component.default,
         });
     }
 </script>
@@ -68,7 +70,7 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={login}
     >
-        <p>Log into your account.</p>
+        <h2>Log into your account</h2>
         <label for="email">Email:</label>
         <input
             type="email"
@@ -76,6 +78,7 @@
             id="email"
             placeholder="your email address"
             bind:value={emailV}
+            autocomplete="off"
             required
         />
         <label for="password">Password:</label>
@@ -85,6 +88,7 @@
             id="password"
             placeholder="your password"
             bind:value={passwordV}
+            autocomplete="current-password"
             required
             minlength="6"
         />
@@ -94,8 +98,11 @@
         {/if}
         <button class="login-button" on:focus={touchForm}>Login</button>
     </form>
-    <button class="reset-password" on:click={passwordReset}
-        >Forgot password?</button
+    <button
+        class="reset-password"
+        on:click={async () => {
+            await passwordReset();
+        }}>Forgot password?</button
     >
 {/if}
 
@@ -105,8 +112,9 @@
     .login-form {
         display: flex;
         flex-direction: column;
-        max-width: 320px;
         padding: 20px;
+        margin: 0 auto;
+        max-width: 400px;
         &--touched {
             input:invalid {
                 border-color: var(--main-colour);
@@ -117,10 +125,10 @@
     input {
         font-size: 16px;
         margin-bottom: 8px;
+        height: 48px;
     }
-
     label {
-        font-family: var(--display-font);
+        margin-bottom: 4px;
     }
 
     .login-button {
@@ -146,8 +154,12 @@
         text-align: center;
         border: none;
         background: none;
-        text-decoration: underline;
+        cursor: pointer;
         color: var(--secondary-colour);
         width: 100%;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 </style>

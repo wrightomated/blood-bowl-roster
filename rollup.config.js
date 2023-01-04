@@ -43,7 +43,7 @@ export default {
         format: 'es',
         dir: 'public/build/',
         name: 'app',
-        sourcemap: true,
+        sourcemap: !production,
     },
     plugins: [
         replace({

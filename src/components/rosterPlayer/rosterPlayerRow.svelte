@@ -5,6 +5,7 @@
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { filteredTableColumns } from '../../store/filteredTableColumns.store';
     import type { TableColumnName } from '../../models/rosterTableColumns.model';
+    import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
 
     export let index: number;
 
@@ -39,11 +40,13 @@
                     text:
                         rosterPlayer.player.cost > 0 &&
                         !rosterPlayer?.alterations?.journeyman
-                            ? `${rosterPlayer.player.cost},000`
+                            ? `${formatNumberInThousands(
+                                  rosterPlayer.player.cost
+                              )}`
                             : '-',
                 },
                 'Current Value': {
-                    text: `${currentCost}${currentCost > 0 ? ',000' : ''}`,
+                    text: `${formatNumberInThousands(currentCost)}`,
                 },
                 'Unspent Spp': {
                     index,

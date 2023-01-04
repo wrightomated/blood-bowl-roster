@@ -12,6 +12,8 @@
         display: block;
         color: var(--main-colour);
         font-size: 80px;
+        width: 80px;
+        margin: 0 auto;
         text-align: center;
         animation-name: spin;
         animation-duration: 1000ms;

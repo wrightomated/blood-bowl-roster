@@ -2,9 +2,10 @@
     export let char: string;
     export let value: string;
     export let change: number;
+    export let variant: string = 'secondary';
 </script>
 
-<div class="characteristic">
+<div class="characteristic characteristic--{variant}">
     <div class="char">{char}</div>
     <div class="value" class:improved={change > 0} class:degraded={change < 0}>
         {value}
@@ -17,10 +18,19 @@
         height: 50px;
         width: 50px;
         position: relative;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         border-top: 0;
         margin-right: 5px;
         text-align: center;
+
+        &--neutral {
+            border-color: #555;
+            border-top: 2px solid;
+
+            > .char {
+                background-color: #555;
+            }
+        }
     }
     .char {
         position: absolute;

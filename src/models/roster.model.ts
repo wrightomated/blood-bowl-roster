@@ -1,6 +1,11 @@
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
+import type { InducementKey } from './inducement.model';
+import type {
+    MatchHistoryRecord,
+    MatchHistorySummary,
+} from './matchHistory.model';
 import type { Player } from './player.model';
 import type { TeamName, TeamSpecialRule } from './team.model';
 
@@ -13,28 +18,44 @@ export interface Roster {
     players: RosterPlayerRecord[];
     /** Extra info in relation to the game */
     extra?: RosterExtraRecords;
-    inducements: ExtraRosterInfo;
+    inducements: InducementsRecord;
     treasury?: number;
+    pettyCash?: number;
     mode?: RosterMode;
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
+    matchSummary?: MatchHistorySummary[];
+    matchDraft?: MatchHistoryRecord;
 }
 
-export type RosterPreviews = { [key: string]: RosterPreview };
+export type RosterPreviews = Record<string, RosterPreview>;
 
 export type RosterPreview = Omit<Roster, 'players' | 'extra' | 'inducements'>;
 
 export function getRosterPreview(roster: Roster): RosterPreview {
-    const { players, extra, inducements, ...preview } = roster;
+    const {
+        players,
+        extra,
+        inducements,
+        matchDraft,
+        matchSummary,
+        ...preview
+    } = roster;
     return preview;
 }
 
+/**
+ * Information specific to the roster should exist at this level.
+ * The player object should only contain data of the base player type.
+ */
 export interface RosterPlayerRecord {
     player: Player;
     deleted?: boolean;
     playerName: string;
     starPlayer?: boolean;
     alterations?: PlayerAlterations;
+    /** Unique id for every player */
+    playerId?: string;
 }
 
 export type RosterExtraRecords = Partial<Record<RosterExtra, number>>;
@@ -47,10 +68,12 @@ export type RosterExtra =
     | 'apothecary' // y
     | 'special_rule'; // s
 
-export interface ExtraRosterInfo {
-    [key: string]: number;
-}
+export type InducementsRecord = Record<InducementKey, number>;
 
+/**
+ * Alterations to a base player for this instance of the player in a roster.
+ * Only use lowercase letters for keys in roster -> string
+ */
 export interface PlayerAlterations {
     spp: number; // s
     ni: number; // n
@@ -59,9 +82,11 @@ export interface PlayerAlterations {
     statChange?: number[]; // c
     extraSkills?: number[]; // e
     valueChange?: number; // v
+    /** How many times a player has advanced */
     advancements?: number; // a
     injuries?: number[]; // i
     journeyman?: boolean; // j
+    gameRecords?: Partial<Record<PlayerGameAchievement, number>>; // g
     playerNumber?: number; // x
 }
 
@@ -75,3 +100,12 @@ export type NewRosterOptions = {
     fans: number;
     specialRule?: TeamSpecialRule;
 };
+
+export type PlayerGameAchievement =
+    | 'casualty'
+    | 'pass'
+    | 'kill'
+    | 'touchdown'
+    | 'deflection'
+    | 'interception'
+    | 'mvp';

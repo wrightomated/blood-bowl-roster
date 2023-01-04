@@ -119,7 +119,7 @@
             transition: transform 250ms ease-in-out;
             background: white;
             height: 124px;
-            border-bottom: 2px solid var(--secondary-colour);
+            border-bottom: var(--secondary-border);
             &--open {
                 transform: translateY(124px);
             }

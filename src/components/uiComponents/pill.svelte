@@ -1,14 +1,14 @@
 <script lang="ts">
-    export let text: string;
+    export let variant: 'default' | 'filled' = 'default';
 </script>
 
-<div class="pill">
-    {text}
+<div class="pill {variant}">
+    <slot />
 </div>
 
 <style>
     .pill {
-        /* display: inline-block;
+        /* 
         background-color: var(--main-colour); */
         /* color: white; */
         /* padding: 8px;
@@ -16,5 +16,14 @@
         text-transform: capitalize;
         font-weight: bold;
         font-family: var(--display-font);
+    }
+
+    .filled {
+        display: inline-block;
+        background-color: var(--main-colour);
+        color: white;
+        border-radius: 12px;
+        padding: 2px 6px;
+        font-size: 12px;
     }
 </style>

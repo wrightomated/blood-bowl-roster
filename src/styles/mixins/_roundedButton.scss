@@ -2,10 +2,11 @@
     border-radius: 12px;
     background-color: white;
     color: var(--secondary-colour);
-    padding: 10px;
+    padding: 8px;
     margin: 4px;
-    border: 2px solid var(--secondary-colour);
+    border: var(--secondary-border);
     transition: background-color 100ms linear;
+    min-width: 48px;
 
     &:hover,
     &.selected {
@@ -24,6 +25,9 @@
     &:disabled {
         border: none;
         color: grey;
+        &:hover{
+            box-shadow: none;
+        }
     }
 
     &.cancel {

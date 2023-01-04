@@ -13,7 +13,7 @@ import {
 import { currentUserStore } from '../../store/currentUser.store';
 import { rosterCache } from '../../store/rosterCache.store';
 
-const firebaseConfig = {
+const firebaseConfig: FirebaseConf = {
     apiKey: '__bbroster.env.FIREBASE_API_KEY',
     authDomain: '__bbroster.env.FIREBASE_AUTH_DOMAIN',
     projectId: '__bbroster.env.FIREBASE_PROJECT_ID',
@@ -28,7 +28,13 @@ export let auth: Auth;
 
 // Initialize Firebase
 export function init() {
-    app = initializeApp(firebaseConfig, {
+    let conf: FirebaseConf = firebaseConfig;
+    let { measurementId, ...rest } = firebaseConfig;
+    if (measurementId === 'undefined') {
+        conf = rest;
+    }
+
+    app = initializeApp(conf, {
         name: 'BBRosterAuth',
         automaticDataCollectionEnabled: false,
     });
@@ -43,7 +49,7 @@ export function init() {
         );
     }
 
-    onAuthStateChanged(auth, (currentUser: User) => {
+    onAuthStateChanged(auth, (currentUser: User | null) => {
         rosterCache.clearCache();
         currentUserStore.set(currentUser);
         import('./firebaseDB.service').then((service) => service.initDb());
@@ -68,7 +74,7 @@ export async function signInWithEmail(email: string, password: string) {
     return signInWithEmailAndPassword(auth, email, password);
 }
 
-export function getCurrentUser(): User {
+export function getCurrentUser(): User | null {
     return auth.currentUser;
 }
 
@@ -87,3 +93,13 @@ export async function resetPassword(email: string) {
         service.resetPassword(auth, email)
     );
 }
+
+type FirebaseConf = {
+    apiKey: string;
+    authDomain: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+    measurementId?: string;
+};

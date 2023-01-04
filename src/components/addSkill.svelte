@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { quadInOut } from 'svelte/easing';
+    import { slide } from 'svelte/transition';
     import { advancementCosts } from '../data/advancementCost.data';
 
     import { dungeonBowlSkillIds, skillCatalogue } from '../data/skills.data';
@@ -269,7 +271,11 @@
     };
 </script>
 
-<div class="container" class:grid-view={$rosterViewMode === 'grid'}>
+<div
+    class="container"
+    class:grid-view={$rosterViewMode === 'grid'}
+    transition:slide={{ duration: 300, easing: quadInOut }}
+>
     <div>
         {#if (rosterPlayer.alterations?.advancements || 0) < 6}
             <button
@@ -417,12 +423,12 @@
         max-width: 100%;
     }
     button {
-        border-radius: 10px;
+        border-radius: 12px;
         background-color: white;
         color: var(--secondary-colour);
         padding: 10px;
         margin: 5px;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         max-width: calc(50% - 20px);
 
         &:hover {
@@ -485,7 +491,7 @@
     }
     fieldset {
         padding: 1em;
-        border-radius: 10px;
+        border-radius: 12px;
         border: 2px solid;
         border-color: var(--secondary-colour);
         margin-top: 1em;

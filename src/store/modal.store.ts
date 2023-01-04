@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 function createModalState() {
     const { subscribe, set, update } = writable<ModalState>({
         isOpen: false,
-        component: undefined,
+        component: '',
         canClose: true,
         componentProps: {},
     });

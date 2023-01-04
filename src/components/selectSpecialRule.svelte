@@ -18,7 +18,6 @@
 
 <style lang="scss">
     label {
-        font-family: var(--display-font);
         margin: 12px 0 4px 4px;
     }
     .special-rule {

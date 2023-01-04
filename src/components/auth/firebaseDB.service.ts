@@ -8,6 +8,7 @@ import {
     updateDoc,
     deleteField,
     DocumentSnapshot,
+    setDoc,
 } from 'firebase/firestore';
 import { nanoid } from 'nanoid';
 import {
@@ -17,6 +18,7 @@ import {
 } from '../../models/roster.model';
 import { get as getValueFromStore } from 'svelte/store';
 import { rosterCache } from '../../store/rosterCache.store';
+import type { MatchHistoryRecord } from '../../models/matchHistory.model';
 
 let db: Firestore;
 let auth, app;
@@ -116,8 +118,28 @@ export async function deleteRoster(rosterId: string) {
     }
 }
 
+export async function addMatchHistory(matchRecord: MatchHistoryRecord) {
+    Object.keys(matchRecord).forEach(
+        (key) => matchRecord[key] === undefined && delete matchRecord[key]
+    );
+
+    const matchRef = getMatchRecordRef(matchRecord.id);
+    return setDoc(matchRef, matchRecord);
+}
+
+export async function getMatchHistory(
+    matchId: string
+): Promise<DocumentSnapshot<MatchHistoryRecord>> {
+    const matchRef = getMatchRecordRef(matchId);
+    return getDoc(matchRef);
+}
+
 function getRosterIndexRef() {
     return doc(db, 'users', auth.currentUser.uid, 'userData', 'rosterIndex');
+}
+
+function getMatchRecordRef(matchId: string) {
+    return doc(db, 'users', auth.currentUser.uid, 'gameRecords', matchId);
 }
 
 function getRosterRef(rosterId: string) {

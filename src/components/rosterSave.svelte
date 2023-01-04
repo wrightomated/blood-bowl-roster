@@ -76,7 +76,7 @@
 {:else if syncing}
     <i
         class="material-symbols-outlined syncing no-transition"
-        title="Saving team">sync</i
+        title="Saving team">autorenew</i
     >
 {:else}<i
         class="material-symbols-outlined saved no-transition"
@@ -106,14 +106,14 @@
     symbol="print"
     clickFunction={printPage}
 />
-{#if $rosterViewMode === 'table'}
+
+<!-- {#if $rosterViewMode === 'table'}
     <MaterialButton
         hoverText="Roster Settings"
         symbol="settings"
         clickFunction={toggleColumnControls}
     />
-{/if}
-
+{/if} -->
 <style lang="scss">
     .saved {
         color: green;
@@ -130,15 +130,6 @@
     @media print {
         :host {
             display: none;
-        }
-    }
-
-    @keyframes spin {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
         }
     }
 </style>

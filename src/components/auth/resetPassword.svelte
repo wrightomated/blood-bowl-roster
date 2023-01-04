@@ -6,7 +6,7 @@
     import Button from '../uiComponents/button.svelte';
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
-    import LoginForm from './loginForm.svelte';
+    import { getAuthModal } from './getAuthFormModule';
 
     $: emailV = '';
     let formTouched = false;
@@ -38,11 +38,12 @@
     function touchForm() {
         formTouched = true;
     }
-    function showLogin() {
+    async function showLogin() {
+        const component = await getAuthModal('login');
         modalState.set({
             ...$modalState,
             isOpen: true,
-            component: LoginForm,
+            component: component.default,
         });
     }
 </script>
@@ -52,7 +53,11 @@
 {:else if emailSent}
     <div class="logged-in">
         <p>Email sent!</p>
-        <Button clickFunction={showLogin}>Login</Button>
+        <Button
+            clickFunction={async () => {
+                await showLogin();
+            }}>Login</Button
+        >
     </div>
 {:else}
     <form
@@ -60,13 +65,14 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={sendResetEmail}
     >
-        <p>Reset your password.</p>
+        <h2>Reset your password</h2>
         <label for="email">Email:</label>
         <input
             type="email"
             name="email"
             id="email"
             placeholder="your email address"
+            autocomplete="email"
             bind:value={emailV}
             required
         />
@@ -84,8 +90,9 @@
     .login-form {
         display: flex;
         flex-direction: column;
-        max-width: 320px;
         padding: 20px;
+        margin: 0 auto;
+        max-width: 400px;
         &--touched {
             input:invalid {
                 border-color: var(--main-colour);
@@ -96,12 +103,11 @@
     input {
         font-size: 16px;
         margin-bottom: 8px;
+        height: 48px;
     }
-
     label {
-        font-family: var(--display-font);
+        margin-bottom: 4px;
     }
-
     button {
         @include roundedButton.rounded-button;
     }

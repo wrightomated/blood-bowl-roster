@@ -8,6 +8,7 @@
     import { showAllInducements } from '../store/showAllInducements.store';
     import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
     export let selectedTeam: Team | DungeonBowlTeam;
 
@@ -73,10 +74,7 @@
     };
 </script>
 
-<table
-    class="inducement-table"
-    class:no-print={$roster.inducements?.length < 1}
->
+<table class="inducement-table" class:no-print={!$roster.inducements}>
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>
@@ -139,7 +137,7 @@
                     <td class="inducement__display-name">{ind.displayName}</td>
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
                     <td>
-                        {ind.cost}{#if typeof ind.cost === 'number'},000{/if}
+                        {formatNumberInThousands(ind.cost)}
                     </td>
                     <td class="inducement__control">
                         <div class="flex-container">

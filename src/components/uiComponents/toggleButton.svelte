@@ -32,10 +32,10 @@
 
     .toggle {
         display: inline-block;
-        border-radius: 10px;
+        border-radius: 12px;
         background-color: white;
         margin: 4px;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
 
         &__button {
             padding: 10px;

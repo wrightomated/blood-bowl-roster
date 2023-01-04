@@ -60,13 +60,13 @@
 
 <style lang="scss">
     .container {
-        border-radius: 10px;
+        border-radius: 12px;
         background: var(--secondary-background-colour);
         padding: 10px;
         margin-bottom: 1em;
     }
     button {
-        border-radius: 10px;
+        border-radius: 12px;
         background-color: white;
         color: grey;
         padding: 10px;

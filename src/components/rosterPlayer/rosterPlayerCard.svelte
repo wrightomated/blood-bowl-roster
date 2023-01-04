@@ -14,6 +14,7 @@
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
+    import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import PlayerNumber from './playerNumber.svelte';
 
     export let index: number;
@@ -154,6 +155,9 @@
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
+                        {#if rosterPlayer.alterations.advancements}
+                            {rosterPlayer.alterations.advancements}
+                        {/if}
                         {#if danger}
                             {numberOfPlayerType}/{maxOfPlayerType}
                         {/if}
@@ -206,6 +210,10 @@
             />
         {/each}
     </div>
+    <!-- 
+    {#if rosterPlayer.alterations.advancements as a}
+        <Pill variant='filled'>{advancementTitle[]}</Pill>
+    {/if} -->
 
     {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
         <div>
@@ -295,12 +303,12 @@
             <span class="mini-title">Hiring Fee:</span>
             {rosterPlayer.player.cost > 0 &&
             !rosterPlayer?.alterations?.journeyman
-                ? `${rosterPlayer.player.cost},000`
+                ? `${formatNumberInThousands(rosterPlayer.player.cost)}`
                 : '-'}
         </p>
         <p class="current-value">
             <span class="mini-title">Current Value:</span>
-            {currentCost}{currentCost > 0 ? ',000' : ''}
+            {formatNumberInThousands(currentCost)}
         </p>
     </div>
 </section>
@@ -323,8 +331,10 @@
         position: relative;
         min-width: 300px;
         height: 100%;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         background-color: white;
+        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+            0 6px 10px 4px rgba(60, 64, 67, 0.15);
         &.danger {
             border-color: var(--main-colour);
         }
@@ -336,7 +346,7 @@
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
-        border: 2px solid var(--secondary-colour);
+        border: var(--secondary-border);
         h3 {
             margin: 0;
         }
@@ -367,6 +377,7 @@
     }
     .player-controls {
         display: flex;
+        align-items: center;
     }
 
     .spp-input {

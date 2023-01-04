@@ -1,8 +1,7 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-
-    const numberFormat = new Intl.NumberFormat();
+    import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
     const noEmptyTreasury = () => {
         editTreasury = !editTreasury;
@@ -21,9 +20,7 @@
 <div class="treasury__container">
     {#if !editTreasury}
         <div on:click={toggleNumber} on:focus={toggleNumber} tabindex="0">
-            {numberFormat.format($roster.treasury)}{$roster.treasury === 0
-                ? ''
-                : ',000'}
+            {formatNumberInThousands($roster.treasury)}
         </div>
     {:else}
         <input

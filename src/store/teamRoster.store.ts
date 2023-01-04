@@ -17,6 +17,12 @@ import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
 import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import { PickedSpecialRule } from '../data/teams.data';
+import {
+    matchSummary,
+    updateMatchDraftTotals,
+    updateRosterWithDraft,
+} from '../helpers/matchHistoryHelpers';
+import type { SaveMatchOptions } from '../models/matchHistory.model';
 
 export const maxPlayerNumber = 99;
 
@@ -85,43 +91,9 @@ function createRoster() {
                 };
             }),
         addInducement: (inducementKey: string) =>
-            update((store) => {
-                return {
-                    ...store,
-                    treasury:
-                        store.treasury -
-                        inducementCost(
-                            store.format,
-                            inducementKey,
-                            store.teamId
-                        ),
-                    inducements: {
-                        ...store.inducements,
-                        [inducementKey]: store?.inducements?.[inducementKey]
-                            ? store.inducements[inducementKey] + 1
-                            : 1,
-                    },
-                };
-            }),
+            update((store) => addInducementToStore(store, inducementKey)),
         removeInducement: (inducementKey: string) =>
-            update((store) => {
-                return {
-                    ...store,
-                    treasury:
-                        store.treasury +
-                        inducementCost(
-                            store.format,
-                            inducementKey,
-                            store.teamId
-                        ),
-                    inducements: {
-                        ...store.inducements,
-                        [inducementKey]: store?.inducements?.[inducementKey]
-                            ? store.inducements[inducementKey] - 1
-                            : 0,
-                    },
-                };
-            }),
+            update((store) => removeInducementFromStore(store, inducementKey)),
         removeAllInducements: () =>
             update((store) => {
                 return { ...store, inducements: {} };
@@ -192,6 +164,10 @@ function createRoster() {
             });
         },
         reset: (options?: NewRosterOptions) => set(getEmptyRoster(options)),
+        setPettyCash: (pettyCash: number) =>
+            update((store) => {
+                return { ...store, pettyCash: +pettyCash };
+            }),
         updateTreasury: (change: number) =>
             update((store) => {
                 return { ...store, treasury: (store?.treasury || 0) + change };
@@ -202,6 +178,33 @@ function createRoster() {
                     ...store,
                     extra: { ...store.extra, special_rule: specialRule },
                 };
+            }),
+        matchDraftToSummary: () =>
+            update((store) => {
+                const { matchDraft, ...rest } = store;
+                return {
+                    ...rest,
+                    matchSummary: [
+                        ...rest.matchSummary,
+                        matchSummary(matchDraft),
+                    ],
+                };
+            }),
+        matchDraftUpdateRoster: (options: SaveMatchOptions) =>
+            update((store) => {
+                return updateRosterWithDraft(store, options);
+            }),
+        updateDraftEventTotals: () =>
+            update((store) => {
+                return {
+                    ...store,
+                    matchDraft: updateMatchDraftTotals(store.matchDraft),
+                };
+            }),
+        deleteMatchDraft: () =>
+            update((store) => {
+                const { matchDraft, pettyCash, ...noDraft } = store;
+                return noDraft;
             }),
         set,
     };
@@ -221,6 +224,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         mode: options?.mode,
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
+        matchSummary: [],
     };
 
     if (options?.specialRule) {
@@ -252,7 +256,7 @@ const rosterFromQueryString = () => {
     return rosterFromCode(code);
 };
 
-const rosterFromCode = (code: string) => {
+const rosterFromCode = (code: string | null) => {
     try {
         let transformedRoster = stringToRoster(code);
         return addPlayerNumbersToRoster(transformedRoster);
@@ -274,10 +278,12 @@ const getDefaultRoster: () => Roster = () => {
         defaultRoster.leagueRosterStatus = 'draft';
     }
     currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
-    return {
+    defaultRoster = {
         ...defaultRoster,
         format: defaultRoster?.format || 'elevens',
+        matchSummary: defaultRoster?.matchSummary || [],
     };
+    return defaultRoster;
 };
 
 const addPlayerToPlayers: (
@@ -290,9 +296,11 @@ const addPlayerToPlayers: (
         ? newPlayer
         : assignPlayerNumber(newPlayer, players);
     const indexToAdd =
-        index < maxPlayers ? index : players.findIndex((p) => p.deleted);
+        index && index < maxPlayers
+            ? index
+            : players.findIndex((p) => p.deleted);
 
-    return indexToAdd >= 0 && indexToAdd < players.length
+    return indexToAdd && indexToAdd >= 0 && indexToAdd < players.length
         ? players.map((p, i) => (i === indexToAdd ? playerWithNumber : p))
         : players.concat([playerWithNumber]);
 };
@@ -318,11 +326,20 @@ const deletePlayersFromPlayers: (
     return newPlayers;
 };
 
-function assignPlayerNumbers(
+/**
+ * Add attributes needed in newer versions of bbroster to legacy team objects
+ */
+function assignMissingAttributesToPlayers(
     players: RosterPlayerRecord[]
 ): RosterPlayerRecord[] {
     return players.map((p, i) => {
-        if (typeof p.alterations?.playerNumber === 'number') return p;
+        if (typeof p.alterations?.playerNumber === 'number') {
+            if (p?.playerId) return p;
+            return {
+                ...p,
+                playerId: nanoid(),
+            };
+        }
         return assignPlayerNumber(i, players);
     });
 }
@@ -334,8 +351,10 @@ function assignPlayerNumber(
     const index = typeof playerRef === 'number' ? playerRef : undefined;
     const player =
         typeof playerRef === 'number' ? players[playerRef] : playerRef;
+    const playerId = player?.playerId ?? nanoid();
     return {
         ...player,
+        playerId,
         alterations: {
             ...player?.alterations,
             playerNumber: generateEligibleNumber(players, index),
@@ -352,7 +371,7 @@ function addPlayerNumbersToRoster(roster: Roster) {
     ) {
         newRoster = {
             ...roster,
-            players: assignPlayerNumbers(roster.players),
+            players: assignMissingAttributesToPlayers(roster.players),
         };
     }
     return newRoster;
@@ -371,6 +390,60 @@ function numberTaken(players: RosterPlayerRecord[], desiredNumber: number) {
     return players.findIndex(
         (p) => p?.alterations?.playerNumber === desiredNumber
     );
+}
+
+function addInducementToStore(store: Roster, inducementKey: string) {
+    let treasury = store.treasury;
+    let pettyCash: number = store.pettyCash;
+
+    if (typeof pettyCash === 'number') {
+        pettyCash =
+            pettyCash -
+            1000 * inducementCost(store.format, inducementKey, store.teamId);
+    } else {
+        treasury =
+            treasury -
+            inducementCost(store.format, inducementKey, store.teamId);
+    }
+
+    return {
+        ...store,
+        treasury,
+        pettyCash,
+        inducements: {
+            ...store.inducements,
+            [inducementKey]: store?.inducements?.[inducementKey]
+                ? store.inducements[inducementKey] + 1
+                : 1,
+        },
+    };
+}
+
+function removeInducementFromStore(store: Roster, inducementKey: string) {
+    let treasury = store.treasury;
+    let pettyCash: number = store.pettyCash;
+
+    if (typeof pettyCash === 'number') {
+        pettyCash =
+            pettyCash +
+            1000 * inducementCost(store.format, inducementKey, store.teamId);
+    } else {
+        treasury =
+            treasury +
+            inducementCost(store.format, inducementKey, store.teamId);
+    }
+
+    return {
+        ...store,
+        treasury,
+        pettyCash,
+        inducements: {
+            ...store.inducements,
+            [inducementKey]: store?.inducements?.[inducementKey]
+                ? store.inducements[inducementKey] - 1
+                : 0,
+        },
+    };
 }
 
 export const roster = createRoster();

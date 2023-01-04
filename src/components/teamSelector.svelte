@@ -119,9 +119,13 @@
 
     const loadTeam = (savedRoster: { id: number; name?: string }) => {
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
+        const retrievedRoster = getSavedRosterFromLocalStorage(savedRoster.id);
+        if (!retrievedRoster) {
+            savedRosterIndex.removeIdFromIndex(savedRoster.id);
+            return;
+        }
 
-        // TODO: change this for database
-        roster.loadRoster(getSavedRosterFromLocalStorage(savedRoster.id));
+        roster.loadRoster(retrievedRoster);
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);
         showAvailableStarPlayers.set(false);
@@ -233,7 +237,7 @@
             <div>
                 {#each sortedTeam as team (team.id)}
                     <button
-                        class="team-buton"
+                        class="team-button"
                         animate:flip={{ duration: 200 }}
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam.id === team.id}
@@ -310,7 +314,6 @@
 
 <style lang="scss">
     @use '../styles/mixins/roundedButton';
-    @import '../styles/font';
 
     .page-title {
         color: var(--main-colour);
@@ -323,12 +326,12 @@
     .button-container {
         margin-top: 8px;
         margin-bottom: 8px;
-        border-radius: 10px;
+        border-radius: 12px;
         background: var(--secondary-background-colour);
         padding: 8px;
     }
     .display-font {
-        font-family: $display-font;
+        font-family: var(--display-font);
     }
     .no-matches {
         margin-left: 4px;
@@ -340,7 +343,7 @@
             margin: 1em 4px 1em 4px;
         }
         &__button {
-            font-family: $display-font;
+            font-family: var(--display-font);
             border-radius: 50%;
             font-size: 0.75em;
             background-color: white;
@@ -351,10 +354,12 @@
             line-height: 0px;
             text-align: center;
             margin: 0 auto;
-            border: 2px solid var(--secondary-colour);
+            border: var(--secondary-border);
 
             &:hover {
-                border-color: var(--secondary-background-colour);
+                box-shadow: 0 4px 12px #4b7d9e inset;
+                background: var(--secondary-colour);
+                color: white;
             }
             &.selected {
                 background-color: var(--secondary-colour);
@@ -378,13 +383,7 @@
             font-size: 16px;
         }
     }
-    .pill-box {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-block-end: 32px;
-    }
-    .team-buton {
+    .team-button {
         @include roundedButton.rounded-button;
     }
     .team-previews {

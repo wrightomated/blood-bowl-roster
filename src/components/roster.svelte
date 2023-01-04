@@ -41,10 +41,9 @@
 </div>
 <span class="no-print">
     <div class="pill-box">
-        <Pill text={$roster.teamType + ' Team'} />
-
-        <Pill text={getTeamFormatShortDisplay($roster.format)} />
-        <Pill text={$roster.mode} />
+        <Pill>{$roster.teamType + ' Team'}</Pill>
+        <Pill>{getTeamFormatShortDisplay($roster.format)}</Pill>
+        <Pill>{$roster.mode}</Pill>
     </div>
 </span>
 <SpecialRuleSelector />
@@ -122,8 +121,8 @@
         display: grid;
         align-items: start;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        column-gap: 10px;
-        row-gap: 15px;
+        column-gap: 12px;
+        row-gap: 16px;
         margin-bottom: 20px;
     }
     .table-container {

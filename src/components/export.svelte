@@ -81,7 +81,7 @@
 
 <style lang="scss">
     .container {
-        border-radius: 10px;
+        border-radius: 12px;
         background: var(--secondary-background-colour);
         padding: 10px;
         margin-bottom: 1em;

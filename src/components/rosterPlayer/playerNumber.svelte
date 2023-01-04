@@ -3,7 +3,7 @@
     import { maxPlayerNumber, roster } from '../../store/teamRoster.store';
 
     export let index: number;
-    export let variant: 'default' | 'card';
+    export let variant: 'default' | 'card' = 'default';
     let playerNumber = getPlayerNumberAlteration();
 
     const changeNumber = () => {

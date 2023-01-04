@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { Roster, RosterPreview } from '../../models/roster.model';
     import { modalState } from '../../store/modal.store';
     import { rosterCache } from '../../store/rosterCache.store';
@@ -9,7 +10,6 @@
     import ModalText from './modalText.svelte';
 
     export let preview: RosterPreview;
-    const numberFormat = new Intl.NumberFormat();
 
     async function loadTeam(rosterId: string) {
         if ($rosterCache.rosters?.[rosterId]?.valid) {
@@ -59,9 +59,7 @@
         <span class="mode-title">{preview.mode || ''}</span>
     </p>
     <p>
-        <span>Treasury: </span>{numberFormat.format(
-            preview.treasury
-        )}{preview.treasury === 0 ? '' : ',000'}
+        <span>Treasury: </span>{formatNumberInThousands(preview.treasury)}
     </p>
 </button>
 
@@ -81,7 +79,7 @@
         &:hover {
             cursor: pointer;
 
-            border: 2px solid var(--secondary-colour);
+            border: var(--secondary-border);
         }
     }
 
