@@ -125,11 +125,7 @@ function createRoster() {
                 };
             }),
         loadRoster: (rosterToLoad: Roster) =>
-            update((_store) => {
-                const updatedRoster = addPlayerNumbersToRoster(rosterToLoad);
-                currentTeam.setCurrentTeamWithId(rosterToLoad.teamId);
-                return updatedRoster;
-            }),
+            update((_store) => addMissingItemsToRoster(rosterToLoad)),
         codeToRoster: (rosterCode: string) =>
             update((_store) => {
                 const loadedRoster =
@@ -266,24 +262,32 @@ const rosterFromCode = (code: string | null) => {
 };
 
 const getDefaultRoster: () => Roster = () => {
-    let defaultRoster: Roster =
+    const defaultRoster: Roster =
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
         getEmptyRoster();
-    defaultRoster = addPlayerNumbersToRoster(defaultRoster);
-    if (!defaultRoster.rosterId) {
-        defaultRoster.rosterId = nanoid();
+
+    const updatedRoster = addMissingItemsToRoster(defaultRoster);
+
+    return updatedRoster;
+};
+
+const addMissingItemsToRoster = (roster: Roster) => {
+    let updatedRoster = addPlayerNumbersToRoster(roster);
+    updatedRoster = addPlayerNumbersToRoster(updatedRoster);
+    if (!updatedRoster.rosterId) {
+        updatedRoster.rosterId = nanoid();
     }
-    if (defaultRoster.mode === 'league' && !defaultRoster.leagueRosterStatus) {
-        defaultRoster.leagueRosterStatus = 'draft';
+    if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
+        updatedRoster.leagueRosterStatus = 'draft';
     }
-    currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
-    defaultRoster = {
-        ...defaultRoster,
-        format: defaultRoster?.format || 'elevens',
-        matchSummary: defaultRoster?.matchSummary || [],
+    currentTeam.setCurrentTeamWithId(updatedRoster.teamId);
+    updatedRoster = {
+        ...updatedRoster,
+        format: updatedRoster?.format || 'elevens',
+        matchSummary: updatedRoster?.matchSummary || [],
     };
-    return defaultRoster;
+    return updatedRoster;
 };
 
 const addPlayerToPlayers: (
