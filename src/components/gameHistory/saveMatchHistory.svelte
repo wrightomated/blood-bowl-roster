@@ -16,6 +16,8 @@
         try {
             await saveMatchHistory();
         } catch (error) {
+            console.error(error);
+            console.log({ $roster });
             roster.set(JSON.parse(backupRoster));
             loading = false;
             modalState.update((state) => {
