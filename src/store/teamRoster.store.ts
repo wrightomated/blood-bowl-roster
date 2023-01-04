@@ -277,6 +277,9 @@ const getDefaultRoster: () => Roster = () => {
     if (defaultRoster.mode === 'league' && !defaultRoster.leagueRosterStatus) {
         defaultRoster.leagueRosterStatus = 'draft';
     }
+    if (!defaultRoster.matchSummary) {
+        defaultRoster.matchSummary = [];
+    }
     currentTeam.setCurrentTeamWithId(defaultRoster.teamId);
     defaultRoster = {
         ...defaultRoster,
