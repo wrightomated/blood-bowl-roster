@@ -12,11 +12,11 @@
     let success = false;
 
     onMount(async () => {
-        const backupRoster = $roster;
+        const backupRoster = JSON.stringify($roster);
         try {
             await saveMatchHistory();
         } catch (error) {
-            roster.set(backupRoster);
+            roster.set(JSON.parse(backupRoster));
             loading = false;
             modalState.update((state) => {
                 return {
