@@ -42,19 +42,17 @@ context('Team creation', () => {
         cy.getBySel('save-roster')
             .click()
             .should(() => {
-                const { rosterId, ...rosterNoId } = JSON.parse(
+                let { rosterId, ...rosterNoId } = JSON.parse(
                     localStorage.getItem('roster')
                 );
+                rosterNoId.players = rosterNoId.players.map((p) => {
+                    const { playerId, ...restOfPlayer } = p;
+                    return restOfPlayer;
+                });
                 expect(rosterNoId).to.deep.equal(expectedRoster);
                 expect(localStorage.getItem('rosterIndex')).to.eq(
                     '{"currentIndex":1,"index":[{"id":1,"name":"Altdorf Daemons"}],"count":1}'
                 );
-            })
-            .should(() => {
-                const { rosterId, ...rosterNoId } = JSON.parse(
-                    localStorage.getItem('roster')
-                );
-                expect(rosterNoId).to.deep.equal(expectedRoster);
             });
 
         cy.getBySel('menu-button').click();
@@ -239,4 +237,5 @@ const expectedRoster = {
     mode: 'league',
     format: 'elevens',
     leagueRosterStatus: 'draft',
+    matchSummary: [],
 };

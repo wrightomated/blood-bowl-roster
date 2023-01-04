@@ -237,7 +237,7 @@
             <div>
                 {#each sortedTeam as team (team.id)}
                     <button
-                        class="team-buton"
+                        class="team-button"
                         animate:flip={{ duration: 200 }}
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam.id === team.id}
@@ -314,7 +314,6 @@
 
 <style lang="scss">
     @use '../styles/mixins/roundedButton';
-    @import '../styles/font';
 
     .page-title {
         color: var(--main-colour);
@@ -332,7 +331,7 @@
         padding: 8px;
     }
     .display-font {
-        font-family: $display-font;
+        font-family: var(--display-font);
     }
     .no-matches {
         margin-left: 4px;
@@ -344,7 +343,7 @@
             margin: 1em 4px 1em 4px;
         }
         &__button {
-            font-family: $display-font;
+            font-family: var(--display-font);
             border-radius: 50%;
             font-size: 0.75em;
             background-color: white;
@@ -384,13 +383,7 @@
             font-size: 16px;
         }
     }
-    .pill-box {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        margin-block-end: 32px;
-    }
-    .team-buton {
+    .team-button {
         @include roundedButton.rounded-button;
     }
     .team-previews {

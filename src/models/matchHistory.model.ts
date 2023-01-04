@@ -94,4 +94,5 @@ export type SaveMatchOption =
     | 'updateSpp'
     | 'updateTreasury'
     | 'removeInducements'
-    | 'removeStarPlayers';
+    | 'removeStarPlayers'
+    | 'updateDedicatedFans';

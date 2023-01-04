@@ -190,10 +190,6 @@ function createRoster() {
                     ],
                 };
             }),
-        // Inducements
-        // SPP
-        // MVP
-        // Total winnings
         matchDraftUpdateRoster: (options: SaveMatchOptions) =>
             update((store) => {
                 return updateRosterWithDraft(store, options);

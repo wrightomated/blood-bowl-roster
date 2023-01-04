@@ -1,11 +1,13 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { saveMatchHistoryToLocal } from '../../helpers/localStorageHelper';
+    import type { SaveMatchOptions } from '../../models/matchHistory.model';
     import { modalState } from '../../store/modal.store';
     import { rosterCache } from '../../store/rosterCache.store';
     import { roster } from '../../store/teamRoster.store';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
 
+    export let saveOptions: SaveMatchOptions;
     let loading = true;
 
     onMount(async () => {
@@ -13,12 +15,7 @@
     });
 
     async function saveMatchHistory() {
-        roster.matchDraftUpdateRoster({
-            updateSpp: true,
-            removeInducements: true,
-            updateTreasury: true,
-            removeStarPlayers: true,
-        });
+        roster.matchDraftUpdateRoster(saveOptions);
 
         const matchHistory = $roster.matchDraft;
         const service = await import('../auth/firebaseDB.service');

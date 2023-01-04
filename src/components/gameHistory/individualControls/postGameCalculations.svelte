@@ -17,7 +17,7 @@
     $: result = scoreDiff > 0 ? `Won` : scoreDiff === 0 ? 'Drew' : 'Lost';
 
     $: filteredPlayers = $roster?.players?.filter(
-        (p) => !p.deleted || !p.starPlayer
+        (p) => !p.deleted && !p.starPlayer
     );
 
     function winnings(
@@ -72,30 +72,29 @@
 </script>
 
 <div
-    class="post-game-calculations"
+    class="post-game"
     in:slide|local={{ duration: 300, easing: quadInOut }}
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
     <!-- TODO: forfeit toggle -->
-    <div>
-        <!-- <h3>You {result}!</h3> -->
-        <div>
-            <label for="winnings">Winnings</label>
-            <input
-                type="number"
-                bind:value={$roster.matchDraft.playingCoach.winnings}
-            />
-        </div>
-        <!-- <div>
+    <!-- <h3>You {result}!</h3> -->
+    <div class="boxed-div">
+        <label for="winnings">Winnings</label>
+        <input
+            type="number"
+            bind:value={$roster.matchDraft.playingCoach.winnings}
+        />
+    </div>
+    <!-- <div>
             Opponent Winnings: {formatNumber(opponentWinnings)}
         </div> -->
-        <!-- <input
+    <!-- <input
             type="number"
             name="dedicated-fans-change"
             id="dedicated-fans-change"
         /> -->
-        <DedicatedFansChange {result} />
 
+    <div class="boxed-div">
         <label for="league-points">League Points</label>
         <input
             type="number"
@@ -103,7 +102,10 @@
             name="league-points"
             bind:value={$roster.matchDraft.playingCoach.leaguePoints}
         />
-        {#if filteredPlayers.length > 0}
+    </div>
+    <DedicatedFansChange {result} />
+    {#if filteredPlayers.length > 0}
+        <div class="boxed-div">
             <label for="choose-mvp">MVP</label>
             <select
                 id="choose-mvp"
@@ -120,14 +122,15 @@
                 defaultDisplay="Random MVP"
                 on:rolled={randomMvp}
             />
-        {/if}
+        </div>
+    {/if}
+    <div class="boxed-div notes-box">
         <label for="notes">Notes</label>
         <textarea
             name="notes"
             class="notes-area"
             id="notes"
-            cols="30"
-            rows="10"
+            rows="4"
             maxlength="512"
             bind:value={$roster.matchDraft.notes}
         />
@@ -137,5 +140,26 @@
 <style lang="scss">
     .notes-area {
         width: 100%;
+    }
+    label {
+        margin-bottom: 4px;
+    }
+    .post-game {
+        margin: 16px 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        .notes-box {
+            grid-column-start: span 2;
+        }
+        select {
+            background-color: white;
+        }
+        @media screen and (max-width: 600px) {
+            grid-template-columns: 1fr;
+            .notes-box {
+                grid-column-start: 1;
+            }
+        }
     }
 </style>

@@ -1,7 +1,10 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import type { SaveMatchOption } from '../../../models/matchHistory.model';
+    import type {
+        SaveMatchOption,
+        SaveMatchOptions,
+    } from '../../../models/matchHistory.model';
     import { inducementsInRoster } from '../../../store/currentInducements.store';
     import { modalState } from '../../../store/modal.store';
     import { roster } from '../../../store/teamRoster.store';
@@ -14,12 +17,21 @@
         'updateTreasury',
         'removeInducements',
         'removeStarPlayers',
+        'updateDedicatedFans',
     ];
     const optionMap: Record<SaveMatchOption, string> = {
         updateSpp: 'Add SPP to players',
         updateTreasury: 'Update treasury',
         removeInducements: 'Remove Inducements',
         removeStarPlayers: 'Remove Star Players',
+        updateDedicatedFans: 'Update dedicated fans',
+    };
+    let saveOptions: SaveMatchOptions = {
+        updateSpp: true,
+        removeInducements: true,
+        updateTreasury: true,
+        removeStarPlayers: true,
+        updateDedicatedFans: true,
     };
 
     function uploadMatchHistory() {
@@ -28,7 +40,11 @@
             isOpen: true,
             canClose: false,
             component: SaveMatchHistory,
+            componentProps: { saveOptions },
         });
+    }
+    function toggleOption(selection: string, option: SaveMatchOption) {
+        saveOptions[option] = selection === 'Yes';
     }
     function showOption(option: SaveMatchOption): boolean {
         switch (option) {
@@ -40,6 +56,8 @@
                 return updateTreasury();
             case 'updateSpp':
                 return updateSpp();
+            case 'updateDedicatedFans':
+                return updateDedicatedFans();
             default:
                 return false;
         }
@@ -62,6 +80,9 @@
             $roster.matchDraft?.playingCoach?.gameEvents?.length >= 1
         );
     }
+    function updateDedicatedFans(): boolean {
+        return !!$roster.matchDraft?.playingCoach?.fanChange;
+    }
 </script>
 
 <div
@@ -75,7 +96,7 @@
                 <ToggleButton
                     options={['Yes', 'No']}
                     selectedIndex={0}
-                    selected={() => {}}
+                    selected={(selection) => toggleOption(selection, option)}
                 />
             </div>
         {/each}

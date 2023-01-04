@@ -58,6 +58,9 @@ export function matchSummary(record: MatchHistoryRecord): MatchHistorySummary {
 export function updateMatchDraftTotals(
     record: MatchHistoryRecord
 ): MatchHistoryRecord {
+    if (record.playingCoach.gameEventRecording === 'total') {
+        return record;
+    }
     const newTally: GameEventTally = {
         opponentScore: record.gameEventTally.opponentScore,
         ...mapGameEventsToTally(record.playingCoach.gameEvents),
@@ -96,6 +99,12 @@ export function updateRosterWithDraft(
     }
     if (options.removeStarPlayers) {
         r.players = r.players.filter((p) => !p.starPlayer);
+    }
+    if (
+        options.updateDedicatedFans &&
+        roster.matchDraft?.playingCoach?.fanChange
+    ) {
+        r.extra.dedicated_fans += roster.matchDraft.playingCoach.fanChange;
     }
 
     return r;

@@ -4,7 +4,7 @@
 
     export let result: string;
 
-    $: changeDedicatedFans = 0;
+    $: changeDedicatedFans = $roster.matchDraft?.playingCoach?.fanChange || 0;
     $: dedicatedFansString = `Your dedicated fans will ${
         changeDedicatedFans === 0
             ? 'remain the same.'
@@ -32,7 +32,7 @@
     }
 </script>
 
-<div>
+<div class="boxed-div">
     <label for="dedicated-fans-change">Dedicated Fans Roll</label>
     {#if result !== 'Drew'}
         <input
@@ -49,3 +49,11 @@
     {/if}
     <p>{dedicatedFansString}</p>
 </div>
+
+<style>
+    @media screen and (max-width: 760px) {
+        .boxed-div {
+            /* grid-column-start: span 2; */
+        }
+    }
+</style>

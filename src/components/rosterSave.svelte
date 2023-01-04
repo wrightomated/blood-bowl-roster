@@ -107,14 +107,6 @@
     clickFunction={printPage}
 />
 
-{#if $currentUserStore}
-    <MaterialButton
-        hoverText="Game History"
-        symbol="history_edu"
-        clickFunction={toggleColumnControls}
-    />
-{/if}
-
 <!-- {#if $rosterViewMode === 'table'}
     <MaterialButton
         hoverText="Roster Settings"

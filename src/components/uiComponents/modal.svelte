@@ -70,9 +70,6 @@
         top: 1.5em;
         right: 1.5em;
     }
-    .closed {
-        display: none;
-    }
     .modal {
         position: absolute;
         // width: min(50vw, 780px);

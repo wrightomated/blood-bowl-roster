@@ -41,12 +41,17 @@ context('Test that a team can be copied', () => {
             treasury: 1000,
             mode: 'exhibition',
             format: 'elevens',
+            matchSummary: [],
         };
         cy.visit('?code=t3t1000d1p9IThe%20Horns:Erny');
         cy.getBySel('team-name').should(() => {
             const { rosterId, ...rosterNoId } = JSON.parse(
                 localStorage.getItem('roster')
             );
+            rosterNoId.players = rosterNoId.players.map((p) => {
+                const { playerId, ...restOfPlayer } = p;
+                return restOfPlayer;
+            });
             console.log(JSON.stringify(rosterNoId, null, 2));
             expect(rosterNoId).to.deep.equal(expectedRoster);
         });
