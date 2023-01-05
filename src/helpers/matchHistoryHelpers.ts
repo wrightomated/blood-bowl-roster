@@ -21,6 +21,7 @@ export function newMatchRecord(coachName?: string): MatchHistoryRecord {
             leaguePoints: 0,
             winnings: 0,
             fanFactor: 0,
+            gameEventRecording: 'total',
         },
         opponentCoach: { name: '' },
         weather: { table: 'default', result: '4 - 10' },
