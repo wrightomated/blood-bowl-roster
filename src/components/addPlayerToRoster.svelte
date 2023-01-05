@@ -87,7 +87,7 @@
                             {playerType.position}
                         </option>
                     {/each}
-                    {#if $roster.mode !== 'exhibition'}
+                    {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}
                         {#each $journeymenTypes as journeymanType}
                             <option value={journeymanType}>
                                 {journeymanPosition(journeymanType.position)}

@@ -49,11 +49,7 @@ function createRoster() {
                         maxPlayerNumber,
                         index
                     ),
-                    treasury:
-                        store.treasury -
-                        (player?.alterations?.journeyman
-                            ? 0
-                            : player.player.cost),
+                    ...updatePlayerTreasury(store, player),
                 };
             }),
         removePlayer: (indices: number[], firePlayer: boolean) =>
@@ -64,9 +60,28 @@ function createRoster() {
                         ? store.treasury +
                           store.players
                               .filter((_, i) => indices.includes(i))
+                              .filter(
+                                  (p) =>
+                                      !(
+                                          p.starPlayer &&
+                                          typeof store?.pettyCash === 'number'
+                                      )
+                              )
                               .map((p) => p.player.cost)
                               .reduce((a, b) => a + b, 0)
                         : store.treasury,
+                    pettyCash: store?.pettyCash
+                        ? store.pettyCash +
+                          store.players
+                              .filter((_, i) => indices.includes(i))
+                              .filter(
+                                  (p) =>
+                                      p.starPlayer &&
+                                      typeof store?.pettyCash === 'number'
+                              )
+                              .map((p) => p.player.cost * 1000)
+                              .reduce((a, b) => a + b, 0)
+                        : store?.pettyCash,
                     players: deletePlayersFromPlayers(store.players, indices),
                 };
             }),
@@ -448,6 +463,25 @@ function removeInducementFromStore(store: Roster, inducementKey: string) {
                 : 0,
         },
     };
+}
+
+function updatePlayerTreasury(
+    store: Roster,
+    player: RosterPlayerRecord
+): {
+    treasury: number;
+    pettyCash?: number;
+} {
+    let treasury = store.treasury;
+    let pettyCash: number = store.pettyCash;
+    if (typeof pettyCash === 'number' && !!player.starPlayer) {
+        pettyCash = pettyCash - player.player.cost * 1000;
+    } else {
+        treasury =
+            treasury -
+            (player?.alterations?.journeyman ? 0 : player.player.cost);
+    }
+    return { treasury, pettyCash };
 }
 
 export const roster = createRoster();
