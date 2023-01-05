@@ -484,29 +484,4 @@ function updatePlayerTreasury(
     return { treasury, pettyCash };
 }
 
-// functremovePlayerTreasury(    store: Roster,
-//     player: RosterPlayerRecord
-// ): {
-//     treasury: number;
-//     pettyCash?: number;
-// } {
-//     let treasury = store.treasury;
-//     let pettyCash: number = store.pettyCash;
-//     if (typeof pettyCash === 'number' && !!player.starPlayer) {
-//         pettyCash = pettyCash - player.player.cost;
-//     } else {
-//         treasury =
-//             treasury -
-//             (player?.alterations?.journeyman ? 0 : player.player.cost);
-//     }
-//     return { treasury, pettyCash };
-// }
-
-// treasury: !firePlayer
-//                         ? store.treasury +
-//                           store.players
-//                               .filter((_, i) => indices.includes(i))
-//                               .map((p) => p.player.cost)
-//                               .reduce((a, b) => a + b, 0)
-//                         : store.treasury,
 export const roster = createRoster();
