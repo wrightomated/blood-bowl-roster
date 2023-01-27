@@ -6,7 +6,6 @@
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
 
     export let matchRecord: MatchHistoryRecord;
-    // export let matchId;
 
     let loading = false;
 
@@ -33,12 +32,6 @@
     }
 </script>
 
-<!-- {#if loading}
-    <FootballSpinner loadingText="Uploading match history" />
-{:else if success}
-{:else}
-<h3>Something went wrong.</h3>
-{/if} -->
 {#if loading}
     <FootballSpinner loadingText="Deleting match history." />
 {:else}
@@ -54,13 +47,3 @@
     <Button clickFunction={deleteMatch}>Yes, delete this record</Button>
     <Button clickFunction={closeModal}>No, keep this record</Button>
 {/if}
-
-<!-- <div class="container">
-    <p>
-        Are you sure you want to delete this match record? It can not be undone.
-    </p>
-    <button class="delete" on:click={deleteMatch}
-        >Yes, delete this record.</button
-    >
-    <button on:click={closeModal}>No, keep this record.</button>
-</div> -->
