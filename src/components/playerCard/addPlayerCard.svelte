@@ -8,6 +8,7 @@
         journeymanPosition,
         journeymanSkills,
     } from '../../helpers/journeymenHelper';
+    import { getStat } from '../../helpers/statHelpers';
     import type { Player } from '../../models/player.model';
     import type {
         PlayerAlterations,
@@ -128,7 +129,7 @@
         {#each selected.playerStats as stat, i}
             <StatBlock
                 char={characteristics[i]}
-                value={'' + stat}
+                value={getStat(stat, i)}
                 change={0}
                 variant="neutral"
             />

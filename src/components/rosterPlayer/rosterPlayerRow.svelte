@@ -25,7 +25,7 @@
     const propsForComponent = (column: TableColumnName) => {
         if (characteristics.includes(column)) {
             return {
-                index,
+                rosterPlayer,
                 charIndex: characteristics.indexOf(column),
             };
         }

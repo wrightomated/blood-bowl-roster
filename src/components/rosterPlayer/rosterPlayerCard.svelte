@@ -16,6 +16,9 @@
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import PlayerNumber from './playerNumber.svelte';
+    import { getStat } from '../../helpers/statHelpers';
+    import { modalState } from '../../store/modal.store';
+    import PlayerAdvancement from '../playerAdvancement/playerAdvancement.svelte';
 
     export let index: number;
 
@@ -79,35 +82,16 @@
         );
     };
 
-    const getStat = (stat: number, i: number) => {
-        const alteredStat =
-            stat +
-            (rosterPlayer?.alterations?.statChange?.[i] || 0) *
-                (i === 2 || i === 3 ? -1 : 1) -
-            (rosterPlayer?.alterations?.injuries?.[i] || 0) *
-                (i === 2 || i === 3 ? -1 : 1);
-        const boundedStat = stat === 0 ? 0 : getBoundedStat(alteredStat, i);
-        return `${
-            boundedStat === 0 ? '-' : i > 1 ? `${boundedStat}+` : boundedStat
-        }`;
-    };
-
-    const getBoundedStat = (alt: number, i: number) => {
-        switch (i) {
-            case 2:
-            case 3:
-                return alt > characteristicMinValue[i]
-                    ? characteristicMinValue[i]
-                    : alt < characteristicMaxValue[i]
-                    ? characteristicMaxValue[i]
-                    : alt;
-            default:
-                return alt < characteristicMinValue[i]
-                    ? characteristicMinValue[i]
-                    : alt > characteristicMaxValue[i]
-                    ? characteristicMaxValue[i]
-                    : alt;
-        }
+    const openAdvancement = () => {
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: PlayerAdvancement,
+            componentProps: {
+                rosterPlayer,
+            },
+        });
     };
 
     const buyJourneyman = () => {
@@ -173,7 +157,7 @@
                     <MaterialButton
                         hoverText="Player advancement"
                         symbol="elevator"
-                        clickFunction={toggleShowSkills}
+                        clickFunction={openAdvancement}
                     />
                 {/if}
                 {#if rosterPlayer?.alterations?.journeyman}
@@ -205,7 +189,7 @@
         {#each rosterPlayer.player.playerStats as stat, i}
             <StatBlock
                 char={characteristics[i]}
-                value={getStat(stat, i)}
+                value={getStat(stat, i, rosterPlayer)}
                 change={alteredStats[i]}
             />
         {/each}

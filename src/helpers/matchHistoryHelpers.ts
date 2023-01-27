@@ -158,7 +158,6 @@ function addEventsToPlayers(
 ) {
     return players.map((p) => {
         const player = { ...p };
-
         if (events?.length > 0) {
             const playerEvents = events.filter(
                 (e) => e.playerId === p.playerId
@@ -176,7 +175,7 @@ function addEventsToPlayers(
                 }
             });
         }
-
+        console.log({ pId: p.playerId, mvp });
         if (p.playerId === mvp) {
             player.alterations?.gameRecords?.['mvp']
                 ? player.alterations.gameRecords['mvp']++
