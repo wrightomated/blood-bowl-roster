@@ -205,6 +205,15 @@ function createRoster() {
             update((store) => {
                 return updateRosterWithDraft(store, options);
             }),
+        removeMatchSummary: (matchId: string) =>
+            update((store) => {
+                return {
+                    ...store,
+                    matchSummary: store.matchSummary.filter(
+                        (s) => s.id !== matchId
+                    ),
+                };
+            }),
         updateDraftEventTotals: () =>
             update((store) => {
                 return {

@@ -9,8 +9,13 @@
         mapHistoryInducementsForDisplay,
     } from '../../helpers/matchHistoryHelpers';
     import type { MatchHistoryRecord } from '../../models/matchHistory.model';
+    import { modalState } from '../../store/modal.store';
+    import { roster } from '../../store/teamRoster.store';
+    import { deleteMatchHistory } from '../auth/firebaseDB.service';
 
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
+    import MaterialButton from '../uiComponents/materialButton.svelte';
+    import DeleteMatchHistory from './deleteMatchHistory.svelte';
     import MatchInducements from './individualControls/matchInducements.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
@@ -30,12 +35,29 @@
     const teamEvents = Object.entries(match.gameEventTally)
         .filter((entry) => entry[0] !== 'opponentScore')
         .sort((a, b) => a[0].localeCompare(b[0]));
+
+    function deleteMatch() {
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: false,
+            component: DeleteMatchHistory,
+            componentProps: {
+                matchRecord: match,
+            },
+        });
+    }
 </script>
 
 <article
     class="content"
     transition:slide={{ duration: 300, easing: quadInOut }}
 >
+    <MaterialButton
+        hoverText="Delete match history"
+        symbol="delete_forever"
+        clickFunction={deleteMatch}
+    />
     <div class="match-modifiers">
         <IconWithCaption icon={weather.icon} caption={weather.type} />
         {#if match.playingCoach.mvp}

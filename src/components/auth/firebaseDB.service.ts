@@ -134,6 +134,11 @@ export async function getMatchHistory(
     return getDoc(matchRef);
 }
 
+export async function deleteMatchHistory(matchId: string) {
+    const matchRef = getMatchRecordRef(matchId);
+    return deleteDoc(matchRef);
+}
+
 function getRosterIndexRef() {
     return doc(db, 'users', auth.currentUser.uid, 'userData', 'rosterIndex');
 }

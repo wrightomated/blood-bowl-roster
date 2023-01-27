@@ -13,6 +13,7 @@
 
     roster.subscribe((x) => {
         try {
+            (window as any).rosterId = x.rosterId;
             writeTitle({ teamName: x?.teamName, teamType: x?.teamType });
         } catch (error) {
             console.error('Unable to update document title');

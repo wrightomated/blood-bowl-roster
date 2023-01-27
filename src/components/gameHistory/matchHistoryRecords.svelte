@@ -57,7 +57,7 @@
 
             {#if $roster?.matchSummary}
                 <div class="matches">
-                    {#each $roster.matchSummary as matchSummary}
+                    {#each $roster.matchSummary as matchSummary (matchSummary.id)}
                         <MatchHistoryCard {matchSummary} />
                     {/each}
                 </div>
