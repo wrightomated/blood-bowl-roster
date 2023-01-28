@@ -83,11 +83,16 @@ export function updateRosterWithDraft(
         r.players = addEventsToPlayers(
             roster.matchDraft.playingCoach.gameEvents,
             [...roster.players],
-            !!options.updateSpp,
-            roster.matchDraft?.playingCoach?.mvp?.id
+            !!options.updateSpp
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
     }
+
+    r.players = addMvpToPlayers(
+        roster.matchDraft?.playingCoach?.mvp?.id,
+        r.players,
+        !!options.updateSpp
+    );
 
     if (options?.updateTreasury && roster.matchDraft?.playingCoach?.winnings) {
         r.treasury += roster.matchDraft.playingCoach.winnings / 1000;
@@ -153,8 +158,7 @@ function getInducementsFromRoster(r: Roster): MatchHistoryInducements {
 function addEventsToPlayers(
     events: GameEvent[],
     players: RosterPlayerRecord[],
-    addSpp: boolean,
-    mvp: string
+    addSpp: boolean
 ) {
     return players.map((p) => {
         const player = { ...p };
@@ -177,6 +181,17 @@ function addEventsToPlayers(
             });
         }
 
+        return player;
+    });
+}
+
+function addMvpToPlayers(
+    mvp: string,
+    players: RosterPlayerRecord[],
+    addSpp: boolean
+) {
+    return players.map((p) => {
+        const player = { ...p };
         if (p.playerId === mvp) {
             player.alterations?.gameRecords?.['mvp']
                 ? player.alterations.gameRecords['mvp']++
