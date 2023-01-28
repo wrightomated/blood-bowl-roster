@@ -52,6 +52,7 @@ export function init() {
     onAuthStateChanged(auth, (currentUser: User | null) => {
         rosterCache.clearCache();
         currentUserStore.set(currentUser);
+        (window as any).user = currentUser.uid;
         import('./firebaseDB.service').then((service) => service.initDb());
     });
 }
