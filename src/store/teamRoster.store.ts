@@ -298,7 +298,6 @@ const getDefaultRoster: () => Roster = () => {
 
 const addMissingItemsToRoster = (roster: Roster) => {
     let updatedRoster = addPlayerNumbersToRoster(roster);
-    // updatedRoster = addPlayerNumbersToRoster(updatedRoster);
     updatedRoster = addPlayerIdsToRoster(updatedRoster);
     if (!updatedRoster.rosterId) {
         updatedRoster.rosterId = nanoid();
