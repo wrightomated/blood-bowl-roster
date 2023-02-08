@@ -70,29 +70,38 @@
                     ' ' +
                     match.playingCoach.mvp.number}
             />
+        {:else if $roster.mode === 'exhibition' && match?.isLeagueMatch}
+            <IconWithCaption
+                caption={`Tournament Point${
+                    match.playingCoach.leaguePoints === 1 ? '' : 's'
+                }`}
+                stringIcon={match.playingCoach.leaguePoints + ''}
+            />
         {/if}
         {#if $roster.format === 'elevens'}
             <IconWithCaption icon="stadium" caption={stadium} />
         {/if}
     </div>
-    <div class="statistics">
-        <TitleWithResult
-            title="Petty Cash"
-            result={match.playingCoach.pettyCash}
-        />
-        <TitleWithResult
-            title="Fan Factor"
-            result={match.playingCoach.fanFactor}
-        />
-        <TitleWithResult
-            title="League Points"
-            result={match.playingCoach.leaguePoints}
-        />
-        <TitleWithResult
-            title="Winnings"
-            result={match.playingCoach.winnings}
-        />
-    </div>
+    {#if $roster.mode === 'league'}
+        <div class="statistics">
+            <TitleWithResult
+                title="Petty Cash"
+                result={match.playingCoach.pettyCash}
+            />
+            <TitleWithResult
+                title="Fan Factor"
+                result={match.playingCoach.fanFactor}
+            />
+            <TitleWithResult
+                title="League Points"
+                result={match.playingCoach.leaguePoints}
+            />
+            <TitleWithResult
+                title="Winnings"
+                result={match.playingCoach.winnings}
+            />
+        </div>
+    {/if}
 
     <div class="additional">
         <!-- {#if match.playingCoach.inducementsHired.length > 0}

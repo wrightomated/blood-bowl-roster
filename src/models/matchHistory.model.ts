@@ -68,6 +68,7 @@ export type GameEventTally = Record<GameEventType | 'opponentScore', number>;
 export type GameEvent = {
     eventType: GameEventType;
     player?: HistoricPlayer;
+    // Deprecated, use id inside player object
     playerId?: string;
     time?: Date;
     turn?: number;

@@ -28,10 +28,10 @@
     };
     let saveOptions: SaveMatchOptions = {
         updateSpp: $roster.format !== 'sevens' && $roster.mode === 'league',
-        removeInducements: true,
-        updateTreasury: true,
-        removeStarPlayers: true,
-        updateDedicatedFans: true,
+        removeInducements: $roster.mode === 'league',
+        updateTreasury: $roster.mode === 'league',
+        removeStarPlayers: $roster.mode === 'league',
+        updateDedicatedFans: $roster.mode === 'league',
     };
 
     function uploadMatchHistory() {
@@ -47,6 +47,7 @@
         saveOptions[option] = selection === 'Yes';
     }
     function showOption(option: SaveMatchOption): boolean {
+        if ($roster.mode === 'exhibition') return false;
         switch (option) {
             case 'removeStarPlayers':
                 return showStarPlayers();

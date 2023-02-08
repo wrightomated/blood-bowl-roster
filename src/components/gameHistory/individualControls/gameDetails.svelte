@@ -1,7 +1,10 @@
 <script lang="ts">
-    import { linear, quadInOut } from 'svelte/easing';
+    import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
     import { roster } from '../../../store/teamRoster.store';
+
+    $: matchTypeString =
+        $roster.mode === 'league' ? 'league match' : 'tournament game';
 </script>
 
 <div
@@ -37,17 +40,15 @@
                 bind:value={$roster.matchDraft.time.date}
             />
         </div>
-        {#if $roster.mode === 'league'}
-            <div class="league-input">
-                <label for="was-league-match">Is this a league match?</label>
-                <input
-                    type="checkbox"
-                    name="was-league-match"
-                    id="was-league-match"
-                    bind:checked={$roster.matchDraft.isLeagueMatch}
-                />
-            </div>
-        {/if}
+        <div class="league-input">
+            <label for="was-league-match">Is this a {matchTypeString}?</label>
+            <input
+                type="checkbox"
+                name="was-league-match"
+                id="was-league-match"
+                bind:checked={$roster.matchDraft.isLeagueMatch}
+            />
+        </div>
     </div>
 </div>
 

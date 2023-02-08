@@ -1,11 +1,19 @@
 <script lang="ts">
-    export let icon: string;
+    export let icon: string = '';
     export let caption: string;
     export let title: string = null;
+    export let stringIcon: string = '';
 </script>
 
 <div class="container">
-    <i class="material-symbols-outlined icon no-transition" {title}>{icon}</i>
+    {#if icon}
+        <i class="material-symbols-outlined icon no-transition" {title}
+            >{icon}</i
+        >
+    {:else if stringIcon}
+        <p class="icon icon--string">{stringIcon}</p>
+    {/if}
+
     <p>{caption}</p>
 </div>
 
@@ -32,6 +40,13 @@
         .icon {
             font-size: 36px;
             font-variation-settings: 'FILL' 0;
+            &--string {
+                font-family: var(--display-font);
+                line-height: 1.1;
+                @media screen and (max-width: 500px) {
+                    line-height: 1.2;
+                }
+            }
         }
     }
 </style>

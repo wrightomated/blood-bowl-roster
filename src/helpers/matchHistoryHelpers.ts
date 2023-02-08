@@ -170,7 +170,7 @@ function addEventsToPlayers(
 
         if (events?.length > 0) {
             const playerEvents = events.filter(
-                (e) => e.playerId === p.playerId
+                (e) => e.player?.id === p.playerId
             );
             playerEvents.forEach((e) => {
                 if (!player.alterations.gameRecords) {
