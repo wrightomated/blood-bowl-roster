@@ -12,7 +12,10 @@ import type {
 } from '../models/matchHistory.model';
 import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 
-export function newMatchRecord(coachName?: string): MatchHistoryRecord {
+export function newMatchRecord(
+    coachName?: string,
+    leagueMatch?: boolean
+): MatchHistoryRecord {
     return {
         id: nanoid(),
         playingCoach: {
@@ -25,7 +28,7 @@ export function newMatchRecord(coachName?: string): MatchHistoryRecord {
         },
         opponentCoach: { name: '' },
         weather: { table: 'default', result: '4 - 10' },
-        isLeagueMatch: true,
+        isLeagueMatch: leagueMatch,
         time: { date: new Date().toISOString().slice(0, 10) },
         stadium: { category: 'Nothing out of the Ordinary', attribute: 1 },
         gameEventTally: {
@@ -83,7 +86,8 @@ export function updateRosterWithDraft(
         r.players = addEventsToPlayers(
             roster.matchDraft.playingCoach.gameEvents,
             [...roster.players],
-            !!options.updateSpp
+            !!options.updateSpp,
+            roster.format === 'dungeon bowl'
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
     }
@@ -158,7 +162,8 @@ function getInducementsFromRoster(r: Roster): MatchHistoryInducements {
 function addEventsToPlayers(
     events: GameEvent[],
     players: RosterPlayerRecord[],
-    addSpp: boolean
+    addSpp: boolean,
+    isDungeonBowl?: boolean
 ) {
     return players.map((p) => {
         const player = { ...p };
@@ -176,7 +181,8 @@ function addEventsToPlayers(
                     ? player.alterations.gameRecords[e.eventType] + 1
                     : 1;
                 if (addSpp) {
-                    player.alterations.spp += eventToSpp[e.eventType];
+                    player.alterations.spp +=
+                        getEventToSppMap(isDungeonBowl)[e.eventType];
                 }
             });
         }
@@ -203,6 +209,13 @@ function addMvpToPlayers(
         }
         return player;
     });
+}
+
+function getEventToSppMap(
+    isDungeonBowl: boolean
+): Record<GameEventType, number> {
+    if (!isDungeonBowl) return eventToSpp;
+    return { ...eventToSpp, touchdown: 5 };
 }
 
 const eventToSpp: Record<GameEventType, number> = {

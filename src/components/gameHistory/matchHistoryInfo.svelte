@@ -59,7 +59,9 @@
         clickFunction={deleteMatch}
     />
     <div class="match-modifiers">
-        <IconWithCaption icon={weather.icon} caption={weather.type} />
+        {#if $roster.format === 'elevens'}
+            <IconWithCaption icon={weather.icon} caption={weather.type} />
+        {/if}
         {#if match.playingCoach.mvp}
             <IconWithCaption
                 title="MVP"
@@ -69,8 +71,9 @@
                     match.playingCoach.mvp.number}
             />
         {/if}
-
-        <IconWithCaption icon="stadium" caption={stadium} />
+        {#if $roster.format === 'elevens'}
+            <IconWithCaption icon="stadium" caption={stadium} />
+        {/if}
     </div>
     <div class="statistics">
         <TitleWithResult

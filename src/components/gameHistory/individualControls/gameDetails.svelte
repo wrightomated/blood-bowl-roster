@@ -37,15 +37,17 @@
                 bind:value={$roster.matchDraft.time.date}
             />
         </div>
-        <div class="league-input">
-            <label for="was-league-match">Is this a league match?</label>
-            <input
-                type="checkbox"
-                name="was-league-match"
-                id="was-league-match"
-                bind:checked={$roster.matchDraft.isLeagueMatch}
-            />
-        </div>
+        {#if $roster.mode === 'league'}
+            <div class="league-input">
+                <label for="was-league-match">Is this a league match?</label>
+                <input
+                    type="checkbox"
+                    name="was-league-match"
+                    id="was-league-match"
+                    bind:checked={$roster.matchDraft.isLeagueMatch}
+                />
+            </div>
+        {/if}
     </div>
 </div>
 

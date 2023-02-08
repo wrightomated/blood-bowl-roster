@@ -27,7 +27,7 @@
         updateDedicatedFans: 'Update dedicated fans',
     };
     let saveOptions: SaveMatchOptions = {
-        updateSpp: true,
+        updateSpp: $roster.format !== 'sevens' && $roster.mode === 'league',
         removeInducements: true,
         updateTreasury: true,
         removeStarPlayers: true,
@@ -76,8 +76,10 @@
     }
     function updateSpp(): boolean {
         return (
-            !!$roster.matchDraft?.playingCoach?.mvp ||
-            $roster.matchDraft?.playingCoach?.gameEvents?.length >= 1
+            $roster.format !== 'sevens' &&
+            $roster.mode === 'league' &&
+            (!!$roster.matchDraft?.playingCoach?.mvp ||
+                $roster.matchDraft?.playingCoach?.gameEvents?.length >= 1)
         );
     }
     function updateDedicatedFans(): boolean {

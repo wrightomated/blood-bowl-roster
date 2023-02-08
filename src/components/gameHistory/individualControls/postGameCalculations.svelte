@@ -76,8 +76,6 @@
     in:slide|local={{ duration: 300, easing: quadInOut }}
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
-    <!-- TODO: forfeit toggle -->
-    <!-- <h3>You {result}!</h3> -->
     <div class="boxed-div">
         <label for="winnings">Winnings</label>
         <input
@@ -85,14 +83,6 @@
             bind:value={$roster.matchDraft.playingCoach.winnings}
         />
     </div>
-    <!-- <div>
-            Opponent Winnings: {formatNumber(opponentWinnings)}
-        </div> -->
-    <!-- <input
-            type="number"
-            name="dedicated-fans-change"
-            id="dedicated-fans-change"
-        /> -->
 
     <div class="boxed-div">
         <label for="league-points">League Points</label>
@@ -104,7 +94,7 @@
         />
     </div>
     <DedicatedFansChange {result} />
-    {#if filteredPlayers.length > 0}
+    {#if $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
         <div class="boxed-div">
             <label for="choose-mvp">MVP</label>
             <select

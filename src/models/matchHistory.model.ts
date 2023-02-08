@@ -57,14 +57,17 @@ export type MatchHistoryCoach = {
     winnings?: number;
     gameEvents?: GameEvent[];
     gameEventRecording?: 'total' | 'individual';
-    mvp?: { name: string; number: number; id: string };
+    mvp?: HistoricPlayer;
     teamType?: TeamName | CollegeName;
 };
+
+export type HistoricPlayer = { name: string; number: number; id: string };
 
 export type GameEventTally = Record<GameEventType | 'opponentScore', number>;
 
 export type GameEvent = {
     eventType: GameEventType;
+    player?: HistoricPlayer;
     playerId?: string;
     time?: Date;
     turn?: number;

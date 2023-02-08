@@ -166,5 +166,6 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: TextElement,
         },
+        disallowedRosterModes: ['exhibition'],
     },
 ];
