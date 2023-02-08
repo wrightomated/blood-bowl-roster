@@ -13,8 +13,11 @@
 
     async function newMatch() {
         if (!$roster.matchDraft) {
-            $roster.matchDraft = newMatchRecord($currentUserStore.displayName);
-            matchHistorySteps.reset();
+            $roster.matchDraft = newMatchRecord(
+                $currentUserStore.displayName,
+                $roster.mode === 'league'
+            );
+            matchHistorySteps.reset($roster.mode, $roster.format);
         }
 
         modalState.set({
@@ -37,36 +40,32 @@
     }
 </script>
 
-{#if $roster.mode === 'league' && $roster.format !== 'dungeon bowl'}
-    <div class="match-history no-print">
-        <!-- <NewMatchRecord /> -->
-        <h2>Match History</h2>
-        {#if $currentUserStore}
-            <div class="button-container">
-                {#if !$roster.matchDraft}
-                    <Button clickFunction={newMatch}>New Match</Button>
-                {:else}
-                    <Button clickFunction={newMatch}>Continue Record</Button>
-                    <Button
-                        cancel={true}
-                        clickFunction={roster.deleteMatchDraft}
-                        >Delete Draft</Button
-                    >
-                {/if}
-            </div>
-
-            {#if $roster?.matchSummary}
-                <div class="matches">
-                    {#each $roster.matchSummary as matchSummary (matchSummary.id)}
-                        <MatchHistoryCard {matchSummary} />
-                    {/each}
-                </div>
+<div class="match-history no-print">
+    <!-- <NewMatchRecord /> -->
+    <h2>Match History</h2>
+    {#if $currentUserStore}
+        <div class="button-container">
+            {#if !$roster.matchDraft}
+                <Button clickFunction={newMatch}>New Match</Button>
+            {:else}
+                <Button clickFunction={newMatch}>Continue Record</Button>
+                <Button cancel={true} clickFunction={roster.deleteMatchDraft}
+                    >Delete Draft</Button
+                >
             {/if}
-        {:else}
-            <p>You must be logged in to record matches.</p>
+        </div>
+
+        {#if $roster?.matchSummary}
+            <div class="matches">
+                {#each $roster.matchSummary as matchSummary (matchSummary.id)}
+                    <MatchHistoryCard {matchSummary} />
+                {/each}
+            </div>
         {/if}
-    </div>
-{/if}
+    {:else}
+        <p>You must be logged in to record matches.</p>
+    {/if}
+</div>
 
 <style lang="scss">
     .match-history {

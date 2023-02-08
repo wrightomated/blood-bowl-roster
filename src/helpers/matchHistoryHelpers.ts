@@ -12,7 +12,10 @@ import type {
 } from '../models/matchHistory.model';
 import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 
-export function newMatchRecord(coachName?: string): MatchHistoryRecord {
+export function newMatchRecord(
+    coachName?: string,
+    leagueMatch?: boolean
+): MatchHistoryRecord {
     return {
         id: nanoid(),
         playingCoach: {
@@ -25,7 +28,7 @@ export function newMatchRecord(coachName?: string): MatchHistoryRecord {
         },
         opponentCoach: { name: '' },
         weather: { table: 'default', result: '4 - 10' },
-        isLeagueMatch: true,
+        isLeagueMatch: leagueMatch,
         time: { date: new Date().toISOString().slice(0, 10) },
         stadium: { category: 'Nothing out of the Ordinary', attribute: 1 },
         gameEventTally: {
@@ -84,10 +87,16 @@ export function updateRosterWithDraft(
             roster.matchDraft.playingCoach.gameEvents,
             [...roster.players],
             !!options.updateSpp,
-            roster.matchDraft?.playingCoach?.mvp?.id
+            roster.format === 'dungeon bowl'
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
     }
+
+    r.players = addMvpToPlayers(
+        roster.matchDraft?.playingCoach?.mvp?.id,
+        r.players,
+        !!options.updateSpp
+    );
 
     if (options?.updateTreasury && roster.matchDraft?.playingCoach?.winnings) {
         r.treasury += roster.matchDraft.playingCoach.winnings / 1000;
@@ -154,13 +163,13 @@ function addEventsToPlayers(
     events: GameEvent[],
     players: RosterPlayerRecord[],
     addSpp: boolean,
-    mvp: string
+    isDungeonBowl?: boolean
 ) {
     return players.map((p) => {
         const player = { ...p };
         if (events?.length > 0) {
             const playerEvents = events.filter(
-                (e) => e.playerId === p.playerId
+                (e) => e.player?.id === p.playerId
             );
             playerEvents.forEach((e) => {
                 if (!player.alterations.gameRecords) {
@@ -171,11 +180,23 @@ function addEventsToPlayers(
                     ? player.alterations.gameRecords[e.eventType] + 1
                     : 1;
                 if (addSpp) {
-                    player.alterations.spp += eventToSpp[e.eventType];
+                    player.alterations.spp +=
+                        getEventToSppMap(isDungeonBowl)[e.eventType];
                 }
             });
         }
-        console.log({ pId: p.playerId, mvp });
+
+        return player;
+    });
+}
+
+function addMvpToPlayers(
+    mvp: string,
+    players: RosterPlayerRecord[],
+    addSpp: boolean
+) {
+    return players.map((p) => {
+        const player = { ...p };
         if (p.playerId === mvp) {
             player.alterations?.gameRecords?.['mvp']
                 ? player.alterations.gameRecords['mvp']++
@@ -187,6 +208,13 @@ function addEventsToPlayers(
         }
         return player;
     });
+}
+
+function getEventToSppMap(
+    isDungeonBowl: boolean
+): Record<GameEventType, number> {
+    if (!isDungeonBowl) return eventToSpp;
+    return { ...eventToSpp, touchdown: 5 };
 }
 
 const eventToSpp: Record<GameEventType, number> = {

@@ -298,7 +298,7 @@ const getDefaultRoster: () => Roster = () => {
 
 const addMissingItemsToRoster = (roster: Roster) => {
     let updatedRoster = addPlayerNumbersToRoster(roster);
-    updatedRoster = addPlayerNumbersToRoster(updatedRoster);
+    updatedRoster = addPlayerIdsToRoster(updatedRoster);
     if (!updatedRoster.rosterId) {
         updatedRoster.rosterId = nanoid();
     }
@@ -361,13 +361,6 @@ function assignMissingAttributesToPlayers(
     players: RosterPlayerRecord[]
 ): RosterPlayerRecord[] {
     return players.map((p, i) => {
-        if (typeof p.alterations?.playerNumber === 'number') {
-            if (p?.playerId) return p;
-            return {
-                ...p,
-                playerId: nanoid(),
-            };
-        }
         return assignPlayerNumber(i, players);
     });
 }
@@ -403,6 +396,21 @@ function addPlayerNumbersToRoster(roster: Roster) {
         };
     }
     return newRoster;
+}
+
+function addPlayerIdsToRoster(roster: Roster): Roster {
+    return {
+        ...roster,
+        players: roster.players.map((p) => {
+            if (typeof p.alterations?.playerNumber === 'number') {
+                if (p?.playerId) return p;
+                return {
+                    ...p,
+                    playerId: nanoid(),
+                };
+            }
+        }),
+    };
 }
 
 function generateEligibleNumber(players: RosterPlayerRecord[], index?: number) {
