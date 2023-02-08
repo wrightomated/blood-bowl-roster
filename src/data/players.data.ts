@@ -229,8 +229,8 @@ const deathroller: Player = {
     playerStats: [4, 7, 5, 0, 11],
     cost: 170,
     skills: [51, 151, 54, 710, 55, 72, 79, 58],
-    primary: ['G', 'S'],
-    secondary: ['A'],
+    primary: ['S'],
+    secondary: ['A', 'G'],
 };
 
 const unionLineman: Player = {
