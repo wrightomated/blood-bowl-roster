@@ -7,6 +7,7 @@
         MatchHistoryRecord,
         MatchHistorySummary,
     } from '../../models/matchHistory.model';
+    import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import Pill from '../uiComponents/pill.svelte';
     import MatchHistoryInfo from './matchHistoryInfo.svelte';
@@ -26,6 +27,8 @@
 
     $: result =
         score === opponentScore ? 'D' : score > opponentScore ? 'W' : 'L';
+
+    $: pillText = $roster.mode === 'league' ? 'League' : 'Tournament';
 
     // let date1 = new Date(Date.UTC(2022, 8, 10, 3, 0, 0));
 
@@ -64,7 +67,7 @@
         <div class="opponent-name">{matchSummary.opponent.name}</div>
         <div class="score">{score} - {opponentScore}</div>
         {#if matchSummary.isLeagueMatch}
-            <Pill variant="filled">League</Pill>
+            <Pill variant="filled">{pillText}</Pill>
         {/if}
 
         <i
@@ -143,6 +146,9 @@
         //     background-color: var(--secondary-colour);
         //     color: white;
         // }
+        @media screen and (max-width: 450px) {
+            flex-wrap: wrap;
+        }
 
         *:last-child {
             margin-left: auto;

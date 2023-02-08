@@ -42,7 +42,7 @@
         const player = $roster.players.find((p) => p.playerId === mvpSelected);
         $roster.matchDraft.playingCoach.mvp = {
             id: mvpSelected,
-            number: player.alterations.playerNumber,
+            number: player?.alterations?.playerNumber,
             name: player.playerName || player.player.position,
         };
     }
@@ -62,7 +62,10 @@
                 $roster.matchDraft.gameEventTally.touchdown
             );
         }
-        if ($roster.matchDraft.playingCoach.leaguePoints === 0) {
+        if (
+            $roster?.matchDraft?.isLeagueMatch &&
+            $roster.matchDraft.playingCoach.leaguePoints === 0
+        ) {
             if (result === 'Won')
                 $roster.matchDraft.playingCoach.leaguePoints = 3;
             if (result === 'Drew')
@@ -76,35 +79,34 @@
     in:slide|local={{ duration: 300, easing: quadInOut }}
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
-    <!-- TODO: forfeit toggle -->
-    <!-- <h3>You {result}!</h3> -->
-    <div class="boxed-div">
-        <label for="winnings">Winnings</label>
-        <input
-            type="number"
-            bind:value={$roster.matchDraft.playingCoach.winnings}
-        />
-    </div>
-    <!-- <div>
-            Opponent Winnings: {formatNumber(opponentWinnings)}
-        </div> -->
-    <!-- <input
-            type="number"
-            name="dedicated-fans-change"
-            id="dedicated-fans-change"
-        /> -->
+    {#if $roster.mode === 'league'}
+        <div class="boxed-div">
+            <label for="winnings">Winnings</label>
+            <input
+                type="number"
+                bind:value={$roster.matchDraft.playingCoach.winnings}
+            />
+        </div>
+    {/if}
 
-    <div class="boxed-div">
-        <label for="league-points">League Points</label>
-        <input
-            type="number"
-            id="league-points"
-            name="league-points"
-            bind:value={$roster.matchDraft.playingCoach.leaguePoints}
-        />
-    </div>
-    <DedicatedFansChange {result} />
-    {#if filteredPlayers.length > 0}
+    {#if $roster?.matchDraft?.isLeagueMatch}
+        <div class="boxed-div">
+            <label for="league-points"
+                >{$roster.mode === 'league' ? 'League' : 'Tournament'} Points</label
+            >
+            <input
+                type="number"
+                id="league-points"
+                name="league-points"
+                bind:value={$roster.matchDraft.playingCoach.leaguePoints}
+            />
+        </div>
+    {/if}
+    {#if $roster.mode === 'league'}
+        <DedicatedFansChange {result} />
+    {/if}
+
+    {#if $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
         <div class="boxed-div">
             <label for="choose-mvp">MVP</label>
             <select

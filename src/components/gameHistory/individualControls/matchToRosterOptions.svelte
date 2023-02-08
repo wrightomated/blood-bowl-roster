@@ -27,11 +27,11 @@
         updateDedicatedFans: 'Update dedicated fans',
     };
     let saveOptions: SaveMatchOptions = {
-        updateSpp: true,
-        removeInducements: true,
-        updateTreasury: true,
-        removeStarPlayers: true,
-        updateDedicatedFans: true,
+        updateSpp: $roster.format !== 'sevens' && $roster.mode === 'league',
+        removeInducements: $roster.mode === 'league',
+        updateTreasury: $roster.mode === 'league',
+        removeStarPlayers: $roster.mode === 'league',
+        updateDedicatedFans: $roster.mode === 'league',
     };
 
     function uploadMatchHistory() {
@@ -47,6 +47,7 @@
         saveOptions[option] = selection === 'Yes';
     }
     function showOption(option: SaveMatchOption): boolean {
+        if ($roster.mode === 'exhibition') return false;
         switch (option) {
             case 'removeStarPlayers':
                 return showStarPlayers();
@@ -76,8 +77,10 @@
     }
     function updateSpp(): boolean {
         return (
-            !!$roster.matchDraft?.playingCoach?.mvp ||
-            $roster.matchDraft?.playingCoach?.gameEvents?.length >= 1
+            $roster.format !== 'sevens' &&
+            $roster.mode === 'league' &&
+            (!!$roster.matchDraft?.playingCoach?.mvp ||
+                $roster.matchDraft?.playingCoach?.gameEvents?.length >= 1)
         );
     }
     function updateDedicatedFans(): boolean {

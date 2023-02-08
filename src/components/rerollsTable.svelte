@@ -19,7 +19,13 @@
 
     $: teamTotal = $roster.players
         .filter((p) => !p?.starPlayer)
-        .map((x) => x.player.cost + (x?.alterations?.valueChange || 0))
+        .map(
+            (x) =>
+                x.player.cost +
+                ($roster.mode === 'exhibition'
+                    ? 0
+                    : x?.alterations?.valueChange || 0)
+        )
         .reduce((a, b) => a + b, 0);
 
     $: teamExtrasTotal = extrasForTeam(
@@ -40,7 +46,10 @@
                     $roster.mode !== 'exhibition' &&
                     $roster.format !== 'dungeon bowl'
                         ? 0
-                        : x.player.cost) + (x?.alterations?.valueChange || 0)
+                        : x.player.cost) +
+                    ($roster.mode === 'exhibition'
+                        ? 0
+                        : x?.alterations?.valueChange || 0)
             )
             .reduce((a, b) => a + b, 0) +
         calculateInducementTotal(

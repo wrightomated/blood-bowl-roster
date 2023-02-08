@@ -1,7 +1,10 @@
 <script lang="ts">
-    import { linear, quadInOut } from 'svelte/easing';
+    import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
     import { roster } from '../../../store/teamRoster.store';
+
+    $: matchTypeString =
+        $roster.mode === 'league' ? 'league match' : 'tournament game';
 </script>
 
 <div
@@ -38,7 +41,7 @@
             />
         </div>
         <div class="league-input">
-            <label for="was-league-match">Is this a league match?</label>
+            <label for="was-league-match">Is this a {matchTypeString}?</label>
             <input
                 type="checkbox"
                 name="was-league-match"

@@ -47,9 +47,16 @@
     }
 
     function addPlayerEvent() {
+        const player = filteredPlayers.find(
+            (p) => p?.playerId === selectedPlayer
+        );
         const event: GameEvent = {
             eventType: selectedEvent,
-            playerId: selectedPlayer,
+            player: {
+                name: player.playerName || player.player.position,
+                number: player?.alterations?.playerNumber,
+                id: player.playerId,
+            },
             turn: turn ?? 0,
         };
         if ($roster.matchDraft.playingCoach?.gameEvents?.length > 0) {
@@ -155,7 +162,7 @@
                 <div class="event">
                     <div class="player-number">
                         Player {filteredPlayers.find(
-                            (x) => x.playerId === gameEvent.playerId
+                            (x) => x.playerId === gameEvent.player.id
                         ).alterations.playerNumber}
                     </div>
                     <div class="event-type">

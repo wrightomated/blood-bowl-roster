@@ -1,6 +1,8 @@
 import { writable, Writable } from 'svelte/store';
 import { newMatchRecordSteps } from '../data/matchHistorySteps.data';
 import type { MatchHistoryStep } from '../models/matchHistory.model';
+import type { TeamFormat } from '../types/teamFormat';
+import type { RosterMode } from './rosterMode.store';
 
 const createMatchHistorySteps = () => {
     const { subscribe, update, set }: Writable<MatchHistoryStep[]> =
@@ -51,8 +53,13 @@ const createMatchHistorySteps = () => {
                 });
             });
         },
-        reset: () => {
-            set(newMatchRecordSteps);
+        reset: (mode: RosterMode, format: TeamFormat) => {
+            const filteredSet = newMatchRecordSteps.filter((step) => {
+                if (step.title !== 'Pre-game Calculations') return true;
+                if (mode === 'league') return true;
+                return format === 'elevens';
+            });
+            set(filteredSet);
         },
     };
 };
