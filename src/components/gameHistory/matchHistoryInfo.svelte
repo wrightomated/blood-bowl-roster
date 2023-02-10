@@ -24,25 +24,30 @@
 
     export let match: MatchHistoryRecord;
 
-    let selectedEvent: GameEventType = 'touchdown';
-    let filteredSingleEvents: GameEvent[] = [];
+    const hasInducements = match.playingCoach?.inducementsHired?.length > 0;
+    const hasIndividualEvents =
+        match.playingCoach?.gameEventRecording === 'individual' &&
+        match.playingCoach?.gameEvents.length > 0;
 
     const inducements = mapHistoryInducementsForDisplay(
         match.playingCoach.inducementsHired
     );
-
     const weather = weatherTables.find((x) => x.type === match.weather.table);
     const stadium = categoryMap[match.stadium.category].attributes
         ? categoryMap[match.stadium.category]?.attributes.find(
               (a) => a.roll === match.stadium.attribute
           )?.attribute
         : 'Standard';
-
     const teamEvents = Object.entries(match.gameEventTally)
         .filter((entry) => entry[0] !== 'opponentScore')
         .sort((a, b) => a[0].localeCompare(b[0]));
 
-    filteredSingleEvents = filterEvents();
+    let selectedEvent =
+        hasIndividualEvents &&
+        match.playingCoach?.gameEvents
+            .map((x) => x.eventType)
+            .sort((a, b) => a[0].localeCompare(b[0]))[0];
+    let filteredSingleEvents: GameEvent[] = filterEvents();
 
     function deleteMatch() {
         modalState.set({
@@ -123,9 +128,8 @@
         <MatchInducements showTitle={true} {inducements} />
         <div
             class="events"
-            class:events--solo={match.playingCoach.inducementsHired.length <= 0}
-            class:events--total={match.playingCoach.gameEventRecording ===
-                'total'}
+            class:events--solo={!hasInducements}
+            class:events--total={!hasIndividualEvents}
         >
             {#each teamEvents as event}
                 <TitleWithResult
@@ -140,7 +144,7 @@
             {/each}
         </div>
     </div>
-    {#if match.playingCoach.gameEventRecording === 'individual'}
+    {#if hasIndividualEvents}
         <PlayerEventGrid gameEvents={filteredSingleEvents} />
     {/if}
     {#if match.notes}
@@ -180,7 +184,7 @@
         gap: 8px;
         margin-top: 8px;
 
-        @media screen and (max-width: 450px) {
+        @media screen and (max-width: 506px) {
             flex-flow: column nowrap;
         }
     }
@@ -196,7 +200,7 @@
         @media screen and (max-width: 720px) {
             grid-template-columns: 1fr;
         }
-        @media screen and (max-width: 450px) {
+        @media screen and (max-width: 506px) {
             grid-template-columns: repeat(3, 1fr);
         }
         @media screen and (max-width: 420px) {

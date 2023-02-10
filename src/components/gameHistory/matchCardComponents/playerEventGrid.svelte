@@ -64,16 +64,15 @@
 
 <style lang="scss">
     .player-event-grid {
-        display: grid;
-        flex-direction: column;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
         gap: 4px;
         margin-top: 8px;
-        grid-template-columns: repeat(2, 1fr);
-        @media screen and (max-width: 630px) {
-            grid-template-columns: 1fr;
-        }
 
         .event {
+            flex: 1;
             display: flex;
             flex-wrap: wrap;
             background-color: var(--secondary-background-colour);
@@ -81,6 +80,7 @@
             padding: 8px;
             align-items: center;
             justify-content: space-between;
+            min-width: 200px;
             &-type {
                 text-align: left;
             }
