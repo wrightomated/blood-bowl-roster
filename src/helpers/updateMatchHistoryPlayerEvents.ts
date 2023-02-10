@@ -28,6 +28,9 @@ function updateGameEvents(
     gameEvents: GameEvent[],
     players: RosterPlayerRecord[]
 ): GameEvent[] {
+    if (!gameEvents || gameEvents.length === 0) {
+        return [];
+    }
     let unknownPlayerNumber = 0;
     const pMap = {};
     return gameEvents.map((event) => {
