@@ -1,25 +1,31 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
     import { categoryMap } from '../../data/stadium.data';
-    import { weatherSymbol, weatherTables } from '../../data/weatherData.data';
+    import { weatherTables } from '../../data/weatherData.data';
     import {
         gameEventPluralMap,
         mapHistoryInducementsForDisplay,
     } from '../../helpers/matchHistoryHelpers';
-    import type { MatchHistoryRecord } from '../../models/matchHistory.model';
+    import type {
+        GameEvent,
+        GameEventType,
+        MatchHistoryRecord,
+    } from '../../models/matchHistory.model';
     import { modalState } from '../../store/modal.store';
     import { roster } from '../../store/teamRoster.store';
-    import { deleteMatchHistory } from '../auth/firebaseDB.service';
 
     import IconWithCaption from '../uiComponents/iconWithCaption.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import DeleteMatchHistory from './deleteMatchHistory.svelte';
     import MatchInducements from './individualControls/matchInducements.svelte';
+    import PlayerEventGrid from './matchCardComponents/playerEventGrid.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
 
     export let match: MatchHistoryRecord;
+
+    let selectedEvent: GameEventType = 'touchdown';
+    let filteredSingleEvents: GameEvent[] = [];
 
     const inducements = mapHistoryInducementsForDisplay(
         match.playingCoach.inducementsHired
@@ -36,6 +42,8 @@
         .filter((entry) => entry[0] !== 'opponentScore')
         .sort((a, b) => a[0].localeCompare(b[0]));
 
+    filteredSingleEvents = filterEvents();
+
     function deleteMatch() {
         modalState.set({
             ...$modalState,
@@ -47,17 +55,25 @@
             },
         });
     }
+
+    function selectEvent(event: string) {
+        selectedEvent = event as GameEventType;
+        filteredSingleEvents = filterEvents();
+    }
+
+    function filterEvents() {
+        return match.playingCoach.gameEventRecording === 'individual'
+            ? match.playingCoach.gameEvents.filter(
+                  (x) => x.eventType === selectedEvent
+              )
+            : [];
+    }
 </script>
 
 <article
     class="content"
     transition:slide={{ duration: 300, easing: quadInOut }}
 >
-    <MaterialButton
-        hoverText="Delete match history"
-        symbol="delete_forever"
-        clickFunction={deleteMatch}
-    />
     <div class="match-modifiers">
         {#if $roster.format === 'elevens'}
             <IconWithCaption icon={weather.icon} caption={weather.type} />
@@ -104,32 +120,44 @@
     {/if}
 
     <div class="additional">
-        <!-- {#if match.playingCoach.inducementsHired.length > 0}
-            {#each match.playingCoach.inducementsHired as inducement}
-                <p>{inducement.id}</p>
-            {/each}
-        {/if} -->
-
         <MatchInducements showTitle={true} {inducements} />
         <div
             class="events"
             class:events--solo={match.playingCoach.inducementsHired.length <= 0}
+            class:events--total={match.playingCoach.gameEventRecording ===
+                'total'}
         >
             {#each teamEvents as event}
                 <TitleWithResult
                     title={gameEventPluralMap[event[0]]}
                     result={event[1]}
-                    background="none"
+                    background={event[0] === selectedEvent ? 'main' : 'none'}
+                    clickFunction={match.playingCoach.gameEventRecording ===
+                        'individual' && event[1] > 0
+                        ? () => selectEvent(event[0])
+                        : undefined}
                 />
             {/each}
         </div>
     </div>
+    {#if match.playingCoach.gameEventRecording === 'individual'}
+        <PlayerEventGrid gameEvents={filteredSingleEvents} />
+    {/if}
     {#if match.notes}
         <div class="match-notes">
             <h4>Notes</h4>
             {match.notes}
         </div>
     {/if}
+    <div class="history-controls">
+        <div>
+            <MaterialButton
+                hoverText="Delete match history"
+                symbol="delete_forever"
+                clickFunction={deleteMatch}
+            />
+        </div>
+    </div>
 </article>
 
 <style lang="scss">
@@ -159,8 +187,7 @@
     .events {
         flex: 1;
         border-radius: 12px;
-        color: white;
-        background-color: var(--main-colour);
+        background-color: var(--secondary-background-colour);
 
         // GROD
         display: grid;
@@ -184,6 +211,10 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+        &--total {
+            background-color: var(--main-colour);
+            color: white;
+        }
     }
     .match-notes {
         margin-top: 8px;
@@ -193,6 +224,20 @@
         h4 {
             margin-block-start: 0;
             margin-block-end: 0;
+        }
+    }
+    .history-controls {
+        width: 100%;
+
+        div {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-background-colour);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px auto 0 auto;
         }
     }
 </style>

@@ -6,14 +6,26 @@
     export let background: 'none' | 'main' | 'secondary' | 'neutral' =
         'neutral';
 
+    export let clickFunction = undefined;
+
     $: formattedResult =
         typeof result === 'number' ? formatNumber(result) : result;
 </script>
 
-<div class="container {background}">
-    <p>{title}</p>
-    <p class="result">{formattedResult}</p>
-</div>
+{#if clickFunction}
+    <button
+        class="container container--clickable {background} "
+        on:click={clickFunction}
+    >
+        <p>{title}</p>
+        <p class="result">{formattedResult}</p>
+    </button>
+{:else}
+    <div class="container {background}">
+        <p>{title}</p>
+        <p class="result">{formattedResult}</p>
+    </div>
+{/if}
 
 <style lang="scss">
     .container {
@@ -40,6 +52,11 @@
             &:first-child {
                 text-transform: capitalize;
             }
+        }
+
+        &--clickable {
+            cursor: pointer;
+            border: none;
         }
 
         .result {

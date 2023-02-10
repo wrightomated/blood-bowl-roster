@@ -2,6 +2,7 @@
     import { quadInOut } from 'svelte/easing';
     import { fade, slide } from 'svelte/transition';
     import { modalState } from '../../store/modal.store';
+    import { scrollYHistory } from '../../store/scrollYHistory.store';
     import MaterialButton from './materialButton.svelte';
 
     function onOverlayClick() {
@@ -24,6 +25,9 @@
         let application: HTMLElement = document?.querySelector('.application');
         if (state.isOpen) {
             if (application) {
+                if (window.scrollY > 0) {
+                    scrollYHistory.set(window.scrollY);
+                }
                 application.style.position = 'fixed';
                 application.style.width = '100%';
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -31,6 +35,10 @@
         } else {
             if (application) {
                 application.style.position = null;
+                window.scrollTo({
+                    top: $scrollYHistory,
+                    behavior: 'smooth',
+                });
             }
         }
     });
