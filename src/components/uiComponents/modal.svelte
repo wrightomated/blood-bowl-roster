@@ -16,7 +16,11 @@
     }
 
     function handleKeydown(event) {
-        if ($modalState.canClose && event?.code === 'Escape') {
+        if (
+            $modalState.isOpen &&
+            $modalState.canClose &&
+            event?.code === 'Escape'
+        ) {
             closeModal();
         }
     }
