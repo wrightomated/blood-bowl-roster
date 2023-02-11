@@ -1,6 +1,7 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
+    import { gameEventTypeToTitle } from '../../data/gameEventMap';
     import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
     import type {
         GameEvent,
@@ -11,6 +12,7 @@
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import ToggleButton from '../uiComponents/toggleButton.svelte';
+    import PlayerEventList from './playerEventList.svelte';
 
     $: gameEvents = $roster.matchDraft.playingCoach.gameEvents ?? [];
 
@@ -25,14 +27,6 @@
         kill: 0,
         interception: 0,
         deflection: 0,
-    };
-    const singularMap: Record<GameEventType, string> = {
-        touchdown: 'Touchdown',
-        completion: 'Completion',
-        casualty: 'Casualty',
-        kill: 'Kill',
-        interception: 'Interception',
-        deflection: 'Deflection',
     };
 
     let selectedPlayer;
@@ -72,13 +66,6 @@
             ' ' +
             (player.playerName || player.player.position)
         );
-    }
-
-    function removeEvent(gameEvent) {
-        $roster.matchDraft.playingCoach.gameEvents =
-            $roster.matchDraft.playingCoach.gameEvents.filter(
-                (e) => e !== gameEvent
-            );
     }
 </script>
 
@@ -133,7 +120,9 @@
                     bind:value={selectedEvent}
                 >
                     {#each Object.keys(gameEventTally) as event}
-                        <option value={event}>{singularMap[event]}</option>
+                        <option value={event}
+                            >{gameEventTypeToTitle[event]}</option
+                        >
                     {/each}
                 </select>
             </div>
@@ -158,24 +147,7 @@
             <!-- <Button clickFunction={addPlayerEvent}>Add Event</Button> -->
         </div>
         <div class="player-event-grid">
-            {#each gameEvents.sort((a, b) => (a.turn || 0) - (b.turn || 0)) as gameEvent}
-                <div class="event">
-                    <div class="player-number">
-                        Player {filteredPlayers.find(
-                            (x) => x.playerId === gameEvent.player.id
-                        ).alterations.playerNumber}
-                    </div>
-                    <div class="event-type">
-                        {singularMap[gameEvent.eventType]}
-                        {gameEvent.turn ? `on turn ${gameEvent.turn}` : ''}
-                    </div>
-                    <MaterialButton
-                        hoverText="Remove event"
-                        symbol="delete"
-                        clickFunction={() => removeEvent(gameEvent)}
-                    />
-                </div>
-            {/each}
+            <PlayerEventList {gameEvents} allowDeletion={true} />
         </div>
     {:else}
         <div>No players</div>
@@ -231,29 +203,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-    }
-    .player-event-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 16px;
-
-        .event {
-            display: flex;
-            flex-wrap: wrap;
-            background-color: var(--secondary-background-colour);
-            border-radius: 8px;
-            padding: 12px;
-            align-items: center;
-            justify-content: space-between;
-            &-type {
-                text-align: left;
-            }
-        }
-
-        .player-number {
-            font-family: var(--display-font);
         }
     }
 </style>

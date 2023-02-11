@@ -3,6 +3,7 @@
         getSavedMatchHistoryFromLocal,
         saveMatchHistoryToLocal,
     } from '../../helpers/localStorageHelper';
+    import { updateMatchHistoryPlayerEvents } from '../../helpers/updateMatchHistoryPlayerEvents';
     import type {
         MatchHistoryRecord,
         MatchHistorySummary,
@@ -30,8 +31,6 @@
 
     $: pillText = $roster.mode === 'league' ? 'League' : 'Tournament';
 
-    // let date1 = new Date(Date.UTC(2022, 8, 10, 3, 0, 0));
-
     async function toggleBody() {
         if (loading) return;
 
@@ -49,6 +48,7 @@
                 saveMatchHistoryToLocal(matchSummary.id, match);
             }
         }
+        match = updateMatchHistoryPlayerEvents(match, $roster.players);
         loading = false;
         open = !open;
     }
