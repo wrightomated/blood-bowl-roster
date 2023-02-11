@@ -16,6 +16,7 @@
     import { getTeamFormatShortDisplay } from '../types/teamFormat';
     import RosterStatusToggle from './rosterStatusToggle.svelte';
     import SpecialRuleSelector from './specialRuleSelector.svelte';
+    import RosterImage from './rosterImage.svelte';
 
     export let playerTypes: Player[];
 
@@ -47,6 +48,7 @@
     </div>
 </span>
 <SpecialRuleSelector />
+<RosterImage />
 
 <div class="sub-heading-box">
     <p class="sub-heading print-only print-only--larger">{$roster.teamName}</p>
