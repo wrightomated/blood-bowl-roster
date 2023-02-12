@@ -5,20 +5,15 @@
     import { currentTeam } from '../../store/currentTeam.store';
     import type { StarPlayer } from '../../models/player.model';
     import AddSkill from '../addSkill.svelte';
-    import {
-        characteristicMaxValue,
-        characteristicMinValue,
-        characteristics,
-    } from '../../data/statOrder.data';
-    import StatBlock from '../playerCard/statBlock.svelte';
+
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import PlayerNumber from './playerNumber.svelte';
-    import { getStat } from '../../helpers/statHelpers';
     import { modalState } from '../../store/modal.store';
     import PlayerAdvancement from '../playerAdvancement/playerAdvancement.svelte';
+    import PlayerCharacteristics from '../playerCard/playerCharacteristics.svelte';
 
     export let index: number;
 
@@ -45,11 +40,7 @@
                   ? 0
                   : rosterPlayer.player.cost) +
               (rosterPlayer.alterations?.valueChange || 0);
-    $: alteredStats = characteristicMaxValue.map(
-        (_, i) =>
-            (rosterPlayer?.alterations?.statChange?.[i] || 0) -
-            (rosterPlayer?.alterations?.injuries?.[i] || 0)
-    );
+
     $: nonLinemen = $currentTeam.players
         .filter((p) => p.max < 12)
         .map((x) => x.id);
@@ -89,7 +80,7 @@
             canClose: true,
             component: PlayerAdvancement,
             componentProps: {
-                rosterPlayer,
+                index,
             },
         });
     };
@@ -185,15 +176,7 @@
         </div>
     </div>
 
-    <div class="player-characteristics">
-        {#each rosterPlayer.player.playerStats as stat, i}
-            <StatBlock
-                char={characteristics[i]}
-                value={getStat(stat, i, rosterPlayer)}
-                change={alteredStats[i]}
-            />
-        {/each}
-    </div>
+    <PlayerCharacteristics {rosterPlayer} />
     <!-- 
     {#if rosterPlayer.alterations.advancements as a}
         <Pill variant='filled'>{advancementTitle[]}</Pill>
@@ -325,6 +308,7 @@
     }
     .header {
         background-color: var(--secondary-colour);
+
         color: white;
         border-radius: 20px 20px 0 0;
         padding: 10px;
@@ -351,11 +335,7 @@
     .content {
         padding: 10px;
     }
-    .player-characteristics {
-        display: flex;
-        position: relative;
-        left: -2px;
-    }
+
     .left-align {
         text-align: left;
     }

@@ -198,8 +198,12 @@ function addMvpToPlayers(
     return players.map((p) => {
         const player = { ...p };
         if (p.playerId === mvp) {
-            player.alterations?.gameRecords?.['mvp']
-                ? player.alterations.gameRecords['mvp']++
+            if (!player.alterations.gameRecords) {
+                player.alterations.gameRecords = {};
+            }
+            player.alterations.gameRecords['mvp'] = !!player.alterations
+                .gameRecords?.['mvp']
+                ? player.alterations.gameRecords['mvp'] + 1
                 : 1;
 
             if (addSpp) {
