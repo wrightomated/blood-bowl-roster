@@ -130,9 +130,6 @@
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
-                        {#if rosterPlayer.alterations.advancements}
-                            {rosterPlayer.alterations.advancements}
-                        {/if}
                         {#if danger}
                             {numberOfPlayerType}/{maxOfPlayerType}
                         {/if}
