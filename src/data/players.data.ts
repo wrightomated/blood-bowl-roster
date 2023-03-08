@@ -1349,7 +1349,7 @@ const eagleLinewoman: Player = {
     secondary: ['A', 'S'],
 };
 const piranhaBlitzer: Player = {
-    position: 'Piranha Warrior Blizter',
+    position: 'Piranha Warrior Blitzer',
     id: 154,
     cost: 90,
     playerStats: [7, 3, 3, 5, 8],
