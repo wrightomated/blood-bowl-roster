@@ -111,7 +111,9 @@
     </div>
 {/if}
 <RosterStatusToggle />
-<AvailablePlayers />
+{#if $roster.format !== 'dungeon bowl'}
+    <AvailablePlayers />
+{/if}
 
 <style lang="scss">
     .sub-heading-box {
