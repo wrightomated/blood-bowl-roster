@@ -418,11 +418,9 @@ function addPlayerIdsToRoster(roster: Roster): Roster {
 function generateEligibleNumber(players: RosterPlayerRecord[], index?: number) {
     const otherPlayers = players.filter((_p, i) => i !== index);
     let targetNumber = index ? index + 1 : 1;
-    console.log('finding number:' + targetNumber);
     while (numberTaken(otherPlayers, targetNumber) >= 0) {
         targetNumber++;
     }
-    console.log('this is nice:' + targetNumber);
     return targetNumber;
 }
 
