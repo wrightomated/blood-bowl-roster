@@ -214,6 +214,12 @@ function addEventsToPlayers(
     });
 }
 
+/**
+ * @param mvp - the id of the player who is the mvp
+ * @param players - the players to add the mvp to
+ * @param addSpp - whether to add the mvp spp to the player
+ * @returns the players with the mvp added
+ */
 function addMvpToPlayers(
     mvp: string,
     players: RosterPlayerRecord[],
@@ -238,6 +244,10 @@ function addMvpToPlayers(
     });
 }
 
+/**
+ * @param isDungeonBowl - whether the game is a dungeon bowl game
+ * @returns the event to spp map
+ */
 function getEventToSppMap(
     isDungeonBowl: boolean
 ): Record<GameEventType, number> {

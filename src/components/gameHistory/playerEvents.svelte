@@ -76,7 +76,7 @@
 >
     <!-- <h3>Your player's events</h3> -->
     <ToggleButton
-        options={['total', 'individual']}
+        {options}
         {selected}
         selectedIndex={options.findIndex((x) => x === option)}
     />
