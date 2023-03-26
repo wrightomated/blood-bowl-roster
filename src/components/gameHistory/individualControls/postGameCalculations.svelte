@@ -6,6 +6,7 @@
 
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
+    import ToggleButton from '../../uiComponents/toggleButton.svelte';
     import DedicatedFansChange from './dedicatedFansChange.svelte';
 
     let mvpSelected: string;
@@ -14,19 +15,32 @@
         $roster.matchDraft.gameEventTally.touchdown -
         $roster.matchDraft.gameEventTally.opponentScore;
 
-    $: result = scoreDiff > 0 ? `Won` : scoreDiff === 0 ? 'Drew' : 'Lost';
+    let result: 'Won' | 'Lost' | 'Drew';
+    $: result =
+        $roster.matchDraft.concession === 'player' || scoreDiff < 0
+            ? `Lost`
+            : $roster.matchDraft.concession === 'opponent' || scoreDiff > 0
+            ? 'Won'
+            : 'Drew';
 
     $: filteredPlayers = $roster?.players?.filter(
         (p) => !p.deleted && !p.starPlayer
     );
 
+    const concessionOptions = ['none', 'player', 'opponent'];
+    $: concessionOption = $roster.matchDraft.concession ?? concessionOptions[0];
+
     function winnings(
         fanFactor: number,
         opponentFanFactor: number,
-        touchdowns: number
+        touchdowns: number,
+        concession?: 'player' | 'opponent' | 'none'
     ) {
+        if (concession === 'player') return 0;
+        const denominator = concession === 'opponent' ? 1 : 2;
         const winnings =
-            10000 * ((fanFactor + opponentFanFactor) / 2 + touchdowns);
+            10000 *
+            ((fanFactor + opponentFanFactor) / denominator + touchdowns);
         return winnings || 0;
     }
 
@@ -52,6 +66,24 @@
         selectMvp();
     }
 
+    function concession(concession: string) {
+        if (concession === 'player') {
+            $roster.matchDraft.concession = 'player';
+            $roster.matchDraft.playingCoach.winnings = 0;
+            delete $roster.matchDraft.playingCoach.mvp;
+        } else if (concession === 'opponent') {
+            $roster.matchDraft.concession = 'opponent';
+        } else {
+            $roster.matchDraft.concession = 'none';
+        }
+        $roster.matchDraft.playingCoach.winnings = winnings(
+            $roster.matchDraft.playingCoach.fanFactor,
+            $roster.matchDraft.opponentCoach.fanFactor,
+            $roster.matchDraft.gameEventTally.touchdown,
+            $roster.matchDraft.concession
+        );
+    }
+
     onMount(() => {
         roster.updateDraftEventTotals();
         mvpSelected = $roster.matchDraft?.playingCoach?.mvp?.id;
@@ -59,7 +91,8 @@
             $roster.matchDraft.playingCoach.winnings = winnings(
                 $roster.matchDraft.playingCoach.fanFactor,
                 $roster.matchDraft.opponentCoach.fanFactor,
-                $roster.matchDraft.gameEventTally.touchdown
+                $roster.matchDraft.gameEventTally.touchdown,
+                $roster.matchDraft.concession
             );
         }
         if (
@@ -103,10 +136,23 @@
         </div>
     {/if}
     {#if $roster.mode === 'league'}
-        <DedicatedFansChange {result} />
+        <div class="boxed-div">
+            <div class="concession-label">Concession</div>
+            <ToggleButton
+                options={concessionOptions}
+                selectedIndex={concessionOptions.findIndex(
+                    (x) => x === concessionOption
+                )}
+                selected={concession}
+            />
+        </div>
+        <DedicatedFansChange
+            {result}
+            concession={$roster.matchDraft?.concession}
+        />
     {/if}
 
-    {#if $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
+    {#if $roster.matchDraft.concession !== 'player' && $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
         <div class="boxed-div">
             <label for="choose-mvp">MVP</label>
             <select
@@ -145,6 +191,11 @@
     }
     label {
         margin-bottom: 4px;
+    }
+    .concession-label {
+        margin-bottom: 4px;
+        font-family: var(--display-font);
+        font-weight: bold;
     }
     .post-game {
         margin: 16px 0;
