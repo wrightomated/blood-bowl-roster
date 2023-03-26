@@ -8,7 +8,7 @@
     $: changeDedicatedFans = $roster.matchDraft?.playingCoach?.fanChange || 0;
     $: dedicatedFansString = `Your dedicated fans will ${
         concession === 'player'
-            ? `decrease by ${roll || 'd3'}.`
+            ? `decrease by ${concedeFanChange($roster)}.`
             : changeDedicatedFans === 0
             ? 'remain the same.'
             : changeDedicatedFans === 1
@@ -27,12 +27,30 @@
         changeDedicatedFans = 0;
         if (concession === 'player' && $roster.extra.dedicated_fans > 1) {
             changeDedicatedFans = -roll;
-        } else if (result === 'Won' && roll >= $roster.extra.dedicated_fans) {
+        } else if (
+            (concession === 'opponent' || result === 'Won') &&
+            roll >= $roster.extra.dedicated_fans
+        ) {
             changeDedicatedFans = 1;
         } else if (result === 'Lost' && roll < $roster.extra.dedicated_fans) {
             changeDedicatedFans = -1;
         }
         $roster.matchDraft.playingCoach.fanChange = changeDedicatedFans;
+    }
+
+    function concedeFanChange(roster) {
+        if (!roll) {
+            return 'd3';
+        }
+        if (roll > 3) {
+            roll = Math.ceil(roll / 2);
+        }
+        const currentFans: number = roster.extra.dedicated_fans;
+        if (currentFans - roll >= 1) {
+            return roll;
+        } else {
+            return currentFans - 1;
+        }
     }
 </script>
 

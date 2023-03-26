@@ -133,6 +133,9 @@ export function updateRosterWithDraft(
         roster.matchDraft?.playingCoach?.fanChange
     ) {
         r.extra.dedicated_fans += roster.matchDraft.playingCoach.fanChange;
+        if (r.extra.dedicated_fans < 1) {
+            r.extra.dedicated_fans = 1;
+        }
     }
 
     return r;
