@@ -81,6 +81,7 @@ export function updateRosterWithDraft(
 ): Roster {
     if (!roster.matchDraft) return roster;
     const { pettyCash, ...r } = roster;
+    let gainedGoals = 0;
 
     if (roster.matchDraft?.playingCoach?.gameEventRecording === 'individual') {
         r.players = addEventsToPlayers(
@@ -90,6 +91,23 @@ export function updateRosterWithDraft(
             roster.format === 'dungeon bowl'
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
+    }
+
+    if (options?.updateConcededGoals) {
+        let opponentTouchdowns = r.matchDraft.gameEventTally.opponentScore || 0;
+        let playerTouchdowns = r.matchDraft.gameEventTally.touchdown || 0;
+
+        if (r.matchDraft.concession === 'opponent') {
+            gainedGoals = opponentTouchdowns + 1;
+            r.matchDraft.gameEventTally.opponentScore = 0;
+            r.matchDraft.gameEventTally.touchdown =
+                playerTouchdowns + gainedGoals;
+        } else if (r.matchDraft.concession === 'player') {
+            gainedGoals = playerTouchdowns + 1;
+            r.matchDraft.gameEventTally.touchdown = 0;
+            r.matchDraft.gameEventTally.opponentScore =
+                opponentTouchdowns + gainedGoals;
+        }
     }
 
     r.players = addMvpToPlayers(
