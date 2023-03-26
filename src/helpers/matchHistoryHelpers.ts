@@ -103,10 +103,12 @@ export function updateRosterWithDraft(
             r.matchDraft.gameEventTally.touchdown =
                 playerTouchdowns + gainedGoals;
         } else if (r.matchDraft.concession === 'player') {
-            gainedGoals = playerTouchdowns + 1;
-            r.matchDraft.gameEventTally.touchdown = 0;
             r.matchDraft.gameEventTally.opponentScore =
-                opponentTouchdowns + gainedGoals;
+                opponentTouchdowns + playerTouchdowns + 1;
+            r.matchDraft.gameEventTally.touchdown = 0;
+        }
+        if (options.updateTreasury) {
+            r.treasury += gainedGoals * 10;
         }
     }
 
