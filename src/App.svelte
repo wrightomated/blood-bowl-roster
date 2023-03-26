@@ -25,6 +25,9 @@
         <Team />
     </main>
     <Footer />
+    {#await import('./components/diceRoller/diceRoller.svelte') then c}
+        <svelte:component this={c.default} />
+    {/await}
 </div>
 
 <style lang="scss">
@@ -32,5 +35,7 @@
         padding: 8px;
         max-width: 1600px;
         margin: 0 auto;
+        position: relative;
+        // z-index: 1;
     }
 </style>

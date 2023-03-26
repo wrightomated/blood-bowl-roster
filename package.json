@@ -52,9 +52,11 @@
         "typescript": "^4.8.4"
     },
     "dependencies": {
+        "cannon-es": "^0.20.0",
         "firebase": "^9.6.9",
         "nanoid": "^3.3.2",
-        "sirv-cli": "^1.0.0"
+        "sirv-cli": "^1.0.0",
+        "three": "^0.150.1"
     },
     "jest": {
         "transform": {
