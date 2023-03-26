@@ -70,6 +70,7 @@
         if (concession === 'player') {
             $roster.matchDraft.concession = 'player';
             $roster.matchDraft.playingCoach.winnings = 0;
+            delete $roster.matchDraft.playingCoach.mvp;
         } else if (concession === 'opponent') {
             $roster.matchDraft.concession = 'opponent';
         } else {
@@ -151,7 +152,7 @@
         />
     {/if}
 
-    {#if $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
+    {#if $roster.matchDraft.concession !== 'player' && $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
         <div class="boxed-div">
             <label for="choose-mvp">MVP</label>
             <select
