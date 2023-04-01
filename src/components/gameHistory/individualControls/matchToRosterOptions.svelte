@@ -18,6 +18,7 @@
         'removeInducements',
         'removeStarPlayers',
         'updateDedicatedFans',
+        'updateConcededGoals',
     ];
     const optionMap: Record<SaveMatchOption, string> = {
         updateSpp: 'Add SPP to players',
@@ -25,6 +26,7 @@
         removeInducements: 'Remove Inducements',
         removeStarPlayers: 'Remove Star Players',
         updateDedicatedFans: 'Update dedicated fans',
+        updateConcededGoals: 'Update conceded goals',
     };
     let saveOptions: SaveMatchOptions = {
         updateSpp: $roster.format !== 'sevens' && $roster.mode === 'league',
@@ -32,6 +34,7 @@
         updateTreasury: $roster.mode === 'league',
         removeStarPlayers: $roster.mode === 'league',
         updateDedicatedFans: $roster.mode === 'league',
+        updateConcededGoals: $roster.mode === 'league',
     };
 
     function uploadMatchHistory() {
@@ -59,6 +62,8 @@
                 return updateSpp();
             case 'updateDedicatedFans':
                 return updateDedicatedFans();
+            case 'updateConcededGoals':
+                return updateConcededGoals();
             default:
                 return false;
         }
@@ -85,6 +90,12 @@
     }
     function updateDedicatedFans(): boolean {
         return !!$roster.matchDraft?.playingCoach?.fanChange;
+    }
+    function updateConcededGoals(): boolean {
+        return (
+            $roster.matchDraft.concession &&
+            $roster.matchDraft.concession !== 'none'
+        );
     }
 </script>
 

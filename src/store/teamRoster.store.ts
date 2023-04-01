@@ -373,12 +373,14 @@ function assignPlayerNumber(
     const player =
         typeof playerRef === 'number' ? players[playerRef] : playerRef;
     const playerId = player?.playerId ?? nanoid();
+    const playerNumber = player?.alterations?.playerNumber;
     return {
         ...player,
         playerId,
         alterations: {
             ...player?.alterations,
-            playerNumber: generateEligibleNumber(players, index),
+            playerNumber:
+                playerNumber || generateEligibleNumber(players, index),
         },
     };
 }

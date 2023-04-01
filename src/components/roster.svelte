@@ -16,6 +16,7 @@
     import { getTeamFormatShortDisplay } from '../types/teamFormat';
     import RosterStatusToggle from './rosterStatusToggle.svelte';
     import SpecialRuleSelector from './specialRuleSelector.svelte';
+    import AvailablePlayers from './availablePlayers.svelte';
 
     export let playerTypes: Player[];
 
@@ -110,6 +111,9 @@
     </div>
 {/if}
 <RosterStatusToggle />
+{#if $roster.format !== 'dungeon bowl'}
+    <AvailablePlayers />
+{/if}
 
 <style lang="scss">
     .sub-heading-box {

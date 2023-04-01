@@ -79,6 +79,10 @@
     class="content"
     transition:slide={{ duration: 300, easing: quadInOut }}
 >
+    {#if match.concession && match.concession !== 'none'}
+        <span class="concession">{match.concession} conceded.</span>
+    {/if}
+
     <div class="match-modifiers">
         {#if $roster.format === 'elevens'}
             <IconWithCaption icon={weather.icon} caption={weather.type} />
@@ -165,6 +169,12 @@
 </article>
 
 <style lang="scss">
+    .concession {
+        font-family: var(--display-font);
+        font-weight: bold;
+        text-transform: capitalize;
+        color: var(--main-colour);
+    }
     .content {
         padding: 0 12px 12px 12px;
     }

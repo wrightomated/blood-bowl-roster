@@ -81,6 +81,7 @@ export function updateRosterWithDraft(
 ): Roster {
     if (!roster.matchDraft) return roster;
     const { pettyCash, ...r } = roster;
+    let gainedGoals = 0;
 
     if (roster.matchDraft?.playingCoach?.gameEventRecording === 'individual') {
         r.players = addEventsToPlayers(
@@ -90,6 +91,25 @@ export function updateRosterWithDraft(
             roster.format === 'dungeon bowl'
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
+    }
+
+    if (options?.updateConcededGoals) {
+        let opponentTouchdowns = r.matchDraft.gameEventTally.opponentScore || 0;
+        let playerTouchdowns = r.matchDraft.gameEventTally.touchdown || 0;
+
+        if (r.matchDraft.concession === 'opponent') {
+            gainedGoals = opponentTouchdowns + 1;
+            r.matchDraft.gameEventTally.opponentScore = 0;
+            r.matchDraft.gameEventTally.touchdown =
+                playerTouchdowns + gainedGoals;
+        } else if (r.matchDraft.concession === 'player') {
+            r.matchDraft.gameEventTally.opponentScore =
+                opponentTouchdowns + playerTouchdowns + 1;
+            r.matchDraft.gameEventTally.touchdown = 0;
+        }
+        if (options.updateTreasury) {
+            r.treasury += gainedGoals * 10;
+        }
     }
 
     r.players = addMvpToPlayers(
@@ -115,6 +135,9 @@ export function updateRosterWithDraft(
         roster.matchDraft?.playingCoach?.fanChange
     ) {
         r.extra.dedicated_fans += roster.matchDraft.playingCoach.fanChange;
+        if (r.extra.dedicated_fans < 1) {
+            r.extra.dedicated_fans = 1;
+        }
     }
 
     return r;
@@ -190,6 +213,12 @@ function addEventsToPlayers(
     });
 }
 
+/**
+ * @param mvp - the id of the player who is the mvp
+ * @param players - the players to add the mvp to
+ * @param addSpp - whether to add the mvp spp to the player
+ * @returns the players with the mvp added
+ */
 function addMvpToPlayers(
     mvp: string,
     players: RosterPlayerRecord[],
@@ -214,6 +243,10 @@ function addMvpToPlayers(
     });
 }
 
+/**
+ * @param isDungeonBowl - whether the game is a dungeon bowl game
+ * @returns the event to spp map
+ */
 function getEventToSppMap(
     isDungeonBowl: boolean
 ): Record<GameEventType, number> {
