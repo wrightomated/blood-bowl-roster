@@ -1,3 +1,5 @@
+import type { AdvancementCombination } from '../data/advancementCost.data';
+import type { CharacteristicType } from '../data/statOrder.data';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
@@ -10,6 +12,8 @@ import type { Player } from './player.model';
 import type { TeamName, TeamSpecialRule } from './team.model';
 
 export interface Roster {
+    /** Used for breaking changes, undefined assumed 1 */
+    version?: number;
     /** Used for firebase storage */
     rosterId?: string;
     teamId: number;
@@ -82,8 +86,10 @@ export interface PlayerAlterations {
     statChange?: number[]; // c
     extraSkills?: number[]; // e
     valueChange?: number; // v
-    /** How many times a player has advanced */
+    /** How many times a player has advanced*/
     advancements?: number; // a
+    /** v2: Details of each advancement */
+    specificAdvancements?: SpecificAdvancement[];
     injuries?: number[]; // i
     journeyman?: boolean; // j
     gameRecords?: Partial<Record<PlayerGameAchievement, number>>; // g
@@ -99,6 +105,14 @@ export type NewRosterOptions = {
     format: TeamFormat;
     fans: number;
     specialRule?: TeamSpecialRule;
+};
+
+export type SpecificAdvancement = {
+    type: AdvancementCombination;
+    /** The advancement cost */
+    sppCost: number;
+    /** Skill id or characteristic type */
+    advancementValue: number | CharacteristicType;
 };
 
 export type PlayerGameAchievement =

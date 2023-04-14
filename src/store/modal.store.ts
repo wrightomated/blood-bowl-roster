@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import RosterPlayerCard from '../components/rosterPlayer/rosterPlayerCard.svelte';
 
 function createModalState() {
     const { subscribe, set, update } = writable<ModalState>({
@@ -24,6 +25,22 @@ function createModalState() {
                     canClose: true,
                     component: undefined,
                     componentProps: {},
+                    compact: false,
+                };
+            }),
+        // This is to prevent a circular dependency
+        editPlayer: (index: number) =>
+            update((store) => {
+                return {
+                    ...store,
+                    isOpen: true,
+                    canClose: true,
+                    compact: true,
+                    component: RosterPlayerCard,
+                    componentProps: {
+                        index,
+                        editMode: true,
+                    },
                 };
             }),
     };
@@ -36,4 +53,5 @@ export interface ModalState {
     component: any;
     componentProps: any;
     canClose: boolean;
+    compact?: boolean;
 }

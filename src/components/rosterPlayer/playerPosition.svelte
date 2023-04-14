@@ -1,10 +1,11 @@
 <script lang="ts">
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import { currentTeam } from '../../store/currentTeam.store';
-    import { showSkillButtons } from '../../store/showSkillButtons.store';
+    import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
+    import RosterPlayerCard from './rosterPlayerCard.svelte';
 
     export let index: number;
     $: rosterPlayer = $roster.players[index];
@@ -47,9 +48,17 @@
     };
 
     const toggleShowSkills = () => {
-        showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? !x : x))
-        );
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: RosterPlayerCard,
+            componentProps: {
+                index,
+                editMode: true,
+            },
+            compact: true,
+        });
     };
 </script>
 

@@ -231,10 +231,6 @@
         position: relative;
         left: -2px;
     }
-    .mini-title {
-        font-family: $display-font;
-        margin: 0;
-    }
     .skills {
         margin-bottom: 10px;
     }

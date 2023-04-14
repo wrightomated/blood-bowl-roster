@@ -187,6 +187,11 @@ thead > tr {
 .center {
     text-align: center;
 }
+.mini-title {
+    color: var(--main-colour);
+    font-family: var(--display-font);
+    margin: 0;
+}
 @keyframes spin {
     from {
         transform: rotate(0deg);
