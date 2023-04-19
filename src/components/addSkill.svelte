@@ -1,12 +1,16 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { advancementCosts } from '../data/advancementCost.data';
+    import {
+        advancementCosts,
+        sevensExtraSkillTax,
+    } from '../data/advancementCost.data';
 
     import { dungeonBowlSkillIds, skillCatalogue } from '../data/skills.data';
     import {
         characteristicMaxValue,
         characteristics,
+        CharacteristicType,
     } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
     import type { SkillCategory } from '../models/skill.model';
@@ -56,8 +60,12 @@
         const extraSkills = (rosterPlayer.alterations.extraSkills || []).concat(
             [skillId]
         );
-        const sevensExtraSkillTax =
-            $roster.format !== 'sevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
+        const skillTax =
+            $roster.format !== 'sevens'
+                ? 0
+                : extraSkills.length > 1
+                ? sevensExtraSkillTax
+                : 0;
         const newPlayer: RosterPlayerRecord = {
             ...rosterPlayer,
             alterations: {
@@ -68,7 +76,7 @@
                 valueChange:
                     (rosterPlayer.alterations?.valueChange || 0) +
                     skillIncreaseCost() +
-                    sevensExtraSkillTax,
+                    skillTax,
             },
         };
         roster.updatePlayer(newPlayer, index);
@@ -155,7 +163,7 @@
     const roll = (dn: number) => {
         die = Math.floor(Math.random() * Math.floor(dn)) + 1;
     };
-    const allowedSkills = (dice: number) => {
+    const allowedSkills: (dice: number) => CharacteristicType[] = (dice) => {
         switch (dice) {
             case 1:
             case 2:
@@ -264,7 +272,7 @@
         addSkill(skills[randomIndex].id);
     };
 
-    const isAtMax = (characteristic: string) => {
+    const isAtMax = (characteristic: CharacteristicType) => {
         const i = characteristics.indexOf(characteristic);
         const currentStat =
             rosterPlayer.player.playerStats[i] +

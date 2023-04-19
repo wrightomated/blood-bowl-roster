@@ -88,7 +88,7 @@ export interface PlayerAlterations {
     valueChange?: number; // v
     /** How many times a player has advanced*/
     advancements?: number; // a
-    /** v2: Details of each advancement */
+    /** v2: Details of each advancement, not for share code */
     specificAdvancements?: SpecificAdvancement[];
     injuries?: number[]; // i
     journeyman?: boolean; // j

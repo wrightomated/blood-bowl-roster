@@ -3,7 +3,9 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import Die from '../dice/die.svelte';
+    import PlayerCheckbox from '../rosterPlayer/playerCheckbox.svelte';
     import Button from '../uiComponents/button.svelte';
+    import MngCheckbox from './mngCheckbox.svelte';
     export let index: number;
     export let rosterPlayer: RosterPlayerRecord;
 
@@ -46,19 +48,6 @@
     }
 </script>
 
-{#if !!rosterPlayer.alterations?.injuries && rosterPlayer.alterations.injuries.some((i) => i > 0)}
-    <fieldset class="injury-fieldset">
-        <legend> Heal Injury </legend>
-        {#each characteristics as chara, i}
-            <Button
-                clickFunction={() => healInjury(i)}
-                disabled={rosterPlayer.alterations?.injuries[i] <= 0}
-                >{chara}</Button
-            >
-        {/each}
-    </fieldset>
-{/if}
-
 <fieldset class="injury-fieldset">
     <legend> Suffer Lasting Injury </legend>
     <Die faces={6} on:rolled={rolled} />
@@ -70,6 +59,18 @@
         >
     {/each}
 </fieldset>
+{#if !!rosterPlayer.alterations?.injuries && rosterPlayer.alterations.injuries.some((i) => i > 0)}
+    <fieldset class="injury-fieldset">
+        <legend> Heal Injury </legend>
+        {#each characteristics as chara, i}
+            <Button
+                clickFunction={() => healInjury(i)}
+                disabled={rosterPlayer.alterations?.injuries[i] <= 0}
+                >{rosterPlayer.alterations?.injuries[i]} {chara}</Button
+            >
+        {/each}
+    </fieldset>
+{/if}
 
 <style lang="scss">
     .injury-fieldset {

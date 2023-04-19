@@ -1,13 +1,9 @@
 <script lang="ts">
-    import { skillCatalogue } from '../data/skills.data';
+    import { getSkill } from '../helpers/getSkill';
 
     export let playerSkillIds: number[];
     export let extraSkillIds: number[] = [];
     export let cyData: string = undefined;
-
-    const getSkill = (id: number) => {
-        return skillCatalogue.find((s) => s.id === id).name;
-    };
 </script>
 
 <span class="skills" data-cy={cyData}>

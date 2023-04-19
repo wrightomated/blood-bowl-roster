@@ -3,6 +3,7 @@
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import { roster } from '../../store/teamRoster.store';
     import SkillElement from '../skillElement.svelte';
+    import MngCheckbox from './mngCheckbox.svelte';
 
     export let index: number;
 
@@ -49,15 +50,7 @@
     {/if}
 
     {#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
-        <label
-            ><span class="mini-title">MNG:</span>
-            <input
-                type="checkbox"
-                class="checkbox"
-                use:blurOnEscapeOrEnter
-                bind:checked={$roster.players[index].alterations.mng}
-            />
-        </label>
+        <MngCheckbox {index} />
         {#if $roster.format !== 'sevens'}
             <label>
                 <span class="mini-title">NI:</span>

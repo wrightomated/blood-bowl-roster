@@ -14,7 +14,6 @@
         PlayerAlterations,
         RosterPlayerRecord,
     } from '../../models/roster.model';
-    import type { Team } from '../../models/team.model';
     import {
         currentTeam,
         journeymenTypes,

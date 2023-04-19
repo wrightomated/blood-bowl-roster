@@ -6,7 +6,6 @@
         currentTeam,
         currentTeamIsDungeonBowl,
     } from '../store/currentTeam.store';
-    import PlayerRow from './player.svelte';
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
     import TeamSelector from './teamSelector.svelte';
@@ -15,10 +14,7 @@
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import StarPlayers from './starPlayers.svelte';
     import LocalStorageController from './localStorageController.svelte';
-    import {
-        showAvailablePlayers,
-        showAvailableStarPlayers,
-    } from '../store/showPlayerList.store';
+    import { showAvailableStarPlayers } from '../store/showPlayerList.store';
     import DocumentTitleWriter from './documentTitleWriter.svelte';
     import { sendEventToAnalytics } from '../analytics/plausible';
     import DungeonBowlContainer from './dungeonBowl/dungeonBowlContainer.svelte';
