@@ -29,16 +29,9 @@ export function guessSpecificAdvancements(
     if (rosterPlayer.alterations?.extraSkills?.length > 0) {
         mappedSkillTypes = rosterPlayer.alterations.extraSkills.map(
             (skillId) => {
-                const skill = skillCatalogue.find(
-                    (skill) => skill.id === skillId
-                );
                 return {
-                    skillType: rosterPlayer.player.primary.includes(
-                        skill.category
-                    )
-                        ? 'primary'
-                        : 'secondary',
-                    skillId: skill.id,
+                    skillType: getSkillType(skillId, rosterPlayer.player),
+                    skillId,
                 };
             }
         );
@@ -48,6 +41,14 @@ export function guessSpecificAdvancements(
         rosterPlayer.alterations?.statChange || [0, 0, 0, 0, 0],
         mappedSkillTypes
     );
+}
+
+export function getSkillType(
+    skillId: number,
+    player: RosterPlayerRecord['player']
+): SkillType {
+    const skill = skillCatalogue.find((skill) => skill.id === skillId);
+    return player.primary.includes(skill.category) ? 'primary' : 'secondary';
 }
 
 function determinePlayerAdvancements(

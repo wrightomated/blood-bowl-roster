@@ -11,7 +11,10 @@
         characteristics,
         CharacteristicType,
     } from '../../data/statOrder.data';
-    import { guessSpecificAdvancements } from '../../helpers/advancementOrder';
+    import {
+        getSkillType,
+        guessSpecificAdvancements,
+    } from '../../helpers/advancementOrder';
     import type {
         RosterPlayerRecord,
         SpecificAdvancement,
@@ -32,6 +35,10 @@
                 ) > -1) &&
             !rosterPlayer.alterations?.specificAdvancements
         ) {
+            if ($roster.format === 'sevens') {
+                sevensAdvancements();
+                return;
+            }
             try {
                 const specificAdvancements =
                     guessSpecificAdvancements(rosterPlayer);
@@ -49,6 +56,30 @@
             } catch (error) {}
         }
     });
+
+    function sevensAdvancements() {
+        const specificAdvancements: SpecificAdvancement[] = [];
+        if (rosterPlayer.alterations?.extraSkills?.length > 0) {
+            rosterPlayer.alterations.extraSkills.forEach((skill) => {
+                specificAdvancements.push({
+                    type: `${getSkillType(skill, rosterPlayer.player)}random`,
+                    advancementValue: skill,
+                    sppCost: skillIncreaseCost[skill],
+                });
+            });
+        }
+        roster.updatePlayer(
+            {
+                ...rosterPlayer,
+                alterations: {
+                    ...rosterPlayer.alterations,
+                    specificAdvancements,
+                },
+            },
+            index
+        );
+        showDisclaimer = true;
+    }
 
     function deleteSpecificAdvancement(advancementIndex) {
         const advancement =
