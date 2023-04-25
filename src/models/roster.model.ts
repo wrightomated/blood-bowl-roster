@@ -13,7 +13,7 @@ import type { TeamName, TeamSpecialRule } from './team.model';
 
 export interface Roster {
     /** Used for breaking changes, undefined assumed 1 */
-    version?: number;
+    version?: string;
     /** Used for firebase storage */
     rosterId?: string;
     teamId: number;
@@ -25,7 +25,9 @@ export interface Roster {
     inducements: InducementsRecord;
     treasury?: number;
     pettyCash?: number;
+    /** League or exhibition */
     mode?: RosterMode;
+    /** Elevens, sevens or dungeon bowl */
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
     matchSummary?: MatchHistorySummary[];
@@ -88,12 +90,14 @@ export interface PlayerAlterations {
     valueChange?: number; // v
     /** How many times a player has advanced*/
     advancements?: number; // a
-    /** v2: Details of each advancement, not for share code */
-    specificAdvancements?: SpecificAdvancement[];
     injuries?: number[]; // i
     journeyman?: boolean; // j
     gameRecords?: Partial<Record<PlayerGameAchievement, number>>; // g
     playerNumber?: number; // x
+    /** v2: Details of each advancement, not for share code */
+    specificAdvancements?: SpecificAdvancement[];
+    /** v2: not for share code */
+    gamesPlayed?: number;
 }
 
 export type LeagueRosterStatus = 'draft' | 'commenced';

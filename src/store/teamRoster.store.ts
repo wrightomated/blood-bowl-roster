@@ -233,6 +233,7 @@ function createRoster() {
 const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format || 'elevens');
     const emptyRoster: Roster = {
+        version: '2.0',
         rosterId: nanoid(),
         teamId: options?.teamId || 0,
         players: [],

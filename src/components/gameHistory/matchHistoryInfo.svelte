@@ -85,7 +85,11 @@
 
     <div class="match-modifiers">
         {#if $roster.format === 'elevens'}
-            <IconWithCaption icon={weather.icon} caption={weather.type} />
+            <IconWithCaption
+                title="Weather"
+                icon={weather.icon}
+                caption={weather.type}
+            />
         {/if}
         {#if match.playingCoach.mvp}
             <IconWithCaption
@@ -97,6 +101,7 @@
             />
         {:else if $roster.mode === 'exhibition' && match?.isLeagueMatch}
             <IconWithCaption
+                title="Tournament points"
                 caption={`Tournament Point${
                     match.playingCoach.leaguePoints === 1 ? '' : 's'
                 }`}
@@ -104,7 +109,7 @@
             />
         {/if}
         {#if $roster.format === 'elevens'}
-            <IconWithCaption icon="stadium" caption={stadium} />
+            <IconWithCaption title="Stadium" icon="stadium" caption={stadium} />
         {/if}
     </div>
     {#if $roster.mode === 'league'}
