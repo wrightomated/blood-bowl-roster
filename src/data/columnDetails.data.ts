@@ -51,7 +51,7 @@ export const columnDetails: ColumnDetails[] = [
             elementClass: 'left-align position',
         },
         rowDetails: {
-            tdClass: 'left-align',
+            tdClass: 'left-align no-wrap',
             component: PlayerPosition,
         },
     },

@@ -24,6 +24,7 @@
         border-radius: 0;
         background: none;
         width: 100%;
+        min-width: 150px;
 
         @media screen and (max-width: 450px) {
             font-size: 16px;

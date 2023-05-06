@@ -9,7 +9,6 @@
         MatchHistorySummary,
     } from '../../models/matchHistory.model';
     import { roster } from '../../store/teamRoster.store';
-    import MaterialButton from '../uiComponents/materialButton.svelte';
     import Pill from '../uiComponents/pill.svelte';
     import MatchHistoryInfo from './matchHistoryInfo.svelte';
 
@@ -80,13 +79,6 @@
                 ? 'arrow_drop_up'
                 : 'arrow_drop_down'}</i
         >
-
-        <!-- <MaterialButton
-            symbol={open ? 'arrow_drop_up' : 'arrow_drop_down'}
-            clickFunction={toggleBody}
-            hoverText="open"
-            pushRight={true}
-        /> -->
     </header>
     {#if open}
         <MatchHistoryInfo {match} />
@@ -112,7 +104,6 @@
         @media screen and (max-width: 450px) {
             box-shadow: none;
         }
-        // padding: 8px 16px 8px 36px;
     }
     .result {
         position: absolute;
@@ -139,13 +130,6 @@
         gap: 12px;
         cursor: pointer;
         padding: 8px 16px 8px 36px;
-        // transition: background-color 0.2s, color 0.2s;
-        // border-radius: 0 20px 0 0;
-
-        // &.open {
-        //     background-color: var(--secondary-colour);
-        //     color: white;
-        // }
         @media screen and (max-width: 450px) {
             flex-wrap: wrap;
         }

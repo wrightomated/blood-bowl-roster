@@ -6,7 +6,6 @@
     import type {
         GameEvent,
         GameEventTally,
-        GameEventType,
     } from '../../models/matchHistory.model';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
@@ -180,13 +179,6 @@
         }
         @media screen and (max-width: 450px) {
             grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    .label-input {
-        text-align: center;
-        label {
-            text-transform: capitalize;
         }
     }
     .player-events {

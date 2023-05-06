@@ -190,7 +190,6 @@ function addEventsToPlayers(
 ) {
     return players.map((p) => {
         const player = { ...p };
-
         if (events?.length > 0) {
             const playerEvents = events.filter(
                 (e) => e.player?.id === p.playerId

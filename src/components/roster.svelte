@@ -67,7 +67,7 @@
 
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
-        {#each $roster.players as player, index}
+        {#each $roster.players as player, index (player.playerId)}
             {#if !player?.deleted}
                 <RosterPlayerCard {index} />
             {/if}

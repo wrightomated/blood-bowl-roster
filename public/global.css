@@ -12,6 +12,7 @@
     --life: #1d8858;
     --beasts: #bf8106;
     --heavens: #d4d6d5;
+    --white: #ffffff;
 
     --display-font: 'Roboto Slab', serif;
 
@@ -186,6 +187,11 @@ thead > tr {
 }
 .center {
     text-align: center;
+}
+.mini-title {
+    color: var(--main-colour);
+    font-family: var(--display-font);
+    margin: 0;
 }
 @keyframes spin {
     from {

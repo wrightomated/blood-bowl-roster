@@ -79,9 +79,6 @@
             margin-top: 0;
             margin-bottom: 0;
         }
-        &__player-group {
-            // flex-basis: 0;
-        }
 
         &__player-group-heading {
             text-transform: capitalize;

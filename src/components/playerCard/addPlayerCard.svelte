@@ -8,12 +8,12 @@
         journeymanPosition,
         journeymanSkills,
     } from '../../helpers/journeymenHelper';
+    import { getStat } from '../../helpers/statHelpers';
     import type { Player } from '../../models/player.model';
     import type {
         PlayerAlterations,
         RosterPlayerRecord,
     } from '../../models/roster.model';
-    import type { Team } from '../../models/team.model';
     import {
         currentTeam,
         journeymenTypes,
@@ -128,7 +128,7 @@
         {#each selected.playerStats as stat, i}
             <StatBlock
                 char={characteristics[i]}
-                value={'' + stat}
+                value={getStat(stat, i)}
                 change={0}
                 variant="neutral"
             />
@@ -174,7 +174,6 @@
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
-        border-radius: 25px;
         border-radius: 20px 20px 0 0;
         border: 2px solid var(--secondary-background-colour);
         margin-bottom: 6px;
@@ -229,10 +228,6 @@
         display: flex;
         position: relative;
         left: -2px;
-    }
-    .mini-title {
-        font-family: $display-font;
-        margin: 0;
     }
     .skills {
         margin-bottom: 10px;

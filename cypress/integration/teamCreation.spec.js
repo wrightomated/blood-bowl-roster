@@ -82,6 +82,7 @@ context('Team creation', () => {
 });
 
 const expectedRoster = {
+    version: '2.0',
     teamId: 1,
     players: [
         {

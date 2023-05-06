@@ -1,12 +1,16 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { advancementCosts } from '../data/advancementCost.data';
+    import {
+        advancementCosts,
+        sevensExtraSkillTax,
+    } from '../data/advancementCost.data';
 
     import { dungeonBowlSkillIds, skillCatalogue } from '../data/skills.data';
     import {
         characteristicMaxValue,
         characteristics,
+        CharacteristicType,
     } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
     import type { SkillCategory } from '../models/skill.model';
@@ -14,6 +18,7 @@
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showSkillButtons } from '../store/showSkillButtons.store';
     import { roster } from '../store/teamRoster.store';
+    import ToggleButton from './uiComponents/toggleButton.svelte';
 
     export let index: number;
     let showPrimary: boolean = false;
@@ -48,13 +53,19 @@
     $: secondarySkills = availableSkills.filter((s) =>
         rosterPlayer.player.secondary.includes(s.category)
     );
+    $: selectedPrimary = rosterPlayer.player.primary[0];
+    $: selectedSecondary = rosterPlayer.player.secondary[0];
 
     const addSkill = (skillId: number) => {
         const extraSkills = (rosterPlayer.alterations.extraSkills || []).concat(
             [skillId]
         );
-        const sevensExtraSkillTax =
-            $roster.format !== 'sevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
+        const skillTax =
+            $roster.format !== 'sevens'
+                ? 0
+                : extraSkills.length > 1
+                ? sevensExtraSkillTax
+                : 0;
         const newPlayer: RosterPlayerRecord = {
             ...rosterPlayer,
             alterations: {
@@ -65,7 +76,7 @@
                 valueChange:
                     (rosterPlayer.alterations?.valueChange || 0) +
                     skillIncreaseCost() +
-                    sevensExtraSkillTax,
+                    skillTax,
             },
         };
         roster.updatePlayer(newPlayer, index);
@@ -152,7 +163,7 @@
     const roll = (dn: number) => {
         die = Math.floor(Math.random() * Math.floor(dn)) + 1;
     };
-    const allowedSkills = (dice: number) => {
+    const allowedSkills: (dice: number) => CharacteristicType[] = (dice) => {
         switch (dice) {
             case 1:
             case 2:
@@ -261,7 +272,7 @@
         addSkill(skills[randomIndex].id);
     };
 
-    const isAtMax = (characteristic: string) => {
+    const isAtMax = (characteristic: CharacteristicType) => {
         const i = characteristics.indexOf(characteristic);
         const currentStat =
             rosterPlayer.player.playerStats[i] +
@@ -344,38 +355,52 @@
     </div>
 
     {#if showPrimary}
-        {#each rosterPlayer.player.primary as category}
-            <fieldset>
-                <legend>
-                    {categoryToName.get(category)}
-                </legend>
-                {#if showRandom}
-                    <button on:click={() => addRandomSkill(category)}
-                        >Random</button
-                    >
-                {/if}
-                {#each primarySkills.filter((s) => s.category === category) as s}
-                    <button on:click={() => addSkill(s.id)}>{s.name}</button>
-                {/each}
-            </fieldset>
-        {/each}
+        {#if rosterPlayer.player.primary.length > 1}
+            <ToggleButton
+                options={rosterPlayer.player.primary}
+                selectedIndex={selectedPrimary
+                    ? rosterPlayer.player.primary.indexOf(selectedPrimary)
+                    : 0}
+                selected={(cat) => (selectedPrimary = cat)}
+            />
+        {/if}
+        <fieldset>
+            <legend>
+                {categoryToName.get(selectedPrimary)}
+            </legend>
+            {#if showRandom}
+                <button on:click={() => addRandomSkill(selectedPrimary)}
+                    >Random</button
+                >
+            {/if}
+            {#each primarySkills.filter((s) => s.category === selectedPrimary) as s}
+                <button on:click={() => addSkill(s.id)}>{s.name}</button>
+            {/each}
+        </fieldset>
     {/if}
     {#if showSecondary}
-        {#each rosterPlayer.player.secondary as category}
-            <fieldset>
-                <legend>
-                    {categoryToName.get(category)}
-                </legend>
-                {#if showRandom}
-                    <button on:click={() => addRandomSkill(category)}
-                        >Random</button
-                    >
-                {/if}
-                {#each secondarySkills.filter((s) => s.category === category) as s}
-                    <button on:click={() => addSkill(s.id)}>{s.name}</button>
-                {/each}
-            </fieldset>
-        {/each}
+        {#if rosterPlayer.player.secondary.length > 1}
+            <ToggleButton
+                options={rosterPlayer.player.secondary}
+                selectedIndex={selectedSecondary
+                    ? rosterPlayer.player.secondary.indexOf(selectedSecondary)
+                    : 0}
+                selected={(cat) => (selectedSecondary = cat)}
+            />
+        {/if}
+        <fieldset>
+            <legend>
+                {categoryToName.get(selectedSecondary)}
+            </legend>
+            {#if showRandom}
+                <button on:click={() => addRandomSkill(selectedSecondary)}
+                    >Random</button
+                >
+            {/if}
+            {#each secondarySkills.filter((s) => s.category === selectedSecondary) as s}
+                <button on:click={() => addSkill(s.id)}>{s.name}</button>
+            {/each}
+        </fieldset>
     {/if}
     {#if showCharacteristics}
         <fieldset>

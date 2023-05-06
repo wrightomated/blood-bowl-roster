@@ -24,6 +24,7 @@ function createModalState() {
                     canClose: true,
                     component: undefined,
                     componentProps: {},
+                    compact: false,
                 };
             }),
     };
@@ -36,4 +37,5 @@ export interface ModalState {
     component: any;
     componentProps: any;
     canClose: boolean;
+    compact?: boolean;
 }

@@ -36,14 +36,19 @@
     >
         {#each $matchHistorySteps as step, i}
             <div class="step step--{step.status}">
-                <div class="step-title">
+                <div
+                    class="step-title"
+                    on:click={() => matchHistorySteps.goToStep(i)}
+                >
                     <i
                         class="material-symbols-outlined checkmark checkmark--{step.status}"
                         >{step.status === 'complete'
                             ? 'check_circle'
+                            : step.status === 'current'
+                            ? 'radio_button_checked'
                             : 'circle'}</i
                     >
-                    <h3 on:click={() => matchHistorySteps.goToStep(i)}>
+                    <h3>
                         {step.title}
                     </h3>
                 </div>
@@ -54,59 +59,6 @@
                 {/if}
             </div>
         {/each}
-
-        <!-- <GameDetails />
-        <PreGameCalculations />
-        <h3>Other</h3>
-
-        <PlayerEvents /> -->
-
-        <!-- <label for="new-ctv">New Current Team Value</label>
-        <input type="number" id="new-ctv" autocomplete="off" /> -->
-
-        <!-- <label for="score">Result:</label>
-        <input
-            type="number"
-            name="player-score"
-            min="0"
-            id=""
-            bind:value={playerScore}
-            autocomplete="off"
-            max="999"
-        />
-        -
-        <input
-            type="number"
-            min="0"
-            name="opponent-score"
-            bind:value={opponentScore}
-            autocomplete="off"
-            max="999"
-        />
-        <p>{result}</p> -->
-
-        <!-- <label for="winnings">Winnings</label>
-        <input type="number" name="winnings" id="winnings" autocomplete="off" />
-        <label for="league-points">League Points</label>
-        <input
-            type="number"
-            id="league-points"
-            name="league-points"
-            autocomplete="off"
-            max="999"
-        />
-
-        <label for="notes">Notes</label>
-        <textarea
-            name="notes"
-            id="notes"
-            cols="30"
-            rows="10"
-            maxlength="512"
-            bind:value={$matchHistoryRecordDraft.notes}
-        /> -->
-
-        <!-- <button on:click={addMatch}>Add</button> -->
     </form>
 </section>
 
@@ -133,7 +85,7 @@
             }
         }
         &:not(.step--current) {
-            .step-title h3:hover {
+            .step-title:hover {
                 color: var(--secondary-colour);
                 cursor: pointer;
             }

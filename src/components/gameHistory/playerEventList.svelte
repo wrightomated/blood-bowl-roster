@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { flip } from 'svelte/animate';
+    import { fade, scale } from 'svelte/transition';
     import { gameEventTypeToTitle } from '../../data/gameEventMap';
     import type { GameEvent } from '../../models/matchHistory.model';
     import { roster } from '../../store/teamRoster.store';
@@ -16,8 +18,12 @@
 </script>
 
 <div class="player-event-grid">
-    {#each gameEvents.sort((a, b) => (a.turn || 0) - (b.turn || 0)) as gameEvent}
-        <div class="event">
+    {#each gameEvents.sort((a, b) => (a.turn || 0) - (b.turn || 0)) as gameEvent (gameEvent)}
+        <div
+            class="event"
+            animate:flip={{ duration: 200 }}
+            in:fade={{ duration: 200 }}
+        >
             <div class="player-number">
                 Player {gameEvent?.player?.number}
             </div>

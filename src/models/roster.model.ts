@@ -1,3 +1,5 @@
+import type { AdvancementCombination } from '../data/advancementCost.data';
+import type { CharacteristicType } from '../data/statOrder.data';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { CollegeName } from './dungeonBowl.model';
@@ -10,6 +12,8 @@ import type { Player } from './player.model';
 import type { TeamName, TeamSpecialRule } from './team.model';
 
 export interface Roster {
+    /** Used for breaking changes, undefined assumed 1 */
+    version?: string;
     /** Used for firebase storage */
     rosterId?: string;
     teamId: number;
@@ -21,7 +25,9 @@ export interface Roster {
     inducements: InducementsRecord;
     treasury?: number;
     pettyCash?: number;
+    /** League or exhibition */
     mode?: RosterMode;
+    /** Elevens, sevens or dungeon bowl */
     format?: TeamFormat;
     leagueRosterStatus?: LeagueRosterStatus;
     matchSummary?: MatchHistorySummary[];
@@ -82,12 +88,16 @@ export interface PlayerAlterations {
     statChange?: number[]; // c
     extraSkills?: number[]; // e
     valueChange?: number; // v
-    /** How many times a player has advanced */
+    /** How many times a player has advanced*/
     advancements?: number; // a
     injuries?: number[]; // i
     journeyman?: boolean; // j
     gameRecords?: Partial<Record<PlayerGameAchievement, number>>; // g
     playerNumber?: number; // x
+    /** v2: Details of each advancement, not for share code */
+    specificAdvancements?: SpecificAdvancement[];
+    /** v2: not for share code */
+    gamesPlayed?: number;
 }
 
 export type LeagueRosterStatus = 'draft' | 'commenced';
@@ -99,6 +109,14 @@ export type NewRosterOptions = {
     format: TeamFormat;
     fans: number;
     specialRule?: TeamSpecialRule;
+};
+
+export type SpecificAdvancement = {
+    type: AdvancementCombination;
+    /** The advancement cost */
+    sppCost: number;
+    /** Skill id or characteristic type */
+    advancementValue: number | CharacteristicType;
 };
 
 export type PlayerGameAchievement =

@@ -14,22 +14,19 @@
         <p class="icon icon--string">{stringIcon}</p>
     {/if}
 
-    <p>{caption}</p>
+    {#if caption}
+        <p>{caption}</p>
+    {/if}
 </div>
 
 <style lang="scss">
     .container {
         flex: 1;
-        // flex-basis: 100%;
-        // font-family: var(--display-font);
         text-align: center;
         margin-top: 8px;
         margin-bottom: 8px;
         border-radius: 12px;
         padding: 12px;
-        // color: white;
-        // background-color: var(--secondary-background-colour);
-        // background: linear-gradient(45deg, var(--secondary-colour), #185b88b2);
 
         p {
             margin-block-start: 0;
