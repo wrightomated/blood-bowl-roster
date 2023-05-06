@@ -5,6 +5,7 @@
     } from '../../data/advancementCost.data';
     import { getSkill } from '../../helpers/getSkill';
     import type { SpecificAdvancement } from '../../models/roster.model';
+    import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
 
     export let advancement: SpecificAdvancement;
@@ -40,7 +41,10 @@
     {#if advancementDetails.isRandom}
         <i class="material-symbols-outlined no-transition"> casino </i>
     {/if}
-    <span class="advancement-details__spp">{advancement.sppCost} SPP</span>
+    <!-- hide for sevens -->
+    {#if $roster.format !== 'sevens'}
+        <span class="advancement-details__spp">{advancement.sppCost} SPP</span>
+    {/if}
 </div>
 <!-- <div> -->
 <div class="advancement-controls">
