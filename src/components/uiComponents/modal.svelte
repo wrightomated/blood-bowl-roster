@@ -61,6 +61,7 @@
                     symbol="cancel"
                     hoverText="Close Modal"
                     clickFunction={closeModal}
+                    cyData="close-modal"
                 />
             </div>
         {/if}

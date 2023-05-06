@@ -33,6 +33,10 @@
         Are you sure you want to delete {rosterPlayer.playerName ||
             'this player'}? It can not be undone.
     </p>
-    <Button clickFunction={removePlayer} cancel={true}>Delete</Button>
+    <Button
+        cyData="accept-player-deletion"
+        clickFunction={removePlayer}
+        cancel={true}>Delete</Button
+    >
     <Button clickFunction={modalState.close}>Cancel</Button>
 </div>
