@@ -52,6 +52,26 @@ function createRoster() {
                     ...updatePlayerTreasury(store, player),
                 };
             }),
+        duplicatePlayer: (index: number) =>
+            update((store) => {
+                const duplicatedPlayer: RosterPlayerRecord = {
+                    ...store.players[index],
+                    playerId: nanoid(),
+                    alterations: {
+                        ...store.players[index].alterations,
+                        playerNumber: undefined,
+                    },
+                };
+                return {
+                    ...store,
+                    players: addPlayerToPlayers(
+                        store.players,
+                        duplicatedPlayer,
+                        maxPlayerNumber
+                    ),
+                    ...updatePlayerTreasury(store, duplicatedPlayer),
+                };
+            }),
         removePlayer: (indices: number[], firePlayer: boolean) =>
             update((store) => {
                 return {

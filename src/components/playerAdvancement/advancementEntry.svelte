@@ -62,12 +62,14 @@
     }
     .advancement-details {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         gap: 4px;
         align-items: center;
         text-transform: capitalize;
         &__spp {
             font-family: var(--display-font);
+            white-space: nowrap;
         }
         /* text-align: center; */
     }

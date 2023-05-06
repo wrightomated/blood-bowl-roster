@@ -1,5 +1,6 @@
 <script lang="ts">
     import { characteristics } from '../../data/statOrder.data';
+    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import Die from '../dice/die.svelte';
@@ -22,6 +23,7 @@
             alterations: {
                 ...rosterPlayer.alterations,
                 injuries,
+                mng: true,
             },
         };
         roster.updatePlayer(newPlayer, index);
@@ -50,6 +52,25 @@
         roster.updatePlayer(newPlayer, index);
     }
 </script>
+
+{#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
+    <div class="attribute-controls">
+        <MngCheckbox title="Miss Next Game:" {index} />
+        {#if $roster.format !== 'sevens'}
+            <label>
+                <span class="mini-title">Niggling Injury:</span>
+                <input
+                    class="ni-input"
+                    type="number"
+                    placeholder="?"
+                    inputmode="numeric"
+                    use:blurOnEscapeOrEnter
+                    bind:value={$roster.players[index].alterations.ni}
+                />
+            </label>
+        {/if}
+    </div>
+{/if}
 
 <fieldset class="injury-fieldset">
     <legend> Suffer Lasting Injury </legend>
@@ -84,6 +105,18 @@
         margin-top: 1em;
         legend {
             color: var(--secondary-colour);
+        }
+    }
+
+    .attribute-controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .ni-input {
+            width: 40px;
         }
     }
 </style>

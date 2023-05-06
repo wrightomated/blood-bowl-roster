@@ -4,6 +4,7 @@
     import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
+    import EditPlayer from '../playerCard/editPlayer.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import RosterPlayerCard from './rosterPlayerCard.svelte';
 
@@ -52,10 +53,9 @@
             ...$modalState,
             isOpen: true,
             canClose: true,
-            component: RosterPlayerCard,
+            component: EditPlayer,
             componentProps: {
                 index,
-                editMode: true,
             },
             compact: true,
         });

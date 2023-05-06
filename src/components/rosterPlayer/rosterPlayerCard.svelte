@@ -2,7 +2,6 @@
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import { currentTeam } from '../../store/currentTeam.store';
-    import type { StarPlayer } from '../../models/player.model';
     import AddSkill from '../addSkill.svelte';
 
     import { showSkillButtons } from '../../store/showSkillButtons.store';
@@ -13,6 +12,7 @@
     import PlayerCharacteristics from '../playerCard/playerCharacteristics.svelte';
     import PlayerCardMainContent from '../playerCard/playerCardMainContent.svelte';
     import EditPlayer from '../playerCard/editPlayer.svelte';
+    import DeletePlayerWarning from './deletePlayerWarning.svelte';
 
     export let index: number;
 
@@ -39,21 +39,16 @@
         $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     function removePlayer() {
-        const firePlayer = $roster?.leagueRosterStatus === 'commenced';
-        removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
-    }
-    function removeTwoForOne(firePlayer: boolean) {
-        if (rosterPlayer.starPlayer) {
-            const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
-            const tfoIndex = $roster.players.findIndex(
-                (p) => p.player.id === twoForOne
-            );
-            if (twoForOne) {
-                roster.removePlayer([index, tfoIndex], firePlayer);
-                return true;
-            }
-        }
-        return false;
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: DeletePlayerWarning,
+            componentProps: {
+                index,
+                rosterPlayer,
+            },
+        });
     }
     const openAdvancement = () => {
         modalState.set({
@@ -129,6 +124,11 @@
                         hoverText="Player advancement"
                         symbol="elevator"
                         clickFunction={openAdvancement}
+                    />
+                    <MaterialButton
+                        hoverText="Duplicate player"
+                        symbol="group_add"
+                        clickFunction={() => roster.duplicatePlayer(index)}
                     />
                 {/if}
                 {#if rosterPlayer?.alterations?.journeyman}
@@ -230,6 +230,7 @@
     .player-controls {
         display: flex;
         align-items: center;
+        gap: 4px;
     }
 
     .big-guys,
