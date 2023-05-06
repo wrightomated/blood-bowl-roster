@@ -25,6 +25,7 @@ export const skillIncreaseCost: Record<`${SkillType}${SelectionType}`, number> =
         secondaryrandom: 20,
         secondaryselect: 40,
     };
+
 /**
  * There is an extra cost for each skill after the first in blood bowl sevens
  */

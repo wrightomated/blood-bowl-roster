@@ -174,7 +174,6 @@
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
-        border-radius: 25px;
         border-radius: 20px 20px 0 0;
         border: 2px solid var(--secondary-background-colour);
         margin-bottom: 6px;

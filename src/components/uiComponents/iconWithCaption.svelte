@@ -14,7 +14,9 @@
         <p class="icon icon--string">{stringIcon}</p>
     {/if}
 
-    <p>{caption}</p>
+    {#if caption}
+        <p>{caption}</p>
+    {/if}
 </div>
 
 <style lang="scss">

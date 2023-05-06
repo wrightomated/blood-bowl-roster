@@ -6,8 +6,11 @@
     import PlayerCheckbox from '../rosterPlayer/playerCheckbox.svelte';
     import Button from '../uiComponents/button.svelte';
     import MngCheckbox from './mngCheckbox.svelte';
+
     export let index: number;
-    export let rosterPlayer: RosterPlayerRecord;
+    // export let rosterPlayer: RosterPlayerRecord;
+    let rosterPlayer: RosterPlayerRecord;
+    $: rosterPlayer = $roster.players[index];
 
     let injuryRoll: string;
 

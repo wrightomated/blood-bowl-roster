@@ -6,6 +6,7 @@
         SelectionType,
         skillIncreaseCost,
     } from '../../data/advancementCost.data';
+    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import type { SkillCategory } from '../../models/skill.model';
     import { roster } from '../../store/teamRoster.store';
@@ -84,6 +85,20 @@
     }
 </script>
 
+{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
+    <label class="spp"
+        ><span class="mini-title">SPP:</span>
+        <input
+            class="spp__input"
+            type="number"
+            placeholder="?"
+            inputmode="numeric"
+            use:blurOnEscapeOrEnter
+            bind:value={$roster.players[index].alterations.spp}
+        />
+    </label>
+{/if}
+
 <ToggleButton options={advancementTypes} selected={selectAdvancementType} />
 
 {#if $roster.format !== 'sevens' && advancementType !== 'characteristic'}
@@ -108,3 +123,14 @@
 {:else if advancementType === 'characteristic'}
     <CharacteristicAdvancement {index} {sppCost} {rosterPlayer} />
 {/if}
+
+<style lang="scss">
+    .spp {
+        display: inline-block;
+        &__input {
+            width: 60px;
+            margin-bottom: 12px;
+            margin-left: 4px;
+        }
+    }
+</style>

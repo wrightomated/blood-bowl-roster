@@ -15,7 +15,6 @@
     import EditPlayer from '../playerCard/editPlayer.svelte';
 
     export let index: number;
-    export let editMode: boolean = false;
 
     $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
@@ -57,7 +56,16 @@
         return false;
     }
     const openAdvancement = () => {
-        modalState.editPlayer(index);
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            compact: true,
+            component: EditPlayer,
+            componentProps: {
+                index,
+            },
+        });
     };
 
     const buyJourneyman = () => {
@@ -79,12 +87,8 @@
     };
 </script>
 
-<section
-    class="player-card"
-    class:danger
-    class:player-card--edit-mode={editMode}
->
-    <div class="header" class:danger>
+<section class="player-card" class:danger>
+    <header class="header" class:danger>
         <h3 class="player-name left-align">
             {#if rosterPlayer.starPlayer}
                 {rosterPlayer.player.position}
@@ -120,7 +124,7 @@
                     clickFunction={() => removePlayer()}
                 />
 
-                {#if !rosterPlayer.starPlayer && !editMode}
+                {#if !rosterPlayer.starPlayer}
                     <MaterialButton
                         hoverText="Player advancement"
                         symbol="elevator"
@@ -136,11 +140,9 @@
                 {/if}
             </div>
         </div>
-    </div>
+    </header>
 
-    {#if !editMode}
-        <PlayerCharacteristics {rosterPlayer} />
-    {/if}
+    <PlayerCharacteristics {rosterPlayer} />
 
     {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
         <div>
@@ -162,11 +164,7 @@
             </p>
         {/if}
 
-        {#if !editMode}
-            <PlayerCardMainContent {index} />
-        {:else}
-            <EditPlayer {index} {rosterPlayer} />
-        {/if}
+        <PlayerCardMainContent {index} />
     </div>
 </section>
 
@@ -192,9 +190,6 @@
         background-color: white;
         box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
-        &--editMode {
-            box-shadow: none;
-        }
         &.danger {
             border-color: var(--main-colour);
         }

@@ -157,9 +157,6 @@
     }
 </script>
 
-{#if !!rosterPlayer.alterations?.specificAdvancements}
-    <h3>Advancements</h3>
-{/if}
 <div class="advancement-list">
     {#if showDisclaimer}
         <p>
@@ -184,6 +181,7 @@
         display: flex;
         flex-direction: column;
         gap: 4px;
+        margin-bottom: 12px;
     }
     .advancement-entry {
         display: flex;

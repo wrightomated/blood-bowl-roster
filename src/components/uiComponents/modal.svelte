@@ -55,10 +55,10 @@
         class:no-padding={$modalState.compact}
         transition:fade={{ duration: 300, easing: quadInOut }}
     >
-        {#if $modalState.canClose && !$modalState.compact}
+        {#if $modalState.canClose}
             <div class="close">
                 <MaterialButton
-                    symbol="close"
+                    symbol="cancel"
                     hoverText="Close Modal"
                     clickFunction={closeModal}
                 />
@@ -82,8 +82,8 @@
     .close {
         position: absolute;
         z-index: 12;
-        top: 1.5em;
-        right: 1.5em;
+        top: 12px;
+        right: 12px;
     }
     .modal {
         position: absolute;
@@ -131,5 +131,8 @@
     }
     .no-padding {
         padding: 0;
+        .close {
+            color: var(--white);
+        }
     }
 </style>
