@@ -15,7 +15,6 @@ import { currentTeam } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
-import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import { PickedSpecialRule } from '../data/teams.data';
 import {
     matchSummary,
@@ -23,6 +22,7 @@ import {
     updateRosterWithDraft,
 } from '../helpers/matchHistoryHelpers';
 import type { SaveMatchOptions } from '../models/matchHistory.model';
+import { getGameTypeSettings } from './gameSettings.store';
 
 export const maxPlayerNumber = 99;
 
@@ -37,7 +37,7 @@ function createRoster() {
             update((store) => {
                 if (
                     store.players.filter((p) => !p.deleted).length >=
-                    getMaxPlayers(store?.format)
+                    getGameTypeSettings(store?.format).maxPlayers
                 ) {
                     return store;
                 }
@@ -253,7 +253,7 @@ function createRoster() {
 const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format || 'elevens');
     const emptyRoster: Roster = {
-        version: '2.0',
+        version: options.format || '2.0',
         rosterId: nanoid(),
         teamId: options?.teamId || 0,
         players: [],

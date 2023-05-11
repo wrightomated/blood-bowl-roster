@@ -1,7 +1,7 @@
 import { sendEventToAnalytics } from '../analytics/plausible';
-import { getGameTypeSettings } from '../data/gameType.data';
 import { teamData } from '../data/teams.data';
 import type { Extra, ExtraString } from '../models/extra.model';
+import { getGameTypeSettings } from '../store/gameSettings.store';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 

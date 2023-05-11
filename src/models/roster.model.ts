@@ -109,6 +109,7 @@ export type NewRosterOptions = {
     format: TeamFormat;
     fans: number;
     specialRule?: TeamSpecialRule;
+    version?: string;
 };
 
 export type SpecificAdvancement = {

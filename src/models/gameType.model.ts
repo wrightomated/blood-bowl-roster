@@ -1,3 +1,7 @@
+import type {
+    AdvancementType,
+    SelectionType,
+} from '../data/advancementCost.data';
 import type { TeamFormat } from '../types/teamFormat';
 
 export interface GameType {
@@ -10,9 +14,24 @@ export interface GameType {
     cheerleaders: RosterExtra;
     apothecary: RosterExtra;
     dedicatedFans: RosterExtra;
+    advancementSettings?: {
+        type: AdvancementType;
+        selectionTypes: SelectionType[];
+    }[];
+
+    starPlayersAllowance?:
+        | number
+        | { default: number; rules: StarPlayerInclusionRules[] };
 }
 
 type RosterExtra = {
     cost: number;
     max: number;
 };
+
+type StarPlayerInclusionRules =
+    | {
+          tier: number;
+          max: number;
+      }
+    | { id: number; max: number };

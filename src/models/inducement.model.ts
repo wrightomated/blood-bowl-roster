@@ -12,6 +12,8 @@ export interface Inducement {
     sevensMax?: number;
     dungeonBowlMax?: number;
     requiresTier?: TeamTier;
+    /** No publication assumes rulebook */
+    publication?: 'rulebook' | 'deathzone' | 'spike' | 'dungeonBowl';
 }
 
 export interface InducementCostReduction {

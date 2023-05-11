@@ -7,7 +7,6 @@
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
-    import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
     import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
@@ -17,6 +16,7 @@
     import RosterStatusToggle from './rosterStatusToggle.svelte';
     import SpecialRuleSelector from './specialRuleSelector.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
+    import { gameSettings } from '../store/gameSettings.store';
 
     export let playerTypes: Player[];
 
@@ -73,7 +73,7 @@
             {/if}
         {/each}
 
-        {#if activePlayersNumber < getMaxPlayers($roster.format)}
+        {#if activePlayersNumber < $gameSettings.maxPlayers}
             <AddPlayerCard {playerTypes} index={nextPlayerIndex} />
         {/if}
     </div>
@@ -103,7 +103,7 @@
                         <RosterPlayerRow {index} />
                     {/if}
                 {/each}
-                {#if activePlayersNumber < getMaxPlayers($roster.format)}
+                {#if activePlayersNumber < $gameSettings.maxPlayers}
                     <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />
                 {/if}
             </tbody>
