@@ -2,7 +2,7 @@ import type { DungeonBowlCollege } from '../models/dungeonBowl.model';
 
 const collegeOfFire: DungeonBowlCollege = {
     name: 'Fire',
-    id: 101,
+    id: '101db',
     characteristics: {
         speed: 2,
         power: 4,
@@ -36,7 +36,7 @@ const collegeOfFire: DungeonBowlCollege = {
 
 const collegeOfShadows: DungeonBowlCollege = {
     name: 'Shadow',
-    id: 102,
+    id: '102db',
     characteristics: {
         speed: 5,
         power: 2,
@@ -70,7 +70,7 @@ const collegeOfShadows: DungeonBowlCollege = {
 
 const collegeOfMetal: DungeonBowlCollege = {
     name: 'Metal',
-    id: 103,
+    id: '103db',
     characteristics: {
         speed: 3,
         power: 3,
@@ -100,7 +100,7 @@ const collegeOfMetal: DungeonBowlCollege = {
 
 const collegeOfLight: DungeonBowlCollege = {
     name: 'Light',
-    id: 104,
+    id: '104db',
     characteristics: {
         speed: 4,
         power: 3,
@@ -130,7 +130,7 @@ const collegeOfLight: DungeonBowlCollege = {
 
 const collegeOfDeath: DungeonBowlCollege = {
     name: 'Death',
-    id: 105,
+    id: '105db',
     characteristics: {
         speed: 2,
         power: 4,
@@ -164,7 +164,7 @@ const collegeOfDeath: DungeonBowlCollege = {
 
 const collegeOfLife: DungeonBowlCollege = {
     name: 'Life',
-    id: 106,
+    id: '106db',
     characteristics: {
         speed: 4,
         power: 3,
@@ -206,7 +206,7 @@ const collegeOfLife: DungeonBowlCollege = {
 
 const collegeOfBeasts: DungeonBowlCollege = {
     name: 'Beasts',
-    id: 107,
+    id: '107db',
     characteristics: {
         speed: 2,
         power: 5,
@@ -243,7 +243,7 @@ const collegeOfBeasts: DungeonBowlCollege = {
 };
 const collegeOfHeavens: DungeonBowlCollege = {
     name: 'Heavens',
-    id: 108,
+    id: '108db',
     characteristics: {
         speed: 5,
         power: 4,

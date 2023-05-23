@@ -1,6 +1,6 @@
 export interface Team {
     name: TeamName;
-    id: number;
+    id: string;
     players: Array<TeamPlayer>;
     reroll: TeamReroll;
     allowedApothecary: boolean;
@@ -25,7 +25,7 @@ export interface TeamReroll {
     max: number;
 }
 
-export type TeamTier = 1 | 2 | 3;
+export type TeamTier = 0 | 1 | 2 | 3 | 4 | 5;
 
 export type TeamName =
     | 'Imperial Nobility'

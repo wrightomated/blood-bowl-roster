@@ -22,7 +22,7 @@ import {
     updateRosterWithDraft,
 } from '../helpers/matchHistoryHelpers';
 import type { SaveMatchOptions } from '../models/matchHistory.model';
-import { getGameTypeSettings } from './gameSettings.store';
+import { getGameTypeSettings } from '../helpers/gameSettings';
 
 export const maxPlayerNumber = 99;
 
@@ -253,9 +253,9 @@ function createRoster() {
 const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format || 'elevens');
     const emptyRoster: Roster = {
-        version: options.format || '2.0',
+        version: options?.format || '2.0',
         rosterId: nanoid(),
-        teamId: options?.teamId || 0,
+        teamId: options?.teamId || '0',
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),

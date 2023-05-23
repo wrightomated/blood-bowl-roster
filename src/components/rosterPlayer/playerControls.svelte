@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getMaxPlayers } from '../../data/gameType.data';
+    import { gameSettings } from '../../store/gameSettings.store';
     import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
@@ -63,7 +63,7 @@
         symbol="delete_forever"
         clickFunction={removePlayer}
     />
-    {#if !rosterPlayer.starPlayer && $roster.players.length < getMaxPlayers($roster.format)}
+    {#if !rosterPlayer.starPlayer && $roster.players.length < $gameSettings.maxPlayers}
         <MaterialButton
             hoverText="Duplicate player"
             symbol="group_add"

@@ -22,8 +22,9 @@
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
+    import { availableTeams } from '../store/availableTeams.store';
 
-    const teamList = teamData.teams;
+    const teamList = $availableTeams;
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);

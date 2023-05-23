@@ -1,12 +1,15 @@
 import type { TournamentCustomisation } from '../types/TournmentCustomisation.type';
 
 export const BigV2023: TournamentCustomisation = {
+    format: 'elevens',
     treasury: 1100,
+    tiers: 4,
     tournamentTeamList: {
-        excludedIds: [22, 25, 28],
+        excludedIds: ['22', '25', '28'],
         additionalTeams: [
             {
                 name: 'Skinks',
+                id: 'bigV2023Skinks',
                 players: [
                     { id: 43, max: 12 },
                     { id: 44, max: 2 },
@@ -19,6 +22,7 @@ export const BigV2023: TournamentCustomisation = {
             },
             {
                 name: 'Underworld Goblins',
+                id: 'bigV2023UnderworldGoblins',
                 players: [
                     { id: 125, max: 12 },
                     { id: 126, max: 6 },
@@ -36,6 +40,7 @@ export const BigV2023: TournamentCustomisation = {
             },
             {
                 name: 'Goblin Bruisers',
+                id: 'bigV2023GoblinBruisers',
                 players: [
                     { id: 6, max: 12 },
                     { id: 8, max: 1 },

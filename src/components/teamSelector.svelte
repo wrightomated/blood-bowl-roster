@@ -36,8 +36,9 @@
     import type { RosterPreviews } from '../models/roster.model';
     import SelectSpecialRule from './selectSpecialRule.svelte';
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
+    import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 
-    export let teamList: Team[];
+    export let teamList: (Team | CustomTeam)[];
 
     let rosterCode: string;
     let includeNaf: boolean = true;
@@ -78,8 +79,8 @@
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
 
-    const newTeam = (index: number) => {
-        currentTeam.setCurrentTeamWithId(index);
+    const newTeam = (id: string) => {
+        currentTeam.setCurrentTeamWithId(id);
 
         teamSelectionSpecialRule.set(
             $currentTeam?.pickSpecialRule
@@ -141,6 +142,10 @@
                 return 'II';
             case 3:
                 return 'III';
+            case 4:
+                return 'IV';
+            case 5:
+                return 'IV';
             default:
                 break;
         }

@@ -1,22 +1,22 @@
 import type {
-    Team,
     TeamPlayer,
     TeamReroll,
     TeamSpecialRule,
+    TeamTier,
 } from '../../models/team.model';
 
 export type CustomiseTeamList = {
-    // Excluded team ids
-    excludedIds?: number[];
+    excludedIds?: string[];
     additionalTeams?: CustomTeam[];
 };
 
 export type CustomTeam = {
     name: string;
+    id: string;
     players: Array<TeamPlayer>;
     reroll: TeamReroll;
     allowedApothecary: boolean;
-    tier: number;
+    tier: TeamTier;
     specialRules: (TeamSpecialRule | string)[];
     maxBigGuys?: number;
     retired?: boolean;

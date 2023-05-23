@@ -3,8 +3,8 @@ import type { TeamSpecialRule } from './team.model';
 /** Used to be compatible with normal rosters */
 export interface DungeonBowlTeam {
     name: CollegeName;
-    id: number;
-    characteristics: CollegeCharacteristics;
+    id: string;
+    characteristics?: CollegeCharacteristics;
     players: DungeonBowlPlayer[];
     reroll: {
         cost: number;
@@ -21,7 +21,7 @@ export interface DungeonBowlTeam {
 
 export interface DungeonBowlCollege {
     name: CollegeName;
-    id: number;
+    id: string;
     characteristics: CollegeCharacteristics;
     players: DBCollegePlayers;
 }

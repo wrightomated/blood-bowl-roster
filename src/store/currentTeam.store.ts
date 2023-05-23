@@ -6,6 +6,7 @@ import { dbCollegeToTeam, DungeonBowlTeam } from '../models/dungeonBowl.model';
 import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 import type { Player } from '../models/player.model';
 import { playerById } from '../helpers/playerCatalogueHelpers';
+import { filteredTeamData } from '../helpers/teamDataFilter';
 
 const currentTeamStore = () => {
     const { subscribe, update, set }: Writable<Team | DungeonBowlTeam> =
@@ -18,7 +19,7 @@ const currentTeamStore = () => {
                 return getTeamFromCode(code) || store;
             });
         },
-        setCurrentTeamWithId: (id: number) => {
+        setCurrentTeamWithId: (id: string) => {
             update((store) => {
                 return getTeamFromId(id) || store;
             });
@@ -39,13 +40,8 @@ const getTeamFromCode = (code: string) => {
     return null;
 };
 
-const getTeamFromId = (id: number) => {
-    if (id < 100) {
-        return teamData.teams.find((x) => x.id === id);
-    }
-    return dbCollegeToTeam(
-        dungeonBowlColleges.colleges.find((x) => x.id === id)
-    );
+const getTeamFromId = (id: string) => {
+    return filteredTeamData({}).find((x) => x.id === id);
 };
 
 const getTeamFromStorage = () => {
@@ -58,9 +54,8 @@ const getTeam = () => {
 };
 
 export const currentTeam = currentTeamStore();
-export const currentTeamIsDungeonBowl = derived(
-    currentTeam,
-    ($currentTeam) => $currentTeam.id >= 100
+export const currentTeamIsDungeonBowl = derived(currentTeam, ($currentTeam) =>
+    $currentTeam.id.includes('db')
 );
 export const playerTypes = derived(currentTeam, ($currentTeam) =>
     $currentTeam.players.map((player) => playerById(player.id))
