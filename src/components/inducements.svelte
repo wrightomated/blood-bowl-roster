@@ -6,11 +6,10 @@
     import type { Inducement } from '../models/inducement.model';
     import { filterInducement } from '../helpers/inducementFilter';
     import { showAllInducements } from '../store/showAllInducements.store';
-    import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
 
-    export let selectedTeam: Team | DungeonBowlTeam;
+    export let selectedTeam: Team;
 
     $: searchTerm = '';
 

@@ -6,7 +6,7 @@ import type { TeamFormat } from '../types/teamFormat';
 import { getGameTypeSettings } from './gameSettings';
 
 export const extrasForTeam: (
-    teamId: number,
+    teamId: string,
     rosterMode: RosterMode,
     teamFormat: TeamFormat
 ) => Extra[] = (teamId, rosterMode, teamFormat) => {
@@ -32,7 +32,7 @@ export const extrasForTeam: (
 };
 
 const getExtras = (
-    teamId: number,
+    teamId: string,
     rosterMode: RosterMode,
     teamFormat: TeamFormat
 ) => {

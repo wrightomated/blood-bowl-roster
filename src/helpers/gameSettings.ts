@@ -3,9 +3,12 @@ import {
     elevensGame,
     sevensGame,
 } from '../data/gameType.data';
+import type { GameType } from '../models/gameType.model';
 import type { TeamFormat } from '../types/teamFormat';
 
-export const getGameTypeSettings = (teamFormat: TeamFormat) => {
+export const getGameTypeSettings: (teamFormat: TeamFormat) => GameType = (
+    teamFormat: TeamFormat
+) => {
     return (
         {
             sevens: sevensGame,

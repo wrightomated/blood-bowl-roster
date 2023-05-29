@@ -11,7 +11,7 @@ import type {
 } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
-import { currentTeam } from './currentTeam.store';
+import { currentTeam, currentTeamId } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
@@ -165,7 +165,7 @@ function createRoster() {
             update((_store) => {
                 const loadedRoster =
                     rosterFromCode(rosterCode) || getEmptyRoster();
-                currentTeam.setCurrentTeamWithCode(rosterCode);
+                currentTeamId.set(rosterCode.split('t')[1]);
                 savedRosterIndex.newId();
                 return { ...loadedRoster };
             }),
@@ -300,6 +300,7 @@ const rosterFromQueryString = () => {
 const rosterFromCode = (code: string | null) => {
     try {
         let transformedRoster = stringToRoster(code);
+
         return addPlayerNumbersToRoster(transformedRoster);
     } catch (error) {
         return null;
@@ -326,7 +327,7 @@ const addMissingItemsToRoster = (roster: Roster) => {
     if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
         updatedRoster.leagueRosterStatus = 'draft';
     }
-    currentTeam.setCurrentTeamWithId(updatedRoster.teamId);
+    currentTeamId.set(updatedRoster.teamId);
     updatedRoster = {
         ...updatedRoster,
         format: updatedRoster?.format || 'elevens',

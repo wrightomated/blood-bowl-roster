@@ -2,6 +2,7 @@
     import type { Team, TeamTier } from '../models/team.model';
     import {
         currentTeam,
+        currentTeamId,
         currentTeamIsDungeonBowl,
     } from '../store/currentTeam.store';
     import { roster } from '../store/teamRoster.store';
@@ -44,7 +45,7 @@
     let includeNaf: boolean = true;
     let includeRetired: boolean = false;
 
-    const nafTeams = [28, 29];
+    const nafTeams = ['28', '29'];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
     const teamFormats: TeamFormat[] = ['elevens', 'sevens', 'dungeon bowl'];
 
@@ -80,7 +81,7 @@
     };
 
     const newTeam = (id: string) => {
-        currentTeam.setCurrentTeamWithId(id);
+        currentTeamId.set(id);
 
         teamSelectionSpecialRule.set(
             $currentTeam?.pickSpecialRule
@@ -220,6 +221,11 @@
                     class="filter__button">III</button
                 >
                 <button
+                    on:click={() => toggledTiers.toggleTier(4)}
+                    class:selected={$filteredTiers.includes(4)}
+                    class="filter__button">IV</button
+                >
+                <!-- <button
                     on:click={toggleNaf}
                     title="Filter NAF teams"
                     class:selected={includeNaf}
@@ -230,7 +236,7 @@
                     title="Filter superseded teams"
                     class:selected={includeRetired}
                     class="filter__button">S</button
-                >
+                > -->
             </div>
             <label class="filter__search">
                 Search: <input
@@ -362,7 +368,7 @@
             border: var(--secondary-border);
 
             &:hover {
-                box-shadow: 0 4px 12px #4b7d9e inset;
+                box-shadow: 0 4px 12px var(--button-shadow) inset;
                 background: var(--secondary-colour);
                 color: white;
             }

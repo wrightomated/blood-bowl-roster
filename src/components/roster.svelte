@@ -157,7 +157,7 @@
             padding: 0;
             box-sizing: inherit;
             border: none;
-            color: #970f0c;
+            color: var(--main-colour);
             margin: 0;
             text-align: center;
             width: 100%;

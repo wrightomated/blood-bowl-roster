@@ -1,6 +1,11 @@
 :root {
-    --main-colour: #970f0c;
+    /* --main-colour: #970f0c;
     --secondary-colour: #1a3f7f;
+    --button-shadow: #185b88b2; */
+
+    --main-colour: #db6d27;
+    --secondary-colour: #db6d27;
+    --button-shadow: #fdbb27;
     --sc-l60: #6b96e1;
     --secondary-background-colour: #eeeeee;
     --neutral: #ccc;
@@ -119,7 +124,7 @@ tr:nth-of-type(even) {
     background-color: #eee;
 }
 thead > tr {
-    background-color: #970f0c;
+    background-color: var(--main-colour);
     color: white;
     text-transform: uppercase;
 }

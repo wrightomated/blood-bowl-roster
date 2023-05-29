@@ -6,14 +6,13 @@
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
-    import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import {
         formatNumber,
         formatNumberInThousands,
     } from '../helpers/formatTotalToThousands';
 
-    export let selectedTeam: Team | DungeonBowlTeam;
+    export let selectedTeam: Team;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
 
@@ -116,7 +115,7 @@
             margin-block-end: 1em;
             margin-right: 1em;
             th {
-                background-color: #970f0c;
+                background-color: var(--main-colour);
                 color: white;
                 text-align: left;
                 text-transform: uppercase;

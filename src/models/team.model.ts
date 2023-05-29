@@ -1,5 +1,7 @@
+import type { CollegeName } from './dungeonBowl.model';
+
 export interface Team {
-    name: TeamName;
+    name: TeamName | CollegeName;
     id: string;
     players: Array<TeamPlayer>;
     reroll: TeamReroll;

@@ -52,7 +52,7 @@
                 border-color: var(--secondary-colour);
             }
             &:hover {
-                box-shadow: 0 5px 15px #185b88b2 inset;
+                box-shadow: 0 5px 15px var(--button-shadow) inset;
             }
 
             &:first-child {
