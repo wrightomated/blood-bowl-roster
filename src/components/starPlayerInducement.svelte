@@ -7,6 +7,7 @@
     import type { Team } from '../models/team.model';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import type { StarPlayer } from '../models/player.model';
 
     let selectedId: number;
 
@@ -27,6 +28,19 @@
             return { ...x, displayName };
         })
         .filter((x) => x.displayName !== 'ignoreThis');
+
+    let currentStarPlayerAmount: number;
+    $: currentStarPlayerAmount = $roster.players
+        .filter((x) => x.starPlayer && !x.deleted)
+        .filter((x, _, a) => {
+            const other = a.find(
+                (p) => p.player.id === (x.player as StarPlayer)?.twoForOne
+            );
+            if (other?.player?.id < x.player.id) {
+                return false;
+            }
+            return true;
+        }).length;
 
     const getSelected = (id) => {
         return starPlayers.starPlayers.find((x) => x.id === id);
@@ -77,13 +91,10 @@
                 </select>
             {/if}
         </td>
-        <td
-            >{$roster.players.filter((x) => x.starPlayer && !x.deleted).length} /
-            2</td
-        >
+        <td>{currentStarPlayerAmount} / 2</td>
         <td>{formatNumberInThousands(getSelected(selectedId)?.cost) || 0}</td>
         <td>
-            {#if filteredStarPlayers.length > 0 && $roster.players.filter((x) => x.starPlayer && !x.deleted).length < 2}
+            {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < 2}
                 <div class="add-star">
                     <MaterialButton
                         hoverText="Add star player"
