@@ -11,8 +11,9 @@
         formatNumber,
         formatNumberInThousands,
     } from '../helpers/formatTotalToThousands';
+    import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 
-    export let selectedTeam: Team;
+    export let selectedTeam: Team | CustomTeam;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
 

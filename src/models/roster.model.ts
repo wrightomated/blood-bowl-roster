@@ -19,7 +19,7 @@ export interface Roster {
     /** Changed from number to string in v2 */
     teamId: string;
     teamName: string;
-    teamType: TeamName | CollegeName;
+    teamType: TeamName | CollegeName | string;
     players: RosterPlayerRecord[];
     /** Extra info in relation to the game */
     extra?: RosterExtraRecords;
@@ -105,7 +105,7 @@ export type LeagueRosterStatus = 'draft' | 'commenced';
 
 export type NewRosterOptions = {
     teamId: string;
-    teamType: TeamName | CollegeName;
+    teamType: TeamName | CollegeName | string;
     mode: RosterMode;
     format: TeamFormat;
     fans: number;

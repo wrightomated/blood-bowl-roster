@@ -25,7 +25,6 @@
     import { availableTeams } from '../store/availableTeams.store';
 
     const teamList = $availableTeams;
-    console.log(teamList);
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);

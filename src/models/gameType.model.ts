@@ -9,7 +9,11 @@ export interface GameType {
     maxPlayers: number;
     minPlayers: number;
     startingTreasury: number;
-    rerollDetails: { costMultiplier: number; max: number };
+    rerollDetails: {
+        costMultiplier: number;
+        max: number;
+        overrideCost?: number;
+    };
     assistantCoaches: RosterExtra;
     cheerleaders: RosterExtra;
     apothecary: RosterExtra;

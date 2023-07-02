@@ -8,8 +8,9 @@
     import { showAllInducements } from '../store/showAllInducements.store';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 
-    export let selectedTeam: Team;
+    export let selectedTeam: Team | CustomTeam;
 
     $: searchTerm = '';
 

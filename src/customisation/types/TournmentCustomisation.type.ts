@@ -13,6 +13,7 @@ export type TournamentCustomisation = {
     format: TeamFormat;
     colourScheme?: string;
     createTeamTitle?: string;
+    cssVariables?: Record<string, string>;
 };
 
 export type TournamentAllowances = {

@@ -251,7 +251,7 @@
                         class="team-button"
                         animate:flip={{ duration: 200 }}
                         transition:scale|local={{ duration: 200 }}
-                        class:selected={$currentTeam.id === team.id}
+                        class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
                         >{team.name}
                         <span class="display-font"

@@ -17,8 +17,8 @@ export type CustomTeam = {
     reroll: TeamReroll;
     allowedApothecary: boolean;
     tier: TeamTier;
-    specialRules: (TeamSpecialRule | string)[];
+    specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
     retired?: boolean;
-    pickSpecialRule?: (TeamSpecialRule | string)[];
+    pickSpecialRule?: TeamSpecialRule[];
 };

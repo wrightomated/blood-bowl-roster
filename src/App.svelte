@@ -14,13 +14,29 @@
         // @ts-ignore - this will be a string replacement by rollup
         if (eventId !== 'undefined') {
             try {
-                await import(`./customisation/data/${eventId}.data`).then(
+                // String replacement is happening after build so the data file isn't getting bundled
+                // Will need to refactor this
+                // await import(`./customisation/data/${eventId}.data`).then(
+                await import(`./customisation/data/bigV2023.data`).then(
                     (customisation) => {
                         console.log({ customisation });
 
                         customisationRules.set(
                             customisation.tournamentCustomisation
                         );
+                        if (
+                            customisation.tournamentCustomisation.cssVariables
+                        ) {
+                            Object.entries(
+                                customisation.tournamentCustomisation
+                                    .cssVariables
+                            ).forEach((style) =>
+                                document.documentElement.style.setProperty(
+                                    style[0],
+                                    style[1]
+                                )
+                            );
+                        }
                     }
                 );
             } catch (error) {}
