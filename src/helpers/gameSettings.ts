@@ -1,6 +1,7 @@
 import {
     dungeonBowlGame,
     elevensGame,
+    gutterBowlGame,
     sevensGame,
 } from '../data/gameType.data';
 import type { GameType } from '../models/gameType.model';
@@ -14,6 +15,7 @@ export const getGameTypeSettings: (teamFormat: TeamFormat) => GameType = (
             sevens: sevensGame,
             elevens: elevensGame,
             'dungeon bowl': dungeonBowlGame,
+            'gutter bowl': gutterBowlGame,
         }[teamFormat] || elevensGame
     );
 };

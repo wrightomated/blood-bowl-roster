@@ -11,7 +11,7 @@ export interface DungeonBowlTeam {
     // TODO: refactor
     specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
-    tier: TeamTier;
+    tier: number;
     allowedApothecary: boolean;
     pickSpecialRule?: TeamSpecialRule[];
 }

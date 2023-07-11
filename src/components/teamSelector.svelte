@@ -47,10 +47,19 @@
 
     const nafTeams = ['28', '29'];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
-    const teamFormats: TeamFormat[] = ['elevens', 'sevens', 'dungeon bowl'];
+    const teamFormats: TeamFormat[] = [
+        'elevens',
+        'sevens',
+        'dungeon bowl',
+        'gutter bowl',
+    ];
 
     $: searchTerm = '';
 
+    let tiers: number[];
+    $: tiers = [...new Set(teamList.map((x) => x.tier))].sort((a, b) => a - b);
+
+    let sortedTeam: (Team | CustomTeam)[];
     $: sortedTeam = sortTeam()
         .filter((x) => $filteredTiers.includes(x.tier))
         .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true))
@@ -135,21 +144,24 @@
         teamLoadOpen.set(false);
     };
 
-    const tierToNumeral = (tier: TeamTier) => {
-        switch (tier) {
-            case 1:
-                return 'I';
-            case 2:
-                return 'II';
-            case 3:
-                return 'III';
-            case 4:
-                return 'IV';
-            case 5:
-                return 'IV';
-            default:
-                break;
+    const tierToNumeral = (tier: number) => {
+        const lookup = {
+            X: 10,
+            IX: 9,
+            V: 5,
+            IV: 4,
+            I: 1,
+        };
+        let num = tier;
+        let roman = '';
+        let i;
+        for (i in lookup) {
+            while (num >= lookup[i]) {
+                roman += i;
+                num -= lookup[i];
+            }
         }
+        return roman;
     };
 
     const inputCode = () => {
@@ -205,12 +217,15 @@
         <div class="button-container">
             <div class="filter__tier">
                 Filter:
-                <button
-                    on:click={() => toggledTiers.toggleTier(1)}
-                    class:selected={$filteredTiers.includes(1)}
-                    class="filter__button">I</button
-                >
-                <button
+                {#each tiers as tier}
+                    <button
+                        on:click={() => toggledTiers.toggleTier(tier)}
+                        class:selected={$filteredTiers.includes(tier)}
+                        class="filter__button">{tierToNumeral(tier)}</button
+                    >
+                {/each}
+
+                <!-- <button
                     on:click={() => toggledTiers.toggleTier(2)}
                     class:selected={$filteredTiers.includes(2)}
                     class="filter__button">II</button
@@ -224,7 +239,7 @@
                     on:click={() => toggledTiers.toggleTier(4)}
                     class:selected={$filteredTiers.includes(4)}
                     class="filter__button">IV</button
-                >
+                > -->
                 <!-- <button
                     on:click={toggleNaf}
                     title="Filter NAF teams"

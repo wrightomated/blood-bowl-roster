@@ -73,3 +73,29 @@ export const dungeonBowlGame: GameTypeSettings = {
         },
     ],
 };
+
+export const gutterBowlGame: GameTypeSettings = {
+    teamFormat: 'gutter bowl',
+    maxPlayers: 16,
+    minPlayers: 7,
+    startingTreasury: 750,
+    rerollDetails: { costMultiplier: 1, max: 8, overrideCost: 100 },
+    assistantCoaches: { cost: 10, max: 0 },
+    cheerleaders: { cost: 10, max: 0 },
+    apothecary: { cost: 50, max: 0 },
+    dedicatedFans: { cost: 10, max: 6 },
+    advancementSettings: [
+        {
+            type: 'primary',
+            selectionTypes: ['random', 'select'],
+        },
+        {
+            type: 'secondary',
+            selectionTypes: ['random', 'select'],
+        },
+        {
+            type: 'characteristic',
+            selectionTypes: ['random'],
+        },
+    ],
+};

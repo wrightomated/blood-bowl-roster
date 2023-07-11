@@ -3,6 +3,7 @@
     import { dbCollegeToTeam } from '../../models/dungeonBowl.model';
     import {
         currentTeam,
+        currentTeamId,
         currentTeamIsDungeonBowl,
     } from '../../store/currentTeam.store';
     import { rosterMode } from '../../store/rosterMode.store';
@@ -50,7 +51,7 @@
         });
     };
     const setCurrentTeam = (college) => {
-        currentTeam.set(dbCollegeToTeam(college));
+        currentTeamId.set(college.id);
     };
 </script>
 

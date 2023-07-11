@@ -6,7 +6,7 @@ export interface Team {
     players: Array<TeamPlayer>;
     reroll: TeamReroll;
     allowedApothecary: boolean;
-    tier: TeamTier;
+    tier: number;
     specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
     retired?: boolean;

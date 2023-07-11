@@ -11,7 +11,7 @@ const createToggledTiers = () => {
     ]);
     return {
         subscribe,
-        toggleTier: (tier: TeamTier) => {
+        toggleTier: (tier: number) => {
             update((store) => {
                 return store.map((x, i) => (tier === i + 1 ? !x : x));
             });
