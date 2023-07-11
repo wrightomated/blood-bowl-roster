@@ -1378,7 +1378,6 @@ const jaguarBlocker: Player = {
 const dbPiranhaBlitzer: Player = {
     ...piranhaBlitzer,
     id: 157,
-    cost: 85,
 };
 const dbPythonThrower: Player = {
     ...pythonThrower,
@@ -1388,7 +1387,6 @@ const dbPythonThrower: Player = {
 const dbJaguarBlocker: Player = {
     ...jaguarBlocker,
     id: 159,
-    cost: 100,
 };
 
 export const playerCatalogue: PlayerCatalogue = {
