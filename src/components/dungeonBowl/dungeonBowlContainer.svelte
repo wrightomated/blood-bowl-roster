@@ -1,6 +1,5 @@
 <script lang="ts">
     import { dungeonBowlColleges } from '../../data/dungeonBowlColleges.data';
-    import { dbCollegeToTeam } from '../../models/dungeonBowl.model';
     import {
         currentTeam,
         currentTeamId,

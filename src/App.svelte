@@ -15,7 +15,7 @@
         if (eventId !== 'undefined') {
             try {
                 // String replacement is happening after build so the data file isn't getting bundled
-                // Will need to refactor this
+                // Will need to refactor this or import all data files...
                 // await import(`./customisation/data/${eventId}.data`).then(
                 await import(`./customisation/data/bigV2023.data`).then(
                     (customisation) => {

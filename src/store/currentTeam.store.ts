@@ -5,6 +5,7 @@ import { playerById } from '../helpers/playerCatalogueHelpers';
 import { filteredTeamData } from '../helpers/teamDataFilter';
 import { customisationRules } from '../customisation/customisation.store';
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
+import type { TeamFormat } from '../types/teamFormat';
 
 const getTeamIdFromQuery = () => {
     const code = window.location.search.substring(1).split('=')[1];
@@ -34,7 +35,10 @@ export const currentTeam: Readable<CustomTeam> = derived(
     [currentTeamId, customisationRules],
     ([$id, $customisation]) => {
         let customisationOptions = {
-            format: undefined,
+            format:
+                !!$id && $id?.includes('db')
+                    ? ('dungeon bowl' as TeamFormat)
+                    : undefined,
             tournamentCustomisation: undefined,
         };
         if ($customisation) {
