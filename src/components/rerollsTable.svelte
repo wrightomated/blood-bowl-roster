@@ -12,8 +12,9 @@
         formatNumberInThousands,
     } from '../helpers/formatTotalToThousands';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
+    import { gameSettings } from '../store/gameSettings.store';
 
-    export let selectedTeam: Team | CustomTeam;
+    export let selectedTeam: CustomTeam;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
 
@@ -96,7 +97,7 @@
         {/if}
     </table>
 
-    {#if $roster.format === 'elevens'}
+    {#if $gameSettings?.starPlayersAllowance > 0}
         <StarPlayerInducement />
     {/if}
 

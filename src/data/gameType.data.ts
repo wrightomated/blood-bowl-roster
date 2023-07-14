@@ -20,6 +20,8 @@ export const sevensGame: GameTypeSettings = {
             selectionTypes: ['random'],
         },
     ],
+    starPlayersAllowance: 0,
+    maxPositionals: 4,
 };
 
 export const elevensGame: GameTypeSettings = {
@@ -46,6 +48,7 @@ export const elevensGame: GameTypeSettings = {
             selectionTypes: ['random'],
         },
     ],
+    starPlayersAllowance: 2,
 };
 
 export const dungeonBowlGame: GameTypeSettings = {
@@ -53,7 +56,7 @@ export const dungeonBowlGame: GameTypeSettings = {
     maxPlayers: 16,
     minPlayers: 11,
     startingTreasury: 1000,
-    rerollDetails: { costMultiplier: 1, max: 8 },
+    rerollDetails: { costMultiplier: 1, max: 8, overrideCost: 50 },
     assistantCoaches: { cost: 10, max: 0 },
     cheerleaders: { cost: 10, max: 0 },
     apothecary: { cost: 50, max: 0 },
@@ -72,6 +75,7 @@ export const dungeonBowlGame: GameTypeSettings = {
             selectionTypes: ['random'],
         },
     ],
+    starPlayersAllowance: 0,
 };
 
 export const gutterBowlGame: GameTypeSettings = {
@@ -98,4 +102,6 @@ export const gutterBowlGame: GameTypeSettings = {
             selectionTypes: ['random'],
         },
     ],
+    starPlayersAllowance: 0,
+    maxPositionals: 5,
 };

@@ -13,6 +13,7 @@
     import PlayerCardMainContent from '../playerCard/playerCardMainContent.svelte';
     import EditPlayer from '../playerCard/editPlayer.svelte';
     import DeletePlayerWarning from './deletePlayerWarning.svelte';
+    import { gameSettings } from '../../store/gameSettings.store';
 
     export let index: number;
 
@@ -33,8 +34,7 @@
     $: nonLinemen = $currentTeam.players
         .filter((p) => p.max < 12)
         .map((x) => x.id);
-    $: sevensSpecialistsAmount =
-        $roster.format === 'sevens' &&
+    $: positionalsAmount =
         nonLinemen.includes(rosterPlayer.player.id) &&
         $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
@@ -157,10 +157,10 @@
                     .length}/{$currentTeam.maxBigGuys} Big Guys
             </p>
         {/if}
-        {#if sevensSpecialistsAmount > 4}
+        {#if positionalsAmount > $gameSettings?.maxPositionals}
             <p class="sevens-over-four">
                 <i class="material-symbols-outlined">warning</i>
-                {sevensSpecialistsAmount} / 4 Specialists
+                {positionalsAmount} / {$gameSettings.maxPositionals} Specialists
             </p>
         {/if}
 

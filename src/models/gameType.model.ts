@@ -22,10 +22,9 @@ export interface GameType {
         type: AdvancementType;
         selectionTypes: SelectionType[];
     }[];
-
-    starPlayersAllowance?:
-        | number
-        | { default: number; rules: StarPlayerInclusionRules[] };
+    maxPositionals?: number;
+    starPlayersAllowance?: number;
+    // | { default: number; rules: StarPlayerInclusionRules[] };
 }
 
 type RosterExtra = {

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import { currentTeam } from '../../store/currentTeam.store';
+    import { gameSettings } from '../../store/gameSettings.store';
     import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
@@ -24,8 +25,7 @@
     $: nonLinemen = $currentTeam.players
         .filter((p) => p.max < 12)
         .map((x) => x.id);
-    $: sevensSpecialistsAmount =
-        $roster.format === 'sevens' &&
+    $: positionalsAmount =
         nonLinemen.includes(rosterPlayer.player.id) &&
         $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
@@ -96,9 +96,11 @@
             .length}/{$currentTeam.maxBigGuys} Big Guys
     </span>
 {/if}
-{#if sevensSpecialistsAmount > 4}
+{#if positionalsAmount > $gameSettings?.maxPositionals}
     <br />
-    <span class="danger">{sevensSpecialistsAmount}/4 Specialists</span>
+    <span class="danger"
+        >{positionalsAmount}/{$gameSettings.maxPositionals} Specialists</span
+    >
 {/if}
 
 <style lang="scss">

@@ -2,7 +2,6 @@ import type {
     TeamPlayer,
     TeamReroll,
     TeamSpecialRule,
-    TeamTier,
 } from '../../models/team.model';
 
 export type CustomiseTeamList = {
