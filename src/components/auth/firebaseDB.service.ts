@@ -13,8 +13,8 @@ import {
 import { nanoid } from 'nanoid';
 import {
     getRosterPreview,
-    Roster,
-    RosterPreviews,
+    type Roster,
+    type RosterPreviews,
 } from '../../models/roster.model';
 import { get as getValueFromStore } from 'svelte/store';
 import { rosterCache } from '../../store/rosterCache.store';

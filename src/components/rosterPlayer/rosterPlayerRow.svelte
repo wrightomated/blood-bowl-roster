@@ -3,7 +3,7 @@
     import AddSkill from '../addSkill.svelte';
     import {
         characteristics,
-        CharacteristicType,
+        type CharacteristicType,
     } from '../../data/statOrder.data';
     import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { filteredTableColumns } from '../../store/filteredTableColumns.store';

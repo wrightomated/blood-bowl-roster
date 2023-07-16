@@ -2,7 +2,10 @@ import { derived, writable } from 'svelte/store';
 import { teamData } from '../data/teams.data';
 import type { Writable, Readable } from 'svelte/store';
 import type { Team } from '../models/team.model';
-import { dbCollegeToTeam, DungeonBowlTeam } from '../models/dungeonBowl.model';
+import {
+    dbCollegeToTeam,
+    type DungeonBowlTeam,
+} from '../models/dungeonBowl.model';
 import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 import type { Player } from '../models/player.model';
 import { playerById } from '../helpers/playerCatalogueHelpers';

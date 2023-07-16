@@ -80,13 +80,14 @@
         {#if errorText}
             <p class="error"><strong>{errorText}</strong></p>
         {/if}
-        <button on:focus={touchForm}>Send Reset Email</button>
+        <button class="rounded-button" on:focus={touchForm}
+            >Send Reset Email</button
+        >
     </form>
 {/if}
 
 <!-- <button on:click={() => sendVerificationEmail()}>Send email</button> -->
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
     .login-form {
         display: flex;
         flex-direction: column;
@@ -107,13 +108,6 @@
     }
     label {
         margin-bottom: 4px;
-    }
-    button {
-        @include roundedButton.rounded-button;
-    }
-
-    h3 {
-        text-align: center;
     }
 
     .error {

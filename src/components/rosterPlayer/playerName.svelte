@@ -30,9 +30,4 @@
             font-size: 16px;
         }
     }
-    td {
-        input {
-            margin-bottom: 0;
-        }
-    }
 </style>

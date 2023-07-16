@@ -1,9 +1,9 @@
 import {
-    AdvancementCombination,
+    type AdvancementCombination,
     advancementCostsMap,
-    SelectionType,
+    type SelectionType,
     skillIncreaseCost,
-    SkillType,
+    type SkillType,
 } from '../data/advancementCost.data';
 import { skillCatalogue } from '../data/skills.data';
 import {

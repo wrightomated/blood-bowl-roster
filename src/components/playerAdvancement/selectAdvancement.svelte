@@ -1,9 +1,9 @@
 <script lang="ts">
     import {
-        AdvancementCombination,
+        type AdvancementCombination,
         advancementCostsMap,
-        AdvancementType,
-        SelectionType,
+        type AdvancementType,
+        type SelectionType,
         skillIncreaseCost,
     } from '../../data/advancementCost.data';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';

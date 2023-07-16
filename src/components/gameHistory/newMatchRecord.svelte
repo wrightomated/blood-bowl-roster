@@ -9,6 +9,7 @@
     </header>
     <div class="button-container">
         <button
+            class="rounded-button"
             on:click={matchHistorySteps.previousStep}
             type="button"
             disabled={!!$matchHistorySteps.find(
@@ -21,7 +22,7 @@
                 (x, i) =>
                     x.status === 'current' && i < $matchHistorySteps.length - 1
             )}
-            class="next-button"
+            class="next-button rounded-button"
             on:click={matchHistorySteps.nextStep}
             type="button">Next</button
         >
@@ -63,14 +64,10 @@
 </section>
 
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
-
     .new-match {
-        // width: 90vw;
         &__form {
             display: flex;
             flex-direction: column;
-            // gap: 16px;
         }
     }
     .step {
@@ -105,10 +102,6 @@
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-
-        // & input {
-        //     max-width: 40px;
-        // }
     }
     header {
         text-align: center;
@@ -120,19 +113,10 @@
         justify-content: center;
 
         button {
-            @include roundedButton.rounded-button;
             padding: 8px;
             min-width: 80px;
         }
-
-        // .next-button {
-        //     margin-left: auto;
-        // }
     }
-    // input,
-    // select {
-    //     margin-bottom: 12px;
-    // }
 
     .checkmark {
         color: var(--secondary-colour);
