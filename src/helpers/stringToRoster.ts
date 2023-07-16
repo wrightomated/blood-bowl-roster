@@ -25,9 +25,30 @@ export const stringToRoster = (code: string) => {
     const [id, treasury, ...extras] = itemsInRosterString(teamDetails);
     const teamId = id.substring(1);
     const format = getFormat(extras.find((x) => x.includes('f')) || 'f0');
+    /** TeamIds have changed from number to string so need to be backwards compatible with old db */
+    const backwardsCompatibleId =
+        format === 'dungeon bowl' && !teamId.includes('db')
+            ? `db${teamId}`
+            : teamId;
+
+    // console.log('backwardsCompatibleId', backwardsCompatibleId);
+    // log all consts
+    console.log({
+        rosterString,
+        rest,
+        rosterNames,
+        teamDetails,
+        players,
+        id,
+        treasury,
+        extras,
+        teamId,
+        format,
+        backwardsCompatibleId,
+    });
 
     const roster: Roster = {
-        teamId,
+        teamId: backwardsCompatibleId,
         extra: stringToExtra(
             extras.filter(
                 (x) => !x.includes('i') && !x.includes('m') && !x.includes('f')
@@ -35,12 +56,16 @@ export const stringToRoster = (code: string) => {
         ),
         players: expandPlayers(players),
         teamName: '',
-        teamType: getTeamType(teamId, format) as TeamName | CollegeName,
+        teamType: getTeamType(backwardsCompatibleId, format) as
+            | TeamName
+            | CollegeName,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
         mode: getMode(extras.find((x) => x.includes('m')) || 'm1'),
         format,
     };
+
+    console.log({ roster });
 
     return rosterNames.length > 0
         ? addNamesToRoster(roster, rosterNames)
@@ -205,6 +230,7 @@ const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
         0: 'elevens',
         1: 'sevens',
         2: 'dungeon bowl',
+        3: 'gutter bowl',
     }[getNumber(modeMatch)] as TeamFormat;
 };
 
@@ -216,6 +242,7 @@ const getTeamType = (teamId: string, format: TeamFormat) => {
     const allTeams = filteredTeamData({
         format,
     });
+
     const teamType = allTeams.find((t) => t.id === teamId)?.name;
 
     if (!teamType) throw new Error('No team type found');

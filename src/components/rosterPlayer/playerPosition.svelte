@@ -1,8 +1,9 @@
 <script lang="ts">
     import { journeymanPosition } from '../../helpers/journeymenHelper';
-    import { currentTeam } from '../../store/currentTeam.store';
+    import { currentTeam, specialistIds } from '../../store/currentTeam.store';
     import { gameSettings } from '../../store/gameSettings.store';
     import { modalState } from '../../store/modal.store';
+    import { specialistsAmount } from '../../store/specialistsAmount.store';
 
     import { roster } from '../../store/teamRoster.store';
     import EditPlayer from '../playerCard/editPlayer.svelte';
@@ -22,12 +23,6 @@
         rosterPlayer.player.bigGuy &&
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
-    $: nonLinemen = $currentTeam.players
-        .filter((p) => p.max < 12)
-        .map((x) => x.id);
-    $: positionalsAmount =
-        nonLinemen.includes(rosterPlayer.player.id) &&
-        $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     const buyJourneyman = () => {
         const extraSkills = rosterPlayer.alterations.extraSkills.filter(
@@ -96,10 +91,10 @@
             .length}/{$currentTeam.maxBigGuys} Big Guys
     </span>
 {/if}
-{#if positionalsAmount > $gameSettings?.maxPositionals}
+{#if $specialistIds?.includes(rosterPlayer.player.id) && $specialistsAmount > $gameSettings?.maxSpecialists}
     <br />
     <span class="danger"
-        >{positionalsAmount}/{$gameSettings.maxPositionals} Specialists</span
+        >{$specialistsAmount}/{$gameSettings?.maxSpecialists} Specialists</span
     >
 {/if}
 

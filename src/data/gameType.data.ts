@@ -21,7 +21,9 @@ export const sevensGame: GameTypeSettings = {
         },
     ],
     starPlayersAllowance: 0,
-    maxPositionals: 4,
+    maxSpecialists: 4,
+    inducementCostKey: 'sevensCost',
+    inducementMaxKey: 'sevensMax',
 };
 
 export const elevensGame: GameTypeSettings = {
@@ -76,6 +78,7 @@ export const dungeonBowlGame: GameTypeSettings = {
         },
     ],
     starPlayersAllowance: 0,
+    inducementMaxKey: 'dungeonBowlMax',
 };
 
 export const gutterBowlGame: GameTypeSettings = {
@@ -103,5 +106,6 @@ export const gutterBowlGame: GameTypeSettings = {
         },
     ],
     starPlayersAllowance: 0,
-    maxPositionals: 5,
+    maxSpecialists: 5,
+    inducementMaxKey: 'gutterBowlMax',
 };

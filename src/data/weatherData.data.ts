@@ -123,6 +123,28 @@ export const weatherTables: WeatherTable[] = [
     },
 ];
 
+export const streetWeatherTable: WeatherTable = {
+    type: 'street',
+    icon: 'signpost',
+    results: {
+        '2': 'Clouds of Smog',
+        '3': 'Howling Winds',
+        '11': 'Sudden Downpour',
+        '12': 'A Stormy Night',
+    },
+};
+
+export const sewerWeatherTable: WeatherTable = {
+    type: 'sewer',
+    icon: 'valve',
+    results: {
+        '2': 'Unbearable Stench',
+        '3': 'Spilt Sewage',
+        '11': "It's Getting Warm",
+        '12': 'Underground Heatwave',
+    },
+};
+
 export const weatherSymbol: Record<string, string> = {
     'Perfect Conditions': 'sunny',
     'Sweltering Heat': 'brightness_high',

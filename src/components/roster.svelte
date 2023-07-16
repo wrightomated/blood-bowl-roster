@@ -17,6 +17,8 @@
     import SpecialRuleSelector from './specialRuleSelector.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
     import { gameSettings } from '../store/gameSettings.store';
+    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
+    import RosterPlayerCount from './rosterPlayerCount.svelte';
 
     export let playerTypes: Player[];
 
@@ -79,7 +81,7 @@
     </div>
 {:else}
     <div class="table-container">
-        <table>
+        <table class="roster-table">
             <thead>
                 <tr>
                     {#each $filteredTableColumns as c}
@@ -111,6 +113,11 @@
     </div>
 {/if}
 <RosterStatusToggle />
+{#if $roster.format === 'dungeon bowl'}
+    <DungeonBowlPlayerCount />
+{:else}
+    <RosterPlayerCount />
+{/if}
 {#if $roster.format !== 'dungeon bowl'}
     <AvailablePlayers />
 {/if}

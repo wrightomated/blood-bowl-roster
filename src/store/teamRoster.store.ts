@@ -11,7 +11,7 @@ import type {
 } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
-import { currentTeam, currentTeamId } from './currentTeam.store';
+import { currentTeamId } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
@@ -25,6 +25,8 @@ import type { SaveMatchOptions } from '../models/matchHistory.model';
 import { getGameTypeSettings } from '../helpers/gameSettings';
 
 export const maxPlayerNumber = 99;
+
+const CURRENT_ROSTER_VERSION = '3.0';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -165,7 +167,7 @@ function createRoster() {
             update((_store) => {
                 const loadedRoster =
                     rosterFromCode(rosterCode) || getEmptyRoster();
-                currentTeamId.set(rosterCode.split('t')[1]);
+                currentTeamId.set(loadedRoster.teamId);
                 savedRosterIndex.newId();
                 return { ...loadedRoster };
             }),
@@ -253,7 +255,7 @@ function createRoster() {
 const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format || 'elevens');
     const emptyRoster: Roster = {
-        version: options?.format || '2.0',
+        version: options.version || CURRENT_ROSTER_VERSION,
         rosterId: nanoid(),
         teamId: options?.teamId || '0',
         players: [],
@@ -321,6 +323,8 @@ const getDefaultRoster: () => Roster = () => {
 const addMissingItemsToRoster = (roster: Roster) => {
     let updatedRoster = addPlayerNumbersToRoster(roster);
     updatedRoster = addPlayerIdsToRoster(updatedRoster);
+    updatedRoster = versionCheck(updatedRoster);
+
     if (!updatedRoster.rosterId) {
         updatedRoster.rosterId = nanoid();
     }
@@ -523,6 +527,24 @@ function updatePlayerTreasury(
             (player?.alterations?.journeyman ? 0 : player.player.cost);
     }
     return { treasury, pettyCash };
+}
+
+function versionCheck(roster: Roster): Roster {
+    let updatedRoster = roster;
+    if (!roster.version || roster?.version < CURRENT_ROSTER_VERSION) {
+        if (roster.format === 'dungeon bowl' && !roster.teamId.includes('db')) {
+            updatedRoster = {
+                ...updatedRoster,
+                teamId: 'db' + updatedRoster.teamId,
+            };
+        }
+
+        updatedRoster = {
+            ...updatedRoster,
+            version: CURRENT_ROSTER_VERSION,
+        };
+    }
+    return updatedRoster;
 }
 
 export const roster = createRoster();

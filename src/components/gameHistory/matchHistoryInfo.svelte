@@ -33,11 +33,7 @@
         match.playingCoach.inducementsHired
     );
     const weather = weatherTables.find((x) => x.type === match.weather.table);
-    const stadium = categoryMap[match.stadium.category].attributes
-        ? categoryMap[match.stadium.category]?.attributes.find(
-              (a) => a.roll === match.stadium.attribute
-          )?.attribute
-        : 'Standard';
+    const stadium = getStadium();
     const teamEvents = Object.entries(match.gameEventTally)
         .filter((entry) => entry[0] !== 'opponentScore')
         .sort((a, b) => a[0].localeCompare(b[0]));
@@ -64,6 +60,19 @@
     function selectEvent(event: string) {
         selectedEvent = event as GameEventType;
         filteredSingleEvents = filterEvents();
+    }
+
+    function getStadium() {
+        const category = match.stadium.category;
+        if (category.includes('Pitch')) {
+            return category;
+        }
+
+        return categoryMap[match.stadium.category].attributes
+            ? categoryMap[match.stadium.category]?.attributes.find(
+                  (a) => a.roll === match.stadium?.attribute
+              )?.attribute
+            : 'Standard';
     }
 
     function filterEvents() {
@@ -110,6 +119,13 @@
         {/if}
         {#if $roster.format === 'elevens'}
             <IconWithCaption title="Stadium" icon="stadium" caption={stadium} />
+        {/if}
+        {#if $roster.format === 'gutter bowl'}
+            <IconWithCaption
+                title="Pitch"
+                icon={stadium.includes('Street') ? 'signpost' : 'valve'}
+                caption={stadium}
+            />
         {/if}
     </div>
     {#if $roster.mode === 'league'}

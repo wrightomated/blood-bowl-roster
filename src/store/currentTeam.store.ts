@@ -69,3 +69,8 @@ export const journeymenTypes: Readable<(Player & { journeyman: boolean })[]> =
             });
         return journeyMen;
     });
+export const specialistIds = derived(currentTeam, ($currentTeam) =>
+    $currentTeam.players
+        .filter((p) => p.max !== 16 && p.max !== 12)
+        .map((player) => player.id)
+);

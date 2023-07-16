@@ -162,6 +162,10 @@
         max="999"
         bind:value={$roster.matchDraft.gameEventTally.opponentScore}
     />
+    <p>
+        *Kills are not an official stat and do not reward spp. Add a casualty
+        simultaneously for automatic spp.
+    </p>
 </div>
 
 <style lang="scss">

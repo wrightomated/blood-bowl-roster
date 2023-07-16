@@ -143,12 +143,15 @@ thead > tr {
         padding: 5px !important;
         border: none;
     }
-    thead {
-        background-color: #333 !important;
-    }
+    /* th,
+    thead,
     thead > tr {
-        background-color: #333;
+        background-color: #333 !important;
+    } */
+    .roster-table {
+        width: 100%;
     }
+
     table {
         border: 1px solid #333 !important;
     }

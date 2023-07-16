@@ -1,7 +1,6 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
     import { playerCatalogue } from '../data/players.data';
-    import { teamData } from '../data/teams.data';
     import {
         currentTeam,
         currentTeamIsDungeonBowl,
@@ -19,7 +18,6 @@
     import { sendEventToAnalytics } from '../analytics/plausible';
     import DungeonBowlContainer from './dungeonBowl/dungeonBowlContainer.svelte';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
-    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
@@ -77,9 +75,6 @@
         <Roster
             playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
         />
-        {#if $roster.format === 'dungeon bowl'}
-            <DungeonBowlPlayerCount />
-        {/if}
         <RerollsTable selectedTeam={$currentTeam} />
         <MatchHistoryRecords />
     {/if}

@@ -3,60 +3,48 @@
     import type { Team } from '../models/team.model';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
-    import type { Inducement } from '../models/inducement.model';
     import { filterInducement } from '../helpers/inducementFilter';
     import { showAllInducements } from '../store/showAllInducements.store';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
+    import { gameSettings } from '../store/gameSettings.store';
 
     export let selectedTeam: Team | CustomTeam;
 
     $: searchTerm = '';
 
-    // TODO: refactor this, this is too long
-    $: filteredInducements =
-        $roster.format === 'dungeon bowl'
-            ? inducementData.inducements
-                  .filter((inducement) => inducement?.dungeonBowlMax > 0)
-                  .map((i) => ({ ...i, max: i.dungeonBowlMax }))
-                  .sort((a, b) => a.displayName.localeCompare(b.displayName))
-            : inducementData.inducements
-                  .filter(
-                      (inducement) =>
-                          ($roster.format === 'elevens' &&
-                              inducement.max > 0) ||
-                          ($roster.format === 'sevens' &&
-                              inducement.sevensMax !== 0)
-                  )
-                  .filter((inducement) =>
-                      filterInducement(inducement, {
-                          ...(selectedTeam as Team),
-                          specialRules: $rosterSpecialRules,
-                      })
-                  )
-                  .map((inducement: Inducement) => ({
-                      ...inducement,
-                      cost: $rosterSpecialRules.includes(
-                          inducement?.reducedCost?.specialRule
-                      )
-                          ? inducement.reducedCost.cost
-                          : $roster.format === 'sevens' && inducement.sevensCost
-                          ? inducement.sevensCost
-                          : inducement.cost,
-                      max:
-                          $roster.format === 'elevens' || !inducement.sevensMax
-                              ? inducement.max
-                              : inducement.sevensMax,
-                  }))
-                  .filter((i) =>
-                      searchTerm
-                          ? i.displayName
-                                .toLowerCase()
-                                .includes(searchTerm.toLowerCase())
-                          : i
-                  )
-                  .sort((a, b) => a.displayName.localeCompare(b.displayName));
+    $: newFilteredInducements = inducementData.inducements
+        .map((inducement) => ({
+            ...inducement,
+            max: $gameSettings?.inducementMaxKey
+                ? inducement[$gameSettings.inducementMaxKey] || 0
+                : inducement.max,
+            cost: $gameSettings?.inducementCostKey
+                ? inducement[$gameSettings.inducementCostKey]
+                : inducement.cost,
+        }))
+        .filter((inducement) => inducement.max > 0)
+        .map((inducement) => ({
+            ...inducement,
+            cost: $rosterSpecialRules.includes(
+                inducement?.reducedCost?.specialRule
+            )
+                ? inducement.reducedCost.cost
+                : inducement.cost,
+        }))
+        .filter((inducement) =>
+            filterInducement(inducement, {
+                ...(selectedTeam as Team),
+                specialRules: $rosterSpecialRules,
+            })
+        )
+        .filter((i) =>
+            searchTerm
+                ? i.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+                : i
+        )
+        .sort((a, b) => a.displayName.localeCompare(b.displayName));
 
     const addInducement = (key: string) => {
         roster.addInducement(key);
@@ -131,7 +119,7 @@
                 </td>
             </tr>
         {/if}
-        {#each filteredInducements as ind}
+        {#each newFilteredInducements as ind}
             {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>
                     <td class="inducement__display-name">{ind.displayName}</td>
@@ -209,9 +197,6 @@
         }
     }
     @media print {
-        .inducement-table {
-            flex-grow: 1;
-        }
         .inducement {
             &__control,
             &__toggle {

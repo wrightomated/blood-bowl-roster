@@ -22,8 +22,11 @@ export interface GameType {
         type: AdvancementType;
         selectionTypes: SelectionType[];
     }[];
-    maxPositionals?: number;
+    maxSpecialists?: number;
     starPlayersAllowance?: number;
+    inducementMaxKey?: 'dungeonBowlMax' | 'gutterBowlMax' | 'sevensMax';
+    inducementCostKey?: 'sevensCost';
+    turnsPerHalf?: number;
     // | { default: number; rules: StarPlayerInclusionRules[] };
 }
 
