@@ -6,6 +6,9 @@
         "name": "James Wright",
         "email": "bbroster@gmail.com"
     },
+    "engines": {
+        "node": ">=16"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/wrightomated/blood-bowl-roster.git"
