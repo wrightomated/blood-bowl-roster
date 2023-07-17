@@ -1,13 +1,14 @@
 {
     "name": "bbroster",
-    "version": "1.0.5",
+    "version": "3.0.0",
     "license": "GPL-3.0",
     "author": {
         "name": "James Wright",
         "email": "bbroster@gmail.com"
     },
     "engines": {
-        "node": ">=16"
+        "node": ">=16",
+        "npm": ">=8"
     },
     "repository": {
         "type": "git",
@@ -19,9 +20,9 @@
         "dev:serve": "HOST=0.0.0.0 npm run dev",
         "start": "sirv public",
         "validate": "svelte-check",
-        "test": "jest",
-        "coverage": "jest --coverage",
-        "test:watch": "jest --watch",
+        "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+        "coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+        "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
         "e2e": "cypress run",
         "e2e:local": "CYPRESS_BASE_URL=http://localhost:5001 cypress run"
     },
@@ -60,6 +61,9 @@
         "sirv-cli": "^2.0.2"
     },
     "jest": {
+        "extensionsToTreatAsEsm": [
+            ".ts"
+        ],
         "transform": {
             "^.+\\.svelte$": [
                 "svelte-jester",
@@ -67,7 +71,12 @@
                     "preprocess": true
                 }
             ],
-            "^.+\\.ts$": "ts-jest",
+            "^.+\\.ts$": [
+                "ts-jest",
+                {
+                    "useESM": true
+                }
+            ],
             "^.+\\.js$": "babel-jest"
         },
         "moduleFileExtensions": [
