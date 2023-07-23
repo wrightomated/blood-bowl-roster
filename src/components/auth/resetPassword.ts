@@ -1,4 +1,4 @@
-import { Auth, sendPasswordResetEmail } from 'firebase/auth';
+import { type Auth, sendPasswordResetEmail } from 'firebase/auth';
 
 export async function resetPassword(auth: Auth, email: string) {
     return sendPasswordResetEmail(auth, email, {

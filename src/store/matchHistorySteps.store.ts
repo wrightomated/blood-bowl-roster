@@ -1,4 +1,4 @@
-import { writable, Writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 import { newMatchRecordSteps } from '../data/matchHistorySteps.data';
 import type { MatchHistoryStep } from '../models/matchHistory.model';
 import type { TeamFormat } from '../types/teamFormat';

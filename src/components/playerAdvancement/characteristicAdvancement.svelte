@@ -2,7 +2,7 @@
     import {
         characteristicCostIncrease,
         characteristics,
-        CharacteristicType,
+        type CharacteristicType,
     } from '../../data/statOrder.data';
     import type {
         RosterPlayerRecord,

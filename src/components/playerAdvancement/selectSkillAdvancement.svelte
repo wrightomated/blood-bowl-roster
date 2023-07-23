@@ -6,8 +6,8 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import {
         categoryToName,
-        Skill,
-        SkillCategory,
+        type Skill,
+        type SkillCategory,
     } from '../../models/skill.model';
     import { roster } from '../../store/teamRoster.store';
     import Button from '../uiComponents/button.svelte';

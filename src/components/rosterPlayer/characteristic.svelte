@@ -1,7 +1,7 @@
 <script lang="ts">
     import {
         characteristics,
-        CharacteristicType,
+        type CharacteristicType,
     } from '../../data/statOrder.data';
 
     export let characteristic: CharacteristicType;

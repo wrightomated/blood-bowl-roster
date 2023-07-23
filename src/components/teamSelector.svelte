@@ -237,7 +237,7 @@
             <div>
                 {#each sortedTeam as team (team.id)}
                     <button
-                        class="team-button"
+                        class="team-button rounded-button"
                         animate:flip={{ duration: 200 }}
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam.id === team.id}
@@ -313,8 +313,6 @@
 {/if}
 
 <style lang="scss">
-    @use '../styles/mixins/roundedButton';
-
     .page-title {
         color: var(--main-colour);
         text-align: center;
@@ -382,9 +380,6 @@
             margin-right: 8px;
             font-size: 16px;
         }
-    }
-    .team-button {
-        @include roundedButton.rounded-button;
     }
     .team-previews {
         display: flex;

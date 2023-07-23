@@ -193,6 +193,48 @@ thead > tr {
     font-family: var(--display-font);
     margin: 0;
 }
+.rounded-button {
+    border-radius: 12px;
+    background-color: white;
+    color: var(--secondary-colour);
+    padding: 8px;
+    margin: 4px;
+    border: var(--secondary-border);
+    transition: background-color 100ms linear;
+    min-width: 48px;
+}
+.rounded-button:hover,
+.rounded-button.selected {
+    background-color: var(--secondary-colour);
+    color: white;
+    border-color: var(--secondary-colour);
+}
+.rounded-button:disabled {
+    background-color: white;
+    color: grey;
+    border: none;
+}
+.rounded-button:hover {
+    box-shadow: 0 5px 15px #185b88b2 inset;
+}
+.rounded-button.cancel {
+    color: var(--main-colour);
+    border-color: var(--main-colour);
+}
+.rounded-button.cancel:hover {
+    color: white;
+    background-color: var(--main-colour);
+}
+.rounded-button:disabled {
+    border: none;
+    color: grey;
+}
+.rounded-button:disabled:hover {
+    box-shadow: none;
+    background-color: white;
+    color: grey;
+}
+
 @keyframes spin {
     from {
         transform: rotate(0deg);

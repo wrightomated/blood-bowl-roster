@@ -9,7 +9,7 @@
         characteristicCostIncrease,
         characteristicIndex,
         characteristics,
-        CharacteristicType,
+        type CharacteristicType,
     } from '../../data/statOrder.data';
     import {
         getSkillType,
