@@ -7,7 +7,6 @@
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
-    import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
     import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
@@ -17,6 +16,9 @@
     import RosterStatusToggle from './rosterStatusToggle.svelte';
     import SpecialRuleSelector from './specialRuleSelector.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
+    import { gameSettings } from '../store/gameSettings.store';
+    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
+    import RosterPlayerCount from './rosterPlayerCount.svelte';
 
     export let playerTypes: Player[];
 
@@ -73,13 +75,13 @@
             {/if}
         {/each}
 
-        {#if activePlayersNumber < getMaxPlayers($roster.format)}
+        {#if activePlayersNumber < $gameSettings.maxPlayers}
             <AddPlayerCard {playerTypes} index={nextPlayerIndex} />
         {/if}
     </div>
 {:else}
     <div class="table-container">
-        <table>
+        <table class="roster-table">
             <thead>
                 <tr>
                     {#each $filteredTableColumns as c}
@@ -103,7 +105,7 @@
                         <RosterPlayerRow {index} />
                     {/if}
                 {/each}
-                {#if activePlayersNumber < getMaxPlayers($roster.format)}
+                {#if activePlayersNumber < $gameSettings.maxPlayers}
                     <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />
                 {/if}
             </tbody>
@@ -111,6 +113,11 @@
     </div>
 {/if}
 <RosterStatusToggle />
+{#if $roster.format === 'dungeon bowl'}
+    <DungeonBowlPlayerCount />
+{:else}
+    <RosterPlayerCount />
+{/if}
 {#if $roster.format !== 'dungeon bowl'}
     <AvailablePlayers />
 {/if}
@@ -157,7 +164,7 @@
             padding: 0;
             box-sizing: inherit;
             border: none;
-            color: #970f0c;
+            color: var(--main-colour);
             margin: 0;
             text-align: center;
             width: 100%;

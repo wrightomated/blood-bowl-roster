@@ -1,8 +1,6 @@
 <script lang="ts">
     import { weatherTables } from '../../../data/weatherData.data';
-    import type { WeatherType } from '../../../models/weather.model';
     import { roster } from '../../../store/teamRoster.store';
-    let selectedTable: WeatherType = 'default';
 
     function capitalise(s: string) {
         return s.charAt(0).toUpperCase() + s.slice(1);

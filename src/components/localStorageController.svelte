@@ -10,7 +10,9 @@
     } from '../store/teamSelectionOpen.store';
 
     const setLocalStorageObject = (key: string, value: object) => {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (key && value && typeof value === 'object') {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
     };
 
     roster.subscribe((x) => {

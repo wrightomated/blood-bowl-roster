@@ -62,6 +62,8 @@ export default {
             '__bbroster.env.FIREBASE_APP_ID': process.env.FIREBASE_APP_ID,
             '__bbroster.env.FIREBASE_MEASUREMENT_ID':
                 process.env.FIREBASE_MEASUREMENT_ID,
+            '__bbroster.env.EVENT_ID': process.env.EVENT_ID,
+            hook: 'writeBundle',
         }),
         svelte({
             preprocess: sveltePreprocess(),

@@ -10,7 +10,9 @@ export type WeatherType =
     | 'desolate'
     | 'mountainous'
     | 'coastal'
-    | 'desert';
+    | 'desert'
+    | 'street'
+    | 'sewer';
 
 /**
  * 2d6 result

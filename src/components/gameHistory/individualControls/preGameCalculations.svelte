@@ -7,6 +7,7 @@
     import PettyCash from './pettyCash.svelte';
     import StadiaControl from './stadiaControl.svelte';
     import WeatherControl from './weatherControl.svelte';
+    import GutterBowlStadia from './gutterBowlStadia.svelte';
 </script>
 
 <div
@@ -21,6 +22,9 @@
     {#if $roster.format === 'elevens'}
         <WeatherControl />
         <StadiaControl />
+    {/if}
+    {#if $roster.format === 'gutter bowl'}
+        <GutterBowlStadia />
     {/if}
 </div>
 

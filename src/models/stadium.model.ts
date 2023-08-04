@@ -11,7 +11,9 @@ export type StadiumCategory =
     | 'Rough & Ready Stadium'
     | 'Nothing out of the Ordinary'
     | 'Luxury Stadium'
-    | 'Local Crowd';
+    | 'Local Crowd'
+    | 'Street Pitch'
+    | 'Sewer Pitch';
 
 export type StadiumTable = Record<TwoD6Result, Stadium>;
 

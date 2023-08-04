@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import CurrentAdvancementList from './currentAdvancementList.svelte';

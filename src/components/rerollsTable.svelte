@@ -6,14 +6,15 @@
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
-    import type { DungeonBowlTeam } from '../models/dungeonBowl.model';
     import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import {
         formatNumber,
         formatNumberInThousands,
     } from '../helpers/formatTotalToThousands';
+    import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
+    import { gameSettings } from '../store/gameSettings.store';
 
-    export let selectedTeam: Team | DungeonBowlTeam;
+    export let selectedTeam: CustomTeam;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
 
@@ -96,7 +97,7 @@
         {/if}
     </table>
 
-    {#if $roster.format === 'elevens'}
+    {#if $gameSettings?.starPlayersAllowance > 0}
         <StarPlayerInducement />
     {/if}
 
@@ -116,7 +117,7 @@
             margin-block-end: 1em;
             margin-right: 1em;
             th {
-                background-color: #970f0c;
+                background-color: var(--main-colour);
                 color: white;
                 text-align: left;
                 text-transform: uppercase;

@@ -6,7 +6,7 @@ import type { TeamFormat } from '../types/teamFormat';
 
 export const calculateInducementTotal = (
     inducements: InducementsRecord,
-    teamId: number,
+    teamId: string,
     format: TeamFormat
 ) => {
     return Object.keys(inducements)
@@ -17,7 +17,7 @@ export const calculateInducementTotal = (
 export const inducementCost = (
     format: TeamFormat,
     key: string,
-    teamId: number
+    teamId: string
 ) => {
     const specialRules: TeamSpecialRule[] =
         teamData.teams.find((x) => x.id === teamId)?.specialRules || [];

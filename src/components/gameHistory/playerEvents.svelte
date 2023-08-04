@@ -12,8 +12,10 @@
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import ToggleButton from '../uiComponents/toggleButton.svelte';
     import PlayerEventList from './playerEventList.svelte';
+    import { gameSettings } from '../../store/gameSettings.store';
 
     $: gameEvents = $roster.matchDraft.playingCoach.gameEvents ?? [];
+    $: maxTurns = ($gameSettings?.turnsPerHalf ?? 8) * 2;
 
     const options = ['total', 'individual'];
     let option =
@@ -40,6 +42,9 @@
     }
 
     function addPlayerEvent() {
+        if (turn > maxTurns) {
+            turn = maxTurns;
+        }
         const player = filteredPlayers.find(
             (p) => p?.playerId === selectedPlayer
         );
@@ -132,7 +137,7 @@
                         name="event-turn"
                         id="event-turn"
                         type="number"
-                        max="16"
+                        max={maxTurns}
                         min="0"
                         bind:value={turn}
                     />
@@ -162,6 +167,10 @@
         max="999"
         bind:value={$roster.matchDraft.gameEventTally.opponentScore}
     />
+    <p>
+        *Kills are not an official stat and do not reward spp. Add a casualty
+        simultaneously for automatic spp.
+    </p>
 </div>
 
 <style lang="scss">

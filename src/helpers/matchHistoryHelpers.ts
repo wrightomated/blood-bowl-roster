@@ -267,7 +267,7 @@ export const gameEventPluralMap: Record<GameEventType, string> = {
     touchdown: 'Touchdowns',
     completion: 'Completions',
     casualty: 'Casualties',
-    kill: 'Kills',
+    kill: 'Kills*',
     interception: 'Interceptions',
     deflection: 'Deflections',
 };

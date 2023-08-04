@@ -6,8 +6,40 @@
 
     import Overlay from './components/uiComponents/overlay.svelte';
     import { onMount } from 'svelte';
+    import { customisationRules } from './customisation/customisation.store';
 
     onMount(async () => {
+        // String replacement by rollup
+        const eventId = '__bbroster.env.EVENT_ID';
+        // @ts-ignore - this will be a string replacement by rollup
+        if (eventId !== 'undefined') {
+            try {
+                // String replacement is happening after build so the data file isn't getting bundled
+                // Will need to refactor this or import all data files...
+                // await import(`./customisation/data/${eventId}.data`).then(
+                await import(`./customisation/data/bigV2023.data`).then(
+                    (customisation) => {
+                        customisationRules.set(
+                            customisation.tournamentCustomisation
+                        );
+                        if (
+                            customisation.tournamentCustomisation.cssVariables
+                        ) {
+                            Object.entries(
+                                customisation.tournamentCustomisation
+                                    .cssVariables
+                            ).forEach((style) =>
+                                document.documentElement.style.setProperty(
+                                    style[0],
+                                    style[1]
+                                )
+                            );
+                        }
+                    }
+                );
+            } catch (error) {}
+        }
+
         await import('./components/auth/firebaseAuth.service').then(
             (firebase) => {
                 firebase.init();

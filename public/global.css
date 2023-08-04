@@ -1,6 +1,8 @@
 :root {
     --main-colour: #970f0c;
     --secondary-colour: #1a3f7f;
+    --button-shadow: #185b88b2;
+
     --sc-l60: #6b96e1;
     --secondary-background-colour: #eeeeee;
     --neutral: #ccc;
@@ -119,7 +121,7 @@ tr:nth-of-type(even) {
     background-color: #eee;
 }
 thead > tr {
-    background-color: #970f0c;
+    background-color: var(--main-colour);
     color: white;
     text-transform: uppercase;
 }
@@ -141,12 +143,15 @@ thead > tr {
         padding: 5px !important;
         border: none;
     }
-    thead {
-        background-color: #333 !important;
-    }
+    /* th,
+    thead,
     thead > tr {
-        background-color: #333;
+        background-color: #333 !important;
+    } */
+    .roster-table {
+        width: 100%;
     }
+
     table {
         border: 1px solid #333 !important;
     }

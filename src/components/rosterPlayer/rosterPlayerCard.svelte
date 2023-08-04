@@ -1,7 +1,7 @@
 <script lang="ts">
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
-    import { currentTeam } from '../../store/currentTeam.store';
+    import { currentTeam, specialistIds } from '../../store/currentTeam.store';
     import AddSkill from '../addSkill.svelte';
 
     import { showSkillButtons } from '../../store/showSkillButtons.store';
@@ -13,6 +13,8 @@
     import PlayerCardMainContent from '../playerCard/playerCardMainContent.svelte';
     import EditPlayer from '../playerCard/editPlayer.svelte';
     import DeletePlayerWarning from './deletePlayerWarning.svelte';
+    import { gameSettings } from '../../store/gameSettings.store';
+    import { specialistsAmount } from '../../store/specialistsAmount.store';
 
     export let index: number;
 
@@ -29,14 +31,6 @@
         rosterPlayer.player.bigGuy &&
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
-
-    $: nonLinemen = $currentTeam.players
-        .filter((p) => p.max < 12)
-        .map((x) => x.id);
-    $: sevensSpecialistsAmount =
-        $roster.format === 'sevens' &&
-        nonLinemen.includes(rosterPlayer.player.id) &&
-        $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     function removePlayer() {
         modalState.set({
@@ -157,10 +151,10 @@
                     .length}/{$currentTeam.maxBigGuys} Big Guys
             </p>
         {/if}
-        {#if sevensSpecialistsAmount > 4}
+        {#if $specialistIds.includes(rosterPlayer.player.id) && $specialistsAmount > $gameSettings?.maxSpecialists}
             <p class="sevens-over-four">
                 <i class="material-symbols-outlined">warning</i>
-                {sevensSpecialistsAmount} / 4 Specialists
+                {$specialistsAmount} / {$gameSettings.maxSpecialists} Specialists
             </p>
         {/if}
 

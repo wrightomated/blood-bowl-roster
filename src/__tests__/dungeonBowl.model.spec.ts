@@ -4,7 +4,7 @@ test('should convert dungeon bowl college into team', () => {
     expect(
         dbCollegeToTeam({
             name: 'Heavens',
-            id: 108,
+            id: 'db108',
             characteristics: {
                 speed: 5,
                 power: 4,
@@ -36,14 +36,7 @@ test('should convert dungeon bowl college into team', () => {
             },
         })
     ).toEqual({
-        characteristics: {
-            aggression: 2,
-            power: 4,
-            resilience: 2,
-            skill: 4,
-            speed: 5,
-        },
-        id: 108,
+        id: 'db108',
         name: 'Heavens',
         players: [
             { dungeonBowlRole: 'linemen', id: 43, max: 16 },

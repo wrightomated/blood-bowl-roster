@@ -16,9 +16,10 @@ export interface Roster {
     version?: string;
     /** Used for firebase storage */
     rosterId?: string;
-    teamId: number;
+    /** Changed from number to string in v2 */
+    teamId: string;
     teamName: string;
-    teamType: TeamName | CollegeName;
+    teamType: TeamName | CollegeName | string;
     players: RosterPlayerRecord[];
     /** Extra info in relation to the game */
     extra?: RosterExtraRecords;
@@ -103,12 +104,13 @@ export interface PlayerAlterations {
 export type LeagueRosterStatus = 'draft' | 'commenced';
 
 export type NewRosterOptions = {
-    teamId: number;
-    teamType: TeamName | CollegeName;
+    teamId: string;
+    teamType: TeamName | CollegeName | string;
     mode: RosterMode;
     format: TeamFormat;
     fans: number;
     specialRule?: TeamSpecialRule;
+    version?: string;
 };
 
 export type SpecificAdvancement = {

@@ -1,10 +1,12 @@
+import type { CollegeName } from './dungeonBowl.model';
+
 export interface Team {
-    name: TeamName;
-    id: number;
+    name: TeamName | CollegeName;
+    id: string;
     players: Array<TeamPlayer>;
     reroll: TeamReroll;
     allowedApothecary: boolean;
-    tier: TeamTier;
+    tier: number;
     specialRules: TeamSpecialRule[];
     maxBigGuys?: number;
     retired?: boolean;
@@ -25,7 +27,7 @@ export interface TeamReroll {
     max: number;
 }
 
-export type TeamTier = 1 | 2 | 3;
+export type TeamTier = 0 | 1 | 2 | 3 | 4 | 5;
 
 export type TeamName =
     | 'Imperial Nobility'

@@ -11,11 +11,10 @@ import type {
 } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
-import { currentTeam } from './currentTeam.store';
+import { currentTeamId } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
-import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import { PickedSpecialRule } from '../data/teams.data';
 import {
     matchSummary,
@@ -23,6 +22,11 @@ import {
     updateRosterWithDraft,
 } from '../helpers/matchHistoryHelpers';
 import type { SaveMatchOptions } from '../models/matchHistory.model';
+import { getGameTypeSettings } from '../helpers/gameSettings';
+import {
+    CURRENT_ROSTER_VERSION,
+    versionCheck,
+} from '../helpers/rosterVersionCheck';
 
 export const maxPlayerNumber = 99;
 
@@ -37,7 +41,7 @@ function createRoster() {
             update((store) => {
                 if (
                     store.players.filter((p) => !p.deleted).length >=
-                    getMaxPlayers(store?.format)
+                    getGameTypeSettings(store?.format).maxPlayers
                 ) {
                     return store;
                 }
@@ -165,7 +169,7 @@ function createRoster() {
             update((_store) => {
                 const loadedRoster =
                     rosterFromCode(rosterCode) || getEmptyRoster();
-                currentTeam.setCurrentTeamWithCode(rosterCode);
+                currentTeamId.set(loadedRoster.teamId);
                 savedRosterIndex.newId();
                 return { ...loadedRoster };
             }),
@@ -253,9 +257,9 @@ function createRoster() {
 const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format || 'elevens');
     const emptyRoster: Roster = {
-        version: '2.0',
+        version: options?.version || CURRENT_ROSTER_VERSION,
         rosterId: nanoid(),
-        teamId: options?.teamId || 0,
+        teamId: options?.teamId || '0',
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
@@ -300,6 +304,7 @@ const rosterFromQueryString = () => {
 const rosterFromCode = (code: string | null) => {
     try {
         let transformedRoster = stringToRoster(code);
+
         return addPlayerNumbersToRoster(transformedRoster);
     } catch (error) {
         return null;
@@ -319,14 +324,18 @@ const getDefaultRoster: () => Roster = () => {
 
 const addMissingItemsToRoster = (roster: Roster) => {
     let updatedRoster = addPlayerNumbersToRoster(roster);
+    // Old rosters had teamId as a number, new ones are strings
+    updatedRoster.teamId = updatedRoster.teamId.toString();
     updatedRoster = addPlayerIdsToRoster(updatedRoster);
+    updatedRoster = versionCheck(updatedRoster);
+
     if (!updatedRoster.rosterId) {
         updatedRoster.rosterId = nanoid();
     }
     if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
         updatedRoster.leagueRosterStatus = 'draft';
     }
-    currentTeam.setCurrentTeamWithId(updatedRoster.teamId);
+    currentTeamId.set(updatedRoster.teamId);
     updatedRoster = {
         ...updatedRoster,
         format: updatedRoster?.format || 'elevens',

@@ -7,6 +7,7 @@
         skillIncreaseCost,
     } from '../../data/advancementCost.data';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
+    import { getGameTypeSettings } from '../../helpers/gameSettings';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import type { SkillCategory } from '../../models/skill.model';
     import { roster } from '../../store/teamRoster.store';
@@ -17,13 +18,16 @@
     export let rosterPlayer: RosterPlayerRecord;
     export let index: number;
 
-    const advancementTypes =
-        $roster.format === 'sevens'
-            ? ['primary', 'secondary']
-            : ['primary', 'secondary', 'characteristic'];
+    const advancementTypes = Object.values(
+        getGameTypeSettings($roster.format).advancementSettings
+    ).map((setting) => setting.type);
     let advancementType: AdvancementType = 'primary';
 
-    const selectionTypes = ['random', 'select'];
+    const selectionTypes: SelectionType[] = getGameTypeSettings(
+        $roster.format
+    ).advancementSettings.find(
+        (setting) => setting.type === advancementType
+    ).selectionTypes;
     let selectionType: SelectionType = 'random';
 
     let advancementCombination: AdvancementCombination;
@@ -101,7 +105,7 @@
 
 <ToggleButton options={advancementTypes} selected={selectAdvancementType} />
 
-{#if $roster.format !== 'sevens' && advancementType !== 'characteristic'}
+{#if selectionTypes?.length > 1}
     <ToggleButton options={selectionTypes} selected={selectSelectionType} />
 {/if}
 {#if options?.length > 1}
