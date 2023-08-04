@@ -27,7 +27,7 @@ export const stringToRoster = (code: string) => {
     const format = getFormat(extras.find((x) => x.includes('f')) || 'f0');
     /** TeamIds have changed from number to string so need to be backwards compatible with old db */
     const backwardsCompatibleId =
-        format === 'dungeon bowl' && !teamId.includes('db')
+        format === 'dungeon bowl' && !teamId.toString().includes('db')
             ? `db${teamId}`
             : teamId;
 
