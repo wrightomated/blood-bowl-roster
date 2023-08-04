@@ -12,7 +12,7 @@
     $: extraCost = alterExtraCost(
         extra,
         $roster.leagueRosterStatus,
-        $roster.format === 'sevens'
+        $roster.format === 'elevens' || $roster.format === 'dungeon bowl'
     );
 
     function addExtra() {
@@ -27,10 +27,11 @@
     function alterExtraCost(
         extra: Extra,
         status: LeagueRosterStatus,
-        is7: boolean
+        doubleRerollsWhenStarted: boolean
     ): number {
         if (status === 'commenced') {
-            if (extra.extraString === 'rerolls' && !is7) return extra.cost * 2;
+            if (extra.extraString === 'rerolls' && doubleRerollsWhenStarted)
+                return extra.cost * 2;
             if (extra.extraString === 'dedicated_fans') return 0;
         }
         return extra.cost;
