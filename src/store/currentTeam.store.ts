@@ -38,7 +38,7 @@ export const currentTeam: Readable<CustomTeam> = derived(
     ([$id, $customisation]) => {
         let customisationOptions = {
             format:
-                !!$id && $id?.includes('db')
+                !!$id && $id?.toString()?.includes('db')
                     ? ('dungeon bowl' as TeamFormat)
                     : undefined,
             tournamentCustomisation: undefined,
@@ -53,7 +53,7 @@ export const currentTeam: Readable<CustomTeam> = derived(
     }
 );
 export const currentTeamIsDungeonBowl = derived(currentTeam, ($currentTeam) =>
-    $currentTeam?.id?.includes('db')
+    $currentTeam?.id?.toString()?.includes('db')
 );
 export const playerTypes = derived(currentTeam, ($currentTeam) =>
     $currentTeam.players.map((player) => playerById(player.id))
