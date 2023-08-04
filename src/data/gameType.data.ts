@@ -108,4 +108,5 @@ export const gutterBowlGame: GameTypeSettings = {
     starPlayersAllowance: 0,
     maxSpecialists: 5,
     inducementMaxKey: 'gutterBowlMax',
+    turnsPerHalf: 6,
 };
