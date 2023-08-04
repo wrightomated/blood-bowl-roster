@@ -36,13 +36,6 @@ test('should convert dungeon bowl college into team', () => {
             },
         })
     ).toEqual({
-        characteristics: {
-            aggression: 2,
-            power: 4,
-            resilience: 2,
-            skill: 4,
-            speed: 5,
-        },
         id: 'db108',
         name: 'Heavens',
         players: [
