@@ -18,7 +18,8 @@ context('Test that a team can be copied', () => {
 
     it('should load roster', () => {
         const expectedRoster = {
-            teamId: 3,
+            teamId: '3',
+            version: '3.0',
             extra: { dedicated_fans: 1 },
             players: [
                 {

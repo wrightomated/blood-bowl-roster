@@ -82,8 +82,8 @@ context('Team creation', () => {
 });
 
 const expectedRoster = {
-    version: '2.0',
-    teamId: 1,
+    version: '3.0',
+    teamId: '1',
     players: [
         {
             playerName: 'Bob',
