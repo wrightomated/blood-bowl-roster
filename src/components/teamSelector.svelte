@@ -240,7 +240,7 @@
                     class:selected={$filteredTiers.includes(4)}
                     class="filter__button">IV</button
                 > -->
-                <!-- <button
+                <button
                     on:click={toggleNaf}
                     title="Filter NAF teams"
                     class:selected={includeNaf}
@@ -251,7 +251,7 @@
                     title="Filter superseded teams"
                     class:selected={includeRetired}
                     class="filter__button">S</button
-                > -->
+                >
             </div>
             <label class="filter__search">
                 Search: <input
