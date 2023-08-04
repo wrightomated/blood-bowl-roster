@@ -81,16 +81,6 @@
 {/if}
 
 <style lang="scss">
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-    }
-    .skills-header {
-        min-width: 100px;
-    }
-    .left-align {
-        text-align: left;
-    }
     .header-container {
         display: flex;
         margin-top: 1em;

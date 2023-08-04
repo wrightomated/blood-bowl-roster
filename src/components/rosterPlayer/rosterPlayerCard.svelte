@@ -169,11 +169,6 @@
         background: none;
         font-size: 16px;
     }
-    div {
-        input {
-            margin-bottom: 0;
-        }
-    }
     .player-card {
         border-radius: 25px;
         position: relative;

@@ -34,12 +34,10 @@
     &:disabled {
         border: none;
         color: grey;
-        &:hover{
+        &:hover {
             box-shadow: none;
             background-color: white;
             color: grey;
         }
     }
-
-
 }

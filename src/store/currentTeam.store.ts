@@ -1,5 +1,6 @@
 import { derived, writable } from 'svelte/store';
 import type { Readable } from 'svelte/store';
+
 import type { Player } from '../models/player.model';
 import { playerById } from '../helpers/playerCatalogueHelpers';
 import { filteredTeamData } from '../helpers/teamDataFilter';
@@ -20,7 +21,7 @@ const getTeamFromCode = (code: string) => {
     return null;
 };
 
-const getTeamFromStorage = () => {
+const getTeamFromStorage: () => CustomTeam = () => {
     const team = localStorage.getItem('selectedTeam');
     return team ? JSON.parse(team) : '';
 };

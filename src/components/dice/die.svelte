@@ -1,6 +1,5 @@
 <script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    // import Button from '../uiComponents/button.svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -44,12 +43,6 @@
     }
 </script>
 
-<button type="button" on:click={rollAll} bind:this={dice}>{display}</button>
-
-<!-- <div class="roll" /> -->
-<style lang="scss">
-    @use '../../styles/mixins/roundedButton';
-    button {
-        @include roundedButton.rounded-button;
-    }
-</style>
+<button class="rounded-button" type="button" on:click={rollAll} bind:this={dice}
+    >{display}</button
+>

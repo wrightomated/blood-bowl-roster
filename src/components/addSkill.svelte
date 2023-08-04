@@ -10,7 +10,7 @@
     import {
         characteristicMaxValue,
         characteristics,
-        CharacteristicType,
+        type CharacteristicType,
     } from '../data/statOrder.data';
     import type { RosterPlayerRecord } from '../models/roster.model';
     import type { SkillCategory } from '../models/skill.model';

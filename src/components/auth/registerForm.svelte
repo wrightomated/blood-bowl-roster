@@ -115,12 +115,11 @@
             />
             <br />
         {/if} -->
-        <button on:focus={touchForm}>Register</button>
+        <button class="rounded-button" on:focus={touchForm}>Register</button>
     </form>
 {/if}
 
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
     .registration-form {
         display: flex;
         flex-direction: column;
@@ -145,10 +144,6 @@
 
     label {
         margin-bottom: 4px;
-    }
-
-    button {
-        @include roundedButton.rounded-button;
     }
 
     .error {

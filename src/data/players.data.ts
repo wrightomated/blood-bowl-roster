@@ -1336,7 +1336,6 @@ const dbSnotling: Player = {
 const dbNorseLineman: Player = {
     ...norseRaiderLineman,
     id: 152,
-    skills: [13, 93],
     secondary: ['A', 'S'],
 };
 const eagleLinewoman: Player = {

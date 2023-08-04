@@ -23,10 +23,12 @@ import {
 } from '../helpers/matchHistoryHelpers';
 import type { SaveMatchOptions } from '../models/matchHistory.model';
 import { getGameTypeSettings } from '../helpers/gameSettings';
+import {
+    CURRENT_ROSTER_VERSION,
+    versionCheck,
+} from '../helpers/rosterVersionCheck';
 
 export const maxPlayerNumber = 99;
-
-const CURRENT_ROSTER_VERSION = '3.0';
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -527,24 +529,6 @@ function updatePlayerTreasury(
             (player?.alterations?.journeyman ? 0 : player.player.cost);
     }
     return { treasury, pettyCash };
-}
-
-function versionCheck(roster: Roster): Roster {
-    let updatedRoster = roster;
-    if (!roster.version || roster?.version < CURRENT_ROSTER_VERSION) {
-        if (roster.format === 'dungeon bowl' && !roster.teamId.includes('db')) {
-            updatedRoster = {
-                ...updatedRoster,
-                teamId: 'db' + updatedRoster.teamId,
-            };
-        }
-
-        updatedRoster = {
-            ...updatedRoster,
-            version: CURRENT_ROSTER_VERSION,
-        };
-    }
-    return updatedRoster;
 }
 
 export const roster = createRoster();

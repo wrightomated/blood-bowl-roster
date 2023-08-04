@@ -1,9 +1,9 @@
-import { FirebaseApp, initializeApp } from 'firebase/app';
+import { type FirebaseApp, initializeApp } from 'firebase/app';
 import {
     getAuth,
-    User,
+    type User,
     sendEmailVerification,
-    Auth,
+    type Auth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     onAuthStateChanged,
