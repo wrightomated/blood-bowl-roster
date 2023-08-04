@@ -324,6 +324,8 @@ const getDefaultRoster: () => Roster = () => {
 
 const addMissingItemsToRoster = (roster: Roster) => {
     let updatedRoster = addPlayerNumbersToRoster(roster);
+    // Old rosters had teamId as a number, new ones are strings
+    updatedRoster.teamId = updatedRoster.teamId.toString();
     updatedRoster = addPlayerIdsToRoster(updatedRoster);
     updatedRoster = versionCheck(updatedRoster);
 
