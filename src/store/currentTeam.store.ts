@@ -7,6 +7,7 @@ import { filteredTeamData } from '../helpers/teamDataFilter';
 import { customisationRules } from '../customisation/customisation.store';
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import type { TeamFormat } from '../types/teamFormat';
+import { updateOldTeamId } from '../helpers/rosterVersionCheck';
 
 const getTeamIdFromQuery = () => {
     const code = window.location.search.substring(1).split('=')[1];
@@ -30,7 +31,7 @@ function getTeamId() {
     return getTeamIdFromQuery() || getTeamFromStorage()?.id;
 }
 
-export const currentTeamId = writable(getTeamId());
+export const currentTeamId = writable(updateOldTeamId(getTeamId()));
 
 export const currentTeam: Readable<CustomTeam> = derived(
     [currentTeamId, customisationRules],

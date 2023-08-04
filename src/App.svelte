@@ -19,8 +19,6 @@
                 // await import(`./customisation/data/${eventId}.data`).then(
                 await import(`./customisation/data/bigV2023.data`).then(
                     (customisation) => {
-                        console.log({ customisation });
-
                         customisationRules.set(
                             customisation.tournamentCustomisation
                         );

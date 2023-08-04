@@ -31,22 +31,6 @@ export const stringToRoster = (code: string) => {
             ? `db${teamId}`
             : teamId;
 
-    // console.log('backwardsCompatibleId', backwardsCompatibleId);
-    // log all consts
-    console.log({
-        rosterString,
-        rest,
-        rosterNames,
-        teamDetails,
-        players,
-        id,
-        treasury,
-        extras,
-        teamId,
-        format,
-        backwardsCompatibleId,
-    });
-
     const roster: Roster = {
         teamId: backwardsCompatibleId,
         extra: stringToExtra(
@@ -64,8 +48,6 @@ export const stringToRoster = (code: string) => {
         mode: getMode(extras.find((x) => x.includes('m')) || 'm1'),
         format,
     };
-
-    console.log({ roster });
 
     return rosterNames.length > 0
         ? addNamesToRoster(roster, rosterNames)
