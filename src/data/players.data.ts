@@ -1387,6 +1387,55 @@ const dbJaguarBlocker: Player = {
     ...jaguarBlocker,
     id: 159,
 };
+const vampireThrower: Player = {
+    position: 'Vampire Thrower',
+    id: 160,
+    cost: 0,
+    playerStats: [6, 4, 2, 2, 9],
+    // bloodlust 2+, hypnotic gaze, pass, regeneration
+    skills: [46, 69, 77, 96],
+    primary: ['A', 'P'],
+    secondary: ['G'],
+};
+const vampireBlitzer: Player = {
+    position: 'Vampire Blitzer',
+    id: 161,
+    cost: 0,
+    playerStats: [6, 4, 2, 5, 9],
+    // bloodlust 3+, hypnotic gaze, regeneration, juggernaut
+    skills: [54, 69, 77, 97],
+    primary: ['A', 'S'],
+    secondary: ['G'],
+};
+const vampireRunner: Player = {
+    position: 'Vampire Runner',
+    id: 162,
+    cost: 0,
+    playerStats: [8, 3, 2, 4, 8],
+    // bloodlust 2+, hypnotic gaze, regeneration
+    skills: [69, 77, 96],
+    primary: ['A'],
+    secondary: ['P', 'S'],
+};
+const thrallLinemanV2: Player = {
+    position: 'Thrall Lineman',
+    id: 163,
+    cost: 0,
+    playerStats: [6, 3, 3, 4, 8],
+    skills: [],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const vargheist: Player = {
+    position: 'Vargheist',
+    id: 164,
+    cost: 0,
+    playerStats: [5, 5, 4, 0, 10],
+    // bloodlust 3+, regeneration, frenzy, claws, loner 4+
+    skills: [26, 69, 97, 71],
+    primary: ['S'],
+    secondary: ['A', 'G'],
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1549,5 +1598,10 @@ export const playerCatalogue: PlayerCatalogue = {
         dbPiranhaBlitzer,
         dbPythonThrower,
         dbJaguarBlocker,
+        vampireThrower,
+        vampireBlitzer,
+        vampireRunner,
+        thrallLinemanV2,
+        vargheist,
     ],
 };
