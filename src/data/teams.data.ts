@@ -533,10 +533,10 @@ export const teamData: TeamList = {
             name: 'Vampire (Incomplete)',
             id: '33',
             players: [
+                { id: 163, max: 12 },
                 { id: 160, max: 2 },
                 { id: 161, max: 2 },
                 { id: 162, max: 2 },
-                { id: 163, max: 16 },
                 { id: 164, max: 1 },
             ],
             reroll: { cost: 70, max: 8 },
