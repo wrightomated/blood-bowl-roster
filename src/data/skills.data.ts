@@ -117,6 +117,8 @@ export const skillCatalogue: Skill[] = [
     { id: 94, name: 'Pick-me-up', category: 'T' },
     // Amazon
     { id: 95, name: 'Hit and Run', category: 'T' },
+    { id: 96, name: 'Bloodlust (2+)', category: 'T' },
+    { id: 97, name: 'Bloodlust (3+)', category: 'T' },
 ];
 
 export const dungeonBowlSkillIds = {
