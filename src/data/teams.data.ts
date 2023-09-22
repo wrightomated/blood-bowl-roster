@@ -449,6 +449,7 @@ export const teamData: TeamList = {
             reroll: { cost: 70, max: 8 },
             allowedApothecary: true,
             tier: 2,
+            retired: true,
             specialRules: ['Sylvanian Spotlight'],
         },
         {
@@ -530,7 +531,7 @@ export const teamData: TeamList = {
             specialRules: ['Lustrian Superleague'],
         },
         {
-            name: 'Vampire (Incomplete)',
+            name: 'Vampire',
             id: '33',
             players: [
                 { id: 163, max: 12 },
@@ -539,8 +540,8 @@ export const teamData: TeamList = {
                 { id: 162, max: 2 },
                 { id: 164, max: 1 },
             ],
-            reroll: { cost: 70, max: 8 },
-            allowedApothecary: false,
+            reroll: { cost: 60, max: 8 },
+            allowedApothecary: true,
             tier: 2,
             specialRules: ['Sylvanian Spotlight'],
         },
