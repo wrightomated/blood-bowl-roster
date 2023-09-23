@@ -1432,7 +1432,7 @@ const vargheist: Player = {
     cost: 150,
     playerStats: [5, 5, 4, 0, 10],
     // bloodlust 3+, regeneration, frenzy, claws, loner 4+
-    skills: [26, 69, 97, 71],
+    skills: [26, 69, 97, 77, 17, 71],
     primary: ['S'],
     secondary: ['A', 'G'],
 };
