@@ -66,19 +66,7 @@
             By registering an account, you will be able to log in from any
             device and maintain access to all your rosters. Any rosters
             currently stored will be uploaded to your account upon registration.
-            There are no costs associated with creating an account. Please
-            ensure to read our <a
-                href="https://blog.bbroster.com/terms-of-use/"
-                target="_blank"
-                class="blog-link">Terms of Use</a
-            >
-            and
-            <a
-                href="https://blog.bbroster.com/private-policy/"
-                title=""
-                target="_blank"
-                class="blog-link">Privacy Policy</a
-            > documents before completing your registration.
+            There are no costs associated with creating an account.
         </p>
         <label for="username">Display name:</label>
         <input
@@ -115,7 +103,21 @@
             required
             minlength="6"
         />
-        <br />
+
+        <p>
+            Please ensure to read our <a
+                href="https://blog.bbroster.com/terms-of-use/"
+                target="_blank"
+                class="blog-link">Terms of Use</a
+            >
+            and
+            <a
+                href="https://blog.bbroster.com/private-policy/"
+                title=""
+                target="_blank"
+                class="blog-link">Privacy Policy</a
+            > documents before completing your registration.
+        </p>
 
         <!-- {#if $savedRosterIndex.index.length > 0}
             <label for="upload-lists">Upload saved rosters:</label>
