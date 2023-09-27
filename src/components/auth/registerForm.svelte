@@ -63,10 +63,22 @@
     >
         <h2>Register your account</h2>
         <p class="intro-text">
-            Registering an account means you can log in from any device and
-            still have access to all your rosters. Any roster you've currently
-            got stored will be uploaded to your account on registration. There
-            is no cost associated with this.
+            By registering an account, you will be able to log in from any
+            device and maintain access to all your rosters. Any rosters
+            currently stored will be uploaded to your account upon registration.
+            There are no costs associated with creating an account. Please
+            ensure to read our <a
+                href="https://blog.bbroster.com/terms-of-use/"
+                target="_blank"
+                class="blog-link">Terms of Use</a
+            >
+            and
+            <a
+                href="https://blog.bbroster.com/private-policy/"
+                title=""
+                target="_blank"
+                class="blog-link">Privacy Policy</a
+            > documents before completing your registration.
         </p>
         <label for="username">Display name:</label>
         <input
