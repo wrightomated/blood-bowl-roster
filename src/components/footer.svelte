@@ -13,10 +13,18 @@
         site is not affiliated with Games Workshop. I just think they're neat.
     </p>
     <p>
-        <a href="https://blog.bbroster.com/private-policy/" target="_blank"
+        <a
+            href="https://blog.bbroster.com/private-policy/"
+            title=""
+            target="_blank"
+            class="blog-link"
             >Privacy <i class="material-symbols-outlined">open_in_new</i></a
         >
-        <a href="https://blog.bbroster.com/terms-of-use/" target="_blank"
+        |
+        <a
+            href="https://blog.bbroster.com/terms-of-use/"
+            target="_blank"
+            class="blog-link"
             >Terms <i class="material-symbols-outlined">open_in_new</i></a
         >
     </p>
