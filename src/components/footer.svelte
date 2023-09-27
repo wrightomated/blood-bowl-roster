@@ -13,6 +13,15 @@
         site is not affiliated with Games Workshop. I just think they're neat.
     </p>
     <p>
+        <a href="https://blog.bbroster.com/private-policy/" target="_blank"
+            >Privacy <i class="material-symbols-outlined">open_in_new</i></a
+        >
+        <a href="https://blog.bbroster.com/terms-of-use/" target="_blank"
+            >Terms <i class="material-symbols-outlined">open_in_new</i></a
+        >
+    </p>
+
+    <p>
         This is a work in progress. For all queries, concerns and suggestions
         please <a href="mailto:bbrosterapp@gmail.com">email</a>.
     </p>
