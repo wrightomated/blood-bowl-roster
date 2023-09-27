@@ -1,0 +1,337 @@
+<script lang="ts">
+    import ToggleButton from '../../components/uiComponents/toggleButton.svelte';
+    import { roster } from '../../store/teamRoster.store';
+    let numberOfRows = 13;
+    let numberOfColumns = 15;
+
+    let players = new Array(numberOfRows)
+        .fill('p')
+        .map(() => new Array(numberOfColumns).fill(null));
+
+    let availablePlayers: string[];
+    $: availablePlayers = $roster.players
+        .map((player) => player.alterations.playerNumber + '')
+        .filter((playerNumber) => !exists(players, playerNumber));
+    $: tackleZones = new Array(numberOfRows)
+        .fill('p')
+        .map(() => new Array(numberOfColumns).fill(false));
+
+    function dragStart(event, player, row, col) {
+        event.dataTransfer.setData(
+            'player',
+            JSON.stringify({ player, row, col })
+        );
+    }
+    function drop(event, newPlayer, newRow, newCol) {
+        event.preventDefault();
+        event.target.style.filter = 'unset';
+        const { player, row, col } = JSON.parse(
+            event.dataTransfer.getData('player')
+        );
+        console.log({ player, row, col, newPlayer, newRow, newCol });
+        players[newRow][newCol] = player;
+        if (typeof row === 'number' && typeof col === 'number') {
+            players[row][col] = newPlayer;
+        }
+        // update tackle zones
+        updateTackleZones(row, col, false);
+        updateTackleZones(newRow, newCol, true);
+    }
+
+    function playerDragStart(event, player) {
+        event.dataTransfer.setData('player', JSON.stringify({ player }));
+        console.log({ player });
+    }
+    function playerDrop(event) {
+        event.preventDefault();
+        event.target.style.filter = 'unset';
+        const { player, row, col } = JSON.parse(
+            event.dataTransfer.getData('player')
+        );
+        // players[newRow][newCol] = player;
+        // if (row && col) {
+        //
+        // }
+
+        if (players[row][col]) {
+            players[row][col] = null;
+        }
+
+        updateTackleZones(row, col, false);
+    }
+    // function dragOver(event) {
+    //     event.preventDefault();
+    //     console.log({ event });
+    // }
+
+    function exists(arr, search) {
+        return arr.some((row) => row.includes(search));
+    }
+
+    function dragEnter(event) {
+        event.target.style.filter = 'brightness(85%)';
+    }
+    function dragLeave(event) {
+        event.target.style.filter = 'unset';
+    }
+
+    function isTackleZone(row, col) {
+        if (row - 1 >= 0) {
+            if (players[row - 1][col]) return true;
+            if (col - 1 >= 0 && players[row - 1][col - 1]) return true;
+            if (col + 1 < numberOfColumns && players[row - 1][col + 1])
+                return true;
+        }
+        if (row + 1 < numberOfRows) {
+            if (players[row + 1][col]) return true;
+            if (col - 1 >= 0 && players[row + 1][col - 1]) return true;
+            if (col + 1 < numberOfColumns && players[row + 1][col + 1])
+                return true;
+        }
+        if (col - 1 >= 0 && players[row][col - 1]) return true;
+        if (col + 1 < numberOfColumns && players[row][col + 1]) return true;
+        return false;
+    }
+    function updateTackleZones(row: number, col: number, value: boolean) {
+        if (row - 1 >= 0) {
+            tackleZones[row - 1][col] = value || isTackleZone(row - 1, col);
+            if (col - 1 >= 0)
+                tackleZones[row - 1][col - 1] =
+                    value || isTackleZone(row - 1, col - 1);
+            if (col + 1 < numberOfColumns)
+                tackleZones[row - 1][col + 1] =
+                    value || isTackleZone(row - 1, col + 1);
+        }
+        if (row + 1 < numberOfRows) {
+            tackleZones[row + 1][col] = value || isTackleZone(row + 1, col);
+            if (col - 1 >= 0)
+                tackleZones[row + 1][col - 1] =
+                    value || isTackleZone(row + 1, col - 1);
+            if (col + 1 < numberOfColumns)
+                tackleZones[row + 1][col + 1] =
+                    value || isTackleZone(row + 1, col + 1);
+        }
+        if (col - 1 >= 0)
+            tackleZones[row][col - 1] = value || isTackleZone(row, col - 1);
+        if (col + 1 < numberOfColumns)
+            tackleZones[row][col + 1] = value || isTackleZone(row, col + 1);
+    }
+</script>
+
+<!-- Row of players -->
+<div class="container">
+    <div
+        class="grid dugout"
+        role="grid"
+        tabindex="0"
+        on:drop={(event) => playerDrop(event)}
+        on:dragover={(event) => event.preventDefault()}
+        on:dragenter={dragEnter}
+        on:dragleave={dragLeave}
+    >
+        {#each availablePlayers as player}
+            <div
+                class="cell"
+                role="gridcell"
+                tabindex="0"
+                draggable="true"
+                on:dragstart={(event) => playerDragStart(event, player)}
+                on:dragover={(event) => event.preventDefault()}
+                aria-grabbed="false"
+            >
+                <div class="player-square">
+                    <p>{player}</p>
+                </div>
+            </div>
+        {/each}
+    </div>
+    <p class="center">Center</p>
+    <!-- A grid 15 wide 13 heigh, the bottom row is the endzone -->
+    <div class="grid pitch" role="grid">
+        {#each players as playerRow, row}
+            {#each playerRow as player, col}
+                <div
+                    class="cell"
+                    class:cell--tackle-zone={tackleZones[row][col]}
+                    role="gridcell"
+                    tabindex={!!player ? 0 : -1}
+                    class:cell--endzone={row === 12}
+                    draggable={!!player}
+                    on:dragstart={(event) => dragStart(event, player, row, col)}
+                    on:dragover={(event) => event.preventDefault()}
+                    on:drop={(event) => drop(event, player, row, col)}
+                    on:dragenter={dragEnter}
+                    on:dragleave={dragLeave}
+                >
+                    {#if !!player}
+                        <div class="player-square">
+                            <p>{player}</p>
+                        </div>
+                    {/if}
+                </div>
+            {/each}
+        {/each}
+    </div>
+    <!-- <ToggleButton
+        options={['on', 'off']}
+    /> -->
+</div>
+
+<style lang="scss">
+    .container {
+        overflow-x: auto;
+    }
+    .grid {
+        max-width: 1200px;
+        min-width: 600px;
+        display: grid;
+        margin: 0 auto;
+    }
+    .dugout {
+        grid-template-columns: repeat(16, 1fr);
+        border: 1px solid #a5d6a7;
+        aspect-ratio: 16/1;
+
+        background-color: var(--neutral);
+        .cell {
+            aspect-ratio: 1;
+        }
+    }
+
+    .pitch {
+        grid-template-columns: repeat(15, 1fr);
+        border-top: 4px double #a5d6a7;
+        // margin-top: 1rem;
+        .cell {
+            aspect-ratio: 1;
+            // a mid green border
+            border: 1px solid #a5d6a7;
+
+            //slightly darker green than #c8e6c
+            background-color: #dcedc8;
+
+            // alternate cells with green colours
+            &:nth-child(even) {
+                background-color: #c8e6c9;
+            }
+            &:nth-child(15n - 11),
+            &:nth-child(15n - 4) {
+                border-right: 1px solid black;
+            }
+            &:nth-child(15n - 10),
+            &:nth-child(15n - 3) {
+                border-left: 1px solid black;
+            }
+            &--endzone {
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+                // a more red a5d6a7
+                background-color: #ffcdd2;
+                opacity: 0.8;
+                background-image: linear-gradient(
+                        135deg,
+                        #ffcdd2 25%,
+                        transparent 25%
+                    ),
+                    linear-gradient(225deg, #ffcdd2 25%, transparent 25%),
+                    linear-gradient(45deg, #ffcdd2 25%, transparent 25%),
+                    linear-gradient(315deg, #ffcdd2 25%, #dcedc8 25%);
+                background-position: 16% 0, 16% 0, 0 0, 0 0;
+                background-size: 32% 32%;
+                background-repeat: repeat;
+                // background-color: #e57373;
+            }
+            &--tackle-zone {
+                // tackle zone color different to #ffcdd2
+                // Dotted background
+                // background-image: radial-gradient(
+                //     circle,
+                //     #ffcdd2 0.5px,
+                //     transparent 0.5px
+                // );
+                // darker than #c8e6c9
+
+                // opacity: 0.8;
+                background: repeating-linear-gradient(
+                    45deg,
+                    #dcedc8 0px,
+                    #dcedc8 6px,
+                    #ffcdd2 6px,
+                    #ffcdd2 12px
+                );
+
+                &:nth-child(even) {
+                    background: repeating-linear-gradient(
+                        135deg,
+                        #c8e6c9 0px,
+                        #c8e6c9 6px,
+                        #ffcdd2 6px,
+                        #ffcdd2 12px
+                    );
+                    // background-color: #dcedc8;
+                    // // opacity: 0.8;
+                    // // background-color: #e5e5f7;
+                    // opacity: 0.8;
+                    // background-image: repeating-linear-gradient(
+                    //         45deg,
+                    //         #dcedc8 25%,
+                    //         transparent 25%,
+                    //         transparent 75%,
+                    //         #dcedc8 75%,
+                    //         #dcedc8
+                    //     ),
+                    //     repeating-linear-gradient(
+                    //         45deg,
+                    //         #dcedc8 25%,
+                    //         #c8e6c9 25%,
+                    //         #c8e6c9 75%,
+                    //         #dcedc8 75%,
+                    //         #dcedc8
+                    //     );
+                    // background-position: 0 0, 31px 31px;
+                    // background-size: 62px 62px;
+                    // background: repeating-linear-gradient(
+                    //     135deg,
+                    //     #c8e6c9 0px,
+                    //     #c8e6c9 6px,
+                    //     #acc6ac 6px,
+                    //     #acc6ac 12px
+                    // );
+                    // a more red #c8e6c9
+                    // background-color: rgba(229, 115, 115, 0.5);
+                }
+            }
+        }
+    }
+    //     background-color: #e5e5f7;
+    // opacity: 0.8;
+
+    // background-size: 10px 10px;
+    // square cell
+
+    .player-square {
+        height: calc(100% - 2px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+        cursor: grab;
+        overflow: hidden;
+
+        p {
+            border-radius: 50%;
+            // aspect-ratio: 1;
+            width: 75%;
+            height: 75%;
+            background-color: var(--main-colour);
+            padding: 4px;
+            color: white;
+            margin-block: 0;
+            margin-inline: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid white;
+        }
+    }
+</style>

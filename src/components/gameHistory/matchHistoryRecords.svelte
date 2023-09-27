@@ -67,6 +67,10 @@
     {/if}
 </div>
 
+{#await import('../../modules/playbook/playbookEntry.svelte') then c}
+    <svelte:component this={c.default} />
+{/await}
+
 <style lang="scss">
     .match-history {
         h2 {
