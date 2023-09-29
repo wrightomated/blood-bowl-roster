@@ -79,6 +79,7 @@
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
                     clickFunction={toggleShowAllInducements}
+                    cyData="toggle-inducements"
                 /></td
             >
         </tr>
