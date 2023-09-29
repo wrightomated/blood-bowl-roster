@@ -21,7 +21,7 @@
                 ? inducement[$gameSettings.inducementMaxKey] || 0
                 : inducement.max,
             cost: $gameSettings?.inducementCostKey
-                ? inducement[$gameSettings.inducementCostKey]
+                ? inducement[$gameSettings.inducementCostKey] || inducement.cost
                 : inducement.cost,
         }))
         .filter((inducement) => inducement.max > 0)

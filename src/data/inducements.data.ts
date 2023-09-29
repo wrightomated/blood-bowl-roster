@@ -24,7 +24,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Weather Mage',
             cost: 30,
             max: 1,
-            sevensMax: 0,
         },
         { id: 'i4', displayName: 'Bloodweiser Keg', cost: 50, max: 2 },
         { id: 'i5', displayName: 'Special Play', cost: 100, max: 5 },
@@ -35,6 +34,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 8,
             sevensCost: 150,
             dungeonBowlMax: 8,
+            sevensMax: 8,
         },
         {
             id: 'i7',
@@ -43,12 +43,14 @@ export const inducementData: { inducements: Inducement[] } = {
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 50 },
             max: 3,
             dungeonBowlMax: 3,
+            sevensMax: 3,
         },
         {
             id: 'i8',
             displayName: 'Wandering Apothecary',
             cost: 100,
             max: 2,
+            sevensMax: 2,
             requiresApothecary: true,
         },
         {
@@ -56,6 +58,7 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Mortuary Assistant',
             cost: 100,
             max: 1,
+            sevensMax: 1,
             requiresSpecialRule: 'Sylvanian Spotlight',
         },
         {
@@ -63,6 +66,7 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Plague Doctor',
             cost: 100,
             max: 1,
+            sevensMax: 1,
             requiresSpecialRule: 'Favoured of Nurgle',
         },
         {
@@ -71,7 +75,6 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 1,
             requiresSpecialRule: 'Low Cost Linemen',
-            sevensMax: 0,
         },
         {
             id: 'i12',
@@ -79,21 +82,26 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 300,
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 100 },
             max: 1,
+            sevensMax: 1,
         },
-        { id: 'i13', displayName: 'Mercenary Player', cost: 30, max: 16 },
+        {
+            id: 'i13',
+            displayName: 'Mercenary Player',
+            cost: 30,
+            max: 16,
+            sevensMax: 16,
+        },
         {
             id: 'i15',
             displayName: '(In)Famous Coaching Staff: Josef Bugman',
             cost: 100,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i18',
             displayName: '(In)Famous Coaching Staff: Kari Coldsteel',
             cost: 50,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Elven Kingdoms League',
                 'Lustrian Superleague',
@@ -106,7 +114,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Papa Skullbones',
             cost: 80,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Favoured of...',
                 'Underworld Challenge',
@@ -118,7 +125,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Glandril Silverwater',
             cost: 40,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Elven Kingdoms League',
         },
         {
@@ -126,7 +132,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Krot Shockwhisker',
             cost: 70,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Underworld Challenge',
         },
         {
@@ -134,14 +139,12 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Ayleen Andar',
             cost: 100,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i23',
             displayName: '(In)Famous Coaching Staff: Professor Frönkelheim',
             cost: 130,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Sylvanian Spotlight',
         },
         {
@@ -149,7 +152,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Mungo Spinecracker',
             cost: 80,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Badlands Brawl',
                 'Old World Classic',
@@ -161,7 +163,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Fink Da Fixer',
             cost: 90,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: ['Badlands Brawl', 'Underworld Challenge'],
         },
         {
@@ -169,21 +170,18 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: '(In)Famous Coaching Staff: Schielund Scharlitan',
             cost: 90,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i16',
             displayName: 'Wizard: Hireling Sports-Wizard',
             cost: 150,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i27',
             displayName: 'Wizard: Chaos Sorcerer',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Favoured of...',
                 'Underworld Challenge',
@@ -195,7 +193,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Druchii Sorceress',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Elven Kingdoms League',
                 'Favoured of...',
@@ -207,7 +204,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Asur High Mage',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Elven Kingdoms League',
         },
         {
@@ -215,7 +211,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Slann Mage Priest',
             cost: 200,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Lustrian Superleague',
         },
         {
@@ -223,7 +218,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Horticulturalist of Nurgle',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: ['Favoured of Nurgle', 'Underworld Challenge'],
         },
         {
@@ -231,7 +225,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Sports Necrotheurge',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Sylvanian Spotlight',
         },
         {
@@ -239,7 +232,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Wicked Witch',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Old World Classic',
                 'Sylvanian Spotlight',
@@ -251,7 +243,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Warlock Engineer',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Underworld Challenge',
         },
         {
@@ -259,7 +250,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Ogre Firebelly',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Badlands Brawl',
         },
         {
@@ -267,7 +257,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Wizard: Night Goblin Shaman',
             cost: 150,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: ['Badlands Brawl', 'Underworld Challenge'],
         },
         {
@@ -275,7 +264,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Named Wizard: Horatio X. Schottenheim',
             cost: 80,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i17',
@@ -283,14 +271,12 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i38',
             displayName: "Biased Referee: Ranulf 'Red' Hokuli",
             cost: 130,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: ['Lustrian Superleague', 'Old World Classic'],
         },
         {
@@ -298,7 +284,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Biased Referee: Thoron Korensson',
             cost: 120,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Worlds Edge Superleague',
         },
         {
@@ -306,7 +291,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Biased Referee: Jorm the Ogre',
             cost: 120,
             max: 1,
-            sevensMax: 0,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
         },
         {
@@ -314,7 +298,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Biased Referee: The Trundlefoot Triplets',
             cost: 80,
             max: 1,
-            sevensMax: 0,
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 40 },
         },
         {
@@ -322,7 +305,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'WAAAGH! Drummer',
             cost: 50,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: 'Badlands Brawl',
         },
         {
@@ -330,7 +312,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Cavorting Nurgling',
             cost: 30,
             max: 3,
-            sevensMax: 0,
             requiresSpecialRule: 'Favoured of Nurgle',
         },
         {
@@ -338,7 +319,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Dwarfen Runesmith',
             cost: 50,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: [
                 'Old World Classic',
                 'Worlds Edge Superleague',
@@ -349,7 +329,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Halfling Hot Pot',
             cost: 80,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: ['Halfling Thimble Cup', 'Old World Classic'],
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 60 },
         },
@@ -358,7 +337,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Master of Ballistics',
             cost: 40,
             max: 1,
-            sevensMax: 0,
             requiresSpecialRule: ['Halfling Thimble Cup', 'Old World Classic'],
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 30 },
         },
@@ -367,7 +345,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Bottles of Heady Brew',
             cost: 40,
             max: 3,
-            sevensMax: 0,
             requiresTier: 3,
         },
         {
@@ -375,14 +352,12 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Team Mascot',
             cost: 30,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i49',
             displayName: 'Medical Unguent',
             cost: 60,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i50',
@@ -396,7 +371,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'College Wizard',
             cost: 100,
             max: 0,
-            sevensMax: 0,
             dungeonBowlMax: 1,
         },
         {
@@ -404,7 +378,6 @@ export const inducementData: { inducements: Inducement[] } = {
             displayName: 'Giant Mercenary Player',
             cost: 350,
             max: 1,
-            sevensMax: 0,
         },
         {
             id: 'i53',
