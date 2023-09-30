@@ -1393,7 +1393,7 @@ const vampireThrower: Player = {
     cost: 110,
     playerStats: [6, 4, 2, 2, 9],
     // bloodlust 2+, hypnotic gaze, pass, regeneration
-    skills: [46, 69, 77, 96],
+    skills: [96, 69, 46, 77],
     primary: ['A', 'G', 'P'],
     secondary: ['S'],
 };
@@ -1403,7 +1403,7 @@ const vampireBlitzer: Player = {
     cost: 110,
     playerStats: [6, 4, 2, 5, 9],
     // bloodlust 3+, hypnotic gaze, regeneration, juggernaut
-    skills: [54, 69, 77, 97],
+    skills: [97, 69, 54, 77],
     primary: ['A', 'G', 'S'],
     secondary: [],
 };
@@ -1413,7 +1413,7 @@ const vampireRunner: Player = {
     cost: 100,
     playerStats: [8, 3, 2, 4, 8],
     // bloodlust 2+, hypnotic gaze, regeneration
-    skills: [69, 77, 96],
+    skills: [96, 77, 69],
     primary: ['A', 'G'],
     secondary: ['P', 'S'],
 };
@@ -1432,7 +1432,7 @@ const vargheist: Player = {
     cost: 150,
     playerStats: [5, 5, 4, 0, 10],
     // bloodlust 3+, regeneration, frenzy, claws, loner 4+
-    skills: [26, 97, 77, 17, 71],
+    skills: [97, 26, 17, 71, 77],
     primary: ['S'],
     secondary: ['A', 'G'],
 };
