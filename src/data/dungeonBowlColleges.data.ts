@@ -141,23 +141,27 @@ const collegeOfDeath: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [65, 47],
+            playerIds: [65, 47, 163],
         },
         blitzers: {
             max: 4,
-            playerIds: [49, 66],
+            playerIds: [49, 66, 161],
         },
         runners: {
             max: 4,
-            playerIds: [48],
+            playerIds: [48, 162],
         },
         blockers: {
             max: 4,
             playerIds: [51],
         },
+        throwers: {
+            max: 2,
+            playerIds: [160],
+        },
         bigGuys: {
             max: 2,
-            playerIds: [67],
+            playerIds: [67, 164],
         },
     },
 };
