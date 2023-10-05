@@ -24,6 +24,11 @@ export const sevensGame: GameTypeSettings = {
     maxSpecialists: 4,
     inducementCostKey: 'sevensCost',
     inducementMaxKey: 'sevensMax',
+    pitch: {
+        length: 20,
+        width: 11,
+        gutter: 4,
+    },
 };
 
 export const elevensGame: GameTypeSettings = {
@@ -51,6 +56,11 @@ export const elevensGame: GameTypeSettings = {
         },
     ],
     starPlayersAllowance: 2,
+    pitch: {
+        length: 26,
+        width: 15,
+        gutter: 4,
+    },
 };
 
 export const dungeonBowlGame: GameTypeSettings = {

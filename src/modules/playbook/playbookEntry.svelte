@@ -1,20 +1,38 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import ToggleButton from '../../components/uiComponents/toggleButton.svelte';
+    import { gameSettings } from '../../store/gameSettings.store';
     import { roster } from '../../store/teamRoster.store';
-    let numberOfRows = 13;
-    let numberOfColumns = 15;
+    import RosterPlayerCard from '../../components/rosterPlayer/rosterPlayerCard.svelte';
 
-    let players = new Array(numberOfRows)
+    let showTackleZones = false;
+    let gridContainer: HTMLElement;
+    let hoverComponent: any = null;
+    $: hoverIndex = 0;
+
+    $: numberOfRows = $gameSettings.pitch.length / 2;
+    $: numberOfColumns = $gameSettings.pitch.width;
+    $: pitchGrid = new Array(numberOfRows)
         .fill('p')
         .map(() => new Array(numberOfColumns).fill(null));
 
     let availablePlayers: string[];
     $: availablePlayers = $roster.players
         .map((player) => player.alterations.playerNumber + '')
-        .filter((playerNumber) => !exists(players, playerNumber));
+        .filter((playerNumber) => !exists(pitchGrid, playerNumber));
     $: tackleZones = new Array(numberOfRows)
         .fill('p')
         .map(() => new Array(numberOfColumns).fill(false));
+    // --pitch-width: 11;
+    // --gutter-width: 2;
+
+    onMount(() => {
+        gridContainer.style.setProperty('--pitch-width', numberOfColumns + '');
+        gridContainer.style.setProperty(
+            '--gutter-width',
+            $gameSettings.pitch.gutter + ''
+        );
+    });
 
     function dragStart(event, player, row, col) {
         event.dataTransfer.setData(
@@ -29,9 +47,9 @@
             event.dataTransfer.getData('player')
         );
         console.log({ player, row, col, newPlayer, newRow, newCol });
-        players[newRow][newCol] = player;
+        pitchGrid[newRow][newCol] = player;
         if (typeof row === 'number' && typeof col === 'number') {
-            players[row][col] = newPlayer;
+            pitchGrid[row][col] = newPlayer;
         }
         // update tackle zones
         updateTackleZones(row, col, false);
@@ -53,8 +71,8 @@
         //
         // }
 
-        if (players[row][col]) {
-            players[row][col] = null;
+        if (pitchGrid?.[row]?.[col]) {
+            pitchGrid[row][col] = null;
         }
 
         updateTackleZones(row, col, false);
@@ -77,19 +95,19 @@
 
     function isTackleZone(row, col) {
         if (row - 1 >= 0) {
-            if (players[row - 1][col]) return true;
-            if (col - 1 >= 0 && players[row - 1][col - 1]) return true;
-            if (col + 1 < numberOfColumns && players[row - 1][col + 1])
+            if (pitchGrid[row - 1][col]) return true;
+            if (col - 1 >= 0 && pitchGrid[row - 1][col - 1]) return true;
+            if (col + 1 < numberOfColumns && pitchGrid[row - 1][col + 1])
                 return true;
         }
         if (row + 1 < numberOfRows) {
-            if (players[row + 1][col]) return true;
-            if (col - 1 >= 0 && players[row + 1][col - 1]) return true;
-            if (col + 1 < numberOfColumns && players[row + 1][col + 1])
+            if (pitchGrid[row + 1][col]) return true;
+            if (col - 1 >= 0 && pitchGrid[row + 1][col - 1]) return true;
+            if (col + 1 < numberOfColumns && pitchGrid[row + 1][col + 1])
                 return true;
         }
-        if (col - 1 >= 0 && players[row][col - 1]) return true;
-        if (col + 1 < numberOfColumns && players[row][col + 1]) return true;
+        if (col - 1 >= 0 && pitchGrid[row][col - 1]) return true;
+        if (col + 1 < numberOfColumns && pitchGrid[row][col + 1]) return true;
         return false;
     }
     function updateTackleZones(row: number, col: number, value: boolean) {
@@ -116,10 +134,25 @@
         if (col + 1 < numberOfColumns)
             tackleZones[row][col + 1] = value || isTackleZone(row, col + 1);
     }
+    function hover(playerNumber) {
+        console.log({ playerNumber });
+        if (!playerNumber) return;
+
+        hoverIndex = $roster.players.findIndex(
+            (player) => player.alterations.playerNumber === +playerNumber
+        );
+
+        console.log({ hoverIndex });
+
+        hoverComponent = RosterPlayerCard;
+    }
 </script>
 
 <!-- Row of players -->
-<div class="container">
+<div class="container" bind:this={gridContainer}>
+    {#if hoverComponent}
+        <svelte:component this={hoverComponent} index={hoverIndex} />
+    {/if}
     <div
         class="grid dugout"
         role="grid"
@@ -137,6 +170,8 @@
                 draggable="true"
                 on:dragstart={(event) => playerDragStart(event, player)}
                 on:dragover={(event) => event.preventDefault()}
+                on:mouseenter={() => console.log('enter' + player)}
+                on:mouseleave={() => console.log('leave' + player)}
                 aria-grabbed="false"
             >
                 <div class="player-square">
@@ -147,16 +182,23 @@
     </div>
     <p class="center">Center</p>
     <!-- A grid 15 wide 13 heigh, the bottom row is the endzone -->
-    <div class="grid pitch" role="grid">
-        {#each players as playerRow, row}
+    <div
+        class="grid pitch"
+        class:pitch--elevens={$roster.format === 'elevens'}
+        class:pitch--sevens={$roster.format === 'sevens'}
+        role="grid"
+    >
+        {#each pitchGrid as playerRow, row}
             {#each playerRow as player, col}
                 <div
                     class="cell"
-                    class:cell--tackle-zone={tackleZones[row][col]}
+                    class:cell--tackle-zone={showTackleZones &&
+                        tackleZones[row][col]}
                     role="gridcell"
                     tabindex={!!player ? 0 : -1}
-                    class:cell--endzone={row === 12}
+                    class:cell--endzone={row === numberOfRows - 1}
                     draggable={!!player}
+                    on:mouseenter={() => hover(player)}
                     on:dragstart={(event) => dragStart(event, player, row, col)}
                     on:dragover={(event) => event.preventDefault()}
                     on:drop={(event) => drop(event, player, row, col)}
@@ -172,13 +214,20 @@
             {/each}
         {/each}
     </div>
-    <!-- <ToggleButton
+    <p>Show tackle zone</p>
+    <ToggleButton
         options={['on', 'off']}
-    /> -->
+        selectedIndex={1}
+        selected={(option) => {
+            showTackleZones = option === 'on';
+        }}
+    />
 </div>
 
 <style lang="scss">
     .container {
+        --pitch-width: 11;
+        --gutter-width: 2;
         overflow-x: auto;
     }
     .grid {
@@ -199,8 +248,9 @@
     }
 
     .pitch {
-        grid-template-columns: repeat(15, 1fr);
+        grid-template-columns: repeat(var(--pitch-width), 1fr);
         border-top: 4px double #a5d6a7;
+
         // margin-top: 1rem;
         .cell {
             aspect-ratio: 1;
@@ -214,14 +264,9 @@
             &:nth-child(even) {
                 background-color: #c8e6c9;
             }
-            &:nth-child(15n - 11),
-            &:nth-child(15n - 4) {
-                border-right: 1px solid black;
-            }
-            &:nth-child(15n - 10),
-            &:nth-child(15n - 3) {
-                border-left: 1px solid black;
-            }
+
+            // gutter width
+
             &--endzone {
                 border-top: 1px solid black;
                 border-bottom: 1px solid black;
@@ -268,46 +313,47 @@
                         #ffcdd2 6px,
                         #ffcdd2 12px
                     );
-                    // background-color: #dcedc8;
-                    // // opacity: 0.8;
-                    // // background-color: #e5e5f7;
-                    // opacity: 0.8;
-                    // background-image: repeating-linear-gradient(
-                    //         45deg,
-                    //         #dcedc8 25%,
-                    //         transparent 25%,
-                    //         transparent 75%,
-                    //         #dcedc8 75%,
-                    //         #dcedc8
-                    //     ),
-                    //     repeating-linear-gradient(
-                    //         45deg,
-                    //         #dcedc8 25%,
-                    //         #c8e6c9 25%,
-                    //         #c8e6c9 75%,
-                    //         #dcedc8 75%,
-                    //         #dcedc8
-                    //     );
-                    // background-position: 0 0, 31px 31px;
-                    // background-size: 62px 62px;
-                    // background: repeating-linear-gradient(
-                    //     135deg,
-                    //     #c8e6c9 0px,
-                    //     #c8e6c9 6px,
-                    //     #acc6ac 6px,
-                    //     #acc6ac 12px
-                    // );
-                    // a more red #c8e6c9
-                    // background-color: rgba(229, 115, 115, 0.5);
                 }
             }
         }
-    }
-    //     background-color: #e5e5f7;
-    // opacity: 0.8;
+        &--elevens {
+            .cell {
+                &:nth-child(15n - 11),
+                &:nth-child(15n - 4) {
+                    border-right: 1px solid black;
+                }
+                &:nth-child(15n - 10),
+                &:nth-child(15n - 3) {
+                    border-left: 1px solid black;
+                }
+            }
+        }
+        &--sevens {
+            .cell {
+                &:nth-child(11n - 9),
+                &:nth-child(11n - 2) {
+                    border-right: 1px solid black;
+                }
+                &:nth-child(11n - 8),
+                &:nth-child(11n - 1) {
+                    border-left: 1px solid black;
+                }
+            }
+        }
 
-    // background-size: 10px 10px;
-    // square cell
+        // &--sevens {
+        //     .cell {
+        //         &:nth-child(n - 11),
+        //         &:nth-child(15n - 4) {
+        //             border-right: 1px solid black;
+        //         }
+        //         &:nth-child(15n - 10),
+        //         &:nth-child(15n - 3) {
+        //             border-left: 1px solid black;
+        //         }
+        //     }
+        // }
+    }
 
     .player-square {
         height: calc(100% - 2px);

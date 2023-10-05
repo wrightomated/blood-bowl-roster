@@ -27,6 +27,11 @@ export interface GameType {
     inducementMaxKey?: 'dungeonBowlMax' | 'gutterBowlMax' | 'sevensMax';
     inducementCostKey?: 'sevensCost';
     turnsPerHalf?: number;
+    pitch?: {
+        width: number;
+        length: number;
+        gutter: number;
+    };
     // | { default: number; rules: StarPlayerInclusionRules[] };
 }
 
