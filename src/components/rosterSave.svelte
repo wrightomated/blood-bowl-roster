@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { nanoid } from 'nanoid';
+
     import { roster } from '../store/teamRoster.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
@@ -11,29 +13,56 @@
     import ColumnControl from './columnControl.svelte';
     import { currentUserStore } from '../store/currentUser.store';
     import { rosterCache } from '../store/rosterCache.store';
+    import type { Roster } from '../models/roster.model';
 
     let saved = false;
-    let syncing = false;
+    let saving = false;
     let rosterCleared = false;
 
     async function saveRoster() {
         if ($currentUserStore) {
-            syncing = true;
-            try {
-                await import('./auth/firebaseDB.service').then((service) =>
-                    service.uploadRoster($roster)
-                );
-                saved = true;
-                rosterCache.invalidateRoster($roster.rosterId);
-                rosterCache.invalidateRosterPreviews();
-            } catch (error) {
-                console.error(error);
-            } finally {
-                syncing = false;
-            }
+            await uploadRoster($roster);
         } else {
             savedRosterIndex.addRoster($roster);
             saved = true;
+        }
+    }
+
+    async function copyRoster() {
+        const duplicatedRoster: Roster = {
+            ...$roster,
+            rosterId: nanoid(),
+            teamName: `${$roster.teamName} (copy)`,
+        };
+        if ($currentUserStore) {
+            modalState.modalLoading('Copying roster');
+            await uploadRoster(duplicatedRoster);
+            try {
+                roster.loadRoster(duplicatedRoster);
+                rosterCache.cacheRoster(duplicatedRoster);
+                modalState.modalMessage('Roster copied and loaded');
+            } catch (error) {
+                console.error(error);
+                modalState.modalError('Something went wrong loading copy');
+            }
+        } else {
+            savedRosterIndex.copyRoster(duplicatedRoster);
+        }
+    }
+
+    async function uploadRoster(rosterToUpload: Roster) {
+        saving = true;
+        try {
+            await import('./auth/firebaseDB.service').then((service) =>
+                service.uploadRoster(rosterToUpload)
+            );
+            saved = true;
+            rosterCache.invalidateRoster(rosterToUpload.rosterId);
+            rosterCache.invalidateRosterPreviews();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            saving = false;
         }
     }
 
@@ -66,14 +95,14 @@
     });
 </script>
 
-{#if !saved && !syncing}
+{#if !saved && !saving}
     <MaterialButton
         cyData="save-roster"
         hoverText="Save team"
         symbol="save"
         clickFunction={() => saveRoster()}
     />
-{:else if syncing}
+{:else if saving}
     <i
         class="material-symbols-outlined syncing no-transition"
         title="Saving team">autorenew</i
@@ -104,6 +133,16 @@
 <MaterialButton
     hoverText="Print roster"
     symbol="print"
+    clickFunction={printPage}
+/>
+<MaterialButton
+    hoverText="Copy roster"
+    symbol="file_copy"
+    clickFunction={copyRoster}
+/>
+<MaterialButton
+    hoverText="Sort by column"
+    symbol="sort"
     clickFunction={printPage}
 />
 

@@ -6,8 +6,6 @@
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
     import { getTeamFormatShortDisplay } from '../../types/teamFormat';
-    import FootballSpinner from './footballSpinner.svelte';
-    import ModalText from './modalText.svelte';
 
     export let preview: RosterPreview;
 
@@ -18,15 +16,8 @@
             teamLoadOpen.set(false);
             return;
         }
-        modalState.set({
-            ...$modalState,
-            isOpen: true,
-            canClose: false,
-            component: FootballSpinner,
-            componentProps: {
-                loadingText: `Loading ${preview?.teamName || 'roster'}`,
-            },
-        });
+        modalState.modalLoading(`Loading ${preview?.teamName || 'roster'}`);
+
         try {
             const service = await import('../auth/firebaseDB.service');
             const rosterToLoad = (
@@ -38,15 +29,7 @@
             modalState.close();
         } catch (error) {
             console.error(error);
-            modalState.set({
-                ...$modalState,
-                isOpen: true,
-                canClose: true,
-                component: ModalText,
-                componentProps: {
-                    text: `Something went wrong`,
-                },
-            });
+            modalState.modalError('Something went wrong loading roster');
         }
     }
 </script>

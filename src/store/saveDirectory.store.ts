@@ -32,6 +32,17 @@ const createSavedRosterIndex = () => {
                     index: updatedRosterIndex(store, roster.teamName),
                 };
             }),
+        copyRoster: (roster: Roster) =>
+            update((store) => {
+                const newId = store.count + 1;
+                addRosterToStorage(newId, roster);
+                return {
+                    ...store,
+                    count: newId,
+                    currentIndex: newId,
+                    index: updatedRosterIndex(store, roster.teamName),
+                };
+            }),
         removeRoster: () =>
             update((store) => {
                 removeRosterFromStorage(store.currentIndex);
