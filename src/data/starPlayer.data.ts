@@ -520,7 +520,7 @@ const countLuthorVonDrakenborg: StarPlayer = {
     playerStats: [6, 5, 2, 3, 10],
     playsFor: ['Sylvanian Spotlight'],
     skills: [13, 69, 71, 77, 9],
-    cost: 350,
+    cost: 340,
     specialRules: ['Star of the Show'],
 };
 
