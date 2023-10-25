@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Team, TeamTier } from '../models/team.model';
+    import type { Team } from '../models/team.model';
     import {
         currentTeam,
         currentTeamId,
@@ -38,6 +38,7 @@
     import SelectSpecialRule from './selectSpecialRule.svelte';
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
+    import { customisationRules } from '../customisation/customisation.store';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -55,9 +56,14 @@
     ];
 
     $: searchTerm = '';
+    customisationRules.subscribe((x) => {
+        if (x?.tiers) {
+            toggledTiers.setTiers(x.tiers);
+        }
+    });
 
-    let tiers: number[];
-    $: tiers = [...new Set(teamList.map((x) => x.tier))].sort((a, b) => a - b);
+    // let tiers: number[];
+    // $: tiers = [...new Set(teamList.map((x) => x.tier))].sort((a, b) => a - b);
 
     let sortedTeam: (Team | CustomTeam)[];
     $: sortedTeam = sortTeam()
@@ -217,29 +223,15 @@
         <div class="button-container">
             <div class="filter__tier">
                 Filter:
-                {#each tiers as tier}
+                {#each $toggledTiers as _tier, i}
                     <button
-                        on:click={() => toggledTiers.toggleTier(tier)}
-                        class:selected={$filteredTiers.includes(tier)}
-                        class="filter__button">{tierToNumeral(tier)}</button
+                        on:click={() => toggledTiers.toggleTier(i + 1)}
+                        class:selected={$filteredTiers.includes(i + 1)}
+                        class="filter__button"
+                        title={`Filter tier ${i + 1}`}
+                        >{tierToNumeral(i + 1)}</button
                     >
                 {/each}
-
-                <!-- <button
-                    on:click={() => toggledTiers.toggleTier(2)}
-                    class:selected={$filteredTiers.includes(2)}
-                    class="filter__button">II</button
-                >
-                <button
-                    on:click={() => toggledTiers.toggleTier(3)}
-                    class:selected={$filteredTiers.includes(3)}
-                    class="filter__button">III</button
-                >
-                <button
-                    on:click={() => toggledTiers.toggleTier(4)}
-                    class:selected={$filteredTiers.includes(4)}
-                    class="filter__button">IV</button
-                > -->
                 <button
                     on:click={toggleNaf}
                     title="Filter NAF teams"
@@ -379,6 +371,7 @@
             text-align: center;
             margin: 0 auto;
             border: var(--secondary-border);
+            margin-right: 4px;
 
             &:hover {
                 box-shadow: 0 4px 12px var(--button-shadow) inset;
