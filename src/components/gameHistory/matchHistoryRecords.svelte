@@ -9,7 +9,11 @@
     import { roster } from '../../store/teamRoster.store';
     import Button from '../uiComponents/button.svelte';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
+    import ToggleButton from '../uiComponents/toggleButton.svelte';
     import MatchHistoryCard from './matchHistoryCard.svelte';
+
+    const rosterTools = ['Match Records', 'Notes', 'Setups'];
+    let selectedOption = 'Match Records';
 
     async function newMatch() {
         if (!$roster.matchDraft) {
@@ -41,29 +45,52 @@
 </script>
 
 <div class="match-history no-print">
-    <!-- <NewMatchRecord /> -->
-    <h2>Match History</h2>
+    <h2>Roster Tools</h2>
     {#if $currentUserStore}
-        <div class="button-container">
-            {#if !$roster.matchDraft}
-                <Button clickFunction={newMatch}>New Match</Button>
-            {:else}
-                <Button clickFunction={newMatch}>Continue Record</Button>
-                <Button cancel={true} clickFunction={roster.deleteMatchDraft}
-                    >Delete Draft</Button
-                >
-            {/if}
-        </div>
-
-        {#if $roster?.matchSummary}
-            <div class="matches">
-                {#each $roster.matchSummary as matchSummary (matchSummary.id)}
-                    <MatchHistoryCard {matchSummary} />
-                {/each}
+        <!-- Toggle between Match Records, notes and setups -->
+        <ToggleButton
+            options={['Match Records', 'Notes', 'Setups']}
+            selectedIndex={rosterTools.findIndex((x) => x === selectedOption)}
+            selected={(option) => {
+                selectedOption = option;
+            }}
+        />
+        {#if selectedOption === 'Notes'}
+            <label for="notes">Notes</label>
+            <textarea
+                name="notes"
+                class="notes-area"
+                id="notes"
+                rows="4"
+                maxlength="512"
+                bind:value={$roster.notes}
+            />
+        {:else if selectedOption === 'Setups'}
+            <p>Coming soon</p>
+        {:else if selectedOption === 'Match Records'}
+            <div class="button-container">
+                {#if !$roster.matchDraft}
+                    <Button clickFunction={newMatch}>New Match</Button>
+                {:else}
+                    <Button clickFunction={newMatch}>Continue Record</Button>
+                    <Button
+                        cancel={true}
+                        clickFunction={roster.deleteMatchDraft}
+                        >Delete Draft</Button
+                    >
+                {/if}
             </div>
+
+            {#if $roster?.matchSummary}
+                <div class="matches">
+                    {#each $roster.matchSummary as matchSummary (matchSummary.id)}
+                        <MatchHistoryCard {matchSummary} />
+                    {/each}
+                </div>
+            {/if}
         {/if}
     {:else}
-        <p>You must be logged in to record matches.</p>
+        <p>You must be logged in to use roster tools.</p>
     {/if}
 </div>
 

@@ -33,6 +33,8 @@ export interface Roster {
     leagueRosterStatus?: LeagueRosterStatus;
     matchSummary?: MatchHistorySummary[];
     matchDraft?: MatchHistoryRecord;
+    coachName?: string;
+    notes?: string;
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;
