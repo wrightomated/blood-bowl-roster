@@ -6,7 +6,7 @@ export const tournamentCustomisation: TournamentCustomisation = {
     treasury: 1100,
     tiers: 4,
     tournamentTeamList: {
-        excludedIds: ['22', '25', '28'],
+        excludedIds: ['22', '25', '27', '28'],
         additionalTeams: [
             {
                 name: 'Skinks',
