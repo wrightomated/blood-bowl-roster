@@ -19,6 +19,7 @@
     import { gameSettings } from '../store/gameSettings.store';
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import RosterPlayerCount from './rosterPlayerCount.svelte';
+    import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
@@ -28,8 +29,7 @@
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
-    $: rosterPlayers = $roster.players.filter((p) => !p.deleted);
-    $: activePlayersNumber = rosterPlayers.length;
+    $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
     // function orderOn(column: ColumnDetails) {
     //     columnSortOrder.set(
     //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
@@ -119,8 +119,10 @@
                 </tr>
             </thead>
             <tbody>
-                {#each rosterPlayers as rosterPlayer}
-                    <RosterPlayerRow {rosterPlayer} />
+                {#each $roster.players as rosterPlayer, index}
+                    {#if !rosterPlayer?.deleted}
+                        <RosterPlayerRow {index} />
+                    {/if}
                 {/each}
                 {#if activePlayersNumber < $gameSettings.maxPlayers}
                     <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />

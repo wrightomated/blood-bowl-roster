@@ -120,16 +120,32 @@ function createRoster() {
             }),
         movePlayerUp: (index: number) =>
             update((store) => {
+                let target = index - 1;
+                while (target > 0) {
+                    if (store.players[target].deleted) {
+                        --target;
+                    } else {
+                        break;
+                    }
+                }
                 return {
                     ...store,
-                    players: switchTwoElements(store.players, index, index - 1),
+                    players: switchTwoElements(store.players, index, target),
                 };
             }),
         movePlayerDown: (index: number) =>
             update((store) => {
+                let target = index + 1;
+                while (target < store.players.length) {
+                    if (store.players[target].deleted) {
+                        ++target;
+                    } else {
+                        break;
+                    }
+                }
                 return {
                     ...store,
-                    players: switchTwoElements(store.players, index, index + 1),
+                    players: switchTwoElements(store.players, index, target),
                 };
             }),
         addInducement: (inducementKey: string) =>
