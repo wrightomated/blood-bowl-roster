@@ -95,9 +95,6 @@
     .flex-container {
         display: flex;
     }
-    .no-op {
-        color: #aaa;
-    }
 
     @media print {
         .control {

@@ -134,13 +134,6 @@
                     </td>
                     <td class="inducement__control">
                         <div class="flex-container">
-                            {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
-                                <MaterialButton
-                                    hoverText="Add inducement"
-                                    symbol="add_circle"
-                                    clickFunction={() => addInducement(ind.id)}
-                                />
-                            {/if}
                             {#if $roster.inducements?.[ind.id] > 0}
                                 <MaterialButton
                                     hoverText="Remove inducement"
@@ -148,6 +141,23 @@
                                     clickFunction={() =>
                                         removeInducement(ind.id)}
                                 />
+                            {:else}
+                                <i
+                                    class="material-symbols-outlined no-op no-transition no-print"
+                                    >block</i
+                                >
+                            {/if}
+                            {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
+                                <MaterialButton
+                                    hoverText="Add inducement"
+                                    symbol="add_circle"
+                                    clickFunction={() => addInducement(ind.id)}
+                                />
+                            {:else}
+                                <i
+                                    class="material-symbols-outlined no-op no-transition no-print"
+                                    >block</i
+                                >
                             {/if}
                         </div>
                     </td>
