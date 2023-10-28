@@ -4,8 +4,11 @@
     import { roster } from '../store/teamRoster.store';
 
     currentUserStore.subscribe((value) => {
-        if ($roster.coachName === undefined) {
-            $roster.coachName = value?.displayName;
+        if ($roster?.coachDetails?.coachName === undefined) {
+            $roster.coachDetails = {
+                ...$roster?.coachDetails,
+                coachName: value?.displayName,
+            };
         }
     });
 </script>
@@ -19,7 +22,16 @@
         id="coach-name"
         data-cy="coach-name"
         class="heading__input no-print"
-        bind:value={$roster.coachName}
+        bind:value={$roster.coachDetails.coachName}
+        use:blurOnEscapeOrEnter
+    />
+    <label for="naf-number" class="heading">NAF Number:</label>
+    <input
+        placeholder="NAF Number"
+        id="naf-number"
+        data-cy="naf-number"
+        class="heading__input no-print"
+        bind:value={$roster.coachDetails.nafNumber}
         use:blurOnEscapeOrEnter
     />
 </div>

@@ -76,11 +76,6 @@
         {$roster.mode}
     </p>
     <RosterSave />
-    {#if $roster?.coachName}
-        <p class="sub-heading print-only coach" title="Coach Name">
-            Coach: {$roster.coachName}
-        </p>
-    {/if}
 </div>
 <Export />
 <RosterDelete />
@@ -144,7 +139,6 @@
 {#if $roster.format !== 'dungeon bowl'}
     <AvailablePlayers />
 {/if}
-<CoachName />
 
 <style lang="scss">
     .sub-heading-box {

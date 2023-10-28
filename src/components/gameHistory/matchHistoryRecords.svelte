@@ -46,75 +46,81 @@
 
 <div class="match-history no-print">
     <h2>Roster Tools</h2>
-    {#if $currentUserStore}
-        <!-- Toggle between Match Records, notes and setups -->
-        <ToggleButton
-            options={['Match Records', 'Notes', 'Setups']}
-            selectedIndex={rosterTools.findIndex((x) => x === selectedOption)}
-            selected={(option) => {
-                selectedOption = option;
-            }}
-        />
-        {#if selectedOption === 'Notes'}
-            <label for="notes">Notes</label>
-            <textarea
-                name="notes"
-                class="notes-area"
-                id="notes"
-                rows="4"
-                maxlength="512"
-                bind:value={$roster.notes}
+    <div class="tool-content">
+        {#if $currentUserStore}
+            <!-- Toggle between Match Records, notes and setups -->
+            <ToggleButton
+                options={['Match Records', 'Notes', 'Setups']}
+                selectedIndex={rosterTools.findIndex(
+                    (x) => x === selectedOption
+                )}
+                selected={(option) => {
+                    selectedOption = option;
+                }}
             />
-        {:else if selectedOption === 'Setups'}
-            <p>Coming soon</p>
-        {:else if selectedOption === 'Match Records'}
-            <div class="button-container">
-                {#if !$roster.matchDraft}
-                    <Button clickFunction={newMatch}>New Match</Button>
-                {:else}
-                    <Button clickFunction={newMatch}>Continue Record</Button>
-                    <Button
-                        cancel={true}
-                        clickFunction={roster.deleteMatchDraft}
-                        >Delete Draft</Button
-                    >
-                {/if}
-            </div>
-
-            {#if $roster?.matchSummary}
-                <div class="matches">
+            {#if selectedOption === 'Notes'}
+                <textarea
+                    name="notes"
+                    class="notes-area"
+                    id="notes"
+                    aria-label="notes"
+                    rows="16"
+                    maxlength="2048"
+                    bind:value={$roster.notes}
+                />
+            {:else if selectedOption === 'Setups'}
+                <p>Coming soon</p>
+            {:else if selectedOption === 'Match Records'}
+                <div class="button-container">
+                    {#if !$roster.matchDraft}
+                        <Button clickFunction={newMatch}>New Match</Button>
+                    {:else}
+                        <Button clickFunction={newMatch}>Continue Record</Button
+                        >
+                        <Button
+                            cancel={true}
+                            clickFunction={roster.deleteMatchDraft}
+                            >Delete Draft</Button
+                        >
+                    {/if}
+                </div>
+                {#if $roster?.matchSummary}
                     {#each $roster.matchSummary as matchSummary (matchSummary.id)}
                         <MatchHistoryCard {matchSummary} />
                     {/each}
-                </div>
+                {/if}
             {/if}
+        {:else}
+            <p>You must be logged in to use roster tools.</p>
         {/if}
-    {:else}
-        <p>You must be logged in to use roster tools.</p>
-    {/if}
+    </div>
 </div>
 
 <style lang="scss">
+    .tool-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
     .match-history {
         h2 {
             font-size: 36px;
+            margin-block-end: 8px;
             text-align: center;
         }
         p {
             text-align: center;
         }
     }
-    .matches {
-        display: flex;
-        /* flex: 1 1 0px; */
-        gap: 20px;
-        flex-direction: column;
-        align-items: center;
-        max-width: 800px;
-        margin: 0 auto;
-    }
+
     .button-container {
         text-align: center;
         margin-bottom: 32px;
+    }
+    .notes-area {
+        width: 100%;
+        margin-block-start: 16px;
     }
 </style>
