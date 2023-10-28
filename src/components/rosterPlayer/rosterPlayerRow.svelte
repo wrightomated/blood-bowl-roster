@@ -9,10 +9,13 @@
     import { filteredTableColumns } from '../../store/filteredTableColumns.store';
     import type { TableColumnName } from '../../models/rosterTableColumns.model';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
+    import type { RosterPlayerRecord } from '../../models/roster.model';
 
-    export let index: number;
+    export let rosterPlayer: RosterPlayerRecord;
 
-    $: rosterPlayer = $roster.players[index];
+    $: index = $roster.players.findIndex(
+        (p) => p?.playerId === rosterPlayer?.playerId
+    );
 
     $: currentCost =
         rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr

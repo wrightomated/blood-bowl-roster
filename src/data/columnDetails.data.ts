@@ -19,6 +19,13 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: PlayerNumber,
         },
+        orderByPropertyPath: 'alterations.playerNumber',
+        sortFunction: (a, b) => {
+            if (!a.alterations.playerNumber || !b.alterations.playerNumber)
+                return -1;
+
+            return a.alterations.playerNumber - b.alterations.playerNumber;
+        },
     },
     {
         id: 2,
@@ -31,6 +38,12 @@ export const columnDetails: ColumnDetails[] = [
             tdClass: 'left-align',
             component: PlayerName,
         },
+        orderByPropertyPath: 'playerName',
+        sortFunction: (a, b) => {
+            if (!a.playerName || !b.playerName) return -1;
+
+            return a.playerName.localeCompare(b.playerName);
+        },
     },
     {
         id: 3,
@@ -39,7 +52,7 @@ export const columnDetails: ColumnDetails[] = [
             hideName: true,
         },
         rowDetails: {
-            tdClass: 'left-align',
+            tdClass: 'left-align controls',
             component: PlayerControls,
         },
     },
@@ -53,6 +66,12 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             tdClass: 'left-align no-wrap',
             component: PlayerPosition,
+        },
+        orderByPropertyPath: 'player.position',
+        sortFunction: (a, b) => {
+            if (!a.player.position || !b.player.position) return -1;
+
+            return a.player.position.localeCompare(b.player.position);
         },
     },
     {
@@ -123,6 +142,12 @@ export const columnDetails: ColumnDetails[] = [
             component: PlayerNumberInput,
         },
         disallowedRosterFormats: ['sevens'],
+        orderByPropertyPath: 'alterations.spp',
+        sortFunction: (a, b) => {
+            if (!a.alterations.spp || !b.alterations.spp) return -1;
+
+            return a.alterations.spp - b.alterations.spp;
+        },
     },
     {
         id: 13,
