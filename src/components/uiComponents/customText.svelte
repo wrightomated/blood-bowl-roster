@@ -20,5 +20,6 @@
         content: attr(placeholder);
         pointer-events: none;
         display: block; /* For Firefox */
+        font-style: italic;
     }
 </style>
