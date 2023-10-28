@@ -103,6 +103,7 @@
         align-items: center;
         max-width: 800px;
         margin: 0 auto;
+        gap: 24px;
     }
     .match-history {
         h2 {
@@ -115,12 +116,7 @@
         }
     }
 
-    .button-container {
-        text-align: center;
-        margin-bottom: 32px;
-    }
     .notes-area {
         width: 100%;
-        margin-block-start: 16px;
     }
 </style>

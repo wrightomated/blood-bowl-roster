@@ -19,7 +19,6 @@
     import { gameSettings } from '../store/gameSettings.store';
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import RosterPlayerCount from './rosterPlayerCount.svelte';
-    import CoachName from './coachName.svelte';
 
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 

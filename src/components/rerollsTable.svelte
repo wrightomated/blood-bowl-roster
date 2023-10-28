@@ -72,7 +72,7 @@
 
 <div class="tables">
     <table class="tables__item">
-        <tr>
+        <tr class:no-print={!$roster?.coachDetails?.coachName}>
             <th>Coach Name</th>
             <td>
                 <input
@@ -83,7 +83,7 @@
                 />
             </td>
         </tr>
-        <tr>
+        <tr class:no-print={!$roster?.coachDetails?.nafNumber}>
             <th>NAF Number</th>
             <td>
                 <input
