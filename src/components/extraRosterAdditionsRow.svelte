@@ -51,6 +51,18 @@
     <td>{formatNumberInThousands(extraCost)}</td>
     <td class="control">
         <div class="flex-container">
+            {#if extraAmount > (extra.min || 0)}
+                <MaterialButton
+                    hoverText="Remove extra"
+                    symbol="remove_circle"
+                    clickFunction={removeExtra}
+                />
+            {:else}
+                <i
+                    class="material-symbols-outlined no-op no-transition no-print"
+                    >block</i
+                >
+            {/if}
             {#if extraAmount < extraMax && !(extra.extraString === 'rerolls' && $roster.leagueRosterStatus === 'commenced' && $roster.format === 'sevens')}
                 <MaterialButton
                     cyData={'add-' + extra.extraString.replace('_', '-')}
@@ -58,13 +70,11 @@
                     symbol="add_circle"
                     clickFunction={addExtra}
                 />
-            {/if}
-            {#if extraAmount > (extra.min || 0)}
-                <MaterialButton
-                    hoverText="Remove extra"
-                    symbol="remove_circle"
-                    clickFunction={removeExtra}
-                />
+            {:else}
+                <i
+                    class="material-symbols-outlined no-op no-transition no-print"
+                    >block</i
+                >
             {/if}
         </div>
     </td>
@@ -84,6 +94,9 @@
     }
     .flex-container {
         display: flex;
+    }
+    .no-op {
+        color: #aaa;
     }
 
     @media print {
