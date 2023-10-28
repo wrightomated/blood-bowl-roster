@@ -1,19 +1,15 @@
 <script lang="ts">
-    import {
-        matchSummary,
-        newMatchRecord,
-    } from '../../helpers/matchHistoryHelpers';
+    import { newMatchRecord } from '../../helpers/matchHistoryHelpers';
     import { currentUserStore } from '../../store/currentUser.store';
     import { matchHistorySteps } from '../../store/matchHistorySteps.store';
     import { modalState } from '../../store/modal.store';
+    import { selectedRosterTool } from '../../store/selectedRosterTool.store';
     import { roster } from '../../store/teamRoster.store';
     import Button from '../uiComponents/button.svelte';
-    import FootballSpinner from '../uiComponents/footballSpinner.svelte';
     import ToggleButton from '../uiComponents/toggleButton.svelte';
     import MatchHistoryCard from './matchHistoryCard.svelte';
 
     const rosterTools = ['Match Records', 'Notes', 'Setups'];
-    let selectedOption = 'Match Records';
 
     async function newMatch() {
         if (!$roster.matchDraft) {
@@ -23,54 +19,53 @@
             );
             matchHistorySteps.reset($roster.mode, $roster.format);
         }
+        modalState.modalLoading('Setting up new match');
 
-        modalState.set({
-            ...$modalState,
-            isOpen: true,
-            canClose: true,
-            component: FootballSpinner,
-        });
         await import('./newMatchRecord.svelte').then((component) => {
             modalState.set({
                 ...$modalState,
                 isOpen: true,
                 canClose: true,
                 component: component.default,
-                // componentProps: {
-                //     loadingText: `Loading ${preview?.teamName || 'roster'}`,
-                // },
             });
         });
     }
 </script>
 
+{#if $roster.notes}
+    <div class="print-only">
+        <strong>Notes</strong>
+        <p>{$roster.notes}</p>
+    </div>
+{/if}
+
 <div class="match-history no-print">
     <h2>Roster Tools</h2>
     <div class="tool-content">
-        {#if $currentUserStore}
-            <!-- Toggle between Match Records, notes and setups -->
-            <ToggleButton
-                options={['Match Records', 'Notes', 'Setups']}
-                selectedIndex={rosterTools.findIndex(
-                    (x) => x === selectedOption
-                )}
-                selected={(option) => {
-                    selectedOption = option;
-                }}
+        <!-- Toggle between Match Records, notes and setups -->
+        <ToggleButton
+            options={['Match Records', 'Notes', 'Setups']}
+            selectedIndex={rosterTools.findIndex(
+                (x) => x === $selectedRosterTool
+            )}
+            selected={(option) => {
+                selectedRosterTool.set(option);
+            }}
+        />
+        {#if $selectedRosterTool === 'Notes'}
+            <textarea
+                name="notes"
+                class="notes-area"
+                id="notes"
+                aria-label="notes"
+                rows="16"
+                maxlength="2048"
+                bind:value={$roster.notes}
             />
-            {#if selectedOption === 'Notes'}
-                <textarea
-                    name="notes"
-                    class="notes-area"
-                    id="notes"
-                    aria-label="notes"
-                    rows="16"
-                    maxlength="2048"
-                    bind:value={$roster.notes}
-                />
-            {:else if selectedOption === 'Setups'}
-                <p>Coming soon</p>
-            {:else if selectedOption === 'Match Records'}
+        {:else if $selectedRosterTool === 'Setups'}
+            <p>Coming soon</p>
+        {:else if $selectedRosterTool === 'Match Records'}
+            {#if $currentUserStore}
                 <div class="button-container">
                     {#if !$roster.matchDraft}
                         <Button clickFunction={newMatch}>New Match</Button>
@@ -89,9 +84,9 @@
                         <MatchHistoryCard {matchSummary} />
                     {/each}
                 {/if}
+            {:else}
+                <p>You must be logged in to record match history.</p>
             {/if}
-        {:else}
-            <p>You must be logged in to use roster tools.</p>
         {/if}
     </div>
 </div>

@@ -132,7 +132,9 @@ thead > tr {
         font-size: 16px;
     }
 }
-
+.print-only {
+    display: none;
+}
 @media print {
     body {
         font-size: 10px;
@@ -157,6 +159,9 @@ thead > tr {
     }
     .no-print {
         display: none !important;
+    }
+    .print-only {
+        display: inline-block;
     }
 }
 
