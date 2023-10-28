@@ -2,6 +2,7 @@ import type { AdvancementCombination } from '../data/advancementCost.data';
 import type { CharacteristicType } from '../data/statOrder.data';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
+import type { CoachDetails } from './coach.model';
 import type { CollegeName } from './dungeonBowl.model';
 import type { InducementKey } from './inducement.model';
 import type {
@@ -33,6 +34,8 @@ export interface Roster {
     leagueRosterStatus?: LeagueRosterStatus;
     matchSummary?: MatchHistorySummary[];
     matchDraft?: MatchHistoryRecord;
+    coachDetails?: CoachDetails;
+    notes?: string;
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;

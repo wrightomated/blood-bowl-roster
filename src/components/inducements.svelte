@@ -45,6 +45,10 @@
                 : i
         )
         .sort((a, b) => a.displayName.localeCompare(b.displayName));
+    $: totalInducements = Object.values($roster.inducements).reduce(
+        (p, c) => p + c,
+        0
+    );
 
     const addInducement = (key: string) => {
         roster.addInducement(key);
@@ -62,7 +66,7 @@
     };
 </script>
 
-<table class="inducement-table" class:no-print={!$roster.inducements}>
+<table class="inducement-table" class:no-print={totalInducements === 0}>
     <thead>
         <tr>
             <td on:click={toggleShowAllInducements}>Inducement</td>
@@ -169,6 +173,9 @@
 </table>
 
 <style lang="scss">
+    table {
+        min-width: 470px;
+    }
     .inducement {
         &__display-name {
             text-align: left;

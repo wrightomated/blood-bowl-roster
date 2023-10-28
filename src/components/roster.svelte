@@ -246,4 +246,7 @@
             overflow: inherit;
         }
     }
+    .coach {
+        margin-left: auto;
+    }
 </style>

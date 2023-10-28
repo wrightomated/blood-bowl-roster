@@ -13,10 +13,20 @@
     } from '../helpers/formatTotalToThousands';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
+    import { currentUserStore } from '../store/currentUser.store';
 
     export let selectedTeam: CustomTeam;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
+
+    currentUserStore.subscribe((value) => {
+        if ($roster?.coachDetails?.coachName === undefined) {
+            $roster.coachDetails = {
+                ...$roster?.coachDetails,
+                coachName: value?.displayName,
+            };
+        }
+    });
 
     $: teamTotal = $roster.players
         .filter((p) => !p?.starPlayer)
@@ -62,20 +72,37 @@
 
 <div class="tables">
     <table class="tables__item">
-        {#each extras as extra}
-            <ExtraRosterAdditionsRow {extra} />
-        {/each}
-    </table>
-    <table class="tables__item">
+        <tr class:no-print={!$roster?.coachDetails?.coachName}>
+            <th>Coach Name</th>
+            <td>
+                <input
+                    placeholder="Coach Name"
+                    id="coach-name"
+                    data-cy="coach-name"
+                    bind:value={$roster.coachDetails.coachName}
+                />
+            </td>
+        </tr>
+        <tr class:no-print={!$roster?.coachDetails?.nafNumber}>
+            <th>NAF Number</th>
+            <td>
+                <input
+                    placeholder="NAF Number"
+                    id="naf-number"
+                    data-cy="naf-number"
+                    bind:value={$roster.coachDetails.nafNumber}
+                />
+            </td>
+        </tr>
         <tr>
             <th>Team Value</th>
-            <td colspan="2">
+            <td>
                 {formatNumberInThousands(teamTotal + teamExtrasTotal)}
             </td>
         </tr>
         <tr>
             <th>Current TV</th>
-            <td data-cy="current-tv" colspan="2">
+            <td data-cy="current-tv">
                 {formatNumberInThousands(currentTotal + teamExtrasTotal)}
             </td>
         </tr>
@@ -95,6 +122,11 @@
                 </td>
             </tr>
         {/if}
+    </table>
+    <table class="tables__item">
+        {#each extras as extra}
+            <ExtraRosterAdditionsRow {extra} />
+        {/each}
     </table>
 
     {#if $gameSettings?.starPlayersAllowance > 0}
@@ -124,8 +156,22 @@
                 font-weight: normal;
                 padding: 10px;
             }
+            & input {
+                border: none;
+                text-align: center;
+                padding: 0;
+                font-size: 16px;
+                background: transparent;
+                font-style: italic;
+            }
+            @media print {
+                & input {
+                    font-size: 10px;
+                    font-style: normal;
+                }
+            }
             tr {
-                height: 44px;
+                height: 40px;
             }
         }
     }
