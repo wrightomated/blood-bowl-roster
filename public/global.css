@@ -2,6 +2,7 @@
     --main-colour: #970f0c;
     --secondary-colour: #1a3f7f;
     --button-shadow: #185b88b2;
+    --no-op-colour: #aaa;
 
     --sc-l60: #6b96e1;
     --secondary-background-colour: #eeeeee;
@@ -183,6 +184,10 @@ thead > tr {
 }
 .no-transition:hover {
     font-variation-settings: 'FILL' 1;
+}
+.no-op {
+    cursor: default;
+    color: var(--no-op-colour);
 }
 .roll {
     animation-name: spin;
