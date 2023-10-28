@@ -19,14 +19,8 @@
     import { gameSettings } from '../store/gameSettings.store';
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import RosterPlayerCount from './rosterPlayerCount.svelte';
-    import MaterialButton from './uiComponents/materialButton.svelte';
-    import type { ColumnDetails } from '../models/rosterTableColumns.model';
-    import type { RosterPlayerRecord } from '../models/roster.model';
-    import {
-        columnSortOrder,
-        sortedColumn,
-        sortedRosterPlayers,
-    } from '../store/sortedRosterPlayers.store';
+
+    // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
     export let playerTypes: Player[];
 
@@ -35,17 +29,17 @@
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
     $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
-    $: rosterPlayers = $sortedRosterPlayers;
+    $: rosterPlayers = $roster.players;
 
-    function orderOn(column: ColumnDetails) {
-        columnSortOrder.set(
-            $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
-                ? 'desc'
-                : 'asc'
-        );
-        sortedColumn.set(column);
-        rosterPlayers = $sortedRosterPlayers;
-    }
+    // function orderOn(column: ColumnDetails) {
+    //     columnSortOrder.set(
+    //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
+    //             ? 'desc'
+    //             : 'asc'
+    //     );
+    //     sortedColumn.set(column);
+    //     rosterPlayers = $sortedRosterPlayers;
+    // }
 </script>
 
 <div class="team-name-container">
@@ -114,13 +108,13 @@
                                 : c?.customName
                                 ? c.customName
                                 : c.name}
-                            {#if c.orderByPropertyPath}
+                            <!-- {#if c.orderByPropertyPath}
                                 <MaterialButton
                                     hoverText="Sort"
                                     symbol="sort"
                                     clickFunction={() => orderOn(c)}
                                 />
-                            {/if}
+                            {/if} -->
                         </td>
                     {/each}
                 </tr>

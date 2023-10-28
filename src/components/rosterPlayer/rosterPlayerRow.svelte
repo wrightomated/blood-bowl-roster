@@ -11,7 +11,6 @@
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { RosterPlayerRecord } from '../../models/roster.model';
 
-    // export let index: number;
     export let rosterPlayer: RosterPlayerRecord;
 
     $: index = $roster.players.findIndex(

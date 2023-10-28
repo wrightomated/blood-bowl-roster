@@ -8,8 +8,6 @@ export const columnSortOrder = writable<'asc' | 'desc'>(undefined);
 export const sortedRosterPlayers = derived(
     [roster, sortedColumn, columnSortOrder],
     ([$roster, $sortedColumn, $sortOrder]) => {
-        console.log({ $sortedColumn, $sortOrder });
-
         const sortFunction = $sortedColumn?.sortFunction;
         const players = $roster?.players.filter((p) => !p.deleted);
         if (sortFunction) {
@@ -17,7 +15,6 @@ export const sortedRosterPlayers = derived(
                 $sortOrder === 'desc'
                     ? players.sort(sortFunction).reverse()
                     : players.sort(sortFunction);
-            console.log({ sorted });
             return sorted;
         }
         return players;

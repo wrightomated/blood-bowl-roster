@@ -47,6 +47,7 @@
             }
         } else {
             savedRosterIndex.copyRoster(duplicatedRoster);
+            roster.loadRoster(duplicatedRoster);
         }
     }
 
@@ -98,22 +99,22 @@
 {#if !saved && !saving}
     <MaterialButton
         cyData="save-roster"
-        hoverText="Save team"
+        hoverText="Save roster"
         symbol="save"
         clickFunction={() => saveRoster()}
     />
 {:else if saving}
     <i
         class="material-symbols-outlined syncing no-transition"
-        title="Saving team">autorenew</i
+        title="Saving roster">autorenew</i
     >
 {:else}<i
         class="material-symbols-outlined saved no-transition"
-        title="Team saved">check_circle</i
+        title="Roster saved">check_circle</i
     >{/if}
 {#if !rosterCleared}
     <MaterialButton
-        hoverText="Delete team forever"
+        hoverText="Delete roster forever"
         symbol="delete_forever"
         clickFunction={toggleDelete}
     />
@@ -125,7 +126,7 @@
         rosterViewMode.set($rosterViewMode === 'grid' ? 'table' : 'grid')}
 />
 <MaterialButton
-    hoverText="Share team"
+    hoverText="Share roster"
     symbol={$showExport ? 'link_off' : 'link'}
     clickFunction={toggleExport}
     cyData="share-team"
@@ -140,11 +141,11 @@
     symbol="file_copy"
     clickFunction={copyRoster}
 />
-<MaterialButton
+<!-- <MaterialButton
     hoverText="Sort by column"
     symbol="sort"
     clickFunction={printPage}
-/>
+/> -->
 
 {#if $rosterViewMode === 'table'}
     <MaterialButton
