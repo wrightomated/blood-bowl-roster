@@ -104,7 +104,6 @@ const updatedRosterIndex = (
         id: cId,
         name: name,
     };
-    // console.log('updating Roster Index', { store, record });
 
     if (rosterIndex.find((x) => x.id === cId)) {
         return rosterIndex.map((v) => (v.id === cId ? record : v));

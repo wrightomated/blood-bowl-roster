@@ -28,9 +28,8 @@
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
-    $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
-    $: rosterPlayers = $roster.players;
-
+    $: rosterPlayers = $roster.players.filter((p) => !p.deleted);
+    $: activePlayersNumber = rosterPlayers.length;
     // function orderOn(column: ColumnDetails) {
     //     columnSortOrder.set(
     //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
