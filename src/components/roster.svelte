@@ -20,13 +20,25 @@
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import RosterPlayerCount from './rosterPlayerCount.svelte';
 
+    // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
+
     export let playerTypes: Player[];
 
     $: nextPlayerIndex =
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
-    $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
+    $: rosterPlayers = $roster.players.filter((p) => !p.deleted);
+    $: activePlayersNumber = rosterPlayers.length;
+    // function orderOn(column: ColumnDetails) {
+    //     columnSortOrder.set(
+    //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
+    //             ? 'desc'
+    //             : 'asc'
+    //     );
+    //     sortedColumn.set(column);
+    //     rosterPlayers = $sortedRosterPlayers;
+    // }
 </script>
 
 <div class="team-name-container">
@@ -95,15 +107,20 @@
                                 : c?.customName
                                 ? c.customName
                                 : c.name}
+                            <!-- {#if c.orderByPropertyPath}
+                                <MaterialButton
+                                    hoverText="Sort"
+                                    symbol="sort"
+                                    clickFunction={() => orderOn(c)}
+                                />
+                            {/if} -->
                         </td>
                     {/each}
                 </tr>
             </thead>
             <tbody>
-                {#each $roster.players as player, index}
-                    {#if !player?.deleted}
-                        <RosterPlayerRow {index} />
-                    {/if}
+                {#each rosterPlayers as rosterPlayer}
+                    <RosterPlayerRow {rosterPlayer} />
                 {/each}
                 {#if activePlayersNumber < $gameSettings.maxPlayers}
                     <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />

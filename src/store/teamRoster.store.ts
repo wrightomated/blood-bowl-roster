@@ -49,7 +49,10 @@ function createRoster() {
                     ...store,
                     players: addPlayerToPlayers(
                         store.players,
-                        player,
+                        {
+                            ...player,
+                            playerId: player.playerId || nanoid(),
+                        },
                         maxPlayerNumber,
                         index
                     ),

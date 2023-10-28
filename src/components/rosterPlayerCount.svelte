@@ -2,19 +2,25 @@
     import { gameSettings } from '../store/gameSettings.store';
     import { specialistsAmount } from '../store/specialistsAmount.store';
     import { roster } from '../store/teamRoster.store';
+
+    $: availablePlayers = $roster.players.filter((p) => !p.deleted);
 </script>
 
-<div class="player-count__container">
+<div class="no-print player-count__container">
     <!-- If under min display warning -->
     <!-- Get players that aren't deleted and check agains min -->
-    {#if $roster.players.filter((p) => !p.deleted)?.length < $gameSettings?.minPlayers}
-        <div
-            class="player-count__player-row player-count__player-row--danger no-print"
-        >
+    {#if availablePlayers.length < $gameSettings?.minPlayers}
+        <div class="player-count__player-row player-count__player-row--danger">
             <div class="player-count__player-group">Minimum players</div>
             <div>
-                {$roster.players.filter((p) => !p.deleted)
-                    .length}/{$gameSettings?.minPlayers}
+                {availablePlayers.length}/{$gameSettings?.minPlayers}
+            </div>
+        </div>
+    {:else}
+        <div class="player-count__player-row">
+            <div class="player-count__player-group">Players</div>
+            <div>
+                {availablePlayers.length}/{$gameSettings?.maxPlayers}
             </div>
         </div>
     {/if}
