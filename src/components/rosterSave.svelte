@@ -107,13 +107,14 @@
     clickFunction={printPage}
 />
 
-<!-- {#if $rosterViewMode === 'table'}
+{#if $rosterViewMode === 'table'}
     <MaterialButton
         hoverText="Roster Settings"
         symbol="settings"
         clickFunction={toggleColumnControls}
     />
-{/if} -->
+{/if}
+
 <style lang="scss">
     .saved {
         color: green;
