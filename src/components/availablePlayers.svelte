@@ -32,17 +32,17 @@
             <table>
                 <thead>
                     <tr>
-                        <td>QTY</td>
-                        <td class="left-align">Position</td>
-                        <td>Cost</td>
-                        <td>MA</td>
-                        <td>ST</td>
-                        <td>AG</td>
-                        <td>PA</td>
-                        <td>AV</td>
-                        <td class="skills-header left-align">Skills</td>
-                        <td>Primary</td>
-                        <td>Secondary</td>
+                        <th>QTY</th>
+                        <th class="left-align">Position</th>
+                        <th>Cost</th>
+                        <th>MA</th>
+                        <th>ST</th>
+                        <th>AG</th>
+                        <th>PA</th>
+                        <th>AV</th>
+                        <th class="skills-header left-align">Skills</th>
+                        <th>Primary</th>
+                        <th>Secondary</th>
                     </tr>
                 </thead>
                 <tbody>

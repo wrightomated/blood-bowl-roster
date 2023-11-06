@@ -14,15 +14,15 @@
     <table>
         <thead>
             <tr>
-                <td class="left-align">Name</td>
-                <td>Cost</td>
-                <td>MA</td>
-                <td>ST</td>
-                <td>AG</td>
-                <td>PA</td>
-                <td>AV</td>
-                <td class="skills-header left-align">Skills</td>
-                <td>Special Rules</td>
+                <th class="left-align">Name</th>
+                <th>Cost</th>
+                <th>MA</th>
+                <th>ST</th>
+                <th>AG</th>
+                <th>PA</th>
+                <th>AV</th>
+                <th class="skills-header left-align">Skills</th>
+                <th>Special Rules</th>
             </tr>
         </thead>
         <tbody>

@@ -69,12 +69,12 @@
 <table class="inducement-table" class:no-print={totalInducements === 0}>
     <thead>
         <tr>
-            <td on:click={toggleShowAllInducements}>Inducement</td>
-            <td class="inducement__qty" on:click={toggleShowAllInducements}>
+            <th on:click={toggleShowAllInducements}>Inducement</th>
+            <th class="inducement__qty" on:click={toggleShowAllInducements}>
                 QTY
-            </td>
-            <td on:click={toggleShowAllInducements}>Cost</td>
-            <td class="inducement__toggle"
+            </th>
+            <th on:click={toggleShowAllInducements}>Cost</th>
+            <th class="inducement__toggle"
                 ><MaterialButton
                     hoverText={$showAllInducements
                         ? 'Hide inducements'
@@ -84,7 +84,7 @@
                         : 'arrow_drop_down'}
                     clickFunction={toggleShowAllInducements}
                     cyData="toggle-inducements"
-                /></td
+                /></th
             >
         </tr>
     </thead>
