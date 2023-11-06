@@ -97,7 +97,7 @@
             <thead>
                 <tr>
                     {#each $filteredTableColumns as c}
-                        <td
+                        <th
                             class={c.headerDetails?.elementClass}
                             id={c.headerDetails?.elementId}
                             colspan={c.colspan || 1}
@@ -114,7 +114,7 @@
                                     clickFunction={() => orderOn(c)}
                                 />
                             {/if} -->
-                        </td>
+                        </th>
                     {/each}
                 </tr>
             </thead>

@@ -18,6 +18,7 @@
     --white: #ffffff;
 
     --display-font: 'Roboto Slab', serif;
+    --body-font: 'PT Sans', sans-serif;
 
     --secondary-border: 2px solid var(--secondary-colour);
 }
@@ -102,6 +103,7 @@ input:disabled {
 table {
     border-collapse: collapse;
 }
+th,
 td,
 tr {
     padding: 8px;

@@ -31,7 +31,8 @@
 
     <p>
         This is a work in progress. For all queries, concerns and suggestions
-        please <a href="mailto:bbrosterapp@gmail.com">email</a>.
+        please <a class="blog-link" href="mailto:bbrosterapp@gmail.com">email</a
+        >.
     </p>
 </footer>
 

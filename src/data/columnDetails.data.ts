@@ -13,9 +13,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 1,
         name: 'Number',
-        headerDetails: {
-            hideName: true,
-        },
+        customName: '#',
         rowDetails: {
             component: PlayerNumber,
         },
@@ -49,10 +47,10 @@ export const columnDetails: ColumnDetails[] = [
         id: 3,
         name: 'Controls',
         headerDetails: {
-            hideName: true,
+            elementClass: 'left-align no-print position',
         },
         rowDetails: {
-            tdClass: 'left-align controls',
+            tdClass: 'left-align no-print controls',
             component: PlayerControls,
         },
     },
