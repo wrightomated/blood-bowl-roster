@@ -21,6 +21,8 @@
     } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import AdvancementEntry from './advancementEntry.svelte';
+    import { fly, slide } from 'svelte/transition';
+    import { quadInOut } from 'svelte/easing';
 
     export let index: number;
     export let rosterPlayer: RosterPlayerRecord;
@@ -166,7 +168,10 @@
     {/if}
     {#if !!rosterPlayer.alterations?.specificAdvancements}
         {#each rosterPlayer.alterations?.specificAdvancements as advancement, i (i)}
-            <div class="advancement-entry">
+            <div
+                class="advancement-entry"
+                in:fly|local={{ duration: 300, easing: quadInOut }}
+            >
                 <AdvancementEntry
                     {advancement}
                     deleteFunction={() => deleteSpecificAdvancement(i)}

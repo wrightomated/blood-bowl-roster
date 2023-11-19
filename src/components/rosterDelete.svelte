@@ -19,26 +19,14 @@
     }
 
     async function deleteRoster() {
-        modalState.set({
-            ...$modalState,
-            isOpen: true,
-            canClose: false,
-            component: FootballSpinner,
-            componentProps: { loadingText: 'Deleting roster' },
-        });
+        modalState.modalLoading('Deleting roster');
         try {
             const service = await import('./auth/firebaseDB.service');
             await service.deleteRoster($roster?.rosterId);
             modalState.close();
         } catch (error) {
             console.error(error);
-            modalState.set({
-                ...$modalState,
-                isOpen: true,
-                canClose: true,
-                component: ModalText,
-                componentProps: { text: 'Something went wrong' },
-            });
+            modalState.modalError('Something went wrong deleting roster');
         }
     }
 

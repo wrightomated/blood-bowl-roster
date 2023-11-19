@@ -282,11 +282,7 @@
     };
 </script>
 
-<div
-    class="container"
-    class:grid-view={$rosterViewMode === 'grid'}
-    transition:slide={{ duration: 300, easing: quadInOut }}
->
+<div class="container" class:grid-view={$rosterViewMode === 'grid'}>
     <div>
         {#if (rosterPlayer.alterations?.advancements || 0) < 6}
             <button
