@@ -105,11 +105,11 @@
     />
 {:else if saving}
     <i
-        class="material-symbols-outlined syncing no-transition"
+        class="material-symbols-outlined syncing no-transition no-print"
         title="Saving roster">autorenew</i
     >
 {:else}<i
-        class="material-symbols-outlined saved no-transition"
+        class="material-symbols-outlined saved no-transition no-print"
         title="Roster saved">check_circle</i
     >{/if}
 {#if !rosterCleared}
