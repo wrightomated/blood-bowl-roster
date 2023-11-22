@@ -48,44 +48,14 @@
 </script>
 
 {#if $showDelete}
-    <div class="container">
+    <div class="boxed-div">
         <p>
             Are you sure you want to delete {$roster.teamName || 'this roster'}?
             It can not be undone.
         </p>
-        <button class="delete" on:click={clearRoster}>Delete</button>
-        <button on:click={toggleDelete}>Cancel</button>
+        <button class="rounded-button cancel" on:click={clearRoster}
+            >Delete</button
+        >
+        <button class="rounded-button" on:click={toggleDelete}>Cancel</button>
     </div>
 {/if}
-
-<style lang="scss">
-    .container {
-        border-radius: 12px;
-        background: var(--secondary-background-colour);
-        padding: 10px;
-        margin-bottom: 1em;
-    }
-    button {
-        border-radius: 12px;
-        background-color: white;
-        color: grey;
-        padding: 10px;
-        margin: 5px;
-        border: 2px solid grey;
-
-        &:hover {
-            background-color: grey;
-            color: white;
-        }
-
-        &.delete {
-            color: var(--main-colour);
-            border-color: var(--main-colour);
-
-            &:hover {
-                background-color: var(--main-colour);
-                color: white;
-            }
-        }
-    }
-</style>

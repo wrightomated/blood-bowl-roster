@@ -35,6 +35,15 @@
 
 <div>
     {advancementValue}
+    {#if advancementDetails.type !== 'characteristic'}
+        <input
+            type="color"
+            aria-label={`Select colour for ${advancementValue}`}
+            bind:value={$roster.config.customSkillColour[
+                +advancement.advancementValue
+            ]}
+        />
+    {/if}
 </div>
 <div class="advancement-details">
     {advancementDetails.type}
@@ -64,6 +73,22 @@
         display: flex;
         justify-content: flex-end;
     }
+    input[type='color'] {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        height: 1.5rem;
+        padding: 0;
+        width: 1.5rem;
+        vertical-align: middle;
+        transition: scale 0.2s ease-in-out;
+        &:hover {
+            scale: 1.1;
+        }
+    }
     .advancement-details {
         display: flex;
         flex-wrap: wrap;
@@ -75,6 +100,5 @@
             font-family: var(--display-font);
             white-space: nowrap;
         }
-        /* text-align: center; */
     }
 </style>

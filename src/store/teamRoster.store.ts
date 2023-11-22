@@ -289,6 +289,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
         matchSummary: [],
+        config: { customSkillColour: {} },
     };
 
     if (options?.specialRule) {
@@ -353,6 +354,9 @@ const addMissingItemsToRoster = (roster: Roster) => {
     }
     if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
         updatedRoster.leagueRosterStatus = 'draft';
+    }
+    if (!updatedRoster.config) {
+        updatedRoster.config = { customSkillColour: {} };
     }
     currentTeamId.set(updatedRoster.teamId);
     updatedRoster = {

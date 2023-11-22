@@ -36,6 +36,7 @@ export interface Roster {
     matchDraft?: MatchHistoryRecord;
     coachDetails?: CoachDetails;
     notes?: string;
+    config: RosterConfig;
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;
@@ -132,3 +133,7 @@ export type PlayerGameAchievement =
     | 'deflection'
     | 'interception'
     | 'mvp';
+
+export interface RosterConfig {
+    customSkillColour: Record<number, string>;
+}

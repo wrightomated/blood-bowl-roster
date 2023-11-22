@@ -38,7 +38,7 @@
 </script>
 
 {#if $showExport}
-    <div class="container">
+    <div class="boxed-div">
         <div class="share-box">
             <label for="url-input">Share Url:</label>
             <input
@@ -80,12 +80,6 @@
 {/if}
 
 <style lang="scss">
-    .container {
-        border-radius: 12px;
-        background: var(--secondary-background-colour);
-        padding: 10px;
-        margin-bottom: 1em;
-    }
     .share-box {
         display: flex;
         padding: 10px;

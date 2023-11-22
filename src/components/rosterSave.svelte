@@ -158,7 +158,6 @@
 <style lang="scss">
     .saved {
         color: green;
-        margin-bottom: 3px;
     }
 
     .syncing {
