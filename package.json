@@ -38,6 +38,7 @@
         "@tsconfig/svelte": "^5.0.0",
         "@types/jest": "^29.5.3",
         "@types/node": "^20.4.2",
+        "@types/qrcode": "^1.5.5",
         "babel-jest": "^29.6.1",
         "cypress": "^13.2.0",
         "dotenv": "^16.3.1",
@@ -58,7 +59,9 @@
     "dependencies": {
         "firebase": "^10.0.0",
         "nanoid": "^4.0.2",
-        "sirv-cli": "^2.0.2"
+        "qrcode": "^1.5.3",
+        "sirv-cli": "^2.0.2",
+        "svelte-qrcode": "^1.0.0"
     },
     "jest": {
         "extensionsToTreatAsEsm": [

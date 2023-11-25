@@ -134,6 +134,9 @@
     {/if}
 
     <Inducements {selectedTeam} />
+    {#await import('./qrCode/qrCode.svelte') then c}
+        <svelte:component this={c.default} />
+    {/await}
 </div>
 
 <style lang="scss">
