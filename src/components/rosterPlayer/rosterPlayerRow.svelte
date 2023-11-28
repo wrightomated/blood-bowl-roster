@@ -89,9 +89,6 @@
 </tr>
 
 <style>
-    .left-align {
-        text-align: left;
-    }
     .no-wrap {
         white-space: nowrap;
     }

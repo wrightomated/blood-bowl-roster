@@ -2,9 +2,7 @@
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import { currentTeam, specialistIds } from '../../store/currentTeam.store';
-    import AddSkill from '../addSkill.svelte';
 
-    import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import PlayerNumber from './playerNumber.svelte';
@@ -138,11 +136,6 @@
 
     <PlayerCharacteristics {rosterPlayer} />
 
-    {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
-        <div>
-            <AddSkill {index} />
-        </div>
-    {/if}
     <div class="content">
         {#if tooManyBigGuys}
             <p class="big-guys">
@@ -211,10 +204,6 @@
     }
     .content {
         padding: 10px;
-    }
-
-    .left-align {
-        text-align: left;
     }
     .player-controls {
         display: flex;

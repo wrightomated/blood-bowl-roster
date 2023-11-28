@@ -15,7 +15,7 @@
         "sourceMap": true,
         /** Requests the runtime types from the svelte modules by default. Needed for TS files or else you get errors. */
         "types": ["jest","svelte","node"],
-    
+        "resolveJsonModule": true,
         "strict": false,
         "esModuleInterop": true,
         "skipLibCheck": true,

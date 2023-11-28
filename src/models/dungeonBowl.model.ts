@@ -1,20 +1,4 @@
-import type { Team, TeamReroll, TeamSpecialRule, TeamTier } from './team.model';
-
-/** @deprecated use Team instead */
-export interface DungeonBowlTeam {
-    name: CollegeName;
-    id: string;
-    // characteristics?: CollegeCharacteristics;
-    players: DungeonBowlPlayer[];
-    reroll: TeamReroll;
-    /** Needed in dungeon bowl team so team based logic doesn't break, dungeon bowl teams don't have special rules */
-    // TODO: refactor
-    specialRules: TeamSpecialRule[];
-    maxBigGuys?: number;
-    tier: number;
-    allowedApothecary: boolean;
-    pickSpecialRule?: TeamSpecialRule[];
-}
+import type { Team } from './team.model';
 
 export interface DungeonBowlCollege {
     name: CollegeName;

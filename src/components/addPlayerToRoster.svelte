@@ -182,9 +182,6 @@
 </tr>
 
 <style lang="scss">
-    .left-align {
-        text-align: left;
-    }
     input {
         border: 0;
         border-radius: 0;

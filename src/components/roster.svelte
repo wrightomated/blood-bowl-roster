@@ -19,7 +19,7 @@
     import { gameSettings } from '../store/gameSettings.store';
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import RosterPlayerCount from './rosterPlayerCount.svelte';
-    import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
+    import { _ } from 'svelte-i18n';
 
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
@@ -45,7 +45,7 @@
     <h2 class="heading">
         <input
             aria-label="team name"
-            placeholder="Team Name"
+            placeholder={$_('roster.namePlaceholder')}
             id="team-name"
             data-cy="team-name"
             class="heading__input"
@@ -56,7 +56,11 @@
 </div>
 <span class="no-print">
     <div class="pill-box">
-        <Pill>{$roster.teamType + ' Team'}</Pill>
+        <Pill
+            >{$_('roster.teamType', {
+                values: { type: $roster.teamType },
+            })}</Pill
+        >
         <Pill>{getTeamFormatShortDisplay($roster.format)}</Pill>
         <Pill>{$roster.mode}</Pill>
     </div>
@@ -66,7 +70,7 @@
 <div class="sub-heading-box">
     <p class="sub-heading print-only print-only--larger">{$roster.teamName}</p>
     <p class="sub-heading print-only">
-        {$roster.teamType} Team
+        {$_('roster.teamType', { values: { type: $roster.teamType } })}
     </p>
     <p class="sub-heading print-only" title={$roster.format}>
         {getTeamFormatShortDisplay($roster.format)}
@@ -101,12 +105,12 @@
                             class={c.headerDetails?.elementClass}
                             id={c.headerDetails?.elementId}
                             colspan={c.colspan || 1}
-                            title={c.title || c.name}
+                            title={$_(c.title || 'roster.column.names.' + c.id)}
                             >{c.headerDetails?.hideName
                                 ? ''
                                 : c?.customName
                                 ? c.customName
-                                : c.name}
+                                : $_('roster.column.names.' + c.id)}
                             <!-- {#if c.orderByPropertyPath}
                                 <MaterialButton
                                     hoverText="Sort"
@@ -217,9 +221,6 @@
         &--format {
             color: var(--main-colour);
         }
-    }
-    .left-align {
-        text-align: left;
     }
     .skills {
         min-width: 200px;

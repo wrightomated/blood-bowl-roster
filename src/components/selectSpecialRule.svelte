@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { currentTeam } from '../store/currentTeam.store';
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
 </script>
 
-<label for="special-rule">Select Special Rule</label>
+<label for="special-rule">{$_('creation.special')}</label>
 
 <select
     id="special-rule"

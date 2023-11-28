@@ -1,10 +1,8 @@
 <script lang="ts">
     import { starPlayers } from '../data/starPlayer.data';
-    import { currentTeam } from '../store/currentTeam.store';
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
     import { roster } from '../store/teamRoster.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
-    import type { Team } from '../models/team.model';
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../models/player.model';
@@ -153,9 +151,6 @@
     //     tr {
     //         height: 44px;
     //     }
-    // }
-    // .left-align {
-    //     text-align: left;
     // }
     .add-star {
         height: 24px;

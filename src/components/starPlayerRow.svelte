@@ -22,9 +22,3 @@
     </td>
     <td class="left-align">{starPlayer.specialRules}</td>
 </tr>
-
-<style lang="scss">
-    .left-align {
-        text-align: left;
-    }
-</style>

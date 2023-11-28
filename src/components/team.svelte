@@ -21,6 +21,7 @@
     import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
+    import { _ } from 'svelte-i18n';
 
     $: teamList = $availableTeams;
 
@@ -57,8 +58,8 @@
                 </caption>
                 <MaterialButton
                     hoverText={$showAvailableStarPlayers
-                        ? 'Hide available star players'
-                        : 'Show available star players'}
+                        ? $_('tables.teamPlayers.hide')
+                        : $_('tables.teamPlayers.show')}
                     symbol={$showAvailableStarPlayers
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
