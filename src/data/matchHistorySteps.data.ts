@@ -7,25 +7,25 @@ import PlayerEvents from '../components/gameHistory/playerEvents.svelte';
 import type { MatchHistoryStep } from '../models/matchHistory.model';
 
 export const newMatchRecordSteps: MatchHistoryStep[] = [
-    { title: 'Game Details', component: GameDetails, status: 'current' },
+    { title: 'match.details.title', component: GameDetails, status: 'current' },
     {
-        title: 'Pre-game Calculations',
+        title: 'match.pre.title',
         component: PreGameCalculations,
         status: 'future',
     },
     {
-        title: 'Match Inducements',
+        title: 'match.inducements.title',
         component: AddMatchInducements,
         status: 'future',
     },
-    { title: 'Player Events', component: PlayerEvents, status: 'future' },
+    { title: 'match.events.title', component: PlayerEvents, status: 'future' },
     {
-        title: 'Post-game Calculations',
+        title: 'match.post.title',
         component: PostGameCalculations,
         status: 'future',
     },
     {
-        title: 'Save Match History',
+        title: 'match.save.title',
         component: MatchToRosterOptions,
         status: 'future',
     },

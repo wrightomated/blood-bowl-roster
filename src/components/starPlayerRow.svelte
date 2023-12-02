@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../models/player.model';
 
@@ -8,7 +9,7 @@
 </script>
 
 <tr>
-    <td class="left-align">{starPlayer.position}</td>
+    <td class="left-align">{$_(`stars.${starPlayer.id}.name`)}</td>
     <td
         >{starPlayer.cost > 0
             ? formatNumberInThousands(starPlayer.cost)
@@ -17,8 +18,8 @@
     {#each starPlayer.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>
     {/each}
-    <td>
+    <td class="left-align">
         <SkillElement playerSkillIds={starPlayer.skills} />
     </td>
-    <td class="left-align">{starPlayer.specialRules}</td>
+    <td class="left-align">{$_(`stars.${starPlayer.id}.rule`)}</td>
 </tr>

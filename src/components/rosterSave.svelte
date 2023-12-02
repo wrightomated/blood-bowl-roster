@@ -14,6 +14,7 @@
     import { currentUserStore } from '../store/currentUser.store';
     import { rosterCache } from '../store/rosterCache.store';
     import type { Roster } from '../models/roster.model';
+    import { _ } from 'svelte-i18n';
 
     let saved = false;
     let saving = false;
@@ -114,7 +115,7 @@
     >{/if}
 {#if !rosterCleared}
     <MaterialButton
-        hoverText="Delete roster forever"
+        hoverText={$_('common.delete')}
         symbol="delete_forever"
         clickFunction={toggleDelete}
     />

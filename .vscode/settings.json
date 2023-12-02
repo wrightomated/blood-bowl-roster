@@ -1,5 +1,4 @@
 {
-    "svelte.language-server.runtime": "/usr/local/bin/node",
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "cSpell.enableFiletypes": [
@@ -9,7 +8,7 @@
         "bbroster"
     ],
     "i18n-ally.localesPaths": [
-        "src/local"
+        "src/locale"
     ],
     "i18n-ally.sourceLanguage": "en"
 }

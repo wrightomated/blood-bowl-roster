@@ -10,7 +10,7 @@
     import Modal from './components/uiComponents/modal.svelte';
     import Overlay from './components/uiComponents/overlay.svelte';
 
-    const savedLocale = localStorage.getItem(localeStorageKey);
+    const savedLocale = localStorage.getItem(localeStorageKey) || 'en';
     locale.set(savedLocale);
     registerLocales(savedLocale);
 

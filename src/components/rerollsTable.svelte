@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { roster } from '../store/teamRoster.store';
     import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
-    import type { Team } from '../models/team.model';
     import Inducements from './inducements.svelte';
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
@@ -73,10 +73,10 @@
 <div class="tables">
     <table class="tables__item">
         <tr class:no-print={!$roster?.coachDetails?.coachName}>
-            <th>Coach Name</th>
+            <th>{$_('tables.coach')}</th>
             <td>
                 <input
-                    placeholder="Coach Name"
+                    placeholder={$_('tables.coach')}
                     id="coach-name"
                     data-cy="coach-name"
                     bind:value={$roster.coachDetails.coachName}
@@ -84,10 +84,10 @@
             </td>
         </tr>
         <tr class:no-print={!$roster?.coachDetails?.nafNumber}>
-            <th>NAF Number</th>
+            <th>{$_('tables.naf')}</th>
             <td>
                 <input
-                    placeholder="NAF Number"
+                    placeholder={$_('tables.naf')}
                     id="naf-number"
                     data-cy="naf-number"
                     bind:value={$roster.coachDetails.nafNumber}
@@ -95,20 +95,20 @@
             </td>
         </tr>
         <tr>
-            <th>Team Value</th>
+            <th>{$_('tables.tv')}</th>
             <td>
                 {formatNumberInThousands(teamTotal + teamExtrasTotal)}
             </td>
         </tr>
         <tr>
-            <th>Current TV</th>
+            <th>{$_('tables.ctv')}</th>
             <td data-cy="current-tv">
                 {formatNumberInThousands(currentTotal + teamExtrasTotal)}
             </td>
         </tr>
 
         <tr>
-            <th>Treasury</th>
+            <th>{$_('tables.treasury')}</th>
             <td class="treasury-cell">
                 <Treasury />
             </td>
@@ -116,7 +116,7 @@
 
         {#if $roster.mode === 'league' && typeof $roster.pettyCash === 'number'}
             <tr>
-                <th>Petty Cash</th>
+                <th>{$_('common.petty')}</th>
                 <td class="treasury-cell">
                     {formatNumber($roster.pettyCash)}
                 </td>

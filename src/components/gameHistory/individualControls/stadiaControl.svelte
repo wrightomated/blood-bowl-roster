@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { categoryMap, stadiumTableData } from '../../../data/stadium.data';
     import type { D6Result } from '../../../models/dice.model';
     import type { Stadium, StadiumTable } from '../../../models/stadium.model';
@@ -22,7 +23,7 @@
 </script>
 
 <div class="stadia boxed-div">
-    <label for="stadium-category">Stadium</label>
+    <label for="stadium-category">{$_('match.pre.stadium')}</label>
     <select
         name="stadium-category"
         id="stadium-category"

@@ -4,6 +4,7 @@ import type { TeamSpecialRule } from './team.model';
 export interface StarPlayer {
     playsFor: TeamSpecialRule[];
     specialRules: string[];
+    /** This id references the id in the player data file */
     id: number;
     position: string;
     playerStats: number[];
@@ -14,6 +15,7 @@ export interface StarPlayer {
 }
 
 export interface Player {
+    /** This id references the id in the player data file */
     id: number;
     position: string;
     playerStats: number[];

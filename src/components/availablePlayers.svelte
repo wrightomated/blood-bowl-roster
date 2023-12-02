@@ -18,14 +18,14 @@
             data-cy="selected-team-caption"
             on:click={togglePlayers}
         >
-            {$_('tables.teamPlayers.caption', {
+            {$_('tables.caption', {
                 values: { team: $currentTeam.name },
             })}
         </caption>
         <MaterialButton
             hoverText={$showAvailablePlayers
-                ? $_('tables.teamPlayers.hide')
-                : $_('tables.teamPlayers.show')}
+                ? $_('tables.hide')
+                : $_('tables.show')}
             symbol={$showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={togglePlayers}
         />
@@ -35,10 +35,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th>{$_('tables.teamPlayers.qty')}</th>
+                        <th>{$_('tables.qty')}</th>
                         <th class="left-align">{$_('roster.column.names.4')}</th
                         >
-                        <th>{$_('tables.teamPlayers.cost')}</th>
+                        <th>{$_('tables.cost')}</th>
                         <th>{$_('roster.column.names.5')}</th>
                         <th>{$_('roster.column.names.6')}</th>
                         <th>{$_('roster.column.names.7')}</th>

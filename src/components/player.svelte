@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { Player } from '../models/player.model';
     import { roster } from '../store/teamRoster.store';
@@ -15,7 +16,7 @@
     <td class:danger={playerTypeCount > max}>
         {playerTypeCount}/{max}
     </td>
-    <td class="left-align">{player.position}</td>
+    <td class="left-align">{$_('players.' + player.id)}</td>
     <td>{formatNumberInThousands(player.cost)}</td>
     {#each player.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>

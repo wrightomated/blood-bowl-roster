@@ -1,11 +1,11 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { matchHistorySteps } from '../../store/matchHistorySteps.store';
 </script>
 
 <section class="new-match">
     <header>
-        <h2>New Match</h2>
-        <!-- <p>All fields are optional</p> -->
+        <h2>{$_('match.new')}</h2>
     </header>
     <div class="button-container">
         <button
@@ -14,7 +14,7 @@
             type="button"
             disabled={!!$matchHistorySteps.find(
                 (x, i) => x.status === 'current' && i === 0
-            )}>Previous</button
+            )}>{$_('match.previous')}</button
         >
 
         <button
@@ -24,7 +24,7 @@
             )}
             class="next-button rounded-button"
             on:click={matchHistorySteps.nextStep}
-            type="button">Next</button
+            type="button">{$_('match.next')}</button
         >
     </div>
     <br />
@@ -39,7 +39,14 @@
             <div class="step step--{step.status}">
                 <div
                     class="step-title"
+                    tabindex="0"
+                    role="button"
                     on:click={() => matchHistorySteps.goToStep(i)}
+                    on:keydown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            matchHistorySteps.goToStep(i);
+                        }
+                    }}
                 >
                     <i
                         class="material-symbols-outlined checkmark checkmark--{step.status}"
@@ -50,7 +57,7 @@
                             : 'circle'}</i
                     >
                     <h3>
-                        {step.title}
+                        {$_(step.title)}
                     </h3>
                 </div>
                 {#if step.status === 'current'}

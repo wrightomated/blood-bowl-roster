@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th class="left-align">{$_('roster.column.names.2')}</th>
-                <th>{$_('tables.teamPlayers.cost')}</th>
+                <th>{$_('tables.cost')}</th>
                 <th>{$_('roster.column.names.5')}</th>
                 <th>{$_('roster.column.names.6')}</th>
                 <th>{$_('roster.column.names.7')}</th>

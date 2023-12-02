@@ -6,6 +6,7 @@
     import { rosterSpecialRules } from '../store/rosterSpecialRules.store';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../models/player.model';
+    import { _ } from 'svelte-i18n';
 
     let selectedId: number;
 
@@ -14,14 +15,17 @@
         $rosterSpecialRules,
         $roster.players.map((x) => x.player.id)
     )
-        .map((x, _, a) => {
-            let displayName = x.position;
+        .map((x, i, a) => {
+            let displayName = $_(`stars.${x.id}.name`);
             if (x?.twoForOne) {
                 const other = a.find((p) => p.id === x?.twoForOne);
                 if (other.id < x.id) {
                     return { ...x, displayName: 'ignoreThis' };
                 }
-                displayName = x.position + ' & ' + other.position;
+                displayName =
+                    $_(`stars.${x.id}.name`) +
+                    ' & ' +
+                    $_(`stars.${other.id}.name`);
             }
             return { ...x, displayName };
         })
@@ -72,7 +76,7 @@
 
 <section class="no-print star-player">
     <header>
-        <h3>Star Player</h3>
+        <h3>{$_('stars.title')}</h3>
     </header>
     <div class="star-player__content">
         {#if filteredStarPlayers.length > 0}
@@ -145,13 +149,7 @@
             margin-right: 0;
         }
     }
-    // .star-player-inducement {
-    //     margin-block-end: 1em;
-    //     margin-right: 1em;
-    //     tr {
-    //         height: 44px;
-    //     }
-    // }
+
     .add-star {
         height: 24px;
     }

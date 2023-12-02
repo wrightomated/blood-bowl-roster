@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import {
         getSavedMatchHistoryFromLocal,
         saveMatchHistoryToLocal,
@@ -28,7 +29,7 @@
     $: result =
         score === opponentScore ? 'D' : score > opponentScore ? 'W' : 'L';
 
-    $: pillText = $roster.mode === 'league' ? 'League' : 'Tournament';
+    $: pillText = $roster.mode === 'league' ? 'league' : 'tournament';
 
     async function toggleBody() {
         if (loading) return;
@@ -60,13 +61,22 @@
         </div>
     {/if}
 
-    <header class="header" class:open on:click={async () => await toggleBody()}>
+    <header
+        class="header"
+        class:open
+        on:click={async () => await toggleBody()}
+        on:keydown={async (event) => {
+            if (event.key === 'Enter') await toggleBody();
+        }}
+        role="button"
+        tabindex="0"
+    >
         <div class="result">{result}</div>
         <div>vs</div>
         <div class="opponent-name">{matchSummary.opponent.name}</div>
         <div class="score">{score} - {opponentScore}</div>
         {#if matchSummary.isLeagueMatch}
-            <Pill variant="filled">{pillText}</Pill>
+            <Pill variant="filled">{$_(pillText)}</Pill>
         {/if}
 
         <i

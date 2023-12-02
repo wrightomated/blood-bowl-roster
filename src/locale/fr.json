@@ -1,57 +1,90 @@
 {
     "league": "Ligue",
     "exhibition": "Exposition",
+    "tournament": "Tournoi",
     "elevens": "Onzes",
-    "sevens": "Sept",
-    "dungeon bowl": "Bol du Donjon",
+    "sevens": "Septs",
+    "dungeon bowl": "Bol de Donjon",
     "gutter bowl": "Bol de Gouttière",
-
+    "tools": "Outils de Composition d'Équipe",
+    "loading": "Chargement...",
+    "success": "Succès!",
     "common": {
         "email": "E-mail",
         "search": "Recherche",
         "specialRules": "Règles Spéciales",
         "primary": "Primaire",
-        "secondary": "Secondaire"
+        "secondary": "Secondaire",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "close": "Fermer",
+        "ok": "D'accord",
+        "confirm": "Confirmer",
+        "notes": "Notes",
+        "petty": "Caisse Mineure",
+        "player": "Joueur",
+        "add": "Ajouter",
+        "remove": "Retirer",
+        "points": "Points",
+        "yes": "Oui",
+        "no": "Non"
     },
     "errors": {
-        "generic": "Quelque chose s'est mal passé. Veuillez réessayer plus tard."
+        "generic": "Un problème est survenu. Veuillez réessayer plus tard.",
+        "incorrect": "Nom d'utilisateur ou mot de passe incorrect."
     },
     "menu": {
         "close": "Fermer le menu",
         "open": "Ouvrir le menu",
         "profile": "Profil de l'utilisateur",
-        "logout": "Se déconnecter",
-        "login": "Se connecter",
+        "logout": "Déconnexion",
+        "login": "Connexion",
         "register": "S'inscrire",
         "new": "Nouvelle Équipe",
         "load": "Charger Équipe",
-        "current": "Équipe Actuelle"
+        "current": "Équipe Actuelle",
+        "locale": "Choisir la langue"
+    },
+    "messages": {
+        "deleting": "Suppression de l'équipe...",
+        "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette équipe ? Cette action ne peut pas être annulée."
+    },
+    "auth": {
+        "logoutSuccess": "Déconnexion réussie !",
+        "forgot": "Mot de passe oublié ?"
     },
     "footer": {
-        "blog": "Notes de mise à jour et nouvelles de BBRoster",
-        "rules": "Les références de règles et les noms des joueurs sont la propriété de Games Workshop. Ce site n'est pas affilié à Games Workshop. Je pense juste qu'ils sont soignés.",
+        "blog": "Notes de mise à jour et actualités de BBRoster",
+        "rules": "Les références aux règles et les noms des joueurs sont la propriété de Games Workshop. Ce site n'est pas affilié à Games Workshop. Je les trouve juste géniaux.",
         "privacy": "Confidentialité",
         "terms": "Conditions",
-        "wip": "Ceci est un travail en cours. Pour toutes questions, préoccupations et suggestions, veuillez envoyer un e-mail."
+        "wip": "Ceci est un travail en cours. Pour toutes questions, préoccupations et suggestions, veuillez envoyer un email."
     },
     "creation": {
         "title": "Créer Nouvelle Équipe",
         "create": "Créer",
-        "filter": "Filtre",
-        "type": "Type d'équipe",
-        "naf": "Filtrer les équipes naf",
-        "s": "Filtrer les équipes remplacées",
-        "tier": "Filtrer niveau {tier}",
-        "special": "Sélectionner règle spéciale"
+        "filter": "Filtrer",
+        "type": "Type d'Équipe",
+        "naf": "Filtrer équipes naf",
+        "s": "Filtrer équipes remplacées",
+        "tier": "Filtrer tier {tier}",
+        "special": "Sélectionner règle spéciale",
+        "noMatch": "Aucune équipe ne correspond à votre filtre"
     },
     "load": {
         "title": "Charger Équipe",
         "code": "Entrer le code",
         "coachTeams": "Équipes de {coach}",
         "local": "Équipes stockées localement",
-        "saved": "Liste enregistrée {n}"
+        "saved": "Équipe enregistrée {n}"
     },
-
+    "register": {
+        "account": "Enregistrez votre compte",
+        "info": "En enregistrant un compte, vous pourrez vous connecter depuis n'importe quel appareil et maintenir l'accès à toutes vos listes. Toutes les listes actuellement stockées seront téléchargées sur votre compte lors de l'enregistrement. Il n'y a aucun coût associé à la création d'un compte.",
+        "duplicate": "{e} déjà utilisé.",
+        "password": "Mot de passe",
+        "disc": "Veuillez lire nos documents de Conditions d'utilisation et de Politique de confidentialité avant de compléter votre inscription."
+    },
     "roster": {
         "namePlaceholder": "Nom de l'Équipe",
         "teamType": "Équipe {type}",
@@ -67,7 +100,7 @@
                 "8": "PA",
                 "9": "AV",
                 "10": "Compétences",
-                "11": "Frais d'embauche",
+                "11": "Frais d'Embauche",
                 "12": "SPP",
                 "13": "MNG",
                 "14": "NI",
@@ -75,52 +108,59 @@
                 "16": "Valeur Actuelle"
             },
             "titles": {
-                "5": "Allocation de Mouvement",
+                "5": "Autorisation de Mouvement",
                 "6": "Force",
                 "7": "Agilité",
-                "8": "Capacité de Passer",
+                "8": "Capacité de Passe",
                 "9": "Valeur d'Armure",
-                "13": "Manquer Prochain Match",
-                "12": "Points de Joueur Étoile Non Dépensés",
-                "14": "Blessure Mineure",
+                "13": "Absent Prochain Match",
+                "12": "Points de Star Player non dépensés",
+                "14": "Blessure Légère",
                 "15": "Retraite Temporaire"
             }
         }
     },
     "tables": {
-        "starPlayers": {
-            "starPlayer": "Joueur Étoile"
-        },
-        "teamPlayers": {
-            "caption": "Joueurs de l'Équipe {team}",
-            "hide": "Cacher les joueurs disponibles",
-            "show": "Montrer les joueurs disponibles",
-            "qty": "QTE",
-            "cost": "Coût"
-        }
+        "hide": "Masquer les disponibles",
+        "show": "Afficher les disponibles",
+        "qty": "QTÉ",
+        "cost": "Coût",
+        "caption": "Joueurs de l'équipe {team}",
+        "starCaption": "Stars de l'équipe {team}",
+        "coach": "Nom de l'entraîneur",
+        "naf": "Numéro NAF",
+        "tv": "Valeur de l'équipe",
+        "ctv": "TV Actuelle",
+        "treasury": "Trésorerie",
+        "rerolls": "Relances",
+        "assistant_coaches": "Entraîneurs adjoints",
+        "cheerleaders": "Pom-pom girls",
+        "dedicated_fans": "Fans dévoués",
+        "apothecary": "Apothicaire",
+        "removeAll": "Retirer tous les avantages ci-dessous (pas de remboursement)"
     },
     "skills": {
-        "1": "Réception",
-        "2": "Réception en Plongeant",
-        "3": "Plaquage en Plongeant",
-        "4": "Esquive",
+        "1": "Attraper",
+        "2": "Attrapage Plongeant",
+        "3": "Plaquage Plongeant",
+        "4": "Esquiver",
         "5": "Défensif",
-        "6": "Se Relever",
-        "7": "Saut",
+        "6": "Sauter",
+        "7": "Bond",
         "8": "Mains Sûres",
-        "9": "Pas de Côté",
+        "9": "Pas Latéral",
         "10": "Fourbe",
         "11": "Sprint",
         "12": "Pieds Sûrs",
         "13": "Blocage",
-        "14": "Téméraire",
+        "14": "Audacieux",
         "15": "Joueur Vicieux (+1)",
-        "16": "Défense",
+        "16": "Éviter",
         "17": "Frénésie",
         "18": "Coup de Pied",
         "19": "Pro",
         "20": "Filature",
-        "21": "Arracher le Ballon",
+        "21": "Désarmer",
         "22": "Mains Sûres",
         "23": "Plaquage",
         "24": "Lutte",
@@ -128,7 +168,7 @@
         "26": "Griffes",
         "27": "Présence Perturbante",
         "28": "Bras Supplémentaires",
-        "29": "Apparence Repoussante",
+        "29": "Apparence Fétide",
         "30": "Cornes",
         "31": "Peau Dure",
         "32": "Gueule Monstrueuse",
@@ -137,23 +177,23 @@
         "35": "Deux Têtes",
         "36": "Jambes Très Longues",
         "37": "Précis",
-        "38": "Canonnier",
-        "39": "Eclateur de Nuages",
-        "40": "Passe de Dégagement",
-        "41": "Fumblerooskie",
+        "38": "Canonnière",
+        "39": "Défenseur des Nuages",
+        "40": "Passe Déchargée",
+        "41": "Fumbleurskie",
         "42": "Passe Hail Mary",
         "43": "Leader",
         "44": "Nerfs d'Acier",
         "45": "Sur le Ballon",
         "46": "Passe",
-        "47": "Passe en Courant",
+        "47": "Passe en Course",
         "48": "Passe Sûre",
-        "49": "Bras de Fer",
+        "49": "Barre de Fer",
         "50": "Bagarreur",
-        "51": "Brise-Tacle",
-        "52": "Saisie",
+        "51": "Casse-Tacle",
+        "52": "Attraper",
         "53": "Garde",
-        "54": "Juggernaut",
+        "54": "Chasseur de Tête",
         "55": "Coup Puissant (+1)",
         "56": "Blocage Multiple",
         "57": "Piloteur",
@@ -165,27 +205,27 @@
         "63": "Toujours Affamé",
         "64": "Boulet et Chaîne",
         "65": "Bombardier",
-        "66": "Tête de Linotte",
+        "66": "Tête Vide",
         "67": "Tronçonneuse",
-        "68": "Décrépitude",
+        "68": "Décomposition",
         "69": "Regard Hypnotique",
-        "70": "Coup de Pied au Coéquipier",
+        "70": "Coup de Pied à l'Équipier",
         "71": "Solitaire (4+)",
         "72": "Pas de Mains",
-        "73": "Pesteux",
+        "73": "Infesté de Peste",
         "74": "Bâton Sauteur",
-        "75": "Vomissement Projectif",
+        "75": "Vomissement Projectile",
         "76": "Vraiment Stupide",
         "77": "Régénération",
-        "78": "Le Bon Coup",
+        "78": "Bon Matériel",
         "79": "Arme Secrète",
         "80": "Poignarder",
-        "81": "Miniature",
+        "81": "Petit Gabarit",
         "82": "Essaim",
         "83": "Piqué",
         "84": "Prendre Racine",
         "85": "Minuscule",
-        "86": "Lancer le Coéquipier",
+        "86": "Lancer l'Équipier",
         "87": "Timmm-ber!",
         "88": "Fureur Non Canal",
         "89": "Navigateur de Portail",
@@ -193,16 +233,16 @@
         "91": "Passeur de Portail",
         "92": "Lanceur de Mur",
         "93": "Ivrogne",
-        "94": "Remontant",
+        "94": "Coup de Fouet",
         "95": "Frapper et Courir",
-        "96": "Soif de Sang (2+)",
-        "97": "Soif de Sang (3+)",
-        "151": "Joueur Vicieux (+2)",
-        "551": "Coup Puissant (+2)",
+        "96": "Soif de sang (2+)",
+        "97": "Soif de sang (3+)",
+        "151": "Joueur vicieux (+2)",
+        "551": "Coup puissant (+2)",
         "620": "Animosité (tous les coéquipiers)",
-        "621": "Animosité (tous les coéquipiers Nain et Halfelin)",
+        "621": "Animosité (tous les coéquipiers Nain et Halfling)",
         "622": "Animosité (tous les coéquipiers Nain et Humain)",
-        "623": "Animosité (Ligneux Gobelin des Bas-fonds)",
+        "623": "Animosité (Ligneux Gobelin du Monde souterrain)",
         "624": "Animosité (Ligneux Orque)",
         "625": "Animosité (Bloqueur Grand Un)",
         "710": "Solitaire (5+)",
@@ -215,9 +255,9 @@
             "3": "Élus du Chaos",
             "4": "Elfe Noir",
             "5": "Nain",
-            "6": "Union Elfe",
+            "6": "Union Elfique",
             "7": "Gobelin",
-            "8": "Halfelin",
+            "8": "Halfling",
             "9": "Humain",
             "10": "Hommes-lézards",
             "11": "Horreur Nécromantique",
@@ -225,15 +265,15 @@
             "13": "Ogre",
             "14": "Alliance du Vieux Monde",
             "15": "Orque",
-            "16": "Morts-vivants Chancelants",
+            "16": "Morts-vivants titubants",
             "17": "Skaven",
             "18": "Snotling",
-            "19": "Habitants des Bas-fonds",
+            "19": "Habitants du Monde souterrain",
             "20": "Elfe Sylvain",
             "21": "Renégat du Chaos",
             "22": "Amazone (ToL)",
             "23": "Nain du Chaos",
-            "24": "Elfe Supérieur",
+            "24": "Haut Elfe",
             "25": "Norse (ToL)",
             "26": "Rois des Tombes",
             "27": "Vampire (ToL)",
@@ -244,24 +284,24 @@
             "32": "Amazone",
             "33": "Vampire"
         },
-        "specialRules": {
-            "badland_brawl": "Bagarre des Terres Désolées",
-            "bribery_and_corruption": "Corruption et Subornation",
-            "favoured_of": "Favorisé par...",
-            "favoured_of_nurgle": "Favorisé par Nurgle",
-            "favoured_of_chaos_undivided": "Favorisé par le Chaos Non-Divisé",
-            "favoured_of_khorne": "Favorisé par Khorne",
-            "favoured_of_slaanesh": "Favorisé par Slaanesh",
-            "favoured_of_tzeentch": "Favorisé par Tzeentch",
-            "elven_kingdoms_league": "Ligue des Royaumes Elfiques",
-            "old_world_classic": "Classique du Vieux Monde",
-            "worlds_edge_superleague": "Superligue des Confins du Monde",
-            "underworld_challengess": "Défi des Bas-fonds",
-            "halfling_thimble_cup": "Coupe du Dé à Coudre Halfelin",
-            "lustrian_superleague": "Superligue de Lustrie",
-            "masters_of_undeath": "Maîtres de la Non-Mort",
-            "sylvanian_spotlight": "Projecteur sur Sylvanie",
-            "low_cost_linemen": "Ligneux à Bas Coût"
+        "rules": {
+            "Badlands Brawl": "Bagarre des Terres Désolées",
+            "Bribery and Corruption": "Corruption et Pot-de-vin",
+            "Favoured of...": "Favorisé de...",
+            "Favoured of Nurgle": "Favorisé de Nurgle",
+            "Favoured of Chaos Undivided": "Favorisé du Chaos Non Divisé",
+            "Favoured of Khorne": "Favorisé de Khorne",
+            "Favoured of Slaanesh": "Favorisé de Slaanesh",
+            "Favoured of Tzeentch": "Favorisé de Tzeentch",
+            "Elven Kingdoms League": "Ligue des Royaumes Elfiques",
+            "Old World Classic": "Classique du Vieux Monde",
+            "Worlds Edge Superleague": "Superligue du Bord du Monde",
+            "Underworld Challenges": "Défi du Monde souterrain",
+            "Halfling Thimble Cup": "Coupe du Dé à Coudre Halfling",
+            "Lustrian Superleague": "Superligue Lustrienne",
+            "Masters of Undeath": "Maîtres de la Non-mort",
+            "Sylvanian Spotlight": "Projecteur sur la Sylvanie",
+            "Low Cost Linemen": "Ligneux à Bas Coût"
         }
     },
     "colleges": {
@@ -273,5 +313,536 @@
         "life": "Vie",
         "beasts": "Bêtes",
         "heavens": "Cieux"
+    },
+    "players": {
+        "name": "Nom du Joueur",
+        "1": "Ligneux Impérial",
+        "2": "Lanceur Impérial",
+        "3": "Blitzer Noble",
+        "4": "Garde du Corps",
+        "5": "Ogre",
+        "6": "Ligneux Gobelin Brute",
+        "7": "Orque Noir",
+        "8": "Troll Dressé",
+        "9": "Ligneux Homme-Bête",
+        "10": "Bloqueur Élu",
+        "11": "Troll du Chaos",
+        "12": "Ogre du Chaos",
+        "13": "Minotaure",
+        "14": "Ligneux Elfe Noir",
+        "15": "Coureur Elfe Noir",
+        "16": "Blitzer Elfe Noir",
+        "17": "Assassin",
+        "18": "Sorcière Elfe",
+        "19": "Ligneux Nain",
+        "20": "Coureur Nain",
+        "21": "Blitzer Nain",
+        "22": "Tueur de Troll",
+        "23": "Roule-mort",
+        "24": "Ligneux de l'Union",
+        "25": "Lanceur de l'Union",
+        "26": "Receveur de l'Union",
+        "27": "Blitzer de l'Union",
+        "28": "Ligneux Gobelin",
+        "29": "Bomma",
+        "30": "Looney",
+        "31": "Fanatique",
+        "32": "Pogoer",
+        "33": "'Ooligan'",
+        "34": "Plongeur du Destin",
+        "35": "Halfling Plein d'Espoir",
+        "36": "Halfling Costaud",
+        "37": "Receveur Halfling",
+        "38": "Homme-Arbre de la Forêt Altern",
+        "39": "Ligneux Humain",
+        "40": "Lanceur Humain",
+        "41": "Receveur Humain",
+        "42": "Blitzer Humain",
+        "43": "Ligneux Skink",
+        "44": "Skinks Caméléons",
+        "45": "Bloqueur Saurus",
+        "46": "Kroxigor",
+        "47": "Ligneux Zombie",
+        "48": "Coureur Ghoul",
+        "49": "Spectre",
+        "50": "Loup-garou",
+        "51": "Golem de Chair",
+        "52": "Ligneux Pourri",
+        "53": "Pestigor",
+        "54": "Bloater",
+        "55": "Rotspawn",
+        "56": "Ligneux Gnoblar",
+        "57": "Punter Ogre Runt",
+        "58": "Bloqueur Ogre",
+        "59": "Ligneux Orque",
+        "60": "Lanceur Orque",
+        "61": "Blitzer Orque",
+        "62": "Bloqueur Big Un",
+        "63": "Ligneux Gobelin",
+        "64": "Troll Non Dressé",
+        "65": "Ligneux Squelette",
+        "66": "Blitzer Wight",
+        "67": "Momie",
+        "68": "Ligneux Skaven",
+        "69": "Lanceur Skaven",
+        "70": "Coureur d'Égout",
+        "71": "Blitzer Skaven",
+        "72": "Rat Ogre",
+        "73": "Ligneux Snotling",
+        "74": "Fungus Flinga",
+        "75": "Fun-hoppa",
+        "76": "Stilty Runna",
+        "77": "Chariot à Pompe",
+        "78": "Ligneux Elfe Sylvain",
+        "79": "Lanceur Elfe Sylvain",
+        "80": "Receveur Elfe Sylvain",
+        "81": "Danseur de Guerre",
+        "82": "Homme-Arbre de Loren",
+        "83": "Ligneux Humain",
+        "84": "Lanceur Humain Renégat",
+        "85": "Gobelin Renégat",
+        "86": "Orque Renégat",
+        "87": "Skaven Renégat",
+        "88": "Elfe Noir Renégat",
+        "89": "Troll Renégat",
+        "90": "Ogre Renégat",
+        "91": "Minotaure Renégat",
+        "92": "Lignewoman Tribale",
+        "93": "Lanceur Guerrier Aigle",
+        "94": "Receveur Guerrier Piranha",
+        "95": "Blitzer Koka Kalim",
+        "96": "Ligneux Hobgoblin",
+        "97": "Bloqueur Nain du Chaos",
+        "98": "Blitzer Centaure Taureau",
+        "99": "Minotaure Asservi",
+        "100": "Haut Elfe Ligne",
+        "101": "Haut Elfe Lanceur",
+        "102": "Haut Elfe Receveur",
+        "103": "Haut Elfe Blitzer",
+        "104": "Nordique Ligne",
+        "105": "Nordique Lanceur",
+        "106": "Nordique Receveur",
+        "107": "Nordique Berserker",
+        "108": "Ulfwerner",
+        "109": "Yéti",
+        "110": "Lanceur Oint",
+        "111": "Blitzer Oint",
+        "112": "Gardien des Tombes",
+        "113": "Ligne Thrall",
+        "114": "Blitzer Vampire",
+        "115": "Ligne Humain du Vieux Monde",
+        "116": "Lanceur Humain du Vieux Monde",
+        "117": "Receveur Humain du Vieux Monde",
+        "118": "Blitzer Humain du Vieux Monde",
+        "119": "Bloqueur Nain du Vieux Monde",
+        "120": "Coureur Nain du Vieux Monde",
+        "121": "Blitzer Nain du Vieux Monde",
+        "122": "Tueur de Trolls Nain du Vieux Monde",
+        "123": "Espoir Halfling du Vieux Monde",
+        "124": "Homme-Arbre de la Forêt Altern",
+        "125": "Ligne Gobelin des Bas-Fonds",
+        "126": "Snotling des Bas-Fonds",
+        "127": "Clanrat Skaven",
+        "128": "Lanceur Skaven",
+        "129": "Coureur d'Égout",
+        "130": "Blitzer Skaven",
+        "131": "Troll des Bas-Fonds",
+        "132": "Ogre Rat Mutant",
+        "133": "Combattant de Fosse",
+        "134": "Démon Bloodletter",
+        "135": "Héraut de Khorne",
+        "136": "Sanguinaire",
+        "137": "Ligne",
+        "138": "Receveur",
+        "139": "Blitzer",
+        "140": "Maraudeur Bloodborn",
+        "141": "Khorngor",
+        "142": "Bloodseeker",
+        "143": "Bloodspawn",
+        "144": "Ligne Nordique Raider",
+        "145": "Berserker Nordique",
+        "146": "Valkyrie",
+        "147": "Ulfwerener",
+        "148": "Yéti",
+        "149": "Sanglier à Bière",
+        "150": "Ligne Gnoblar",
+        "151": "Ligne Snotling",
+        "152": "Ligne Nordique Raider",
+        "153": "Ligne Guerrière Aigle",
+        "154": "Blitzer Guerrière Piranha",
+        "155": "Lanceur Guerrier Python",
+        "156": "Bloqueur Guerrier Jaguar",
+        "157": "Blitzer Guerrière Piranha",
+        "158": "Lanceur Guerrier Python",
+        "159": "Bloqueur Guerrier Jaguar",
+        "160": "Lanceur Vampire",
+        "161": "Blitzer Vampire",
+        "162": "Coureur Vampire",
+        "163": "Ligne Thrall",
+        "164": "Vargheist"
+    },
+    "stars": {
+        "title": "Joueurs Étoiles",
+        "200": {
+            "name": "Le Gobbo Noir",
+            "rule": "Le Plus Sournois du Lot"
+        },
+        "201": {
+            "name": "Deeproot Strongbranch",
+            "rule": "Fiable"
+        },
+        "202": {
+            "name": "Eldril Sidewinder",
+            "rule": "Danse Hypnotisante"
+        },
+        "203": {
+            "name": "Glart Smarshrip",
+            "rule": "Rush Frénétique"
+        },
+        "204": {
+            "name": "Gloriel Summerbloom",
+            "rule": "Tir de Nulle Part"
+        },
+        "205": {
+            "name": "Grak",
+            "rule": "Deux pour Un"
+        },
+        "206": {
+            "name": "Crumbleberry",
+            "rule": "Deux pour Un"
+        },
+        "207": {
+            "name": "Gretchen Wächter",
+            "rule": "Incorporel"
+        },
+        "208": {
+            "name": "Griff Oberwald",
+            "rule": "Professionnel Accompli"
+        },
+        "209": {
+            "name": "Grim Ironjaw",
+            "rule": "Tueur"
+        },
+        "210": {
+            "name": "Hakflem Skuttlespike",
+            "rule": "Traître"
+        },
+        "211": {
+            "name": "Helmut Wulf",
+            "rule": "Vieux Pro"
+        },
+        "212": {
+            "name": "Karla Von Kill",
+            "rule": "Indomptable"
+        },
+        "213": {
+            "name": "Lord Borak",
+            "rule": "Seigneur du Chaos"
+        },
+        "214": {
+            "name": "Mighty Zug",
+            "rule": "Coup Écrasant"
+        },
+        "215": {
+            "name": "Morg 'n' Thorg",
+            "rule": "La Baliste"
+        },
+        "216": {
+            "name": "Roxanna Darknail",
+            "rule": "Bouffée de Vitesse"
+        },
+        "217": {
+            "name": "Rumbelow Sheepskin",
+            "rule": "Bélier"
+        },
+        "218": {
+            "name": "Skrull Halfheight",
+            "rule": "Jeu de Passe Fort"
+        },
+        "219": {
+            "name": "Lucian Swift",
+            "rule": "Deux pour Un"
+        },
+        "220": {
+            "name": "Valen Swift",
+            "rule": "Deux pour Un"
+        },
+        "221": {
+            "name": "Varag Ghoul-Chewer",
+            "rule": "Coup Écrasant"
+        },
+        "222": {
+            "name": "Grombrindal, le Nain Blanc",
+            "rule": "Sagesse du Nain Blanc"
+        },
+        "223": {
+            "name": "Willow Rosebark",
+            "rule": "Indomptable"
+        },
+        "224": {
+            "name": "Zolcath le Zoat",
+            "rule": "Excusez-moi, Êtes-vous un Zoat ?"
+        },
+        "225": {
+            "name": "Akhorne l'Écureuil",
+            "rule": "Rage Aveugle"
+        },
+        "226": {
+            "name": "Frank 'N' Stein",
+            "rule": "Blocage Brutal"
+        },
+        "227": {
+            "name": "Wilhelm Chaney",
+            "rule": "Déchirement Sauvage"
+        },
+        "228": {
+            "name": "Kreek, 'Le Vermineur' Rustgouger",
+            "rule": "Je Reviendrai"
+        },
+        "229": {
+            "name": "Grashnak Sabot-Noir",
+            "rule": "Empalé par le Taureau"
+        },
+        "230": {
+            "name": "Bryce 'La Lame' Cambuel",
+            "rule": "Flammes Spectrales"
+        },
+        "231": {
+            "name": "Scyla Anfingrimm",
+            "rule": "Fureur du Dieu du Sang"
+        },
+        "232": {
+            "name": "Max Spleenripper",
+            "rule": "Carnage Maximum"
+        },
+        "233": {
+            "name": "Barik Farblast",
+            "rule": "Faites-le Sauter !"
+        },
+        "234": {
+            "name": "Bomber Dribblesnot",
+            "rule": "Kaboum !"
+        },
+        "235": {
+            "name": "Fungus le Fou",
+            "rule": "Derviche Tourneur !"
+        },
+        "236": {
+            "name": "Ivar Eriksson",
+            "rule": "Partie de Pillage"
+        },
+        "237": {
+            "name": "Skrorg Snowpelt",
+            "rule": "Gonfler la Foule"
+        },
+        "238": {
+            "name": "Thorsson Stoutmead",
+            "rule": "Coup de Baril de Bière !"
+        },
+        "239": {
+            "name": "Boa Kon'ssstriktr",
+            "rule": "Regardez-moi dans les Yeux"
+        },
+        "240": {
+            "name": "Estelle la Veneaux",
+            "rule": "Maléfice Néfaste"
+        },
+        "241": {
+            "name": "Glotl Stop",
+            "rule": "Sauvagerie Primitive !"
+        },
+        "242": {
+            "name": "Puggy Baconbreath",
+            "rule": "Chance Halfling"
+        },
+        "243": {
+            "name": "Cindy Piewhistle",
+            "rule": "À Volonté"
+        },
+        "244": {
+            "name": "Dribl",
+            "rule": "Un Duo Sournois"
+        },
+        "245": {
+            "name": "Drull",
+            "rule": "Un Duo Sournois"
+        },
+        "246": {
+            "name": "Bilerot Vomitflesh",
+            "rule": "Régénération Putride"
+        },
+        "247": {
+            "name": "Ripper Bolgrot",
+            "rule": "Le Troll du Penseur"
+        },
+        "248": {
+            "name": "Nobbla Blackwart",
+            "rule": "Frappez-les Pendant qu'Ils sont à Terre !"
+        },
+        "249": {
+            "name": "Scrappa Sorehead",
+            "rule": "Yoink !"
+        },
+        "250": {
+            "name": "Withergrasp Doubledrool",
+            "rule": "Attention !"
+        },
+        "251": {
+            "name": "Ivan 'l'Animal' Deathshroud",
+            "rule": "Fléau Nain"
+        },
+        "252": {
+            "name": "Comte Luthor von Drakenborg",
+            "rule": "Star du Spectacle"
+        },
+        "253": {
+            "name": "Capitaine Karina von Riesz",
+            "rule": "Bouchée Appétissante"
+        }
+    },
+    "inducements": {
+        "i1": "Pom-Pom Girl d'Agence Temporaire",
+        "i2": "Assistant Coach à Temps Partiel",
+        "i3": "Mage du Temps",
+        "i4": "Fût de Bloodweiser",
+        "i5": "Jeu Spécial",
+        "i6": "Entraînement Supplémentaire d'Équipe",
+        "i7": "Pot-de-vin",
+        "i8": "Apothicaire Errant",
+        "i9": "Assistant Mortuaire",
+        "i10": "Docteur de la Peste",
+        "i11": "Recrues Turbulentes",
+        "i12": "Chef Cuisinier Halfling",
+        "i13": "Joueur Mercenaire",
+        "i15": "Staff d'Entraînement (In)Fameux : Josef Bugman",
+        "i18": "Staff d'Entraînement (In)Fameux : Kari Coldsteel",
+        "i19": "Staff d'Entraînement (In)Fameux : Papa Skullbones",
+        "i20": "Staff d'Entraînement (In)Fameux : Glandril Silverwater",
+        "i21": "Staff d'Entraînement (In)Fameux : Krot Shockwhisker",
+        "i22": "Staff d'Entraînement (In)Fameux : Ayleen Andar",
+        "i23": "Staff d'Entraînement (In)Fameux : Professeur Frönkelheim",
+        "i24": "Staff d'Entraînement (In)Fameux : Mungo Spinecracker",
+        "i25": "Staff d'Entraînement (In)Fameux : Fink Da Fixer",
+        "i26": "Staff d'Entraînement (In)Fameux : Schielund Scharlitan",
+        "i16": "Mage : Mage Sportif à Louer",
+        "i27": "Mage : Sorcier du Chaos",
+        "i28": "Mage : Sorcière Druchii",
+        "i29": "Mage : Haut Mage Asur",
+        "i30": "Mage : Prêtre-Mage Slann",
+        "i31": "Mage : Horticulteur de Nurgle",
+        "i32": "Mage : Necrotheurge Sportif",
+        "i33": "Mage : Sorcière Maléfique",
+        "i34": "Mage : Ingénieur Sorcier",
+        "i35": "Mage : Ogre Firebelly",
+        "i36": "Mage : Shaman Gobelin de la Nuit",
+        "i37": "Mage Nommé : Horatio X. Schottenheim",
+        "i17": "Arbitre Biaisé",
+        "i38": "Arbitre Biaisé : Ranulf 'Rouge' Hokuli",
+        "i39": "Arbitre Biaisé : Thoron Korensson",
+        "i40": "Arbitre Biaisé : Jorm l'Ogre",
+        "i41": "Arbitre Biaisé : Les Triplés Trundlefoot",
+        "i42": "Batteur WAAAGH!",
+        "i43": "Nurgling Dansant",
+        "i44": "Runiste Nain",
+        "i45": "Marmite Halfling",
+        "i46": "Maître en Balistique",
+        "i47": "Bouteilles de Breuvage Capiteux",
+        "i48": "Mascotte de l'Équipe",
+        "i49": "Onguent Médical",
+        "i50": "Mesures Désespérées",
+        "i51": "Mage Universitaire",
+        "i52": "Joueur Mercenaire Géant",
+        "i53": "Potion Magique Mineure",
+        "i54": "Potion Magique Supérieure",
+        "i55": "Sawbones",
+        "i56": "Stand de Snacks",
+        "i57": "Mage Novice"
+    },
+    "match": {
+        "login": "Vous devez être connecté pour enregistrer l'historique des matchs.",
+        "new": "Nouveau Match",
+        "continue": "Continuer l'Enregistrement",
+        "delete": "Supprimer le Brouillon",
+        "next": "Suivant",
+        "previous": "Précédent",
+        "records": "Enregistrements des Matchs",
+        "setups": "Configurations",
+        "details": {
+            "title": "Détails du Jeu",
+            "name": "Votre nom",
+            "opponent": "Nom de l'adversaire",
+            "date": "Date du match",
+            "type": "Est-ce un jeu de type {type}?"
+        },
+        "pre": {
+            "title": "Calculs Pré-Jeu",
+            "your": "Votre Facteur de Fans",
+            "opponent": "Facteur de Fans de l'Adversaire",
+            "weather": "Météo",
+            "stadium": "Stade"
+        },
+        "inducements": {
+            "title": "Avantages du Match",
+            "none": "Aucun",
+            "directions": "Vous pouvez retourner en toute sécurité à votre liste pour la modifier."
+        },
+        "events": {
+            "title": "Événements des Joueurs",
+            "total": "Total",
+            "individual": "Individuel",
+            "type": "Type d'Événement",
+            "turn": "Tour",
+            "opp": "Total des Touchdowns de l'Adversaire",
+            "disc": "*Les tueries ne sont pas une statistique officielle et ne rapportent pas de spp. Ajoutez simultanément une blessure pour spp automatique.",
+            "onTurn": "au tour {turn}",
+            "casualty": "Blessure",
+            "casualty.p": "Blessures",
+            "completion": "Passe Complétée",
+            "completion.p": "Passes Complétées",
+            "kill": "Tuerie",
+            "kill.p": "Tueries",
+            "touchdown": "Touchdown",
+            "touchdown.p": "Touchdowns",
+            "deflection": "Déviation",
+            "deflection.p": "Déviations",
+            "interception": "Interception",
+            "interception.p": "Interceptions"
+        },
+        "post": {
+            "title": "Calculs Post-Jeu",
+            "winnings": "Gains",
+            "concession": "Concession",
+            "mvp": "MVP",
+            "df": "Jet des Fans Dévoués",
+            "df_change": "Vos fans dévoués vont {change}",
+            "dec": "diminuer de {n}.",
+            "inc": "augmenter de 1.",
+            "stay": "rester les mêmes."
+        },
+        "save": {
+            "title": "Enregistrer le Match",
+            "updateSpp": "Ajouter des SPP aux joueurs",
+            "updateTreasury": "Mettre à jour la trésorerie",
+            "removeInducements": "Retirer les Avantages",
+            "removeStarPlayers": "Retirer les Joueurs Vedettes",
+            "updateDedicatedFans": "Mettre à jour les fans dévoués",
+            "updateConcededGoals": "Mettre à jour les buts concédés"
+        }
+    },
+    "weather": {
+        "default": "Par défaut",
+        "spring": "Printemps",
+        "summer": "Été",
+        "autumn": "Automne",
+        "winter": "Hiver",
+        "subterranean": "Souterrain",
+        "primordial": "Primordial",
+        "graveyard": "Cimetière",
+        "desolate": "Désolé",
+        "mountainous": "Montagneux",
+        "coastal": "Côtier",
+        "desert": "Désert",
+        "street": "Rue",
+        "sewer": "Égout"
     }
 }

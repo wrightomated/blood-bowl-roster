@@ -4,6 +4,7 @@
     import type { Extra } from '../models/extra.model';
     import type { LeagueRosterStatus } from '../models/roster.model';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import { _ } from 'svelte-i18n';
 
     export let extra: Extra;
 
@@ -46,7 +47,7 @@
 </script>
 
 <tr>
-    <th>{extra.extraString.replace('_', ' ')}</th>
+    <th>{$_('tables.' + extra.extraString)}</th>
     <td class="qty">{extraAmount} / {extraMax}</td>
     <td>{formatNumberInThousands(extraCost)}</td>
     <td class="control">

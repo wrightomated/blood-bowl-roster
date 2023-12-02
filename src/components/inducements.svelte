@@ -9,6 +9,7 @@
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
+    import { _ } from 'svelte-i18n';
 
     export let selectedTeam: Team | CustomTeam;
 
@@ -41,10 +42,14 @@
         )
         .filter((i) =>
             searchTerm
-                ? i.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+                ? $_('inducements.' + i.id)
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
                 : i
         )
-        .sort((a, b) => a.displayName.localeCompare(b.displayName));
+        .sort((a, b) =>
+            $_('inducements.' + a.id).localeCompare($_('inducements.' + b.id))
+        );
     $: totalInducements = Object.values($roster.inducements).reduce(
         (p, c) => p + c,
         0
@@ -71,14 +76,14 @@
         <tr>
             <th on:click={toggleShowAllInducements}>Inducement</th>
             <th class="inducement__qty" on:click={toggleShowAllInducements}>
-                QTY
+                {$_('tables.qty')}
             </th>
-            <th on:click={toggleShowAllInducements}>Cost</th>
+            <th on:click={toggleShowAllInducements}>{$_('tables.cost')}</th>
             <th class="inducement__toggle"
                 ><MaterialButton
                     hoverText={$showAllInducements
-                        ? 'Hide inducements'
-                        : 'Show inducements'}
+                        ? $_('tables.hide')
+                        : $_('tables.show')}
                     symbol={$showAllInducements
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
@@ -91,10 +96,10 @@
     <tbody>
         {#if $roster.mode === 'league' && Object.values($roster.inducements).reduce((p, c) => p + c, 0) > 0}
             <tr class="no-print">
-                <td colspan="3">Remove all inducements below (no refund)</td>
+                <td colspan="3">{$_('tables.removeAll')}</td>
                 <td>
                     <MaterialButton
-                        hoverText="Remove all inducements"
+                        hoverText={$_('common.remove')}
                         symbol="delete_forever"
                         clickFunction={() => removeAllInducements()}
                     /></td
@@ -106,8 +111,8 @@
                 ><td colspan="4">
                     <div class="inducement__search">
                         <input
-                            aria-label="Search inducements"
-                            placeholder="Search inducements"
+                            aria-label={$_('common.search')}
+                            placeholder={$_('common.search')}
                             type="text"
                             bind:value={searchTerm}
                         />
@@ -127,7 +132,9 @@
         {#each newFilteredInducements as ind}
             {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>
-                    <td class="inducement__display-name">{ind.displayName}</td>
+                    <td class="inducement__display-name"
+                        >{$_('inducements.' + ind.id)}</td
+                    >
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
                     <td>
                         {formatNumberInThousands(ind.cost)}
@@ -136,7 +143,7 @@
                         <div class="flex-container">
                             {#if $roster.inducements?.[ind.id] > 0}
                                 <MaterialButton
-                                    hoverText="Remove inducement"
+                                    hoverText={$_('common.remove')}
                                     symbol="remove_circle"
                                     clickFunction={() =>
                                         removeInducement(ind.id)}
@@ -149,7 +156,7 @@
                             {/if}
                             {#if ($roster.inducements?.[ind.id] || 0) < ind.max}
                                 <MaterialButton
-                                    hoverText="Add inducement"
+                                    hoverText={$_('common.add')}
                                     symbol="add_circle"
                                     clickFunction={() => addInducement(ind.id)}
                                 />
@@ -169,8 +176,8 @@
                 ><td colspan="4">
                     <MaterialButton
                         hoverText={$showAllInducements
-                            ? 'Hide inducements'
-                            : 'Show inducements'}
+                            ? $_('tables.hide')
+                            : $_('tables.show')}
                         symbol={$showAllInducements
                             ? 'arrow_drop_up'
                             : 'arrow_drop_down'}

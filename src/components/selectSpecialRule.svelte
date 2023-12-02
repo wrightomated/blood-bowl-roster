@@ -13,7 +13,7 @@
     data-cy="select-team-rule"
 >
     {#each $currentTeam.pickSpecialRule as specialRule}
-        <option value={specialRule}>{specialRule}</option>
+        <option value={specialRule}>{$_('teams.rules.' + specialRule)}</option>
     {/each}
 </select>
 

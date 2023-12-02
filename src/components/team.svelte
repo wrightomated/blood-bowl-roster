@@ -54,12 +54,14 @@
                     class="team-star-player-caption"
                     on:click={toggleStarPlayers}
                 >
-                    {`${$currentTeam.name} Team Star Players`}
+                    {$_('tables.starCaption', {
+                        values: { team: $currentTeam.name },
+                    })}
                 </caption>
                 <MaterialButton
                     hoverText={$showAvailableStarPlayers
-                        ? $_('tables.teamPlayers.hide')
-                        : $_('tables.teamPlayers.show')}
+                        ? $_('tables.hide')
+                        : $_('tables.show')}
                     symbol={$showAvailableStarPlayers
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}

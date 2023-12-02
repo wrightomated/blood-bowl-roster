@@ -7,18 +7,19 @@
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
     import { getAuthModal } from './getAuthFormModule';
+    import { _ } from 'svelte-i18n';
 
     $: emailV = '';
     let formTouched = false;
     let emailSent = false;
-    let errorText = '';
+    let error: boolean = false;
 
     onMount(() => {
         document.getElementById('email')?.focus();
     });
 
     async function sendResetEmail(e: Event) {
-        errorText = '';
+        error = false;
         modalState.enableClose(false);
         showSpinner.set(true);
         e.preventDefault();
@@ -29,7 +30,7 @@
             emailSent = true;
         } catch (error) {
             console.error({ error });
-            errorText = 'Something went wrong';
+            error = true;
         } finally {
             modalState.enableClose(true);
             showSpinner.set(false);
@@ -56,7 +57,7 @@
         <Button
             clickFunction={async () => {
                 await showLogin();
-            }}>Login</Button
+            }}>{$_('menu.login')}</Button
         >
     </div>
 {:else}
@@ -66,7 +67,7 @@
         on:submit|preventDefault={sendResetEmail}
     >
         <h2>Reset your password</h2>
-        <label for="email">Email:</label>
+        <label for="email">{$_('common.email')}:</label>
         <input
             type="email"
             name="email"
@@ -77,8 +78,8 @@
             required
         />
         <br />
-        {#if errorText}
-            <p class="error"><strong>{errorText}</strong></p>
+        {#if error}
+            <p class="error"><strong>{$_('errors.generic')}</strong></p>
         {/if}
         <button class="rounded-button" on:focus={touchForm}
             >Send Reset Email</button
