@@ -60,7 +60,10 @@
     },
     "auth": {
         "logoutSuccess": "Successfully logged out!",
-        "forgot": "Forgot password?"
+        "forgot": "Forgot password?",
+        "loginTitle": "Login to your account",
+        "resetEmail": "Send Reset Email",
+        "reset": "Reset your password"
     },
     "footer": {
         "blog": "BBRoster update notes and news",

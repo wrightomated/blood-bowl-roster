@@ -60,7 +60,10 @@
     },
     "auth": {
         "logoutSuccess": "Déconnexion réussie !",
-        "forgot": "Mot de passe oublié ?"
+        "forgot": "Mot de passe oublié ?",
+        "loginTitle": "Connectez-vous à votre compte",
+        "resetEmail": "Envoyer l'Email de Réinitialisation",
+        "reset": "Réinitialisez votre mot de passe"
     },
     "footer": {
         "blog": "Notes de mise à jour et actualités de BBRoster",

@@ -53,7 +53,7 @@
     <FootballSpinner loadingText="Sending reset password email" />
 {:else if emailSent}
     <div class="logged-in">
-        <p>Email sent!</p>
+        <p>{$_('success')}</p>
         <Button
             clickFunction={async () => {
                 await showLogin();
@@ -66,13 +66,13 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={sendResetEmail}
     >
-        <h2>Reset your password</h2>
+        <h2>{$_('auth.reset')}</h2>
         <label for="email">{$_('common.email')}:</label>
         <input
             type="email"
             name="email"
             id="email"
-            placeholder="your email address"
+            placeholder={$_('common.email')}
             autocomplete="email"
             bind:value={emailV}
             required
@@ -82,7 +82,7 @@
             <p class="error"><strong>{$_('errors.generic')}</strong></p>
         {/if}
         <button class="rounded-button" on:focus={touchForm}
-            >Send Reset Email</button
+            >{$_('auth.resetEmail')}</button
         >
     </form>
 {/if}
