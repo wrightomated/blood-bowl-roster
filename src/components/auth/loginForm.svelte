@@ -73,7 +73,7 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={login}
     >
-        <h2>Log into your account</h2>
+        <h2>{$_('auth.loginTitle')}</h2>
         <label for="email">{$_('common.email')}:</label>
         <input
             type="email"
