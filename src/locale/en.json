@@ -9,6 +9,13 @@
     "tools": "Roster tools",
     "loading": "Loading...",
     "success": "Success!",
+    "commenced": "Commenced",
+    "draft": "Draft",
+    "total": "Total",
+    "individual": "Individual",
+    "player": "Player",
+    "none": "None",
+    "opponent": "Opponent",
     "common": {
         "email": "Email",
         "search": "Search",
@@ -22,12 +29,14 @@
         "confirm": "Confirm",
         "notes": "Notes",
         "petty": "Petty Cash",
-        "player": "Player",
         "add": "Add",
         "remove": "Remove",
         "points": "Points",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "specialists": "Specialists",
+        "players": "Players",
+        "minPlayers": "Minimum Players"
     },
     "errors": {
         "generic": "Something went wrong. Please try again later.",
@@ -305,14 +314,24 @@
         }
     },
     "colleges": {
-        "fire": "Fire",
-        "shadow": "Shadow",
-        "light": "Light",
-        "metal": "Metal",
-        "death": "Death",
-        "life": "Life",
-        "beasts": "Beasts",
-        "heavens": "Heavens"
+        "title": "Colleges",
+        "Fire": "Fire",
+        "Shadow": "Shadow",
+        "Light": "Light",
+        "Metal": "Metal",
+        "Death": "Death",
+        "Life": "Life",
+        "Beasts": "Beasts",
+        "Heavens": "Heavens"
+    },
+    "db": {
+        "linemen": "Linemen",
+        "runners": "Runners",
+        "blitzers": "Blitzers",
+        "throwers": "Throwers",
+        "blockers": "Blockers",
+        "special": "Special",
+        "bigGuys": "Big Guys"
     },
     "players": {
         "name": "Player Name",
@@ -783,13 +802,11 @@
         },
         "inducements": {
             "title": "Match Inducements",
-            "none": "None",
             "directions": "You can safely return to your roster to edit."
         },
         "events": {
             "title": "Player Events",
-            "total": "Total",
-            "individual": "Individual",
+
             "type": "Event Type",
             "turn": "Turn",
             "opp": "Opponent's Total Touchdowns",

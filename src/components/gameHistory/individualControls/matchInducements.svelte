@@ -11,7 +11,7 @@
     {/if}
     <div class="inducements">
         {#if inducements.length <= 0}<span class="inducements--none"
-                >{$_('match.inducements.none')}</span
+                >{$_('none')}</span
             >{/if}
         {#each inducements as i}
             <!-- {i} -->

@@ -106,7 +106,7 @@
     {:else if filteredPlayers?.length > 0}
         <div class="event-entry">
             <div>
-                <label for="player-event-selector">{$_('common.player')}</label>
+                <label for="player-event-selector">{$_('player')}</label>
                 <select
                     id="player-event-selector"
                     name="player-event-selector"

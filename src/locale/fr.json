@@ -9,6 +9,13 @@
     "tools": "Outils de Composition d'Équipe",
     "loading": "Chargement...",
     "success": "Succès!",
+    "commenced": "Commencé",
+    "draft": "Repêchage",
+    "total": "Total",
+    "individual": "Individuel",
+    "player": "Joueur",
+    "none": "Aucun",
+    "opponent": "Adversaire",
     "common": {
         "email": "E-mail",
         "search": "Recherche",
@@ -22,12 +29,14 @@
         "confirm": "Confirmer",
         "notes": "Notes",
         "petty": "Caisse Mineure",
-        "player": "Joueur",
         "add": "Ajouter",
         "remove": "Retirer",
         "points": "Points",
         "yes": "Oui",
-        "no": "Non"
+        "no": "Non",
+        "specialists": "Spécialistes",
+        "players": "Joueurs",
+        "minPlayers": "Joueurs Minimum"
     },
     "errors": {
         "generic": "Un problème est survenu. Veuillez réessayer plus tard.",
@@ -305,14 +314,24 @@
         }
     },
     "colleges": {
-        "fire": "Feu",
-        "shadow": "Ombre",
-        "light": "Lumière",
-        "metal": "Métal",
-        "death": "Mort",
-        "life": "Vie",
-        "beasts": "Bêtes",
-        "heavens": "Cieux"
+        "title": "Collèges",
+        "Fire": "Feu",
+        "Shadow": "Ombre",
+        "Light": "Lumière",
+        "Metal": "Métal",
+        "Death": "Mort",
+        "Life": "Vie",
+        "Beasts": "Bêtes",
+        "Heavens": "Cieux"
+    },
+    "db": {
+        "linemen": "Ligneurs",
+        "runners": "Coureurs",
+        "blitzers": "Blitzers",
+        "throwers": "Lanceurs",
+        "blockers": "Bloqueurs",
+        "special": "Spécial",
+        "bigGuys": "Gros Costauds"
     },
     "players": {
         "name": "Nom du Joueur",

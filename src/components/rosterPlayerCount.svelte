@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { gameSettings } from '../store/gameSettings.store';
     import { specialistsAmount } from '../store/specialistsAmount.store';
     import { roster } from '../store/teamRoster.store';
@@ -11,14 +12,16 @@
     <!-- Get players that aren't deleted and check agains min -->
     {#if availablePlayers.length < $gameSettings?.minPlayers}
         <div class="player-count__player-row player-count__player-row--danger">
-            <div class="player-count__player-group">Minimum players</div>
+            <div class="player-count__player-group">
+                {$_('common.minPlayers')}
+            </div>
             <div>
                 {availablePlayers.length}/{$gameSettings?.minPlayers}
             </div>
         </div>
     {:else}
         <div class="player-count__player-row">
-            <div class="player-count__player-group">Players</div>
+            <div class="player-count__player-group">{$_('common.players')}</div>
             <div>
                 {availablePlayers.length}/{$gameSettings?.maxPlayers}
             </div>
@@ -28,7 +31,9 @@
     <!-- If over specialists display warning -->
     {#if $specialistsAmount > $gameSettings?.maxSpecialists}
         <div class="player-count__player-row player-count__player-row--danger">
-            <div class="player-count__player-group">Specialists</div>
+            <div class="player-count__player-group">
+                {$_('common.specialists')}
+            </div>
             <div>
                 {$specialistsAmount} / {$gameSettings.maxSpecialists}
             </div>
