@@ -77,7 +77,7 @@
         "create": "Create",
         "filter": "Filter",
         "type": "Team type",
-        "naf": "Filter naf teams",
+        "naf": "Filter NAF teams",
         "s": "Filter superseded teams",
         "tier": "Filter tier {tier}",
         "special": "Select special rule",
