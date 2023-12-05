@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { roster } from '../../store/teamRoster.store';
 
@@ -12,7 +13,7 @@
     <input
         data-cy={`player-${index}-name`}
         aria-labelledby="name-header"
-        placeholder="Player Name"
+        placeholder={$_('players.name')}
         bind:value={$roster.players[index].playerName}
         use:blurOnEscapeOrEnter
     />

@@ -22,6 +22,7 @@
     import DungeonBowlCollegeCard from './dungeonBowlCollegeCard.svelte';
     import Button from '../uiComponents/button.svelte';
     import { sendEventToAnalytics } from '../../analytics/plausible';
+    import { _ } from 'svelte-i18n';
 
     const selectCollege = (college) => {
         setCurrentTeam(college);
@@ -56,14 +57,14 @@
 
 {#if $showDungeonBowl}
     <div>
-        <h3>Colleges</h3>
+        <h3>{$_('colleges.title')}</h3>
         <div class="college-buttons">
             {#each dungeonBowlColleges.colleges as college}
                 <button
                     class="college-button college-button--{college.name.toLowerCase()}"
-                    class:selected={$currentTeam?.name === college.name}
+                    class:selected={$currentTeam?.id === college.id}
                     on:click={() => selectCollege(college)}
-                    >{college.name}</button
+                    >{$_('colleges.' + college.name)}</button
                 >
             {/each}
         </div>
@@ -78,7 +79,7 @@
     {/if}
 
     <Button clickFunction={newTeam} disabled={!$currentTeamIsDungeonBowl}
-        >Create</Button
+        >{$_('creation.create')}</Button
     >
 {/if}
 

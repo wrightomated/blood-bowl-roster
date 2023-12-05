@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import { currentTeam, specialistIds } from '../../store/currentTeam.store';
     import { gameSettings } from '../../store/gameSettings.store';
@@ -68,7 +69,8 @@
         />
     </span>
 {:else}
-    {rosterPlayer.player.position}
+    <!-- {rosterPlayer.player.position} -->
+    {$_('players.' + rosterPlayer.player.id)}
     {#if danger}
         <span class="danger">
             <i class="material-symbols-outlined">warning</i>

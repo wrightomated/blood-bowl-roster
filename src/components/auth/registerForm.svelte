@@ -6,6 +6,7 @@
     import { currentUserStore } from '../../store/currentUser.store';
     import Button from '../uiComponents/button.svelte';
     import { onMount } from 'svelte';
+    import { _ } from 'svelte-i18n';
 
     $: emailV = '';
     $: passwordV = '';
@@ -52,8 +53,10 @@
     <FootballSpinner {loadingText} />
 {:else if $currentUserStore}
     <div class="logged-in">
-        <p>Successfully Registered!</p>
-        <Button clickFunction={() => modalState.close()}>Okay</Button>
+        <p>{$_('success')}</p>
+        <Button clickFunction={() => modalState.close()}
+            >{$_('common.ok')}</Button
+        >
     </div>
 {:else}
     <form
@@ -61,75 +64,71 @@
         class:registration-form--touched={formTouched}
         on:submit|preventDefault={register}
     >
-        <h2>Register your account</h2>
+        <h2>{$_('register.account')}</h2>
         <p class="intro-text">
-            By registering an account, you will be able to log in from any
-            device and maintain access to all your rosters. Any rosters
-            currently stored will be uploaded to your account upon registration.
-            There are no costs associated with creating an account.
+            {$_('register.info')}
         </p>
-        <label for="username">Display name:</label>
+        <label for="username">{$_('tables.coach')}:</label>
         <input
             type="text"
             name="username"
             id="username"
-            placeholder="your coach name"
+            placeholder={$_('tables.coach')}
             autocomplete="username"
             bind:value={usernameV}
             required
         />
         <br />
-        <label for="email">Email:</label>
+        <label for="email">{$_('common.email')}:</label>
         <input
             type="email"
             name="email"
             id="email"
-            placeholder="email that you will log in with"
+            placeholder={$_('common.email')}
             autocomplete="email"
             bind:value={emailV}
             required
         />
         {#if emailError}
-            <p class="error"><strong>{emailError} already in use.</strong></p>
+            <p class="error">
+                <strong
+                    >{$_('register.duplicate', {
+                        values: { e: emailError },
+                    })}</strong
+                >
+            </p>
         {/if}
         <br />
-        <label for="password">Password:</label>
+        <label for="password">{$_('register.password')}:</label>
         <input
             type="password"
             name="password"
             id="password"
-            placeholder="make it unique"
+            placeholder={$_('register.password')}
             bind:value={passwordV}
             required
             minlength="6"
         />
 
         <p>
-            Please ensure to read our <a
-                href="https://blog.bbroster.com/terms-of-use/"
-                target="_blank"
-                class="blog-link">Terms of Use</a
-            >
-            and
+            {$_('register.disc')}
+            <br />
+            <br />
             <a
                 href="https://blog.bbroster.com/private-policy/"
-                title=""
                 target="_blank"
-                class="blog-link">Privacy Policy</a
-            > documents before completing your registration.
+                class="blog-link">{$_('footer.terms')}</a
+            >
+            |
+            <a
+                href="https://blog.bbroster.com/terms-of-use/"
+                target="_blank"
+                class="blog-link">{$_('footer.privacy')}</a
+            >
         </p>
-
-        <!-- {#if $savedRosterIndex.index.length > 0}
-            <label for="upload-lists">Upload saved rosters:</label>
-            <input
-                type="checkbox"
-                id="upload-lists"
-                name="upload-lists"
-                bind:checked={updateSavedRosters}
-            />
-            <br />
-        {/if} -->
-        <button class="rounded-button" on:focus={touchForm}>Register</button>
+        <button class="rounded-button" on:focus={touchForm}
+            >{$_('menu.register')}</button
+        >
     </form>
 {/if}
 

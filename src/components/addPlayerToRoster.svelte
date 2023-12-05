@@ -21,6 +21,7 @@
         journeymanSkills,
     } from '../helpers/journeymenHelper';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import { _ } from 'svelte-i18n';
 
     export let playerTypes: Player[];
     export let index: number;
@@ -118,12 +119,12 @@
 </script>
 
 <tr class="add-player-row">
-    {#each $filteredTableColumns as c}
+    {#each $filteredTableColumns as c (c.id)}
         <td class={c.rowDetails?.tdClass}>
             {#if c.name === 'Name'}
                 <input
                     aria-labelledby="name-header"
-                    placeholder="Player Name"
+                    placeholder={$_('players.name')}
                     bind:value={newName}
                     class="name-input"
                     data-cy="new-player-name-input"
@@ -137,7 +138,7 @@
                 >
                     {#each playerTypes as playerType}
                         <option value={playerType}>
-                            {playerType.position}
+                            {$_('players.' + playerType.id)}
                         </option>
                     {/each}
                     {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}
@@ -182,9 +183,6 @@
 </tr>
 
 <style lang="scss">
-    .left-align {
-        text-align: left;
-    }
     input {
         border: 0;
         border-radius: 0;

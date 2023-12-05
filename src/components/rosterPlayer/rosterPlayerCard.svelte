@@ -2,9 +2,7 @@
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import { currentTeam, specialistIds } from '../../store/currentTeam.store';
-    import AddSkill from '../addSkill.svelte';
 
-    import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import PlayerNumber from './playerNumber.svelte';
@@ -15,6 +13,7 @@
     import DeletePlayerWarning from './deletePlayerWarning.svelte';
     import { gameSettings } from '../../store/gameSettings.store';
     import { specialistsAmount } from '../../store/specialistsAmount.store';
+    import { _ } from 'svelte-i18n';
 
     export let index: number;
 
@@ -83,8 +82,8 @@
                 {rosterPlayer.player.position}
             {:else}
                 <input
-                    aria-label="player name"
-                    placeholder="Player Name"
+                    aria-label={$_('players.name')}
+                    placeholder={$_('players.name')}
                     use:blurOnEscapeOrEnter
                     bind:value={$roster.players[index].playerName}
                 />
@@ -138,11 +137,6 @@
 
     <PlayerCharacteristics {rosterPlayer} />
 
-    {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
-        <div>
-            <AddSkill {index} />
-        </div>
-    {/if}
     <div class="content">
         {#if tooManyBigGuys}
             <p class="big-guys">
@@ -211,10 +205,6 @@
     }
     .content {
         padding: 10px;
-    }
-
-    .left-align {
-        text-align: left;
     }
     .player-controls {
         display: flex;

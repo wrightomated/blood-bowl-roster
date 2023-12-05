@@ -1,8 +1,10 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     export let text = '';
 </script>
 
-<p>{text}</p>
+<p>{$_(text)}</p>
 
 <style lang="scss">
     p {

@@ -1,14 +1,11 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { weatherTables } from '../../../data/weatherData.data';
     import { roster } from '../../../store/teamRoster.store';
-
-    function capitalise(s: string) {
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    }
 </script>
 
 <div class="boxed-div">
-    <label for="weather-table">Weather</label>
+    <label for="weather-table">{$_('match.pre.weather')}</label>
     <select
         name="weather-table"
         id="weather-table"
@@ -16,7 +13,7 @@
     >
         {#each weatherTables as table}
             <option class="weather-type" value={table.type}
-                >{capitalise(table.type)}</option
+                >{$_('weather.' + table.type)}</option
             >
         {/each}
     </select>

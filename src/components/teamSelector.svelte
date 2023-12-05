@@ -39,6 +39,7 @@
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { customisationRules } from '../customisation/customisation.store';
+    import { _ } from 'svelte-i18n';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -72,7 +73,9 @@
         .filter((x) => !x?.retired || (x.retired && includeRetired))
         .filter((x) =>
             searchTerm
-                ? x.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ? $_('teams.names.' + x.id)
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
                 : x
         );
 
@@ -203,7 +206,7 @@
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
-    <h2 class="page-title">Create New Team</h2>
+    <h2 class="page-title">{$_('creation.title')}</h2>
     <ToggleButton
         options={rosterModes}
         selectedIndex={rosterModes.indexOf($rosterMode)}
@@ -228,27 +231,28 @@
                         on:click={() => toggledTiers.toggleTier(i + 1)}
                         class:selected={$filteredTiers.includes(i + 1)}
                         class="filter__button"
-                        title={`Filter tier ${i + 1}`}
+                        title={$_('creation.tier', { values: { tier: i + 1 } })}
                         >{tierToNumeral(i + 1)}</button
                     >
                 {/each}
                 <button
                     on:click={toggleNaf}
-                    title="Filter NAF teams"
+                    title={$_('creation.naf')}
                     class:selected={includeNaf}
                     class="filter__button">N</button
                 >
                 <button
                     on:click={toggleRetired}
-                    title="Filter superseded teams"
+                    title={$_('creation.s')}
                     class:selected={includeRetired}
                     class="filter__button">S</button
                 >
             </div>
             <label class="filter__search">
-                Search: <input
+                {$_('common.search')}
+                <input
                     bind:value={searchTerm}
-                    placeholder="Team type"
+                    placeholder={$_('creation.type')}
                 />
             </label>
             <br />
@@ -260,7 +264,7 @@
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
-                        >{team.name}
+                        >{$_('teams.names.' + team.id)}
                         <span class="display-font"
                             >{tierToNumeral(team.tier)}</span
                         >{#if nafTeams.includes(team.id)}<span
@@ -269,7 +273,7 @@
                     >
                 {/each}
                 {#if sortedTeam.length === 0}
-                    <p class="no-matches">No matches</p>
+                    <p class="no-matches">No teams match your filter</p>
                 {/if}
             </div>
             {#if $currentTeam?.pickSpecialRule}
@@ -277,28 +281,28 @@
             {/if}
         </div>
 
-        <div />
         <Button
             clickFunction={createTeam}
             cyData="create-team"
-            disabled={!$currentTeam || $currentTeamIsDungeonBowl}>Create</Button
+            disabled={!$currentTeam || $currentTeamIsDungeonBowl}
+            >{$_('creation.create')}</Button
         >
     {/if}
 {/if}
 
 {#if $teamLoadOpen}
-    <h2 class="page-title">Load Team</h2>
+    <h2 class="page-title">{$_('load.title')}</h2>
     <div class="button-container" data-cy="load-team-box">
         <div class="code-box">
             <input
-                aria-label="Input code"
+                aria-label={$_('load.code')}
                 id="code-input"
-                placeholder="Input Code"
+                placeholder={$_('load.code')}
                 bind:value={rosterCode}
                 use:blurOnEscapeOrEnter
             />
             <MaterialButton
-                hoverText="Enter code"
+                hoverText={$_('load.title')}
                 symbol="input"
                 clickFunction={inputCode}
             />
@@ -308,7 +312,9 @@
                 <FootballSpinner />
             {:then rosterPreviews}
                 <h3 class="signed-in-heading">
-                    Teams of {$currentUserStore.displayName}
+                    {$_('load.coachTeams', {
+                        values: { coach: $currentUserStore.displayName },
+                    })}
                 </h3>
                 <div class="team-previews">
                     {#each sortedPreviews(rosterPreviews) as preview}
@@ -316,13 +322,14 @@
                     {/each}
                 </div>
             {:catch}
-                <p style="color: red">Something went wrong.</p>
+                <p style="color: red">{$_('errors.generic')}</p>
             {/await}
         {:else}
-            <h3>Locally stored teams</h3>
+            <h3>{$_('load.local')}</h3>
             {#each $savedRosterIndex.index as savedRoster, i}
                 <Button clickFunction={() => loadTeam(savedRoster)}
-                    >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
+                    >{savedRoster.name ||
+                        $_('load.saved', { values: { n: i + 1 } })}</Button
                 >
             {/each}
         {/if}

@@ -3,10 +3,7 @@
     import { slide } from 'svelte/transition';
     import { categoryMap } from '../../data/stadium.data';
     import { weatherTables } from '../../data/weatherData.data';
-    import {
-        gameEventPluralMap,
-        mapHistoryInducementsForDisplay,
-    } from '../../helpers/matchHistoryHelpers';
+
     import type {
         GameEvent,
         GameEventType,
@@ -21,6 +18,8 @@
     import MatchInducements from './individualControls/matchInducements.svelte';
     import PlayerEventGrid from './matchCardComponents/playerEventGrid.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
+    import { _ } from 'svelte-i18n';
+    import { getInducementName } from '../../helpers/matchHistoryHelpers';
 
     export let match: MatchHistoryRecord;
 
@@ -29,9 +28,14 @@
         match.playingCoach?.gameEventRecording === 'individual' &&
         match.playingCoach?.gameEvents.length > 0;
 
-    const inducements = mapHistoryInducementsForDisplay(
-        match.playingCoach.inducementsHired
-    );
+    const inducements = match.playingCoach?.inducementsHired
+        ?.map((x) => ({
+            name: getInducementName(x.id),
+            amount: x.amount,
+        }))
+        .filter((x) => {
+            return x.amount > 0 && !!x.name;
+        });
     const weather = weatherTables.find((x) => x.type === match.weather.table);
     const stadium = getStadium();
     const teamEvents = Object.entries(match.gameEventTally)
@@ -131,7 +135,7 @@
     {#if $roster.mode === 'league'}
         <div class="statistics">
             <TitleWithResult
-                title="Petty Cash"
+                title={$_('common.petty')}
                 result={match.playingCoach.pettyCash}
             />
             <TitleWithResult
@@ -158,7 +162,7 @@
         >
             {#each teamEvents as event}
                 <TitleWithResult
-                    title={gameEventPluralMap[event[0]]}
+                    title={$_('match.events.' + event[0] + '.p')}
                     result={event[1]}
                     background={event[0] === selectedEvent ? 'main' : 'none'}
                     clickFunction={match.playingCoach.gameEventRecording ===

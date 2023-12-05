@@ -14,7 +14,7 @@ export type TableColumnName =
     | 'AV'
     | 'Skills'
     | 'Hiring Fee'
-    | 'Unspent Spp'
+    | 'Spp'
     | 'MNG'
     | 'NI'
     | 'TR'
@@ -23,7 +23,7 @@ export type TableColumnName =
 
 export interface ColumnDetails {
     id?: number;
-    name: TableColumnName;
+    name?: TableColumnName;
     headerDetails?: HeaderDetails;
     rowDetails?: RowDetails;
     colspan?: number;
