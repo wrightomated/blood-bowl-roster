@@ -79,10 +79,10 @@
             padding: 20px;
 
             @media screen and (min-width: 801px) {
-                min-width: 780px;
+                width: 780px;
             }
             @media screen and (max-width: 800px) {
-                min-width: 96%;
+                min-width: calc(100vw - 90px);
             }
             &.no-padding {
                 padding: 0;
