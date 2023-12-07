@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { dungeonBowlColleges } from '../../data/dungeonBowlColleges.data';
 
     import type { PlayerGroup } from '../../models/dungeonBowl.model';
@@ -24,7 +25,7 @@
             ) > college.players[playerGroup].max}
         >
             <div class="player-count__player-group">
-                {playerGroup === 'bigGuys' ? 'Big Guys' : playerGroup}
+                {$_('db.' + playerGroup)}
             </div>
             <div>
                 {getPlayersOfType(playerGroup)}/{college.players[playerGroup]

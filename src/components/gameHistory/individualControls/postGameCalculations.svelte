@@ -8,6 +8,7 @@
     import Die from '../../dice/die.svelte';
     import ToggleButton from '../../uiComponents/toggleButton.svelte';
     import DedicatedFansChange from './dedicatedFansChange.svelte';
+    import { _ } from 'svelte-i18n';
 
     let mvpSelected: string;
 
@@ -29,8 +30,6 @@
 
     const concessionOptions = ['none', 'player', 'opponent'];
     $: concessionOption = $roster.matchDraft.concession ?? concessionOptions[0];
-
-    // let gutterBowlWinningsRoll: number;
 
     function winnings(
         fanFactor: number,
@@ -152,7 +151,7 @@
     {#if $roster.mode === 'league'}
         {#if $roster.format === 'gutter bowl'}
             <div class="boxed-div">
-                <label for="winnings">Winnings</label>
+                <label for="winnings">{$_('match.post.winnings')}</label>
                 <input
                     type="number"
                     bind:value={$roster.matchDraft.playingCoach.winnings}
@@ -161,7 +160,7 @@
             </div>
         {:else}
             <div class="boxed-div">
-                <label for="winnings">Winnings</label>
+                <label for="winnings">{$_('match.post.winnings')}</label>
                 <input
                     type="number"
                     bind:value={$roster.matchDraft.playingCoach.winnings}
@@ -173,7 +172,8 @@
     {#if $roster?.matchDraft?.isLeagueMatch}
         <div class="boxed-div">
             <label for="league-points"
-                >{$roster.mode === 'league' ? 'League' : 'Tournament'} Points</label
+                >{$roster.mode === 'league' ? $_('league') : $_('tournament')}
+                {$_('common.points')}</label
             >
             <input
                 type="number"
@@ -185,7 +185,7 @@
     {/if}
     {#if $roster.mode === 'league' && $roster.format !== 'gutter bowl'}
         <div class="boxed-div">
-            <div class="concession-label">Concession</div>
+            <div class="concession-label">{$_('match.post.concession')}</div>
             <ToggleButton
                 options={concessionOptions}
                 selectedIndex={concessionOptions.findIndex(
@@ -202,7 +202,7 @@
 
     {#if $roster.matchDraft.concession !== 'player' && $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
         <div class="boxed-div">
-            <label for="choose-mvp">MVP</label>
+            <label for="choose-mvp">{$_('match.post.mvp')}</label>
             <select
                 id="choose-mvp"
                 name="choose-mvp"
@@ -215,13 +215,13 @@
             </select>
             <Die
                 faces={filteredPlayers.length}
-                defaultDisplay="Random MVP"
+                defaultDisplay={'d' + filteredPlayers.length}
                 on:rolled={randomMvp}
             />
         </div>
     {/if}
     <div class="boxed-div notes-box">
-        <label for="notes">Notes</label>
+        <label for="notes">{$_('common.notes')}</label>
         <textarea
             name="notes"
             class="notes-area"

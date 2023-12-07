@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { dbIgnoredSkills } from '../../data/dungeonBowlIgnoredSkills';
     import { characteristics } from '../../data/statOrder.data';
 
@@ -85,8 +86,8 @@
         <div>
             <h3>
                 <input
-                    aria-label="New Player Name"
-                    placeholder="New Player Name"
+                    aria-label={$_('players.name')}
+                    placeholder={$_('players.name')}
                     bind:value={newName}
                     class="name-input"
                     use:blurOnEscapeOrEnter

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
     let yourFanCalc: HTMLElement, opFanCalc: HTMLElement;
@@ -47,7 +48,7 @@
 </script>
 
 <div class="boxed-div">
-    <label for="your-fan-factor">Your Fan Factor</label>
+    <label for="your-fan-factor">{$_('match.pre.your')}</label>
     <span bind:this={yourFanCalc} on:click={() => makeOpaque(yourFanCalc)}>
         {$roster.extra.dedicated_fans} +
         <input
@@ -74,7 +75,7 @@
     />
 </div>
 <div class="boxed-div">
-    <label for="op-fan-factor">Opponent's Fan Factor</label>
+    <label for="op-fan-factor">{$_('match.pre.opponent')}</label>
     <span bind:this={opFanCalc} on:click={() => makeOpaque(opFanCalc)}>
         <input
             type="number"

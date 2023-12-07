@@ -1,9 +1,9 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import type {
         AdvancementCombination,
         AdvancementType,
     } from '../../data/advancementCost.data';
-    import { getSkill } from '../../helpers/getSkill';
     import type { SpecificAdvancement } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
@@ -12,7 +12,7 @@
     export let deleteFunction: () => void;
 
     $: advancementValue = !isNaN(+advancement.advancementValue)
-        ? getSkill(+advancement.advancementValue)
+        ? $_(`skills.${advancement.advancementValue}`)
         : advancement.advancementValue;
 
     let advancementDetails: {

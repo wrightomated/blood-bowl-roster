@@ -251,6 +251,9 @@ thead > tr {
     background-color: white;
     color: grey;
 }
+.left-align {
+    text-align: left;
+}
 
 @keyframes spin {
     from {

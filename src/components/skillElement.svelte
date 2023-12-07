@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getSkill } from '../helpers/getSkill';
+    import { _ } from 'svelte-i18n';
 
     export let playerSkillIds: number[];
     export let extraSkillIds: number[] = [];
@@ -7,9 +7,10 @@
 </script>
 
 <span class="skills" data-cy={cyData}>
-    {#each playerSkillIds as skillId}<span>{getSkill(skillId)}</span>{/each}
+    {#each playerSkillIds as skillId}<span>{$_(`skills.${skillId}`)}</span
+        >{/each}
     {#each extraSkillIds as skillId}<span class="extra"
-            >{getSkill(skillId)}</span
+            >{$_(`skills.${skillId}`)}</span
         >{/each}
 </span>
 

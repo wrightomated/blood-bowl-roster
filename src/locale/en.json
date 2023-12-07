@@ -1,0 +1,868 @@
+{
+    "league": "League",
+    "exhibition": "Exhibition",
+    "tournament": "Tournament",
+    "elevens": "Elevens",
+    "sevens": "Sevens",
+    "dungeon bowl": "Dungeon Bowl",
+    "gutter bowl": "Gutter Bowl",
+    "tools": "Roster tools",
+    "loading": "Loading...",
+    "success": "Success!",
+    "commenced": "Commenced",
+    "draft": "Draft",
+    "total": "Total",
+    "individual": "Individual",
+    "player": "Player",
+    "none": "None",
+    "opponent": "Opponent",
+    "common": {
+        "email": "Email",
+        "search": "Search",
+        "specialRules": "Special Rules",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "close": "Close",
+        "ok": "Okay",
+        "confirm": "Confirm",
+        "notes": "Notes",
+        "petty": "Petty Cash",
+        "add": "Add",
+        "remove": "Remove",
+        "points": "Points",
+        "yes": "Yes",
+        "no": "No",
+        "specialists": "Specialists",
+        "players": "Players",
+        "minPlayers": "Minimum Players"
+    },
+    "errors": {
+        "generic": "Something went wrong. Please try again later.",
+        "incorrect": "Incorrect username or password."
+    },
+    "menu": {
+        "close": "Close menu",
+        "open": "Open menu",
+        "profile": "User profile",
+        "logout": "Logout",
+        "login": "Login",
+        "register": "Register",
+        "new": "New Team",
+        "load": "Load Team",
+        "current": "Current Team",
+        "locale": "Select language"
+    },
+    "messages": {
+        "deleting": "Deleting roster...",
+        "deleteConfirm": "Are you sure you want to delete this roster? This action cannot be undone."
+    },
+    "auth": {
+        "logoutSuccess": "Successfully logged out!",
+        "forgot": "Forgot password?",
+        "loginTitle": "Login to your account",
+        "resetEmail": "Send Reset Email",
+        "reset": "Reset your password"
+    },
+    "footer": {
+        "blog": "BBRoster update notes and news",
+        "rules": "Rule references and player names are property of Games Workshop. This site is not affiliated with Games Workshop. I just think they're neat.",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "wip": "This is a work in progress. For all queries, concerns and suggestions please email."
+    },
+    "creation": {
+        "title": "Create New Team",
+        "create": "Create",
+        "filter": "Filter",
+        "type": "Team type",
+        "naf": "Filter NAF teams",
+        "s": "Filter superseded teams",
+        "tier": "Filter tier {tier}",
+        "special": "Select special rule",
+        "noMatch": "No teams match your filter"
+    },
+    "load": {
+        "title": "Load Team",
+        "code": "Input code",
+        "coachTeams": "Teams of {coach}",
+        "local": "Locally stored teams",
+        "saved": "Saved roster {n}"
+    },
+    "register": {
+        "account": "Register your account",
+        "info": "By registering an account, you will be able to log in from any device and maintain access to all your rosters. Any rosters currently stored will be uploaded to your account upon registration. There are no costs associated with creating an account.",
+        "duplicate": "{e} already in use.",
+        "password": "Password",
+        "disc": "Please ensure to read our Terms of Use and Privacy Policy documents before completing your registration."
+    },
+    "roster": {
+        "namePlaceholder": "Team Name",
+        "teamType": "{type} Team",
+        "column": {
+            "names": {
+                "1": "Number",
+                "2": "Name",
+                "3": "Controls",
+                "4": "Position",
+                "5": "MA",
+                "6": "ST",
+                "7": "AG",
+                "8": "PA",
+                "9": "AV",
+                "10": "Skills",
+                "11": "Hiring Fee",
+                "12": "SPP",
+                "13": "MNG",
+                "14": "NI",
+                "15": "TR",
+                "16": "Current Value"
+            },
+            "titles": {
+                "5": "Movement Allowance",
+                "6": "Strength",
+                "7": "Agility",
+                "8": "Passing Ability",
+                "9": "Armour Value",
+                "13": "Miss Next Game",
+                "12": "Unspent Star Player Points",
+                "14": "Niggling Injury",
+                "15": "Temporarily Retiring"
+            }
+        }
+    },
+    "tables": {
+        "hide": "Hide available",
+        "show": "Show available",
+        "qty": "QTY",
+        "cost": "Cost",
+        "caption": "{team} Team Players",
+        "starCaption": "{team} Team Star Players",
+        "coach": "Coach Name",
+        "naf": "NAF Number",
+        "tv": "Team Value",
+        "ctv": "Current TV",
+        "treasury": "Treasury",
+        "rerolls": "Rerolls",
+        "assistant_coaches": "Assistant Coaches",
+        "cheerleaders": "Cheerleaders",
+        "dedicated_fans": "Dedicated Fans",
+        "apothecary": "Apothecary",
+        "removeAll": "Remove all inducements below (no refund)"
+    },
+    "skills": {
+        "1": "Catch",
+        "2": "Diving Catch",
+        "3": "Diving Tackle",
+        "4": "Dodge",
+        "5": "Defensive",
+        "6": "Jump Up",
+        "7": "Leap",
+        "8": "Safe Pair Of Hands",
+        "9": "Sidestep",
+        "10": "Sneaky Git",
+        "11": "Sprint",
+        "12": "Sure Feet",
+        "13": "Block",
+        "14": "Dauntless",
+        "15": "Dirty Player (+1)",
+        "16": "Fend",
+        "17": "Frenzy",
+        "18": "Kick",
+        "19": "Pro",
+        "20": "Shadowing",
+        "21": "Strip Ball",
+        "22": "Sure Hands",
+        "23": "Tackle",
+        "24": "Wrestle",
+        "25": "Big Hand",
+        "26": "Claws",
+        "27": "Disturbing Presence",
+        "28": "Extra Arms",
+        "29": "Foul Appearance",
+        "30": "Horns",
+        "31": "Iron Hard Skin",
+        "32": "Monstrous Mouth",
+        "33": "Prehensile Tail",
+        "34": "Tentacles",
+        "35": "Two Heads",
+        "36": "Very Long Legs",
+        "37": "Accurate",
+        "38": "Cannoneer",
+        "39": "Cloud Burster",
+        "40": "Dump-off",
+        "41": "Fumblerooskie",
+        "42": "Hail Mary Pass",
+        "43": "Leader",
+        "44": "Nerves Of Steel",
+        "45": "On The Ball",
+        "46": "Pass",
+        "47": "Running Pass",
+        "48": "Safe Pass",
+        "49": "Arm Bar",
+        "50": "Brawler",
+        "51": "Break Tackle",
+        "52": "Grab",
+        "53": "Guard",
+        "54": "Juggernaut",
+        "55": "Mighty Blow (+1)",
+        "56": "Multiple Block",
+        "57": "Pile Driver",
+        "58": "Stand Firm",
+        "59": "Strong Arm",
+        "60": "Thick Skull",
+        "61": "Animal Savagery",
+        "62": "Animosity",
+        "63": "Always Hungry",
+        "64": "Ball & Chain",
+        "65": "Bombardier",
+        "66": "Bone Head",
+        "67": "Chainsaw",
+        "68": "Decay",
+        "69": "Hypnotic Gaze",
+        "70": "Kick Team-mate",
+        "71": "Loner (4+)",
+        "72": "No Hands",
+        "73": "Plague Ridden",
+        "74": "Pogo Stick",
+        "75": "Projectile Vomit",
+        "76": "Really Stupid",
+        "77": "Regeneration",
+        "78": "Right Stuff",
+        "79": "Secret Weapon",
+        "80": "Stab",
+        "81": "Stunty",
+        "82": "Swarming",
+        "83": "Swoop",
+        "84": "Take Root",
+        "85": "Titchy",
+        "86": "Throw Team-mate",
+        "87": "Timmm-ber!",
+        "88": "Unchannelled Fury",
+        "89": "Portal Navigator",
+        "90": "Give and Go",
+        "91": "Portal Passer",
+        "92": "Wall Thrower",
+        "93": "Drunkard",
+        "94": "Pick-me-up",
+        "95": "Hit and Run",
+        "96": "Bloodlust (2+)",
+        "97": "Bloodlust (3+)",
+        "151": "Dirty Player (+2)",
+        "551": "Mighty Blow (+2)",
+        "620": "Animosity (all team-mates)",
+        "621": "Animosity (all Dwarf and Halfling team-mates)",
+        "622": "Animosity (all Dwarf and Human team-mates)",
+        "623": "Animosity (Underworld Goblin Linemen)",
+        "624": "Animosity (Orc Lineman)",
+        "625": "Animosity (Big Un Blocker)",
+        "710": "Loner (5+)",
+        "711": "Loner (3+)"
+    },
+    "teams": {
+        "names": {
+            "1": "Imperial Nobility",
+            "2": "Black Orc",
+            "3": "Chaos Chosen",
+            "4": "Dark Elf",
+            "5": "Dwarf",
+            "6": "Elven Union",
+            "7": "Goblin",
+            "8": "Halfling",
+            "9": "Human",
+            "10": "Lizardmen",
+            "11": "Necromantic Horror",
+            "12": "Nurgle",
+            "13": "Ogre",
+            "14": "Old World Alliance",
+            "15": "Orc",
+            "16": "Shambling Undead",
+            "17": "Skaven",
+            "18": "Snotling",
+            "19": "Underworld Denizens",
+            "20": "Wood Elf",
+            "21": "Chaos Renegade",
+            "22": "Amazon (ToL)",
+            "23": "Chaos Dwarf",
+            "24": "High Elf",
+            "25": "Norse (ToL)",
+            "26": "Tomb Kings",
+            "27": "Vampire (ToL)",
+            "28": "Daemons of Khorne",
+            "29": "Slann",
+            "30": "Khorne",
+            "31": "Norse",
+            "32": "Amazon",
+            "33": "Vampire"
+        },
+        "rules": {
+            "Badlands Brawl": "Badlands Brawl",
+            "Bribery and Corruption": "Bribery and Corruption",
+            "Favoured of...": "Favoured of...",
+            "Favoured of Nurgle": "Favoured of Nurgle",
+            "Favoured of Chaos Undivided": "Favoured of Chaos Undivided",
+            "Favoured of Khorne": "Favoured of Khorne",
+            "Favoured of Slaanesh": "Favoured of Slaanesh",
+            "Favoured of Tzeentch": "Favoured of Tzeentch",
+            "Elven Kingdoms League": "Elven Kingdoms League",
+            "Old World Classic": "Old World Classic",
+            "Worlds Edge Superleague": "Worlds Edge Superleague",
+            "Underworld Challenge": "Underworld Challenge",
+            "Halfling Thimble Cup": "Halfling Thimble Cup",
+            "Lustrian Superleague": "Lustrian Superleague",
+            "Masters of Undeath": "Masters of Undeath",
+            "Sylvanian Spotlight": "Sylvanian Spotlight",
+            "Low Cost Linemen": "Low Cost Linemen"
+        }
+    },
+    "colleges": {
+        "title": "Colleges",
+        "Fire": "Fire",
+        "Shadow": "Shadow",
+        "Light": "Light",
+        "Metal": "Metal",
+        "Death": "Death",
+        "Life": "Life",
+        "Beasts": "Beasts",
+        "Heavens": "Heavens"
+    },
+    "db": {
+        "linemen": "Linemen",
+        "runners": "Runners",
+        "blitzers": "Blitzers",
+        "throwers": "Throwers",
+        "blockers": "Blockers",
+        "special": "Special",
+        "bigGuys": "Big Guys"
+    },
+    "players": {
+        "name": "Player Name",
+        "1": "Imperial Lineman",
+        "2": "Imperial Thrower",
+        "3": "Noble Blitzer",
+        "4": "Bodyguard",
+        "5": "Ogre",
+        "6": "Goblin Bruiser Lineman",
+        "7": "Black Orc",
+        "8": "Trained Troll",
+        "9": "Beastman Lineman",
+        "10": "Chosen Blocker",
+        "11": "Chaos Troll",
+        "12": "Chaos Ogre",
+        "13": "Minotaur",
+        "14": "Dark Elf Lineman",
+        "15": "Dark Elf Runner",
+        "16": "Dark Elf Blitzer",
+        "17": "Assassin",
+        "18": "Witch Elf",
+        "19": "Dwarf Lineman",
+        "20": "Dwarf Runner",
+        "21": "Dwarf Blitzer",
+        "22": "Troll Slayer",
+        "23": "Deathroller",
+        "24": "Union Lineman",
+        "25": "Union Thrower",
+        "26": "Union Catcher",
+        "27": "Union Blitzer",
+        "28": "Goblin Lineman",
+        "29": "Bomma",
+        "30": "Looney",
+        "31": "Fanatic",
+        "32": "Pogoer",
+        "33": "'Ooligan'",
+        "34": "Doom Diver",
+        "35": "Halfling Hopeful Lineman",
+        "36": "Halfling Hefty",
+        "37": "Halfling Catcher",
+        "38": "Altern Forest Treeman",
+        "39": "Human Lineman",
+        "40": "Human Thrower",
+        "41": "Human Catcher",
+        "42": "Human Blitzer",
+        "43": "Skink Lineman",
+        "44": "Chameleon Skinks",
+        "45": "Saurus Blocker",
+        "46": "Kroxigor",
+        "47": "Zombie Lineman",
+        "48": "Ghoul Runner",
+        "49": "Wraith",
+        "50": "Werewolf",
+        "51": "Flesh Golem",
+        "52": "Rotter Lineman",
+        "53": "Pestigor",
+        "54": "Bloater",
+        "55": "Rotspawn",
+        "56": "Gnoblar Lineman",
+        "57": "Ogre Runt Punter",
+        "58": "Ogre Blocker",
+        "59": "Orc Lineman",
+        "60": "Orc Thrower",
+        "61": "Orc Blitzer",
+        "62": "Big Un Blocker",
+        "63": "Goblin Lineman",
+        "64": "Untrained Troll",
+        "65": "Skeleton Lineman",
+        "66": "Wight Blitzer",
+        "67": "Mummy",
+        "68": "Skaven Lineman",
+        "69": "Skaven Thrower",
+        "70": "Gutter Runner",
+        "71": "Skaven Blitzer",
+        "72": "Rat Ogre",
+        "73": "Snotling Lineman",
+        "74": "Fungus Flinga",
+        "75": "Fun-hoppa",
+        "76": "Stilty Runna",
+        "77": "Pump Wagon",
+        "78": "Wood Elf Lineman",
+        "79": "Wood Elf Thrower",
+        "80": "Wood Elf Catcher",
+        "81": "Wardancer",
+        "82": "Loren Forest Treeman",
+        "83": "Human Lineman",
+        "84": "Renegade Human Thrower",
+        "85": "Renegade Goblin",
+        "86": "Renegade Orc",
+        "87": "Renegade Skaven",
+        "88": "Renegade Dark Elf",
+        "89": "Renegade Troll",
+        "90": "Renegade Ogre",
+        "91": "Renegade Minotaur",
+        "92": "Tribal Linewoman",
+        "93": "Eagle Warrior Thrower",
+        "94": "Piranha Warrior Catcher",
+        "95": "Koka Kalim Blitzer",
+        "96": "Hobgoblin Lineman",
+        "97": "Chaos Dwarf Blocker",
+        "98": "Bull Centaur Blitzer",
+        "99": "Enslaved Minotaur",
+        "100": "High Elf Lineman",
+        "101": "High Elf Thrower",
+        "102": "High Elf Catcher",
+        "103": "High Elf Blitzer",
+        "104": "Norse Lineman",
+        "105": "Norse Thrower",
+        "106": "Norse Catcher",
+        "107": "Norse Berserker",
+        "108": "Ulfwerner",
+        "109": "Yhetee",
+        "110": "Anointed Thrower",
+        "111": "Anointed Blitzer",
+        "112": "Tomb Guardian",
+        "113": "Thrall Lineman",
+        "114": "Vampire Blitzer",
+        "115": "Old World Human Lineman",
+        "116": "Old World Human Thrower",
+        "117": "Old World Human Catcher",
+        "118": "Old World Human Blitzer",
+        "119": "Old World Dwarf Blocker",
+        "120": "Old World Dwarf Runner",
+        "121": "Old World Dwarf Blitzer",
+        "122": "Old World Dwarf Troll Slayer",
+        "123": "Old World Halfling Hopeful",
+        "124": "Altern Forest Treeman",
+        "125": "Underworld Goblin Lineman",
+        "126": "Underworld Snotling",
+        "127": "Skaven Clanrat",
+        "128": "Skaven Thrower",
+        "129": "Gutter Runner",
+        "130": "Skaven Blitzer",
+        "131": "Underworld Troll",
+        "132": "Mutant Rat Ogre",
+        "133": "Pit Fighter",
+        "134": "Bloodletter Daemon",
+        "135": "Khorne Herald",
+        "136": "Bloodthirster",
+        "137": "Lineman",
+        "138": "Catcher",
+        "139": "Blitzer",
+        "140": "Bloodborn Marauder",
+        "141": "Khorngor",
+        "142": "Bloodseeker",
+        "143": "Bloodspawn",
+        "144": "Norse Raider Lineman",
+        "145": "Norse Berserker",
+        "146": "Valkyrie",
+        "147": "Ulfwerener",
+        "148": "Yhetee",
+        "149": "Beer Boar",
+        "150": "Gnoblar Lineman",
+        "151": "Snotling Lineman",
+        "152": "Norse Raider Lineman",
+        "153": "Eagle Warrior Linewoman",
+        "154": "Piranha Warrior Blitzer",
+        "155": "Python Warrior Thrower",
+        "156": "Jaguar Warrior Blocker",
+        "157": "Piranha Warrior Blitzer",
+        "158": "Python Warrior Thrower",
+        "159": "Jaguar Warrior Blocker",
+        "160": "Vampire Thrower",
+        "161": "Vampire Blitzer",
+        "162": "Vampire Runner",
+        "163": "Thrall Lineman",
+        "164": "Vargheist"
+    },
+    "stars": {
+        "title": "Star Players",
+        "200": {
+            "name": "The Black Gobbo",
+            "rule": "Sneakiest of the Lot"
+        },
+        "201": {
+            "name": "Deeproot Strongbranch",
+            "rule": "Reliable"
+        },
+        "202": {
+            "name": "Eldril Sidewinder",
+            "rule": "Mesmerizing Dance"
+        },
+        "203": {
+            "name": "Glart Smarshrip",
+            "rule": "Frenzied Rush"
+        },
+        "204": {
+            "name": "Gloriel Summerbloom",
+            "rule": "Shot to Nothing"
+        },
+        "205": {
+            "name": "Grak",
+            "rule": "Two for One"
+        },
+        "206": {
+            "name": "Crumbleberry",
+            "rule": "Two for One"
+        },
+        "207": {
+            "name": "Gretchen Wächter",
+            "rule": "Incorporeal"
+        },
+        "208": {
+            "name": "Griff Oberwald",
+            "rule": "Consummate Professional"
+        },
+        "209": {
+            "name": "Grim Ironjaw",
+            "rule": "Slayer"
+        },
+        "210": {
+            "name": "Hakflem Skuttlespike",
+            "rule": "Treacherous"
+        },
+        "211": {
+            "name": "Helmut Wulf",
+            "rule": "Old Pro"
+        },
+        "212": {
+            "name": "Karla Von Kill",
+            "rule": "Indomitable"
+        },
+        "213": {
+            "name": "Lord Borak",
+            "rule": "Lord of Chaos"
+        },
+        "214": {
+            "name": "Mighty Zug",
+            "rule": "Crushing Blow"
+        },
+        "215": {
+            "name": "Morg 'n' Thorg",
+            "rule": "The Ballista"
+        },
+        "216": {
+            "name": "Roxanna Darknail",
+            "rule": "Burst of Speed"
+        },
+        "217": {
+            "name": "Rumbelow Sheepskin",
+            "rule": "Ram"
+        },
+        "218": {
+            "name": "Skrull Halfheight",
+            "rule": "Strong Passing Game"
+        },
+        "219": {
+            "name": "Lucian Swift",
+            "rule": "Two for One"
+        },
+        "220": {
+            "name": "Valen Swift",
+            "rule": "Two for One"
+        },
+        "221": {
+            "name": "Varag Ghoul-Chewer",
+            "rule": "Crushing Blow"
+        },
+        "222": {
+            "name": "Grombrindal, the White Dwarf",
+            "rule": "Wisdom of the White Dwarf"
+        },
+        "223": {
+            "name": "Willow Rosebark",
+            "rule": "Indomitable"
+        },
+        "224": {
+            "name": "Zolcath the Zoat",
+            "rule": "Excuse Me, Are You a Zoat?"
+        },
+        "225": {
+            "name": "Akhorne the Squirrel",
+            "rule": "Blind Rage"
+        },
+        "226": {
+            "name": "Frank 'N' Stein",
+            "rule": "Brutal Block"
+        },
+        "227": {
+            "name": "Wilhelm Chaney",
+            "rule": "Savage Mauling"
+        },
+        "228": {
+            "name": "Kreek, \"The Verminator\" Rustgouger",
+            "rule": "I'll be back"
+        },
+        "229": {
+            "name": "Grashnak Blackhoof",
+            "rule": "Gored by the Bull"
+        },
+        "230": {
+            "name": "Bryce \"The Slice\" Cambuel",
+            "rule": "Ghostly Flames"
+        },
+        "231": {
+            "name": "Scyla Anfingrimm",
+            "rule": "Fury of the Blood God"
+        },
+        "232": {
+            "name": "Max Spleenripper",
+            "rule": "Maximum Carnage"
+        },
+        "233": {
+            "name": "Barik Farblast",
+            "rule": "Blast It!"
+        },
+        "234": {
+            "name": "Bomber Dribblesnot",
+            "rule": "Kaboom!"
+        },
+        "235": {
+            "name": "Fungus the Loon",
+            "rule": "Whirling Dervish!"
+        },
+        "236": {
+            "name": "Ivar Eriksson",
+            "rule": "Raiding Party"
+        },
+        "237": {
+            "name": "Skrorg Snowpelt",
+            "rule": "Pump Up the Crowd"
+        },
+        "238": {
+            "name": "Thorsson Stoutmead",
+            "rule": "Beer Barrel Bash!"
+        },
+        "239": {
+            "name": "Boa Kon'ssstriktr",
+            "rule": "Look Into My Eyes"
+        },
+        "240": {
+            "name": "Estelle la Veneaux",
+            "rule": "Baleful Hex"
+        },
+        "241": {
+            "name": "Glotl Stop",
+            "rule": "Primal Savegery!"
+        },
+        "242": {
+            "name": "Puggy Baconbreath",
+            "rule": "Halfling Luck"
+        },
+        "243": {
+            "name": "Cindy Piewhistle",
+            "rule": "All You Can Eat"
+        },
+        "244": {
+            "name": "Dribl",
+            "rule": "A Sneaky Pair"
+        },
+        "245": {
+            "name": "Drull",
+            "rule": "A Sneaky Pair"
+        },
+        "246": {
+            "name": "Bilerot Vomitflesh",
+            "rule": "Putrid Regeneration"
+        },
+        "247": {
+            "name": "Ripper Bolgrot",
+            "rule": "Thinking Man's Troll"
+        },
+        "248": {
+            "name": "Nobbla Blackwart",
+            "rule": "Kick 'em While They're down!"
+        },
+        "249": {
+            "name": "Scrappa Sorehead",
+            "rule": "Yoink!"
+        },
+        "250": {
+            "name": "Withergrasp Doubledrool",
+            "rule": "Watch Out!"
+        },
+        "251": {
+            "name": "Ivan 'the Animal' Deathshroud",
+            "rule": "Dwarfen Scourge"
+        },
+        "252": {
+            "name": "Count Luthor von Drakenborg",
+            "rule": "Star of the Show"
+        },
+        "253": {
+            "name": "Captain Karina von Riesz",
+            "rule": "Tasty Morsel"
+        }
+    },
+    "inducements": {
+        "i1": "Temp Agency Cheerleader",
+        "i2": "Part-time Assistant Coach",
+        "i3": "Weather Mage",
+        "i4": "Bloodweiser Keg",
+        "i5": "Special Play",
+        "i6": "Extra Team Training",
+        "i7": "Bribe",
+        "i8": "Wandering Apothecary",
+        "i9": "Mortuary Assistant",
+        "i10": "Plague Doctor",
+        "i11": "Riotous Rookies",
+        "i12": "Halfling Master Chef",
+        "i13": "Mercenary Player",
+        "i15": "(In)Famous Coaching Staff: Josef Bugman",
+        "i18": "(In)Famous Coaching Staff: Kari Coldsteel",
+        "i19": "(In)Famous Coaching Staff: Papa Skullbones",
+        "i20": "(In)Famous Coaching Staff: Glandril Silverwater",
+        "i21": "(In)Famous Coaching Staff: Krot Shockwhisker",
+        "i22": "(In)Famous Coaching Staff: Ayleen Andar",
+        "i23": "(In)Famous Coaching Staff: Professor Frönkelheim",
+        "i24": "(In)Famous Coaching Staff: Mungo Spinecracker",
+        "i25": "(In)Famous Coaching Staff: Fink Da Fixer",
+        "i26": "(In)Famous Coaching Staff: Schielund Scharlitan",
+        "i16": "Wizard: Hireling Sports-Wizard",
+        "i27": "Wizard: Chaos Sorcerer",
+        "i28": "Wizard: Druchii Sorceress",
+        "i29": "Wizard: Asur High Mage",
+        "i30": "Wizard: Slann Mage Priest",
+        "i31": "Wizard: Horticulturalist of Nurgle",
+        "i32": "Wizard: Sports Necrotheurge",
+        "i33": "Wizard: Wicked Witch",
+        "i34": "Wizard: Warlock Engineer",
+        "i35": "Wizard: Ogre Firebelly",
+        "i36": "Wizard: Night Goblin Shaman",
+        "i37": "Named Wizard: Horatio X. Schottenheim",
+        "i17": "Biased Referee",
+        "i38": "Biased Referee: Ranulf 'Red' Hokuli",
+        "i39": "Biased Referee: Thoron Korensson",
+        "i40": "Biased Referee: Jorm the Ogre",
+        "i41": "Biased Referee: The Trundlefoot Triplets",
+        "i42": "WAAAGH! Drummer",
+        "i43": "Cavorting Nurgling",
+        "i44": "Dwarfen Runesmith",
+        "i45": "Halfling Hot Pot",
+        "i46": "Master of Ballistics",
+        "i47": "Bottles of Heady Brew",
+        "i48": "Team Mascot",
+        "i49": "Medical Unguent",
+        "i50": "Desperate Measures",
+        "i51": "College Wizard",
+        "i52": "Giant Mercenary Player",
+        "i53": "Lesser Magic Potion",
+        "i54": "Superior Magic Potion",
+        "i55": "Sawbones",
+        "i56": "Snack Stand",
+        "i57": "Novice Wizard"
+    },
+    "match": {
+        "login": "You must be logged in to record match history.",
+        "new": "New Match",
+        "continue": "Continue Record",
+        "delete": "Delete Draft",
+        "next": "Next",
+        "previous": "Previous",
+        "records": "Match Records",
+        "setups": "Setups",
+        "details": {
+            "title": "Game Details",
+            "name": "Your name",
+            "opponent": "Opponent's name",
+            "date": "Date of match",
+            "type": "Is this a {type} game?"
+        },
+        "pre": {
+            "title": "Pre-game Calculations",
+            "your": "Your Fan Factor",
+            "opponent": "Opponent's Fan Factor",
+            "weather": "Weather",
+            "stadium": "Stadium"
+        },
+        "inducements": {
+            "title": "Match Inducements",
+            "directions": "You can safely return to your roster to edit."
+        },
+        "events": {
+            "title": "Player Events",
+
+            "type": "Event Type",
+            "turn": "Turn",
+            "opp": "Opponent's Total Touchdowns",
+            "disc": "*Kills are not an official stat and do not reward spp. Add a casualty simultaneously for automatic spp.",
+            "onTurn": "on turn {turn}",
+            "casualty": "Casualty",
+            "casualty.p": "Casualties",
+            "completion": "Completion",
+            "completion.p": "Completions",
+            "kill": "Kill",
+            "kill.p": "Kills",
+            "touchdown": "Touchdown",
+            "touchdown.p": "Touchdowns",
+            "deflection": "Deflection",
+            "deflection.p": "Deflections",
+            "interception": "Interception",
+            "interception.p": "Interceptions"
+        },
+        "post": {
+            "title": "Post-game Calculations",
+            "winnings": "Winnings",
+            "concession": "Concession",
+            "mvp": "MVP",
+            "df": "Dedicated Fans Roll",
+            "df_change": "Your dedicated fans will {change}",
+            "dec": "decrease by {n}.",
+            "inc": "increase by 1.",
+            "stay": "remain the same."
+        },
+        "save": {
+            "title": "Save Match",
+            "updateSpp": "Add SPP to players",
+            "updateTreasury": "Update treasury",
+            "removeInducements": "Remove Inducements",
+            "removeStarPlayers": "Remove Star Players",
+            "updateDedicatedFans": "Update dedicated fans",
+            "updateConcededGoals": "Update conceded goals"
+        }
+    },
+    "weather": {
+        "default": "Default",
+        "spring": "Spring",
+        "summer": "Summer",
+        "autumn": "Autumn",
+        "winter": "Winter",
+        "subterranean": "Subterranean",
+        "primordial": "Primordial",
+        "graveyard": "Graveyard",
+        "desolate": "Desolate",
+        "mountainous": "Mountainous",
+        "coastal": "Coastal",
+        "desert": "Desert",
+        "street": "Street",
+        "sewer": "Sewer"
+    }
+}

@@ -75,7 +75,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 5,
         name: 'MA',
-        title: 'Movement Allowance',
+        title: 'roster.column.titles.5',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -83,7 +83,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 6,
         name: 'ST',
-        title: 'Strength',
+        title: 'roster.column.titles.6',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -91,7 +91,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 7,
         name: 'AG',
-        title: 'Agility',
+        title: 'roster.column.titles.7',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -99,7 +99,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 8,
         name: 'PA',
-        title: 'Passing',
+        title: 'roster.column.titles.8',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -107,7 +107,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 9,
         name: 'AV',
-        title: 'Armour Value',
+        title: 'roster.column.titles.9',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -132,7 +132,8 @@ export const columnDetails: ColumnDetails[] = [
     },
     {
         id: 12,
-        name: 'Unspent Spp',
+        name: 'Spp',
+        title: 'roster.column.titles.12',
         headerDetails: {
             elementId: 'spp-header',
         },
@@ -150,7 +151,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 13,
         name: 'MNG',
-        title: 'Miss next game',
+        title: 'roster.column.titles.13',
         headerDetails: {
             elementId: 'mng-header',
         },
@@ -162,7 +163,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 14,
         name: 'NI',
-        title: 'Niggling Injury',
+        title: 'roster.column.titles.14',
         rowDetails: {
             component: PlayerNumberInput,
         },
@@ -172,7 +173,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 15,
         name: 'TR',
-        title: 'Temporarily Retiring',
+        title: 'roster.column.titles.15',
         headerDetails: {
             elementId: 'tr-header',
         },
@@ -185,7 +186,6 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 16,
         name: 'Current Value',
-        title: 'Current Value',
         rowDetails: {
             component: TextElement,
         },

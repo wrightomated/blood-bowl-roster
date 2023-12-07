@@ -2,9 +2,7 @@
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
     import { roster } from '../../../store/teamRoster.store';
-
-    $: matchTypeString =
-        $roster.mode === 'league' ? 'league match' : 'tournament game';
+    import { _ } from 'svelte-i18n';
 </script>
 
 <div
@@ -14,7 +12,7 @@
 >
     <div class="game-details-container">
         <div>
-            <label for="coach-name">Your Name</label>
+            <label for="coach-name">{$_('match.details.name')}</label>
             <input
                 type="text"
                 id="coach-name"
@@ -23,7 +21,7 @@
             />
         </div>
         <div>
-            <label for="opponent">Opponent's Name</label>
+            <label for="opponent">{$_('match.details.opponent')}</label>
             <input
                 type="text"
                 id="opponent"
@@ -32,7 +30,7 @@
             />
         </div>
         <div>
-            <label for="opponent">Date of match</label>
+            <label for="opponent">{$_('match.details.date')}</label>
             <input
                 type="date"
                 id="date"
@@ -41,7 +39,11 @@
             />
         </div>
         <div class="league-input">
-            <label for="was-league-match">Is this a {matchTypeString}?</label>
+            <label for="was-league-match"
+                >{$_('match.details.type', {
+                    values: { type: $roster.mode },
+                })}</label
+            >
             <input
                 type="checkbox"
                 name="was-league-match"

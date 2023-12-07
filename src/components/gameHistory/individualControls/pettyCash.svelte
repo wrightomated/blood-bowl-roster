@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { roster } from '../../../store/teamRoster.store';
     function updatePettyCash(event) {
         roster.setPettyCash(event.target.value);
@@ -6,7 +7,7 @@
 </script>
 
 <div class="petty-cash-box boxed-div">
-    <label for="petty-cash">Petty Cash</label>
+    <label for="petty-cash">{$_('common.petty')}</label>
     <input
         type="number"
         autocomplete="off"

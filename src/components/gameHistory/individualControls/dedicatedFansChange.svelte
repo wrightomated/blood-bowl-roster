@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
 
@@ -6,15 +7,19 @@
     export let concession: 'player' | 'opponent' | 'none' = 'none';
 
     $: changeDedicatedFans = $roster.matchDraft?.playingCoach?.fanChange || 0;
-    $: dedicatedFansString = `Your dedicated fans will ${
+
+    $: changeValue =
         concession === 'player'
-            ? `decrease by ${concedeFanChange($roster)}.`
+            ? $_('match.post.dec', { values: { n: concedeFanChange($roster) } })
             : changeDedicatedFans === 0
-            ? 'remain the same.'
+            ? $_('match.post.stay')
             : changeDedicatedFans === 1
-            ? 'increase by one.'
-            : 'decrease by one.'
-    }`;
+            ? $_('match.post.inc')
+            : $_('match.post.dec', { values: { n: 1 } });
+
+    $: dedicatedFansString = $_('match.post.df_change', {
+        values: { change: changeValue },
+    });
 
     let roll: number;
 
@@ -55,7 +60,7 @@
 </script>
 
 <div class="boxed-div">
-    <label for="dedicated-fans-change">Dedicated Fans Roll</label>
+    <label for="dedicated-fans-change">{$_('match.post.df')}</label>
     {#if concession === 'player'}
         <input
             type="number"

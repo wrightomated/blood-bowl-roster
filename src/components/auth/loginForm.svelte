@@ -9,6 +9,7 @@
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
     import { getAuthModal } from './getAuthFormModule';
+    import { _ } from 'svelte-i18n';
 
     $: emailV = '';
     $: passwordV = '';
@@ -34,9 +35,9 @@
                 error?.code === 'auth/wrong-password' ||
                 error?.code === 'auth/user-not-found'
             ) {
-                errorText = 'Incorrect username or password.';
+                errorText = $_('errors.incorrect');
             } else {
-                errorText = 'Something went wrong';
+                errorText = $_('errors.generic');
             }
         } finally {
             modalState.enableClose(true);
@@ -58,11 +59,13 @@
 </script>
 
 {#if $showSpinner}
-    <FootballSpinner loadingText="Logging in." />
+    <FootballSpinner loadingText={$_('loading')} />
 {:else if $currentUserStore}
     <div class="logged-in">
-        <p>Successfully logged in!</p>
-        <Button clickFunction={() => modalState.close()}>Okay</Button>
+        <p>{$_('success')}</p>
+        <Button clickFunction={() => modalState.close()}
+            >{$_('common.ok')}</Button
+        >
     </div>
 {:else}
     <form
@@ -70,23 +73,23 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={login}
     >
-        <h2>Log into your account</h2>
-        <label for="email">Email:</label>
+        <h2>{$_('auth.loginTitle')}</h2>
+        <label for="email">{$_('common.email')}:</label>
         <input
             type="email"
             name="email"
             id="email"
-            placeholder="your email address"
+            placeholder={$_('common.email')}
             bind:value={emailV}
             autocomplete="email"
             required
         />
-        <label for="password">Password:</label>
+        <label for="password">{$_('register.password')}:</label>
         <input
             type="password"
             name="password"
             id="password"
-            placeholder="your password"
+            placeholder={$_('register.password')}
             bind:value={passwordV}
             autocomplete="current-password"
             required
@@ -97,18 +100,17 @@
             <p class="error"><strong>{errorText}</strong></p>
         {/if}
         <button class="login-button rounded-button" on:focus={touchForm}
-            >Login</button
+            >{$_('menu.login')}</button
         >
     </form>
     <button
         class="reset-password"
         on:click={async () => {
             await passwordReset();
-        }}>Forgot password?</button
+        }}>{$_('auth.forgot')}</button
     >
 {/if}
 
-<!-- <button on:click={() => sendVerificationEmail()}>Send email</button> -->
 <style lang="scss">
     .login-form {
         display: flex;

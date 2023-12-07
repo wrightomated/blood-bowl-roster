@@ -6,5 +6,9 @@
     ],
     "cSpell.words": [
         "bbroster"
-    ]
+    ],
+    "i18n-ally.localesPaths": [
+        "src/locale"
+    ],
+    "i18n-ally.sourceLanguage": "en"
 }
