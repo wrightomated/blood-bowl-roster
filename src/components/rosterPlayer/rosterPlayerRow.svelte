@@ -54,7 +54,7 @@
                 'Current Value': {
                     text: `${formatNumberInThousands(currentCost)}`,
                 },
-                'Unspent Spp': {
+                Spp: {
                     index,
                     alteration: 'spp',
                 },
