@@ -1,10 +1,11 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import { menuDrawerOpen } from '../../store/menuDrawer.store';
     import MenuItems from './menuItems.svelte';
     import UserProfile from '../auth/userProfile.svelte';
     import UserCircle from './userCircle.svelte';
-    import { _ } from 'svelte-i18n';
+    import LocalSelector from '../../locale/selector/localeSelector.svelte';
 
     let menuComponent: typeof MenuItems | typeof UserProfile;
 
@@ -34,13 +35,16 @@
     </div>
     <h1>BB Roster</h1>
 
-    <button
-        class="profile"
-        title={$_('menu.profile')}
-        on:click={toggleUserProfile}
-    >
-        <UserCircle />
-    </button>
+    <div class="profile">
+        <LocalSelector />
+        <button
+            class="profile"
+            title={$_('menu.profile')}
+            on:click={toggleUserProfile}
+        >
+            <UserCircle />
+        </button>
+    </div>
 </header>
 <div class="spacer" class:spacer--show={$menuDrawerOpen} />
 <nav class="menu__drawer" class:menu__drawer--open={$menuDrawerOpen}>
@@ -84,15 +88,21 @@
         }
     }
     .profile {
-        margin: 0px 12px 0 auto;
-        background: none;
-        border: none;
-        padding: 0;
-        font: inherit;
-        cursor: pointer;
-        color: var(--shadow);
-        &:hover {
-            color: var(--main-colour);
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+
+        button {
+            margin-right: 12px;
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            color: var(--shadow);
+            &:hover {
+                color: var(--main-colour);
+            }
         }
     }
     .spacer {
