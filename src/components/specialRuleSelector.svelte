@@ -6,6 +6,7 @@
     import { roster } from '../store/teamRoster.store';
     import SelectSpecialRule from './selectSpecialRule.svelte';
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
+    import { _ } from 'svelte-i18n';
 
     onMount(() => {
         if ($currentTeam.pickSpecialRule) {
@@ -29,7 +30,7 @@
 
         <SelectSpecialRule />
         <button class="rounded-button" on:click={confirmSpecialRule}
-            >Confirm</button
+            >{$_('common.confirm')}</button
         >
     </div>
 {/if}

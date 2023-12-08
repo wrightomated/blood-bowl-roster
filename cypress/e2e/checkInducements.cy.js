@@ -5,7 +5,7 @@ context('Test that the correct inducements are displayed', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
-        cy.contains('sevens').click();
+        cy.contains('Sevens').click();
         cy.contains('Orc').click();
         cy.getBySel('create-team').click();
         cy.getBySel('toggle-inducements').click();

@@ -18,8 +18,9 @@ function createModalState() {
             update((store) => {
                 return { ...store, canClose };
             }),
-        modalLoading: (loadingText: string) =>
+        modalLoading: (loadingText?: string) =>
             update((store) => {
+                loadingText = loadingText || 'loading';
                 return {
                     ...store,
                     isOpen: true,

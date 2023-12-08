@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import {
         dungeonBowlSkillIds,
         skillCatalogue,
@@ -53,7 +54,7 @@
         {/if}
         {#each availableSkills as skill}
             <Button clickFunction={() => selectSkill(skill.id)}
-                >{skill.name}</Button
+                >{$_(`skills.${skill.id}`)}</Button
             >
         {/each}
     </fieldset>

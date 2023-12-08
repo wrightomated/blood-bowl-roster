@@ -1,20 +1,17 @@
+import type { CharacteristicType } from '../data/statOrder.data';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import type { RosterPlayerRecord } from './roster.model';
 
 export type TableColumnName =
+    | CharacteristicType
     | 'Number'
     | 'Name'
     | 'Controls'
     | 'Position'
-    | 'MA'
-    | 'ST'
-    | 'AG'
-    | 'PA'
-    | 'AV'
     | 'Skills'
     | 'Hiring Fee'
-    | 'Unspent Spp'
+    | 'Spp'
     | 'MNG'
     | 'NI'
     | 'TR'
@@ -23,7 +20,7 @@ export type TableColumnName =
 
 export interface ColumnDetails {
     id?: number;
-    name: TableColumnName;
+    name?: TableColumnName;
     headerDetails?: HeaderDetails;
     rowDetails?: RowDetails;
     colspan?: number;

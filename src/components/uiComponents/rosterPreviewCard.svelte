@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { Roster, RosterPreview } from '../../models/roster.model';
     import { modalState } from '../../store/modal.store';
@@ -16,7 +17,7 @@
             teamLoadOpen.set(false);
             return;
         }
-        modalState.modalLoading(`Loading ${preview?.teamName || 'roster'}`);
+        modalState.modalLoading();
 
         try {
             const service = await import('../auth/firebaseDB.service');
@@ -35,14 +36,16 @@
 </script>
 
 <button class="roster-preview" on:click={() => loadTeam(preview.rosterId)}>
-    <p>{preview.teamType} Team</p>
+    <p>{$_('roster.teamType', { values: { type: preview.teamType } })}</p>
     <h3>{preview.teamName || 'Unnamed'}</h3>
     <p>
         {preview.format ? getTeamFormatShortDisplay(preview.format) + ' ' : ''}
         <span class="mode-title">{preview.mode || ''}</span>
     </p>
     <p>
-        <span>Treasury: </span>{formatNumberInThousands(preview.treasury)}
+        <span>{$_('tables.treasury')}: </span>{formatNumberInThousands(
+            preview.treasury
+        )}
     </p>
 </button>
 

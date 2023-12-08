@@ -6,6 +6,7 @@
     import Button from '../uiComponents/button.svelte';
     import { menuDrawerOpen } from '../../store/menuDrawer.store';
     import LoggedOut from './loggedOut.svelte';
+    import { _ } from 'svelte-i18n';
 
     let logOutEnabled = true;
     const showModal = (component: string) => {
@@ -33,9 +34,11 @@
 
 {#if $currentUserStore?.uid}
     <Button clickFunction={signUserOut} cancel disabled={!logOutEnabled}
-        >Logout</Button
+        >{$_('menu.logout')}</Button
     >
 {:else}
-    <Button clickFunction={() => showModal('login')}>Login</Button>
-    <Button clickFunction={() => showModal('register')}>Register</Button>
+    <Button clickFunction={() => showModal('login')}>{$_('menu.login')}</Button>
+    <Button clickFunction={() => showModal('register')}
+        >{$_('menu.register')}</Button
+    >
 {/if}

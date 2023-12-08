@@ -14,6 +14,7 @@
     import { currentUserStore } from '../store/currentUser.store';
     import { rosterCache } from '../store/rosterCache.store';
     import type { Roster } from '../models/roster.model';
+    import { _ } from 'svelte-i18n';
 
     let saved = false;
     let saving = false;
@@ -105,16 +106,16 @@
     />
 {:else if saving}
     <i
-        class="material-symbols-outlined syncing no-transition"
+        class="material-symbols-outlined syncing no-transition no-print"
         title="Saving roster">autorenew</i
     >
 {:else}<i
-        class="material-symbols-outlined saved no-transition"
+        class="material-symbols-outlined saved no-transition no-print"
         title="Roster saved">check_circle</i
     >{/if}
 {#if !rosterCleared}
     <MaterialButton
-        hoverText="Delete roster forever"
+        hoverText={$_('common.delete')}
         symbol="delete_forever"
         clickFunction={toggleDelete}
     />

@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
-import { inducementData } from '../data/inducements.data';
-import { starPlayers } from '../data/starPlayer.data';
+
 import type {
     GameEvent,
     GameEventTally,
@@ -143,25 +142,11 @@ export function updateRosterWithDraft(
     return r;
 }
 
-export function mapHistoryInducementsForDisplay(
-    inducements: MatchHistoryInducements
-): (string | number)[][] {
-    return inducements
-        .map((i) => {
-            const inducementName: string = getInducementName(i.id);
-            if (!inducementName || !i.amount) return null;
-
-            return [inducementName, i.amount];
-        })
-        .filter((x) => x);
-}
-
-function getInducementName(id: string) {
+export function getInducementName(id: string) {
     if (id[0] === 'i') {
-        return inducementData.inducements.find((i) => i.id === id).displayName;
+        return 'inducements.' + id;
     } else if (id[0] === 'p') {
-        return starPlayers.starPlayers.find((p) => p.id === +id.substring(1))
-            .position;
+        return 'stars.' + id.slice(1) + '.name';
     }
     return null;
 }

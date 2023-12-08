@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { newMatchRecord } from '../../helpers/matchHistoryHelpers';
     import { currentUserStore } from '../../store/currentUser.store';
     import { matchHistorySteps } from '../../store/matchHistorySteps.store';
@@ -9,7 +10,11 @@
     import ToggleButton from '../uiComponents/toggleButton.svelte';
     import MatchHistoryCard from './matchHistoryCard.svelte';
 
-    const rosterTools = ['Match Records', 'Notes', 'Setups'];
+    const rosterTools = [
+        $_('match.records'),
+        $_('common.notes'),
+        $_('match.setups'),
+    ];
 
     async function newMatch() {
         if (!$roster.matchDraft) {
@@ -19,7 +24,7 @@
             );
             matchHistorySteps.reset($roster.mode, $roster.format);
         }
-        modalState.modalLoading('Setting up new match');
+        modalState.modalLoading($_('loading'));
 
         await import('./newMatchRecord.svelte').then((component) => {
             modalState.set({
@@ -34,17 +39,17 @@
 
 {#if $roster.notes}
     <div class="print-only">
-        <strong>Notes</strong>
+        <strong>{$_('common.notes')}</strong>
         <p>{$roster.notes}</p>
     </div>
 {/if}
 
 <div class="match-history no-print">
-    <h2>Roster Tools</h2>
+    <h2>{$_('tools')}</h2>
     <div class="tool-content">
         <!-- Toggle between Match Records, notes and setups -->
         <ToggleButton
-            options={['Match Records', 'Notes', 'Setups']}
+            options={rosterTools}
             selectedIndex={rosterTools.findIndex(
                 (x) => x === $selectedRosterTool
             )}
@@ -52,7 +57,7 @@
                 selectedRosterTool.set(option);
             }}
         />
-        {#if $selectedRosterTool === 'Notes'}
+        {#if $selectedRosterTool === rosterTools[1]}
             <textarea
                 name="notes"
                 class="notes-area"
@@ -62,20 +67,23 @@
                 maxlength="2048"
                 bind:value={$roster.notes}
             />
-        {:else if $selectedRosterTool === 'Setups'}
+        {:else if $selectedRosterTool === rosterTools[2]}
             <p>Coming soon</p>
-        {:else if $selectedRosterTool === 'Match Records'}
+        {:else if $selectedRosterTool === rosterTools[0]}
             {#if $currentUserStore}
                 <div class="button-container">
                     {#if !$roster.matchDraft}
-                        <Button clickFunction={newMatch}>New Match</Button>
+                        <Button clickFunction={newMatch}
+                            >{$_('match.new')}</Button
+                        >
                     {:else}
-                        <Button clickFunction={newMatch}>Continue Record</Button
+                        <Button clickFunction={newMatch}
+                            >{$_('match.continue')}</Button
                         >
                         <Button
                             cancel={true}
                             clickFunction={roster.deleteMatchDraft}
-                            >Delete Draft</Button
+                            >{$_('match.delete')}</Button
                         >
                     {/if}
                 </div>
@@ -85,7 +93,7 @@
                     {/each}
                 {/if}
             {:else}
-                <p>You must be logged in to record match history.</p>
+                <p>{$_('match.login')}</p>
             {/if}
         {/if}
     </div>

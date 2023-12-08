@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getSkill } from '../helpers/getSkill';
     import { roster } from '../store/teamRoster.store';
+    import { _ } from 'svelte-i18n';
 
     let defaultColour = '#970f0c';
 
@@ -19,7 +19,8 @@
 </script>
 
 <span class="skills" data-cy={cyData}>
-    {#each playerSkillIds as skillId}<span>{getSkill(skillId)}</span>{/each}
+    {#each playerSkillIds as skillId}<span>{$_(`skills.${skillId}`)}</span
+        >{/each}
     {#each extraSkillIds as skillId, index}
         <div
             class="extra"
@@ -28,10 +29,11 @@
         >
             <input
                 type="color"
-                aria-label={`Select colour for ${getSkill(skillId)}`}
+                aria-label={`Select colour for ${$_(`skills.${skillId}`)}`}
                 bind:value={$roster.config.customSkillColour[skillId]}
             />
-            {getSkill(skillId) + (index < extraSkillIds.length - 1 ? ', ' : '')}
+            {$_(`skills.${skillId}`) +
+                (index < extraSkillIds.length - 1 ? ', ' : '')}
         </div>
     {/each}
 </span>

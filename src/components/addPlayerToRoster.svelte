@@ -1,6 +1,6 @@
 <script lang="ts">
     import { dbIgnoredSkills } from '../data/dungeonBowlIgnoredSkills';
-    import { characteristics } from '../data/statOrder.data';
+    import { isCharacteristicType } from '../data/statOrder.data';
 
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
@@ -21,6 +21,7 @@
         journeymanSkills,
     } from '../helpers/journeymenHelper';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import { _ } from 'svelte-i18n';
 
     export let playerTypes: Player[];
     export let index: number;
@@ -84,32 +85,6 @@
         amount = 1;
     };
 
-    // const addPlayer = () => {
-    //     const { journeyman, ...player } = selected;
-    //     const extraSkills = journeyman
-    //         ? journeymanSkills($roster.format)
-    //         : undefined;
-    //     let alterations: PlayerAlterations = { spp: 0, ni: 0 };
-
-    //     if (journeyman) {
-    //         alterations = { ...alterations, journeyman };
-    //     }
-
-    //     if (extraSkills) {
-    //         alterations = { ...alterations, extraSkills };
-    //     }
-
-    //     roster.addPlayer(
-    //         {
-    //             playerName: newName,
-    //             player: { ...player, skills: filteredSkills(player.skills) },
-    //             alterations,
-    //         },
-    //         index
-    //     );
-    //     newName = '';
-    // };
-
     const filteredSkills: (skills: number[]) => number[] = (skills) => {
         return $roster.format === 'dungeon bowl'
             ? skills.filter((skillId) => !dbIgnoredSkills.includes(skillId))
@@ -118,12 +93,12 @@
 </script>
 
 <tr class="add-player-row">
-    {#each $filteredTableColumns as c}
+    {#each $filteredTableColumns as c (c.id)}
         <td class={c.rowDetails?.tdClass}>
             {#if c.name === 'Name'}
                 <input
                     aria-labelledby="name-header"
-                    placeholder="Player Name"
+                    placeholder={$_('players.name')}
                     bind:value={newName}
                     class="name-input"
                     data-cy="new-player-name-input"
@@ -137,7 +112,7 @@
                 >
                     {#each playerTypes as playerType}
                         <option value={playerType}>
-                            {playerType.position}
+                            {$_('players.' + playerType.id)}
                         </option>
                     {/each}
                     {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}
@@ -165,7 +140,7 @@
                     max={maxOfPlayerType - numberOfPlayerType}
                     use:blurOnEscapeOrEnter
                 />
-            {:else if characteristics.includes(c.name)}
+            {:else if isCharacteristicType(c.name)}
                 <Characteristic
                     characteristic={c.name}
                     playerStats={selected.playerStats}
@@ -182,9 +157,6 @@
 </tr>
 
 <style lang="scss">
-    .left-align {
-        text-align: left;
-    }
     input {
         border: 0;
         border-radius: 0;

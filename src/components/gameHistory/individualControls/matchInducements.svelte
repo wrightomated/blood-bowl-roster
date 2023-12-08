@@ -1,17 +1,21 @@
 <script lang="ts">
-    export let inducements: (string | number)[][];
+    import { _ } from 'svelte-i18n';
+
+    export let inducements: { name: string; amount: number }[];
     export let showTitle: boolean = true;
 </script>
 
 <div class="inducements-container">
     {#if showTitle}
-        <h3>Inducements</h3>
+        <h3>{$_('match.inducements.title')}</h3>
     {/if}
     <div class="inducements">
-        {#if inducements.length <= 0}<span class="inducements--none">None</span
+        {#if inducements.length <= 0}<span class="inducements--none"
+                >{$_('none')}</span
             >{/if}
         {#each inducements as i}
-            <div>{i[0]}{i[1] > 1 ? ` x ${i[1]}` : ''}</div>
+            <!-- {i} -->
+            <div>{$_(i.name)}{i.amount > 1 ? ` x ${i.amount}` : ''}</div>
         {/each}
     </div>
 </div>

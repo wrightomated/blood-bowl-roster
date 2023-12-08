@@ -89,6 +89,9 @@ select {
     background-position: 97% 72%;
     padding-right: 24px;
     background-repeat: no-repeat;
+    border-color: transparent;
+}
+select:hover {
     border-color: #ccc;
 }
 
@@ -260,6 +263,9 @@ thead > tr {
     box-shadow: none;
     background-color: white;
     color: grey;
+}
+.left-align {
+    text-align: left;
 }
 
 @keyframes spin {

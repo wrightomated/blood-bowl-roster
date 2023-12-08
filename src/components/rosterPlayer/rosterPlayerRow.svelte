@@ -54,7 +54,7 @@
                 'Current Value': {
                     text: `${formatNumberInThousands(currentCost)}`,
                 },
-                'Unspent Spp': {
+                Spp: {
                     index,
                     alteration: 'spp',
                 },
@@ -89,9 +89,6 @@
 </tr>
 
 <style>
-    .left-align {
-        text-align: left;
-    }
     .no-wrap {
         white-space: nowrap;
     }

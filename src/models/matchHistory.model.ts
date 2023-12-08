@@ -90,6 +90,10 @@ export type MatchHistoryStep = {
     status: StepStatus;
 };
 
+/**
+ * Inducements hired by a coach
+ * id can be either an inducement id or a star player id
+ */
 export type MatchHistoryInducements = { id: string; amount?: number }[];
 
 export type StepStatus = 'complete' | 'current' | 'future';
