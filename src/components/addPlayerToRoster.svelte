@@ -1,9 +1,6 @@
 <script lang="ts">
     import { dbIgnoredSkills } from '../data/dungeonBowlIgnoredSkills';
-    import {
-        characteristics,
-        isCharacteristicType,
-    } from '../data/statOrder.data';
+    import { isCharacteristicType } from '../data/statOrder.data';
 
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
