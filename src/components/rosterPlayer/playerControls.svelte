@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { activePlayers } from '../../store/activePlayers.store';
     import { gameSettings } from '../../store/gameSettings.store';
     import { modalState } from '../../store/modal.store';
 
@@ -63,12 +64,13 @@
         symbol="delete_forever"
         clickFunction={removePlayer}
     />
-    {#if !rosterPlayer.starPlayer && $roster.players.length < $gameSettings.maxPlayers}
+    {#if !rosterPlayer.starPlayer && $activePlayers.length < $gameSettings.maxPlayers}
         <MaterialButton
             hoverText="Duplicate player"
             symbol="group_add"
             clickFunction={duplicatePlayer}
-        />{/if}
+        />
+    {/if}
 </div>
 
 <style lang="scss">

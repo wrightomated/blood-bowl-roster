@@ -61,6 +61,12 @@ function createRoster() {
             }),
         duplicatePlayer: (index: number) =>
             update((store) => {
+                if (
+                    store.players.filter((p) => !p.deleted).length >=
+                    getGameTypeSettings(store?.format).maxPlayers
+                ) {
+                    return store;
+                }
                 const duplicatedPlayer: RosterPlayerRecord = {
                     ...store.players[index],
                     playerId: nanoid(),

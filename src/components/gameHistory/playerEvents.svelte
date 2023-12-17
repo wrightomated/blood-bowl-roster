@@ -1,8 +1,6 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { gameEventTypeToTitle } from '../../data/gameEventMap';
-    import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
     import type {
         GameEvent,
         GameEventTally,

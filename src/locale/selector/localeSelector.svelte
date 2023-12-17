@@ -15,6 +15,7 @@
         aria-label={$_('menu.locale')}
         bind:value={$locale}
         on:change={changeLocale}
+        name="locale"
     >
         {#each availableLocales as l}
             <option value={l}>{l.toUpperCase()}</option>
