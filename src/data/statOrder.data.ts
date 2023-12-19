@@ -13,7 +13,3 @@ export const characteristicIndex = (c: CharacteristicType) => {
 };
 
 export type CharacteristicType = 'MA' | 'ST' | 'AG' | 'PA' | 'AV';
-
-export function isCharacteristicType(name: string): name is CharacteristicType {
-    return characteristics.includes(name as CharacteristicType);
-}

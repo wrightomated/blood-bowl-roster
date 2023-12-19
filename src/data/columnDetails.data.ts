@@ -19,7 +19,7 @@ export const columnDetails: ColumnDetails[] = [
         },
         orderByPropertyPath: 'alterations.playerNumber',
         sortFunction: (a, b) => {
-            if (!a.alterations?.playerNumber || !b.alterations?.playerNumber)
+            if (!a.alterations.playerNumber || !b.alterations.playerNumber)
                 return -1;
 
             return a.alterations.playerNumber - b.alterations.playerNumber;
@@ -143,7 +143,7 @@ export const columnDetails: ColumnDetails[] = [
         disallowedRosterFormats: ['sevens'],
         orderByPropertyPath: 'alterations.spp',
         sortFunction: (a, b) => {
-            if (!a.alterations?.spp || !b.alterations?.spp) return -1;
+            if (!a.alterations.spp || !b.alterations.spp) return -1;
 
             return a.alterations.spp - b.alterations.spp;
         },
