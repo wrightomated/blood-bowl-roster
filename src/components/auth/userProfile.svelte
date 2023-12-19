@@ -7,6 +7,7 @@
     import { menuDrawerOpen } from '../../store/menuDrawer.store';
     import LoggedOut from './loggedOut.svelte';
     import { _ } from 'svelte-i18n';
+    import LocalSelector from '../../locale/selector/localeSelector.svelte';
 
     let logOutEnabled = true;
     const showModal = (component: string) => {
@@ -32,6 +33,7 @@
     };
 </script>
 
+<LocalSelector />
 {#if $currentUserStore?.uid}
     <Button clickFunction={signUserOut} cancel disabled={!logOutEnabled}
         >{$_('menu.logout')}</Button
