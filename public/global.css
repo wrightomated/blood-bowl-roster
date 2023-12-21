@@ -89,6 +89,9 @@ select {
     background-position: 97% 72%;
     padding-right: 24px;
     background-repeat: no-repeat;
+    border-color: transparent;
+}
+select:hover {
     border-color: #ccc;
 }
 

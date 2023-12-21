@@ -1,6 +1,6 @@
 <script lang="ts">
     import { dbIgnoredSkills } from '../data/dungeonBowlIgnoredSkills';
-    import { characteristics } from '../data/statOrder.data';
+    import { isCharacteristicType } from '../data/statOrder.data';
 
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
@@ -85,32 +85,6 @@
         amount = 1;
     };
 
-    // const addPlayer = () => {
-    //     const { journeyman, ...player } = selected;
-    //     const extraSkills = journeyman
-    //         ? journeymanSkills($roster.format)
-    //         : undefined;
-    //     let alterations: PlayerAlterations = { spp: 0, ni: 0 };
-
-    //     if (journeyman) {
-    //         alterations = { ...alterations, journeyman };
-    //     }
-
-    //     if (extraSkills) {
-    //         alterations = { ...alterations, extraSkills };
-    //     }
-
-    //     roster.addPlayer(
-    //         {
-    //             playerName: newName,
-    //             player: { ...player, skills: filteredSkills(player.skills) },
-    //             alterations,
-    //         },
-    //         index
-    //     );
-    //     newName = '';
-    // };
-
     const filteredSkills: (skills: number[]) => number[] = (skills) => {
         return $roster.format === 'dungeon bowl'
             ? skills.filter((skillId) => !dbIgnoredSkills.includes(skillId))
@@ -166,7 +140,7 @@
                     max={maxOfPlayerType - numberOfPlayerType}
                     use:blurOnEscapeOrEnter
                 />
-            {:else if characteristics.includes(c.name)}
+            {:else if isCharacteristicType(c.name)}
                 <Characteristic
                     characteristic={c.name}
                     playerStats={selected.playerStats}
