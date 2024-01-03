@@ -14,12 +14,11 @@
     import { specialistsAmount } from '../../store/specialistsAmount.store';
     import { _ } from 'svelte-i18n';
     import { activePlayers } from '../../store/activePlayers.store';
+    import type { RosterPlayerRecord } from '../../models/roster.model';
 
-    // export let index: number;
-    export let playerId: string;
+    export let index: number;
 
-    $: rosterPlayer = $roster.players.find((x) => x.playerId === playerId);
-    $: index = $roster.players.findIndex((x) => x.playerId === playerId);
+    $: rosterPlayer = $roster.players[index];
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === rosterPlayer.player.id
     ).length;

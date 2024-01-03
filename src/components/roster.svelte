@@ -87,16 +87,9 @@
 <RosterDelete />
 
 {#if $rosterViewMode === 'grid'}
-    <div>{JSON.stringify($activePlayers, null, 2)}</div>
-    <div>{JSON.stringify($roster.players, null, 2)}</div>
     <div class="player-cards">
-        {#each $activePlayers as player (player.playerId)}
-            <div
-                animate:flip={{ duration: 200 }}
-                transition:scale|local={{ duration: 200 }}
-            >
-                <RosterPlayerCard playerId={player.playerId} />
-            </div>
+        {#each $activePlayers as player, index (player.playerId)}
+            <RosterPlayerCard {index} />
         {/each}
 
         {#if activePlayersNumber < $gameSettings.maxPlayers}
