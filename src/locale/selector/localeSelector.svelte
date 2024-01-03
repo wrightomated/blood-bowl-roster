@@ -18,7 +18,7 @@
         name="locale"
     >
         {#each availableLocales as l}
-            <option value={l}>{l.toUpperCase()}</option>
+            <option value={l}>{l}</option>
         {/each}
     </select>
 </div>
@@ -28,8 +28,6 @@
         display: flex;
         align-items: center;
         margin: 0 8px;
-    }
-    select {
-        background-position: 90% 72%;
+        gap: 4px;
     }
 </style>
