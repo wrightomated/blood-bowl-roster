@@ -48,8 +48,8 @@
     let includeRetired: boolean = false;
 
     const nafTeams = ['28', '29'];
-    const rosterModes: RosterMode[] = ['league', 'exhibition'];
-    const teamFormats: TeamFormat[] = [
+    let rosterModes: RosterMode[] = ['league', 'exhibition'];
+    let teamFormats: TeamFormat[] = [
         'elevens',
         'sevens',
         'dungeon bowl',
@@ -58,10 +58,21 @@
 
     $: searchTerm = '';
     customisationRules.subscribe((x) => {
+        if (x) {
+            rosterMode.set('exhibition');
+        } else {
+            return;
+        }
+        if (x?.format) {
+            teamFormat.set(x.format);
+        }
         if (x?.tiers) {
             toggledTiers.setTiers(x.tiers);
         }
     });
+
+    // let rosterModes: RosterMode[];
+    // $: rosterModes = ['league', 'exhibition'];
 
     // let tiers: number[];
     // $: tiers = [...new Set(teamList.map((x) => x.tier))].sort((a, b) => a - b);
@@ -121,6 +132,7 @@
             fans: $rosterMode === 'exhibition' ? 0 : 1,
             format: $teamFormat,
             specialRule: $teamSelectionSpecialRule,
+            treasury: $customisationRules.gameTypeSettings.startingTreasury,
         });
 
         teamSelectionOpen.set(false);
@@ -206,22 +218,28 @@
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
-    <h2 class="page-title">{$_('creation.title')}</h2>
-    <ToggleButton
-        options={rosterModes}
-        selectedIndex={rosterModes.indexOf($rosterMode)}
-        selected={(mode) => {
-            rosterMode.set(mode);
-        }}
-    />
+    <h2 class="page-title">
+        {$customisationRules?.createTeamTitle || $_('creation.title')}
+    </h2>
+    <!-- Customisation rules will only allow one type of roster at the moment -->
+    {#if !$customisationRules}
+        <ToggleButton
+            options={rosterModes}
+            selectedIndex={rosterModes.indexOf($rosterMode)}
+            selected={(mode) => {
+                rosterMode.set(mode);
+            }}
+        />
 
-    <ToggleButton
-        options={teamFormats}
-        selectedIndex={teamFormats.indexOf($teamFormat)}
-        selected={(format) => {
-            changeFormat(format);
-        }}
-    />
+        <ToggleButton
+            options={teamFormats}
+            selectedIndex={teamFormats.indexOf($teamFormat)}
+            selected={(format) => {
+                changeFormat(format);
+            }}
+        />
+    {/if}
+
     {#if $teamSelectionOpen}
         <div class="button-container">
             <div class="filter__tier">
@@ -241,12 +259,14 @@
                     class:selected={includeNaf}
                     class="filter__button">N</button
                 >
-                <button
-                    on:click={toggleRetired}
-                    title={$_('creation.s')}
-                    class:selected={includeRetired}
-                    class="filter__button">S</button
-                >
+                {#if !$customisationRules}
+                    <button
+                        on:click={toggleRetired}
+                        title={$_('creation.s')}
+                        class:selected={includeRetired}
+                        class="filter__button">S</button
+                    >
+                {/if}
             </div>
             <label class="filter__search">
                 {$_('common.search')}

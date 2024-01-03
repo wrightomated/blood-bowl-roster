@@ -1,30 +1,33 @@
 <script lang="ts">
+    import CharacteristicAdvancement from '../../../components/playerAdvancement/characteristicAdvancement.svelte';
+    import SelectSkillAdvancement from '../../../components/playerAdvancement/selectSkillAdvancement.svelte';
+    import ToggleButton from '../../../components/uiComponents/toggleButton.svelte';
     import {
-        type AdvancementCombination,
         advancementCostsMap,
+        type AdvancementCombination,
         type AdvancementType,
         type SelectionType,
         skillIncreaseCost,
-    } from '../../data/advancementCost.data';
-    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
-    import { getGameTypeSettings } from '../../helpers/gameSettings';
-    import type { RosterPlayerRecord } from '../../models/roster.model';
-    import type { SkillCategory } from '../../models/skill.model';
-    import { roster } from '../../store/teamRoster.store';
-    import ToggleButton from '../uiComponents/toggleButton.svelte';
-    import CharacteristicAdvancement from './characteristicAdvancement.svelte';
-    import SelectSkillAdvancement from './selectSkillAdvancement.svelte';
+    } from '../../../data/advancementCost.data';
+    import { blurOnEscapeOrEnter } from '../../../helpers/blurOnEscapeOrEnter';
+    import { getGameTypeSettings } from '../../../helpers/gameSettings';
+    import type { RosterPlayerRecord } from '../../../models/roster.model';
+    import type { SkillCategory } from '../../../models/skill.model';
+    import { roster } from '../../../store/teamRoster.store';
+    import { customisationRules } from '../../customisation.store';
 
     export let rosterPlayer: RosterPlayerRecord;
     export let index: number;
 
     const advancementTypes = Object.values(
-        getGameTypeSettings($roster.format).advancementSettings
+        getGameTypeSettings($roster.format, $customisationRules)
+            .advancementSettings
     ).map((setting) => setting.type);
     let advancementType: AdvancementType = 'primary';
 
     const selectionTypes: SelectionType[] = getGameTypeSettings(
-        $roster.format
+        $roster.format,
+        $customisationRules
     ).advancementSettings.find(
         (setting) => setting.type === advancementType
     ).selectionTypes;

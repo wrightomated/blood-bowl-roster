@@ -1,30 +1,24 @@
 export type AdvancementType = 'primary' | 'secondary' | 'characteristic';
 export type SelectionType = 'random' | 'select';
 export type SkillType = Exclude<AdvancementType, 'characteristic'>;
-
-export const advancementCosts = {
-    ranPri: [3, 4, 6, 8, 10, 15],
-    priOrRanSec: [6, 8, 12, 16, 20, 30],
-    sec: [12, 14, 18, 22, 26, 40],
-    char: [18, 20, 24, 28, 32, 50],
-};
-
-export const advancementCostsMap: Partial<
+export type AdvancementCostsMap = Partial<
     Record<AdvancementCombination, number[]>
-> = {
+>;
+export type SkillIncreaseCost = Record<`${SkillType}${SelectionType}`, number>;
+
+export const advancementCostsMap: AdvancementCostsMap = {
     primaryrandom: [3, 4, 6, 8, 10, 15],
     primaryselect: [6, 8, 12, 16, 20, 30],
     secondaryrandom: [6, 8, 12, 16, 20, 30],
     secondaryselect: [12, 14, 18, 22, 26, 40],
     characteristic: [18, 20, 24, 28, 32, 50],
 };
-export const skillIncreaseCost: Record<`${SkillType}${SelectionType}`, number> =
-    {
-        primaryrandom: 10,
-        primaryselect: 20,
-        secondaryrandom: 20,
-        secondaryselect: 40,
-    };
+export const skillIncreaseCost: SkillIncreaseCost = {
+    primaryrandom: 10,
+    primaryselect: 20,
+    secondaryrandom: 20,
+    secondaryselect: 40,
+};
 
 /**
  * There is an extra cost for each skill after the first in blood bowl sevens

@@ -18,8 +18,12 @@ export function filteredTeamData(options: {
     const filteredTeams = baseTeamData.filter((team) => {
         return !customisation.tournamentTeamList?.excludedIds.includes(team.id);
     });
+    const alteredTiersTeams = filteredTeams.map((team) => {
+        const tier = customisation.updatedTierMap?.[team.name] || team.tier;
+        return { ...team, tier };
+    });
     return [
-        ...filteredTeams,
+        ...alteredTiersTeams,
         ...customisation.tournamentTeamList.additionalTeams,
     ];
 }

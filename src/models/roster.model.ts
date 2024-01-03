@@ -114,6 +114,7 @@ export type NewRosterOptions = {
     fans: number;
     specialRule?: TeamSpecialRule;
     version?: string;
+    treasury?: number;
 };
 
 export type SpecificAdvancement = {

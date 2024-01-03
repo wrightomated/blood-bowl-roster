@@ -1,10 +1,11 @@
+import type { SkillIncreaseCost } from '../../data/advancementCost.data';
+import type { GameType } from '../../models/gameType.model';
 import type { TeamName } from '../../models/team.model';
 import type { TeamFormat } from '../../types/teamFormat';
 import type { CustomiseTeamList } from './CustomiseTeamList.type';
 
 export type TournamentCustomisation = {
-    // Treasury in thousands
-    treasury: number;
+    gameTypeSettings: GameType;
     tournamentTeamList?: CustomiseTeamList;
     excludedInducementIds?: string[];
     updatedTierMap?: Partial<Record<TeamName, number>>;
@@ -14,52 +15,38 @@ export type TournamentCustomisation = {
     colourScheme?: string;
     createTeamTitle?: string;
     cssVariables?: Record<string, string>;
+    tournamentAdvancements?: TournamentAdvancements;
 };
 
 export type TournamentAllowances = {
+    /** How many of the same skill are allowed in the team */
     sameSkillAllowance?: number;
     statImprovementAllowancePerPlayer?: number;
     allowTraitRemoval?: number;
-    disallowTraitRemovalIds?: number[];
-    traitAndStatSameAllowance?: boolean;
     increaseTierPerStarPlayer?: boolean;
 };
 
-// Tier 0: 12 SPP (2 x Primary only*)
-
-// Tier 1: 42 SPP (7 x primary or equivalent)
-
-// Tier 2: 54 SPP (9 x primary or equivalent)
-
-// Tier 3: 66 SPP (11 x primary or equivalent)
-
-// Tier 4: 78 SPP (13 x primary or equivalent)
-
-// * SPPs available to teams in Tier 0 can only be spent on Primary Skills, and cannot be used to purchase Secondary Skills.
-
-// Coaches may spend SPP to purchase the following advancements:
-
-// Choose a Primary Skill: 6 SPP
-
-// Choose a Secondary Skill: 12 SPP
-
-// Improve either MA , PA or AV by 1: 15 SPP
-
-// Improve AG by 1: 18 SPP
-
-// Improve ST by 1 or Remove a Trait (except Secret Weapon): 24 SPP
-const tierAllowances = {
-    0: 12,
-    1: 42,
-    2: 54,
-    3: 66,
-    4: 78,
+type TournamentAdvancements = {
+    tiers: Record<string, TierAllowance>;
+    advancementCost?: SkillIncreaseCost;
+    characteristicCostIncrease?: number[];
+    advancements: {
+        primaryrandom?: number;
+        primaryselect?: number;
+        secondaryrandom?: number;
+        secondaryselect?: number;
+        characteristic?: {
+            ma?: number;
+            pa?: number;
+            av?: number;
+            ag?: number;
+            st?: number;
+        };
+        traitRemoval?: { spp: number; disallowedTraits?: number[] };
+    };
 };
-const costs = {
-    primarySkill: 6,
-    secondarySkill: 12,
-    statIncrease: 15,
-    agIncrease: 18,
-    stIncrease: 24,
-    traitRemoval: 24,
+
+type TierAllowance = {
+    spp: number;
+    restrictions?: ('primary' | 'secondary')[];
 };

@@ -9,14 +9,14 @@
 
 <div class="no-print player-count__container">
     <!-- If under min display warning -->
-    <!-- Get players that aren't deleted and check agains min -->
-    {#if availablePlayers.length < $gameSettings?.minPlayers}
+    {#if availablePlayers.filter((x) => !x.starPlayer).length < $gameSettings?.minPlayers}
         <div class="player-count__player-row player-count__player-row--danger">
             <div class="player-count__player-group">
                 {$_('common.minPlayers')}
             </div>
             <div>
-                {availablePlayers.length}/{$gameSettings?.minPlayers}
+                {availablePlayers.filter((x) => !x.starPlayer)
+                    .length}/{$gameSettings?.minPlayers}
             </div>
         </div>
     {:else}

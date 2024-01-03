@@ -1,9 +1,13 @@
+import { elevensGame } from '../../data/gameType.data';
 import type { TournamentCustomisation } from '../types/TournmentCustomisation.type';
 
 export const tournamentCustomisation: TournamentCustomisation = {
-    createTeamTitle: 'Create new Big V roster',
+    gameTypeSettings: {
+        ...elevensGame,
+        startingTreasury: 1100,
+    },
+    createTeamTitle: 'Create new Big V 2023 roster',
     format: 'elevens',
-    treasury: 1100,
     tiers: 4,
     tournamentTeamList: {
         excludedIds: ['22', '25', '27', '28'],
@@ -68,5 +72,42 @@ export const tournamentCustomisation: TournamentCustomisation = {
         '--main-colour': '#db6d27',
         '--secondary-colour': '#db6d27',
         '--button-shadow': '#fdbb27',
+    },
+    allowances: {
+        sameSkillAllowance: 4,
+        statImprovementAllowancePerPlayer: 1,
+        allowTraitRemoval: 1,
+        increaseTierPerStarPlayer: true,
+    },
+    tournamentAdvancements: {
+        tiers: {
+            '0': {
+                spp: 12,
+                restrictions: ['primary'],
+            },
+            '1': { spp: 42 },
+            '2': { spp: 54 },
+            '3': { spp: 66 },
+            '4': { spp: 78 },
+        },
+        advancementCost: {
+            primaryrandom: 0,
+            primaryselect: 0,
+            secondaryrandom: 0,
+            secondaryselect: 0,
+        },
+        // characteristicCostIncrease?: number[];
+        advancements: {
+            primaryselect: 6,
+            secondaryselect: 12,
+            characteristic: {
+                ma: 15,
+                pa: 15,
+                av: 15,
+                ag: 18,
+                st: 24,
+            },
+            traitRemoval: { spp: 24, disallowedTraits: [79] },
+        },
     },
 };

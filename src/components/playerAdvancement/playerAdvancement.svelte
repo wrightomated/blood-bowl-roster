@@ -13,5 +13,6 @@
 <CurrentAdvancementList {rosterPlayer} {index} />
 
 {#if !(rosterPlayer.alterations?.advancements >= 6)}
+    <!-- TODO: custom advancement component -->
     <SelectAdvancement {rosterPlayer} {index} />
 {/if}

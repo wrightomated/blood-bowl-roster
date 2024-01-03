@@ -1,5 +1,4 @@
-import { sendEventToAnalytics } from '../analytics/plausible';
-import { teamData } from '../data/teams.data';
+import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import type { Extra, ExtraString } from '../models/extra.model';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
@@ -8,17 +7,19 @@ import { getGameTypeSettings } from './gameSettings';
 export const extrasForTeam: (
     teamId: string,
     rosterMode: RosterMode,
-    teamFormat: TeamFormat
-) => Extra[] = (teamId, rosterMode, teamFormat) => {
-    return getExtras(teamId, rosterMode, teamFormat);
+    teamFormat: TeamFormat,
+    teamList: CustomTeam[]
+) => Extra[] = (teamId, rosterMode, teamFormat, teamList) => {
+    return getExtras(teamId, rosterMode, teamFormat, teamList);
 };
 
 const getExtras = (
     teamId: string,
     rosterMode: RosterMode,
-    teamFormat: TeamFormat
+    teamFormat: TeamFormat,
+    teamList: CustomTeam[]
 ) => {
-    const team = teamData.teams.find((x) => x.id === teamId);
+    const team = teamList.find((x) => x.id === teamId);
     const gameSettings = getGameTypeSettings(teamFormat);
     return [
         {

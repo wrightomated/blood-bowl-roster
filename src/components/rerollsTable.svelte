@@ -14,10 +14,16 @@
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
     import { currentUserStore } from '../store/currentUser.store';
+    import { availableTeams } from '../store/availableTeams.store';
 
     export let selectedTeam: CustomTeam;
 
-    const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
+    $: extras = extrasForTeam(
+        selectedTeam.id,
+        $roster.mode,
+        $roster.format,
+        $availableTeams
+    );
 
     currentUserStore.subscribe((value) => {
         if ($roster?.coachDetails?.coachName === undefined) {
@@ -39,11 +45,7 @@
         )
         .reduce((a, b) => a + b, 0);
 
-    $: teamExtrasTotal = extrasForTeam(
-        selectedTeam.id,
-        $roster.mode,
-        $roster.format
-    )
+    $: teamExtrasTotal = extras
         .filter((e) => e.extraString !== 'dedicated_fans')
         .map((e) => $roster.extra[e.extraString] * e.cost || 0)
         .reduce((a, b) => a + b, 0);
