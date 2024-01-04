@@ -36,7 +36,7 @@ export interface Roster {
     matchDraft?: MatchHistoryRecord;
     coachDetails?: CoachDetails;
     notes?: string;
-    config: RosterConfig;
+    config?: RosterConfig;
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;

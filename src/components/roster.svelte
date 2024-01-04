@@ -20,8 +20,7 @@
     import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import RosterPlayerCount from './rosterPlayerCount.svelte';
     import { _ } from 'svelte-i18n';
-    import { flip } from 'svelte/animate';
-    import { scale } from 'svelte/transition';
+
     import { activePlayers } from '../store/activePlayers.store';
 
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';

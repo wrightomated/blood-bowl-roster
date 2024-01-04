@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { roster } from '../../store/teamRoster.store';
     import { getStat } from '../../helpers/statHelpers';
     import type { RosterPlayerRecord } from '../../models/roster.model';
 
@@ -22,8 +21,10 @@
 <style lang="scss">
     .improved {
         color: green;
+        text-decoration: underline;
     }
     .degraded {
         color: var(--main-colour);
+        text-decoration: underline;
     }
 </style>

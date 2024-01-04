@@ -10,11 +10,7 @@
     import ToggleButton from '../uiComponents/toggleButton.svelte';
     import MatchHistoryCard from './matchHistoryCard.svelte';
 
-    const rosterTools = [
-        $_('match.records'),
-        $_('common.notes'),
-        $_('match.setups'),
-    ];
+    const rosterTools = ['match.records', 'common.notes', 'match.setups'];
 
     async function newMatch() {
         if (!$roster.matchDraft) {

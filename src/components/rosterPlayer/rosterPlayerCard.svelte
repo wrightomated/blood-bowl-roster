@@ -14,7 +14,6 @@
     import { specialistsAmount } from '../../store/specialistsAmount.store';
     import { _ } from 'svelte-i18n';
     import { activePlayers } from '../../store/activePlayers.store';
-    import type { RosterPlayerRecord } from '../../models/roster.model';
 
     export let index: number;
 
