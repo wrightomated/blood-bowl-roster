@@ -44,6 +44,7 @@ context('Test that a team can be copied', () => {
             format: 'elevens',
             matchSummary: [],
             coachDetails: {},
+            config: { customSkillColour: {} },
         };
         cy.visit('?code=t3t1000d1p9IThe%20Horns:Erny');
         cy.getBySel('team-name').should(() => {
