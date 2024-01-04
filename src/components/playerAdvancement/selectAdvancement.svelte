@@ -55,6 +55,9 @@
     }
 
     function selectSkill(skillId: number) {
+        if (!$roster.config.customSkillColour[skillId]) {
+            $roster.config.customSkillColour[skillId] = '#970f0c';
+        }
         const extraSkills = (rosterPlayer.alterations.extraSkills || []).concat(
             [skillId]
         );
