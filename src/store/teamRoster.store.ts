@@ -61,6 +61,12 @@ function createRoster() {
             }),
         duplicatePlayer: (index: number) =>
             update((store) => {
+                if (
+                    store.players.filter((p) => !p.deleted).length >=
+                    getGameTypeSettings(store?.format).maxPlayers
+                ) {
+                    return store;
+                }
                 const duplicatedPlayer: RosterPlayerRecord = {
                     ...store.players[index],
                     playerId: nanoid(),
@@ -289,6 +295,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
         matchSummary: [],
+        config: { customSkillColour: {} },
     };
 
     if (options?.specialRule) {
@@ -353,6 +360,9 @@ const addMissingItemsToRoster = (roster: Roster) => {
     }
     if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
         updatedRoster.leagueRosterStatus = 'draft';
+    }
+    if (!updatedRoster.config) {
+        updatedRoster.config = { customSkillColour: {} };
     }
     currentTeamId.set(updatedRoster.teamId);
     updatedRoster = {

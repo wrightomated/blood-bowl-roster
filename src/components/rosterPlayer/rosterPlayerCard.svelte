@@ -2,7 +2,6 @@
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import { currentTeam, specialistIds } from '../../store/currentTeam.store';
-
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
     import PlayerNumber from './playerNumber.svelte';
@@ -14,6 +13,7 @@
     import { gameSettings } from '../../store/gameSettings.store';
     import { specialistsAmount } from '../../store/specialistsAmount.store';
     import { _ } from 'svelte-i18n';
+    import { activePlayers } from '../../store/activePlayers.store';
 
     export let index: number;
 
@@ -118,11 +118,13 @@
                         symbol="elevator"
                         clickFunction={openAdvancement}
                     />
-                    <MaterialButton
-                        hoverText="Duplicate player"
-                        symbol="group_add"
-                        clickFunction={() => roster.duplicatePlayer(index)}
-                    />
+                    {#if $activePlayers.length < $gameSettings.maxPlayers}
+                        <MaterialButton
+                            hoverText="Duplicate player"
+                            symbol="group_add"
+                            clickFunction={() => roster.duplicatePlayer(index)}
+                        />
+                    {/if}
                 {/if}
                 {#if rosterPlayer?.alterations?.journeyman}
                     <MaterialButton
@@ -171,7 +173,8 @@
         height: 100%;
         border: var(--secondary-border);
         background-color: white;
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
         &.danger {
             border-color: var(--main-colour);

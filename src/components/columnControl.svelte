@@ -4,6 +4,7 @@
     import { tableColumns } from '../store/tableColumns.store';
     import Button from './uiComponents/button.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
+    import { _ } from 'svelte-i18n';
 
     let newCol: string;
 </script>
@@ -21,7 +22,7 @@
             animate:flip={{ duration: 200 }}
             transition:scale|local={{ duration: 200 }}
         >
-            <p>{c.customName || c.name}</p>
+            <p>{c.customName || $_('roster.column.names.' + c.id)}</p>
 
             <MaterialButton
                 hoverText={c.hideColumn ? 'Show column' : 'Hide column'}

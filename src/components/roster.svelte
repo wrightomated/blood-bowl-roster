@@ -21,6 +21,8 @@
     import RosterPlayerCount from './rosterPlayerCount.svelte';
     import { _ } from 'svelte-i18n';
 
+    import { activePlayers } from '../store/activePlayers.store';
+
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
     export let playerTypes: Player[];
@@ -29,7 +31,7 @@
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
-    $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
+    $: activePlayersNumber = $activePlayers.length;
     // function orderOn(column: ColumnDetails) {
     //     columnSortOrder.set(
     //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
@@ -85,10 +87,8 @@
 
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
-        {#each $roster.players as player, index (player.playerId)}
-            {#if !player?.deleted}
-                <RosterPlayerCard {index} />
-            {/if}
+        {#each $activePlayers as player, index (player.playerId)}
+            <RosterPlayerCard {index} />
         {/each}
 
         {#if activePlayersNumber < $gameSettings.maxPlayers}
@@ -109,8 +109,8 @@
                             >{c.headerDetails?.hideName
                                 ? ''
                                 : c?.customName
-                                ? c.customName
-                                : $_('roster.column.names.' + c.id)}
+                                  ? c.customName
+                                  : $_('roster.column.names.' + c.id)}
                             <!-- {#if c.orderByPropertyPath}
                                 <MaterialButton
                                     hoverText="Sort"

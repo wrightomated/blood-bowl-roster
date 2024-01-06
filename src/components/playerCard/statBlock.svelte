@@ -55,8 +55,10 @@
     }
     .improved {
         color: green;
+        text-decoration: underline;
     }
     .degraded {
         color: var(--main-colour);
+        text-decoration: underline;
     }
 </style>

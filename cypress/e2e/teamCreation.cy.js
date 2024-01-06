@@ -240,4 +240,5 @@ const expectedRoster = {
     leagueRosterStatus: 'draft',
     matchSummary: [],
     coachDetails: {},
+    config: { customSkillColour: {} },
 };
