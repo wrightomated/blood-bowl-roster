@@ -600,5 +600,6 @@ export const starPlayers = {
         ivanTheAnimal,
         countLuthorVonDrakenborg,
         captainKarinaVonRiesz,
+        skitter,
     ],
 };
