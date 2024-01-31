@@ -720,6 +720,10 @@
         "253": {
             "name": "Captain Karina von Riesz",
             "rule": "Tasty Morsel"
+        },
+        "254": {
+            "name": "Skitter Stab-Stab",
+            "rule": "Master Assassin"
         }
     },
     "inducements": {
