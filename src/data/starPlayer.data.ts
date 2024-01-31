@@ -533,6 +533,16 @@ const captainKarinaVonRiesz: StarPlayer = {
     cost: 230,
     specialRules: ['Tasty Morsel'],
 };
+// SKITTER STAB-STAB
+const skitter: StarPlayer = {
+    id: 254,
+    position: 'Skitter Stab-Stab',
+    playerStats: [9, 2, 2, 4, 8],
+    playsFor: ['Favoured of...', 'Underworld Challenge'],
+    skills: [4, 71, 33, 20, 80],
+    cost: 150,
+    specialRules: ['Master Assassin'],
+};
 
 export const starPlayers = {
     starPlayers: [
