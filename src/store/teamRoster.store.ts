@@ -406,11 +406,8 @@ const deletePlayersFromPlayers: (
               }
             : p
     );
-    while (newPlayers[newPlayers.length - 1]?.deleted) {
-        newPlayers.pop();
-    }
 
-    return newPlayers;
+    return newPlayers.filter((p) => !p.deleted);
 };
 
 /**
