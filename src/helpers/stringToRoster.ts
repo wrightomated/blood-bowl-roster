@@ -1,7 +1,6 @@
-import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 import { playerCatalogue } from '../data/players.data';
 import { starPlayers } from '../data/starPlayer.data';
-import { teamData } from '../data/teams.data';
+import type { CollegeName } from '../models/dungeonBowl.model';
 import type { Player } from '../models/player.model';
 import type {
     InducementsRecord,
@@ -9,8 +8,10 @@ import type {
     Roster,
     RosterPlayerRecord,
 } from '../models/roster.model';
+import type { TeamName } from '../models/team.model';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
+import { filteredTeamData } from './teamDataFilter';
 
 /*
 t1t0m0d1r2 p1 p1 p1 p1 p4 p4 p2 p3 p4 p4 p5 I The%20Altdorf%20Deamons:Bob
@@ -21,11 +22,17 @@ export const stringToRoster = (code: string) => {
     const [rosterString, ...rest] = decodedString.split('I');
     const rosterNames = rest.join('I');
     const [teamDetails, ...players] = rosterString.split('p');
-    const [id, treasury, ...extras] = itemsInString(teamDetails);
-    const teamId = getNumber(id);
+    const [id, treasury, ...extras] = itemsInRosterString(teamDetails);
+    const teamId = id.substring(1);
+    const format = getFormat(extras.find((x) => x.includes('f')) || 'f0');
+    /** TeamIds have changed from number to string so need to be backwards compatible with old db */
+    const backwardsCompatibleId =
+        format === 'dungeon bowl' && !teamId.toString().includes('db')
+            ? `db${teamId}`
+            : teamId;
 
     const roster: Roster = {
-        teamId,
+        teamId: backwardsCompatibleId,
         extra: stringToExtra(
             extras.filter(
                 (x) => !x.includes('i') && !x.includes('m') && !x.includes('f')
@@ -33,12 +40,15 @@ export const stringToRoster = (code: string) => {
         ),
         players: expandPlayers(players),
         teamName: '',
-        teamType: getTeamType(teamId),
+        teamType: getTeamType(backwardsCompatibleId, format) as
+            | TeamName
+            | CollegeName,
         inducements: mapInducements(extras.filter((x) => x.includes('i'))),
         treasury: getNumber(treasury),
         mode: getMode(extras.find((x) => x.includes('m')) || 'm1'),
-        format: getFormat(extras.find((x) => x.includes('f')) || 'f0'),
+        format,
     };
+
     return rosterNames.length > 0
         ? addNamesToRoster(roster, rosterNames)
         : roster;
@@ -51,7 +61,7 @@ const expandPlayers = (players: string[]) => {
 const expandPlayer: (playerString: string) => RosterPlayerRecord = (
     playerString
 ) => {
-    const [id, ...other] = itemsInString(playerString);
+    const [id, ...other] = itemsInPlayerString(playerString);
     const nId = parseInt(id);
     const starPlayer = nId >= 200;
     const player = findPlayer(nId);
@@ -159,7 +169,11 @@ const stringToExtra: (extras: string[]) => InducementsRecord = (extras) => {
     return extraObject;
 };
 
-const itemsInString = (rosterSection: string) => {
+const itemsInRosterString = (rosterSection: string) => {
+    return rosterSection.match(/[a-z]+[\d.-]+/g) ?? [];
+};
+
+const itemsInPlayerString = (rosterSection: string) => {
     return rosterSection.match(/[a-z]?[\d.-]+/g) ?? [];
 };
 
@@ -198,14 +212,21 @@ const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
         0: 'elevens',
         1: 'sevens',
         2: 'dungeon bowl',
+        3: 'gutter bowl',
     }[getNumber(modeMatch)] as TeamFormat;
 };
 
-const getTeamType = (teamId: number) => {
-    const teamType =
-        teamId < 100
-            ? teamData.teams.find((t) => t.id === teamId)?.name
-            : dungeonBowlColleges.colleges.find((t) => t.id === teamId)?.name;
+/**
+ *
+ * TODO: load tournament customisation earlier
+ */
+const getTeamType = (teamId: string, format: TeamFormat) => {
+    const allTeams = filteredTeamData({
+        format,
+    });
+
+    const teamType = allTeams.find((t) => t.id === teamId)?.name;
+
     if (!teamType) throw new Error('No team type found');
     return teamType;
 };

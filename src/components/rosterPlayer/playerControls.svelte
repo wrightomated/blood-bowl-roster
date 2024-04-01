@@ -1,9 +1,12 @@
 <script lang="ts">
-    import type { StarPlayer } from '../../models/player.model';
+    import { activePlayers } from '../../store/activePlayers.store';
+    import { gameSettings } from '../../store/gameSettings.store';
+    import { modalState } from '../../store/modal.store';
 
     import { roster } from '../../store/teamRoster.store';
 
     import MaterialButton from '../uiComponents/materialButton.svelte';
+    import DeletePlayerWarning from './deletePlayerWarning.svelte';
 
     export let index: number;
     $: rosterPlayer = $roster.players[index];
@@ -16,22 +19,19 @@
     };
 
     function removePlayer() {
-        const firePlayer = $roster?.leagueRosterStatus === 'commenced';
-        removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: DeletePlayerWarning,
+            componentProps: {
+                index,
+                rosterPlayer,
+            },
+        });
     }
-
-    function removeTwoForOne(firePlayer: boolean) {
-        if (rosterPlayer.starPlayer) {
-            const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
-            const tfoIndex = $roster.players.findIndex(
-                (p) => p.player.id === twoForOne
-            );
-            if (twoForOne) {
-                roster.removePlayer([index, tfoIndex], firePlayer);
-                return true;
-            }
-        }
-        return false;
+    function duplicatePlayer() {
+        roster.duplicatePlayer(index);
     }
 </script>
 
@@ -62,15 +62,19 @@
         cyData={`player-${index}-remove`}
         hoverText="Remove player"
         symbol="delete_forever"
-        clickFunction={() => removePlayer()}
+        clickFunction={removePlayer}
     />
+    {#if !rosterPlayer.starPlayer && $activePlayers.length < $gameSettings.maxPlayers}
+        <MaterialButton
+            hoverText="Duplicate player"
+            symbol="group_add"
+            clickFunction={duplicatePlayer}
+        />
+    {/if}
 </div>
 
 <style lang="scss">
     .flex-container {
         display: flex;
-    }
-    .no-op {
-        color: #aaa;
     }
 </style>

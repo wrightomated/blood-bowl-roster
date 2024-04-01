@@ -119,6 +119,7 @@ const getFormatInt = (format: TeamFormat) => {
         elevens: 0,
         sevens: 1,
         'dungeon bowl': 2,
+        'gutter bowl': 3,
     }[format];
 };
 

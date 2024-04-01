@@ -20,16 +20,8 @@
         }
     }
     &:hover {
-        box-shadow: 0 5px 15px #185b88b2 inset;
+        box-shadow: 0 5px 15px var(--button-shadow) inset;
     }
-    &:disabled {
-        border: none;
-        color: grey;
-        &:hover{
-            box-shadow: none;
-        }
-    }
-
     &.cancel {
         color: var(--main-colour);
         border-color: var(--main-colour);
@@ -37,6 +29,15 @@
         &:hover {
             color: white;
             background-color: var(--main-colour);
+        }
+    }
+    &:disabled {
+        border: none;
+        color: grey;
+        &:hover {
+            box-shadow: none;
+            background-color: white;
+            color: grey;
         }
     }
 }

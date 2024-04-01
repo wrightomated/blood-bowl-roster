@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { playerCatalogue } from '../../data/players.data';
 
     import type { DungeonBowlCollege } from '../../models/dungeonBowl.model';
@@ -16,7 +17,7 @@
             <div class="college-card__player-group">
                 <div class="college-card__player-group-heading">
                     0-{college.players[playerGroup].max}
-                    {playerGroup === 'bigGuys' ? 'Big Guys' : playerGroup}
+                    {$_('db.' + playerGroup)}
                 </div>
                 {#each college.players[playerGroup].playerIds as id}
                     <p class="college-card__position">
@@ -78,9 +79,6 @@
         &__position {
             margin-top: 0;
             margin-bottom: 0;
-        }
-        &__player-group {
-            // flex-basis: 0;
         }
 
         &__player-group-heading {

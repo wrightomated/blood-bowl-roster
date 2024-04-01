@@ -1,9 +1,13 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
-    import { currentTeam } from '../../store/currentTeam.store';
-    import { showSkillButtons } from '../../store/showSkillButtons.store';
+    import { currentTeam, specialistIds } from '../../store/currentTeam.store';
+    import { gameSettings } from '../../store/gameSettings.store';
+    import { modalState } from '../../store/modal.store';
+    import { specialistsAmount } from '../../store/specialistsAmount.store';
 
     import { roster } from '../../store/teamRoster.store';
+    import EditPlayer from '../playerCard/editPlayer.svelte';
     import MaterialButton from '../uiComponents/materialButton.svelte';
 
     export let index: number;
@@ -20,13 +24,6 @@
         rosterPlayer.player.bigGuy &&
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
-    $: nonLinemen = $currentTeam.players
-        .filter((p) => p.max < 12)
-        .map((x) => x.id);
-    $: sevensSpecialistsAmount =
-        $roster.format === 'sevens' &&
-        nonLinemen.includes(rosterPlayer.player.id) &&
-        $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     const buyJourneyman = () => {
         const extraSkills = rosterPlayer.alterations.extraSkills.filter(
@@ -47,9 +44,16 @@
     };
 
     const toggleShowSkills = () => {
-        showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? !x : x))
-        );
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: EditPlayer,
+            componentProps: {
+                index,
+            },
+            compact: true,
+        });
     };
 </script>
 
@@ -65,7 +69,8 @@
         />
     </span>
 {:else}
-    {rosterPlayer.player.position}
+    <!-- {rosterPlayer.player.position} -->
+    {$_('players.' + rosterPlayer.player.id)}
     {#if danger}
         <span class="danger">
             <i class="material-symbols-outlined">warning</i>
@@ -88,9 +93,11 @@
             .length}/{$currentTeam.maxBigGuys} Big Guys
     </span>
 {/if}
-{#if sevensSpecialistsAmount > 4}
+{#if $specialistIds?.includes(rosterPlayer.player.id) && $specialistsAmount > $gameSettings?.maxSpecialists}
     <br />
-    <span class="danger">{sevensSpecialistsAmount}/4 Specialists</span>
+    <span class="danger"
+        >{$specialistsAmount}/{$gameSettings?.maxSpecialists} Specialists</span
+    >
 {/if}
 
 <style lang="scss">

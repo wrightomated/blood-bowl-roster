@@ -1,20 +1,20 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { gameEventTypeToTitle } from '../../data/gameEventMap';
-    import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
     import type {
         GameEvent,
         GameEventTally,
-        GameEventType,
     } from '../../models/matchHistory.model';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
     import ToggleButton from '../uiComponents/toggleButton.svelte';
     import PlayerEventList from './playerEventList.svelte';
+    import { gameSettings } from '../../store/gameSettings.store';
+    import { _ } from 'svelte-i18n';
 
     $: gameEvents = $roster.matchDraft.playingCoach.gameEvents ?? [];
+    $: maxTurns = ($gameSettings?.turnsPerHalf ?? 8) * 2;
 
     const options = ['total', 'individual'];
     let option =
@@ -41,13 +41,16 @@
     }
 
     function addPlayerEvent() {
+        if (turn > maxTurns) {
+            turn = maxTurns;
+        }
         const player = filteredPlayers.find(
             (p) => p?.playerId === selectedPlayer
         );
         const event: GameEvent = {
             eventType: selectedEvent,
             player: {
-                name: player.playerName || player.player.position,
+                name: player.playerName,
                 number: player?.alterations?.playerNumber,
                 id: player.playerId,
             },
@@ -64,7 +67,7 @@
         return (
             player.alterations.playerNumber +
             ' ' +
-            (player.playerName || player.player.position)
+            (player.playerName || $_('players.' + player.player.id))
         );
     }
 </script>
@@ -76,7 +79,7 @@
 >
     <!-- <h3>Your player's events</h3> -->
     <ToggleButton
-        options={['total', 'individual']}
+        {options}
         {selected}
         selectedIndex={options.findIndex((x) => x === option)}
     />
@@ -85,7 +88,7 @@
             {#each Object.keys(gameEventTally) as event}
                 <div>
                     <label for="tally-{event}"
-                        >{gameEventPluralMap[event]}</label
+                        >{$_('match.events.' + event + '.p')}</label
                     >
                     <input
                         type="number"
@@ -101,7 +104,7 @@
     {:else if filteredPlayers?.length > 0}
         <div class="event-entry">
             <div>
-                <label for="player-event-selector">Player</label>
+                <label for="player-event-selector">{$_('player')}</label>
                 <select
                     id="player-event-selector"
                     name="player-event-selector"
@@ -113,27 +116,31 @@
                 </select>
             </div>
             <div>
-                <label for="event-type-selector">Event Type</label>
+                <label for="event-type-selector"
+                    >{$_('match.events.type')}</label
+                >
                 <select
                     name="event-type-selector"
                     id="event-type-selector"
                     bind:value={selectedEvent}
                 >
                     {#each Object.keys(gameEventTally) as event}
-                        <option value={event}
-                            >{gameEventTypeToTitle[event]}</option
-                        >
+                        <option value={event}>
+                            {$_('match.events.' + event)}
+                        </option>
                     {/each}
                 </select>
             </div>
             <div>
-                <label for="event-turn" class="turn-label">Turn</label>
+                <label for="event-turn" class="turn-label"
+                    >{$_('match.events.turn')}</label
+                >
                 <div class="turn-input">
                     <input
                         name="event-turn"
                         id="event-turn"
                         type="number"
-                        max="16"
+                        max={maxTurns}
                         min="0"
                         bind:value={turn}
                     />
@@ -153,7 +160,7 @@
         <div>No players</div>
     {/if}
     <br />
-    <label for="opponent-touchdowns">Opponent's Total Touchdowns</label>
+    <label for="opponent-touchdowns">{$_('match.events.opp')}</label>
     <input
         class="opponent-touchdowns"
         type="number"
@@ -163,6 +170,9 @@
         max="999"
         bind:value={$roster.matchDraft.gameEventTally.opponentScore}
     />
+    <p>
+        {$_('match.events.disc')}:
+    </p>
 </div>
 
 <style lang="scss">
@@ -180,13 +190,6 @@
         }
         @media screen and (max-width: 450px) {
             grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    .label-input {
-        text-align: center;
-        label {
-            text-transform: capitalize;
         }
     }
     .player-events {

@@ -1,6 +1,6 @@
 # BBRoster
 
-A simple web app to keep track of Bloodbowl 2020 teams made with [Svelte](https://svelte.dev). 
+A simple web app to keep track of Blood Bowl 2020 teams made with [Svelte](https://svelte.dev).
 
 ## Get started
 
@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see the app running.
+Navigate to [localhost:5000](http://localhost:5001). You should see the app running.
 
 If you're using [Visual Studio Code](https://code.visualstudio.com/) [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) is pretty handy.
 
@@ -65,7 +65,6 @@ Run against local:
 ```bash
 npm run e2e:local
 ```
-
 
 ## BBRoster.com status
 

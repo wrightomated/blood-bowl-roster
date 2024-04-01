@@ -1,4 +1,4 @@
-import { writable, Writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 import type { MatchHistoryRecord } from '../models/matchHistory.model';
 
 const createMatchHistoryRecordDraft = () => {

@@ -7,7 +7,6 @@
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
     import AddPlayerToRoster from './addPlayerToRoster.svelte';
-    import { getMaxPlayers } from '../data/gameType.data';
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
     import RosterPlayerRow from './rosterPlayer/rosterPlayerRow.svelte';
@@ -17,6 +16,14 @@
     import RosterStatusToggle from './rosterStatusToggle.svelte';
     import SpecialRuleSelector from './specialRuleSelector.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
+    import { gameSettings } from '../store/gameSettings.store';
+    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
+    import RosterPlayerCount from './rosterPlayerCount.svelte';
+    import { _ } from 'svelte-i18n';
+
+    import { activePlayers } from '../store/activePlayers.store';
+
+    // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
     export let playerTypes: Player[];
 
@@ -24,14 +31,23 @@
         $roster.players.findIndex((p) => p.deleted) >= 0
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
-    $: activePlayersNumber = $roster.players.filter((p) => !p.deleted).length;
+    $: activePlayersNumber = $activePlayers.length;
+    // function orderOn(column: ColumnDetails) {
+    //     columnSortOrder.set(
+    //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
+    //             ? 'desc'
+    //             : 'asc'
+    //     );
+    //     sortedColumn.set(column);
+    //     rosterPlayers = $sortedRosterPlayers;
+    // }
 </script>
 
 <div class="team-name-container">
     <h2 class="heading">
         <input
             aria-label="team name"
-            placeholder="Team Name"
+            placeholder={$_('roster.namePlaceholder')}
             id="team-name"
             data-cy="team-name"
             class="heading__input"
@@ -42,7 +58,11 @@
 </div>
 <span class="no-print">
     <div class="pill-box">
-        <Pill>{$roster.teamType + ' Team'}</Pill>
+        <Pill
+            >{$_('roster.teamType', {
+                values: { type: $roster.teamType },
+            })}</Pill
+        >
         <Pill>{getTeamFormatShortDisplay($roster.format)}</Pill>
         <Pill>{$roster.mode}</Pill>
     </div>
@@ -52,7 +72,7 @@
 <div class="sub-heading-box">
     <p class="sub-heading print-only print-only--larger">{$roster.teamName}</p>
     <p class="sub-heading print-only">
-        {$roster.teamType} Team
+        {$_('roster.teamType', { values: { type: $roster.teamType } })}
     </p>
     <p class="sub-heading print-only" title={$roster.format}>
         {getTeamFormatShortDisplay($roster.format)}
@@ -67,43 +87,48 @@
 
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
-        {#each $roster.players as player, index}
-            {#if !player?.deleted}
-                <RosterPlayerCard {index} />
-            {/if}
+        {#each $activePlayers as player, index (player.playerId)}
+            <RosterPlayerCard {index} />
         {/each}
 
-        {#if activePlayersNumber < getMaxPlayers($roster.format)}
+        {#if activePlayersNumber < $gameSettings.maxPlayers}
             <AddPlayerCard {playerTypes} index={nextPlayerIndex} />
         {/if}
     </div>
 {:else}
     <div class="table-container">
-        <table>
+        <table class="roster-table">
             <thead>
                 <tr>
                     {#each $filteredTableColumns as c}
-                        <td
+                        <th
                             class={c.headerDetails?.elementClass}
                             id={c.headerDetails?.elementId}
                             colspan={c.colspan || 1}
-                            title={c.title || c.name}
+                            title={$_(c.title || 'roster.column.names.' + c.id)}
                             >{c.headerDetails?.hideName
                                 ? ''
                                 : c?.customName
-                                ? c.customName
-                                : c.name}
-                        </td>
+                                  ? c.customName
+                                  : $_('roster.column.names.' + c.id)}
+                            <!-- {#if c.orderByPropertyPath}
+                                <MaterialButton
+                                    hoverText="Sort"
+                                    symbol="sort"
+                                    clickFunction={() => orderOn(c)}
+                                />
+                            {/if} -->
+                        </th>
                     {/each}
                 </tr>
             </thead>
             <tbody>
-                {#each $roster.players as player, index}
-                    {#if !player?.deleted}
+                {#each $roster.players as rosterPlayer, index}
+                    {#if !rosterPlayer?.deleted}
                         <RosterPlayerRow {index} />
                     {/if}
                 {/each}
-                {#if activePlayersNumber < getMaxPlayers($roster.format)}
+                {#if activePlayersNumber < $gameSettings.maxPlayers}
                     <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />
                 {/if}
             </tbody>
@@ -111,6 +136,11 @@
     </div>
 {/if}
 <RosterStatusToggle />
+{#if $roster.format === 'dungeon bowl'}
+    <DungeonBowlPlayerCount />
+{:else}
+    <RosterPlayerCount />
+{/if}
 {#if $roster.format !== 'dungeon bowl'}
     <AvailablePlayers />
 {/if}
@@ -157,7 +187,7 @@
             padding: 0;
             box-sizing: inherit;
             border: none;
-            color: #970f0c;
+            color: var(--main-colour);
             margin: 0;
             text-align: center;
             width: 100%;
@@ -192,9 +222,6 @@
             color: var(--main-colour);
         }
     }
-    .left-align {
-        text-align: left;
-    }
     .skills {
         min-width: 200px;
     }
@@ -219,5 +246,8 @@
         .table-container {
             overflow: inherit;
         }
+    }
+    .coach {
+        margin-left: auto;
     }
 </style>

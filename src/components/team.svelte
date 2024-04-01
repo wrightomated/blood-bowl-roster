@@ -1,12 +1,10 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
     import { playerCatalogue } from '../data/players.data';
-    import { teamData } from '../data/teams.data';
     import {
         currentTeam,
         currentTeamIsDungeonBowl,
     } from '../store/currentTeam.store';
-    import PlayerRow from './player.svelte';
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
     import TeamSelector from './teamSelector.svelte';
@@ -15,19 +13,17 @@
     import { teamLoadOpen } from '../store/teamLoadOpen.store';
     import StarPlayers from './starPlayers.svelte';
     import LocalStorageController from './localStorageController.svelte';
-    import {
-        showAvailablePlayers,
-        showAvailableStarPlayers,
-    } from '../store/showPlayerList.store';
+    import { showAvailableStarPlayers } from '../store/showPlayerList.store';
     import DocumentTitleWriter from './documentTitleWriter.svelte';
     import { sendEventToAnalytics } from '../analytics/plausible';
     import DungeonBowlContainer from './dungeonBowl/dungeonBowlContainer.svelte';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
-    import DungeonBowlPlayerCount from './dungeonBowl/dungeonBowlPlayerCount.svelte';
     import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
+    import { availableTeams } from '../store/availableTeams.store';
+    import { _ } from 'svelte-i18n';
 
-    const teamList = teamData.teams;
+    $: teamList = $availableTeams;
 
     const playerById = (id?: number) => {
         return playerCatalogue.players.find((x) => x.id === id);
@@ -58,12 +54,14 @@
                     class="team-star-player-caption"
                     on:click={toggleStarPlayers}
                 >
-                    {`${$currentTeam.name} Team Star Players`}
+                    {$_('tables.starCaption', {
+                        values: { team: $currentTeam.name },
+                    })}
                 </caption>
                 <MaterialButton
                     hoverText={$showAvailableStarPlayers
-                        ? 'Hide available star players'
-                        : 'Show available star players'}
+                        ? $_('tables.hide')
+                        : $_('tables.show')}
                     symbol={$showAvailableStarPlayers
                         ? 'arrow_drop_up'
                         : 'arrow_drop_down'}
@@ -80,25 +78,12 @@
         <Roster
             playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
         />
-        {#if $roster.format === 'dungeon bowl'}
-            <DungeonBowlPlayerCount />
-        {/if}
         <RerollsTable selectedTeam={$currentTeam} />
         <MatchHistoryRecords />
     {/if}
 {/if}
 
 <style lang="scss">
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-    }
-    .skills-header {
-        min-width: 100px;
-    }
-    .left-align {
-        text-align: left;
-    }
     .header-container {
         display: flex;
         margin-top: 1em;

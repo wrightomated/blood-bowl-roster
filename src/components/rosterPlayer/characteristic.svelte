@@ -1,7 +1,10 @@
 <script lang="ts">
-    import { characteristics } from '../../data/statOrder.data';
+    import {
+        characteristics,
+        type CharacteristicType,
+    } from '../../data/statOrder.data';
 
-    export let characteristic: string;
+    export let characteristic: CharacteristicType;
     export let playerStats: number[];
 
     $: cIndex = characteristics.indexOf(characteristic);

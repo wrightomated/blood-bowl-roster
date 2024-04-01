@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { playerById } from '../helpers/playerCatalogueHelpers';
     import { currentTeam } from '../store/currentTeam.store';
     import { showAvailablePlayers } from '../store/showPlayerList.store';
@@ -17,12 +18,14 @@
             data-cy="selected-team-caption"
             on:click={togglePlayers}
         >
-            {`${$currentTeam.name} Team Players`}
+            {$_('tables.caption', {
+                values: { team: $currentTeam.name },
+            })}
         </caption>
         <MaterialButton
             hoverText={$showAvailablePlayers
-                ? 'Hide available players'
-                : 'Show available players'}
+                ? $_('tables.hide')
+                : $_('tables.show')}
             symbol={$showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
             clickFunction={togglePlayers}
         />
@@ -32,17 +35,20 @@
             <table>
                 <thead>
                     <tr>
-                        <td>QTY</td>
-                        <td class="left-align">Position</td>
-                        <td>Cost</td>
-                        <td>MA</td>
-                        <td>ST</td>
-                        <td>AG</td>
-                        <td>PA</td>
-                        <td>AV</td>
-                        <td class="skills-header left-align">Skills</td>
-                        <td>Primary</td>
-                        <td>Secondary</td>
+                        <th>{$_('tables.qty')}</th>
+                        <th class="left-align">{$_('roster.column.names.4')}</th
+                        >
+                        <th>{$_('tables.cost')}</th>
+                        <th>{$_('roster.column.names.5')}</th>
+                        <th>{$_('roster.column.names.6')}</th>
+                        <th>{$_('roster.column.names.7')}</th>
+                        <th>{$_('roster.column.names.8')}</th>
+                        <th>{$_('roster.column.names.9')}</th>
+                        <th class="skills-header left-align"
+                            >{$_('roster.column.names.10')}</th
+                        >
+                        <th>{$_('common.primary')}</th>
+                        <th>{$_('common.secondary')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,9 +71,6 @@
     }
     .skills-header {
         min-width: 100px;
-    }
-    .left-align {
-        text-align: left;
     }
     .header-container {
         display: flex;

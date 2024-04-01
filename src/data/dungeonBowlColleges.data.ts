@@ -2,7 +2,7 @@ import type { DungeonBowlCollege } from '../models/dungeonBowl.model';
 
 const collegeOfFire: DungeonBowlCollege = {
     name: 'Fire',
-    id: 101,
+    id: 'db101',
     characteristics: {
         speed: 2,
         power: 4,
@@ -36,7 +36,7 @@ const collegeOfFire: DungeonBowlCollege = {
 
 const collegeOfShadows: DungeonBowlCollege = {
     name: 'Shadow',
-    id: 102,
+    id: 'db102',
     characteristics: {
         speed: 5,
         power: 2,
@@ -70,7 +70,7 @@ const collegeOfShadows: DungeonBowlCollege = {
 
 const collegeOfMetal: DungeonBowlCollege = {
     name: 'Metal',
-    id: 103,
+    id: 'db103',
     characteristics: {
         speed: 3,
         power: 3,
@@ -100,7 +100,7 @@ const collegeOfMetal: DungeonBowlCollege = {
 
 const collegeOfLight: DungeonBowlCollege = {
     name: 'Light',
-    id: 104,
+    id: 'db104',
     characteristics: {
         speed: 4,
         power: 3,
@@ -130,7 +130,7 @@ const collegeOfLight: DungeonBowlCollege = {
 
 const collegeOfDeath: DungeonBowlCollege = {
     name: 'Death',
-    id: 105,
+    id: 'db105',
     characteristics: {
         speed: 2,
         power: 4,
@@ -141,30 +141,34 @@ const collegeOfDeath: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [65, 47],
+            playerIds: [65, 47, 163],
         },
         blitzers: {
             max: 4,
-            playerIds: [49, 66],
+            playerIds: [49, 66, 161],
         },
         runners: {
             max: 4,
-            playerIds: [48],
+            playerIds: [48, 162],
         },
         blockers: {
             max: 4,
             playerIds: [51],
         },
+        throwers: {
+            max: 2,
+            playerIds: [160],
+        },
         bigGuys: {
             max: 2,
-            playerIds: [67],
+            playerIds: [67, 164],
         },
     },
 };
 
 const collegeOfLife: DungeonBowlCollege = {
     name: 'Life',
-    id: 106,
+    id: 'db106',
     characteristics: {
         speed: 4,
         power: 3,
@@ -206,7 +210,7 @@ const collegeOfLife: DungeonBowlCollege = {
 
 const collegeOfBeasts: DungeonBowlCollege = {
     name: 'Beasts',
-    id: 107,
+    id: 'db107',
     characteristics: {
         speed: 2,
         power: 5,
@@ -243,7 +247,7 @@ const collegeOfBeasts: DungeonBowlCollege = {
 };
 const collegeOfHeavens: DungeonBowlCollege = {
     name: 'Heavens',
-    id: 108,
+    id: 'db108',
     characteristics: {
         speed: 5,
         power: 4,

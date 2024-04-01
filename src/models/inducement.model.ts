@@ -2,7 +2,7 @@ import type { TeamSpecialRule, TeamTier } from './team.model';
 
 export interface Inducement {
     id: InducementKey;
-    displayName: string;
+    displayName?: string;
     cost: number;
     reducedCost?: InducementCostReduction;
     max: number;
@@ -11,7 +11,15 @@ export interface Inducement {
     sevensCost?: number;
     sevensMax?: number;
     dungeonBowlMax?: number;
-    requiresTier?: TeamTier;
+    gutterBowlMax?: number;
+    requiresTier?: number;
+    /** No publication assumes rulebook */
+    publication?:
+        | 'rulebook'
+        | 'deathzone'
+        | 'spike'
+        | 'dungeonBowl'
+        | 'gutterBowl';
 }
 
 export interface InducementCostReduction {

@@ -5,24 +5,29 @@
     import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
 
     import type { Player } from '../models/player.model';
-    import type { PlayerAlterations } from '../models/roster.model';
+    import type {
+        PlayerAlterations,
+        RosterPlayerRecord,
+    } from '../models/roster.model';
     import { filteredTableColumns } from '../store/filteredTableColumns.store';
 
     import { roster } from '../store/teamRoster.store';
     import Characteristic from './rosterPlayer/characteristic.svelte';
     import SkillElement from './skillElement.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
-    import { journeymenTypes } from '../store/currentTeam.store';
+    import { currentTeam, journeymenTypes } from '../store/currentTeam.store';
     import {
         journeymanPosition,
         journeymanSkills,
     } from '../helpers/journeymenHelper';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import { _ } from 'svelte-i18n';
 
     export let playerTypes: Player[];
     export let index: number;
     let selected: Player & { journeyman?: boolean } = playerTypes[0];
     let newName: string = '';
+    let amount: number = 1;
 
     $: selectedSkills = selected?.journeyman
         ? [
@@ -30,32 +35,81 @@
               ...journeymanSkills($roster.format),
           ]
         : filteredSkills(selected.skills);
+    $: numberOfPlayerType = $roster.players.filter(
+        (x) => x.player.id === selected?.id || 0
+    ).length;
+    $: maxOfPlayerType =
+        $currentTeam.players.find((x) => x.id === selected?.id)?.max || 0;
+    const addPlayers = () => {
+        const numberOfPlayers =
+            !amount || amount < 1
+                ? 1
+                : amount > maxOfPlayerType
+                ? maxOfPlayerType
+                : amount;
+        for (let i = 0; i < numberOfPlayers; i++) {
+            const { journeyman, ...player } = selected;
+            let alterations: PlayerAlterations = { spp: 0, ni: 0 };
+            let skills: number[] = player.skills;
+            const extraSkills = journeyman
+                ? journeymanSkills($roster.format)
+                : undefined;
 
-    const addPlayer = () => {
-        const { journeyman, ...player } = selected;
-        const extraSkills = journeyman
-            ? journeymanSkills($roster.format)
-            : undefined;
-        let alterations: PlayerAlterations = { spp: 0, ni: 0 };
+            if (journeyman) {
+                alterations = { ...alterations, journeyman };
+            }
 
-        if (journeyman) {
-            alterations = { ...alterations, journeyman };
-        }
+            if (extraSkills) {
+                alterations = { ...alterations, extraSkills };
+            }
 
-        if (extraSkills) {
-            alterations = { ...alterations, extraSkills };
-        }
+            if ($roster.format === 'dungeon bowl') {
+                skills = skills.filter(
+                    (skillId) => !dbIgnoredSkills.includes(skillId)
+                );
+            }
 
-        roster.addPlayer(
-            {
+            let newPlayer: RosterPlayerRecord = {
                 playerName: newName,
-                player: { ...player, skills: filteredSkills(player.skills) },
+                player: { ...player, skills },
                 alterations,
-            },
-            index
-        );
-        newName = '';
+            };
+
+            roster.addPlayer(
+                newPlayer,
+                numberOfPlayers === 1 ? index : undefined
+            );
+            newName = '';
+        }
+        // Reset amount for next player selection
+        amount = 1;
     };
+
+    // const addPlayer = () => {
+    //     const { journeyman, ...player } = selected;
+    //     const extraSkills = journeyman
+    //         ? journeymanSkills($roster.format)
+    //         : undefined;
+    //     let alterations: PlayerAlterations = { spp: 0, ni: 0 };
+
+    //     if (journeyman) {
+    //         alterations = { ...alterations, journeyman };
+    //     }
+
+    //     if (extraSkills) {
+    //         alterations = { ...alterations, extraSkills };
+    //     }
+
+    //     roster.addPlayer(
+    //         {
+    //             playerName: newName,
+    //             player: { ...player, skills: filteredSkills(player.skills) },
+    //             alterations,
+    //         },
+    //         index
+    //     );
+    //     newName = '';
+    // };
 
     const filteredSkills: (skills: number[]) => number[] = (skills) => {
         return $roster.format === 'dungeon bowl'
@@ -65,12 +119,12 @@
 </script>
 
 <tr class="add-player-row">
-    {#each $filteredTableColumns as c}
+    {#each $filteredTableColumns as c (c.id)}
         <td class={c.rowDetails?.tdClass}>
             {#if c.name === 'Name'}
                 <input
                     aria-labelledby="name-header"
-                    placeholder="Player Name"
+                    placeholder={$_('players.name')}
                     bind:value={newName}
                     class="name-input"
                     data-cy="new-player-name-input"
@@ -84,7 +138,7 @@
                 >
                     {#each playerTypes as playerType}
                         <option value={playerType}>
-                            {playerType.position}
+                            {$_('players.' + playerType.id)}
                         </option>
                     {/each}
                     {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}
@@ -100,7 +154,17 @@
                     hoverText="Add new player"
                     cyData="add-player"
                     symbol="add_circle"
-                    clickFunction={addPlayer}
+                    clickFunction={addPlayers}
+                />
+                x
+                <input
+                    aria-label="Amount"
+                    class="multiplier"
+                    type="number"
+                    bind:value={amount}
+                    min="1"
+                    max={maxOfPlayerType - numberOfPlayerType}
+                    use:blurOnEscapeOrEnter
                 />
             {:else if characteristics.includes(c.name)}
                 <Characteristic
@@ -119,9 +183,6 @@
 </tr>
 
 <style lang="scss">
-    .left-align {
-        text-align: left;
-    }
     input {
         border: 0;
         border-radius: 0;
@@ -137,6 +198,14 @@
     @media print {
         .add-player-row {
             display: none;
+        }
+    }
+    .controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        input {
+            font-style: italic;
         }
     }
 </style>

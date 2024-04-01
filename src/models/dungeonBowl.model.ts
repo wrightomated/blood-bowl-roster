@@ -1,27 +1,8 @@
-import type { TeamSpecialRule } from './team.model';
-
-/** Used to be compatible with normal rosters */
-export interface DungeonBowlTeam {
-    name: CollegeName;
-    id: number;
-    characteristics: CollegeCharacteristics;
-    players: DungeonBowlPlayer[];
-    reroll: {
-        cost: number;
-        max: number;
-    };
-    /** Needed in dungeon bowl team so team based logic doesn't break, dungeon bowl teams don't have special rules */
-    // TODO: refactor
-    specialRules: TeamSpecialRule[];
-    maxBigGuys?: number;
-    tier: number;
-    allowedApothecary: boolean;
-    pickSpecialRule?: TeamSpecialRule[];
-}
+import type { Team } from './team.model';
 
 export interface DungeonBowlCollege {
     name: CollegeName;
-    id: number;
+    id: string;
     characteristics: CollegeCharacteristics;
     players: DBCollegePlayers;
 }
@@ -65,15 +46,14 @@ export interface CollegeCharacteristics {
     resilience: number;
 }
 
-export const dbCollegeToTeam: (
-    college: DungeonBowlCollege
-) => DungeonBowlTeam = (college) => {
-    let team: DungeonBowlTeam;
+export const dbCollegeToTeam: (college: DungeonBowlCollege) => Team = (
+    college
+) => {
+    let team: Team;
     try {
         team = {
             name: college.name,
             id: college.id,
-            characteristics: college.characteristics,
             players: convertPlayers(college.players),
             reroll: {
                 cost: 50,

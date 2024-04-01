@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
+
     export let options: string[];
     export let selected: Function;
     export let selectedIndex: number = 0;
@@ -15,7 +17,7 @@
                 selected(option);
             }}
         >
-            {option}
+            {$_(option)}
         </button>
     {/each}
 </div>
@@ -52,7 +54,7 @@
                 border-color: var(--secondary-colour);
             }
             &:hover {
-                box-shadow: 0 5px 15px #185b88b2 inset;
+                box-shadow: 0 5px 15px var(--button-shadow) inset;
             }
 
             &:first-child {

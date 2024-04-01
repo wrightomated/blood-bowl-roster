@@ -21,7 +21,7 @@ export const teamData: TeamList = {
     teams: [
         {
             name: 'Imperial Nobility',
-            id: 1,
+            id: '1',
             players: [
                 { id: 1, max: 12 },
                 { id: 2, max: 2 },
@@ -36,7 +36,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Black Orc',
-            id: 2,
+            id: '2',
             players: [
                 { id: 6, max: 12 },
                 { id: 7, max: 6 },
@@ -49,7 +49,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Chaos Chosen',
-            id: 3,
+            id: '3',
             players: [
                 { id: 9, max: 16 },
                 { id: 10, max: 4 },
@@ -66,7 +66,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Dark Elf',
-            id: 4,
+            id: '4',
             players: [
                 { id: 14, max: 12 },
                 { id: 15, max: 2 },
@@ -81,7 +81,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Dwarf',
-            id: 5,
+            id: '5',
             players: [
                 { id: 19, max: 12 },
                 { id: 20, max: 2 },
@@ -96,7 +96,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Elven Union',
-            id: 6,
+            id: '6',
             players: [
                 { id: 24, max: 12 },
                 { id: 25, max: 2 },
@@ -110,7 +110,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Goblin',
-            id: 7,
+            id: '7',
             players: [
                 { id: 28, max: 16 },
                 { id: 29, max: 1 },
@@ -132,7 +132,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Halfling',
-            id: 8,
+            id: '8',
             players: [
                 { id: 35, max: 16 },
                 { id: 36, max: 2 },
@@ -146,7 +146,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Human',
-            id: 9,
+            id: '9',
             players: [
                 { id: 39, max: 16 },
                 { id: 40, max: 2 },
@@ -162,7 +162,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Lizardmen',
-            id: 10,
+            id: '10',
             players: [
                 { id: 43, max: 12 },
                 { id: 44, max: 2 },
@@ -176,7 +176,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Necromantic Horror',
-            id: 11,
+            id: '11',
             players: [
                 { id: 47, max: 16 },
                 { id: 48, max: 2 },
@@ -191,7 +191,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Nurgle',
-            id: 12,
+            id: '12',
             players: [
                 { id: 52, max: 12 },
                 { id: 53, max: 4 },
@@ -205,7 +205,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Ogre',
-            id: 13,
+            id: '13',
             players: [
                 { id: 56, max: 16 },
                 { id: 57, max: 1 },
@@ -222,7 +222,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Old World Alliance',
-            id: 14,
+            id: '14',
             players: [
                 { id: 115, max: 12 },
                 { id: 116, max: 1 },
@@ -244,7 +244,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Orc',
-            id: 15,
+            id: '15',
             players: [
                 { id: 59, max: 16 },
                 { id: 60, max: 2 },
@@ -260,7 +260,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Shambling Undead',
-            id: 16,
+            id: '16',
             players: [
                 { id: 65, max: 12 },
                 { id: 47, max: 12 },
@@ -275,7 +275,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Skaven',
-            id: 17,
+            id: '17',
             players: [
                 { id: 68, max: 16 },
                 { id: 69, max: 2 },
@@ -290,7 +290,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Snotling',
-            id: 18,
+            id: '18',
             players: [
                 { id: 73, max: 16 },
                 { id: 74, max: 2 },
@@ -310,7 +310,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Underworld Denizens',
-            id: 19,
+            id: '19',
             players: [
                 { id: 125, max: 12 },
                 { id: 126, max: 6 },
@@ -329,7 +329,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Wood Elf',
-            id: 20,
+            id: '20',
             players: [
                 { id: 78, max: 12 },
                 { id: 79, max: 2 },
@@ -344,7 +344,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Chaos Renegade',
-            id: 21,
+            id: '21',
             players: [
                 { id: 83, max: 12 },
                 { id: 84, max: 1 },
@@ -366,7 +366,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Amazon (ToL)',
-            id: 22,
+            id: '22',
             players: [
                 { id: 92, max: 16 },
                 { id: 93, max: 2 },
@@ -381,7 +381,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Chaos Dwarf',
-            id: 23,
+            id: '23',
             players: [
                 { id: 96, max: 16 },
                 { id: 97, max: 6 },
@@ -396,7 +396,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'High Elf',
-            id: 24,
+            id: '24',
             players: [
                 { id: 100, max: 16 },
                 { id: 101, max: 2 },
@@ -410,7 +410,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Norse (ToL)',
-            id: 25,
+            id: '25',
             players: [
                 { id: 104, max: 12 },
                 { id: 105, max: 2 },
@@ -427,7 +427,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Tomb Kings',
-            id: 26,
+            id: '26',
             players: [
                 { id: 65, max: 16 },
                 { id: 110, max: 2 },
@@ -440,8 +440,8 @@ export const teamData: TeamList = {
             specialRules: ['Sylvanian Spotlight'],
         },
         {
-            name: 'Vampire',
-            id: 27,
+            name: 'Vampire (ToL)',
+            id: '27',
             players: [
                 { id: 113, max: 12 },
                 { id: 114, max: 6 },
@@ -449,11 +449,12 @@ export const teamData: TeamList = {
             reroll: { cost: 70, max: 8 },
             allowedApothecary: true,
             tier: 2,
+            retired: true,
             specialRules: ['Sylvanian Spotlight'],
         },
         {
             name: 'Daemons of Khorne',
-            id: 28,
+            id: '28',
             players: [
                 { id: 133, max: 16 },
                 { id: 134, max: 4 },
@@ -468,7 +469,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Slann',
-            id: 29,
+            id: '29',
             players: [
                 { id: 137, max: 16 },
                 { id: 138, max: 4 },
@@ -482,7 +483,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Khorne',
-            id: 30,
+            id: '30',
             players: [
                 { id: 140, max: 16 },
                 { id: 141, max: 4 },
@@ -496,7 +497,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Norse',
-            id: 31,
+            id: '31',
             players: [
                 { id: 144, max: 16 },
                 { id: 149, max: 2 },
@@ -517,7 +518,7 @@ export const teamData: TeamList = {
         },
         {
             name: 'Amazon',
-            id: 32,
+            id: '32',
             players: [
                 { id: 153, max: 16 },
                 { id: 154, max: 2 },
@@ -528,6 +529,21 @@ export const teamData: TeamList = {
             allowedApothecary: true,
             tier: 1,
             specialRules: ['Lustrian Superleague'],
+        },
+        {
+            name: 'Vampire',
+            id: '33',
+            players: [
+                { id: 163, max: 12 },
+                { id: 160, max: 2 },
+                { id: 161, max: 2 },
+                { id: 162, max: 2 },
+                { id: 164, max: 1 },
+            ],
+            reroll: { cost: 60, max: 8 },
+            allowedApothecary: true,
+            tier: 2,
+            specialRules: ['Sylvanian Spotlight'],
         },
     ],
 };

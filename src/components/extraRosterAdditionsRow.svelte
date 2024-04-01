@@ -4,6 +4,7 @@
     import type { Extra } from '../models/extra.model';
     import type { LeagueRosterStatus } from '../models/roster.model';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
+    import { _ } from 'svelte-i18n';
 
     export let extra: Extra;
 
@@ -12,7 +13,7 @@
     $: extraCost = alterExtraCost(
         extra,
         $roster.leagueRosterStatus,
-        $roster.format === 'sevens'
+        $roster.format === 'elevens' || $roster.format === 'dungeon bowl'
     );
 
     function addExtra() {
@@ -27,10 +28,11 @@
     function alterExtraCost(
         extra: Extra,
         status: LeagueRosterStatus,
-        is7: boolean
+        doubleRerollsWhenStarted: boolean
     ): number {
         if (status === 'commenced') {
-            if (extra.extraString === 'rerolls' && !is7) return extra.cost * 2;
+            if (extra.extraString === 'rerolls' && doubleRerollsWhenStarted)
+                return extra.cost * 2;
             if (extra.extraString === 'dedicated_fans') return 0;
         }
         return extra.cost;
@@ -45,11 +47,23 @@
 </script>
 
 <tr>
-    <th>{extra.extraString.replace('_', ' ')}</th>
+    <th>{$_('tables.' + extra.extraString)}</th>
     <td class="qty">{extraAmount} / {extraMax}</td>
     <td>{formatNumberInThousands(extraCost)}</td>
     <td class="control">
         <div class="flex-container">
+            {#if extraAmount > (extra.min || 0)}
+                <MaterialButton
+                    hoverText="Remove extra"
+                    symbol="remove_circle"
+                    clickFunction={removeExtra}
+                />
+            {:else}
+                <i
+                    class="material-symbols-outlined no-op no-transition no-print"
+                    >block</i
+                >
+            {/if}
             {#if extraAmount < extraMax && !(extra.extraString === 'rerolls' && $roster.leagueRosterStatus === 'commenced' && $roster.format === 'sevens')}
                 <MaterialButton
                     cyData={'add-' + extra.extraString.replace('_', '-')}
@@ -57,13 +71,11 @@
                     symbol="add_circle"
                     clickFunction={addExtra}
                 />
-            {/if}
-            {#if extraAmount > (extra.min || 0)}
-                <MaterialButton
-                    hoverText="Remove extra"
-                    symbol="remove_circle"
-                    clickFunction={removeExtra}
-                />
+            {:else}
+                <i
+                    class="material-symbols-outlined no-op no-transition no-print"
+                    >block</i
+                >
             {/if}
         </div>
     </td>

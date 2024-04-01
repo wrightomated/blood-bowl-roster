@@ -11,6 +11,7 @@
     import Button from '../../uiComponents/button.svelte';
     import ToggleButton from '../../uiComponents/toggleButton.svelte';
     import SaveMatchHistory from '../saveMatchHistory.svelte';
+    import { _ } from 'svelte-i18n';
 
     const options: SaveMatchOption[] = [
         'updateSpp',
@@ -18,20 +19,16 @@
         'removeInducements',
         'removeStarPlayers',
         'updateDedicatedFans',
+        'updateConcededGoals',
     ];
-    const optionMap: Record<SaveMatchOption, string> = {
-        updateSpp: 'Add SPP to players',
-        updateTreasury: 'Update treasury',
-        removeInducements: 'Remove Inducements',
-        removeStarPlayers: 'Remove Star Players',
-        updateDedicatedFans: 'Update dedicated fans',
-    };
+
     let saveOptions: SaveMatchOptions = {
         updateSpp: $roster.format !== 'sevens' && $roster.mode === 'league',
         removeInducements: $roster.mode === 'league',
         updateTreasury: $roster.mode === 'league',
         removeStarPlayers: $roster.mode === 'league',
         updateDedicatedFans: $roster.mode === 'league',
+        updateConcededGoals: $roster.mode === 'league',
     };
 
     function uploadMatchHistory() {
@@ -44,7 +41,7 @@
         });
     }
     function toggleOption(selection: string, option: SaveMatchOption) {
-        saveOptions[option] = selection === 'Yes';
+        saveOptions[option] = selection === $_('common.yes');
     }
     function showOption(option: SaveMatchOption): boolean {
         if ($roster.mode === 'exhibition') return false;
@@ -59,6 +56,8 @@
                 return updateSpp();
             case 'updateDedicatedFans':
                 return updateDedicatedFans();
+            case 'updateConcededGoals':
+                return updateConcededGoals();
             default:
                 return false;
         }
@@ -86,6 +85,12 @@
     function updateDedicatedFans(): boolean {
         return !!$roster.matchDraft?.playingCoach?.fanChange;
     }
+    function updateConcededGoals(): boolean {
+        return (
+            $roster.matchDraft.concession &&
+            $roster.matchDraft.concession !== 'none'
+        );
+    }
 </script>
 
 <div
@@ -95,16 +100,16 @@
     <div class="option-container">
         {#each options.filter((o) => showOption(o)) as option}
             <div class="option-toggle boxed-div">
-                <span>{optionMap[option]}</span>
+                <span>{$_('match.save.' + option)}</span>
                 <ToggleButton
-                    options={['Yes', 'No']}
+                    options={[$_('common.yes'), $_('common.no')]}
                     selectedIndex={0}
                     selected={(selection) => toggleOption(selection, option)}
                 />
             </div>
         {/each}
     </div>
-    <Button clickFunction={uploadMatchHistory}>Save Match History</Button>
+    <Button clickFunction={uploadMatchHistory}>{$_('match.save.title')}</Button>
 </div>
 
 <style>

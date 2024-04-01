@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { Roster, RosterPreview } from '../../models/roster.model';
     import { modalState } from '../../store/modal.store';
@@ -6,8 +7,6 @@
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
     import { getTeamFormatShortDisplay } from '../../types/teamFormat';
-    import FootballSpinner from './footballSpinner.svelte';
-    import ModalText from './modalText.svelte';
 
     export let preview: RosterPreview;
 
@@ -18,15 +17,8 @@
             teamLoadOpen.set(false);
             return;
         }
-        modalState.set({
-            ...$modalState,
-            isOpen: true,
-            canClose: false,
-            component: FootballSpinner,
-            componentProps: {
-                loadingText: `Loading ${preview?.teamName || 'roster'}`,
-            },
-        });
+        modalState.modalLoading();
+
         try {
             const service = await import('../auth/firebaseDB.service');
             const rosterToLoad = (
@@ -38,28 +30,22 @@
             modalState.close();
         } catch (error) {
             console.error(error);
-            modalState.set({
-                ...$modalState,
-                isOpen: true,
-                canClose: true,
-                component: ModalText,
-                componentProps: {
-                    text: `Something went wrong`,
-                },
-            });
+            modalState.modalError('Something went wrong loading roster');
         }
     }
 </script>
 
 <button class="roster-preview" on:click={() => loadTeam(preview.rosterId)}>
-    <p>{preview.teamType} Team</p>
+    <p>{$_('roster.teamType', { values: { type: preview.teamType } })}</p>
     <h3>{preview.teamName || 'Unnamed'}</h3>
     <p>
         {preview.format ? getTeamFormatShortDisplay(preview.format) + ' ' : ''}
         <span class="mode-title">{preview.mode || ''}</span>
     </p>
     <p>
-        <span>Treasury: </span>{formatNumberInThousands(preview.treasury)}
+        <span>{$_('tables.treasury')}: </span>{formatNumberInThousands(
+            preview.treasury
+        )}
     </p>
 </button>
 

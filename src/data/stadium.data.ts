@@ -128,7 +128,7 @@ const nothing: Stadium = {
     category: 'Nothing out of the Ordinary',
 };
 
-export const categoryMap: Record<StadiumCategory, Stadium> = {
+export const categoryMap: Partial<Record<StadiumCategory, Stadium>> = {
     'Nothing out of the Ordinary': nothing,
     'Unusual Playing Surface': unusual,
     'Rough & Ready Stadium': rough,

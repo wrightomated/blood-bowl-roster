@@ -82,7 +82,8 @@ context('Team creation', () => {
 });
 
 const expectedRoster = {
-    teamId: 1,
+    version: '3.0',
+    teamId: '1',
     players: [
         {
             playerName: 'Bob',
@@ -238,4 +239,6 @@ const expectedRoster = {
     format: 'elevens',
     leagueRosterStatus: 'draft',
     matchSummary: [],
+    coachDetails: {},
+    config: { customSkillColour: {} },
 };

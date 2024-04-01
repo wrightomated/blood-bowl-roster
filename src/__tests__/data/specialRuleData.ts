@@ -2,7 +2,7 @@ export const norseNoSpecialRuleString = 't31t950m0f0d1p144I';
 export const norseSpecialRuleString = 't31t950m0f0d1s3p144I';
 
 export const norseNoSpecialRuleRoster = {
-    teamId: 31,
+    teamId: '31',
     players: [
         {
             playerName: '',
@@ -28,7 +28,7 @@ export const norseNoSpecialRuleRoster = {
 };
 
 export const norseSpecialRuleRoster = {
-    teamId: 31,
+    teamId: '31',
     players: [
         {
             playerName: '',

@@ -1,8 +1,10 @@
 <script lang="ts">
-    import { gameEventTypeToTitle } from '../../data/gameEventMap';
+    import { flip } from 'svelte/animate';
+    import { fade } from 'svelte/transition';
     import type { GameEvent } from '../../models/matchHistory.model';
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
+    import { _ } from 'svelte-i18n';
 
     export let gameEvents: GameEvent[];
     export let allowDeletion: boolean = false;
@@ -16,14 +18,22 @@
 </script>
 
 <div class="player-event-grid">
-    {#each gameEvents.sort((a, b) => (a.turn || 0) - (b.turn || 0)) as gameEvent}
-        <div class="event">
+    {#each gameEvents.sort((a, b) => (a.turn || 0) - (b.turn || 0)) as gameEvent (gameEvent)}
+        <div
+            class="event"
+            animate:flip={{ duration: 200 }}
+            in:fade={{ duration: 200 }}
+        >
             <div class="player-number">
                 Player {gameEvent?.player?.number}
             </div>
             <div class="event-type">
-                {gameEventTypeToTitle[gameEvent.eventType]}
-                {gameEvent.turn ? `on turn ${gameEvent.turn}` : ''}
+                {$_('match.events.' + gameEvent.eventType)}
+                {gameEvent.turn
+                    ? $_('match.events.onTurn', {
+                          values: { turn: gameEvent.turn },
+                      })
+                    : ''}
             </div>
             {#if allowDeletion}
                 <MaterialButton

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { nanoid } from 'nanoid';
+
     import { roster } from '../store/teamRoster.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
@@ -11,29 +13,58 @@
     import ColumnControl from './columnControl.svelte';
     import { currentUserStore } from '../store/currentUser.store';
     import { rosterCache } from '../store/rosterCache.store';
+    import type { Roster } from '../models/roster.model';
+    import { _ } from 'svelte-i18n';
 
     let saved = false;
-    let syncing = false;
+    let saving = false;
     let rosterCleared = false;
 
     async function saveRoster() {
         if ($currentUserStore) {
-            syncing = true;
-            try {
-                await import('./auth/firebaseDB.service').then((service) =>
-                    service.uploadRoster($roster)
-                );
-                saved = true;
-                rosterCache.invalidateRoster($roster.rosterId);
-                rosterCache.invalidateRosterPreviews();
-            } catch (error) {
-                console.error(error);
-            } finally {
-                syncing = false;
-            }
+            await uploadRoster($roster);
         } else {
             savedRosterIndex.addRoster($roster);
             saved = true;
+        }
+    }
+
+    async function copyRoster() {
+        const duplicatedRoster: Roster = {
+            ...$roster,
+            rosterId: nanoid(),
+            teamName: `${$roster.teamName} (copy)`,
+        };
+        if ($currentUserStore) {
+            modalState.modalLoading('Copying roster');
+            await uploadRoster(duplicatedRoster);
+            try {
+                roster.loadRoster(duplicatedRoster);
+                rosterCache.cacheRoster(duplicatedRoster);
+                modalState.modalMessage('Roster copied and loaded');
+            } catch (error) {
+                console.error(error);
+                modalState.modalError('Something went wrong loading copy');
+            }
+        } else {
+            savedRosterIndex.copyRoster(duplicatedRoster);
+            roster.loadRoster(duplicatedRoster);
+        }
+    }
+
+    async function uploadRoster(rosterToUpload: Roster) {
+        saving = true;
+        try {
+            await import('./auth/firebaseDB.service').then((service) =>
+                service.uploadRoster(rosterToUpload)
+            );
+            saved = true;
+            rosterCache.invalidateRoster(rosterToUpload.rosterId);
+            rosterCache.invalidateRosterPreviews();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            saving = false;
         }
     }
 
@@ -66,25 +97,25 @@
     });
 </script>
 
-{#if !saved && !syncing}
+{#if !saved && !saving}
     <MaterialButton
         cyData="save-roster"
-        hoverText="Save team"
+        hoverText="Save roster"
         symbol="save"
         clickFunction={() => saveRoster()}
     />
-{:else if syncing}
+{:else if saving}
     <i
-        class="material-symbols-outlined syncing no-transition"
-        title="Saving team">autorenew</i
+        class="material-symbols-outlined syncing no-transition no-print"
+        title="Saving roster">autorenew</i
     >
 {:else}<i
-        class="material-symbols-outlined saved no-transition"
-        title="Team saved">check_circle</i
+        class="material-symbols-outlined saved no-transition no-print"
+        title="Roster saved">check_circle</i
     >{/if}
 {#if !rosterCleared}
     <MaterialButton
-        hoverText="Delete team forever"
+        hoverText={$_('common.delete')}
         symbol="delete_forever"
         clickFunction={toggleDelete}
     />
@@ -96,7 +127,7 @@
         rosterViewMode.set($rosterViewMode === 'grid' ? 'table' : 'grid')}
 />
 <MaterialButton
-    hoverText="Share team"
+    hoverText="Share roster"
     symbol={$showExport ? 'link_off' : 'link'}
     clickFunction={toggleExport}
     cyData="share-team"
@@ -106,18 +137,28 @@
     symbol="print"
     clickFunction={printPage}
 />
+<MaterialButton
+    hoverText="Copy roster"
+    symbol="file_copy"
+    clickFunction={copyRoster}
+/>
+<!-- <MaterialButton
+    hoverText="Sort by column"
+    symbol="sort"
+    clickFunction={printPage}
+/> -->
 
-<!-- {#if $rosterViewMode === 'table'}
+{#if $rosterViewMode === 'table'}
     <MaterialButton
         hoverText="Roster Settings"
         symbol="settings"
         clickFunction={toggleColumnControls}
     />
-{/if} -->
+{/if}
+
 <style lang="scss">
     .saved {
         color: green;
-        margin-bottom: 3px;
     }
 
     .syncing {

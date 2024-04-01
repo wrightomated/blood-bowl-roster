@@ -11,11 +11,10 @@ import type {
 } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
 import { deletedPlayer, stringToRoster } from '../helpers/stringToRoster';
-import { currentTeam } from './currentTeam.store';
+import { currentTeamId } from './currentTeam.store';
 import { inducementCost } from '../helpers/totalInducementAmount';
 import type { RosterMode } from './rosterMode.store';
 import { savedRosterIndex } from './saveDirectory.store';
-import { getGameTypeSettings, getMaxPlayers } from '../data/gameType.data';
 import { PickedSpecialRule } from '../data/teams.data';
 import {
     matchSummary,
@@ -23,6 +22,11 @@ import {
     updateRosterWithDraft,
 } from '../helpers/matchHistoryHelpers';
 import type { SaveMatchOptions } from '../models/matchHistory.model';
+import { getGameTypeSettings } from '../helpers/gameSettings';
+import {
+    CURRENT_ROSTER_VERSION,
+    versionCheck,
+} from '../helpers/rosterVersionCheck';
 
 export const maxPlayerNumber = 99;
 
@@ -37,7 +41,7 @@ function createRoster() {
             update((store) => {
                 if (
                     store.players.filter((p) => !p.deleted).length >=
-                    getMaxPlayers(store?.format)
+                    getGameTypeSettings(store?.format).maxPlayers
                 ) {
                     return store;
                 }
@@ -45,11 +49,40 @@ function createRoster() {
                     ...store,
                     players: addPlayerToPlayers(
                         store.players,
-                        player,
+                        {
+                            ...player,
+                            playerId: player.playerId || nanoid(),
+                        },
                         maxPlayerNumber,
                         index
                     ),
                     ...updatePlayerTreasury(store, player),
+                };
+            }),
+        duplicatePlayer: (index: number) =>
+            update((store) => {
+                if (
+                    store.players.filter((p) => !p.deleted).length >=
+                    getGameTypeSettings(store?.format).maxPlayers
+                ) {
+                    return store;
+                }
+                const duplicatedPlayer: RosterPlayerRecord = {
+                    ...store.players[index],
+                    playerId: nanoid(),
+                    alterations: {
+                        ...store.players[index].alterations,
+                        playerNumber: undefined,
+                    },
+                };
+                return {
+                    ...store,
+                    players: addPlayerToPlayers(
+                        store.players,
+                        duplicatedPlayer,
+                        maxPlayerNumber
+                    ),
+                    ...updatePlayerTreasury(store, duplicatedPlayer),
                 };
             }),
         removePlayer: (indices: number[], firePlayer: boolean) =>
@@ -93,16 +126,32 @@ function createRoster() {
             }),
         movePlayerUp: (index: number) =>
             update((store) => {
+                let target = index - 1;
+                while (target > 0) {
+                    if (store.players[target].deleted) {
+                        --target;
+                    } else {
+                        break;
+                    }
+                }
                 return {
                     ...store,
-                    players: switchTwoElements(store.players, index, index - 1),
+                    players: switchTwoElements(store.players, index, target),
                 };
             }),
         movePlayerDown: (index: number) =>
             update((store) => {
+                let target = index + 1;
+                while (target < store.players.length) {
+                    if (store.players[target].deleted) {
+                        ++target;
+                    } else {
+                        break;
+                    }
+                }
                 return {
                     ...store,
-                    players: switchTwoElements(store.players, index, index + 1),
+                    players: switchTwoElements(store.players, index, target),
                 };
             }),
         addInducement: (inducementKey: string) =>
@@ -145,7 +194,7 @@ function createRoster() {
             update((_store) => {
                 const loadedRoster =
                     rosterFromCode(rosterCode) || getEmptyRoster();
-                currentTeam.setCurrentTeamWithCode(rosterCode);
+                currentTeamId.set(loadedRoster.teamId);
                 savedRosterIndex.newId();
                 return { ...loadedRoster };
             }),
@@ -233,8 +282,9 @@ function createRoster() {
 const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
     const gameSettings = getGameTypeSettings(options?.format || 'elevens');
     const emptyRoster: Roster = {
+        version: options?.version || CURRENT_ROSTER_VERSION,
         rosterId: nanoid(),
-        teamId: options?.teamId || 0,
+        teamId: options?.teamId || '0',
         players: [],
         teamName: '',
         teamType: options?.teamType || ('' as TeamName),
@@ -245,6 +295,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
         matchSummary: [],
+        config: { customSkillColour: {} },
     };
 
     if (options?.specialRule) {
@@ -279,6 +330,7 @@ const rosterFromQueryString = () => {
 const rosterFromCode = (code: string | null) => {
     try {
         let transformedRoster = stringToRoster(code);
+
         return addPlayerNumbersToRoster(transformedRoster);
     } catch (error) {
         return null;
@@ -298,14 +350,21 @@ const getDefaultRoster: () => Roster = () => {
 
 const addMissingItemsToRoster = (roster: Roster) => {
     let updatedRoster = addPlayerNumbersToRoster(roster);
+    // Old rosters had teamId as a number, new ones are strings
+    updatedRoster.teamId = updatedRoster.teamId.toString();
     updatedRoster = addPlayerIdsToRoster(updatedRoster);
+    updatedRoster = versionCheck(updatedRoster);
+
     if (!updatedRoster.rosterId) {
         updatedRoster.rosterId = nanoid();
     }
     if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
         updatedRoster.leagueRosterStatus = 'draft';
     }
-    currentTeam.setCurrentTeamWithId(updatedRoster.teamId);
+    if (!updatedRoster.config) {
+        updatedRoster.config = { customSkillColour: {} };
+    }
+    currentTeamId.set(updatedRoster.teamId);
     updatedRoster = {
         ...updatedRoster,
         format: updatedRoster?.format || 'elevens',
@@ -347,11 +406,8 @@ const deletePlayersFromPlayers: (
               }
             : p
     );
-    while (newPlayers[newPlayers.length - 1]?.deleted) {
-        newPlayers.pop();
-    }
 
-    return newPlayers;
+    return newPlayers.filter((p) => !p.deleted);
 };
 
 /**

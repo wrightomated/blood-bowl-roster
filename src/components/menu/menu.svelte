@@ -4,6 +4,7 @@
     import MenuItems from './menuItems.svelte';
     import UserProfile from '../auth/userProfile.svelte';
     import UserCircle from './userCircle.svelte';
+    import { _ } from 'svelte-i18n';
 
     let menuComponent: typeof MenuItems | typeof UserProfile;
 
@@ -27,12 +28,17 @@
         <MaterialButton
             cyData="menu-button"
             symbol={$menuDrawerOpen ? 'close' : 'menu'}
-            hoverText={$menuDrawerOpen ? 'Close menu' : 'Open menu'}
+            hoverText={$menuDrawerOpen ? $_('menu.close') : $_('menu.open')}
             clickFunction={toggleNavMenu}
         />
     </div>
     <h1>BB Roster</h1>
-    <button class="profile" title="User Profile" on:click={toggleUserProfile}>
+
+    <button
+        class="profile"
+        title={$_('menu.profile')}
+        on:click={toggleUserProfile}
+    >
         <UserCircle />
     </button>
 </header>
@@ -131,6 +137,7 @@
             display: flex;
             padding: 16px;
             margin-top: 52px;
+            align-items: center;
             &--hidden {
                 display: none;
             }
@@ -149,6 +156,7 @@
             }
             &__buttons {
                 flex-direction: column;
+                align-items: inherit;
             }
         }
     }

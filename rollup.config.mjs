@@ -2,12 +2,14 @@ import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import replace from '@rollup/plugin-replace';
 import dotenv from 'dotenv';
+import child_process from 'child_process';
+import json from '@rollup/plugin-json';
 dotenv.config();
 
 const production = !process.env.ROLLUP_WATCH;
@@ -22,7 +24,7 @@ function serve() {
     return {
         writeBundle() {
             if (server) return;
-            server = require('child_process').spawn(
+            server = child_process.spawn(
                 'npm',
                 ['run', 'start', '--', '--dev'],
                 {
@@ -61,7 +63,11 @@ export default {
             '__bbroster.env.FIREBASE_APP_ID': process.env.FIREBASE_APP_ID,
             '__bbroster.env.FIREBASE_MEASUREMENT_ID':
                 process.env.FIREBASE_MEASUREMENT_ID,
+            '__bbroster.env.EVENT_ID': process.env.EVENT_ID,
+            hook: 'writeBundle',
         }),
+        // add rollup json
+        json(),
         svelte({
             preprocess: sveltePreprocess(),
             compilerOptions: {

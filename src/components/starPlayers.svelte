@@ -3,6 +3,7 @@
     import { teamCreationSpecialRules } from '../store/rosterSpecialRules.store';
     import StarPlayerRow from './starPlayerRow.svelte';
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
+    import { _ } from 'svelte-i18n';
 
     $: filteredStarPlayers = filterStarPlayers(
         starPlayers,
@@ -14,15 +15,17 @@
     <table>
         <thead>
             <tr>
-                <td class="left-align">Name</td>
-                <td>Cost</td>
-                <td>MA</td>
-                <td>ST</td>
-                <td>AG</td>
-                <td>PA</td>
-                <td>AV</td>
-                <td class="skills-header left-align">Skills</td>
-                <td>Special Rules</td>
+                <th class="left-align">{$_('roster.column.names.2')}</th>
+                <th>{$_('tables.cost')}</th>
+                <th>{$_('roster.column.names.5')}</th>
+                <th>{$_('roster.column.names.6')}</th>
+                <th>{$_('roster.column.names.7')}</th>
+                <th>{$_('roster.column.names.8')}</th>
+                <th>{$_('roster.column.names.9')}</th>
+                <th class="skills-header left-align"
+                    >{$_('roster.column.names.10')}</th
+                >
+                <th>{$_('common.specialRules')}</th>
             </tr>
         </thead>
         <tbody>
@@ -36,9 +39,6 @@
 <style lang="scss">
     .skills-header {
         min-width: 200px;
-    }
-    .left-align {
-        text-align: left;
     }
     .table-container {
         max-width: 100%;

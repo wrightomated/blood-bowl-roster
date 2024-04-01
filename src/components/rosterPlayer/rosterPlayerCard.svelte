@@ -1,21 +1,19 @@
 <script lang="ts">
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
-    import SkillElement from '../skillElement.svelte';
-    import { currentTeam } from '../../store/currentTeam.store';
-    import type { StarPlayer } from '../../models/player.model';
-    import AddSkill from '../addSkill.svelte';
-    import {
-        characteristicMaxValue,
-        characteristicMinValue,
-        characteristics,
-    } from '../../data/statOrder.data';
-    import StatBlock from '../playerCard/statBlock.svelte';
-    import { showSkillButtons } from '../../store/showSkillButtons.store';
+    import { currentTeam, specialistIds } from '../../store/currentTeam.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { journeymanPosition } from '../../helpers/journeymenHelper';
-    import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import PlayerNumber from './playerNumber.svelte';
+    import { modalState } from '../../store/modal.store';
+    import PlayerCharacteristics from '../playerCard/playerCharacteristics.svelte';
+    import PlayerCardMainContent from '../playerCard/playerCardMainContent.svelte';
+    import EditPlayer from '../playerCard/editPlayer.svelte';
+    import DeletePlayerWarning from './deletePlayerWarning.svelte';
+    import { gameSettings } from '../../store/gameSettings.store';
+    import { specialistsAmount } from '../../store/specialistsAmount.store';
+    import { _ } from 'svelte-i18n';
+    import { activePlayers } from '../../store/activePlayers.store';
 
     export let index: number;
 
@@ -32,82 +30,30 @@
         rosterPlayer.player.bigGuy &&
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
-    $: currentCost =
-        rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
-            ? 0
-            : ((rosterPlayer.player.id === 56 ||
-                  rosterPlayer.player.id === 73) &&
-              $roster.mode !== 'exhibition' &&
-              $roster.format !== 'dungeon bowl'
-                  ? 0
-                  : rosterPlayer.player.cost) +
-              (rosterPlayer.alterations?.valueChange || 0);
-    $: alteredStats = characteristicMaxValue.map(
-        (_, i) =>
-            (rosterPlayer?.alterations?.statChange?.[i] || 0) -
-            (rosterPlayer?.alterations?.injuries?.[i] || 0)
-    );
-    $: nonLinemen = $currentTeam.players
-        .filter((p) => p.max < 12)
-        .map((x) => x.id);
-    $: sevensSpecialistsAmount =
-        $roster.format === 'sevens' &&
-        nonLinemen.includes(rosterPlayer.player.id) &&
-        $roster.players.filter((p) => nonLinemen.includes(p.player.id)).length;
 
     function removePlayer() {
-        const firePlayer = $roster?.leagueRosterStatus === 'commenced';
-        removeTwoForOne(firePlayer) || roster.removePlayer([index], firePlayer);
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            component: DeletePlayerWarning,
+            componentProps: {
+                index,
+                rosterPlayer,
+            },
+        });
     }
-    function removeTwoForOne(firePlayer: boolean) {
-        if (rosterPlayer.starPlayer) {
-            const twoForOne = (rosterPlayer.player as StarPlayer).twoForOne;
-            const tfoIndex = $roster.players.findIndex(
-                (p) => p.player.id === twoForOne
-            );
-            if (twoForOne) {
-                roster.removePlayer([index, tfoIndex], firePlayer);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    const toggleShowSkills = () => {
-        showSkillButtons.set(
-            $showSkillButtons.map((x, i) => (i === index ? !x : x))
-        );
-    };
-
-    const getStat = (stat: number, i: number) => {
-        const alteredStat =
-            stat +
-            (rosterPlayer?.alterations?.statChange?.[i] || 0) *
-                (i === 2 || i === 3 ? -1 : 1) -
-            (rosterPlayer?.alterations?.injuries?.[i] || 0) *
-                (i === 2 || i === 3 ? -1 : 1);
-        const boundedStat = stat === 0 ? 0 : getBoundedStat(alteredStat, i);
-        return `${
-            boundedStat === 0 ? '-' : i > 1 ? `${boundedStat}+` : boundedStat
-        }`;
-    };
-
-    const getBoundedStat = (alt: number, i: number) => {
-        switch (i) {
-            case 2:
-            case 3:
-                return alt > characteristicMinValue[i]
-                    ? characteristicMinValue[i]
-                    : alt < characteristicMaxValue[i]
-                    ? characteristicMaxValue[i]
-                    : alt;
-            default:
-                return alt < characteristicMinValue[i]
-                    ? characteristicMinValue[i]
-                    : alt > characteristicMaxValue[i]
-                    ? characteristicMaxValue[i]
-                    : alt;
-        }
+    const openAdvancement = () => {
+        modalState.set({
+            ...$modalState,
+            isOpen: true,
+            canClose: true,
+            compact: true,
+            component: EditPlayer,
+            componentProps: {
+                index,
+            },
+        });
     };
 
     const buyJourneyman = () => {
@@ -130,14 +76,14 @@
 </script>
 
 <section class="player-card" class:danger>
-    <div class="header" class:danger>
+    <header class="header" class:danger>
         <h3 class="player-name left-align">
             {#if rosterPlayer.starPlayer}
                 {rosterPlayer.player.position}
             {:else}
                 <input
-                    aria-label="player name"
-                    placeholder="Player Name"
+                    aria-label={$_('players.name')}
+                    placeholder={$_('players.name')}
                     use:blurOnEscapeOrEnter
                     bind:value={$roster.players[index].playerName}
                 />
@@ -155,9 +101,6 @@
                 {:else}
                     <p>
                         {rosterPlayer.player.position}
-                        {#if rosterPlayer.alterations.advancements}
-                            {rosterPlayer.alterations.advancements}
-                        {/if}
                         {#if danger}
                             {numberOfPlayerType}/{maxOfPlayerType}
                         {/if}
@@ -173,8 +116,15 @@
                     <MaterialButton
                         hoverText="Player advancement"
                         symbol="elevator"
-                        clickFunction={toggleShowSkills}
+                        clickFunction={openAdvancement}
                     />
+                    {#if $activePlayers.length < $gameSettings.maxPlayers}
+                        <MaterialButton
+                            hoverText="Duplicate player"
+                            symbol="group_add"
+                            clickFunction={() => roster.duplicatePlayer(index)}
+                        />
+                    {/if}
                 {/if}
                 {#if rosterPlayer?.alterations?.journeyman}
                     <MaterialButton
@@ -183,43 +133,12 @@
                         clickFunction={buyJourneyman}
                     />
                 {/if}
-                <!-- {#if index > 0}
-                    <MaterialButton
-                        hoverText="Move player up"
-                        symbol="arrow_circle_up"
-                        clickFunction={moveUp}
-                    />
-                {/if}
-                {#if index < $roster.players.length - 1}
-                    <MaterialButton
-                        hoverText="Move player down"
-                        symbol="arrow_circle_down"
-                        clickFunction={moveDown}
-                    />
-                {/if} -->
             </div>
         </div>
-    </div>
+    </header>
 
-    <div class="player-characteristics">
-        {#each rosterPlayer.player.playerStats as stat, i}
-            <StatBlock
-                char={characteristics[i]}
-                value={getStat(stat, i)}
-                change={alteredStats[i]}
-            />
-        {/each}
-    </div>
-    <!-- 
-    {#if rosterPlayer.alterations.advancements as a}
-        <Pill variant='filled'>{advancementTitle[]}</Pill>
-    {/if} -->
+    <PlayerCharacteristics {rosterPlayer} />
 
-    {#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
-        <div>
-            <AddSkill {index} />
-        </div>
-    {/if}
     <div class="content">
         {#if tooManyBigGuys}
             <p class="big-guys">
@@ -228,112 +147,34 @@
                     .length}/{$currentTeam.maxBigGuys} Big Guys
             </p>
         {/if}
-        {#if sevensSpecialistsAmount > 4}
+        {#if $specialistIds.includes(rosterPlayer.player.id) && $specialistsAmount > $gameSettings?.maxSpecialists}
             <p class="sevens-over-four">
                 <i class="material-symbols-outlined">warning</i>
-                {sevensSpecialistsAmount} / 4 Specialists
+                {$specialistsAmount} / {$gameSettings.maxSpecialists} Specialists
             </p>
         {/if}
-        <div class="skills">
-            <p class="mini-title">SKILLS:</p>
-            {#if rosterPlayer.player.skills.length + (rosterPlayer?.alterations?.extraSkills?.length || 0) > 0}
-                <SkillElement
-                    playerSkillIds={rosterPlayer.player.skills}
-                    extraSkillIds={rosterPlayer?.alterations?.extraSkills || []}
-                />
-            {:else}
-                None
-            {/if}
-        </div>
 
-        <div class="extraDetails">
-            {#if $roster.format !== 'sevens'}
-                {#if $roster.players[index]?.alterations?.spp !== undefined}
-                    <label
-                        ><span class="mini-title">SPP:</span>
-                        <input
-                            class="spp-input"
-                            type="number"
-                            placeholder="?"
-                            inputmode="numeric"
-                            use:blurOnEscapeOrEnter
-                            bind:value={$roster.players[index].alterations.spp}
-                        />
-                    </label>
-                {:else if !rosterPlayer.starPlayer}0{/if}
-            {/if}
-
-            {#if $roster.mode !== 'exhibition' && !rosterPlayer.starPlayer}
-                <label
-                    ><span class="mini-title">MNG:</span>
-                    <input
-                        type="checkbox"
-                        class="checkbox"
-                        use:blurOnEscapeOrEnter
-                        bind:checked={$roster.players[index].alterations.mng}
-                    />
-                </label>
-                {#if $roster.format !== 'sevens'}
-                    <label>
-                        <span class="mini-title">NI:</span>
-                        <input
-                            class="spp-input"
-                            type="number"
-                            placeholder="?"
-                            inputmode="numeric"
-                            use:blurOnEscapeOrEnter
-                            bind:value={$roster.players[index].alterations.ni}
-                        />
-                    </label>
-
-                    <label>
-                        <span class="mini-title">TR:</span>
-                        <input
-                            type="checkbox"
-                            class="checkbox"
-                            use:blurOnEscapeOrEnter
-                            bind:checked={$roster.players[index].alterations.tr}
-                        />
-                    </label>
-                {/if}
-            {/if}
-        </div>
-
-        <p>
-            <span class="mini-title">Hiring Fee:</span>
-            {rosterPlayer.player.cost > 0 &&
-            !rosterPlayer?.alterations?.journeyman
-                ? `${formatNumberInThousands(rosterPlayer.player.cost)}`
-                : '-'}
-        </p>
-        <p class="current-value">
-            <span class="mini-title">Current Value:</span>
-            {formatNumberInThousands(currentCost)}
-        </p>
+        <PlayerCardMainContent {index} />
     </div>
 </section>
 
 <style lang="scss">
-    @import '../../styles/font';
     input {
         border: 0;
         border-radius: 0;
         background: none;
         font-size: 16px;
     }
-    div {
-        input {
-            margin-bottom: 0;
-        }
-    }
     .player-card {
         border-radius: 25px;
         position: relative;
         min-width: 300px;
+        max-width: 776px;
         height: 100%;
         border: var(--secondary-border);
         background-color: white;
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
         &.danger {
             border-color: var(--main-colour);
@@ -341,6 +182,7 @@
     }
     .header {
         background-color: var(--secondary-colour);
+
         color: white;
         border-radius: 20px 20px 0 0;
         padding: 10px;
@@ -367,60 +209,19 @@
     .content {
         padding: 10px;
     }
-    .player-characteristics {
-        display: flex;
-        position: relative;
-        left: -2px;
-    }
-    .left-align {
-        text-align: left;
-    }
     .player-controls {
         display: flex;
         align-items: center;
-    }
-
-    .spp-input {
-        width: 40px;
-    }
-
-    .mini-title {
-        color: var(--main-colour);
-        font-family: $display-font;
-        margin: 0;
+        gap: 4px;
     }
 
     .big-guys,
     .sevens-over-four {
         color: var(--main-colour);
-        font-family: $display-font;
+        font-family: var(--display-font);
         i {
             vertical-align: text-bottom;
         }
-    }
-
-    .extraDetails {
-        display: flex;
-        margin-bottom: 10px;
-        & label {
-            & span {
-                vertical-align: middle;
-            }
-            & input {
-                padding: 0;
-                vertical-align: middle;
-                &.checkbox {
-                    margin: 3px;
-                    margin-right: 10px;
-                }
-            }
-        }
-    }
-    .skills {
-        margin-bottom: 10px;
-    }
-    .current-value {
-        margin-bottom: 0;
     }
 
     @media print {

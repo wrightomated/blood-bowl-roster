@@ -3,10 +3,7 @@
     import { slide } from 'svelte/transition';
     import { categoryMap } from '../../data/stadium.data';
     import { weatherTables } from '../../data/weatherData.data';
-    import {
-        gameEventPluralMap,
-        mapHistoryInducementsForDisplay,
-    } from '../../helpers/matchHistoryHelpers';
+
     import type {
         GameEvent,
         GameEventType,
@@ -21,6 +18,8 @@
     import MatchInducements from './individualControls/matchInducements.svelte';
     import PlayerEventGrid from './matchCardComponents/playerEventGrid.svelte';
     import TitleWithResult from './matchCardComponents/titleWithResult.svelte';
+    import { _ } from 'svelte-i18n';
+    import { getInducementName } from '../../helpers/matchHistoryHelpers';
 
     export let match: MatchHistoryRecord;
 
@@ -29,15 +28,16 @@
         match.playingCoach?.gameEventRecording === 'individual' &&
         match.playingCoach?.gameEvents.length > 0;
 
-    const inducements = mapHistoryInducementsForDisplay(
-        match.playingCoach.inducementsHired
-    );
+    const inducements = match.playingCoach?.inducementsHired
+        ?.map((x) => ({
+            name: getInducementName(x.id),
+            amount: x.amount,
+        }))
+        .filter((x) => {
+            return x.amount > 0 && !!x.name;
+        });
     const weather = weatherTables.find((x) => x.type === match.weather.table);
-    const stadium = categoryMap[match.stadium.category].attributes
-        ? categoryMap[match.stadium.category]?.attributes.find(
-              (a) => a.roll === match.stadium.attribute
-          )?.attribute
-        : 'Standard';
+    const stadium = getStadium();
     const teamEvents = Object.entries(match.gameEventTally)
         .filter((entry) => entry[0] !== 'opponentScore')
         .sort((a, b) => a[0].localeCompare(b[0]));
@@ -66,6 +66,19 @@
         filteredSingleEvents = filterEvents();
     }
 
+    function getStadium() {
+        const category = match.stadium.category;
+        if (category.includes('Pitch')) {
+            return category;
+        }
+
+        return categoryMap[match.stadium.category].attributes
+            ? categoryMap[match.stadium.category]?.attributes.find(
+                  (a) => a.roll === match.stadium?.attribute
+              )?.attribute
+            : 'Standard';
+    }
+
     function filterEvents() {
         return match.playingCoach.gameEventRecording === 'individual'
             ? match.playingCoach.gameEvents.filter(
@@ -79,9 +92,17 @@
     class="content"
     transition:slide={{ duration: 300, easing: quadInOut }}
 >
+    {#if match.concession && match.concession !== 'none'}
+        <span class="concession">{match.concession} conceded.</span>
+    {/if}
+
     <div class="match-modifiers">
         {#if $roster.format === 'elevens'}
-            <IconWithCaption icon={weather.icon} caption={weather.type} />
+            <IconWithCaption
+                title="Weather"
+                icon={weather.icon}
+                caption={weather.type}
+            />
         {/if}
         {#if match.playingCoach.mvp}
             <IconWithCaption
@@ -93,6 +114,7 @@
             />
         {:else if $roster.mode === 'exhibition' && match?.isLeagueMatch}
             <IconWithCaption
+                title="Tournament points"
                 caption={`Tournament Point${
                     match.playingCoach.leaguePoints === 1 ? '' : 's'
                 }`}
@@ -100,13 +122,20 @@
             />
         {/if}
         {#if $roster.format === 'elevens'}
-            <IconWithCaption icon="stadium" caption={stadium} />
+            <IconWithCaption title="Stadium" icon="stadium" caption={stadium} />
+        {/if}
+        {#if $roster.format === 'gutter bowl'}
+            <IconWithCaption
+                title="Pitch"
+                icon={stadium.includes('Street') ? 'signpost' : 'valve'}
+                caption={stadium}
+            />
         {/if}
     </div>
     {#if $roster.mode === 'league'}
         <div class="statistics">
             <TitleWithResult
-                title="Petty Cash"
+                title={$_('common.petty')}
                 result={match.playingCoach.pettyCash}
             />
             <TitleWithResult
@@ -133,7 +162,7 @@
         >
             {#each teamEvents as event}
                 <TitleWithResult
-                    title={gameEventPluralMap[event[0]]}
+                    title={$_('match.events.' + event[0] + '.p')}
                     result={event[1]}
                     background={event[0] === selectedEvent ? 'main' : 'none'}
                     clickFunction={match.playingCoach.gameEventRecording ===
@@ -165,6 +194,12 @@
 </article>
 
 <style lang="scss">
+    .concession {
+        font-family: var(--display-font);
+        font-weight: bold;
+        text-transform: capitalize;
+        color: var(--main-colour);
+    }
     .content {
         padding: 0 12px 12px 12px;
     }

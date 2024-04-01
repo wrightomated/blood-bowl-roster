@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import {
         getSavedMatchHistoryFromLocal,
         saveMatchHistoryToLocal,
@@ -9,7 +10,6 @@
         MatchHistorySummary,
     } from '../../models/matchHistory.model';
     import { roster } from '../../store/teamRoster.store';
-    import MaterialButton from '../uiComponents/materialButton.svelte';
     import Pill from '../uiComponents/pill.svelte';
     import MatchHistoryInfo from './matchHistoryInfo.svelte';
 
@@ -29,7 +29,7 @@
     $: result =
         score === opponentScore ? 'D' : score > opponentScore ? 'W' : 'L';
 
-    $: pillText = $roster.mode === 'league' ? 'League' : 'Tournament';
+    $: pillText = $roster.mode === 'league' ? 'league' : 'tournament';
 
     async function toggleBody() {
         if (loading) return;
@@ -61,13 +61,22 @@
         </div>
     {/if}
 
-    <header class="header" class:open on:click={async () => await toggleBody()}>
+    <header
+        class="header"
+        class:open
+        on:click={async () => await toggleBody()}
+        on:keydown={async (event) => {
+            if (event.key === 'Enter') await toggleBody();
+        }}
+        role="button"
+        tabindex="0"
+    >
         <div class="result">{result}</div>
         <div>vs</div>
         <div class="opponent-name">{matchSummary.opponent.name}</div>
         <div class="score">{score} - {opponentScore}</div>
         {#if matchSummary.isLeagueMatch}
-            <Pill variant="filled">{pillText}</Pill>
+            <Pill variant="filled">{$_(pillText)}</Pill>
         {/if}
 
         <i
@@ -80,13 +89,6 @@
                 ? 'arrow_drop_up'
                 : 'arrow_drop_down'}</i
         >
-
-        <!-- <MaterialButton
-            symbol={open ? 'arrow_drop_up' : 'arrow_drop_down'}
-            clickFunction={toggleBody}
-            hoverText="open"
-            pushRight={true}
-        /> -->
     </header>
     {#if open}
         <MatchHistoryInfo {match} />
@@ -112,7 +114,6 @@
         @media screen and (max-width: 450px) {
             box-shadow: none;
         }
-        // padding: 8px 16px 8px 36px;
     }
     .result {
         position: absolute;
@@ -139,13 +140,6 @@
         gap: 12px;
         cursor: pointer;
         padding: 8px 16px 8px 36px;
-        // transition: background-color 0.2s, color 0.2s;
-        // border-radius: 0 20px 0 0;
-
-        // &.open {
-        //     background-color: var(--secondary-colour);
-        //     color: white;
-        // }
         @media screen and (max-width: 450px) {
             flex-wrap: wrap;
         }

@@ -41,7 +41,6 @@
                 application.style.position = null;
                 // window.scrollTo({
                 //     top: $scrollYHistory,
-                //     behavior: 'smooth',
                 // });
             }
         }
@@ -51,17 +50,22 @@
 <svelte:window on:keydown={handleKeydown} />
 
 {#if $modalState.isOpen}
-    <div class="modal" transition:fade={{ duration: 300, easing: quadInOut }}>
+    <div
+        class="modal"
+        class:no-padding={$modalState.compact}
+        transition:fade={{ duration: 300, easing: quadInOut }}
+    >
         {#if $modalState.canClose}
             <div class="close">
                 <MaterialButton
-                    symbol="close"
+                    symbol="cancel"
                     hoverText="Close Modal"
                     clickFunction={closeModal}
+                    cyData="close-modal"
                 />
             </div>
         {/if}
-        <div class="content">
+        <div class="content" class:no-padding={$modalState.compact}>
             <svelte:component
                 this={$modalState.component}
                 {...$modalState.componentProps}
@@ -79,8 +83,8 @@
     .close {
         position: absolute;
         z-index: 12;
-        top: 1.5em;
-        right: 1.5em;
+        top: 12px;
+        right: 12px;
     }
     .modal {
         position: absolute;
@@ -124,6 +128,12 @@
         &--visible {
             visibility: visible;
             opacity: 1;
+        }
+    }
+    .no-padding {
+        padding: 0;
+        .close {
+            color: var(--white);
         }
     }
 </style>

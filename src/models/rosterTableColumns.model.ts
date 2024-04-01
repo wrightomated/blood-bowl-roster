@@ -1,5 +1,6 @@
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
+import type { RosterPlayerRecord } from './roster.model';
 
 export type TableColumnName =
     | 'Number'
@@ -13,7 +14,7 @@ export type TableColumnName =
     | 'AV'
     | 'Skills'
     | 'Hiring Fee'
-    | 'Unspent Spp'
+    | 'Spp'
     | 'MNG'
     | 'NI'
     | 'TR'
@@ -22,15 +23,17 @@ export type TableColumnName =
 
 export interface ColumnDetails {
     id?: number;
-    name: TableColumnName;
+    name?: TableColumnName;
     headerDetails?: HeaderDetails;
     rowDetails?: RowDetails;
     colspan?: number;
     customName?: string;
     title?: string;
     hideColumn?: boolean;
+    orderByPropertyPath?: string;
     disallowedRosterModes?: RosterMode[];
     disallowedRosterFormats?: TeamFormat[];
+    sortFunction?: (a: RosterPlayerRecord, b: RosterPlayerRecord) => number;
 }
 
 interface HeaderDetails {

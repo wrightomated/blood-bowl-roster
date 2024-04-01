@@ -1336,7 +1336,6 @@ const dbSnotling: Player = {
 const dbNorseLineman: Player = {
     ...norseRaiderLineman,
     id: 152,
-    skills: [13, 93],
     secondary: ['A', 'S'],
 };
 const eagleLinewoman: Player = {
@@ -1378,7 +1377,6 @@ const jaguarBlocker: Player = {
 const dbPiranhaBlitzer: Player = {
     ...piranhaBlitzer,
     id: 157,
-    cost: 85,
 };
 const dbPythonThrower: Player = {
     ...pythonThrower,
@@ -1388,7 +1386,55 @@ const dbPythonThrower: Player = {
 const dbJaguarBlocker: Player = {
     ...jaguarBlocker,
     id: 159,
+};
+const vampireThrower: Player = {
+    position: 'Vampire Thrower',
+    id: 160,
+    cost: 110,
+    playerStats: [6, 4, 2, 2, 9],
+    // bloodlust 2+, hypnotic gaze, pass, regeneration
+    skills: [96, 69, 46, 77],
+    primary: ['A', 'G', 'P'],
+    secondary: ['S'],
+};
+const vampireBlitzer: Player = {
+    position: 'Vampire Blitzer',
+    id: 161,
+    cost: 110,
+    playerStats: [6, 4, 2, 5, 9],
+    // bloodlust 3+, hypnotic gaze, regeneration, juggernaut
+    skills: [97, 69, 54, 77],
+    primary: ['A', 'G', 'S'],
+    secondary: [],
+};
+const vampireRunner: Player = {
+    position: 'Vampire Runner',
+    id: 162,
     cost: 100,
+    playerStats: [8, 3, 2, 4, 8],
+    // bloodlust 2+, hypnotic gaze, regeneration
+    skills: [96, 77, 69],
+    primary: ['A', 'G'],
+    secondary: ['P', 'S'],
+};
+const thrallLinemanV2: Player = {
+    position: 'Thrall Lineman',
+    id: 163,
+    cost: 40,
+    playerStats: [6, 3, 3, 4, 8],
+    skills: [],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const vargheist: Player = {
+    position: 'Vargheist',
+    id: 164,
+    cost: 150,
+    playerStats: [5, 5, 4, 0, 10],
+    // bloodlust 3+, regeneration, frenzy, claws, loner 4+
+    skills: [97, 26, 17, 71, 77],
+    primary: ['S'],
+    secondary: ['A', 'G'],
 };
 
 export const playerCatalogue: PlayerCatalogue = {
@@ -1552,5 +1598,10 @@ export const playerCatalogue: PlayerCatalogue = {
         dbPiranhaBlitzer,
         dbPythonThrower,
         dbJaguarBlocker,
+        vampireThrower,
+        vampireBlitzer,
+        vampireRunner,
+        thrallLinemanV2,
+        vargheist,
     ],
 };

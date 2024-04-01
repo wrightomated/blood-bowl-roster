@@ -1,17 +1,25 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
 
-    export let result: string;
+    export let result: 'Won' | 'Lost' | 'Drew';
+    export let concession: 'player' | 'opponent' | 'none' = 'none';
 
     $: changeDedicatedFans = $roster.matchDraft?.playingCoach?.fanChange || 0;
-    $: dedicatedFansString = `Your dedicated fans will ${
-        changeDedicatedFans === 0
-            ? 'remain the same.'
+
+    $: changeValue =
+        concession === 'player'
+            ? $_('match.post.dec', { values: { n: concedeFanChange($roster) } })
+            : changeDedicatedFans === 0
+            ? $_('match.post.stay')
             : changeDedicatedFans === 1
-            ? 'increase by one.'
-            : 'decrease by one.'
-    }`;
+            ? $_('match.post.inc')
+            : $_('match.post.dec', { values: { n: 1 } });
+
+    $: dedicatedFansString = $_('match.post.df_change', {
+        values: { change: changeValue },
+    });
 
     let roll: number;
 
@@ -22,19 +30,50 @@
 
     function updateFanChange() {
         changeDedicatedFans = 0;
-        if (result === 'Won' && roll >= $roster.extra.dedicated_fans) {
+        if (concession === 'player' && $roster.extra.dedicated_fans > 1) {
+            changeDedicatedFans = -roll;
+        } else if (
+            (concession === 'opponent' || result === 'Won') &&
+            roll >= $roster.extra.dedicated_fans
+        ) {
             changeDedicatedFans = 1;
-        }
-        if (result === 'Lost' && roll < $roster.extra.dedicated_fans) {
+        } else if (result === 'Lost' && roll < $roster.extra.dedicated_fans) {
             changeDedicatedFans = -1;
         }
         $roster.matchDraft.playingCoach.fanChange = changeDedicatedFans;
     }
+
+    function concedeFanChange(roster) {
+        if (!roll) {
+            return 'd3';
+        }
+        if (roll > 3) {
+            roll = Math.ceil(roll / 2);
+        }
+        const currentFans: number = roster.extra.dedicated_fans;
+        if (currentFans - roll >= 1) {
+            return roll;
+        } else {
+            return currentFans - 1;
+        }
+    }
 </script>
 
 <div class="boxed-div">
-    <label for="dedicated-fans-change">Dedicated Fans Roll</label>
-    {#if result !== 'Drew'}
+    <label for="dedicated-fans-change">{$_('match.post.df')}</label>
+    {#if concession === 'player'}
+        <input
+            type="number"
+            id="fair-weather-fans"
+            aria-label="fair weather fans"
+            max="3"
+            min="1"
+            autocomplete="off"
+            bind:value={roll}
+            on:change={updateFanChange}
+        />
+        <Die faces={3} on:rolled={yourRoll} />
+    {:else if result !== 'Drew'}
         <input
             type="number"
             id="fair-weather-fans"
@@ -49,11 +88,3 @@
     {/if}
     <p>{dedicatedFansString}</p>
 </div>
-
-<style>
-    @media screen and (max-width: 760px) {
-        .boxed-div {
-            /* grid-column-start: span 2; */
-        }
-    }
-</style>

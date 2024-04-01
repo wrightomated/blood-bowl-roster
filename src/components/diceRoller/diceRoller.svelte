@@ -14,9 +14,15 @@
         MeshStandardMaterial,
         DoubleSide,
         Vector3,
+        DirectionalLight,
+        PointLightHelper,
     } from 'three';
-    import { MapControls } from 'three/examples/jsm/controls/OrbitControls';
-    import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils';
+    // import { MapControls } from 'three-stdlib/controls/OrbitControls.js';
+    // import { MapControls } from 'three/addons/controls/MapControls.js';
+
+    import { MapControls } from 'three/examples/jsm/controls/MapControls.js';
+
+    import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
     let initialRoll = false;
     let scores = [0, 0, 0, 0, 0, 0];
@@ -35,7 +41,12 @@
         const scoreResult = document.querySelector('#score-result');
         const rollBtn = document.querySelector('#roll-btn');
 
-        let renderer, scene, camera, orbit, diceMesh, physicsWorld;
+        let renderer: WebGLRenderer,
+            scene,
+            camera,
+            orbit,
+            diceMesh,
+            physicsWorld;
 
         const params = {
             numberOfDice: 1000,
@@ -75,9 +86,9 @@
 
             updateSceneSize();
 
-            const ambientLight = new AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            const topLight = new PointLight(0xffffff, 0.5);
+            // const ambientLight = new AmbientLight(0xffffff, 0.5);
+            // scene.add(ambientLight);
+            const topLight = new PointLight(0xffffff, 1);
             topLight.position.set(10, 15, 0);
             topLight.castShadow = true;
             topLight.shadow.mapSize.width = 2048;
@@ -85,6 +96,12 @@
             topLight.shadow.camera.near = 5;
             topLight.shadow.camera.far = 400;
             scene.add(topLight);
+            const sphereSize = 1;
+            const pointLightHelper = new PointLightHelper(topLight, sphereSize);
+            scene.add(pointLightHelper);
+            const light = new DirectionalLight(0xffffff, 1);
+            light.position.set(1, 1, 1).normalize();
+            scene.add(light);
 
             orbit = new MapControls(camera, canvasEl);
             orbit.enableDamping = true;
@@ -167,7 +184,7 @@
                 transparent: true,
             });
             const whiteMat = new MeshStandardMaterial({
-                color: 0xeeeeee,
+                color: 0xffffff,
                 side: DoubleSide,
             });
 
@@ -379,7 +396,7 @@
 
         function showRollResults(score: number) {
             scores[score - 1] += 1;
-            scoreResult.innerHTML = score + '';
+            // scoreResult.innerHTML = score + '';
         }
 
         function render() {
@@ -436,7 +453,6 @@
 <div id="score-result" />
 
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
     #dice-roller {
         position: absolute;
         width: 100vw;
@@ -446,7 +462,6 @@
         z-index: 0;
     }
     #roll-btn {
-        @include roundedButton.rounded-button;
         position: absolute;
         top: 100px;
         left: 100px;

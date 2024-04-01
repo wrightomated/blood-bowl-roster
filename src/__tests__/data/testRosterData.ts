@@ -1,7 +1,7 @@
 import type { Roster } from '../../models/roster.model';
 
-export const testRoster = {
-    teamId: 1,
+export const testRoster: Roster = {
+    teamId: '1',
     mode: 'exhibition',
     format: 'elevens',
     players: [
@@ -158,7 +158,7 @@ export const testRoster = {
 };
 
 export const inducementAndStarPlayer = {
-    teamId: 22,
+    teamId: '22',
     mode: 'exhibition',
     format: 'elevens',
     players: [
@@ -184,7 +184,7 @@ export const inducementAndStarPlayer = {
 };
 
 export const playerSkills = {
-    teamId: 25,
+    teamId: '25',
     mode: 'exhibition',
     format: 'elevens',
     players: [
@@ -216,7 +216,7 @@ export const playerSkills = {
 };
 
 export const noTeamName: Roster = {
-    teamId: 2,
+    teamId: '2',
     mode: 'exhibition',
     format: 'elevens',
     players: [

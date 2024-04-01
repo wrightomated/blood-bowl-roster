@@ -7,18 +7,19 @@
 
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
     import { getAuthModal } from './getAuthFormModule';
+    import { _ } from 'svelte-i18n';
 
     $: emailV = '';
     let formTouched = false;
     let emailSent = false;
-    let errorText = '';
+    let error: boolean = false;
 
     onMount(() => {
         document.getElementById('email')?.focus();
     });
 
     async function sendResetEmail(e: Event) {
-        errorText = '';
+        error = false;
         modalState.enableClose(false);
         showSpinner.set(true);
         e.preventDefault();
@@ -29,7 +30,7 @@
             emailSent = true;
         } catch (error) {
             console.error({ error });
-            errorText = 'Something went wrong';
+            error = true;
         } finally {
             modalState.enableClose(true);
             showSpinner.set(false);
@@ -52,11 +53,11 @@
     <FootballSpinner loadingText="Sending reset password email" />
 {:else if emailSent}
     <div class="logged-in">
-        <p>Email sent!</p>
+        <p>{$_('success')}</p>
         <Button
             clickFunction={async () => {
                 await showLogin();
-            }}>Login</Button
+            }}>{$_('menu.login')}</Button
         >
     </div>
 {:else}
@@ -65,28 +66,29 @@
         class:login-form--touched={formTouched}
         on:submit|preventDefault={sendResetEmail}
     >
-        <h2>Reset your password</h2>
-        <label for="email">Email:</label>
+        <h2>{$_('auth.reset')}</h2>
+        <label for="email">{$_('common.email')}:</label>
         <input
             type="email"
             name="email"
             id="email"
-            placeholder="your email address"
+            placeholder={$_('common.email')}
             autocomplete="email"
             bind:value={emailV}
             required
         />
         <br />
-        {#if errorText}
-            <p class="error"><strong>{errorText}</strong></p>
+        {#if error}
+            <p class="error"><strong>{$_('errors.generic')}</strong></p>
         {/if}
-        <button on:focus={touchForm}>Send Reset Email</button>
+        <button class="rounded-button" on:focus={touchForm}
+            >{$_('auth.resetEmail')}</button
+        >
     </form>
 {/if}
 
 <!-- <button on:click={() => sendVerificationEmail()}>Send email</button> -->
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
     .login-form {
         display: flex;
         flex-direction: column;
@@ -107,13 +109,6 @@
     }
     label {
         margin-bottom: 4px;
-    }
-    button {
-        @include roundedButton.rounded-button;
-    }
-
-    h3 {
-        text-align: center;
     }
 
     .error {

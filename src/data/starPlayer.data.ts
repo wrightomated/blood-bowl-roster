@@ -505,6 +505,44 @@ const withergrasp: StarPlayer = {
     cost: 170,
     specialRules: [`Watch Out!`],
 };
+const ivanTheAnimal: StarPlayer = {
+    id: 251,
+    position: "Ivan 'the Animal' Deathshroud",
+    playerStats: [6, 4, 4, 5, 9],
+    playsFor: ['Sylvanian Spotlight'],
+    skills: [13, 27, 54, 71, 77, 21, 23],
+    cost: 190,
+    specialRules: ['Dwarfen Scourge'],
+};
+const countLuthorVonDrakenborg: StarPlayer = {
+    id: 252,
+    position: 'Count Luthor von Drakenborg',
+    playerStats: [6, 5, 2, 3, 10],
+    playsFor: ['Sylvanian Spotlight'],
+    skills: [13, 69, 71, 77, 9],
+    cost: 340,
+    specialRules: ['Star of the Show'],
+};
+
+const captainKarinaVonRiesz: StarPlayer = {
+    id: 253,
+    position: 'Captain Karina von Riesz',
+    playerStats: [7, 4, 2, 4, 9],
+    playsFor: ['Sylvanian Spotlight'],
+    skills: [96, 4, 69, 6, 71, 77],
+    cost: 230,
+    specialRules: ['Tasty Morsel'],
+};
+// SKITTER STAB-STAB
+const skitter: StarPlayer = {
+    id: 254,
+    position: 'Skitter Stab-Stab',
+    playerStats: [9, 2, 2, 4, 8],
+    playsFor: ['Favoured of...', 'Underworld Challenge'],
+    skills: [4, 71, 33, 20, 80],
+    cost: 150,
+    specialRules: ['Master Assassin'],
+};
 
 export const starPlayers = {
     starPlayers: [
@@ -559,5 +597,9 @@ export const starPlayers = {
         nobbla,
         scrappa,
         withergrasp,
+        ivanTheAnimal,
+        countLuthorVonDrakenborg,
+        captainKarinaVonRiesz,
+        skitter,
     ],
 };

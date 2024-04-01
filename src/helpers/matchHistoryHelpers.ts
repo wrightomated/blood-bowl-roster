@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
-import { inducementData } from '../data/inducements.data';
-import { starPlayers } from '../data/starPlayer.data';
+
 import type {
     GameEvent,
     GameEventTally,
@@ -81,6 +80,7 @@ export function updateRosterWithDraft(
 ): Roster {
     if (!roster.matchDraft) return roster;
     const { pettyCash, ...r } = roster;
+    let gainedGoals = 0;
 
     if (roster.matchDraft?.playingCoach?.gameEventRecording === 'individual') {
         r.players = addEventsToPlayers(
@@ -90,6 +90,25 @@ export function updateRosterWithDraft(
             roster.format === 'dungeon bowl'
         );
         r.matchDraft = updateMatchDraftTotals(roster.matchDraft);
+    }
+
+    if (options?.updateConcededGoals) {
+        let opponentTouchdowns = r.matchDraft.gameEventTally.opponentScore || 0;
+        let playerTouchdowns = r.matchDraft.gameEventTally.touchdown || 0;
+
+        if (r.matchDraft.concession === 'opponent') {
+            gainedGoals = opponentTouchdowns + 1;
+            r.matchDraft.gameEventTally.opponentScore = 0;
+            r.matchDraft.gameEventTally.touchdown =
+                playerTouchdowns + gainedGoals;
+        } else if (r.matchDraft.concession === 'player') {
+            r.matchDraft.gameEventTally.opponentScore =
+                opponentTouchdowns + playerTouchdowns + 1;
+            r.matchDraft.gameEventTally.touchdown = 0;
+        }
+        if (options.updateTreasury) {
+            r.treasury += gainedGoals * 10;
+        }
     }
 
     r.players = addMvpToPlayers(
@@ -115,30 +134,19 @@ export function updateRosterWithDraft(
         roster.matchDraft?.playingCoach?.fanChange
     ) {
         r.extra.dedicated_fans += roster.matchDraft.playingCoach.fanChange;
+        if (r.extra.dedicated_fans < 1) {
+            r.extra.dedicated_fans = 1;
+        }
     }
 
     return r;
 }
 
-export function mapHistoryInducementsForDisplay(
-    inducements: MatchHistoryInducements
-): (string | number)[][] {
-    return inducements
-        .map((i) => {
-            const inducementName: string = getInducementName(i.id);
-            if (!inducementName || !i.amount) return null;
-
-            return [inducementName, i.amount];
-        })
-        .filter((x) => x);
-}
-
-function getInducementName(id: string) {
+export function getInducementName(id: string) {
     if (id[0] === 'i') {
-        return inducementData.inducements.find((i) => i.id === id).displayName;
+        return 'inducements.' + id;
     } else if (id[0] === 'p') {
-        return starPlayers.starPlayers.find((p) => p.id === +id.substring(1))
-            .position;
+        return 'stars.' + id.slice(1) + '.name';
     }
     return null;
 }
@@ -167,7 +175,6 @@ function addEventsToPlayers(
 ) {
     return players.map((p) => {
         const player = { ...p };
-
         if (events?.length > 0) {
             const playerEvents = events.filter(
                 (e) => e.player?.id === p.playerId
@@ -191,6 +198,12 @@ function addEventsToPlayers(
     });
 }
 
+/**
+ * @param mvp - the id of the player who is the mvp
+ * @param players - the players to add the mvp to
+ * @param addSpp - whether to add the mvp spp to the player
+ * @returns the players with the mvp added
+ */
 function addMvpToPlayers(
     mvp: string,
     players: RosterPlayerRecord[],
@@ -199,8 +212,12 @@ function addMvpToPlayers(
     return players.map((p) => {
         const player = { ...p };
         if (p.playerId === mvp) {
-            player.alterations?.gameRecords?.['mvp']
-                ? player.alterations.gameRecords['mvp']++
+            if (!player.alterations.gameRecords) {
+                player.alterations.gameRecords = {};
+            }
+            player.alterations.gameRecords['mvp'] = !!player.alterations
+                .gameRecords?.['mvp']
+                ? player.alterations.gameRecords['mvp'] + 1
                 : 1;
 
             if (addSpp) {
@@ -211,6 +228,10 @@ function addMvpToPlayers(
     });
 }
 
+/**
+ * @param isDungeonBowl - whether the game is a dungeon bowl game
+ * @returns the event to spp map
+ */
 function getEventToSppMap(
     isDungeonBowl: boolean
 ): Record<GameEventType, number> {
@@ -231,7 +252,7 @@ export const gameEventPluralMap: Record<GameEventType, string> = {
     touchdown: 'Touchdowns',
     completion: 'Completions',
     casualty: 'Casualties',
-    kill: 'Kills',
+    kill: 'Kills*',
     interception: 'Interceptions',
     deflection: 'Deflections',
 };

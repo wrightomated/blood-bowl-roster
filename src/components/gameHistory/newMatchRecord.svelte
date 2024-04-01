@@ -1,19 +1,20 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { matchHistorySteps } from '../../store/matchHistorySteps.store';
 </script>
 
 <section class="new-match">
     <header>
-        <h2>New Match</h2>
-        <!-- <p>All fields are optional</p> -->
+        <h2>{$_('match.new')}</h2>
     </header>
     <div class="button-container">
         <button
+            class="rounded-button"
             on:click={matchHistorySteps.previousStep}
             type="button"
             disabled={!!$matchHistorySteps.find(
                 (x, i) => x.status === 'current' && i === 0
-            )}>Previous</button
+            )}>{$_('match.previous')}</button
         >
 
         <button
@@ -21,9 +22,9 @@
                 (x, i) =>
                     x.status === 'current' && i < $matchHistorySteps.length - 1
             )}
-            class="next-button"
+            class="next-button rounded-button"
             on:click={matchHistorySteps.nextStep}
-            type="button">Next</button
+            type="button">{$_('match.next')}</button
         >
     </div>
     <br />
@@ -36,15 +37,27 @@
     >
         {#each $matchHistorySteps as step, i}
             <div class="step step--{step.status}">
-                <div class="step-title">
+                <div
+                    class="step-title"
+                    tabindex="0"
+                    role="button"
+                    on:click={() => matchHistorySteps.goToStep(i)}
+                    on:keydown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            matchHistorySteps.goToStep(i);
+                        }
+                    }}
+                >
                     <i
                         class="material-symbols-outlined checkmark checkmark--{step.status}"
                         >{step.status === 'complete'
                             ? 'check_circle'
+                            : step.status === 'current'
+                            ? 'radio_button_checked'
                             : 'circle'}</i
                     >
-                    <h3 on:click={() => matchHistorySteps.goToStep(i)}>
-                        {step.title}
+                    <h3>
+                        {$_(step.title)}
                     </h3>
                 </div>
                 {#if step.status === 'current'}
@@ -54,71 +67,14 @@
                 {/if}
             </div>
         {/each}
-
-        <!-- <GameDetails />
-        <PreGameCalculations />
-        <h3>Other</h3>
-
-        <PlayerEvents /> -->
-
-        <!-- <label for="new-ctv">New Current Team Value</label>
-        <input type="number" id="new-ctv" autocomplete="off" /> -->
-
-        <!-- <label for="score">Result:</label>
-        <input
-            type="number"
-            name="player-score"
-            min="0"
-            id=""
-            bind:value={playerScore}
-            autocomplete="off"
-            max="999"
-        />
-        -
-        <input
-            type="number"
-            min="0"
-            name="opponent-score"
-            bind:value={opponentScore}
-            autocomplete="off"
-            max="999"
-        />
-        <p>{result}</p> -->
-
-        <!-- <label for="winnings">Winnings</label>
-        <input type="number" name="winnings" id="winnings" autocomplete="off" />
-        <label for="league-points">League Points</label>
-        <input
-            type="number"
-            id="league-points"
-            name="league-points"
-            autocomplete="off"
-            max="999"
-        />
-
-        <label for="notes">Notes</label>
-        <textarea
-            name="notes"
-            id="notes"
-            cols="30"
-            rows="10"
-            maxlength="512"
-            bind:value={$matchHistoryRecordDraft.notes}
-        /> -->
-
-        <!-- <button on:click={addMatch}>Add</button> -->
     </form>
 </section>
 
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
-
     .new-match {
-        // width: 90vw;
         &__form {
             display: flex;
             flex-direction: column;
-            // gap: 16px;
         }
     }
     .step {
@@ -133,7 +89,7 @@
             }
         }
         &:not(.step--current) {
-            .step-title h3:hover {
+            .step-title:hover {
                 color: var(--secondary-colour);
                 cursor: pointer;
             }
@@ -153,10 +109,6 @@
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-
-        // & input {
-        //     max-width: 40px;
-        // }
     }
     header {
         text-align: center;
@@ -168,19 +120,10 @@
         justify-content: center;
 
         button {
-            @include roundedButton.rounded-button;
             padding: 8px;
             min-width: 80px;
         }
-
-        // .next-button {
-        //     margin-left: auto;
-        // }
     }
-    // input,
-    // select {
-    //     margin-bottom: 12px;
-    // }
 
     .checkmark {
         color: var(--secondary-colour);

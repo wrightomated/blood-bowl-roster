@@ -1,7 +1,8 @@
 <script lang="ts">
-    import type { Team, TeamTier } from '../models/team.model';
+    import type { Team } from '../models/team.model';
     import {
         currentTeam,
+        currentTeamId,
         currentTeamIsDungeonBowl,
     } from '../store/currentTeam.store';
     import { roster } from '../store/teamRoster.store';
@@ -36,26 +37,45 @@
     import type { RosterPreviews } from '../models/roster.model';
     import SelectSpecialRule from './selectSpecialRule.svelte';
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
+    import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
+    import { customisationRules } from '../customisation/customisation.store';
+    import { _ } from 'svelte-i18n';
 
-    export let teamList: Team[];
+    export let teamList: (Team | CustomTeam)[];
 
     let rosterCode: string;
     let includeNaf: boolean = true;
     let includeRetired: boolean = false;
 
-    const nafTeams = [28, 29];
+    const nafTeams = ['28', '29'];
     const rosterModes: RosterMode[] = ['league', 'exhibition'];
-    const teamFormats: TeamFormat[] = ['elevens', 'sevens', 'dungeon bowl'];
+    const teamFormats: TeamFormat[] = [
+        'elevens',
+        'sevens',
+        'dungeon bowl',
+        'gutter bowl',
+    ];
 
     $: searchTerm = '';
+    customisationRules.subscribe((x) => {
+        if (x?.tiers) {
+            toggledTiers.setTiers(x.tiers);
+        }
+    });
 
+    // let tiers: number[];
+    // $: tiers = [...new Set(teamList.map((x) => x.tier))].sort((a, b) => a - b);
+
+    let sortedTeam: (Team | CustomTeam)[];
     $: sortedTeam = sortTeam()
         .filter((x) => $filteredTiers.includes(x.tier))
         .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true))
         .filter((x) => !x?.retired || (x.retired && includeRetired))
         .filter((x) =>
             searchTerm
-                ? x.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ? $_('teams.names.' + x.id)
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
                 : x
         );
 
@@ -78,8 +98,8 @@
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
 
-    const newTeam = (index: number) => {
-        currentTeam.setCurrentTeamWithId(index);
+    const newTeam = (id: string) => {
+        currentTeamId.set(id);
 
         teamSelectionSpecialRule.set(
             $currentTeam?.pickSpecialRule
@@ -133,17 +153,24 @@
         teamLoadOpen.set(false);
     };
 
-    const tierToNumeral = (tier: TeamTier) => {
-        switch (tier) {
-            case 1:
-                return 'I';
-            case 2:
-                return 'II';
-            case 3:
-                return 'III';
-            default:
-                break;
+    const tierToNumeral = (tier: number) => {
+        const lookup = {
+            X: 10,
+            IX: 9,
+            V: 5,
+            IV: 4,
+            I: 1,
+        };
+        let num = tier;
+        let roman = '';
+        let i;
+        for (i in lookup) {
+            while (num >= lookup[i]) {
+                roman += i;
+                num -= lookup[i];
+            }
         }
+        return roman;
     };
 
     const inputCode = () => {
@@ -179,7 +206,7 @@
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
-    <h2 class="page-title">Create New Team</h2>
+    <h2 class="page-title">{$_('creation.title')}</h2>
     <ToggleButton
         options={rosterModes}
         selectedIndex={rosterModes.indexOf($rosterMode)}
@@ -199,50 +226,45 @@
         <div class="button-container">
             <div class="filter__tier">
                 Filter:
-                <button
-                    on:click={() => toggledTiers.toggleTier(1)}
-                    class:selected={$filteredTiers.includes(1)}
-                    class="filter__button">I</button
-                >
-                <button
-                    on:click={() => toggledTiers.toggleTier(2)}
-                    class:selected={$filteredTiers.includes(2)}
-                    class="filter__button">II</button
-                >
-                <button
-                    on:click={() => toggledTiers.toggleTier(3)}
-                    class:selected={$filteredTiers.includes(3)}
-                    class="filter__button">III</button
-                >
+                {#each $toggledTiers as _tier, i}
+                    <button
+                        on:click={() => toggledTiers.toggleTier(i + 1)}
+                        class:selected={$filteredTiers.includes(i + 1)}
+                        class="filter__button"
+                        title={$_('creation.tier', { values: { tier: i + 1 } })}
+                        >{tierToNumeral(i + 1)}</button
+                    >
+                {/each}
                 <button
                     on:click={toggleNaf}
-                    title="Filter NAF teams"
+                    title={$_('creation.naf')}
                     class:selected={includeNaf}
                     class="filter__button">N</button
                 >
                 <button
                     on:click={toggleRetired}
-                    title="Filter superseded teams"
+                    title={$_('creation.s')}
                     class:selected={includeRetired}
                     class="filter__button">S</button
                 >
             </div>
             <label class="filter__search">
-                Search: <input
+                {$_('common.search')}
+                <input
                     bind:value={searchTerm}
-                    placeholder="Team type"
+                    placeholder={$_('creation.type')}
                 />
             </label>
             <br />
             <div>
                 {#each sortedTeam as team (team.id)}
                     <button
-                        class="team-button"
+                        class="team-button rounded-button"
                         animate:flip={{ duration: 200 }}
                         transition:scale|local={{ duration: 200 }}
-                        class:selected={$currentTeam.id === team.id}
+                        class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
-                        >{team.name}
+                        >{$_('teams.names.' + team.id)}
                         <span class="display-font"
                             >{tierToNumeral(team.tier)}</span
                         >{#if nafTeams.includes(team.id)}<span
@@ -251,7 +273,7 @@
                     >
                 {/each}
                 {#if sortedTeam.length === 0}
-                    <p class="no-matches">No matches</p>
+                    <p class="no-matches">No teams match your filter</p>
                 {/if}
             </div>
             {#if $currentTeam?.pickSpecialRule}
@@ -259,28 +281,28 @@
             {/if}
         </div>
 
-        <div />
         <Button
             clickFunction={createTeam}
             cyData="create-team"
-            disabled={!$currentTeam || $currentTeamIsDungeonBowl}>Create</Button
+            disabled={!$currentTeam || $currentTeamIsDungeonBowl}
+            >{$_('creation.create')}</Button
         >
     {/if}
 {/if}
 
 {#if $teamLoadOpen}
-    <h2 class="page-title">Load Team</h2>
+    <h2 class="page-title">{$_('load.title')}</h2>
     <div class="button-container" data-cy="load-team-box">
         <div class="code-box">
             <input
-                aria-label="Input code"
+                aria-label={$_('load.code')}
                 id="code-input"
-                placeholder="Input Code"
+                placeholder={$_('load.code')}
                 bind:value={rosterCode}
                 use:blurOnEscapeOrEnter
             />
             <MaterialButton
-                hoverText="Enter code"
+                hoverText={$_('load.title')}
                 symbol="input"
                 clickFunction={inputCode}
             />
@@ -290,7 +312,9 @@
                 <FootballSpinner />
             {:then rosterPreviews}
                 <h3 class="signed-in-heading">
-                    Teams of {$currentUserStore.displayName}
+                    {$_('load.coachTeams', {
+                        values: { coach: $currentUserStore.displayName },
+                    })}
                 </h3>
                 <div class="team-previews">
                     {#each sortedPreviews(rosterPreviews) as preview}
@@ -298,13 +322,14 @@
                     {/each}
                 </div>
             {:catch}
-                <p style="color: red">Something went wrong.</p>
+                <p style="color: red">{$_('errors.generic')}</p>
             {/await}
         {:else}
-            <h3>Locally stored teams</h3>
+            <h3>{$_('load.local')}</h3>
             {#each $savedRosterIndex.index as savedRoster, i}
                 <Button clickFunction={() => loadTeam(savedRoster)}
-                    >{savedRoster.name || 'Saved Roster ' + (i + 1)}</Button
+                    >{savedRoster.name ||
+                        $_('load.saved', { values: { n: i + 1 } })}</Button
                 >
             {/each}
         {/if}
@@ -313,8 +338,6 @@
 {/if}
 
 <style lang="scss">
-    @use '../styles/mixins/roundedButton';
-
     .page-title {
         color: var(--main-colour);
         text-align: center;
@@ -355,9 +378,10 @@
             text-align: center;
             margin: 0 auto;
             border: var(--secondary-border);
+            margin-right: 4px;
 
             &:hover {
-                box-shadow: 0 4px 12px #4b7d9e inset;
+                box-shadow: 0 4px 12px var(--button-shadow) inset;
                 background: var(--secondary-colour);
                 color: white;
             }
@@ -382,9 +406,6 @@
             margin-right: 8px;
             font-size: 16px;
         }
-    }
-    .team-button {
-        @include roundedButton.rounded-button;
     }
     .team-previews {
         display: flex;

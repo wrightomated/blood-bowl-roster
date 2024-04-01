@@ -6,7 +6,9 @@
 
     import { roster } from '../../../store/teamRoster.store';
     import Die from '../../dice/die.svelte';
+    import ToggleButton from '../../uiComponents/toggleButton.svelte';
     import DedicatedFansChange from './dedicatedFansChange.svelte';
+    import { _ } from 'svelte-i18n';
 
     let mvpSelected: string;
 
@@ -14,20 +16,64 @@
         $roster.matchDraft.gameEventTally.touchdown -
         $roster.matchDraft.gameEventTally.opponentScore;
 
-    $: result = scoreDiff > 0 ? `Won` : scoreDiff === 0 ? 'Drew' : 'Lost';
+    let result: 'Won' | 'Lost' | 'Drew';
+    $: result =
+        $roster.matchDraft.concession === 'player' || scoreDiff < 0
+            ? `Lost`
+            : $roster.matchDraft.concession === 'opponent' || scoreDiff > 0
+            ? 'Won'
+            : 'Drew';
 
     $: filteredPlayers = $roster?.players?.filter(
         (p) => !p.deleted && !p.starPlayer
     );
 
+    const concessionOptions = ['none', 'player', 'opponent'];
+    $: concessionOption = $roster.matchDraft.concession ?? concessionOptions[0];
+
     function winnings(
         fanFactor: number,
         opponentFanFactor: number,
-        touchdowns: number
+        touchdowns: number,
+        concession?: 'player' | 'opponent' | 'none'
     ) {
+        if (concession === 'player') return 0;
+        const denominator = concession === 'opponent' ? 1 : 2;
         const winnings =
-            10000 * ((fanFactor + opponentFanFactor) / 2 + touchdowns);
+            10000 *
+            ((fanFactor + opponentFanFactor) / denominator + touchdowns);
         return winnings || 0;
+    }
+
+    /**
+     * Gutter bowl winnings
+     * has a different calculation for winnings
+     * 1 d6 * 10000
+     * + 10000 if won
+     * + 10000 if three or more touchdowns
+     * + 10000 if caused three or more casualties
+     */
+    function gutterBowlWinnings(
+        d6result: number,
+        touchdowns: number,
+        casualties: number,
+        won: boolean
+    ) {
+        const winnings = d6result * 10000;
+        const bonus =
+            (touchdowns >= 3 ? 1 : 0) +
+            (casualties >= 3 ? 1 : 0) +
+            (won ? 1 : 0);
+
+        return winnings + bonus * 10000;
+    }
+    function gutterBowlRoll(event) {
+        $roster.matchDraft.playingCoach.winnings = gutterBowlWinnings(
+            event.detail.result,
+            $roster.matchDraft.gameEventTally.touchdown,
+            $roster.matchDraft.gameEventTally.casualty,
+            result === 'Won'
+        );
     }
 
     function playerShort(player: RosterPlayerRecord) {
@@ -46,20 +92,43 @@
             name: player.playerName || player.player.position,
         };
     }
+
     function randomMvp(event) {
         const diceResult = event.detail.result;
         mvpSelected = filteredPlayers[diceResult - 1].playerId;
         selectMvp();
     }
 
+    function concession(concession: string) {
+        if (concession === 'player') {
+            $roster.matchDraft.concession = 'player';
+            $roster.matchDraft.playingCoach.winnings = 0;
+            delete $roster.matchDraft.playingCoach.mvp;
+        } else if (concession === 'opponent') {
+            $roster.matchDraft.concession = 'opponent';
+        } else {
+            $roster.matchDraft.concession = 'none';
+        }
+        $roster.matchDraft.playingCoach.winnings = winnings(
+            $roster.matchDraft.playingCoach.fanFactor,
+            $roster.matchDraft.opponentCoach.fanFactor,
+            $roster.matchDraft.gameEventTally.touchdown,
+            $roster.matchDraft.concession
+        );
+    }
+
     onMount(() => {
         roster.updateDraftEventTotals();
         mvpSelected = $roster.matchDraft?.playingCoach?.mvp?.id;
-        if (!$roster.matchDraft.playingCoach.winnings) {
+        if (
+            $roster.format !== 'gutter bowl' &&
+            !$roster.matchDraft.playingCoach.winnings
+        ) {
             $roster.matchDraft.playingCoach.winnings = winnings(
                 $roster.matchDraft.playingCoach.fanFactor,
                 $roster.matchDraft.opponentCoach.fanFactor,
-                $roster.matchDraft.gameEventTally.touchdown
+                $roster.matchDraft.gameEventTally.touchdown,
+                $roster.matchDraft.concession
             );
         }
         if (
@@ -80,19 +149,31 @@
     out:slide|local={{ duration: 300, easing: quadInOut }}
 >
     {#if $roster.mode === 'league'}
-        <div class="boxed-div">
-            <label for="winnings">Winnings</label>
-            <input
-                type="number"
-                bind:value={$roster.matchDraft.playingCoach.winnings}
-            />
-        </div>
+        {#if $roster.format === 'gutter bowl'}
+            <div class="boxed-div">
+                <label for="winnings">{$_('match.post.winnings')}</label>
+                <input
+                    type="number"
+                    bind:value={$roster.matchDraft.playingCoach.winnings}
+                />
+                <Die faces={6} on:rolled={gutterBowlRoll} />
+            </div>
+        {:else}
+            <div class="boxed-div">
+                <label for="winnings">{$_('match.post.winnings')}</label>
+                <input
+                    type="number"
+                    bind:value={$roster.matchDraft.playingCoach.winnings}
+                />
+            </div>
+        {/if}
     {/if}
 
     {#if $roster?.matchDraft?.isLeagueMatch}
         <div class="boxed-div">
             <label for="league-points"
-                >{$roster.mode === 'league' ? 'League' : 'Tournament'} Points</label
+                >{$roster.mode === 'league' ? $_('league') : $_('tournament')}
+                {$_('common.points')}</label
             >
             <input
                 type="number"
@@ -102,13 +183,26 @@
             />
         </div>
     {/if}
-    {#if $roster.mode === 'league'}
-        <DedicatedFansChange {result} />
+    {#if $roster.mode === 'league' && $roster.format !== 'gutter bowl'}
+        <div class="boxed-div">
+            <div class="concession-label">{$_('match.post.concession')}</div>
+            <ToggleButton
+                options={concessionOptions}
+                selectedIndex={concessionOptions.findIndex(
+                    (x) => x === concessionOption
+                )}
+                selected={concession}
+            />
+        </div>
+        <DedicatedFansChange
+            {result}
+            concession={$roster.matchDraft?.concession}
+        />
     {/if}
 
-    {#if $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
+    {#if $roster.matchDraft.concession !== 'player' && $roster.format !== 'sevens' && $roster.mode === 'league' && filteredPlayers.length > 0}
         <div class="boxed-div">
-            <label for="choose-mvp">MVP</label>
+            <label for="choose-mvp">{$_('match.post.mvp')}</label>
             <select
                 id="choose-mvp"
                 name="choose-mvp"
@@ -121,13 +215,13 @@
             </select>
             <Die
                 faces={filteredPlayers.length}
-                defaultDisplay="Random MVP"
+                defaultDisplay={'d' + filteredPlayers.length}
                 on:rolled={randomMvp}
             />
         </div>
     {/if}
     <div class="boxed-div notes-box">
-        <label for="notes">Notes</label>
+        <label for="notes">{$_('common.notes')}</label>
         <textarea
             name="notes"
             class="notes-area"
@@ -145,6 +239,11 @@
     }
     label {
         margin-bottom: 4px;
+    }
+    .concession-label {
+        margin-bottom: 4px;
+        font-family: var(--display-font);
+        font-weight: bold;
     }
     .post-game {
         margin: 16px 0;

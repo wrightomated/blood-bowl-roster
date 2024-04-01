@@ -17,6 +17,7 @@ export type MatchHistorySummary = {
     /** yyyy-MM-dd */
     matchDate?: string;
     leaguePoints?: number;
+    concession?: 'player' | 'opponent' | 'none';
 };
 
 export type MatchHistoryRecord = {
@@ -39,6 +40,7 @@ export type MatchHistoryRecord = {
         date?: string;
     };
     notes?: string;
+    concession?: 'player' | 'opponent' | 'none';
 };
 
 export type MatchHistoryCoach = {
@@ -88,6 +90,10 @@ export type MatchHistoryStep = {
     status: StepStatus;
 };
 
+/**
+ * Inducements hired by a coach
+ * id can be either an inducement id or a star player id
+ */
 export type MatchHistoryInducements = { id: string; amount?: number }[];
 
 export type StepStatus = 'complete' | 'current' | 'future';
@@ -99,4 +105,5 @@ export type SaveMatchOption =
     | 'updateTreasury'
     | 'removeInducements'
     | 'removeStarPlayers'
-    | 'updateDedicatedFans';
+    | 'updateDedicatedFans'
+    | 'updateConcededGoals';
