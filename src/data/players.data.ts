@@ -1467,7 +1467,7 @@ const woodlandFox: Player = {
     position: 'Woodland Fox',
     id: 168,
     cost: 50,
-    playerStats: [7, 3, 3, 4, 7],
+    playerStats: [7, 2, 2, 0, 6],
     skills: [4, 99, 9, 81],
     primary: ['G'],
     secondary: ['A', 'S'],
