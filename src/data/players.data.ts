@@ -1436,6 +1436,42 @@ const vargheist: Player = {
     primary: ['S'],
     secondary: ['A', 'G'],
 };
+const gnomeLineman: Player = {
+    position: 'Gnome Lineman',
+    id: 165,
+    cost: 40,
+    playerStats: [5, 2, 3, 4, 7],
+    skills: [6, 78, 81, 24],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const gnomeBeastmaster: Player = {
+    position: 'Gnome Beastmaster',
+    id: 166,
+    cost: 55,
+    playerStats: [5, 2, 3, 4, 8],
+    skills: [53, 6, 81, 24],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const gnomeIllusionist: Player = {
+    position: 'Gnome Illusionist',
+    id: 167,
+    cost: 50,
+    playerStats: [5, 2, 3, 3, 7],
+    skills: [6, 81, 98, 24],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const woodlandFox: Player = {
+    position: 'Woodland Fox',
+    id: 168,
+    cost: 50,
+    playerStats: [7, 3, 3, 4, 7],
+    skills: [4, 99, 9, 81],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1603,5 +1639,9 @@ export const playerCatalogue: PlayerCatalogue = {
         vampireRunner,
         thrallLinemanV2,
         vargheist,
+        gnomeLineman,
+        gnomeBeastmaster,
+        gnomeIllusionist,
+        woodlandFox,
     ],
 };
