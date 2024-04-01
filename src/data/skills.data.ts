@@ -112,6 +112,9 @@ export const skillCatalogue: Skill[] = [
     // Vampire
     { id: 96, category: 'T' },
     { id: 97, category: 'T' },
+    // Gnomes
+    { id: 98, category: 'T' },
+    { id: 99, category: 'T' },
 ];
 
 export const dungeonBowlSkillIds = {

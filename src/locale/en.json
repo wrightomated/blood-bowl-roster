@@ -249,6 +249,8 @@
         "95": "Hit and Run",
         "96": "Bloodlust (2+)",
         "97": "Bloodlust (3+)",
+        "98": "Trickster",
+        "99": "My Ball",
         "151": "Dirty Player (+2)",
         "551": "Mighty Blow (+2)",
         "620": "Animosity (all team-mates)",
@@ -294,7 +296,8 @@
             "30": "Khorne",
             "31": "Norse",
             "32": "Amazon",
-            "33": "Vampire"
+            "33": "Vampire",
+            "34": "Gnome"
         },
         "rules": {
             "Badlands Brawl": "Badlands Brawl",
@@ -501,7 +504,11 @@
         "161": "Vampire Blitzer",
         "162": "Vampire Runner",
         "163": "Thrall Lineman",
-        "164": "Vargheist"
+        "164": "Vargheist",
+        "165": "Gnome Lineman",
+        "166": "Gnome Beastmaster",
+        "167": "Gnome Illusionist",
+        "168": "Woodland Fox"
     },
     "stars": {
         "title": "Star Players",
