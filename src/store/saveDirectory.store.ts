@@ -29,7 +29,27 @@ const createSavedRosterIndex = () => {
                 addRosterToStorage(store.currentIndex, roster);
                 return {
                     ...store,
-                    index: updatedRosterIndex(store, roster.teamName),
+                    index: updatedRosterIndex(
+                        store.currentIndex,
+                        store.index,
+                        roster.teamName
+                    ),
+                };
+            }),
+        copyRoster: (roster: Roster) =>
+            update((store) => {
+                const newId = store.count + 1;
+
+                addRosterToStorage(newId, roster);
+                return {
+                    ...store,
+                    count: newId,
+                    currentIndex: newId,
+                    index: updatedRosterIndex(
+                        newId,
+                        store.index,
+                        roster.teamName
+                    ),
                 };
             }),
         removeRoster: () =>
@@ -74,16 +94,21 @@ const storageKeyFromId = (id: number) => {
     return `savedRoster${id}`;
 };
 
-const updatedRosterIndex = (store: RosterIndex, name: string) => {
-    const cId = store.currentIndex;
+const updatedRosterIndex = (
+    currentIndex: number,
+    rosterIndex: { id: number; name: string }[],
+    name: string
+) => {
+    const cId = currentIndex;
     const record = {
         id: cId,
         name: name,
     };
-    if (store.index.find((x) => x.id === cId)) {
-        return store.index.map((v) => (v.id === cId ? record : v));
+
+    if (rosterIndex.find((x) => x.id === cId)) {
+        return rosterIndex.map((v) => (v.id === cId ? record : v));
     } else {
-        return store.index.concat([record]);
+        return rosterIndex.concat([record]);
     }
 };
 

@@ -520,7 +520,7 @@ const countLuthorVonDrakenborg: StarPlayer = {
     playerStats: [6, 5, 2, 3, 10],
     playsFor: ['Sylvanian Spotlight'],
     skills: [13, 69, 71, 77, 9],
-    cost: 350,
+    cost: 340,
     specialRules: ['Star of the Show'],
 };
 
@@ -532,6 +532,16 @@ const captainKarinaVonRiesz: StarPlayer = {
     skills: [96, 4, 69, 6, 71, 77],
     cost: 230,
     specialRules: ['Tasty Morsel'],
+};
+// SKITTER STAB-STAB
+const skitter: StarPlayer = {
+    id: 254,
+    position: 'Skitter Stab-Stab',
+    playerStats: [9, 2, 2, 4, 8],
+    playsFor: ['Favoured of...', 'Underworld Challenge'],
+    skills: [4, 71, 33, 20, 80],
+    cost: 150,
+    specialRules: ['Master Assassin'],
 };
 
 export const starPlayers = {
@@ -590,5 +600,6 @@ export const starPlayers = {
         ivanTheAnimal,
         countLuthorVonDrakenborg,
         captainKarinaVonRiesz,
+        skitter,
     ],
 };

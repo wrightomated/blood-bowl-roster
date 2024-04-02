@@ -1,17 +1,16 @@
 <script lang="ts">
     import { roster } from '../../store/teamRoster.store';
-    import AddSkill from '../addSkill.svelte';
     import {
         characteristics,
         type CharacteristicType,
     } from '../../data/statOrder.data';
-    import { showSkillButtons } from '../../store/showSkillButtons.store';
     import { filteredTableColumns } from '../../store/filteredTableColumns.store';
     import type { TableColumnName } from '../../models/rosterTableColumns.model';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
+    import type { RosterPlayerRecord } from '../../models/roster.model';
 
     export let index: number;
-
+    let rosterPlayer: RosterPlayerRecord;
     $: rosterPlayer = $roster.players[index];
 
     $: currentCost =
@@ -55,7 +54,7 @@
                 'Current Value': {
                     text: `${formatNumberInThousands(currentCost)}`,
                 },
-                'Unspent Spp': {
+                Spp: {
                     index,
                     alteration: 'spp',
                 },
@@ -88,18 +87,8 @@
         </td>
     {/each}
 </tr>
-{#if !rosterPlayer.starPlayer && $showSkillButtons[index]}
-    <tr>
-        <td colspan="16">
-            <AddSkill {index} />
-        </td>
-    </tr>
-{/if}
 
 <style>
-    .left-align {
-        text-align: left;
-    }
     .no-wrap {
         white-space: nowrap;
     }

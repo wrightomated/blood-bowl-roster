@@ -6,6 +6,7 @@
     import { rosterCache } from '../../store/rosterCache.store';
     import { roster } from '../../store/teamRoster.store';
     import FootballSpinner from '../uiComponents/footballSpinner.svelte';
+    import { _ } from 'svelte-i18n';
 
     export let saveOptions: SaveMatchOptions;
     let loading = true;
@@ -64,5 +65,5 @@
 {:else if success}
     <h3 class="center">Match history updated</h3>
 {:else}
-    <h3>Something went wrong.</h3>
+    <h3>{$_('errors.generic')}</h3>
 {/if}

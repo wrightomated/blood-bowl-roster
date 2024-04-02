@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { menuDrawerOpen } from '../../store/menuDrawer.store';
 
     import { showDungeonBowl } from '../../store/showDungeonBowl.store';
@@ -39,8 +40,10 @@
 
 {#if $roster.teamType}
     <Button clickFunction={loadCurrentTeam}
-        >Current Team{$roster.teamName ? ': ' + $roster.teamName : ''}</Button
+        >{$_('menu.current')}{$roster.teamName
+            ? ': ' + $roster.teamName
+            : ''}</Button
     >
 {/if}
-<Button cyData="new-team" clickFunction={newTeam}>New Team</Button>
-<Button cyData="load-team" clickFunction={loadTeam}>Load Team</Button>
+<Button cyData="new-team" clickFunction={newTeam}>{$_('menu.new')}</Button>
+<Button cyData="load-team" clickFunction={loadTeam}>{$_('menu.load')}</Button>

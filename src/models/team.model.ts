@@ -64,7 +64,8 @@ export type TeamName =
     | 'Amazon (ToL)'
     | 'Amazon (Incomplete)'
     | 'Vampire (ToL)'
-    | 'Vampire (Incomplete)';
+    | 'Vampire (Incomplete)'
+    | 'Gnome';
 
 export type TeamSpecialRule =
     | 'Badlands Brawl'

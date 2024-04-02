@@ -545,5 +545,20 @@ export const teamData: TeamList = {
             tier: 2,
             specialRules: ['Sylvanian Spotlight'],
         },
+        {
+            name: 'Gnome',
+            id: '34',
+            players: [
+                { id: 165, max: 16 },
+                { id: 38, max: 2 },
+                { id: 166, max: 2 },
+                { id: 167, max: 2 },
+                { id: 168, max: 2 },
+            ],
+            reroll: { cost: 60, max: 8 },
+            allowedApothecary: true,
+            tier: 3,
+            specialRules: ['Halfling Thimble Cup'],
+        },
     ],
 };

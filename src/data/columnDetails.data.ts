@@ -13,11 +13,16 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 1,
         name: 'Number',
-        headerDetails: {
-            hideName: true,
-        },
+        customName: '#',
         rowDetails: {
             component: PlayerNumber,
+        },
+        orderByPropertyPath: 'alterations.playerNumber',
+        sortFunction: (a, b) => {
+            if (!a.alterations.playerNumber || !b.alterations.playerNumber)
+                return -1;
+
+            return a.alterations.playerNumber - b.alterations.playerNumber;
         },
     },
     {
@@ -31,15 +36,21 @@ export const columnDetails: ColumnDetails[] = [
             tdClass: 'left-align',
             component: PlayerName,
         },
+        orderByPropertyPath: 'playerName',
+        sortFunction: (a, b) => {
+            if (!a.playerName || !b.playerName) return -1;
+
+            return a.playerName.localeCompare(b.playerName);
+        },
     },
     {
         id: 3,
         name: 'Controls',
         headerDetails: {
-            hideName: true,
+            elementClass: 'left-align no-print position',
         },
         rowDetails: {
-            tdClass: 'left-align',
+            tdClass: 'left-align no-print controls',
             component: PlayerControls,
         },
     },
@@ -54,11 +65,17 @@ export const columnDetails: ColumnDetails[] = [
             tdClass: 'left-align no-wrap',
             component: PlayerPosition,
         },
+        orderByPropertyPath: 'player.position',
+        sortFunction: (a, b) => {
+            if (!a.player.position || !b.player.position) return -1;
+
+            return a.player.position.localeCompare(b.player.position);
+        },
     },
     {
         id: 5,
         name: 'MA',
-        title: 'Movement Allowance',
+        title: 'roster.column.titles.5',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -66,7 +83,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 6,
         name: 'ST',
-        title: 'Strength',
+        title: 'roster.column.titles.6',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -74,7 +91,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 7,
         name: 'AG',
-        title: 'Agility',
+        title: 'roster.column.titles.7',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -82,7 +99,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 8,
         name: 'PA',
-        title: 'Passing',
+        title: 'roster.column.titles.8',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -90,7 +107,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 9,
         name: 'AV',
-        title: 'Armour Value',
+        title: 'roster.column.titles.9',
         rowDetails: {
             component: PlayerCharacteristic,
         },
@@ -115,7 +132,8 @@ export const columnDetails: ColumnDetails[] = [
     },
     {
         id: 12,
-        name: 'Unspent Spp',
+        name: 'Spp',
+        title: 'roster.column.titles.12',
         headerDetails: {
             elementId: 'spp-header',
         },
@@ -123,11 +141,17 @@ export const columnDetails: ColumnDetails[] = [
             component: PlayerNumberInput,
         },
         disallowedRosterFormats: ['sevens'],
+        orderByPropertyPath: 'alterations.spp',
+        sortFunction: (a, b) => {
+            if (!a.alterations.spp || !b.alterations.spp) return -1;
+
+            return a.alterations.spp - b.alterations.spp;
+        },
     },
     {
         id: 13,
         name: 'MNG',
-        title: 'Miss next game',
+        title: 'roster.column.titles.13',
         headerDetails: {
             elementId: 'mng-header',
         },
@@ -139,7 +163,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 14,
         name: 'NI',
-        title: 'Niggling Injury',
+        title: 'roster.column.titles.14',
         rowDetails: {
             component: PlayerNumberInput,
         },
@@ -149,7 +173,7 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 15,
         name: 'TR',
-        title: 'Temporarily Retiring',
+        title: 'roster.column.titles.15',
         headerDetails: {
             elementId: 'tr-header',
         },
@@ -162,7 +186,6 @@ export const columnDetails: ColumnDetails[] = [
     {
         id: 16,
         name: 'Current Value',
-        title: 'Current Value',
         rowDetails: {
             component: TextElement,
         },

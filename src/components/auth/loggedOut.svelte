@@ -1,4 +1,5 @@
 <script>
+    import { _ } from 'svelte-i18n';
     import { currentUserStore } from '../../store/currentUser.store';
     import { modalState } from '../../store/modal.store';
     import Button from '../uiComponents/button.svelte';
@@ -9,8 +10,10 @@
     <FootballSpinner loadingText="Logging out" />
 {:else}
     <div class="success">
-        <p>Successfully logged out!</p>
-        <Button clickFunction={() => modalState.close()}>Okay</Button>
+        <p>{$_('auth.logoutSuccess')}</p>
+        <Button clickFunction={() => modalState.close()}
+            >{$_('common.ok')}</Button
+        >
     </div>
 {/if}
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
+
     export let options: string[];
     export let selected: Function;
     export let selectedIndex: number = 0;
@@ -15,7 +17,7 @@
                 selected(option);
             }}
         >
-            {option}
+            {$_(option)}
         </button>
     {/each}
 </div>

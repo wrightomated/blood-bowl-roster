@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { _ } from 'svelte-i18n';
     import { roster } from '../store/teamRoster.store';
     import ExtraRosterAdditionsRow from './extraRosterAdditionsRow.svelte';
-    import type { Team } from '../models/team.model';
     import Inducements from './inducements.svelte';
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
@@ -13,10 +13,20 @@
     } from '../helpers/formatTotalToThousands';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
+    import { currentUserStore } from '../store/currentUser.store';
 
     export let selectedTeam: CustomTeam;
 
     const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
+
+    currentUserStore.subscribe((value) => {
+        if ($roster?.coachDetails?.coachName === undefined) {
+            $roster.coachDetails = {
+                ...$roster?.coachDetails,
+                coachName: value?.displayName,
+            };
+        }
+    });
 
     $: teamTotal = $roster.players
         .filter((p) => !p?.starPlayer)
@@ -62,26 +72,43 @@
 
 <div class="tables">
     <table class="tables__item">
-        {#each extras as extra}
-            <ExtraRosterAdditionsRow {extra} />
-        {/each}
-    </table>
-    <table class="tables__item">
+        <tr class:no-print={!$roster?.coachDetails?.coachName}>
+            <th>{$_('tables.coach')}</th>
+            <td>
+                <input
+                    placeholder={$_('tables.coach')}
+                    id="coach-name"
+                    data-cy="coach-name"
+                    bind:value={$roster.coachDetails.coachName}
+                />
+            </td>
+        </tr>
+        <tr class:no-print={!$roster?.coachDetails?.nafNumber}>
+            <th>{$_('tables.naf')}</th>
+            <td>
+                <input
+                    placeholder={$_('tables.naf')}
+                    id="naf-number"
+                    data-cy="naf-number"
+                    bind:value={$roster.coachDetails.nafNumber}
+                />
+            </td>
+        </tr>
         <tr>
-            <th>Team Value</th>
-            <td colspan="2">
+            <th>{$_('tables.tv')}</th>
+            <td>
                 {formatNumberInThousands(teamTotal + teamExtrasTotal)}
             </td>
         </tr>
         <tr>
-            <th>Current TV</th>
-            <td data-cy="current-tv" colspan="2">
+            <th>{$_('tables.ctv')}</th>
+            <td data-cy="current-tv">
                 {formatNumberInThousands(currentTotal + teamExtrasTotal)}
             </td>
         </tr>
 
         <tr>
-            <th>Treasury</th>
+            <th>{$_('tables.treasury')}</th>
             <td class="treasury-cell">
                 <Treasury />
             </td>
@@ -89,12 +116,17 @@
 
         {#if $roster.mode === 'league' && typeof $roster.pettyCash === 'number'}
             <tr>
-                <th>Petty Cash</th>
+                <th>{$_('common.petty')}</th>
                 <td class="treasury-cell">
                     {formatNumber($roster.pettyCash)}
                 </td>
             </tr>
         {/if}
+    </table>
+    <table class="tables__item">
+        {#each extras as extra}
+            <ExtraRosterAdditionsRow {extra} />
+        {/each}
     </table>
 
     {#if $gameSettings?.starPlayersAllowance > 0}
@@ -124,8 +156,22 @@
                 font-weight: normal;
                 padding: 10px;
             }
+            & input {
+                border: none;
+                text-align: center;
+                padding: 0;
+                font-size: 16px;
+                background: transparent;
+                font-style: italic;
+            }
+            @media print {
+                & input {
+                    font-size: 10px;
+                    font-style: normal;
+                }
+            }
             tr {
-                height: 44px;
+                height: 40px;
             }
         }
     }

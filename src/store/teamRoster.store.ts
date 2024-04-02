@@ -49,7 +49,10 @@ function createRoster() {
                     ...store,
                     players: addPlayerToPlayers(
                         store.players,
-                        player,
+                        {
+                            ...player,
+                            playerId: player.playerId || nanoid(),
+                        },
                         maxPlayerNumber,
                         index
                     ),
@@ -58,6 +61,12 @@ function createRoster() {
             }),
         duplicatePlayer: (index: number) =>
             update((store) => {
+                if (
+                    store.players.filter((p) => !p.deleted).length >=
+                    getGameTypeSettings(store?.format).maxPlayers
+                ) {
+                    return store;
+                }
                 const duplicatedPlayer: RosterPlayerRecord = {
                     ...store.players[index],
                     playerId: nanoid(),
@@ -117,16 +126,32 @@ function createRoster() {
             }),
         movePlayerUp: (index: number) =>
             update((store) => {
+                let target = index - 1;
+                while (target > 0) {
+                    if (store.players[target].deleted) {
+                        --target;
+                    } else {
+                        break;
+                    }
+                }
                 return {
                     ...store,
-                    players: switchTwoElements(store.players, index, index - 1),
+                    players: switchTwoElements(store.players, index, target),
                 };
             }),
         movePlayerDown: (index: number) =>
             update((store) => {
+                let target = index + 1;
+                while (target < store.players.length) {
+                    if (store.players[target].deleted) {
+                        ++target;
+                    } else {
+                        break;
+                    }
+                }
                 return {
                     ...store,
-                    players: switchTwoElements(store.players, index, index + 1),
+                    players: switchTwoElements(store.players, index, target),
                 };
             }),
         addInducement: (inducementKey: string) =>
@@ -270,6 +295,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
         matchSummary: [],
+        config: { customSkillColour: {} },
     };
 
     if (options?.specialRule) {
@@ -335,6 +361,9 @@ const addMissingItemsToRoster = (roster: Roster) => {
     if (updatedRoster.mode === 'league' && !updatedRoster.leagueRosterStatus) {
         updatedRoster.leagueRosterStatus = 'draft';
     }
+    if (!updatedRoster.config) {
+        updatedRoster.config = { customSkillColour: {} };
+    }
     currentTeamId.set(updatedRoster.teamId);
     updatedRoster = {
         ...updatedRoster,
@@ -377,11 +406,8 @@ const deletePlayersFromPlayers: (
               }
             : p
     );
-    while (newPlayers[newPlayers.length - 1]?.deleted) {
-        newPlayers.pop();
-    }
 
-    return newPlayers;
+    return newPlayers.filter((p) => !p.deleted);
 };
 
 /**

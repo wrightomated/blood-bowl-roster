@@ -9,6 +9,7 @@ import css from 'rollup-plugin-css-only';
 import replace from '@rollup/plugin-replace';
 import dotenv from 'dotenv';
 import child_process from 'child_process';
+import json from '@rollup/plugin-json';
 dotenv.config();
 
 const production = !process.env.ROLLUP_WATCH;
@@ -65,6 +66,8 @@ export default {
             '__bbroster.env.EVENT_ID': process.env.EVENT_ID,
             hook: 'writeBundle',
         }),
+        // add rollup json
+        json(),
         svelte({
             preprocess: sveltePreprocess(),
             compilerOptions: {

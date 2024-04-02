@@ -9,3 +9,5 @@
 .DS_Store
 .env
 .prod_env
+
+/.idea

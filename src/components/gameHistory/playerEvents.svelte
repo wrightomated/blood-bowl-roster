@@ -1,8 +1,6 @@
 <script lang="ts">
     import { quadInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
-    import { gameEventTypeToTitle } from '../../data/gameEventMap';
-    import { gameEventPluralMap } from '../../helpers/matchHistoryHelpers';
     import type {
         GameEvent,
         GameEventTally,
@@ -13,6 +11,7 @@
     import ToggleButton from '../uiComponents/toggleButton.svelte';
     import PlayerEventList from './playerEventList.svelte';
     import { gameSettings } from '../../store/gameSettings.store';
+    import { _ } from 'svelte-i18n';
 
     $: gameEvents = $roster.matchDraft.playingCoach.gameEvents ?? [];
     $: maxTurns = ($gameSettings?.turnsPerHalf ?? 8) * 2;
@@ -51,7 +50,7 @@
         const event: GameEvent = {
             eventType: selectedEvent,
             player: {
-                name: player.playerName || player.player.position,
+                name: player.playerName,
                 number: player?.alterations?.playerNumber,
                 id: player.playerId,
             },
@@ -68,7 +67,7 @@
         return (
             player.alterations.playerNumber +
             ' ' +
-            (player.playerName || player.player.position)
+            (player.playerName || $_('players.' + player.player.id))
         );
     }
 </script>
@@ -89,7 +88,7 @@
             {#each Object.keys(gameEventTally) as event}
                 <div>
                     <label for="tally-{event}"
-                        >{gameEventPluralMap[event]}</label
+                        >{$_('match.events.' + event + '.p')}</label
                     >
                     <input
                         type="number"
@@ -105,7 +104,7 @@
     {:else if filteredPlayers?.length > 0}
         <div class="event-entry">
             <div>
-                <label for="player-event-selector">Player</label>
+                <label for="player-event-selector">{$_('player')}</label>
                 <select
                     id="player-event-selector"
                     name="player-event-selector"
@@ -117,21 +116,25 @@
                 </select>
             </div>
             <div>
-                <label for="event-type-selector">Event Type</label>
+                <label for="event-type-selector"
+                    >{$_('match.events.type')}</label
+                >
                 <select
                     name="event-type-selector"
                     id="event-type-selector"
                     bind:value={selectedEvent}
                 >
                     {#each Object.keys(gameEventTally) as event}
-                        <option value={event}
-                            >{gameEventTypeToTitle[event]}</option
-                        >
+                        <option value={event}>
+                            {$_('match.events.' + event)}
+                        </option>
                     {/each}
                 </select>
             </div>
             <div>
-                <label for="event-turn" class="turn-label">Turn</label>
+                <label for="event-turn" class="turn-label"
+                    >{$_('match.events.turn')}</label
+                >
                 <div class="turn-input">
                     <input
                         name="event-turn"
@@ -157,7 +160,7 @@
         <div>No players</div>
     {/if}
     <br />
-    <label for="opponent-touchdowns">Opponent's Total Touchdowns</label>
+    <label for="opponent-touchdowns">{$_('match.events.opp')}</label>
     <input
         class="opponent-touchdowns"
         type="number"
@@ -168,8 +171,7 @@
         bind:value={$roster.matchDraft.gameEventTally.opponentScore}
     />
     <p>
-        *Kills are not an official stat and do not reward spp. Add a casualty
-        simultaneously for automatic spp.
+        {$_('match.events.disc')}:
     </p>
 </div>
 

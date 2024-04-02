@@ -1,10 +1,12 @@
 <script>
+    import { _ } from 'svelte-i18n';
+
     export let loadingText = '';
 </script>
 
 <i class="material-symbols-outlined spinner">sports_football</i>
 {#if loadingText}
-    <p>{loadingText}</p>
+    <p>{$_(loadingText)}</p>
 {/if}
 
 <style lang="scss">

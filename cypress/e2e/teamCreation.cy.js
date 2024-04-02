@@ -239,4 +239,6 @@ const expectedRoster = {
     format: 'elevens',
     leagueRosterStatus: 'draft',
     matchSummary: [],
+    coachDetails: {},
+    config: { customSkillColour: {} },
 };

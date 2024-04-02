@@ -2,7 +2,7 @@ import type { TeamSpecialRule, TeamTier } from './team.model';
 
 export interface Inducement {
     id: InducementKey;
-    displayName: string;
+    displayName?: string;
     cost: number;
     reducedCost?: InducementCostReduction;
     max: number;

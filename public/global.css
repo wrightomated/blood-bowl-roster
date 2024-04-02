@@ -2,6 +2,7 @@
     --main-colour: #970f0c;
     --secondary-colour: #1a3f7f;
     --button-shadow: #185b88b2;
+    --no-op-colour: #aaa;
 
     --sc-l60: #6b96e1;
     --secondary-background-colour: #eeeeee;
@@ -17,6 +18,7 @@
     --white: #ffffff;
 
     --display-font: 'Roboto Slab', serif;
+    --body-font: 'PT Sans', sans-serif;
 
     --secondary-border: 2px solid var(--secondary-colour);
 }
@@ -101,6 +103,7 @@ input:disabled {
 table {
     border-collapse: collapse;
 }
+th,
 td,
 tr {
     padding: 8px;
@@ -132,7 +135,9 @@ thead > tr {
         font-size: 16px;
     }
 }
-
+.print-only {
+    display: none;
+}
 @media print {
     body {
         font-size: 10px;
@@ -148,15 +153,28 @@ thead > tr {
     thead > tr {
         background-color: #333 !important;
     } */
+    tr > th,
+    thead > tr {
+        background-color: transparent !important;
+        color: black !important;
+    }
+
     .roster-table {
         width: 100%;
     }
-
+    th,
+    td,
+    tr {
+        border: 1px solid #333 !important;
+    }
     table {
         border: 1px solid #333 !important;
     }
     .no-print {
-        display: none;
+        display: none !important;
+    }
+    .print-only {
+        display: inline-block;
     }
 }
 
@@ -178,6 +196,10 @@ thead > tr {
 }
 .no-transition:hover {
     font-variation-settings: 'FILL' 1;
+}
+.no-op {
+    cursor: default;
+    color: var(--no-op-colour);
 }
 .roll {
     animation-name: spin;
@@ -220,7 +242,7 @@ thead > tr {
     border: none;
 }
 .rounded-button:hover {
-    box-shadow: 0 5px 15px #185b88b2 inset;
+    box-shadow: 0 4px 12px var(--button-shadow) inset;
 }
 .rounded-button.cancel {
     color: var(--main-colour);
@@ -238,6 +260,9 @@ thead > tr {
     box-shadow: none;
     background-color: white;
     color: grey;
+}
+.left-align {
+    text-align: left;
 }
 
 @keyframes spin {
