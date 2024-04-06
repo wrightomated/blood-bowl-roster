@@ -731,6 +731,14 @@
         "254": {
             "name": "Skitter Stab-Stab",
             "rule": "Master Assassin"
+        },
+        "255": {
+            "name": "Rodney Roachbait",
+            "rule": "Catch of the Day"
+        },
+        "256": {
+            "name": "Rowana Forestfoot",
+            "rule": "Bounding Leap"
         }
     },
     "inducements": {
