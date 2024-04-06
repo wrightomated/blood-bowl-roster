@@ -544,6 +544,26 @@ const skitter: StarPlayer = {
     specialRules: ['Master Assassin'],
 };
 
+const rodneyRoachbait: StarPlayer = {
+    id: 255,
+    position: 'Rodney Roachbait',
+    playerStats: [6, 2, 3, 4, 7],
+    playsFor: ['Halfling Thimble Cup'],
+    skills: [1, 2, 6, 71, 45, 9, 81, 24],
+    cost: 70,
+    specialRules: ['Catch of the Day'],
+};
+
+const rowanaForestfoot: StarPlayer = {
+    id: 256,
+    position: 'Rowana Forestfoot',
+    playerStats: [6, 3, 3, 4, 8],
+    playsFor: ['Halfling Thimble Cup'],
+    skills: [4, 40, 53, 30, 6, 7, 71],
+    cost: 160,
+    specialRules: ['Bounding Leap'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -601,5 +621,7 @@ export const starPlayers = {
         countLuthorVonDrakenborg,
         captainKarinaVonRiesz,
         skitter,
+        rodneyRoachbait,
+        rowanaForestfoot,
     ],
 };
