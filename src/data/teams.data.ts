@@ -555,7 +555,7 @@ export const teamData: TeamList = {
                 { id: 167, max: 2 },
                 { id: 168, max: 2 },
             ],
-            reroll: { cost: 60, max: 8 },
+            reroll: { cost: 50, max: 8 },
             allowedApothecary: true,
             tier: 3,
             specialRules: ['Halfling Thimble Cup'],
