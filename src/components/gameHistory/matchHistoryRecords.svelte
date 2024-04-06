@@ -64,7 +64,9 @@
                 bind:value={$roster.notes}
             />
         {:else if $selectedRosterTool === rosterTools[2]}
-            <p>Coming soon</p>
+            {#await import('../../modules/playbook/playbookEntry.svelte') then c}
+                <svelte:component this={c.default} />
+            {/await}
         {:else if $selectedRosterTool === rosterTools[0]}
             {#if $currentUserStore}
                 <div class="button-container">
@@ -94,10 +96,6 @@
         {/if}
     </div>
 </div>
-
-{#await import('../../modules/playbook/playbookEntry.svelte') then c}
-    <svelte:component this={c.default} />
-{/await}
 
 <style lang="scss">
     .tool-content {

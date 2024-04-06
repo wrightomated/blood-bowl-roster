@@ -1,13 +1,14 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import ToggleButton from '../../components/uiComponents/toggleButton.svelte';
     import { gameSettings } from '../../store/gameSettings.store';
     import { roster } from '../../store/teamRoster.store';
-    import RosterPlayerCard from '../../components/rosterPlayer/rosterPlayerCard.svelte';
+
+    import ToggleButton from '../../components/uiComponents/toggleButton.svelte';
+    import HoverCard from './hoverCard.svelte';
 
     let showTackleZones = false;
     let gridContainer: HTMLElement;
-    let hoverComponent: any = null;
+    let hoverCard: HTMLElement;
     $: hoverIndex = 0;
 
     $: numberOfRows = $gameSettings.pitch.length / 2;
@@ -23,18 +24,65 @@
     $: tackleZones = new Array(numberOfRows)
         .fill('p')
         .map(() => new Array(numberOfColumns).fill(false));
-    // --pitch-width: 11;
-    // --gutter-width: 2;
 
     onMount(() => {
+        hoverCard = document.querySelector('.hover-card');
         gridContainer.style.setProperty('--pitch-width', numberOfColumns + '');
         gridContainer.style.setProperty(
             '--gutter-width',
             $gameSettings.pitch.gutter + ''
         );
+        if ($roster.setUps.draft.players.length > 0) {
+            $roster.setUps.draft.players.forEach((player) => {
+                const playerNumber = $roster.players.find(
+                    (p) => p.playerId === player.playerId
+                ).alterations.playerNumber;
+                if (playerNumber) {
+                    pitchGrid[player.position.y][player.position.x] =
+                        playerNumber + '';
+
+                    updateTackleZones(
+                        player.position.y,
+                        player.position.x,
+                        true
+                    );
+                }
+            });
+        }
     });
 
+    function pitchGridToRoster() {
+        const arr = [];
+        pitchGrid.forEach((row, rowIndex) => {
+            row.forEach((player, colIndex) => {
+                if (player) {
+                    const playerRecord = $roster.players.find(
+                        (p) => p.alterations.playerNumber === +player
+                    );
+                    arr.push({
+                        playerId: playerRecord.playerId,
+                        position: {
+                            x: colIndex,
+                            y: rowIndex,
+                        },
+                    });
+                }
+            });
+        });
+        roster.set({
+            ...$roster,
+            setUps: {
+                ...$roster?.setUps,
+                draft: {
+                    ...$roster?.setUps?.draft,
+                    players: arr,
+                },
+            },
+        });
+    }
+
     function dragStart(event, player, row, col) {
+        hideCard();
         event.dataTransfer.setData(
             'player',
             JSON.stringify({ player, row, col })
@@ -57,8 +105,8 @@
     }
 
     function playerDragStart(event, player) {
+        hideCard();
         event.dataTransfer.setData('player', JSON.stringify({ player }));
-        console.log({ player });
     }
     function playerDrop(event) {
         event.preventDefault();
@@ -66,10 +114,6 @@
         const { player, row, col } = JSON.parse(
             event.dataTransfer.getData('player')
         );
-        // players[newRow][newCol] = player;
-        // if (row && col) {
-        //
-        // }
 
         if (pitchGrid?.[row]?.[col]) {
             pitchGrid[row][col] = null;
@@ -77,10 +121,6 @@
 
         updateTackleZones(row, col, false);
     }
-    // function dragOver(event) {
-    //     event.preventDefault();
-    //     console.log({ event });
-    // }
 
     function exists(arr, search) {
         return arr.some((row) => row.includes(search));
@@ -134,25 +174,37 @@
         if (col + 1 < numberOfColumns)
             tackleZones[row][col + 1] = value || isTackleZone(row, col + 1);
     }
-    function hover(playerNumber) {
-        console.log({ playerNumber });
-        if (!playerNumber) return;
+
+    function hideCard() {
+        hoverCard.style.display = 'none';
+    }
+
+    function hover(playerNumber, event) {
+        console.log({ playerNumber, event });
+        if (!playerNumber) {
+            hideCard();
+            return;
+        }
 
         hoverIndex = $roster.players.findIndex(
             (player) => player.alterations.playerNumber === +playerNumber
         );
 
         console.log({ hoverIndex });
-
-        hoverComponent = RosterPlayerCard;
+        console.log({ hoverCard });
+        if (hoverCard) {
+            hoverCard.style.display = 'block';
+            hoverCard.style.position = 'fixed';
+            hoverCard.style.left = event.clientX + 'px';
+            hoverCard.style.top = event.clientY + 'px';
+        }
     }
 </script>
 
 <!-- Row of players -->
 <div class="container" bind:this={gridContainer}>
-    {#if hoverComponent}
-        <svelte:component this={hoverComponent} index={hoverIndex} />
-    {/if}
+    <input type="text" name="setup-name" id="setup-input" />
+    <HoverCard index={hoverIndex} />
     <div
         class="grid dugout"
         role="grid"
@@ -161,6 +213,7 @@
         on:dragover={(event) => event.preventDefault()}
         on:dragenter={dragEnter}
         on:dragleave={dragLeave}
+        on:mouseleave={hideCard}
     >
         {#each availablePlayers as player}
             <div
@@ -170,7 +223,7 @@
                 draggable="true"
                 on:dragstart={(event) => playerDragStart(event, player)}
                 on:dragover={(event) => event.preventDefault()}
-                on:mouseenter={() => console.log('enter' + player)}
+                on:mouseenter={(event) => hover(player, event)}
                 on:mouseleave={() => console.log('leave' + player)}
                 aria-grabbed="false"
             >
@@ -187,6 +240,8 @@
         class:pitch--elevens={$roster.format === 'elevens'}
         class:pitch--sevens={$roster.format === 'sevens'}
         role="grid"
+        on:mouseleave={hideCard}
+        tabindex="0"
     >
         {#each pitchGrid as playerRow, row}
             {#each playerRow as player, col}
@@ -198,7 +253,7 @@
                     tabindex={!!player ? 0 : -1}
                     class:cell--endzone={row === numberOfRows - 1}
                     draggable={!!player}
-                    on:mouseenter={() => hover(player)}
+                    on:mouseenter={(event) => hover(player, event)}
                     on:dragstart={(event) => dragStart(event, player, row, col)}
                     on:dragover={(event) => event.preventDefault()}
                     on:drop={(event) => drop(event, player, row, col)}
@@ -222,6 +277,7 @@
             showTackleZones = option === 'on';
         }}
     />
+    <button on:click={pitchGridToRoster}>Gird</button>
 </div>
 
 <style lang="scss">
@@ -281,7 +337,11 @@
                     linear-gradient(225deg, #ffcdd2 25%, transparent 25%),
                     linear-gradient(45deg, #ffcdd2 25%, transparent 25%),
                     linear-gradient(315deg, #ffcdd2 25%, #dcedc8 25%);
-                background-position: 16% 0, 16% 0, 0 0, 0 0;
+                background-position:
+                    16% 0,
+                    16% 0,
+                    0 0,
+                    0 0;
                 background-size: 32% 32%;
                 background-repeat: repeat;
                 // background-color: #e57373;
@@ -379,5 +439,10 @@
             justify-content: center;
             border: 1px solid white;
         }
+    }
+    .center {
+        font-family: var(--display-font);
+        font-size: 1.25rem;
+        margin-bottom: 0;
     }
 </style>

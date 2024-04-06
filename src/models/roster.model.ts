@@ -37,7 +37,20 @@ export interface Roster {
     coachDetails?: CoachDetails;
     notes?: string;
     config?: RosterConfig;
+    // setUps?: Record<
+    //     string,
+    //     { playerId: string; position: { x: number; y: number } }[]
+    // >;
+    setUps?: {
+        draft: RosterSetUp;
+    };
 }
+
+export type RosterSetUp = {
+    id?: string;
+    name?: string;
+    players: { playerId: string; position: { x: number; y: number } }[];
+};
 
 export type RosterPreviews = Record<string, RosterPreview>;
 
