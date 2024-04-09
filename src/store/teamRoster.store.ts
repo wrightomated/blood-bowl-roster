@@ -290,7 +290,7 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         teamType: options?.teamType || ('' as TeamName),
         extra: { dedicated_fans: options?.fans || 0 },
         inducements: {},
-        treasury: gameSettings?.startingTreasury || 1000,
+        treasury: options?.treasury || gameSettings?.startingTreasury || 1000,
         mode: options?.mode,
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,

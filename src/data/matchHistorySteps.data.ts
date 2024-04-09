@@ -4,9 +4,9 @@ import MatchToRosterOptions from '../components/gameHistory/individualControls/m
 import PostGameCalculations from '../components/gameHistory/individualControls/postGameCalculations.svelte';
 import PreGameCalculations from '../components/gameHistory/individualControls/preGameCalculations.svelte';
 import PlayerEvents from '../components/gameHistory/playerEvents.svelte';
-import type { MatchHistoryStep } from '../models/matchHistory.model';
+import type { StepperStep } from '../models/stepper.model';
 
-export const newMatchRecordSteps: MatchHistoryStep[] = [
+export const newMatchRecordSteps: StepperStep[] = [
     { title: 'match.details.title', component: GameDetails, status: 'current' },
     {
         title: 'match.pre.title',

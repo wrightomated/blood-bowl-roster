@@ -1,12 +1,10 @@
 import { writable, type Writable } from 'svelte/store';
 import { newMatchRecordSteps } from '../data/matchHistorySteps.data';
-import type { MatchHistoryStep } from '../models/matchHistory.model';
-import type { TeamFormat } from '../types/teamFormat';
-import type { RosterMode } from './rosterMode.store';
+import type { StepperStep } from '../models/stepper.model';
 
-const createMatchHistorySteps = () => {
-    const { subscribe, update, set }: Writable<MatchHistoryStep[]> =
-        writable<MatchHistoryStep[]>(newMatchRecordSteps);
+const createMatchHistorySteps = (stepData: StepperStep[]) => {
+    const { subscribe, update, set }: Writable<StepperStep[]> =
+        writable<StepperStep[]>(stepData);
     return {
         subscribe,
         set,
@@ -53,14 +51,12 @@ const createMatchHistorySteps = () => {
                 });
             });
         },
-        reset: (mode: RosterMode, format: TeamFormat) => {
-            const filteredSet = newMatchRecordSteps.filter((step) => {
-                if (step.title !== 'Pre-game Calculations') return true;
-                if (mode === 'league') return true;
-                return format === 'elevens';
-            });
-            set(filteredSet);
-        },
+        reset: () => set(stepData),
     };
 };
-export const matchHistorySteps = createMatchHistorySteps();
+export const matchHistorySteps: Writable<StepperStep[]> & {
+    nextStep: () => void;
+    previousStep: () => void;
+    goToStep: (index: number) => void;
+    reset: () => void;
+} = createMatchHistorySteps(newMatchRecordSteps);

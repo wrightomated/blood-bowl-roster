@@ -6,9 +6,22 @@ export const filteredTableColumns = derived(
     [tableColumns, roster],
     ([$tableColumns, $roster]) =>
         $tableColumns.filter(
-            (d) =>
-                !d?.hideColumn &&
-                !d?.disallowedRosterFormats?.includes($roster.format) &&
-                !d?.disallowedRosterModes?.includes($roster.mode)
+            (details) =>
+                !details?.hideColumn &&
+                !details?.disallowedRosterFormats?.includes($roster.format) &&
+                !details?.disallowedRosterModes?.includes($roster.mode) &&
+                details?.redraft !== 'only'
+        )
+);
+
+export const redraftTableColumns = derived(
+    [tableColumns, roster],
+    ([$tableColumns, $roster]) =>
+        $tableColumns.filter(
+            (details) =>
+                !details?.hideColumn &&
+                !details?.disallowedRosterFormats?.includes($roster.format) &&
+                !details?.disallowedRosterModes?.includes($roster.mode) &&
+                !!details?.redraft
         )
 );

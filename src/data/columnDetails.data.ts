@@ -16,6 +16,7 @@ export const columnDetails: ColumnDetails[] = [
         customName: '#',
         rowDetails: {
             component: PlayerNumber,
+            redraftComponent: TextElement,
         },
         orderByPropertyPath: 'alterations.playerNumber',
         sortFunction: (a, b) => {
@@ -24,6 +25,7 @@ export const columnDetails: ColumnDetails[] = [
 
             return a.alterations.playerNumber - b.alterations.playerNumber;
         },
+        redraft: 'yes',
     },
     {
         id: 2,
@@ -35,6 +37,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             tdClass: 'left-align',
             component: PlayerName,
+            redraftComponent: TextElement,
         },
         orderByPropertyPath: 'playerName',
         sortFunction: (a, b) => {
@@ -42,6 +45,7 @@ export const columnDetails: ColumnDetails[] = [
 
             return a.playerName.localeCompare(b.playerName);
         },
+        redraft: 'yes',
     },
     {
         id: 3,
@@ -64,6 +68,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             tdClass: 'left-align no-wrap',
             component: PlayerPosition,
+            redraftComponent: TextElement,
         },
         orderByPropertyPath: 'player.position',
         sortFunction: (a, b) => {
@@ -71,6 +76,7 @@ export const columnDetails: ColumnDetails[] = [
 
             return a.player.position.localeCompare(b.player.position);
         },
+        redraft: 'yes',
     },
     {
         id: 5,
@@ -79,6 +85,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: PlayerCharacteristic,
         },
+        redraft: 'yes',
     },
     {
         id: 6,
@@ -87,6 +94,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: PlayerCharacteristic,
         },
+        redraft: 'yes',
     },
     {
         id: 7,
@@ -95,6 +103,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: PlayerCharacteristic,
         },
+        redraft: 'yes',
     },
     {
         id: 8,
@@ -103,6 +112,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: PlayerCharacteristic,
         },
+        redraft: 'yes',
     },
     {
         id: 9,
@@ -111,6 +121,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: PlayerCharacteristic,
         },
+        redraft: 'yes',
     },
     {
         id: 10,
@@ -122,6 +133,7 @@ export const columnDetails: ColumnDetails[] = [
             tdClass: 'left-align',
             component: SkillElement,
         },
+        redraft: 'yes',
     },
     {
         id: 11,
@@ -139,6 +151,7 @@ export const columnDetails: ColumnDetails[] = [
         },
         rowDetails: {
             component: PlayerNumberInput,
+            redraftComponent: TextElement,
         },
         disallowedRosterFormats: ['sevens'],
         orderByPropertyPath: 'alterations.spp',
@@ -147,6 +160,7 @@ export const columnDetails: ColumnDetails[] = [
 
             return a.alterations.spp - b.alterations.spp;
         },
+        redraft: 'yes',
     },
     {
         id: 13,
@@ -166,9 +180,11 @@ export const columnDetails: ColumnDetails[] = [
         title: 'roster.column.titles.14',
         rowDetails: {
             component: PlayerNumberInput,
+            redraftComponent: TextElement,
         },
         disallowedRosterModes: ['exhibition'],
         disallowedRosterFormats: ['sevens'],
+        redraft: 'yes',
     },
     {
         id: 15,
@@ -179,9 +195,11 @@ export const columnDetails: ColumnDetails[] = [
         },
         rowDetails: {
             component: PlayerCheckbox,
+            redraftComponent: TextElement,
         },
         disallowedRosterModes: ['exhibition'],
         disallowedRosterFormats: ['sevens'],
+        redraft: 'yes',
     },
     {
         id: 16,
@@ -190,5 +208,29 @@ export const columnDetails: ColumnDetails[] = [
             component: TextElement,
         },
         disallowedRosterModes: ['exhibition'],
+    },
+    {
+        id: 17,
+        name: 'Seasons',
+        rowDetails: {
+            component: TextElement,
+        },
+        redraft: 'only',
+    },
+    {
+        id: 18,
+        name: 'Cost',
+        rowDetails: {
+            component: TextElement,
+        },
+        redraft: 'only',
+    },
+    {
+        id: 19,
+        name: 'Redraft',
+        rowDetails: {
+            component: TextElement,
+        },
+        redraft: 'only',
     },
 ];

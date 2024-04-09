@@ -22,6 +22,7 @@
     import { _ } from 'svelte-i18n';
 
     import { activePlayers } from '../store/activePlayers.store';
+    import Redraft from './redraft/redraft.svelte';
 
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
 
@@ -136,6 +137,7 @@
     </div>
 {/if}
 <RosterStatusToggle />
+<Redraft />
 {#if $roster.format === 'dungeon bowl'}
     <DungeonBowlPlayerCount />
 {:else}

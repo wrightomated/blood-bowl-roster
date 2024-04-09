@@ -103,9 +103,10 @@ export interface PlayerAlterations {
     specificAdvancements?: SpecificAdvancement[];
     /** v2: not for share code */
     gamesPlayed?: number;
+    seasonsPlayed?: number;
 }
 
-export type LeagueRosterStatus = 'draft' | 'commenced';
+export type LeagueRosterStatus = 'draft' | 'commenced' | 'redraft';
 
 export type NewRosterOptions = {
     teamId: string;
@@ -115,6 +116,7 @@ export type NewRosterOptions = {
     fans: number;
     specialRule?: TeamSpecialRule;
     version?: string;
+    treasury?: number;
 };
 
 export type SpecificAdvancement = {

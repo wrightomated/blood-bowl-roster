@@ -117,7 +117,10 @@
                 "13": "MNG",
                 "14": "NI",
                 "15": "TR",
-                "16": "Current Value"
+                "16": "Current Value",
+                "17": "Seasons",
+                "18": "Cost",
+                "19": "Redraft"
             },
             "titles": {
                 "5": "Movement Allowance",
@@ -883,5 +886,10 @@
         "desert": "Desert",
         "street": "Street",
         "sewer": "Sewer"
+    },
+    "redraft": {
+        "budget": "Re-draft budget",
+        "cap": "Budget cap",
+        "bonus": "Re-draft bonus"
     }
 }

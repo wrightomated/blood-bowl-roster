@@ -2,7 +2,7 @@
     import { _ } from 'svelte-i18n';
     import { newMatchRecord } from '../../helpers/matchHistoryHelpers';
     import { currentUserStore } from '../../store/currentUser.store';
-    import { matchHistorySteps } from '../../store/matchHistorySteps.store';
+    import { matchHistorySteps } from '../../store/steppers.store';
     import { modalState } from '../../store/modal.store';
     import { selectedRosterTool } from '../../store/selectedRosterTool.store';
     import { roster } from '../../store/teamRoster.store';
@@ -18,7 +18,7 @@
                 $currentUserStore.displayName,
                 $roster.mode === 'league'
             );
-            matchHistorySteps.reset($roster.mode, $roster.format);
+            matchHistorySteps.reset();
         }
         modalState.modalLoading($_('loading'));
 

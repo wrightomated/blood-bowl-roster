@@ -19,7 +19,10 @@ export type TableColumnName =
     | 'NI'
     | 'TR'
     | 'Current Value'
-    | 'Custom';
+    | 'Custom'
+    | 'Seasons'
+    | 'Cost'
+    | 'Redraft';
 
 export interface ColumnDetails {
     id?: number;
@@ -34,6 +37,7 @@ export interface ColumnDetails {
     disallowedRosterModes?: RosterMode[];
     disallowedRosterFormats?: TeamFormat[];
     sortFunction?: (a: RosterPlayerRecord, b: RosterPlayerRecord) => number;
+    redraft?: 'only' | 'yes';
 }
 
 interface HeaderDetails {
@@ -44,6 +48,7 @@ interface HeaderDetails {
 
 interface RowDetails {
     component: any;
+    redraftComponent?: any;
     tdClass?: string;
     cyData?: string;
 }
