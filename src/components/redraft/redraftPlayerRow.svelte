@@ -8,30 +8,8 @@
     import type { TableColumnName } from '../../models/rosterTableColumns.model';
     import { redraftTableColumns } from '../../store/filteredTableColumns.store';
 
-    // import { roster } from '../../store/teamRoster.store';
-    // import {
-    //     characteristics,
-    //     type CharacteristicType,
-    // } from '../../data/statOrder.data';
-    // import { filteredTableColumns } from '../../store/filteredTableColumns.store';
-    // import type { TableColumnName } from '../../models/rosterTableColumns.model';
-    // import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
-    // import type { RosterPlayerRecord } from '../../models/roster.model';
-
     export let rosterPlayer: RosterPlayerRecord;
 
-    // $: rosterPlayer = $roster.players[index];
-
-    // $: currentCost =
-    //     rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
-    //         ? 0
-    //         : ((rosterPlayer.player.id === 56 ||
-    //               rosterPlayer.player.id === 73) &&
-    //           $roster.mode !== 'exhibition' &&
-    //           $roster.format !== 'dungeon bowl'
-    //               ? 0
-    //               : rosterPlayer.player.cost) +
-    //           (rosterPlayer.alterations?.valueChange || 0);
     $: hireCost =
         rosterPlayer.player.cost +
         (rosterPlayer.alterations?.valueChange || 0) +
