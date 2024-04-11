@@ -563,7 +563,15 @@ const rowanaForestfoot: StarPlayer = {
     cost: 160,
     specialRules: ['Bounding Leap'],
 };
-
+const kirotKrakeneye: StarPlayer = {
+    id: 257,
+    position: 'Kiroth Krakeneye',
+    playerStats: [7, 3, 2, 3, 9],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [27, 29, 71, 45, 23, 34],
+    cost: 160,
+    specialRules: ['Black Ink'],
+};
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -623,5 +631,6 @@ export const starPlayers = {
         skitter,
         rodneyRoachbait,
         rowanaForestfoot,
+        kirotKrakeneye,
     ],
 };
