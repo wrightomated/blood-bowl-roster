@@ -739,6 +739,10 @@
         "256": {
             "name": "Rowana Forestfoot",
             "rule": "Bounding Leap"
+        },
+        "257": {
+            "name": "Kiroth Krakeneye",
+            "rule": "Black Ink"
         }
     },
     "inducements": {
