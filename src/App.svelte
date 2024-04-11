@@ -9,6 +9,7 @@
     import Team from './components/team.svelte';
     import Modal from './components/uiComponents/modal.svelte';
     import Overlay from './components/uiComponents/overlay.svelte';
+    import type { TournamentCustomisation } from './customisation/types/TournmentCustomisation.type';
 
     const savedLocale = localStorage.getItem(localeStorageKey) || 'en';
     locale.set(savedLocale);
@@ -25,30 +26,24 @@
         // @ts-ignore - this will be a string replacement by rollup
         if (eventId !== 'undefined') {
             try {
-                // String replacement is happening after build so the data file isn't getting bundled
-                // Might need to switch to json
-                // await import(`./customisation/data/${eventId}.data`).then(
-                await import(`./customisation/data/bigV2023.data`).then(
-                    (customisation) => {
-                        customisationRules.set(
-                            customisation.tournamentCustomisation
-                        );
-                        if (
-                            customisation.tournamentCustomisation.cssVariables
-                        ) {
-                            Object.entries(
-                                customisation.tournamentCustomisation
-                                    .cssVariables
-                            ).forEach((style) =>
-                                document.documentElement.style.setProperty(
-                                    style[0],
-                                    style[1]
-                                )
-                            );
-                        }
-                    }
+                const response = await fetch(
+                    `/assets/tournamentData/${eventId}.json`
                 );
-            } catch (error) {}
+                const customisation: TournamentCustomisation =
+                    await response.json();
+                customisationRules.set(customisation);
+                if (customisation.cssVariables) {
+                    Object.entries(customisation.cssVariables).forEach(
+                        (style) =>
+                            document.documentElement.style.setProperty(
+                                style[0],
+                                style[1]
+                            )
+                    );
+                }
+            } catch (error) {
+                console.error('Error loading customisation', error);
+            }
         }
 
         await import('./components/auth/firebaseAuth.service').then(

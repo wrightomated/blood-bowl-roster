@@ -12,6 +12,7 @@ export interface StarPlayer {
     skills: number[];
     twoForOne?: number;
     doesNotPlayFor?: TeamSpecialRule[];
+    megaStar?: boolean;
 }
 
 export interface Player {

@@ -38,7 +38,6 @@
 <style lang="scss">
     .player-count {
         &__container {
-            margin-top: 8px;
             display: flex;
             flex-wrap: wrap;
             column-gap: 16px;

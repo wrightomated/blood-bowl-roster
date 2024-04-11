@@ -134,10 +134,6 @@
         margin-bottom: 4px;
     }
 
-    .error {
-        color: var(--main-colour);
-    }
-
     .logged-in {
         text-align: center;
         p {

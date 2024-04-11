@@ -1,0 +1,29 @@
+{
+    "createTeamTitle": "Create new Chaos Cup roster",
+    "format": "elevens",
+    "treasury": 1200,
+    "tiers": 3,
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "excludedInducementIds": [
+        "i5",
+        "i16",
+        "i27",
+        "i28",
+        "i29",
+        "i30",
+        "i31",
+        "i32",
+        "i33",
+        "i34",
+        "i35",
+        "i36",
+        "i37",
+        "i13",
+        "i45"
+    ],
+    "cssVariables": {
+        "--main-colour": "#2d3648"
+    }
+}

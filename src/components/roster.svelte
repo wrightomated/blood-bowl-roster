@@ -23,8 +23,6 @@
 
     import { activePlayers } from '../store/activePlayers.store';
 
-    // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
-
     export let playerTypes: Player[];
 
     $: nextPlayerIndex =
@@ -84,7 +82,7 @@
 </div>
 <Export />
 <RosterDelete />
-
+<!-- <RosterValidator /> -->
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
         {#each $activePlayers as player, index (player.playerId)}
