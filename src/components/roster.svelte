@@ -22,6 +22,7 @@
     import { _ } from 'svelte-i18n';
 
     import { activePlayers } from '../store/activePlayers.store';
+    import RosterValidator from './validator/rosterValidator.svelte';
 
     export let playerTypes: Player[];
 
@@ -82,7 +83,7 @@
 </div>
 <Export />
 <RosterDelete />
-<!-- <RosterValidator /> -->
+
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
         {#each $activePlayers as player, index (player.playerId)}
@@ -133,11 +134,10 @@
         </table>
     </div>
 {/if}
+<RosterValidator />
 <RosterStatusToggle />
 {#if $roster.format === 'dungeon bowl'}
     <DungeonBowlPlayerCount />
-{:else}
-    <RosterPlayerCount />
 {/if}
 {#if $roster.format !== 'dungeon bowl'}
     <AvailablePlayers />

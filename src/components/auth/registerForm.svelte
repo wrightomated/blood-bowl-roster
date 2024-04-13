@@ -141,7 +141,7 @@
         max-width: 400px;
         &--touched {
             input:invalid {
-                border-color: var(--main-colour);
+                border-color: var(--error);
             }
         }
     }

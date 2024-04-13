@@ -63,7 +63,6 @@
 </div>
 <div class="error-messages">
     {#if invalid.invalid.moreThanFourOfTheSameSkill.length > 0}
-        <!-- each -->
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
             Have more than 4 of the same skill:

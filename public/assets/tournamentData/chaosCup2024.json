@@ -1,6 +1,7 @@
 {
     "createTeamTitle": "Create new Chaos Cup roster",
     "format": "elevens",
+    "mode": "exhibition",
     "treasury": 1200,
     "tiers": 3,
     "tournamentTeamList": {
@@ -22,8 +23,5 @@
         "i37",
         "i13",
         "i45"
-    ],
-    "cssVariables": {
-        "--main-colour": "#2d3648"
-    }
+    ]
 }

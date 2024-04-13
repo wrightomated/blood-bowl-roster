@@ -1,4 +1,5 @@
 import type { TeamName } from '../../models/team.model';
+import type { RosterMode } from '../../store/rosterMode.store';
 import type { TeamFormat } from '../../types/teamFormat';
 import type { CustomiseTeamList } from './CustomiseTeamList.type';
 
@@ -11,6 +12,7 @@ export type TournamentCustomisation = {
     tiers?: number;
     allowances?: TournamentAllowances;
     format: TeamFormat;
+    mode?: RosterMode;
     colourScheme?: string;
     createTeamTitle?: string;
     cssVariables?: Record<string, string>;

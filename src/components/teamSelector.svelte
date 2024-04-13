@@ -48,8 +48,8 @@
     let includeRetired: boolean = false;
 
     const nafTeams = ['28', '29'];
-    const rosterModes: RosterMode[] = ['league', 'exhibition'];
-    const teamFormats: TeamFormat[] = [
+    let rosterModes: RosterMode[] = ['league', 'exhibition'];
+    let teamFormats: TeamFormat[] = [
         'elevens',
         'sevens',
         'dungeon bowl',
@@ -57,9 +57,20 @@
     ];
 
     $: searchTerm = '';
-    customisationRules.subscribe((x) => {
-        if (x?.tiers) {
-            toggledTiers.setTiers(x.tiers);
+    customisationRules.subscribe((rules) => {
+        if (!rules) {
+            return;
+        }
+        if (rules?.tiers) {
+            toggledTiers.setTiers(rules.tiers);
+        }
+        if (rules?.format) {
+            teamFormats = [rules.format];
+            teamFormat.set(rules.format);
+        }
+        if (rules?.mode) {
+            rosterModes = [rules.mode];
+            rosterMode.set(rules.mode);
         }
     });
 
@@ -207,21 +218,26 @@
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
     <h2 class="page-title">{$_('creation.title')}</h2>
-    <ToggleButton
-        options={rosterModes}
-        selectedIndex={rosterModes.indexOf($rosterMode)}
-        selected={(mode) => {
-            rosterMode.set(mode);
-        }}
-    />
+    {#if rosterModes.length > 1}
+        <ToggleButton
+            options={rosterModes}
+            selectedIndex={rosterModes.indexOf($rosterMode)}
+            selected={(mode) => {
+                rosterMode.set(mode);
+            }}
+        />
+    {/if}
 
-    <ToggleButton
-        options={teamFormats}
-        selectedIndex={teamFormats.indexOf($teamFormat)}
-        selected={(format) => {
-            changeFormat(format);
-        }}
-    />
+    {#if teamFormats.length > 1}
+        <ToggleButton
+            options={teamFormats}
+            selectedIndex={teamFormats.indexOf($teamFormat)}
+            selected={(format) => {
+                changeFormat(format);
+            }}
+        />
+    {/if}
+
     {#if $teamSelectionOpen}
         <div class="button-container">
             <div class="filter__tier">

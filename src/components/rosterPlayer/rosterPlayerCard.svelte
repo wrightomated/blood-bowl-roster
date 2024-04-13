@@ -177,7 +177,7 @@
             0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
         &.danger {
-            border-color: var(--main-colour);
+            border-color: var(--error);
         }
     }
     .header {
@@ -202,8 +202,8 @@
             }
         }
         &.danger {
-            background-color: var(--main-colour);
-            border-color: var(--main-colour);
+            background-color: var(--error);
+            border-color: var(--error);
         }
     }
     .content {

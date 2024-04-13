@@ -57,7 +57,7 @@
             align-items: center;
             column-gap: 8px;
             &--danger {
-                color: var(--main-colour);
+                color: var(--error);
             }
         }
     }
