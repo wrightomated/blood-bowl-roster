@@ -43,7 +43,7 @@
         }
         &.secondary {
             background-color: var(--secondary-colour);
-            color: white;
+            color: var(--secondary-compliment);
         }
         p {
             margin-block-start: 0;

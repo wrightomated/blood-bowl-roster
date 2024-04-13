@@ -172,7 +172,7 @@
         max-width: 776px;
         height: 100%;
         border: var(--secondary-border);
-        background-color: white;
+        background-color: var(--secondary-compliment);
         box-shadow:
             0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
@@ -183,7 +183,7 @@
     .header {
         background-color: var(--secondary-colour);
 
-        color: white;
+        color: var(--secondary-compliment);
         border-radius: 20px 20px 0 0;
         padding: 10px;
         padding-bottom: 0;
