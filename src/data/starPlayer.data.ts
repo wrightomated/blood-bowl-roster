@@ -578,6 +578,65 @@ const kirotKrakeneye: StarPlayer = {
     cost: 160,
     specialRules: ['Black Ink'],
 };
+
+const losteriksson: StarPlayer = {
+    id: 400,
+    position: 'Losteriksson, Norse Hero',
+    playerStats: [6, 4, 3, 3, 9],
+    playsFor: [],
+    // Block, Jump Up, Dauntless, Thickskull + Drunkard, Loner 4+
+    skills: [13, 6, 14, 60, 93, 71],
+    cost: 260,
+    specialRules: ['Two for One'],
+    twoForOne: 401,
+};
+const bjarnhildr: StarPlayer = {
+    id: 401,
+    position: 'Bjarnhildr, War Bear',
+    playerStats: [4, 5, 5, 0, 10],
+    playsFor: [],
+    // Frenzy, Mighty Blow, Thickskull + Unchanneled Fury, No Hands, Loner 4+
+    skills: [17, 55, 60, 88, 72, 71],
+    cost: 0,
+    specialRules: ['Two for One'],
+    twoForOne: 400,
+};
+const cipactlicihuatlSaurus: StarPlayer = {
+    id: 402,
+    position: 'Cipactlicihuatl - Saurus',
+    playerStats: [6, 4, 5, 6, 10],
+    playsFor: [],
+    // Block, Mighty Blow, Frenzy & Loner (3+)
+    skills: [13, 55, 17, 711],
+    cost: 230,
+    specialRules: ['Lustrian Lycanthrope'],
+};
+
+const cipactlicihuatlAmazon: StarPlayer = {
+    id: 403,
+    position: 'Cipactlicihuatl - Amazon',
+    playerStats: [7, 3, 4, 4, 8],
+    playsFor: [],
+    // Dodge, Side Step, Jump Up, PRO & Loner (3+
+    skills: [4, 9, 6, 19, 711],
+    cost: 230,
+    specialRules: ['Lustrian Lycanthrope'],
+};
+
+// Losteriksson and Bjarnhildr - Star Players are Available to purchase for 260K for your roster for all rounds and BOTH Stars count as ONE Star Player but count as 2 roster slots
+// Losteriksson - Norse Hero
+// MA6, ST4, AG3+, PA 3+, AV 9+ Skills: Block, Jump Up, Dauntless, Thickskull + Drunkard, Loner 4+
+// *However, if either Losteriksson or Bjarnhildr are removed from play due to suffering a KO’d or Casualty! result on the Injury table, the other replaces the Loner (4+) trait with the Loner (2+) trait.
+// Bjarnhildr - War Bear
+// MA4, ST5, AG5+, PA -, AV 10+ Skills: Frenzy, Mighty Blow, Thickskull + Unchanneled Fury, No Hands, Loner 4+
+// *However, if either Losteriksson or Bjarnhildr are removed from play due to suffering a KO’d or Casualty! result on the Injury table, the other replaces the Loner (4+) trait with the Loner (2+) trait.
+// Cipactlicihuatl aka CiCi - Lustrian Lycanthrope will also be allowed from 2023 TKC and Chaos Cup for 230K
+// Coaches will determine Amazon or Saurus form after finding out the opponent’s race but before seeing the roster…CiCi will change form to the alternate version at half time.
+// One HALF - Saurus Form
+// MA6, ST4, AG5+, PA 6+, AV 10+ Skills: Block, Mighty Blow, Frenzy & Loner (3+)
+// One HALF - Amazon Form
+// MA7, ST3, AG3+, PA 4+, AV 8+ Skills: Dodge, Side Step, Jump Up, PRO & Loner (3+)
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -638,5 +697,9 @@ export const starPlayers = {
         rodneyRoachbait,
         rowanaForestfoot,
         kirotKrakeneye,
+        losteriksson,
+        bjarnhildr,
+        cipactlicihuatlSaurus,
+        cipactlicihuatlAmazon,
     ],
 };

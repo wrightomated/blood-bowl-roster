@@ -138,7 +138,8 @@ export const columnDetails: ColumnDetails[] = [
             elementId: 'spp-header',
         },
         rowDetails: {
-            component: PlayerNumberInput,
+            // Chaos Cup Rule
+            component: TextElement,
         },
         disallowedRosterFormats: ['sevens'],
         orderByPropertyPath: 'alterations.spp',

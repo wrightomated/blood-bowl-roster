@@ -8,6 +8,8 @@
     import type { TableColumnName } from '../../models/rosterTableColumns.model';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { RosterPlayerRecord } from '../../models/roster.model';
+    import type { StarPlayer } from '../../models/player.model';
+    import { customisationRules } from '../../customisation/customisation.store';
 
     export let index: number;
     let rosterPlayer: RosterPlayerRecord;
@@ -23,6 +25,25 @@
                   ? 0
                   : rosterPlayer.player.cost) +
               (rosterPlayer.alterations?.valueChange || 0);
+    $: starPlayerCost = $customisationRules?.starPlayerCost;
+    $: sppText = rosterPlayer?.starPlayer
+        ? getSppForPlayer(starPlayerCost)
+        : rosterPlayer?.alterations?.spp * -1 || '-';
+
+    function getSppForPlayer(starPlayerCost?: {
+        star: number;
+        megaStar: number;
+    }) {
+        const starPlayer = rosterPlayer.player as StarPlayer;
+        if (!!starPlayer?.twoForOne && starPlayer.twoForOne < starPlayer.id) {
+            return '-';
+        }
+        if (starPlayer.megaStar) {
+            return starPlayerCost?.megaStar || '-';
+        } else {
+            return starPlayerCost?.star || '-';
+        }
+    }
 
     const propsForComponent = (
         column: TableColumnName | CharacteristicType
@@ -55,8 +76,7 @@
                     text: `${formatNumberInThousands(currentCost)}`,
                 },
                 Spp: {
-                    index,
-                    alteration: 'spp',
+                    text: sppText,
                 },
                 NI: {
                     index,

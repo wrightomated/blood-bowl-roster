@@ -743,6 +743,22 @@
         "257": {
             "name": "Kiroth Krakeneye",
             "rule": "Black Ink"
+        },
+        "400": {
+            "name": "Losteriksson",
+            "rule": "Two for One"
+        },
+        "401": {
+            "name": "Bjarnhildr",
+            "rule": "Two for One"
+        },
+        "402": {
+            "name": "Cipactlicihuatl - Saurus",
+            "rule": "Lustrian Lycanthrope"
+        },
+        "403": {
+            "name": "Cipactlicihuatl - Amazon",
+            "rule": "Lustrian Lycanthrope"
         }
     },
     "inducements": {

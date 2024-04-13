@@ -7,7 +7,6 @@
         type SelectionType,
         skillIncreaseCost,
     } from '../../data/advancementCost.data';
-    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { getGameTypeSettings } from '../../helpers/gameSettings';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import type { SkillCategory } from '../../models/skill.model';
@@ -22,15 +21,25 @@
     const advancementSettings =
         $customisationRules?.advancementSettings ||
         getGameTypeSettings($roster.format).advancementSettings;
-    const advancementTypes = Object.values(advancementSettings).map(
-        (setting) => setting.type
-    );
-    let advancementType: AdvancementType = advancementTypes[0];
-
-    const selectionTypes: SelectionType[] = advancementSettings.find(
+    $: advancementTypes = Object.values(advancementSettings)
+        .map((setting) => setting.type)
+        .filter((type) => {
+            // CHAOS CUP RULE
+            const specificAdvancements =
+                rosterPlayer.alterations?.specificAdvancements || [];
+            return (
+                specificAdvancements?.length === 0 ||
+                (specificAdvancements?.length === 1 && type.includes('primary'))
+            );
+        });
+    let advancementType: AdvancementType;
+    $: advancementType = advancementTypes[0];
+    let selectionTypes: SelectionType[];
+    $: selectionTypes = advancementSettings.find(
         (setting) => setting.type === advancementType
     ).selectionTypes;
-    let selectionType: SelectionType = selectionTypes[0];
+    let selectionType: SelectionType;
+    $: selectionType = selectionTypes[0];
 
     let advancementCombination: AdvancementCombination;
     $: advancementCombination = (advancementType +
@@ -94,7 +103,7 @@
     }
 </script>
 
-{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
+<!-- {#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
     <label class="spp"
         ><span class="mini-title">SPP:</span>
         <input
@@ -106,7 +115,7 @@
             bind:value={$roster.players[index].alterations.spp}
         />
     </label>
-{/if}
+{/if} -->
 
 <ToggleButton options={advancementTypes} selected={selectAdvancementType} />
 
@@ -132,14 +141,3 @@
 {:else if advancementType === 'characteristic'}
     <CharacteristicAdvancement {index} {sppCost} {rosterPlayer} />
 {/if}
-
-<style lang="scss">
-    .spp {
-        display: inline-block;
-        &__input {
-            width: 60px;
-            margin-bottom: 12px;
-            margin-left: 4px;
-        }
-    }
-</style>

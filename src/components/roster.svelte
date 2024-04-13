@@ -62,8 +62,7 @@
                 values: { type: $roster.teamType },
             })}</Pill
         >
-        <Pill>{getTeamFormatShortDisplay($roster.format)}</Pill>
-        <Pill>{$roster.mode}</Pill>
+        <Pill>CHAOS CUP</Pill>
     </div>
 </span>
 <SpecialRuleSelector />
@@ -73,12 +72,13 @@
     <p class="sub-heading print-only">
         {$_('roster.teamType', { values: { type: $roster.teamType } })}
     </p>
-    <p class="sub-heading print-only" title={$roster.format}>
+    <!-- <p class="sub-heading print-only" title={$roster.format}>
         {getTeamFormatShortDisplay($roster.format)}
     </p>
     <p class="sub-heading print-only" title={$roster.mode}>
         {$roster.mode}
-    </p>
+    </p> -->
+    <p class="sub-heading print-only">CHAOS CUP</p>
     <RosterSave />
 </div>
 <Export />
@@ -169,7 +169,7 @@
     .pill-box {
         display: flex;
         justify-content: center;
-        gap: 12px;
+        gap: 8px;
         margin-block-end: 32px;
     }
     input {
