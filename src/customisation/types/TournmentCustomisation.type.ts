@@ -29,7 +29,6 @@ export type TournamentAllowances = {
     sppPerTier?: Record<number, number>;
     sppCost?: SPPCost;
     maxOfSkill?: number;
-    advancements?: AdvancementAllowances;
     statImprovementAllowancePerPlayer?: number;
     allowTraitRemoval?: number;
     disallowTraitRemovalIds?: number[];
@@ -49,5 +48,3 @@ export type SPPCost = {
 export type ValidatorOptions = {
     enable: boolean;
 };
-
-export type AdvancementAllowances = {};

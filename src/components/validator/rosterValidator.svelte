@@ -14,7 +14,6 @@
         .filter((x) => x.starPlayer && !x.deleted)
         .filter((x, _i, a) => {
             const starPlayer = x.player as StarPlayer;
-            console.log({ starPlayer });
             if (starPlayer?.twoForOne) {
                 const other = a.find(
                     (p) => p.player.id === starPlayer?.twoForOne
@@ -41,7 +40,6 @@
                 : 0),
         0
     );
-    console.log({ starPlayers });
     $: invalid = invalidRoster($roster, {
         sppAllowance,
         maxPlayers: $gameSettings.maxPlayers,
