@@ -6,11 +6,15 @@
     import { invalidRoster } from '../../helpers/validator';
     import { currentTeam } from '../../store/currentTeam.store';
     import { spentSpp } from '../../store/spentSpp.store';
+    import { customisationRules } from '../../customisation/customisation.store';
+    import { gameSettings } from '../../store/gameSettings.store';
 
+    let starPlayers: StarPlayer[];
     $: starPlayers = $roster.players
         .filter((x) => x.starPlayer && !x.deleted)
         .filter((x, _i, a) => {
             const starPlayer = x.player as StarPlayer;
+            console.log({ starPlayer });
             if (starPlayer?.twoForOne) {
                 const other = a.find(
                     (p) => p.player.id === starPlayer?.twoForOne
@@ -20,19 +24,33 @@
                 }
             }
             return true;
-        });
+        })
+        .map((x) => x.player as StarPlayer);
 
-    $: invalid = invalidRoster(
-        $roster,
-        // tournamentAdvancements?.tiers[$bigVTier]?.spp,
-        {
-            sppAllowance: 12,
-            maxPlayers: 16,
-            minPlayers: 11,
-            budget: 1000,
-            currentTeam: $currentTeam,
-        }
+    $: sppAllowance =
+        $customisationRules?.allowances?.sppPerTier[$currentTeam.tier] ?? 0;
+    $: maxOfSkill = $customisationRules?.allowances?.maxOfSkill;
+    $: budget = $customisationRules?.treasury || $gameSettings.startingTreasury;
+    $: starPlayerSpp = starPlayers.reduce(
+        (acc, x) =>
+            acc +
+            ($customisationRules?.starPlayerCost
+                ? x.megaStar
+                    ? $customisationRules.starPlayerCost.megaStar
+                    : $customisationRules.starPlayerCost.star
+                : 0),
+        0
     );
+    console.log({ starPlayers });
+    $: invalid = invalidRoster($roster, {
+        sppAllowance,
+        maxPlayers: $gameSettings.maxPlayers,
+        minPlayers: $gameSettings.minPlayers,
+        budget,
+        currentTeam: $currentTeam,
+        maxOfSkill,
+        starPlayerSpp,
+    });
 </script>
 
 <div class="validator">
@@ -47,10 +65,12 @@
         <span class="mini-title">Tier:</span>
         {$currentTeam.tier}
     </p>
-    <p>
-        <span class="mini-title">SPP:</span>
-        {$spentSpp}
-    </p>
+    {#if sppAllowance > 0}
+        <p>
+            <span class="mini-title">SPP:</span>
+            {$spentSpp + starPlayerSpp} / {sppAllowance}
+        </p>
+    {/if}
     <p>
         <RosterPlayerCount />
     </p>
@@ -86,10 +106,10 @@
             {/each}
         </p>
     {/if}
-    {#if invalid.invalid.teamTotalValue > 1100}
+    {#if invalid.invalid.teamTotalValue > budget}
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
-            Budget exceeded by {invalid.invalid.teamTotalValue - 1100}k
+            Budget exceeded by {invalid.invalid.teamTotalValue - budget}k
         </p>
     {/if}
     {#if invalid.invalid.tooMany}

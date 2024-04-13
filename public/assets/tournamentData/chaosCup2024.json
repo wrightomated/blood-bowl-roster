@@ -23,5 +23,27 @@
         "i37",
         "i13",
         "i45"
-    ]
+    ],
+    "allowances": {
+        "sppPerTier": {
+            "1": 42,
+            "2": 54,
+            "3": 66
+        },
+        "maxOfSkill": 4
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "starPlayerCost": {
+        "star": 12,
+        "megaStar": 18
+    }
 }

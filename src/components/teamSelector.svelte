@@ -132,6 +132,7 @@
             fans: $rosterMode === 'exhibition' ? 0 : 1,
             format: $teamFormat,
             specialRule: $teamSelectionSpecialRule,
+            startingTreasury: $customisationRules?.treasury,
         });
 
         teamSelectionOpen.set(false);

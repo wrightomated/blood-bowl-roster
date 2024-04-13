@@ -1,3 +1,4 @@
+import type { AdvancementSetting } from '../../models/gameType.model';
 import type { TeamName } from '../../models/team.model';
 import type { RosterMode } from '../../store/rosterMode.store';
 import type { TeamFormat } from '../../types/teamFormat';
@@ -13,15 +14,22 @@ export type TournamentCustomisation = {
     allowances?: TournamentAllowances;
     format: TeamFormat;
     mode?: RosterMode;
+    validator?: ValidatorOptions;
     colourScheme?: string;
     createTeamTitle?: string;
     cssVariables?: Record<string, string>;
+    advancementSettings?: AdvancementSetting[];
+    starPlayerCost?: {
+        star: number;
+        megaStar: number;
+    };
 };
 
 export type TournamentAllowances = {
     sppPerTier?: Record<number, number>;
     sppCost?: SPPCost;
-    sameSkillAllowance?: number;
+    maxOfSkill?: number;
+    advancements?: AdvancementAllowances;
     statImprovementAllowancePerPlayer?: number;
     allowTraitRemoval?: number;
     disallowTraitRemovalIds?: number[];
@@ -37,3 +45,9 @@ export type SPPCost = {
     stIncrease?: number;
     traitRemoval?: number;
 };
+
+export type ValidatorOptions = {
+    enable: boolean;
+};
+
+export type AdvancementAllowances = {};

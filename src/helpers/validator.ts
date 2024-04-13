@@ -1,7 +1,8 @@
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import { extrasForTeam } from '../helpers/extrasForTeam';
 import { calculateInducementTotal } from '../helpers/totalInducementAmount';
-import type { Roster } from '../models/roster.model';
+import type { StarPlayer } from '../models/player.model';
+import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 
 export type RosterValidationResult = {
     valid: boolean;
@@ -20,9 +21,10 @@ export type RosterValidationOptions = {
     sppAllowance: number;
     currentTeam: CustomTeam;
     budget: number;
-    maxOfSkillId?: number;
+    maxOfSkill?: number;
     maxPlayers?: number;
     minPlayers?: number;
+    starPlayerSpp?: number;
 };
 
 export function invalidRoster(
@@ -31,17 +33,18 @@ export function invalidRoster(
         sppAllowance,
         currentTeam,
         budget,
-        maxOfSkillId,
+        maxOfSkill,
         maxPlayers,
         minPlayers,
+        starPlayerSpp,
     }: RosterValidationOptions
 ): RosterValidationResult {
     try {
         const tooFew = tooFewPlayers(roster, minPlayers || 11);
         const tooMany = tooManyPlayers(roster, maxPlayers || 16);
         const tooBigGuy = tooManyBigGuy(roster, currentTeam?.maxBigGuys);
-        const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkillId);
-        const sppBalance = excessSpp(roster, sppAllowance);
+        const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkill);
+        const sppBalance = excessSpp(roster, sppAllowance, starPlayerSpp);
         const tooManyOfPlayerType = tooManyOfPlayerTypeCalc(
             roster,
             currentTeam
@@ -151,12 +154,17 @@ function allAdvancements(roster: Roster) {
     return skills;
 }
 
-export function excessSpp(roster: Roster, allowance: number) {
+export function excessSpp(
+    roster: Roster,
+    allowance: number,
+    starPlayerSpp: number = 0
+) {
     const spp = roster.players
         .filter((x) => !x.deleted)
         .map((x) => x.alterations?.spp || 0)
         .reduce((a, b) => a + b, 0);
-    return allowance + spp;
+
+    return allowance + spp - starPlayerSpp;
 }
 
 /** Including dedicated fans */

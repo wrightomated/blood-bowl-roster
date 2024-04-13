@@ -17,6 +17,7 @@ const deeprootStrongbranch: StarPlayer = {
     skills: [13, 71, 551, 58, 59, 60, 86, 87],
     cost: 280,
     specialRules: ['Reliable'],
+    megaStar: true,
 };
 const eldrilSidewinder: StarPlayer = {
     id: 202,
@@ -82,6 +83,7 @@ const griff: StarPlayer = {
     skills: [13, 4, 16, 711, 11, 12],
     cost: 280,
     specialRules: ['Consummate Professional'],
+    megaStar: true,
 };
 const grim: StarPlayer = {
     id: 209,
@@ -104,6 +106,7 @@ const hakflem: StarPlayer = {
     skills: [4, 28, 71, 33, 35],
     cost: 210,
     specialRules: ['Treacherous'],
+    megaStar: true,
 };
 const helmut: StarPlayer = {
     id: 211,
@@ -158,6 +161,7 @@ const morg: StarPlayer = {
     skills: [13, 71, 551, 60, 86],
     cost: 380,
     specialRules: ['The Ballista'],
+    megaStar: true,
 };
 const roxanna: StarPlayer = {
     id: 216,
@@ -287,6 +291,7 @@ const kreek: StarPlayer = {
     skills: [64, 71, 55, 72, 33, 79],
     cost: 170,
     specialRules: ["I'll be back"],
+    megaStar: true,
 };
 
 const grashnak: StarPlayer = {
@@ -351,6 +356,7 @@ const bomberDribblesnot: StarPlayer = {
     skills: [37, 65, 4, 71, 78, 79, 81],
     cost: 50,
     specialRules: ['Kaboom!'],
+    megaStar: true,
 };
 
 const fungusTheLoon: StarPlayer = {
