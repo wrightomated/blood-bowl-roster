@@ -10,12 +10,19 @@
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../customisation/customisation.store';
 
     export let selectedTeam: Team | CustomTeam;
 
     $: searchTerm = '';
 
     $: newFilteredInducements = inducementData.inducements
+        .filter(
+            (inducement) =>
+                !$customisationRules?.excludedInducementIds?.includes(
+                    inducement.id
+                )
+        )
         .map((inducement) => ({
             ...inducement,
             max: $gameSettings?.inducementMaxKey
