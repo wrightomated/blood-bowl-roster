@@ -18,10 +18,7 @@ export interface GameType {
     cheerleaders: RosterExtra;
     apothecary: RosterExtra;
     dedicatedFans: RosterExtra;
-    advancementSettings?: {
-        type: AdvancementType;
-        selectionTypes: SelectionType[];
-    }[];
+    advancementSettings?: AdvancementSetting[];
     maxSpecialists?: number;
     starPlayersAllowance?: number;
     inducementMaxKey?: 'dungeonBowlMax' | 'gutterBowlMax' | 'sevensMax';
@@ -29,6 +26,11 @@ export interface GameType {
     turnsPerHalf?: number;
     // | { default: number; rules: StarPlayerInclusionRules[] };
 }
+
+export type AdvancementSetting = {
+    type: AdvancementType;
+    selectionTypes: SelectionType[];
+};
 
 type RosterExtra = {
     cost: number;
