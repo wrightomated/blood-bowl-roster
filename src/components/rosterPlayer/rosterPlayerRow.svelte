@@ -25,6 +25,7 @@
                   ? 0
                   : rosterPlayer.player.cost) +
               (rosterPlayer.alterations?.valueChange || 0);
+    //   CHAOS CUP
     $: starPlayerCost = $customisationRules?.starPlayerCost;
     $: sppText = rosterPlayer?.starPlayer
         ? getSppForPlayer(starPlayerCost)

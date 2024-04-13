@@ -172,6 +172,7 @@
         max-width: 776px;
         height: 100%;
         border: var(--secondary-border);
+        border-color: var(--main-colour);
         background-color: white;
         box-shadow:
             0 2px 3px 0 rgba(60, 64, 67, 0.3),
@@ -181,13 +182,14 @@
         }
     }
     .header {
-        background-color: var(--secondary-colour);
+        background-color: var(--main-colour);
         color: var(--secondary-compliment);
         border-radius: 20px 20px 0 0;
         padding: 10px;
         padding-bottom: 0;
         min-height: 52px;
         border: var(--secondary-border);
+        border-color: var(--main-colour);
         h3 {
             margin: 0;
         }

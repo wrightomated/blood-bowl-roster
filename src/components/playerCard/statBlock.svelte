@@ -17,17 +17,18 @@
 </div>
 
 <style lang="scss">
-    @import '../../styles/font';
     .characteristic {
         height: 50px;
         width: 50px;
         position: relative;
         border: var(--secondary-border);
+        border-color: var(--main-colour);
         border-top: 0;
         margin-right: 5px;
         text-align: center;
         &--top-border {
             border-top: var(--secondary-border);
+            border-color: var(--main-colour);
         }
 
         &--neutral {
@@ -44,14 +45,14 @@
         left: 0;
         top: -1px;
         font-size: 12px;
-        background: var(--secondary-colour);
+        background: var(--main-colour);
         color: white;
         padding: 2px;
     }
     .value {
         margin-top: 22px;
         font-size: 16px;
-        font-family: $display-font;
+        font-family: var(--display-font);
     }
     .improved {
         color: green;
