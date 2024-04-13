@@ -71,7 +71,7 @@
             font-family: var(--display-font);
             right: 10px;
             top: 10px;
-            background-color: white;
+            background-color: var(--secondary-compliment);
             color: var(--secondary-colour);
             position: absolute;
             padding: 0;

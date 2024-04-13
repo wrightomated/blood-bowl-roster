@@ -182,8 +182,7 @@
     }
     .header {
         background-color: var(--secondary-colour);
-
-        color: white;
+        color: var(--secondary-compliment);
         border-radius: 20px 20px 0 0;
         padding: 10px;
         padding-bottom: 0;

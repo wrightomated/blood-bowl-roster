@@ -183,7 +183,7 @@
 
         &__input {
             display: block;
-            font-family: var(--display-font);
+            font-family: Norse;
             font-weight: 600;
             font-size: 48px;
             -webkit-padding: 0;

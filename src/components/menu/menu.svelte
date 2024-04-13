@@ -32,15 +32,15 @@
             clickFunction={toggleNavMenu}
         />
     </div>
-    <h1>BB Roster</h1>
+    <h1>BB Roster | <span>CHAOS CUP</span></h1>
 
-    <button
+    <!-- <button
         class="profile"
         title={$_('menu.profile')}
         on:click={toggleUserProfile}
     >
         <UserCircle />
-    </button>
+    </button> -->
 </header>
 <div class="spacer" class:spacer--show={$menuDrawerOpen} />
 <nav class="menu__drawer" class:menu__drawer--open={$menuDrawerOpen}>
@@ -62,6 +62,9 @@
 <style lang="scss">
     :root {
         --header-height: 60px;
+    }
+    h1 span {
+        font-family: Norse;
     }
     .header {
         position: relative;

@@ -260,12 +260,13 @@
                     class:selected={includeNaf}
                     class="filter__button">N</button
                 >
-                <button
+                <!-- CHAOS CUP DISABLED -->
+                <!-- <button
                     on:click={toggleRetired}
                     title={$_('creation.s')}
                     class:selected={includeRetired}
                     class="filter__button">S</button
-                >
+                > -->
             </div>
             <label class="filter__search">
                 {$_('common.search')}
@@ -388,7 +389,7 @@
             font-family: var(--display-font);
             border-radius: 50%;
             font-size: 0.75em;
-            background-color: white;
+            background-color: var(--secondary-compliment);
             color: var(--secondary-colour);
             padding: 0;
             width: 24px;
@@ -402,11 +403,11 @@
             &:hover {
                 box-shadow: 0 4px 12px var(--button-shadow) inset;
                 background: var(--secondary-colour);
-                color: white;
+                color: var(--secondary-compliment);
             }
             &.selected {
                 background-color: var(--secondary-colour);
-                color: white;
+                color: var(--secondary-compliment);
                 border-color: var(--secondary-colour);
             }
         }

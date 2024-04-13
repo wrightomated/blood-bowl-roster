@@ -45,5 +45,11 @@
     "starPlayerCost": {
         "star": 12,
         "megaStar": 18
+    },
+    "cssVariables": {
+        "--main-colour": "#2e4d67",
+        "--secondary-colour": "#333333",
+        "--button-shadow": "#bde4f3",
+        "--error": "#dd0033"
     }
 }
