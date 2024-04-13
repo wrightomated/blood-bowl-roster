@@ -135,17 +135,16 @@
     </div>
 {/if}
 
-<RosterValidator />
-
-{#if $roster.mode === 'league'}
-    <RosterPlayerCount />
-{/if}
-
 <RosterStatusToggle />
 {#if $roster.format === 'dungeon bowl'}
     <DungeonBowlPlayerCount />
 {/if}
 {#if $roster.format !== 'dungeon bowl'}
+    {#if $roster.mode === 'league'}
+        <RosterPlayerCount />
+    {:else}
+        <RosterValidator />
+    {/if}
     <AvailablePlayers />
 {/if}
 
