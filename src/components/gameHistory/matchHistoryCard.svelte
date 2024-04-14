@@ -86,8 +86,8 @@
             >{loading
                 ? 'autorenew'
                 : open
-                ? 'arrow_drop_up'
-                : 'arrow_drop_down'}</i
+                  ? 'arrow_drop_up'
+                  : 'arrow_drop_down'}</i
         >
     </header>
     {#if open}
@@ -108,7 +108,8 @@
         border: var(--secondary-border);
         margin-left: var(--l-offset);
         margin-top: var(--t-offset);
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
 
         @media screen and (max-width: 450px) {
@@ -124,7 +125,7 @@
         line-height: 48px;
         background-color: var(--secondary-colour);
         border: var(--secondary-border);
-        background: white;
+        background: var(--secondary-compliment);
         text-align: center;
         color: var(--secondary-colour);
         top: calc(var(--t-offset) * -2);

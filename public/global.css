@@ -1,6 +1,7 @@
 :root {
     --main-colour: #970f0c;
     --secondary-colour: #1a3f7f;
+    --secondary-compliment: #ffffff;
     --button-shadow: #185b88b2;
     --no-op-colour: #aaa;
 
@@ -224,7 +225,7 @@ thead > tr {
 }
 .rounded-button {
     border-radius: 12px;
-    background-color: white;
+    background-color: var(--secondary-compliment);
     color: var(--secondary-colour);
     padding: 8px;
     margin: 4px;
@@ -235,7 +236,7 @@ thead > tr {
 .rounded-button:hover,
 .rounded-button.selected {
     background-color: var(--secondary-colour);
-    color: white;
+    color: var(--secondary-compliment);
     border-color: var(--secondary-colour);
 }
 .rounded-button:disabled {

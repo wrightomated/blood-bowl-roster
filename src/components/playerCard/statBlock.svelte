@@ -45,7 +45,7 @@
         top: -1px;
         font-size: 12px;
         background: var(--secondary-colour);
-        color: white;
+        color: var(--secondary-compliment);
         padding: 2px;
     }
     .value {
