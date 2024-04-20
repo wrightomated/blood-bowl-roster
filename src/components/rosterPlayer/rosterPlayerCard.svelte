@@ -14,6 +14,8 @@
     import { specialistsAmount } from '../../store/specialistsAmount.store';
     import { _ } from 'svelte-i18n';
     import { activePlayers } from '../../store/activePlayers.store';
+    import { starPlayers } from '../../data/starPlayer.data';
+    import SkillElement from '../skillElement.svelte';
 
     export let index: number;
 
@@ -30,6 +32,14 @@
         rosterPlayer.player.bigGuy &&
         $currentTeam.maxBigGuys <
             $roster.players.filter((x) => x.player.bigGuy).length;
+
+    $: cici = rosterPlayer.player.id === 402 || rosterPlayer.player.id === 403;
+    $: otherCici = cici
+        ? starPlayers.starPlayers.find((p) => {
+              const otherId = rosterPlayer.player.id === 402 ? 403 : 402;
+              return p.id === otherId;
+          })
+        : null;
 
     function removePlayer() {
         modalState.set({
@@ -157,6 +167,48 @@
         <PlayerCardMainContent {index} />
     </div>
 </section>
+
+{#if otherCici}
+    <section class="player-card" class:danger>
+        <header class="header" class:danger>
+            <h3 class="player-name left-align">
+                {#if otherCici}
+                    {otherCici.position}
+                {/if}
+            </h3>
+            <div>
+                <PlayerNumber {index} variant="card" />
+            </div>
+            <div class="player-position left-align">
+                <div class="player-controls">
+                    <p>Star Player</p>
+                    <MaterialButton
+                        hoverText="Remove player"
+                        symbol="delete_forever"
+                        clickFunction={() => removePlayer()}
+                    />
+                </div>
+            </div>
+        </header>
+
+        <PlayerCharacteristics {rosterPlayer} />
+
+        <div class="content">
+            <div class="skills">
+                <p class="mini-title">SKILLS:</p>
+                {#if rosterPlayer.player.skills.length + (rosterPlayer?.alterations?.extraSkills?.length || 0) > 0}
+                    <SkillElement
+                        playerSkillIds={rosterPlayer.player.skills}
+                        extraSkillIds={rosterPlayer?.alterations?.extraSkills ||
+                            []}
+                    />
+                {:else}
+                    None
+                {/if}
+            </div>
+        </div>
+    </section>
+{/if}
 
 <style lang="scss">
     input {

@@ -3,6 +3,7 @@
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../../models/player.model';
+    import { rosterMode } from '../../store/rosterMode.store';
     import { roster } from '../../store/teamRoster.store';
     import SkillElement from '../skillElement.svelte';
     import MngCheckbox from './mngCheckbox.svelte';
@@ -107,10 +108,12 @@
         ? `${formatNumberInThousands(rosterPlayer.player.cost)}`
         : '-'}
 </p>
-<p class="current-value">
-    <span class="mini-title">Current Value:</span>
-    {formatNumberInThousands(currentCost)}
-</p>
+{#if $rosterMode !== 'exhibition'}
+    <p class="current-value">
+        <span class="mini-title">Current Value:</span>
+        {formatNumberInThousands(currentCost)}
+    </p>
+{/if}
 
 <style lang="scss">
     input {
