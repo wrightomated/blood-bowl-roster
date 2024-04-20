@@ -5,6 +5,7 @@
     import UserProfile from '../auth/userProfile.svelte';
     import UserCircle from './userCircle.svelte';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../../customisation/customisation.store';
 
     let menuComponent: typeof MenuItems | typeof UserProfile;
 
@@ -32,7 +33,11 @@
             clickFunction={toggleNavMenu}
         />
     </div>
-    <h1>BB Roster | <span>CHAOS CUP</span></h1>
+    <h1>
+        BB Roster | <span
+            >{$customisationRules?.customContent?.menuSubtitle}</span
+        >
+    </h1>
 
     <!-- <button
         class="profile"

@@ -23,6 +23,8 @@
 
     import { activePlayers } from '../store/activePlayers.store';
     import RosterValidator from './validator/rosterValidator.svelte';
+    import { customisationRules } from '../customisation/customisation.store';
+    import CiciOther from '../chaosCup/ciciOther.svelte';
 
     export let playerTypes: Player[];
 
@@ -62,7 +64,7 @@
                 values: { type: $roster.teamType },
             })}</Pill
         >
-        <Pill>CHAOS CUP</Pill>
+        <Pill>{$customisationRules?.customContent?.teamTypeTitle}</Pill>
     </div>
 </span>
 <SpecialRuleSelector />
@@ -78,7 +80,9 @@
     <p class="sub-heading print-only" title={$roster.mode}>
         {$roster.mode}
     </p> -->
-    <p class="sub-heading print-only">CHAOS CUP</p>
+    <p class="sub-heading print-only">
+        {$customisationRules?.customContent?.teamTypeTitle}
+    </p>
     <RosterSave />
 </div>
 <Export />

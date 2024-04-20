@@ -10,6 +10,7 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import type { StarPlayer } from '../../models/player.model';
     import { customisationRules } from '../../customisation/customisation.store';
+    import { starPlayers } from '../../data/starPlayer.data';
 
     export let index: number;
     let rosterPlayer: RosterPlayerRecord;
@@ -30,6 +31,14 @@
     $: sppText = rosterPlayer?.starPlayer
         ? getSppForPlayer(starPlayerCost)
         : rosterPlayer?.alterations?.spp * -1 || '-';
+
+    $: cici = rosterPlayer.player.id === 402 || rosterPlayer.player.id === 403;
+    $: otherCici = cici
+        ? starPlayers.starPlayers.find((p) => {
+              const otherId = rosterPlayer.player.id === 402 ? 403 : 402;
+              return p.id === otherId;
+          })
+        : null;
 
     function getSppForPlayer(starPlayerCost?: {
         star: number;
@@ -94,6 +103,57 @@
             }[column] || { index }
         );
     };
+    const propsForOtherCici = (
+        column: TableColumnName | CharacteristicType
+    ) => {
+        if (characteristics.includes(column as CharacteristicType)) {
+            return {
+                rosterPlayer: { player: otherCici },
+                charIndex: characteristics.indexOf(
+                    column as CharacteristicType
+                ),
+            };
+        }
+        return (
+            {
+                Skills: {
+                    playerSkillIds: otherCici?.skills,
+                    extraSkillIds: rosterPlayer?.alterations?.extraSkills || [],
+                    cyData: `player-${index}-skills`,
+                },
+                'Hiring Fee': {
+                    text:
+                        rosterPlayer.player.cost > 0 &&
+                        !rosterPlayer?.alterations?.journeyman
+                            ? `${formatNumberInThousands(
+                                  rosterPlayer.player.cost
+                              )}`
+                            : '-',
+                },
+                'Current Value': {
+                    text: `${formatNumberInThousands(currentCost)}`,
+                },
+                Spp: {
+                    text: '-',
+                },
+                NI: {
+                    index,
+                    alteration: 'ni',
+                },
+                MNG: {
+                    index,
+                    alteration: 'mng',
+                },
+                TR: {
+                    index,
+                    alteration: 'tr',
+                },
+                Name: {
+                    text: otherCici?.position,
+                },
+            }[column] || { index }
+        );
+    };
 </script>
 
 <tr>
@@ -108,6 +168,23 @@
         </td>
     {/each}
 </tr>
+
+{#if otherCici}
+    <tr>
+        {#each $filteredTableColumns as c}
+            <td class={c.rowDetails?.tdClass}>
+                {#if c.name === 'Name'}
+                    {otherCici?.position}
+                {:else if c.rowDetails?.component}
+                    <svelte:component
+                        this={c.rowDetails?.component}
+                        {...propsForOtherCici(c.name)}
+                    />
+                {/if}
+            </td>
+        {/each}
+    </tr>
+{/if}
 
 <style>
     .no-wrap {

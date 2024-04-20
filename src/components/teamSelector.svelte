@@ -219,7 +219,8 @@
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
     <h2 class="page-title">
-        {$customisationRules?.createTeamTitle || $_('creation.title')}
+        {$customisationRules?.customContent?.createTeamTitle ||
+            $_('creation.title')}
     </h2>
     {#if rosterModes.length > 1}
         <ToggleButton

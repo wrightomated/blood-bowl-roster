@@ -16,12 +16,16 @@ export type TournamentCustomisation = {
     mode?: RosterMode;
     validator?: ValidatorOptions;
     colourScheme?: string;
-    createTeamTitle?: string;
     cssVariables?: Record<string, string>;
     advancementSettings?: AdvancementSetting[];
     starPlayerCost?: {
         star: number;
         megaStar: number;
+    };
+    customContent?: {
+        createTeamTitle?: string;
+        menuSubtitle?: string;
+        teamTypeTitle?: string;
     };
 };
 

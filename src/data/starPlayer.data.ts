@@ -623,20 +623,6 @@ const cipactlicihuatlAmazon: StarPlayer = {
     specialRules: ['Lustrian Lycanthrope'],
 };
 
-// Losteriksson and Bjarnhildr - Star Players are Available to purchase for 260K for your roster for all rounds and BOTH Stars count as ONE Star Player but count as 2 roster slots
-// Losteriksson - Norse Hero
-// MA6, ST4, AG3+, PA 3+, AV 9+ Skills: Block, Jump Up, Dauntless, Thickskull + Drunkard, Loner 4+
-// *However, if either Losteriksson or Bjarnhildr are removed from play due to suffering a KO’d or Casualty! result on the Injury table, the other replaces the Loner (4+) trait with the Loner (2+) trait.
-// Bjarnhildr - War Bear
-// MA4, ST5, AG5+, PA -, AV 10+ Skills: Frenzy, Mighty Blow, Thickskull + Unchanneled Fury, No Hands, Loner 4+
-// *However, if either Losteriksson or Bjarnhildr are removed from play due to suffering a KO’d or Casualty! result on the Injury table, the other replaces the Loner (4+) trait with the Loner (2+) trait.
-// Cipactlicihuatl aka CiCi - Lustrian Lycanthrope will also be allowed from 2023 TKC and Chaos Cup for 230K
-// Coaches will determine Amazon or Saurus form after finding out the opponent’s race but before seeing the roster…CiCi will change form to the alternate version at half time.
-// One HALF - Saurus Form
-// MA6, ST4, AG5+, PA 6+, AV 10+ Skills: Block, Mighty Blow, Frenzy & Loner (3+)
-// One HALF - Amazon Form
-// MA7, ST3, AG3+, PA 4+, AV 8+ Skills: Dodge, Side Step, Jump Up, PRO & Loner (3+)
-
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,

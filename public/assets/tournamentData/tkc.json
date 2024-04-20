@@ -1,8 +1,8 @@
 {
     "customContent": {
-        "createTeamTitle": "New Chaos Cup Roster",
-        "menuSubtitle": "CHAOS CUP",
-        "teamTypeTitle": "CHAOS CUP"
+        "createTeamTitle": "Three Kingdoms Challenge Roster",
+        "menuSubtitle": "Three Kingdoms Challenge",
+        "teamTypeTitle": "TKC"
     },
     "format": "elevens",
     "mode": "exhibition",
