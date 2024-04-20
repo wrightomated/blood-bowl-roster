@@ -1,7 +1,9 @@
 import type { TournamentCustomisation } from '../types/TournmentCustomisation.type';
 
 export const tournamentCustomisation: TournamentCustomisation = {
-    createTeamTitle: 'Create new Big V roster',
+    customContent: {
+        createTeamTitle: 'Create new Big V roster',
+    },
     format: 'elevens',
     treasury: 1100,
     tiers: 4,

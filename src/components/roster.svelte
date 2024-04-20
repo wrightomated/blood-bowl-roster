@@ -24,7 +24,6 @@
     import { activePlayers } from '../store/activePlayers.store';
     import RosterValidator from './validator/rosterValidator.svelte';
     import { customisationRules } from '../customisation/customisation.store';
-    import CiciOther from '../chaosCup/ciciOther.svelte';
 
     export let playerTypes: Player[];
 
