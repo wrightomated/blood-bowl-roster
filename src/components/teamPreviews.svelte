@@ -10,24 +10,35 @@
 
     $: filteredString = '';
     $: previewArray = rosterPreviews ? Object.values(rosterPreviews) : [];
-    $: sortedPreviews = sortPreviews(rosterPreviews, filteredString);
-    $: teamTypes = [...new Set(previewArray.map((x) => x.teamType))].sort(
-        (a, b) => a.localeCompare(b)
-    );
-    $: selectedTeamType = undefined;
-
     $: availableFormats = [...new Set(previewArray.map((x) => x.format))].sort(
         (a, b) => a.localeCompare(b)
     );
-    $: selectedFormat = undefined;
     $: availableModes = [...new Set(previewArray.map((x) => x.mode))].sort(
         (a, b) => a.localeCompare(b)
     );
+    $: teamTypes = [...new Set(previewArray.map((x) => x.teamType))].sort(
+        (a, b) => a.localeCompare(b)
+    );
+
+    $: selectedTeamType = undefined;
+    $: selectedFormat = undefined;
+
     $: selectedMode = undefined;
+
+    $: sortedPreviews = sortPreviews(
+        rosterPreviews,
+        filteredString,
+        selectedTeamType,
+        selectedFormat,
+        selectedMode
+    );
 
     function sortPreviews(
         rosterPreviews: RosterPreviews,
-        filteredString: string
+        filteredString: string,
+        selectedTeamType?: string,
+        selectedFormat?: string,
+        selectedMode?: string
     ) {
         if (!rosterPreviews) return [];
         const previews = previewArray;
