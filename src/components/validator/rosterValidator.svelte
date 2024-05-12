@@ -29,7 +29,7 @@
     $: sppAllowance =
         $customisationRules?.allowances?.sppPerTier[$currentTeam.tier] ?? 0;
     $: maxOfSkill = $customisationRules?.allowances?.maxOfSkill;
-    $: budget = $customisationRules?.treasury || $gameSettings.startingTreasury;
+    $: budget = $customisationRules?.treasury || undefined;
     $: starPlayerSpp = starPlayers.reduce(
         (acc, x) =>
             acc +
@@ -104,7 +104,7 @@
             {/each}
         </p>
     {/if}
-    {#if invalid.invalid.teamTotalValue > budget}
+    {#if budget && invalid.invalid.teamTotalValue > budget}
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
             Budget exceeded by {invalid.invalid.teamTotalValue - budget}k
@@ -122,7 +122,7 @@
             Not enough players in roster.
         </p>
     {/if}
-    {#if invalid.invalid.sppBalance < 0}
+    {#if $roster.format === 'elevens' && invalid.invalid.sppBalance < 0}
         <p class="error">
             <i class="material-symbols-outlined no-transition">warning</i>
             {-1 * invalid.invalid.sppBalance} SPP over allowance.

@@ -73,7 +73,7 @@
     {$_('players.' + rosterPlayer.player.id)}
     {#if danger}
         <span class="danger">
-            <i class="material-symbols-outlined">warning</i>
+            <i class="material-symbols-outlined no-transition">warning</i>
             {numberOfPlayerType}/{maxOfPlayerType}
         </span>
     {/if}
