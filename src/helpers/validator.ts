@@ -1,8 +1,7 @@
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import { extrasForTeam } from '../helpers/extrasForTeam';
 import { calculateInducementTotal } from '../helpers/totalInducementAmount';
-import type { StarPlayer } from '../models/player.model';
-import type { Roster, RosterPlayerRecord } from '../models/roster.model';
+import type { Roster } from '../models/roster.model';
 
 export type RosterValidationResult = {
     valid: boolean;
@@ -50,6 +49,7 @@ export function invalidRoster(
             currentTeam
         );
         const teamTotalValue = teamTotal(roster);
+        const budgetValid = budget ? teamTotalValue <= budget : true;
 
         const valid =
             !tooFew &&
@@ -58,7 +58,7 @@ export function invalidRoster(
             !(moreThanMaxOfSameSkill.length > 0) &&
             sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
-            teamTotalValue <= budget;
+            budgetValid;
 
         return {
             valid,
