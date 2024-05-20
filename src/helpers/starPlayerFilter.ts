@@ -3,13 +3,13 @@ import type { TeamSpecialRule } from '../models/team.model';
 import { chaosSpecialRules } from '../data/teams.data';
 
 export const filterStarPlayers = (
-    sp: { starPlayers: StarPlayer[] },
+    starPlayers: StarPlayer[],
     /** Special rules of the team */
     specialRules: TeamSpecialRule[],
     /** Player ids not to include */
     extraFilter: number[] = []
 ) => {
-    const spWithExpandedSpecialRules = sp.starPlayers.map((star) =>
+    const spWithExpandedSpecialRules = starPlayers.map((star) =>
         star.playsFor.includes('Favoured of...')
             ? { ...star, playsFor: [...star.playsFor, ...chaosSpecialRules] }
             : star

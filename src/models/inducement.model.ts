@@ -1,4 +1,4 @@
-import type { TeamSpecialRule, TeamTier } from './team.model';
+import type { TeamSpecialRule } from './team.model';
 
 export interface Inducement {
     id: InducementKey;

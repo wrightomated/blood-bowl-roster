@@ -166,7 +166,10 @@
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
-    <h2 class="page-title">{$_('creation.title')}</h2>
+    <h2 class="page-title">
+        {$customisationRules?.customContent?.createTeamTitle ||
+            $_('creation.title')}
+    </h2>
     {#if rosterModes.length > 1}
         <ToggleButton
             options={rosterModes}

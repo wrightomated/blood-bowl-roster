@@ -578,6 +578,7 @@ const kirotKrakeneye: StarPlayer = {
     cost: 160,
     specialRules: ['Black Ink'],
 };
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,

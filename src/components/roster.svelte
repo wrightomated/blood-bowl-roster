@@ -140,10 +140,10 @@
     <DungeonBowlPlayerCount />
 {/if}
 {#if $roster.format !== 'dungeon bowl'}
-    {#if $roster.mode === 'league'}
-        <RosterPlayerCount />
-    {:else}
+    {#if $roster.mode === 'exhibition' && $roster.format === 'elevens'}
         <RosterValidator />
+    {:else}
+        <RosterPlayerCount />
     {/if}
     <AvailablePlayers />
 {/if}

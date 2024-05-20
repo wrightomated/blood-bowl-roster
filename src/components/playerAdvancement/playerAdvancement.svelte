@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { customisationRules } from '../../customisation/customisation.store';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import CurrentAdvancementList from './currentAdvancementList.svelte';
@@ -12,6 +13,6 @@
 
 <CurrentAdvancementList {rosterPlayer} {index} />
 
-{#if !(rosterPlayer.alterations?.advancements >= 6)}
+{#if (!$customisationRules?.allowances?.noSkillStacking && rosterPlayer.alterations?.advancements < 6) || ($customisationRules?.allowances?.noSkillStacking && !rosterPlayer.alterations?.advancements)}
     <SelectAdvancement {rosterPlayer} {index} />
 {/if}
