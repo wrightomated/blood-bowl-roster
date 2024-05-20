@@ -579,6 +579,16 @@ const kirotKrakeneye: StarPlayer = {
     specialRules: ['Black Ink'],
 };
 
+const barlgura: StarPlayer = {
+    id: 1000,
+    position: 'Barlgura',
+    playerStats: [5, 6, 4, 0, 9],
+    playsFor: [],
+    skills: [50, 17, 54, 55, 71],
+    cost: 260,
+    specialRules: ['Finisher'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -639,5 +649,6 @@ export const starPlayers = {
         rodneyRoachbait,
         rowanaForestfoot,
         kirotKrakeneye,
+        barlgura,
     ],
 };

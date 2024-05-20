@@ -31,14 +31,14 @@
         "Snotling": 4
     },
     "inducementSettings": {
-        "includedInducementIds": ["i4", "i7", "i9", "i10", "i11", "i12"],
-        "customInducements": [
-            {
-                "id": "i1000",
-                "displayName": "Ancient artifact",
-                "cost": 30,
-                "max": 1
-            }
+        "includedInducementIds": [
+            "i4",
+            "i7",
+            "i9",
+            "i10",
+            "i11",
+            "i12",
+            "i1000"
         ]
     },
     "allowances": {
@@ -80,17 +80,6 @@
         }
     ],
     "starPlayerSettings": {
-        "customStarPlayers": [
-            {
-                "id": 1000,
-                "position": "Barlgura",
-                "playerStats": [5, 6, 4, 0, 9],
-                "playsFor": [],
-                "skills": [50, 17, 54, 55, 71],
-                "cost": 260,
-                "specialRules": ["Finisher"]
-            }
-        ],
         "starPlayerCost": {
             "star": 12,
             "megaStar": 24

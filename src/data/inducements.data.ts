@@ -414,5 +414,11 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 0,
             gutterBowlMax: 1,
         },
+        {
+            id: 'i1000',
+            displayName: 'Ancient artifact',
+            cost: 30,
+            max: 1,
+        },
     ],
 };
