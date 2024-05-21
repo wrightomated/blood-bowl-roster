@@ -98,7 +98,7 @@ export function invalidRoster(
 export function tooFewPlayers(roster: Roster, minimum: number): boolean {
     return (
         roster.players.filter(
-            (x) => !x.deleted && !x.starPlayer && x.player.id !== 1000
+            (x) => !x.deleted && (!x.starPlayer || x.player.id === 1000)
         ).length < minimum
     );
 }
