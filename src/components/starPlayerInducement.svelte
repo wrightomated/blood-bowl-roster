@@ -8,6 +8,7 @@
     import type { StarPlayer } from '../models/player.model';
     import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
+    import { currentTeam } from '../store/currentTeam.store';
 
     let selectedId: number;
 
@@ -51,6 +52,9 @@
             return true;
         }).length;
 
+    $: starPlayerAllowance =
+        $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
+            .starPlayer || 2;
     const getSelected = (id) => {
         return allStarPlayers.find((x) => x.id === id);
     };
@@ -100,13 +104,13 @@
         {/if}
         <div class="star-player__secondary">
             <div class="star-player-amount">
-                {currentStarPlayerAmount} / 2
+                {currentStarPlayerAmount} / {starPlayerAllowance}
             </div>
             <div class="star-player-cost">
                 {formatNumberInThousands(getSelected(selectedId)?.cost) || 0}
             </div>
             <div class="add-star">
-                {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < 2}
+                {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < starPlayerAllowance}
                     <MaterialButton
                         hoverText="Add star player"
                         symbol="add_circle"

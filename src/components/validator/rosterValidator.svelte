@@ -31,17 +31,20 @@
             ?.spp ?? 0;
     $: maxOfSkillId = $customisationRules?.allowances?.maxOfSkillId;
     $: budget = $customisationRules?.treasury || undefined;
-    $: starPlayerSpp = starPlayers.reduce(
-        (acc, x) =>
-            acc +
-            ($customisationRules?.starPlayerSettings?.starPlayerCost
-                ? x.megaStar
-                    ? $customisationRules.starPlayerSettings.starPlayerCost
-                          .megaStar
-                    : $customisationRules.starPlayerSettings.starPlayerCost.star
-                : 0),
-        0
-    );
+    $: starPlayerSpp = starPlayers
+        .filter((x) => x.id !== 1000)
+        .reduce(
+            (acc, x) =>
+                acc +
+                ($customisationRules?.starPlayerSettings?.starPlayerCost
+                    ? x.megaStar
+                        ? $customisationRules.starPlayerSettings.starPlayerCost
+                              .megaStar
+                        : $customisationRules.starPlayerSettings.starPlayerCost
+                              .star
+                    : 0),
+            0
+        );
     $: invalid = invalidRoster($roster, {
         sppAllowance,
         maxPlayers: $gameSettings.maxPlayers,
@@ -132,7 +135,7 @@
     {#if $roster.format === 'elevens' && invalid.invalid.sppBalance < 0}
         <p class="error">
             <i class="material-symbols-outlined no-transition">warning</i>
-            {-1 * invalid.invalid.sppBalance} SPP over allowance.
+            {(-1 * invalid.invalid.sppBalance) / 6} SP over allowance.
         </p>
     {/if}
 </div>

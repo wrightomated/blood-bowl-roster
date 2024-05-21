@@ -14,6 +14,10 @@
     );
 
     function calculateSpp(rosterPlayer: RosterPlayerRecord, starPlayerCost) {
+        // Itza rule
+        if (rosterPlayer.player.id === 1000) {
+            return '-';
+        }
         let playerSpp: number | '-' = rosterPlayer?.alterations?.spp;
         if (rosterPlayer?.starPlayer) {
             if (starPlayerCost) {

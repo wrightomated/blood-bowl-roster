@@ -133,7 +133,7 @@ export const columnDetails: ColumnDetails[] = [
     },
     {
         id: 12,
-        name: 'Spp',
+        name: 'SP',
         title: 'roster.column.titles.12',
         headerDetails: {
             elementId: 'spp-header',

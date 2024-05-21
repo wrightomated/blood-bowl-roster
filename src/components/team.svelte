@@ -79,7 +79,7 @@
             playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
         />
         <RerollsTable selectedTeam={$currentTeam} />
-        <MatchHistoryRecords />
+        <!-- <MatchHistoryRecords /> -->
     {/if}
 {/if}
 

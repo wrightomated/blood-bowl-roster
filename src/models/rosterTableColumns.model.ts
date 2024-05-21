@@ -19,7 +19,8 @@ export type TableColumnName =
     | 'NI'
     | 'TR'
     | 'Current Value'
-    | 'Custom';
+    | 'Custom'
+    | 'SP';
 
 export interface ColumnDetails {
     id?: number;
