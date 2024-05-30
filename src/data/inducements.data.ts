@@ -80,7 +80,7 @@ export const inducementData: { inducements: Inducement[] } = {
             id: 'i12',
 
             cost: 300,
-            reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 100 },
+            reducedCost: { teamName: 'Halfling', cost: 100 },
             max: 1,
             sevensMax: 1,
         },
