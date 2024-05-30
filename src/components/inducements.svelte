@@ -54,19 +54,14 @@
 
     function inducementReducedCost(inducement: Inducement) {
         const reducedCost = inducement.reducedCost;
-        if (!reducedCost) {
-            return inducement.cost;
+
+        if (
+            $rosterSpecialRules.includes(reducedCost?.specialRule) ||
+            reducedCost?.teamName === selectedTeam.name
+        ) {
+            return reducedCost.cost;
         }
-        if (reducedCost.specialRule) {
-            return $rosterSpecialRules.includes(reducedCost.specialRule)
-                ? reducedCost.cost
-                : inducement.cost;
-        }
-        if (reducedCost.teamName) {
-            return selectedTeam.name === reducedCost.teamName
-                ? reducedCost.cost
-                : inducement.cost;
-        }
+
         return inducement.cost;
     }
 
