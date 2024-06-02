@@ -25,8 +25,8 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 30,
             max: 1,
         },
-        { id: 'i4', cost: 50, max: 2 },
-        { id: 'i5', cost: 100, max: 5 },
+        { id: 'i4', cost: 50, max: 2, sevensMax: 2 },
+        { id: 'i5', cost: 100, max: 5, sevensMax: 5 },
         {
             id: 'i6',
 
@@ -80,7 +80,7 @@ export const inducementData: { inducements: Inducement[] } = {
             id: 'i12',
 
             cost: 300,
-            reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 100 },
+            reducedCost: { teamName: 'Halfling', cost: 100 },
             max: 1,
             sevensMax: 1,
         },

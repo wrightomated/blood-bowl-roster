@@ -445,6 +445,7 @@ const cindy: StarPlayer = {
     skills: [37, 65, 4, 71, 79, 81],
     cost: 50,
     specialRules: ['All You Can Eat'],
+    megaStar: true,
 };
 const dribl: StarPlayer = {
     id: 244,
