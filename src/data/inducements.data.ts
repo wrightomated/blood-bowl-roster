@@ -25,8 +25,8 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 30,
             max: 1,
         },
-        { id: 'i4', cost: 50, max: 2 },
-        { id: 'i5', cost: 100, max: 5 },
+        { id: 'i4', cost: 50, max: 2, sevensMax: 2 },
+        { id: 'i5', cost: 100, max: 5, sevensMax: 5 },
         {
             id: 'i6',
 
