@@ -289,8 +289,8 @@ const bomma: Player = {
     playerStats: [6, 2, 3, 4, 8],
     cost: 45,
     skills: [65, 4, 79, 81],
-    primary: ['A'],
-    secondary: ['G', 'P', 'S'],
+    primary: ['A', 'P'],
+    secondary: ['G', 'S'],
 };
 
 const looney: Player = {
@@ -1123,6 +1123,7 @@ const uwSnotling: Player = {
     ...snotlingLineman,
     id: 126,
     position: 'Underworld Snotling',
+    skills: [4, 78, 9, 81, 85],
     primary: ['A', 'M'],
     secondary: ['G'],
 };

@@ -11,6 +11,7 @@
     import { gameSettings } from '../store/gameSettings.store';
     import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
+    import type { Inducement } from '../models/inducement.model';
 
     export let selectedTeam: Team | CustomTeam;
 
@@ -35,11 +36,7 @@
         .filter((inducement) => inducement.max > 0)
         .map((inducement) => ({
             ...inducement,
-            cost: $rosterSpecialRules.includes(
-                inducement?.reducedCost?.specialRule
-            )
-                ? inducement.reducedCost.cost
-                : inducement.cost,
+            cost: inducementReducedCost(inducement),
         }))
         .filter((inducement) =>
             filterInducement(inducement, {
@@ -61,6 +58,19 @@
         (p, c) => p + c,
         0
     );
+
+    function inducementReducedCost(inducement: Inducement) {
+        const reducedCost = inducement.reducedCost;
+
+        if (
+            $rosterSpecialRules.includes(reducedCost?.specialRule) ||
+            reducedCost?.teamName === selectedTeam.name
+        ) {
+            return reducedCost.cost;
+        }
+
+        return inducement.cost;
+    }
 
     const addInducement = (key: string) => {
         roster.addInducement(key);
