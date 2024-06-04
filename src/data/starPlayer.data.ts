@@ -586,7 +586,7 @@ const losteriksson: StarPlayer = {
     playsFor: [],
     // Block, Jump Up, Dauntless, Thickskull + Drunkard, Loner 4+
     skills: [13, 6, 14, 60, 93, 71],
-    cost: 260,
+    cost: 270,
     specialRules: ['Two for One'],
     twoForOne: 401,
 };
@@ -608,7 +608,7 @@ const cipactlicihuatlSaurus: StarPlayer = {
     playsFor: [],
     // Block, Mighty Blow, Frenzy & Loner (3+)
     skills: [13, 55, 17, 711],
-    cost: 230,
+    cost: 240,
     specialRules: ['Lustrian Lycanthrope'],
 };
 
@@ -619,7 +619,7 @@ const cipactlicihuatlAmazon: StarPlayer = {
     playsFor: [],
     // Dodge, Side Step, Jump Up, PRO & Loner (3+
     skills: [4, 9, 6, 19, 711],
-    cost: 230,
+    cost: 240,
     specialRules: ['Lustrian Lycanthrope'],
 };
 
