@@ -159,7 +159,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 50, max: 8 },
             allowedApothecary: true,
-            tier: 2,
+            tier: 1,
             specialRules: ['Old World Classic'],
         },
         {
@@ -188,7 +188,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 70, max: 8 },
             allowedApothecary: false,
-            tier: 2,
+            tier: 1,
             specialRules: ['Masters of Undeath', 'Sylvanian Spotlight'],
         },
         {
@@ -257,7 +257,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
-            tier: 2,
+            tier: 1,
             specialRules: ['Badlands Brawl'],
         },
         {
@@ -303,7 +303,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
-            tier: 3,
+            tier: 2,
             maxBigGuys: 2,
             specialRules: [
                 'Bribery and Corruption',
