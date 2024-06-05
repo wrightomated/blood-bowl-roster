@@ -832,7 +832,6 @@
         },
         "events": {
             "title": "Player Events",
-
             "type": "Event Type",
             "turn": "Turn",
             "opp": "Opponent's Total Touchdowns",
