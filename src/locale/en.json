@@ -743,6 +743,10 @@
         "257": {
             "name": "Kiroth Krakeneye",
             "rule": "Black Ink"
+        },
+        "258": {
+            "name": "Jordell Freshbreeze",
+            "rule": "Swift as the Breeze"
         }
     },
     "inducements": {
