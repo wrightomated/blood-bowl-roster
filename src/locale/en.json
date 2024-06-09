@@ -759,6 +759,10 @@
         "403": {
             "name": "Cipactlicihuatl - Amazon",
             "rule": "Lustrian Lycanthrope"
+        },
+        "258": {
+            "name": "Jordell Freshbreeze",
+            "rule": "Swift as the Breeze"
         }
     },
     "inducements": {

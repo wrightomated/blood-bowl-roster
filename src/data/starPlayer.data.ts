@@ -624,6 +624,15 @@ const cipactlicihuatlAmazon: StarPlayer = {
     specialRules: ['Lustrian Lycanthrope'],
 };
 
+const jordellFreshbreeze: StarPlayer = {
+    id: 258,
+    position: 'Jordell Freshbreeze',
+    playerStats: [8, 3, 1, 3, 8],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [13, 2, 4, 7, 71, 9],
+    cost: 250,
+    specialRules: ['Swift as the Breeze'],
+};
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -688,5 +697,6 @@ export const starPlayers = {
         bjarnhildr,
         cipactlicihuatlSaurus,
         cipactlicihuatlAmazon,
+        jordellFreshbreeze,
     ],
 };
