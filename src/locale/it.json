@@ -104,7 +104,7 @@
             "names": {
                 "1": "Numero",
                 "2": "Nome",
-                "3": "Controlli",
+                "3": "Funzionalità",
                 "4": "Posizione",
                 "5": "MO",
                 "6": "FO",
@@ -144,11 +144,11 @@
         "tv": "Valore della Squadra",
         "ctv": "Valore Attuale della Squadra",
         "treasury": "Tesoreria",
-        "rerolls": "Ripetizioni",
-        "assistant_coaches": "Allenatori Assistenti",
-        "cheerleaders": "Tifose",
-        "dedicated_fans": "Fan Dedicati",
-        "apothecary": "Guaritore",
+        "rerolls": "Re-Roll",
+        "assistant_coaches": "Assistenti Allenatori",
+        "cheerleaders": "Cheerleader",
+        "dedicated_fans": "Tifosi Sfegatati",
+        "apothecary": "Medico",
         "removeAll": "Rimuovi tutti i potenziamenti qui sotto (nessun rimborso)"
     },
     "skills": {
@@ -827,7 +827,7 @@
             "stadium": "Stadio"
         },
         "inducements": {
-            "title": "Inducement della Partita",
+            "title": "Incentivi della Partita",
             "directions": "Puoi tornare in sicurezza al tuo roster per modificare."
         },
         "events": {
@@ -835,14 +835,14 @@
             "type": "Tipo di Evento",
             "turn": "Turno",
             "opp": "Touchdown Totali dell'Avversario",
-            "disc": "*Le uccisioni non sono una statistica ufficiale e non danno ricompensa spp. Aggiungi una ferita contemporaneamente per spp automatico.",
+            "disc": "*Le Uccisioni non sono una statistica ufficiale e non danno ricompensa SPP. Aggiungi una ferita contemporaneamente per SPP automatico.",
             "onTurn": "al turno {turn}",
             "casualty": "Perdita",
             "casualty.p": "Perdite",
             "completion": "Completo",
             "completion.p": "Completi",
             "kill": "Uccisione",
-            "kill.p": "Uccisioni",
+            "kill.p": "Uccisioni*",
             "touchdown": "Touchdown",
             "touchdown.p": "Touchdown",
             "deflection": "Deviazione",
@@ -855,16 +855,16 @@
             "winnings": "Vittorie",
             "concession": "Concedere la Partita",
             "mvp": "MVP",
-            "df": "Tiro dei Fan Dedicati",
-            "df_change": "I tuoi Fan Sfegatati {change}",
+            "df": "Tiro dei Fan Sfegatati",
+            "df_change": "I tuoi Tifosi Sfegatati {change}",
             "dec": "diminuiscono di {n}.",
             "inc": "aumentano di 1.",
             "stay": "rimangono gli stessi."
         },
         "save": {
             "title": "Salva Partita",
-            "updateSpp": "Aggiungi SPP ai giocatori",
-            "updateTreasury": "Aggiorna tesoreria",
+            "updateSpp": "Aggiorna SPP dei giocatori",
+            "updateTreasury": "Aggiorna Tesoreria",
             "removeInducements": "Rimuovi Inducement",
             "removeStarPlayers": "Rimuovi Star Player",
             "updateDedicatedFans": "Aggiorna Fan Sfegatati",
