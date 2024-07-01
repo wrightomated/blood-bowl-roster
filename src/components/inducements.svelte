@@ -200,9 +200,9 @@
 </table>
 
 <style lang="scss">
-    table {
-        min-width: 470px;
-    }
+    // table {
+    //     min-width: 470px;
+    // }
     .inducement {
         &__display-name {
             text-align: left;
