@@ -5,6 +5,7 @@
     import type { LeagueRosterStatus } from '../models/roster.model';
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import { _ } from 'svelte-i18n';
+    import { rosterMode } from '../store/rosterMode.store';
 
     export let extra: Extra;
 
@@ -39,10 +40,14 @@
     }
 
     function alterExtraMax(extra: Extra, status: LeagueRosterStatus) {
-        if (extra.extraString !== 'dedicated_fans' || status === 'commenced') {
-            return extra.max;
+        if (
+            extra.extraString === 'dedicated_fans' &&
+            status === 'draft' &&
+            $rosterMode === 'league'
+        ) {
+            return extra.max - 1;
         }
-        return extra.max - 1;
+        return extra.max;
     }
 </script>
 

@@ -24,7 +24,7 @@
         text-decoration: underline;
     }
     .degraded {
-        color: var(--main-colour);
+        color: var(--error);
         text-decoration: underline;
     }
 </style>

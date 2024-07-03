@@ -1,0 +1,49 @@
+{
+    "createTeamTitle": "Create new Chaos Cup roster",
+    "format": "elevens",
+    "mode": "exhibition",
+    "treasury": 1200,
+    "tiers": 3,
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "excludedInducementIds": [
+        "i5",
+        "i16",
+        "i27",
+        "i28",
+        "i29",
+        "i30",
+        "i31",
+        "i32",
+        "i33",
+        "i34",
+        "i35",
+        "i36",
+        "i37",
+        "i13",
+        "i45"
+    ],
+    "allowances": {
+        "sppPerTier": {
+            "1": 42,
+            "2": 54,
+            "3": 66
+        },
+        "maxOfSkill": 4
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "starPlayerCost": {
+        "star": 12,
+        "megaStar": 18
+    }
+}

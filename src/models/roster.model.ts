@@ -117,6 +117,7 @@ export type NewRosterOptions = {
     specialRule?: TeamSpecialRule;
     version?: string;
     treasury?: number;
+    startingTreasury?: number;
 };
 
 export type SpecificAdvancement = {

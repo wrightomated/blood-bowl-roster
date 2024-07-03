@@ -289,8 +289,8 @@ const bomma: Player = {
     playerStats: [6, 2, 3, 4, 8],
     cost: 45,
     skills: [65, 4, 79, 81],
-    primary: ['A'],
-    secondary: ['G', 'P', 'S'],
+    primary: ['A', 'P'],
+    secondary: ['G', 'S'],
 };
 
 const looney: Player = {
@@ -433,7 +433,7 @@ const skinkRunnerLineman: Player = {
 
 const chameleonSkink: Player = {
     id: 44,
-    position: 'Chameleon Skinks',
+    position: 'Chameleon Skink',
     playerStats: [7, 2, 3, 3, 8],
     cost: 70,
     skills: [4, 45, 20, 81],
@@ -1123,6 +1123,7 @@ const uwSnotling: Player = {
     ...snotlingLineman,
     id: 126,
     position: 'Underworld Snotling',
+    skills: [4, 78, 9, 81, 85],
     primary: ['A', 'M'],
     secondary: ['G'],
 };

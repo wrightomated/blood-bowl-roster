@@ -25,6 +25,7 @@
     import Redraft from './redraft/redraft.svelte';
 
     // import { sortedRosterPlayers } from '../store/sortedRosterPlayers.store';
+    import RosterValidator from './validator/rosterValidator.svelte';
 
     export let playerTypes: Player[];
 
@@ -136,14 +137,18 @@
         </table>
     </div>
 {/if}
+
 <RosterStatusToggle />
 <Redraft />
 {#if $roster.format === 'dungeon bowl'}
     <DungeonBowlPlayerCount />
-{:else}
-    <RosterPlayerCount />
 {/if}
 {#if $roster.format !== 'dungeon bowl'}
+    {#if $roster.mode === 'league'}
+        <RosterPlayerCount />
+    {:else}
+        <RosterValidator />
+    {/if}
     <AvailablePlayers />
 {/if}
 

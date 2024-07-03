@@ -17,39 +17,32 @@
         showAvailablePlayers,
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
-    import MaterialButton from './uiComponents/materialButton.svelte';
     import { rosterMode } from '../store/rosterMode.store';
     import ToggleButton from './uiComponents/toggleButton.svelte';
     import { teamFormat } from '../store/teamFormat.store';
     import type { RosterMode } from '../store/rosterMode.store';
-    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
     import { sendEventToAnalytics } from '../analytics/plausible';
     import Button from './uiComponents/button.svelte';
     import { flip } from 'svelte/animate';
     import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import type { TeamFormat } from '../types/teamFormat';
-    import { currentUserStore } from '../store/currentUser.store';
-    import FootballSpinner from './uiComponents/footballSpinner.svelte';
-    import RosterPreviewCard from './uiComponents/rosterPreviewCard.svelte';
-    import { getSavedRosterFromLocalStorage } from '../helpers/localStorageHelper';
-    import { rosterCache } from '../store/rosterCache.store';
-    import type { RosterPreviews } from '../models/roster.model';
+
     import SelectSpecialRule from './selectSpecialRule.svelte';
     import { teamSelectionSpecialRule } from '../store/rosterSpecialRules.store';
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
+    import LoadTeam from './loadTeam.svelte';
 
     export let teamList: (Team | CustomTeam)[];
 
-    let rosterCode: string;
     let includeNaf: boolean = true;
     let includeRetired: boolean = false;
 
     const nafTeams = ['28', '29'];
-    const rosterModes: RosterMode[] = ['league', 'exhibition'];
-    const teamFormats: TeamFormat[] = [
+    let rosterModes: RosterMode[] = ['league', 'exhibition'];
+    let teamFormats: TeamFormat[] = [
         'elevens',
         'sevens',
         'dungeon bowl',
@@ -57,9 +50,20 @@
     ];
 
     $: searchTerm = '';
-    customisationRules.subscribe((x) => {
-        if (x?.tiers) {
-            toggledTiers.setTiers(x.tiers);
+    customisationRules.subscribe((rules) => {
+        if (!rules) {
+            return;
+        }
+        if (rules?.tiers) {
+            toggledTiers.setTiers(rules.tiers);
+        }
+        if (rules?.format) {
+            teamFormats = [rules.format];
+            teamFormat.set(rules.format);
+        }
+        if (rules?.mode) {
+            rosterModes = [rules.mode];
+            rosterMode.set(rules.mode);
         }
     });
 
@@ -80,20 +84,7 @@
         );
 
     // This should be in a service of some type
-    async function getRosterPreviews() {
-        if ($rosterCache.rosterPreviews.valid) {
-            return $rosterCache.rosterPreviews.cachedItem;
-        }
-        try {
-            const dbService = await import('./auth/firebaseDB.service');
-            const rosterPreviewDocument = await dbService.gerRosterPreviews();
-            const rosterPreviews = rosterPreviewDocument.data();
-            rosterCache.cacheRosterPreviews(rosterPreviews);
-            return rosterPreviews;
-        } catch {
-            throw new Error('');
-        }
-    }
+
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
     };
@@ -108,10 +99,6 @@
         );
     };
 
-    const toggleLoad = () => {
-        teamLoadOpen.set(!$teamLoadOpen);
-    };
-
     const createTeam = () => {
         savedRosterIndex.newId();
         roster.reset({
@@ -121,6 +108,7 @@
             fans: $rosterMode === 'exhibition' ? 0 : 1,
             format: $teamFormat,
             specialRule: $teamSelectionSpecialRule,
+            startingTreasury: $customisationRules?.treasury,
         });
 
         teamSelectionOpen.set(false);
@@ -135,22 +123,6 @@
         });
 
         document.body.scrollIntoView();
-    };
-
-    const loadTeam = (savedRoster: { id: number; name?: string }) => {
-        savedRosterIndex.updateCurrentIndex(savedRoster.id);
-        const retrievedRoster = getSavedRosterFromLocalStorage(savedRoster.id);
-        if (!retrievedRoster) {
-            savedRosterIndex.removeIdFromIndex(savedRoster.id);
-            return;
-        }
-
-        roster.loadRoster(retrievedRoster);
-        teamSelectionOpen.set(false);
-        showAvailablePlayers.set(false);
-        showAvailableStarPlayers.set(false);
-        showNewTeamDialogue.set(false);
-        teamLoadOpen.set(false);
     };
 
     const tierToNumeral = (tier: number) => {
@@ -173,11 +145,6 @@
         return roman;
     };
 
-    const inputCode = () => {
-        roster.codeToRoster(rosterCode);
-        toggleLoad();
-    };
-
     const toggleNaf = () => {
         includeNaf = !includeNaf;
     };
@@ -196,32 +163,30 @@
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
     }
-
-    function sortedPreviews(rosterPreviews: RosterPreviews) {
-        if (!rosterPreviews) return [];
-        const previews = Object.values(rosterPreviews);
-        if (previews.length === 0) return [];
-        return previews.sort((a, b) => a.teamName.localeCompare(b.teamName));
-    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
     <h2 class="page-title">{$_('creation.title')}</h2>
-    <ToggleButton
-        options={rosterModes}
-        selectedIndex={rosterModes.indexOf($rosterMode)}
-        selected={(mode) => {
-            rosterMode.set(mode);
-        }}
-    />
+    {#if rosterModes.length > 1}
+        <ToggleButton
+            options={rosterModes}
+            selectedIndex={rosterModes.indexOf($rosterMode)}
+            selected={(mode) => {
+                rosterMode.set(mode);
+            }}
+        />
+    {/if}
 
-    <ToggleButton
-        options={teamFormats}
-        selectedIndex={teamFormats.indexOf($teamFormat)}
-        selected={(format) => {
-            changeFormat(format);
-        }}
-    />
+    {#if teamFormats.length > 1}
+        <ToggleButton
+            options={teamFormats}
+            selectedIndex={teamFormats.indexOf($teamFormat)}
+            selected={(format) => {
+                changeFormat(format);
+            }}
+        />
+    {/if}
+
     {#if $teamSelectionOpen}
         <div class="button-container">
             <div class="filter__tier">
@@ -291,50 +256,7 @@
 {/if}
 
 {#if $teamLoadOpen}
-    <h2 class="page-title">{$_('load.title')}</h2>
-    <div class="button-container" data-cy="load-team-box">
-        <div class="code-box">
-            <input
-                aria-label={$_('load.code')}
-                id="code-input"
-                placeholder={$_('load.code')}
-                bind:value={rosterCode}
-                use:blurOnEscapeOrEnter
-            />
-            <MaterialButton
-                hoverText={$_('load.title')}
-                symbol="input"
-                clickFunction={inputCode}
-            />
-        </div>
-        {#if $currentUserStore}
-            {#await getRosterPreviews()}
-                <FootballSpinner />
-            {:then rosterPreviews}
-                <h3 class="signed-in-heading">
-                    {$_('load.coachTeams', {
-                        values: { coach: $currentUserStore.displayName },
-                    })}
-                </h3>
-                <div class="team-previews">
-                    {#each sortedPreviews(rosterPreviews) as preview}
-                        <RosterPreviewCard {preview} />
-                    {/each}
-                </div>
-            {:catch}
-                <p style="color: red">{$_('errors.generic')}</p>
-            {/await}
-        {:else}
-            <h3>{$_('load.local')}</h3>
-            {#each $savedRosterIndex.index as savedRoster, i}
-                <Button clickFunction={() => loadTeam(savedRoster)}
-                    >{savedRoster.name ||
-                        $_('load.saved', { values: { n: i + 1 } })}</Button
-                >
-            {/each}
-        {/if}
-    </div>
-    <!-- Refactor to it's own component -->
+    <LoadTeam />
 {/if}
 
 <style lang="scss">
@@ -369,7 +291,7 @@
             font-family: var(--display-font);
             border-radius: 50%;
             font-size: 0.75em;
-            background-color: white;
+            background-color: var(--secondary-compliment);
             color: var(--secondary-colour);
             padding: 0;
             width: 24px;
@@ -383,11 +305,11 @@
             &:hover {
                 box-shadow: 0 4px 12px var(--button-shadow) inset;
                 background: var(--secondary-colour);
-                color: white;
+                color: var(--secondary-compliment);
             }
             &.selected {
                 background-color: var(--secondary-colour);
-                color: white;
+                color: var(--secondary-compliment);
                 border-color: var(--secondary-colour);
             }
         }
@@ -395,26 +317,5 @@
             display: inline-block;
             margin: 0 4px 1rem 4px;
         }
-    }
-
-    .code-box {
-        display: flex;
-        padding: 10px;
-        align-items: center;
-
-        input {
-            margin-right: 8px;
-            font-size: 16px;
-        }
-    }
-    .team-previews {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 16px;
-        margin: 16px 8px;
-    }
-    .signed-in-heading {
-        text-align: center;
     }
 </style>

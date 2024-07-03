@@ -3,6 +3,7 @@ import { register, init, getLocaleFromNavigator } from 'svelte-i18n';
 export const registerLocales = (savedLocale?: string) => {
     register('en', () => import('./en.json'));
     register('fr', () => import('./fr.json'));
+    register('it', () => import('./it.json'));
 
     init({
         fallbackLocale: 'en',
@@ -10,4 +11,4 @@ export const registerLocales = (savedLocale?: string) => {
     });
 };
 export const localeStorageKey = 'user-locale';
-export const availableLocales = ['en', 'fr'];
+export const availableLocales = ['en', 'fr', 'it'];

@@ -44,7 +44,6 @@
 <style lang="scss">
     .player-count {
         &__container {
-            margin-top: 8px;
             display: flex;
             flex-wrap: wrap;
             column-gap: 16px;
@@ -58,7 +57,7 @@
             align-items: center;
             column-gap: 8px;
             &--danger {
-                color: var(--main-colour);
+                color: var(--error);
             }
         }
     }

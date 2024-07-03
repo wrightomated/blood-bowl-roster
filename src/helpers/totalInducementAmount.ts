@@ -19,21 +19,19 @@ export const inducementCost = (
     key: string,
     teamId: string
 ) => {
-    const specialRules: TeamSpecialRule[] =
-        teamData.teams.find((x) => x.id === teamId)?.specialRules || [];
+    const team = teamData.teams.find((x) => x.id === teamId);
+    const specialRules: TeamSpecialRule[] = team?.specialRules || [];
+
     const ind = inducementData.inducements.find((x) => x.id === key);
 
-    if (
-        ind?.reducedCost &&
-        specialRules.includes(ind.reducedCost?.specialRule)
-    ) {
-        return ind.reducedCost.cost;
+    if (ind?.reducedCost) {
+        if (
+            specialRules.includes(ind.reducedCost?.specialRule) ||
+            ind.reducedCost?.teamName === team.name
+        ) {
+            return ind.reducedCost.cost;
+        }
     }
 
-    return ind?.reducedCost &&
-        specialRules.includes(ind.reducedCost?.specialRule)
-        ? ind.reducedCost.cost
-        : format === 'sevens' && ind.sevensCost
-        ? ind.sevensCost
-        : ind.cost;
+    return format === 'sevens' && ind.sevensCost ? ind.sevensCost : ind.cost;
 };

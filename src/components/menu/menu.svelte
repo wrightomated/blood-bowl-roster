@@ -68,8 +68,8 @@
         z-index: 8;
         width: 100%;
         text-align: center;
-        border-bottom: var(--secondary-colour) 2px solid;
-        background-color: white;
+        border-bottom: var(--secondary-border);
+        background-color: var(--secondary-compliment);
         display: flex;
         align-items: center;
         &--drawer-open {
@@ -123,7 +123,7 @@
             left: 0;
             top: -124px;
             transition: transform 250ms ease-in-out;
-            background: white;
+            background: var(--secondary-compliment);
             height: 124px;
             border-bottom: var(--secondary-border);
             &--open {

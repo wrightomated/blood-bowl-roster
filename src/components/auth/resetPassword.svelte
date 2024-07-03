@@ -97,7 +97,7 @@
         max-width: 400px;
         &--touched {
             input:invalid {
-                border-color: var(--main-colour);
+                border-color: var(--error);
             }
         }
     }
@@ -109,10 +109,6 @@
     }
     label {
         margin-bottom: 4px;
-    }
-
-    .error {
-        color: var(--main-colour);
     }
 
     .logged-in {
