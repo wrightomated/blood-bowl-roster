@@ -445,6 +445,7 @@ const cindy: StarPlayer = {
     skills: [37, 65, 4, 71, 79, 81],
     cost: 50,
     specialRules: ['All You Can Eat'],
+    megaStar: true,
 };
 const dribl: StarPlayer = {
     id: 244,
@@ -578,7 +579,15 @@ const kirotKrakeneye: StarPlayer = {
     cost: 160,
     specialRules: ['Black Ink'],
 };
-
+const jordellFreshbreeze: StarPlayer = {
+    id: 258,
+    position: 'Jordell Freshbreeze',
+    playerStats: [8, 3, 1, 3, 8],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [13, 2, 4, 7, 71, 9],
+    cost: 250,
+    specialRules: ['Swift as the Breeze'],
+};
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -639,5 +648,6 @@ export const starPlayers = {
         rodneyRoachbait,
         rowanaForestfoot,
         kirotKrakeneye,
+        jordellFreshbreeze,
     ],
 };

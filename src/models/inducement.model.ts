@@ -1,4 +1,5 @@
-import type { TeamSpecialRule } from './team.model';
+import type { CollegeName } from './dungeonBowl.model';
+import type { TeamName, TeamSpecialRule } from './team.model';
 
 export interface Inducement {
     id: InducementKey;
@@ -24,6 +25,7 @@ export interface Inducement {
 
 export interface InducementCostReduction {
     specialRule?: TeamSpecialRule;
+    teamName?: TeamName | CollegeName;
     cost: number;
 }
 
