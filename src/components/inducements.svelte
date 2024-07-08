@@ -10,6 +10,7 @@
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../customisation/customisation.store';
     import type { Inducement } from '../models/inducement.model';
 
     export let selectedTeam: Team | CustomTeam;
@@ -17,6 +18,22 @@
     $: searchTerm = '';
 
     $: newFilteredInducements = inducementData.inducements
+        .filter((inducement) => {
+            let excludedInducementIds =
+                $customisationRules?.inducementSettings?.excludedInducementIds;
+            let includedInducementIds =
+                $customisationRules?.inducementSettings?.includedInducementIds;
+            if (includedInducementIds) {
+                return includedInducementIds.includes(inducement.id);
+            } else if (excludedInducementIds) {
+                return !excludedInducementIds.includes(inducement.id);
+            } else {
+                return true;
+            }
+        })
+        .concat(
+            $customisationRules?.inducementSettings?.customInducements || []
+        )
         .map((inducement) => ({
             ...inducement,
             max: $gameSettings?.inducementMaxKey
@@ -66,11 +83,17 @@
     }
 
     const addInducement = (key: string) => {
-        roster.addInducement(key);
+        roster.addInducement(
+            key,
+            $customisationRules?.inducementSettings?.customInducements
+        );
     };
 
     const removeInducement = (key: string) => {
-        roster.removeInducement(key);
+        roster.removeInducement(
+            key,
+            $customisationRules?.inducementSettings?.customInducements
+        );
     };
 
     const toggleShowAllInducements = () => {
@@ -143,7 +166,9 @@
             {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>
                     <td class="inducement__display-name"
-                        >{$_('inducements.' + ind.id)}</td
+                        >{$_('inducements.' + ind.id, {
+                            default: ind.displayName,
+                        })}</td
                     >
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
                     <td>

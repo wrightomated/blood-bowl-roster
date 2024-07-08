@@ -8,6 +8,7 @@ import PlayerCheckbox from '../components/rosterPlayer/playerCheckbox.svelte';
 import SkillElement from '../components/skillElement.svelte';
 import TextElement from '../components/uiComponents/textElement.svelte';
 import type { ColumnDetails } from '../models/rosterTableColumns.model';
+import SppInput from '../components/rosterPlayer/sppInput.svelte';
 
 export const columnDetails: ColumnDetails[] = [
     {
@@ -138,7 +139,7 @@ export const columnDetails: ColumnDetails[] = [
             elementId: 'spp-header',
         },
         rowDetails: {
-            component: PlayerNumberInput,
+            component: SppInput,
         },
         disallowedRosterFormats: ['sevens'],
         orderByPropertyPath: 'alterations.spp',

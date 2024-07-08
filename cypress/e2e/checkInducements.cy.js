@@ -18,4 +18,18 @@ context('Test that the correct inducements are displayed', () => {
         cy.contains('Temp Agency Cheerleader');
         cy.contains('Wandering Apothecary');
     });
+
+    it('should add an inducement and increase current team value', () => {
+        cy.visit('/');
+        cy.getBySel('menu-button').click();
+        cy.getBySel('new-team').click();
+        cy.contains('Orc').click();
+        cy.getBySel('create-team').click();
+        cy.getBySel('toggle-inducements').click();
+        cy.contains('Bribe')
+            .siblings('.inducement__control')
+            .find('button')
+            .click();
+        cy.getBySel('current-tv').should('have.text', '50,000');
+    });
 });

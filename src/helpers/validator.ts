@@ -10,6 +10,7 @@ export type RosterValidationResult = {
         tooMany?: boolean;
         tooBigGuy?: boolean;
         moreThanFourOfTheSameSkill?: string[];
+        tooManySecondarySkills?: number;
         sppBalance?: number;
         tooManyOfPlayerType?: number[];
         teamTotalValue?: number;
@@ -20,10 +21,11 @@ export type RosterValidationOptions = {
     sppAllowance: number;
     currentTeam: CustomTeam;
     budget: number;
-    maxOfSkill?: number;
+    maxOfSkillId?: number;
     maxPlayers?: number;
     minPlayers?: number;
     starPlayerSpp?: number;
+    secondaryAllowance?: number;
 };
 
 export function invalidRoster(
@@ -32,17 +34,18 @@ export function invalidRoster(
         sppAllowance,
         currentTeam,
         budget,
-        maxOfSkill,
+        maxOfSkillId,
         maxPlayers,
         minPlayers,
         starPlayerSpp,
+        secondaryAllowance,
     }: RosterValidationOptions
 ): RosterValidationResult {
     try {
         const tooFew = tooFewPlayers(roster, minPlayers || 11);
         const tooMany = tooManyPlayers(roster, maxPlayers || 16);
         const tooBigGuy = tooManyBigGuy(roster, currentTeam?.maxBigGuys);
-        const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkill);
+        const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkillId);
         const sppBalance = excessSpp(roster, sppAllowance, starPlayerSpp);
         const tooManyOfPlayerType = tooManyOfPlayerTypeCalc(
             roster,
@@ -50,6 +53,16 @@ export function invalidRoster(
         );
         const teamTotalValue = teamTotal(roster);
         const budgetValid = budget ? teamTotalValue <= budget : true;
+        let tooManySecondarySkills = 0;
+        if (secondaryAllowance) {
+            const advancements = allAdvancements(roster);
+            const secondarySkills = advancements.filter(
+                (x) =>
+                    x.type === 'secondaryselect' || x.type === 'secondaryrandom'
+            );
+            tooManySecondarySkills =
+                secondarySkills.length - secondaryAllowance;
+        }
 
         const valid =
             !tooFew &&
@@ -58,7 +71,8 @@ export function invalidRoster(
             !(moreThanMaxOfSameSkill.length > 0) &&
             sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
-            budgetValid;
+            budgetValid &&
+            tooManySecondarySkills <= 0;
 
         return {
             valid,
@@ -70,6 +84,7 @@ export function invalidRoster(
                 sppBalance,
                 tooManyOfPlayerType,
                 teamTotalValue,
+                tooManySecondarySkills,
             },
         };
     } catch (error) {
@@ -116,14 +131,24 @@ function tooManyOfPlayerTypeCalc(
     return tooMany;
 }
 
-/**
- * Number of primary skills
- * Number of secondary skills
- * Number of characteristic increases
- * Number of trait removals
- */
-function advancementBreakdown(roster: Roster) {
+export function advancementBreakdown(roster: Roster) {
     const advancements = allAdvancements(roster);
+    const breakdown = advancements.reduce(
+        (a, b) => {
+            if (a[b.type] !== undefined) {
+                a[b.type]++;
+            }
+            return a;
+        },
+        {
+            primaryselect: 0,
+            primaryrandom: 0,
+            characteristic: 0,
+            secondaryselect: 0,
+            secondaryrandom: 0,
+        }
+    );
+    return breakdown;
 }
 /**
  * return any skillids that appear more than skillMax times in the advancements

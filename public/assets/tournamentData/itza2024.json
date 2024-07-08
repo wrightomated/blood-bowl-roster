@@ -1,0 +1,100 @@
+{
+    "format": "elevens",
+    "mode": "exhibition",
+    "treasury": 1150,
+    "tiers": 4,
+
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "customContent": {
+        "createTeamTitle": "Itza Rumble in the Jungle 2024",
+        "menuSubtitle": "ITZA"
+    },
+    "updatedTierMap": {
+        "High Elf": 2,
+        "Shambling Undead": 2,
+        "Skaven": 2,
+        "Black Orc": 3,
+        "Chaos Chosen": 3,
+        "Chaos Renegades": 3,
+        "Imperial Nobility": 3,
+        "Khorne": 3,
+        "Nurgle": 3,
+        "Old World Alliance": 3,
+        "Slann": 3,
+        "Vampire": 3,
+        "Halfling": 4,
+        "Goblin": 4,
+        "Ogre": 4,
+        "Gnome": 4,
+        "Snotling": 4
+    },
+    "inducementSettings": {
+        "includedInducementIds": ["i4", "i7", "i9", "i10", "i11", "i12"],
+        "customInducements": [
+            {
+                "id": "i1000",
+                "displayName": "Ancient artifact",
+                "cost": 30,
+                "max": 1
+            }
+        ]
+    },
+    "allowances": {
+        "maxOfSkillId": 4,
+        "noSkillStacking": true,
+        "useSkillPoints": true,
+        "blockSppEditing": true,
+        "allowancesPerTier": {
+            "1": {
+                "secondarySkill": 1,
+                "starPlayer": 1,
+                "spp": 36
+            },
+            "2": {
+                "secondarySkill": 2,
+                "starPlayer": 2,
+                "spp": 48
+            },
+            "3": {
+                "secondarySkill": 3,
+                "starPlayer": 2,
+                "spp": 60
+            },
+            "4": {
+                "secondarySkill": 4,
+                "starPlayer": 2,
+                "spp": 72
+            }
+        }
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "starPlayerSettings": {
+        "customStarPlayers": [
+            {
+                "id": 1000,
+                "position": "Barlgura",
+                "playerStats": [5, 6, 4, 0, 9],
+                "playsFor": [],
+                "skills": [50, 17, 54, 55, 71],
+                "cost": 260,
+                "specialRules": ["Finisher"]
+            }
+        ],
+        "starPlayerCost": {
+            "star": 12,
+            "megaStar": 24
+        }
+    },
+    "hideProfile": true
+}

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
-    import { maxPlayerNumber, roster } from '../../store/teamRoster.store';
+    import { MAX_PLAYER_NUMBER, roster } from '../../store/teamRoster.store';
 
     export let index: number;
     export let variant: 'default' | 'card' = 'default';
@@ -9,7 +9,7 @@
     const changeNumber = () => {
         if (
             !Number.isInteger(playerNumber) ||
-            playerNumber > maxPlayerNumber ||
+            playerNumber > MAX_PLAYER_NUMBER ||
             playerNumber < 0
         ) {
             playerNumber = getPlayerNumberAlteration();
@@ -32,7 +32,7 @@
     type="number"
     inputmode="numeric"
     min="0"
-    max={maxPlayerNumber}
+    max={MAX_PLAYER_NUMBER}
     on:blur={changeNumber}
     bind:value={playerNumber}
     use:blurOnEscapeOrEnter

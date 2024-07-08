@@ -4,9 +4,13 @@
     import StarPlayerRow from './starPlayerRow.svelte';
     import { filterStarPlayers } from '../helpers/starPlayerFilter';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../customisation/customisation.store';
+
+    $: customStarPlayers =
+        $customisationRules?.starPlayerSettings?.customStarPlayers;
 
     $: filteredStarPlayers = filterStarPlayers(
-        starPlayers,
+        starPlayers.starPlayers.concat(customStarPlayers || []),
         $teamCreationSpecialRules
     );
 </script>

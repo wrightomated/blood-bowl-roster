@@ -27,16 +27,18 @@
         .map((x) => x.player as StarPlayer);
 
     $: sppAllowance =
-        $customisationRules?.allowances?.sppPerTier[$currentTeam.tier] ?? 0;
-    $: maxOfSkill = $customisationRules?.allowances?.maxOfSkill;
+        $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
+            ?.spp ?? 0;
+    $: maxOfSkillId = $customisationRules?.allowances?.maxOfSkillId;
     $: budget = $customisationRules?.treasury || undefined;
     $: starPlayerSpp = starPlayers.reduce(
         (acc, x) =>
             acc +
-            ($customisationRules?.starPlayerCost
+            ($customisationRules?.starPlayerSettings?.starPlayerCost
                 ? x.megaStar
-                    ? $customisationRules.starPlayerCost.megaStar
-                    : $customisationRules.starPlayerCost.star
+                    ? $customisationRules.starPlayerSettings.starPlayerCost
+                          .megaStar
+                    : $customisationRules.starPlayerSettings.starPlayerCost.star
                 : 0),
         0
     );
@@ -46,7 +48,7 @@
         minPlayers: $gameSettings.minPlayers,
         budget,
         currentTeam: $currentTeam,
-        maxOfSkill,
+        maxOfSkillId,
         starPlayerSpp,
     });
 </script>
@@ -65,8 +67,13 @@
     </p>
     {#if sppAllowance > 0}
         <p>
-            <span class="mini-title">SPP:</span>
-            {$spentSpp + starPlayerSpp} / {sppAllowance}
+            {#if $customisationRules?.allowances?.useSkillPoints}
+                <span class="mini-title">Skill Points:</span>
+                {($spentSpp + starPlayerSpp) / 6} / {sppAllowance / 6}
+            {:else}
+                <span class="mini-title">SPP:</span>
+                {$spentSpp + starPlayerSpp} / {sppAllowance}
+            {/if}
         </p>
     {/if}
     <p>
@@ -80,7 +87,7 @@
     {/if}
 </div>
 <div class="error-messages">
-    {#if invalid.invalid.moreThanFourOfTheSameSkill.length > 0}
+    {#if invalid?.invalid?.moreThanFourOfTheSameSkill?.length > 0}
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
             Have more than 4 of the same skill:

@@ -81,7 +81,7 @@
         <p>
             {#if rosterPlayer.alterations.advancements}
                 {advancementTitle[rosterPlayer.alterations.advancements]}
-                {#each Array(rosterPlayer.alterations.advancements) as _}
+                {#each Array(rosterPlayer?.alterations?.advancements) as _}
                     <i
                         class="material-symbols-outlined player-info__star no-transition"
                         >star</i

@@ -54,10 +54,6 @@
                 'Current Value': {
                     text: `${formatNumberInThousands(currentCost)}`,
                 },
-                Spp: {
-                    index,
-                    alteration: 'spp',
-                },
                 NI: {
                     index,
                     alteration: 'ni',
