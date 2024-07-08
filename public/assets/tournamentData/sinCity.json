@@ -1,0 +1,54 @@
+{
+    "format": "elevens",
+    "mode": "exhibition",
+    "treasury": 1150,
+    "tiers": 3,
+
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "customContent": {
+        "createTeamTitle": "SIN CITY BOWL at LVO 2025",
+        "menuSubtitle": "SIN CITY",
+        "teamTypeTitle": "SIN CITY"
+    },
+    "updatedTierMap": {
+        "Orc": 1
+    },
+    "inducementSettings": {
+        "includedInducementIds": ["i4", "i7", "i11", "i12"]
+    },
+    "allowances": {
+        "noSkillStacking": true,
+        "useSkillPoints": true,
+        "blockSppEditing": true,
+        "allowancesPerTier": {
+            "1": {
+                "secondarySkill": 1,
+                "starPlayer": 1,
+                "spp": 36
+            },
+            "2": {
+                "secondarySkill": 2,
+                "starPlayer": 1,
+                "spp": 48
+            },
+            "3": {
+                "secondarySkill": 3,
+                "starPlayer": 1,
+                "spp": 60
+            }
+        }
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "hideProfile": true
+}

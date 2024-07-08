@@ -81,43 +81,46 @@
     };
 </script>
 
-<section class="no-print star-player">
-    <header>
-        <h3>{$_('stars.title')}</h3>
-    </header>
-    <div class="star-player__content">
-        {#if filteredStarPlayers.length > 0}
-            <select
-                aria-label="star player name"
-                class="star-player-select"
-                data-cy="star-player-select"
-                bind:value={selectedId}
-            >
-                {#each filteredStarPlayers as star (star.id)}
-                    <option value={star.id}>{star.displayName}</option>
-                {/each}
-            </select>
-        {/if}
-        <div class="star-player__secondary">
-            <div class="star-player-amount">
-                {currentStarPlayerAmount} / 2
-            </div>
-            <div class="star-player-cost">
-                {formatNumberInThousands(getSelected(selectedId)?.cost) || 0}
-            </div>
-            <div class="add-star">
-                {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < 2}
-                    <MaterialButton
-                        hoverText="Add star player"
-                        symbol="add_circle"
-                        clickFunction={addStarPlayer}
-                        cyData="add-star-player"
-                    />
-                {/if}
+{#if filteredStarPlayers.length > 0}
+    <section class="no-print star-player">
+        <header>
+            <h3>{$_('stars.title')}</h3>
+        </header>
+        <div class="star-player__content">
+            {#if filteredStarPlayers.length > 0}
+                <select
+                    aria-label="star player name"
+                    class="star-player-select"
+                    data-cy="star-player-select"
+                    bind:value={selectedId}
+                >
+                    {#each filteredStarPlayers as star (star.id)}
+                        <option value={star.id}>{star.displayName}</option>
+                    {/each}
+                </select>
+            {/if}
+            <div class="star-player__secondary">
+                <div class="star-player-amount">
+                    {currentStarPlayerAmount} / 1
+                </div>
+                <div class="star-player-cost">
+                    {formatNumberInThousands(getSelected(selectedId)?.cost) ||
+                        0}
+                </div>
+                <div class="add-star">
+                    {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < 2}
+                        <MaterialButton
+                            hoverText="Add star player"
+                            symbol="add_circle"
+                            clickFunction={addStarPlayer}
+                            cyData="add-star-player"
+                        />
+                    {/if}
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{/if}
 
 <style lang="scss">
     .star-player {

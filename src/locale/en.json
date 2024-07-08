@@ -260,7 +260,11 @@
         "624": "Animosity (Orc Lineman)",
         "625": "Animosity (Big Un Blocker)",
         "710": "Loner (5+)",
-        "711": "Loner (3+)"
+        "711": "Loner (3+)",
+        "201": "Big Hand*",
+        "202": "Claws**",
+        "203": "Sure Hands*",
+        "204": "Juggernaut**"
     },
     "teams": {
         "names": {

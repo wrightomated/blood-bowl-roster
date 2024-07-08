@@ -115,6 +115,14 @@ export const skillCatalogue: Skill[] = [
     // Gnomes
     { id: 98, category: 'T' },
     { id: 99, category: 'T' },
+    // "201": "Big Hand*",
+    // "202": "Claws*",
+    // "203": "Sure Hands*",
+    // "204": "Juggernaut**"
+    { id: 201, category: 'M' },
+    { id: 202, category: 'M' },
+    { id: 203, category: 'G' },
+    { id: 204, category: 'S' },
 ];
 
 export const dungeonBowlSkillIds = {

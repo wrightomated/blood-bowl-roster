@@ -22,6 +22,7 @@ export type TournamentCustomisation = {
     advancementSettings?: AdvancementSetting[];
     starPlayerSettings?: {
         excludeStarPlayers?: string[];
+        includeStarPlayers?: string[];
         /** Spp */
         starPlayerCost?: {
             star: number;
