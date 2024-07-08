@@ -9,10 +9,12 @@
     export let index: number;
     let rosterPlayer: RosterPlayerRecord;
     $: rosterPlayer = $roster.players[index];
+
+    $: skillStackingAllowed = !$customisationRules?.allowances?.noSkillStacking;
 </script>
 
 <CurrentAdvancementList {rosterPlayer} {index} />
 
-{#if (!$customisationRules?.allowances?.noSkillStacking && rosterPlayer.alterations?.advancements < 6) || ($customisationRules?.allowances?.noSkillStacking && !rosterPlayer.alterations?.advancements)}
+{#if (skillStackingAllowed && rosterPlayer.alterations?.advancements < 6) || !rosterPlayer.alterations?.advancements}
     <SelectAdvancement {rosterPlayer} {index} />
 {/if}
