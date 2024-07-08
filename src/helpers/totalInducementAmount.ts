@@ -38,7 +38,7 @@ export const inducementCost = (
     if (ind?.reducedCost) {
         if (
             specialRules.includes(ind.reducedCost?.specialRule) ||
-            ind.reducedCost?.teamName === team.name
+            (team && ind.reducedCost?.teamName === team?.name)
         ) {
             return ind.reducedCost.cost;
         }
