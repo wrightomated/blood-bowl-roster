@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { customisationRules } from '../../customisation/customisation.store';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import { roster } from '../../store/teamRoster.store';
@@ -35,17 +36,22 @@
 <div class="extraDetails">
     {#if $roster.format !== 'sevens'}
         {#if $roster.players[index]?.alterations?.spp !== undefined}
-            <label
-                ><span class="mini-title">SPP:</span>
-                <input
-                    class="spp-input"
-                    type="number"
-                    placeholder="?"
-                    inputmode="numeric"
-                    use:blurOnEscapeOrEnter
-                    bind:value={$roster.players[index].alterations.spp}
-                />
-            </label>
+            {#if !$customisationRules?.allowances?.blockSppEditing}
+                <label
+                    ><span class="mini-title">SPP:</span>
+                    <input
+                        class="spp-input"
+                        type="number"
+                        placeholder="?"
+                        inputmode="numeric"
+                        use:blurOnEscapeOrEnter
+                        bind:value={$roster.players[index].alterations.spp}
+                    />
+                </label>
+            {:else}
+                <span class="mini-title">SP:&nbsp;</span>
+                {-1 * rosterPlayer.alterations.spp}
+            {/if}
         {:else if !rosterPlayer.starPlayer}0{/if}
     {/if}
 

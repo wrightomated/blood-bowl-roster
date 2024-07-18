@@ -37,6 +37,11 @@ export interface Roster {
     coachDetails?: CoachDetails;
     notes?: string;
     config?: RosterConfig;
+    ringer?: {
+        budget: number;
+        currentCost: number;
+        player: RosterPlayerRecord;
+    };
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;

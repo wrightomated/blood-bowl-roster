@@ -13,23 +13,32 @@
     import type { SkillCategory } from '../../models/skill.model';
     import { roster } from '../../store/teamRoster.store';
     import ToggleButton from '../uiComponents/toggleButton.svelte';
-    import CharacteristicAdvancement from './characteristicAdvancement.svelte';
-    import SelectSkillAdvancement from './selectSkillAdvancement.svelte';
+    import RmrrCharAdvancement from './rmrrCharAdvancement.svelte';
+    import RmrrSelectSkillAdvancement from './rmrrSelectSkillAdvancement.svelte';
 
     export let rosterPlayer: RosterPlayerRecord;
     export let index: number;
 
-    const advancementSettings =
-        $customisationRules?.advancementSettings ||
-        getGameTypeSettings($roster.format).advancementSettings;
+    const advancementSettings = [
+        {
+            type: 'primary',
+            selectionTypes: ['select'],
+        },
+
+        {
+            type: 'characteristic',
+            selectionTypes: ['select', 'random'],
+        },
+    ];
     const advancementTypes = Object.values(advancementSettings).map(
         (setting) => setting.type
     );
-    let advancementType: AdvancementType = advancementTypes[0];
+    let advancementType: AdvancementType =
+        advancementTypes[0] as AdvancementType;
 
     const selectionTypes: SelectionType[] = advancementSettings.find(
         (setting) => setting.type === advancementType
-    ).selectionTypes;
+    ).selectionTypes as SelectionType[];
     let selectionType: SelectionType = selectionTypes[0];
 
     let advancementCombination: AdvancementCombination;
@@ -38,11 +47,7 @@
             ? ''
             : selectionType)) as AdvancementCombination;
 
-    let sppCost: number;
-    $: sppCost =
-        advancementCostsMap[advancementCombination][
-            rosterPlayer?.alterations?.advancements || 0
-        ];
+    let sppCost: number = 0;
 
     // Skill category toggle
     let options: SkillCategory[];
@@ -55,6 +60,15 @@
     function selectSelectionType(type: SelectionType) {
         selectionType = type;
     }
+    /**
+     * ST = 80k
+    AG = 40k
+    PA/MA = 20k
+    AV = 10
+    Cost of Skill Upgrades for Ringer:
+    Primary Skill = 20k
+
+     */
 
     function selectSkill(skillId: number) {
         if (!$roster.config.customSkillColour[skillId]) {
@@ -63,8 +77,6 @@
         const extraSkills = (rosterPlayer.alterations.extraSkills || []).concat(
             [skillId]
         );
-        const sevensExtraSkillTax =
-            $roster.format !== 'sevens' ? 0 : extraSkills.length > 1 ? 10 : 0;
 
         const specificAdvancement = {
             type: advancementCombination,
@@ -80,8 +92,7 @@
                 advancements: (rosterPlayer.alterations?.advancements || 0) + 1,
                 valueChange:
                     (rosterPlayer.alterations?.valueChange || 0) +
-                    skillIncreaseCost[advancementType + selectionType] +
-                    sevensExtraSkillTax,
+                    skillIncreaseCost[advancementType + selectionType],
                 specificAdvancements: rosterPlayer.alterations
                     ?.specificAdvancements
                     ? rosterPlayer.alterations.specificAdvancements.concat([
@@ -94,7 +105,7 @@
     }
 </script>
 
-{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined && !$customisationRules?.allowances?.blockSppEditing}
+{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
     <label class="spp"
         ><span class="mini-title">SPP:</span>
         <input
@@ -122,7 +133,7 @@
     />
 {/if}
 {#if selectedCategory && advancementType !== 'characteristic'}
-    <SelectSkillAdvancement
+    <RmrrSelectSkillAdvancement
         {selectedCategory}
         {rosterPlayer}
         {selectSkill}
@@ -130,7 +141,7 @@
         randomSelection={selectionType === 'random'}
     />
 {:else if advancementType === 'characteristic'}
-    <CharacteristicAdvancement {index} {sppCost} {rosterPlayer} />
+    <RmrrCharAdvancement {index} {sppCost} {rosterPlayer} />
 {/if}
 
 <style lang="scss">

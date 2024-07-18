@@ -1474,6 +1474,16 @@ const woodlandFox: Player = {
     secondary: ['A'],
 };
 
+const ringer: Player = {
+    ...humanLineman,
+    id: 199,
+    position: 'Ringer',
+    cost: 0,
+    skills: [...humanLineman.skills, 1000],
+    primary: ['A', 'G', 'M', 'P', 'S'],
+    secondary: [],
+};
+
 export const playerCatalogue: PlayerCatalogue = {
     players: [
         imperialLineman,
@@ -1644,5 +1654,6 @@ export const playerCatalogue: PlayerCatalogue = {
         gnomeBeastmaster,
         gnomeIllusionist,
         woodlandFox,
+        ringer,
     ],
 };

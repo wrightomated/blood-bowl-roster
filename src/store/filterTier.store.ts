@@ -6,6 +6,7 @@ const createToggledTiers = () => {
         true,
         true,
         true,
+        true,
     ]);
     return {
         subscribe,

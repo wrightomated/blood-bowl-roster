@@ -132,7 +132,11 @@
     {#if $roster.format === 'elevens' && invalid.invalid.sppBalance < 0}
         <p class="error">
             <i class="material-symbols-outlined no-transition">warning</i>
-            {-1 * invalid.invalid.sppBalance} SPP over allowance.
+            {#if $customisationRules?.allowances?.useSkillPoints}
+                {(-1 * invalid.invalid.sppBalance) / 6} Skill Points over allowance.
+            {:else}
+                {-1 * invalid.invalid.sppBalance} SPP over allowance.
+            {/if}
         </p>
     {/if}
 </div>

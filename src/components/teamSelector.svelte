@@ -145,6 +145,17 @@
         return roman;
     };
 
+    const tierToRMRR = (tier: number) => {
+        return (
+            {
+                1: '1',
+                2: '1.5',
+                3: '2',
+                4: '3',
+            }[tier] || tier
+        );
+    };
+
     const toggleNaf = () => {
         includeNaf = !includeNaf;
     };
@@ -200,7 +211,7 @@
                         class:selected={$filteredTiers.includes(i + 1)}
                         class="filter__button"
                         title={$_('creation.tier', { values: { tier: i + 1 } })}
-                        >{tierToNumeral(i + 1)}</button
+                        >{tierToRMRR(i + 1)}</button
                     >
                 {/each}
                 <button
@@ -233,8 +244,7 @@
                         class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
                         >{$_('teams.names.' + team.id)}
-                        <span class="display-font"
-                            >{tierToNumeral(team.tier)}</span
+                        <span class="display-font">{tierToRMRR(team.tier)}</span
                         >{#if nafTeams.includes(team.id)}<span
                                 class="display-font">&nbsp;N</span
                             >{/if}</button

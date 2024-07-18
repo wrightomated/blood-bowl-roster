@@ -2,10 +2,7 @@
     import { customisationRules } from '../../customisation/customisation.store';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
-    import RmrrSelectAdvancement from '../rmrr/rmrrSelectAdvancement.svelte';
-    import CurrentAdvancementList from './currentAdvancementList.svelte';
-
-    import SelectAdvancement from './selectAdvancement.svelte';
+    import CurrentAdvancementList from '../playerAdvancement/currentAdvancementList.svelte';
 
     export let index: number;
     let rosterPlayer: RosterPlayerRecord;
@@ -15,8 +12,8 @@
 </script>
 
 <CurrentAdvancementList {rosterPlayer} {index} />
+{#if rosterPlayer.alterations?.advancements < 6}{/if}
 
 {#if (skillStackingAllowed && rosterPlayer.alterations?.advancements < 6) || !rosterPlayer.alterations?.advancements}
-    <!-- <RmrrSelectAdvancement {rosterPlayer} {index} /> -->
-    <SelectAdvancement {rosterPlayer} {index} />
+    <!-- <SelectAdvancement {rosterPlayer} {index} /> -->
 {/if}

@@ -1,0 +1,82 @@
+{
+    "format": "elevens",
+    "mode": "exhibition",
+    "treasury": 1000,
+    "tiers": 4,
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "customContent": {
+        "createTeamTitle": "Rocky Mountain Ringers Rebellion",
+        "menuSubtitle": "RMRR",
+        "teamTypeTitle": "RMRR"
+    },
+    "updatedTierMap": {
+        "Imperial Nobility": 2,
+        "Black Orc": 3,
+        "Chaos Chosen": 3,
+        "Dark Elf": 1,
+        "Dwarf": 1,
+        "Elven Union": 2,
+        "Goblin": 4,
+        "Halfling": 4,
+        "Human": 2,
+        "Lizardmen": 1,
+        "Necromantic Horror": 2,
+        "Nurgle": 3,
+        "Ogre": 4,
+        "Old World Alliance": 3,
+        "Orc": 1,
+        "Shambling Undead": 1,
+        "Skaven": 1,
+        "Snotling": 4,
+        "Underworld Denizens": 1,
+        "Wood Elf": 2,
+        "Chaos Renegade": 3,
+        "Amazon": 1,
+        "Chaos Dwarf": 1,
+        "High Elf": 2,
+        "Norse": 1,
+        "Tomb Kings": 2,
+        "Vampire": 1,
+        "Daemons of Khorne": 3,
+        "Slann": 3,
+        "Khorne": 3,
+        "Gnome": 4
+    },
+    "allowances": {
+        "noSkillStacking": true,
+        "useSkillPoints": true,
+        "blockSppEditing": true,
+        "allowancesPerTier": {
+            "1": {
+                "spp": 36
+            },
+            "2": {
+                "spp": 36
+            },
+            "3": {
+                "spp": 36
+            },
+            "4": {
+                "spp": 36
+            }
+        }
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "hideProfile": true,
+    "starPlayerSettings": {
+        "excludeStarPlayers": [
+            215, 201, 208, 210, 228, 234, 227, 243, 240, 213, 244, 245, 254
+        ]
+    }
+}

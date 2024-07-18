@@ -141,6 +141,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: SppInput,
         },
+        customName: 'SP',
         disallowedRosterFormats: ['sevens'],
         orderByPropertyPath: 'alterations.spp',
         sortFunction: (a, b) => {

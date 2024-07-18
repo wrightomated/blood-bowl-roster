@@ -14,11 +14,13 @@
     $: customStarPlayers =
         $customisationRules?.starPlayerSettings?.customStarPlayers;
     $: allStarPlayers = starPlayers.starPlayers.concat(customStarPlayers || []);
+    $: excludedStarPlayers =
+        $customisationRules?.starPlayerSettings?.excludeStarPlayers || [];
 
     $: filteredStarPlayers = filterStarPlayers(
         allStarPlayers,
         $rosterSpecialRules,
-        $roster.players.map((x) => x.player.id)
+        $roster.players.map((x) => x.player.id).concat(excludedStarPlayers)
     )
         .map((x, _i, a) => {
             let displayName = $_(`stars.${x.id}.name`, {

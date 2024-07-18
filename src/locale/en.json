@@ -260,7 +260,8 @@
         "624": "Animosity (Orc Lineman)",
         "625": "Animosity (Big Un Blocker)",
         "710": "Loner (5+)",
-        "711": "Loner (3+)"
+        "711": "Loner (3+)",
+        "1000": "Egomaniac"
     },
     "teams": {
         "names": {
@@ -508,7 +509,8 @@
         "165": "Gnome Lineman",
         "166": "Gnome Beastmaster",
         "167": "Gnome Illusionist",
-        "168": "Woodland Fox"
+        "168": "Woodland Fox",
+        "199": "Ringer"
     },
     "stars": {
         "title": "Star Players",
