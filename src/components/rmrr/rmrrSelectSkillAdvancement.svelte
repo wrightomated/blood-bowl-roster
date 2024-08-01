@@ -30,7 +30,8 @@
             (x) =>
                 !rosterPlayer.alterations?.extraSkills?.includes(x.id) &&
                 !rosterPlayer.player.skills.includes(x.id) &&
-                x.category === selectedCategory
+                x.category === selectedCategory &&
+                x.id !== 43
         );
     $: legendText = `${categoryToName.get(selectedCategory)}${
         $roster.format !== 'sevens' ? ` - ${sppCost} SPP` : ''
