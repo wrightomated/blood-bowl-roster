@@ -8,6 +8,12 @@
     import { spentSpp } from '../../store/spentSpp.store';
     import { customisationRules } from '../../customisation/customisation.store';
     import { gameSettings } from '../../store/gameSettings.store';
+    import {
+        getRinger,
+        getRingerBudget,
+        getRingerCost,
+        getRmrrTier,
+    } from '../rmrr/helperFunctions';
 
     let starPlayers: StarPlayer[];
     $: starPlayers = $roster.players
@@ -63,7 +69,7 @@
     >
     <p>
         <span class="mini-title">Tier:</span>
-        {$currentTeam.tier}
+        {getRmrrTier($currentTeam.tier)}
     </p>
     {#if sppAllowance > 0}
         <p>
@@ -85,6 +91,12 @@
             {starPlayers.length}
         </p>
     {/if}
+    <p>
+        <span class="mini-title">Ringer Budget:</span>
+        {getRingerCost(getRinger($roster))}k / {getRingerBudget(
+            $currentTeam.tier
+        )}k
+    </p>
 </div>
 <div class="error-messages">
     {#if invalid?.invalid?.moreThanFourOfTheSameSkill?.length > 0}
@@ -127,6 +139,12 @@
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
             Not enough players in roster.
+        </p>
+    {/if}
+    {#if invalid.invalid.ringerOverBudget > 0}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Ringer over budget by {invalid.invalid.ringerOverBudget}k
         </p>
     {/if}
     {#if $roster.format === 'elevens' && invalid.invalid.sppBalance < 0}

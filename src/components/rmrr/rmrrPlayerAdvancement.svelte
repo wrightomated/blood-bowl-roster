@@ -3,17 +3,25 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import CurrentAdvancementList from '../playerAdvancement/currentAdvancementList.svelte';
+    import SelectAdvancement from '../playerAdvancement/selectAdvancement.svelte';
+    import RmrrSelectAdvancement from './rmrrSelectAdvancement.svelte';
 
     export let index: number;
     let rosterPlayer: RosterPlayerRecord;
     $: rosterPlayer = $roster.players[index];
 
     $: skillStackingAllowed = !$customisationRules?.allowances?.noSkillStacking;
+
+    $: isRinger = rosterPlayer?.player?.id === 199;
+    $: advancementCount = rosterPlayer?.alterations?.advancements || 0;
 </script>
 
 <CurrentAdvancementList {rosterPlayer} {index} />
-{#if rosterPlayer.alterations?.advancements < 6}{/if}
 
-{#if (skillStackingAllowed && rosterPlayer.alterations?.advancements < 6) || !rosterPlayer.alterations?.advancements}
-    <!-- <SelectAdvancement {rosterPlayer} {index} /> -->
+{#if isRinger && advancementCount < 6}
+    <RmrrSelectAdvancement {rosterPlayer} {index} />
+{/if}
+
+{#if !isRinger && ((skillStackingAllowed && advancementCount < 6) || !rosterPlayer.alterations?.advancements)}
+    <SelectAdvancement {rosterPlayer} {index} />
 {/if}

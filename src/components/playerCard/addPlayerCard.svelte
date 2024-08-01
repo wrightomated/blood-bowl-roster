@@ -40,8 +40,8 @@
             !amount || amount < 1
                 ? 1
                 : amount > maxOfPlayerType
-                ? maxOfPlayerType
-                : amount;
+                  ? maxOfPlayerType
+                  : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
             let alterations: PlayerAlterations = { spp: 0, ni: 0 };
@@ -74,6 +74,9 @@
                 newPlayer,
                 numberOfPlayers === 1 ? index : undefined
             );
+            if (player.id === 199) {
+                roster.updateRinger($roster.ringer.budget, 50);
+            }
             newName = '';
         }
         // Reset amount for next player selection
@@ -163,7 +166,8 @@
         border: 2px solid var(--secondary-background-colour);
         height: 100%;
         background-color: var(--secondary-background-colour);
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
 
         &__content {

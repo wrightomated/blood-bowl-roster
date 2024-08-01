@@ -3,6 +3,7 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import PlayerAdvancement from '../playerAdvancement/playerAdvancement.svelte';
+    import RmrrPlayerAdvancement from '../rmrr/rmrrPlayerAdvancement.svelte';
     import ExtendedDetails from './extendedDetails.svelte';
     import Injury from './injury.svelte';
 
@@ -10,10 +11,10 @@
     let rosterPlayer: RosterPlayerRecord;
     $: rosterPlayer = $roster.players[index];
 
-    let mainComponent = PlayerAdvancement;
+    let mainComponent = RmrrPlayerAdvancement;
 
     const componentMap = {
-        advancements: PlayerAdvancement,
+        advancements: RmrrPlayerAdvancement,
         records: ExtendedDetails,
         injuries: Injury,
     };

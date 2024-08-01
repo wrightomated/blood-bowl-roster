@@ -45,8 +45,8 @@
             !amount || amount < 1
                 ? 1
                 : amount > maxOfPlayerType
-                ? maxOfPlayerType
-                : amount;
+                  ? maxOfPlayerType
+                  : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
             let alterations: PlayerAlterations = { spp: 0, ni: 0 };
@@ -79,6 +79,9 @@
                 newPlayer,
                 numberOfPlayers === 1 ? index : undefined
             );
+            if (numberOfPlayerType >= maxOfPlayerType - numberOfPlayers) {
+                selected = playerTypes[1];
+            }
             newName = '';
         }
         // Reset amount for next player selection

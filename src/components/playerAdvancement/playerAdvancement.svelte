@@ -2,7 +2,6 @@
     import { customisationRules } from '../../customisation/customisation.store';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
-    import RmrrSelectAdvancement from '../rmrr/rmrrSelectAdvancement.svelte';
     import CurrentAdvancementList from './currentAdvancementList.svelte';
 
     import SelectAdvancement from './selectAdvancement.svelte';
@@ -17,6 +16,5 @@
 <CurrentAdvancementList {rosterPlayer} {index} />
 
 {#if (skillStackingAllowed && rosterPlayer.alterations?.advancements < 6) || !rosterPlayer.alterations?.advancements}
-    <!-- <RmrrSelectAdvancement {rosterPlayer} {index} /> -->
     <SelectAdvancement {rosterPlayer} {index} />
 {/if}

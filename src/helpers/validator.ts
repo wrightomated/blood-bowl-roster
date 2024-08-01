@@ -1,3 +1,8 @@
+import {
+    getRingerBudget,
+    getRingerCost,
+    getRinger,
+} from '../components/rmrr/helperFunctions';
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import { extrasForTeam } from '../helpers/extrasForTeam';
 import { calculateInducementTotal } from '../helpers/totalInducementAmount';
@@ -14,6 +19,7 @@ export type RosterValidationResult = {
         sppBalance?: number;
         tooManyOfPlayerType?: number[];
         teamTotalValue?: number;
+        ringerOverBudget?: number;
     };
 };
 
@@ -63,6 +69,10 @@ export function invalidRoster(
             tooManySecondarySkills =
                 secondarySkills.length - secondaryAllowance;
         }
+        const ringer = getRinger(roster);
+        /** Positive amount is over budget */
+        const ringerOverBudget =
+            getRingerCost(ringer) - getRingerBudget(currentTeam.tier);
 
         const valid =
             !tooFew &&
@@ -72,7 +82,8 @@ export function invalidRoster(
             sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
             budgetValid &&
-            tooManySecondarySkills <= 0;
+            tooManySecondarySkills <= 0 &&
+            ringerOverBudget < 0;
 
         return {
             valid,
@@ -85,6 +96,7 @@ export function invalidRoster(
                 tooManyOfPlayerType,
                 teamTotalValue,
                 tooManySecondarySkills,
+                ringerOverBudget,
             },
         };
     } catch (error) {

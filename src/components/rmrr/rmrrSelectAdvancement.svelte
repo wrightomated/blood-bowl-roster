@@ -7,8 +7,7 @@
         type SelectionType,
         skillIncreaseCost,
     } from '../../data/advancementCost.data';
-    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
-    import { getGameTypeSettings } from '../../helpers/gameSettings';
+    import type { AdvancementSetting } from '../../models/gameType.model';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import type { SkillCategory } from '../../models/skill.model';
     import { roster } from '../../store/teamRoster.store';
@@ -19,12 +18,11 @@
     export let rosterPlayer: RosterPlayerRecord;
     export let index: number;
 
-    const advancementSettings = [
+    const advancementSettings: AdvancementSetting[] = [
         {
             type: 'primary',
             selectionTypes: ['select'],
         },
-
         {
             type: 'characteristic',
             selectionTypes: ['select', 'random'],
@@ -104,20 +102,6 @@
         roster.updatePlayer(newPlayer, index);
     }
 </script>
-
-{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
-    <label class="spp"
-        ><span class="mini-title">SPP:</span>
-        <input
-            class="spp__input"
-            type="number"
-            placeholder="?"
-            inputmode="numeric"
-            use:blurOnEscapeOrEnter
-            bind:value={$roster.players[index].alterations.spp}
-        />
-    </label>
-{/if}
 
 <ToggleButton options={advancementTypes} selected={selectAdvancementType} />
 
