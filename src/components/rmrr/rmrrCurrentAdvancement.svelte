@@ -1,10 +1,5 @@
 <script lang="ts">
-    import {
-        characteristicCostIncrease,
-        characteristicIndex,
-        characteristics,
-        type CharacteristicType,
-    } from '../../data/statOrder.data';
+    import { characteristics } from '../../data/statOrder.data';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import AdvancementEntry from '../playerAdvancement/advancementEntry.svelte';
@@ -17,14 +12,14 @@
     function deleteSpecificAdvancement(advancementIndex) {
         const advancement =
             rosterPlayer.alterations.specificAdvancements[advancementIndex];
-        let advancementCost =
-            advancement.type === 'characteristic'
-                ? characteristicCostIncrease[
-                      characteristicIndex(
-                          advancement.advancementValue as CharacteristicType
-                      )
-                  ]
-                : 20;
+        // let advancementCost =
+        //     advancement.type === 'characteristic'
+        //         ? characteristicCostIncrease[
+        //               characteristicIndex(
+        //                   advancement.advancementValue as CharacteristicType
+        //               )
+        //           ]
+        //         : 20;
 
         const newSpecificAdvancements =
             rosterPlayer.alterations.specificAdvancements.filter(
@@ -59,8 +54,6 @@
                 extraSkills,
                 specificAdvancements: newSpecificAdvancements,
                 statChange,
-                valueChange:
-                    rosterPlayer.alterations.valueChange - advancementCost,
             },
         };
         roster.updatePlayer(newPlayer, index);

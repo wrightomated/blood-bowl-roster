@@ -4,6 +4,7 @@
     import { roster } from '../../store/teamRoster.store';
     import CurrentAdvancementList from '../playerAdvancement/currentAdvancementList.svelte';
     import SelectAdvancement from '../playerAdvancement/selectAdvancement.svelte';
+    import RmrrCurrentAdvancement from './rmrrCurrentAdvancement.svelte';
     import RmrrSelectAdvancement from './rmrrSelectAdvancement.svelte';
 
     export let index: number;
@@ -16,7 +17,7 @@
     $: advancementCount = rosterPlayer?.alterations?.advancements || 0;
 </script>
 
-<CurrentAdvancementList {rosterPlayer} {index} />
+<RmrrCurrentAdvancement {rosterPlayer} {index} />
 
 {#if isRinger && advancementCount < 6}
     <RmrrSelectAdvancement {rosterPlayer} {index} />

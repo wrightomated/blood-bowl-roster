@@ -78,7 +78,6 @@
 <fieldset>
     <legend> Characteristic - {sppCost} SPP </legend>
 
-    <Die faces={16} on:rolled={rolled} />
     {#each characteristics as chara, i}
         <Button
             disabled={!enabled.includes(chara)}
