@@ -1,8 +1,10 @@
 <script lang="ts">
     import { characteristics } from '../../data/statOrder.data';
     import type { RosterPlayerRecord } from '../../models/roster.model';
+    import { currentTeam } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
-    import AdvancementEntry from '../playerAdvancement/advancementEntry.svelte';
+    import { getRingerBudget, getRingerCost } from './helperFunctions';
+    import RmrrAdvancementEntry from './rmrrAdvancementEntry.svelte';
 
     export let index: number;
     export let rosterPlayer: RosterPlayerRecord;
@@ -67,10 +69,14 @@
             were recorded. The sequence has been inferred.
         </p>
     {/if}
+    <p>
+        <span class="mini-title">Ringer Budget:</span>
+        {getRingerCost(rosterPlayer)}k / {getRingerBudget($currentTeam.tier)}k
+    </p>
     {#if !!rosterPlayer.alterations?.specificAdvancements}
         {#each rosterPlayer.alterations?.specificAdvancements as advancement, i (i)}
             <div class="advancement-entry">
-                <AdvancementEntry
+                <RmrrAdvancementEntry
                     {advancement}
                     deleteFunction={() => deleteSpecificAdvancement(i)}
                 />

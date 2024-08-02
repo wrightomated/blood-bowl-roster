@@ -33,9 +33,7 @@
                 x.category === selectedCategory &&
                 x.id !== 43
         );
-    $: legendText = `${categoryToName.get(selectedCategory)}${
-        $roster.format !== 'sevens' ? ` - ${sppCost} SPP` : ''
-    }`;
+    $: legendText = `${categoryToName.get(selectedCategory)} - 20k`;
 
     function addRandomSkill() {
         const randomSkill =

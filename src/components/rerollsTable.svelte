@@ -110,7 +110,8 @@
         <tr>
             <th>{$_('tables.treasury')}</th>
             <td class="treasury-cell">
-                <Treasury />
+                <!-- <Treasury /> -->
+                {formatNumberInThousands($roster.treasury)}
             </td>
         </tr>
 

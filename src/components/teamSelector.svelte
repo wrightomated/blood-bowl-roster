@@ -34,7 +34,7 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
-    import { getRmrrTier } from './rmrr/helperFunctions';
+    import { getRingerBudget, getRmrrTier } from './rmrr/helperFunctions';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -249,6 +249,11 @@
                 <SelectSpecialRule />
             {/if}
         </div>
+        <p>
+            <span class="display-font">Ringer Budget</span>: {getRingerBudget(
+                $currentTeam.tier
+            )}k
+        </p>
 
         <Button
             clickFunction={createTeam}

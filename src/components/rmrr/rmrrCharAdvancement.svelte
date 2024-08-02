@@ -9,36 +9,21 @@
         SpecificAdvancement,
     } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
-    import Die from '../dice/die.svelte';
     import Button from '../uiComponents/button.svelte';
 
     export let index: number;
     export let rosterPlayer: RosterPlayerRecord;
     export let sppCost: number;
 
-    let enabled = characteristics;
-
-    function rolled(event) {
-        const roll = event.detail.result;
-        enabled = {
-            1: ['MA', 'AV'],
-            2: ['MA', 'AV'],
-            3: ['MA', 'AV'],
-            4: ['MA', 'AV'],
-            5: ['MA', 'AV'],
-            6: ['MA', 'AV'],
-            7: ['MA', 'AV'],
-            8: ['MA', 'PA', 'AV'],
-            9: ['MA', 'PA', 'AV'],
-            10: ['MA', 'PA', 'AV'],
-            11: ['MA', 'PA', 'AV'],
-            12: ['MA', 'PA', 'AV'],
-            13: ['MA', 'PA', 'AV'],
-            14: ['AG', 'PA'],
-            15: ['ST', 'AG'],
-            16: characteristics,
-        }[roll];
-    }
+    $: enabled = characteristics.map((chara, i) => {
+        return (
+            rosterPlayer.alterations.specificAdvancements.filter(
+                (advancement) =>
+                    advancement.type === 'characteristic' &&
+                    advancement.advancementValue === chara
+            ).length < 2
+        );
+    });
 
     function addCharacteristic(
         charIndex: number,
@@ -76,12 +61,13 @@
 </script>
 
 <fieldset>
-    <legend> Characteristic - {sppCost} SPP </legend>
+    <legend> Characteristic </legend>
 
     {#each characteristics as chara, i}
         <Button
-            disabled={!enabled.includes(chara)}
-            clickFunction={() => addCharacteristic(i, chara)}>{chara}</Button
+            disabled={!enabled[i]}
+            clickFunction={() => addCharacteristic(i, chara)}
+            >{chara} {characteristicCostIncrease[i]}k</Button
         >
     {/each}
 </fieldset>

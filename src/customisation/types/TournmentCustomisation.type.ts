@@ -44,6 +44,7 @@ export type TournamentCustomisation = {
         teamTypeTitle?: string;
     };
     hideProfile?: boolean;
+    lockTreasury?: boolean;
 };
 
 export type TournamentAllowances = {
