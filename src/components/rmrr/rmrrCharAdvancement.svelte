@@ -16,13 +16,15 @@
     export let sppCost: number;
 
     $: enabled = characteristics.map((chara, i) => {
-        return (
-            rosterPlayer.alterations.specificAdvancements.filter(
-                (advancement) =>
-                    advancement.type === 'characteristic' &&
-                    advancement.advancementValue === chara
-            ).length < 2
+        let hasChar = rosterPlayer?.alterations?.specificAdvancements?.filter(
+            (advancement) =>
+                advancement.type === 'characteristic' &&
+                advancement.advancementValue === chara
         );
+        if (hasChar && hasChar.length >= 2) {
+            return false;
+        }
+        return true;
     });
 
     function addCharacteristic(
