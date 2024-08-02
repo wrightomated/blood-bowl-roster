@@ -1,6 +1,10 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
     import { characteristics } from '../../data/statOrder.data';
-    import type { RosterPlayerRecord } from '../../models/roster.model';
+    import type {
+        RosterPlayerRecord,
+        SpecificAdvancement,
+    } from '../../models/roster.model';
     import { currentTeam } from '../../store/currentTeam.store';
     import { roster } from '../../store/teamRoster.store';
     import { getRingerBudget, getRingerCost } from './helperFunctions';
@@ -9,7 +13,65 @@
     export let index: number;
     export let rosterPlayer: RosterPlayerRecord;
 
+    $: isRinger = rosterPlayer?.player?.id === 199;
+
     let showDisclaimer = false;
+
+    onMount(() => {
+        if (
+            (rosterPlayer.alterations?.extraSkills?.length > 0 ||
+                rosterPlayer.alterations?.statChange?.findIndex(
+                    (x) => x !== 0
+                ) > -1) &&
+            !rosterPlayer.alterations?.specificAdvancements
+        ) {
+            try {
+                // const specificAdvancements = rosterPlayer.alterations?.statChange
+                //     ? rosterPlayer.alterations.statChange
+                //           .map((stat, i) =>
+                //               stat > 0
+                //                   ? {
+                //                         type: 'characteristic',
+                //                         sppCost: 0,
+                //                         advancementValue: characteristics[i],
+                //                     }
+                //                   : null
+                //           )
+                //           .filter((x) => x)
+                //     : [];
+
+                let specificAdvancements: SpecificAdvancement[] = [];
+                if (rosterPlayer.alterations?.extraSkills?.length > 0) {
+                    specificAdvancements =
+                        rosterPlayer.alterations.extraSkills.map((skill) => ({
+                            type: 'primaryselect',
+                            advancementValue: skill,
+                            sppCost: 6,
+                        }));
+                }
+                rosterPlayer.alterations.statChange.forEach((stat, i) => {
+                    for (let j = 0; j < stat; j++) {
+                        specificAdvancements.push({
+                            type: 'characteristic',
+                            sppCost: 0,
+                            advancementValue: characteristics[i],
+                        });
+                    }
+                });
+                roster.updatePlayer(
+                    {
+                        ...rosterPlayer,
+                        alterations: {
+                            ...rosterPlayer.alterations,
+                            specificAdvancements,
+                        },
+                    },
+                    index
+                );
+                showDisclaimer = true;
+            } catch (error) {}
+        }
+    });
 
     function deleteSpecificAdvancement(advancementIndex) {
         const advancement =
@@ -63,16 +125,14 @@
 </script>
 
 <div class="advancement-list">
-    {#if showDisclaimer}
+    {#if isRinger}
         <p>
-            These advancements were added before the order and selection types
-            were recorded. The sequence has been inferred.
+            <span class="mini-title">Ringer Budget:</span>
+            {getRingerCost(rosterPlayer)}k / {getRingerBudget(
+                $currentTeam.tier
+            )}k
         </p>
     {/if}
-    <p>
-        <span class="mini-title">Ringer Budget:</span>
-        {getRingerCost(rosterPlayer)}k / {getRingerBudget($currentTeam.tier)}k
-    </p>
     {#if !!rosterPlayer.alterations?.specificAdvancements}
         {#each rosterPlayer.alterations?.specificAdvancements as advancement, i (i)}
             <div class="advancement-entry">

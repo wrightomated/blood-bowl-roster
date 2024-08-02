@@ -17,12 +17,16 @@
     $: advancementCount = rosterPlayer?.alterations?.advancements || 0;
 </script>
 
-{#if isRinger && advancementCount < 6}
+{#if isRinger}
     <RmrrCurrentAdvancement {rosterPlayer} {index} />
+{:else}
+    <CurrentAdvancementList {rosterPlayer} {index} />
+{/if}
+
+{#if isRinger && advancementCount < 6}
     <RmrrSelectAdvancement {rosterPlayer} {index} />
 {/if}
 
 {#if !isRinger && ((skillStackingAllowed && advancementCount < 6) || !rosterPlayer.alterations?.advancements)}
-    <CurrentAdvancementList {rosterPlayer} {index} />
     <SelectAdvancement {rosterPlayer} {index} />
 {/if}
