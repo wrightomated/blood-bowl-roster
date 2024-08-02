@@ -249,11 +249,13 @@
                 <SelectSpecialRule />
             {/if}
         </div>
-        <p>
-            <span class="display-font">Ringer Budget</span>: {getRingerBudget(
-                $currentTeam.tier
-            )}k
-        </p>
+        {#if $currentTeam}
+            <p>
+                <span class="display-font">Ringer Budget</span>: {getRingerBudget(
+                    $currentTeam?.tier
+                )}k
+            </p>
+        {/if}
 
         <Button
             clickFunction={createTeam}
