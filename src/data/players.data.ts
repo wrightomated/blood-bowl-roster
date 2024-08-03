@@ -1479,7 +1479,7 @@ const ringer: Player = {
     id: 199,
     position: 'Ringer',
     cost: 0,
-    skills: [...humanLineman.skills, 1000],
+    skills: [62, 1000, 71],
     primary: ['A', 'G', 'M', 'P', 'S'],
     secondary: [],
 };
