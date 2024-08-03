@@ -23,7 +23,7 @@
     <CurrentAdvancementList {rosterPlayer} {index} />
 {/if}
 
-{#if isRinger && advancementCount < 6}
+{#if isRinger}
     <RmrrSelectAdvancement {rosterPlayer} {index} />
 {/if}
 

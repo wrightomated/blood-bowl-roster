@@ -1,14 +1,12 @@
 <script lang="ts">
     import { _ } from 'svelte-i18n';
     import {
-        advancementCostsMap,
         type AdvancementCombination,
         type AdvancementType,
     } from '../../data/advancementCost.data';
     import type { SpecificAdvancement } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
-    import { customisationRules } from '../../customisation/customisation.store';
     import {
         characteristicCostIncrease,
         characteristicIndex,

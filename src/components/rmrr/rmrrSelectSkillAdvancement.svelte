@@ -43,20 +43,24 @@
     }
 </script>
 
-{#if selectedCategory}
-    <fieldset>
-        <legend>
-            {legendText}
-        </legend>
-        {#if randomSelection}
-            <Button clickFunction={() => addRandomSkill()}>Random</Button>
-        {/if}
-        {#each availableSkills as skill}
-            <Button clickFunction={() => selectSkill(skill.id)}
-                >{$_(`skills.${skill.id}`)}</Button
-            >
-        {/each}
-    </fieldset>
+{#if !rosterPlayer?.alterations?.extraSkills || rosterPlayer?.alterations?.extraSkills?.length < 6}
+    {#if selectedCategory}
+        <fieldset>
+            <legend>
+                {legendText}
+            </legend>
+            {#if randomSelection}
+                <Button clickFunction={() => addRandomSkill()}>Random</Button>
+            {/if}
+            {#each availableSkills as skill}
+                <Button clickFunction={() => selectSkill(skill.id)}
+                    >{$_(`skills.${skill.id}`)}</Button
+                >
+            {/each}
+        </fieldset>
+    {/if}
+{:else}
+    <p>Maximum of six skills selected.</p>
 {/if}
 
 <style lang="scss">

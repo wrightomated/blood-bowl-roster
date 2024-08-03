@@ -80,7 +80,7 @@
             {rosterPlayer.alterations.playerNumber}
         </p>
         <p>
-            {#if rosterPlayer.alterations.advancements}
+            {#if rosterPlayer.alterations.advancements && rosterPlayer.player.id !== 199}
                 {advancementTitle[rosterPlayer.alterations.advancements]}
                 {#each Array(rosterPlayer?.alterations?.advancements) as _}
                     <i
