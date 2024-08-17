@@ -9,6 +9,7 @@ import type { CustomiseTeamList } from './CustomiseTeamList.type';
 export type TournamentCustomisation = {
     // Treasury in thousands
     treasury: number;
+    lockTreasury?: boolean;
     tournamentTeamList?: CustomiseTeamList;
     updatedTierMap?: Partial<Record<TeamName, number>>;
     tiers?: number;
