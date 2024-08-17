@@ -94,7 +94,7 @@
     }
 </script>
 
-{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
+{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined && !$customisationRules?.allowances?.blockSppEditing}
     <label class="spp"
         ><span class="mini-title">SPP:</span>
         <input
