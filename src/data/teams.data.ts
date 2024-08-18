@@ -44,7 +44,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
-            tier: 1,
+            tier: 2,
             specialRules: ['Badlands Brawl', 'Bribery and Corruption'],
         },
         {
@@ -257,7 +257,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
-            tier: 2,
+            tier: 1,
             specialRules: ['Badlands Brawl'],
         },
         {
