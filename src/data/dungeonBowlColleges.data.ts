@@ -47,11 +47,11 @@ const collegeOfShadows: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [14, 68, 28],
+            playerIds: [14, 68, 28, 165],
         },
         runners: {
             max: 4,
-            playerIds: [70, 15],
+            playerIds: [70, 15, 168],
         },
         blitzers: {
             max: 2,
@@ -59,11 +59,11 @@ const collegeOfShadows: DungeonBowlCollege = {
         },
         throwers: {
             max: 2,
-            playerIds: [69],
+            playerIds: [69, 167],
         },
         special: {
             max: 2,
-            playerIds: [18, 17],
+            playerIds: [18, 17, 166],
         },
     },
 };

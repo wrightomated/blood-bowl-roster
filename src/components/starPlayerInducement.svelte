@@ -7,16 +7,23 @@
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../models/player.model';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../customisation/customisation.store';
 
     let selectedId: number;
 
+    $: customStarPlayers =
+        $customisationRules?.starPlayerSettings?.customStarPlayers;
+    $: allStarPlayers = starPlayers.starPlayers.concat(customStarPlayers || []);
+
     $: filteredStarPlayers = filterStarPlayers(
-        starPlayers,
+        allStarPlayers,
         $rosterSpecialRules,
         $roster.players.map((x) => x.player.id)
     )
-        .map((x, i, a) => {
-            let displayName = $_(`stars.${x.id}.name`);
+        .map((x, _i, a) => {
+            let displayName = $_(`stars.${x.id}.name`, {
+                default: x.position,
+            });
             if (x?.twoForOne) {
                 const other = a.find((p) => p.id === x?.twoForOne);
                 if (other.id < x.id) {
@@ -45,7 +52,7 @@
         }).length;
 
     const getSelected = (id) => {
-        return starPlayers.starPlayers.find((x) => x.id === id);
+        return allStarPlayers.find((x) => x.id === id);
     };
 
     const addStarPlayer = () => {
@@ -58,7 +65,7 @@
         });
 
         if (addTwo) {
-            const twoForPlayer = starPlayers.starPlayers.find(
+            const twoForPlayer = allStarPlayers.find(
                 (x) => x.id === getSelected(selectedId).twoForOne
             );
             roster.addPlayer({

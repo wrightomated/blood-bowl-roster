@@ -289,8 +289,8 @@ const bomma: Player = {
     playerStats: [6, 2, 3, 4, 8],
     cost: 45,
     skills: [65, 4, 79, 81],
-    primary: ['A'],
-    secondary: ['G', 'P', 'S'],
+    primary: ['A', 'P'],
+    secondary: ['G', 'S'],
 };
 
 const looney: Player = {
@@ -433,7 +433,7 @@ const skinkRunnerLineman: Player = {
 
 const chameleonSkink: Player = {
     id: 44,
-    position: 'Chameleon Skinks',
+    position: 'Chameleon Skink',
     playerStats: [7, 2, 3, 3, 8],
     cost: 70,
     skills: [4, 45, 20, 81],
@@ -1123,6 +1123,7 @@ const uwSnotling: Player = {
     ...snotlingLineman,
     id: 126,
     position: 'Underworld Snotling',
+    skills: [4, 78, 9, 81, 85],
     primary: ['A', 'M'],
     secondary: ['G'],
 };
@@ -1442,8 +1443,8 @@ const gnomeLineman: Player = {
     cost: 40,
     playerStats: [5, 2, 3, 4, 7],
     skills: [6, 78, 81, 24],
-    primary: ['G'],
-    secondary: ['A', 'S'],
+    primary: ['A'],
+    secondary: ['G', 'S'],
 };
 const gnomeBeastmaster: Player = {
     position: 'Gnome Beastmaster',
@@ -1451,8 +1452,8 @@ const gnomeBeastmaster: Player = {
     cost: 55,
     playerStats: [5, 2, 3, 4, 8],
     skills: [53, 6, 81, 24],
-    primary: ['G'],
-    secondary: ['A', 'S'],
+    primary: ['A'],
+    secondary: ['G', 'S'],
 };
 const gnomeIllusionist: Player = {
     position: 'Gnome Illusionist',
@@ -1460,8 +1461,8 @@ const gnomeIllusionist: Player = {
     cost: 50,
     playerStats: [5, 2, 3, 3, 7],
     skills: [6, 81, 98, 24],
-    primary: ['G'],
-    secondary: ['A', 'S'],
+    primary: ['A', 'P'],
+    secondary: ['G'],
 };
 const woodlandFox: Player = {
     position: 'Woodland Fox',
@@ -1469,8 +1470,8 @@ const woodlandFox: Player = {
     cost: 50,
     playerStats: [7, 2, 2, 0, 6],
     skills: [4, 99, 9, 81],
-    primary: ['G'],
-    secondary: ['A', 'S'],
+    primary: [],
+    secondary: ['A'],
 };
 
 export const playerCatalogue: PlayerCatalogue = {

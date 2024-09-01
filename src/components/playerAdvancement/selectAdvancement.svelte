@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { customisationRules } from '../../customisation/customisation.store';
     import {
         type AdvancementCombination,
         advancementCostsMap,
@@ -18,17 +19,18 @@
     export let rosterPlayer: RosterPlayerRecord;
     export let index: number;
 
-    const advancementTypes = Object.values(
-        getGameTypeSettings($roster.format).advancementSettings
-    ).map((setting) => setting.type);
-    let advancementType: AdvancementType = 'primary';
+    const advancementSettings =
+        $customisationRules?.advancementSettings ||
+        getGameTypeSettings($roster.format).advancementSettings;
+    const advancementTypes = Object.values(advancementSettings).map(
+        (setting) => setting.type
+    );
+    let advancementType: AdvancementType = advancementTypes[0];
 
-    const selectionTypes: SelectionType[] = getGameTypeSettings(
-        $roster.format
-    ).advancementSettings.find(
+    const selectionTypes: SelectionType[] = advancementSettings.find(
         (setting) => setting.type === advancementType
     ).selectionTypes;
-    let selectionType: SelectionType = 'random';
+    let selectionType: SelectionType = selectionTypes[0];
 
     let advancementCombination: AdvancementCombination;
     $: advancementCombination = (advancementType +
@@ -92,7 +94,7 @@
     }
 </script>
 
-{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
+{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined && !$customisationRules?.allowances?.blockSppEditing}
     <label class="spp"
         ><span class="mini-title">SPP:</span>
         <input

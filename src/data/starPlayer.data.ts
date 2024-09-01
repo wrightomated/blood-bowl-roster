@@ -17,6 +17,7 @@ const deeprootStrongbranch: StarPlayer = {
     skills: [13, 71, 551, 58, 59, 60, 86, 87],
     cost: 280,
     specialRules: ['Reliable'],
+    megaStar: true,
 };
 const eldrilSidewinder: StarPlayer = {
     id: 202,
@@ -82,6 +83,7 @@ const griff: StarPlayer = {
     skills: [13, 4, 16, 711, 11, 12],
     cost: 280,
     specialRules: ['Consummate Professional'],
+    megaStar: true,
 };
 const grim: StarPlayer = {
     id: 209,
@@ -104,6 +106,7 @@ const hakflem: StarPlayer = {
     skills: [4, 28, 71, 33, 35],
     cost: 210,
     specialRules: ['Treacherous'],
+    megaStar: true,
 };
 const helmut: StarPlayer = {
     id: 211,
@@ -158,6 +161,7 @@ const morg: StarPlayer = {
     skills: [13, 71, 551, 60, 86],
     cost: 380,
     specialRules: ['The Ballista'],
+    megaStar: true,
 };
 const roxanna: StarPlayer = {
     id: 216,
@@ -287,6 +291,7 @@ const kreek: StarPlayer = {
     skills: [64, 71, 55, 72, 33, 79],
     cost: 170,
     specialRules: ["I'll be back"],
+    megaStar: true,
 };
 
 const grashnak: StarPlayer = {
@@ -351,6 +356,7 @@ const bomberDribblesnot: StarPlayer = {
     skills: [37, 65, 4, 71, 78, 79, 81],
     cost: 50,
     specialRules: ['Kaboom!'],
+    megaStar: true,
 };
 
 const fungusTheLoon: StarPlayer = {
@@ -439,6 +445,7 @@ const cindy: StarPlayer = {
     skills: [37, 65, 4, 71, 79, 81],
     cost: 50,
     specialRules: ['All You Can Eat'],
+    megaStar: true,
 };
 const dribl: StarPlayer = {
     id: 244,
@@ -544,6 +551,43 @@ const skitter: StarPlayer = {
     specialRules: ['Master Assassin'],
 };
 
+const rodneyRoachbait: StarPlayer = {
+    id: 255,
+    position: 'Rodney Roachbait',
+    playerStats: [6, 2, 3, 4, 7],
+    playsFor: ['Halfling Thimble Cup'],
+    skills: [1, 2, 6, 71, 45, 9, 81, 24],
+    cost: 70,
+    specialRules: ['Catch of the Day'],
+};
+
+const rowanaForestfoot: StarPlayer = {
+    id: 256,
+    position: 'Rowana Forestfoot',
+    playerStats: [6, 3, 3, 4, 8],
+    playsFor: ['Halfling Thimble Cup'],
+    skills: [4, 40, 53, 30, 6, 7, 71],
+    cost: 160,
+    specialRules: ['Bounding Leap'],
+};
+const kirotKrakeneye: StarPlayer = {
+    id: 257,
+    position: 'Kiroth Krakeneye',
+    playerStats: [7, 3, 2, 3, 9],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [27, 29, 71, 45, 23, 34],
+    cost: 160,
+    specialRules: ['Black Ink'],
+};
+const jordellFreshbreeze: StarPlayer = {
+    id: 258,
+    position: 'Jordell Freshbreeze',
+    playerStats: [8, 3, 1, 3, 8],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [13, 2, 4, 7, 71, 9],
+    cost: 250,
+    specialRules: ['Swift as the Breeze'],
+};
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -601,5 +645,9 @@ export const starPlayers = {
         countLuthorVonDrakenborg,
         captainKarinaVonRiesz,
         skitter,
+        rodneyRoachbait,
+        rowanaForestfoot,
+        kirotKrakeneye,
+        jordellFreshbreeze,
     ],
 };

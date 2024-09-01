@@ -45,7 +45,7 @@
         top: -1px;
         font-size: 12px;
         background: var(--secondary-colour);
-        color: white;
+        color: var(--secondary-compliment);
         padding: 2px;
     }
     .value {
@@ -58,7 +58,7 @@
         text-decoration: underline;
     }
     .degraded {
-        color: var(--main-colour);
+        color: var(--error);
         text-decoration: underline;
     }
 </style>

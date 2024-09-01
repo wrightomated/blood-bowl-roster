@@ -5,6 +5,7 @@
     import UserProfile from '../auth/userProfile.svelte';
     import UserCircle from './userCircle.svelte';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../../customisation/customisation.store';
 
     let menuComponent: typeof MenuItems | typeof UserProfile;
 
@@ -32,15 +33,21 @@
             clickFunction={toggleNavMenu}
         />
     </div>
-    <h1>BB Roster</h1>
+    <h1>
+        BB Roster {#if $customisationRules?.customContent?.menuSubtitle}
+            | <span>{$customisationRules.customContent.menuSubtitle}</span>
+        {/if}
+    </h1>
 
-    <button
-        class="profile"
-        title={$_('menu.profile')}
-        on:click={toggleUserProfile}
-    >
-        <UserCircle />
-    </button>
+    {#if !$customisationRules?.hideProfile}
+        <button
+            class="profile"
+            title={$_('menu.profile')}
+            on:click={toggleUserProfile}
+        >
+            <UserCircle />
+        </button>
+    {/if}
 </header>
 <div class="spacer" class:spacer--show={$menuDrawerOpen} />
 <nav class="menu__drawer" class:menu__drawer--open={$menuDrawerOpen}>
@@ -68,8 +75,8 @@
         z-index: 8;
         width: 100%;
         text-align: center;
-        border-bottom: var(--secondary-colour) 2px solid;
-        background-color: white;
+        border-bottom: var(--secondary-border);
+        background-color: var(--secondary-compliment);
         display: flex;
         align-items: center;
         &--drawer-open {
@@ -123,7 +130,7 @@
             left: 0;
             top: -124px;
             transition: transform 250ms ease-in-out;
-            background: white;
+            background: var(--secondary-compliment);
             height: 124px;
             border-bottom: var(--secondary-border);
             &--open {

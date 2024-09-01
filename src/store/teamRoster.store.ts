@@ -27,8 +27,9 @@ import {
     CURRENT_ROSTER_VERSION,
     versionCheck,
 } from '../helpers/rosterVersionCheck';
+import type { Inducement } from '../models/inducement.model';
 
-export const maxPlayerNumber = 99;
+export const MAX_PLAYER_NUMBER = 99;
 
 function createRoster() {
     const { subscribe, set, update }: Writable<Roster> = writable(
@@ -53,7 +54,7 @@ function createRoster() {
                             ...player,
                             playerId: player.playerId || nanoid(),
                         },
-                        maxPlayerNumber,
+                        MAX_PLAYER_NUMBER,
                         index
                     ),
                     ...updatePlayerTreasury(store, player),
@@ -80,7 +81,7 @@ function createRoster() {
                     players: addPlayerToPlayers(
                         store.players,
                         duplicatedPlayer,
-                        maxPlayerNumber
+                        MAX_PLAYER_NUMBER
                     ),
                     ...updatePlayerTreasury(store, duplicatedPlayer),
                 };
@@ -154,10 +155,24 @@ function createRoster() {
                     players: switchTwoElements(store.players, index, target),
                 };
             }),
-        addInducement: (inducementKey: string) =>
-            update((store) => addInducementToStore(store, inducementKey)),
-        removeInducement: (inducementKey: string) =>
-            update((store) => removeInducementFromStore(store, inducementKey)),
+        addInducement: (
+            inducementKey: string,
+            customInducements?: Inducement[]
+        ) =>
+            update((store) =>
+                addInducementToStore(store, inducementKey, customInducements)
+            ),
+        removeInducement: (
+            inducementKey: string,
+            customInducements?: Inducement[]
+        ) =>
+            update((store) =>
+                removeInducementFromStore(
+                    store,
+                    inducementKey,
+                    customInducements
+                )
+            ),
         removeAllInducements: () =>
             update((store) => {
                 return { ...store, inducements: {} };
@@ -290,7 +305,8 @@ const getEmptyRoster: (options?: NewRosterOptions) => Roster = (options) => {
         teamType: options?.teamType || ('' as TeamName),
         extra: { dedicated_fans: options?.fans || 0 },
         inducements: {},
-        treasury: gameSettings?.startingTreasury || 1000,
+        treasury:
+            options?.startingTreasury || gameSettings?.startingTreasury || 1000,
         mode: options?.mode,
         format: options?.format || 'elevens',
         leagueRosterStatus: options?.mode === 'league' ? 'draft' : undefined,
@@ -486,18 +502,33 @@ function numberTaken(players: RosterPlayerRecord[], desiredNumber: number) {
     );
 }
 
-function addInducementToStore(store: Roster, inducementKey: string) {
+function addInducementToStore(
+    store: Roster,
+    inducementKey: string,
+    customInducements?: Inducement[]
+) {
     let treasury = store.treasury;
     let pettyCash: number = store.pettyCash;
 
     if (typeof pettyCash === 'number') {
         pettyCash =
             pettyCash -
-            1000 * inducementCost(store.format, inducementKey, store.teamId);
+            1000 *
+                inducementCost(
+                    store.format,
+                    inducementKey,
+                    store.teamId,
+                    customInducements
+                );
     } else {
         treasury =
             treasury -
-            inducementCost(store.format, inducementKey, store.teamId);
+            inducementCost(
+                store.format,
+                inducementKey,
+                store.teamId,
+                customInducements
+            );
     }
 
     return {
@@ -513,18 +544,33 @@ function addInducementToStore(store: Roster, inducementKey: string) {
     };
 }
 
-function removeInducementFromStore(store: Roster, inducementKey: string) {
+function removeInducementFromStore(
+    store: Roster,
+    inducementKey: string,
+    customInducements?: Inducement[]
+) {
     let treasury = store.treasury;
     let pettyCash: number = store.pettyCash;
 
     if (typeof pettyCash === 'number') {
         pettyCash =
             pettyCash +
-            1000 * inducementCost(store.format, inducementKey, store.teamId);
+            1000 *
+                inducementCost(
+                    store.format,
+                    inducementKey,
+                    store.teamId,
+                    customInducements
+                );
     } else {
         treasury =
             treasury +
-            inducementCost(store.format, inducementKey, store.teamId);
+            inducementCost(
+                store.format,
+                inducementKey,
+                store.teamId,
+                customInducements
+            );
     }
 
     return {

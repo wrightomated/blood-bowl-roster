@@ -17,7 +17,7 @@
     .initial {
         font-family: var(--display-font);
         color: var(--secondary-colour);
-        background-color: white;
+        background-color: var(--secondary-compliment);
         border-radius: 50%;
         width: 28px;
         height: 28px;
@@ -28,7 +28,7 @@
 
         &:hover {
             background-color: var(--secondary-colour);
-            color: white;
+            color: var(--secondary-compliment);
             border-color: var(--secondary-colour);
         }
     }

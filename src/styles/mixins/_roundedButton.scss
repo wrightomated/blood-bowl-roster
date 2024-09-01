@@ -1,6 +1,6 @@
 @mixin rounded-button {
     border-radius: 12px;
-    background-color: white;
+    background-color: var(--secondary-compliment);
     color: var(--secondary-colour);
     padding: 8px;
     margin: 4px;
@@ -11,10 +11,10 @@
     &:hover,
     &.selected {
         background-color: var(--secondary-colour);
-        color: white;
+        color: var(--secondary-compliment);
         border-color: var(--secondary-colour);
         &:disabled {
-            background-color: white;
+            background-color: var(--secondary-compliment);
             color: grey;
             border: none;
         }

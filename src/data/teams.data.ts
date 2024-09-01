@@ -124,6 +124,7 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 3,
+            maxBigGuys: 2,
             specialRules: [
                 'Badlands Brawl',
                 'Bribery and Corruption',
@@ -142,6 +143,7 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 3,
+            maxBigGuys: 2,
             specialRules: ['Halfling Thimble Cup', 'Old World Classic'],
         },
         {
@@ -302,6 +304,7 @@ export const teamData: TeamList = {
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
             tier: 3,
+            maxBigGuys: 2,
             specialRules: [
                 'Bribery and Corruption',
                 'Low Cost Linemen',
@@ -555,9 +558,10 @@ export const teamData: TeamList = {
                 { id: 167, max: 2 },
                 { id: 168, max: 2 },
             ],
-            reroll: { cost: 60, max: 8 },
+            reroll: { cost: 50, max: 8 },
             allowedApothecary: true,
             tier: 3,
+            maxBigGuys: 2,
             specialRules: ['Halfling Thimble Cup'],
         },
     ],

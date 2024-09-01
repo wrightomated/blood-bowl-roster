@@ -9,7 +9,11 @@
 </script>
 
 <tr>
-    <td class="left-align">{$_(`stars.${starPlayer.id}.name`)}</td>
+    <td class="left-align"
+        >{$_(`stars.${starPlayer.id}.name`, {
+            default: starPlayer.position,
+        })}</td
+    >
     <td
         >{starPlayer.cost > 0
             ? formatNumberInThousands(starPlayer.cost)
@@ -21,5 +25,9 @@
     <td class="left-align">
         <SkillElement playerSkillIds={starPlayer.skills} />
     </td>
-    <td class="left-align">{$_(`stars.${starPlayer.id}.rule`)}</td>
+    <td class="left-align"
+        >{$_(`stars.${starPlayer.id}.rule`, {
+            default: starPlayer.specialRules[0],
+        })}</td
+    >
 </tr>

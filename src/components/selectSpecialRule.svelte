@@ -22,7 +22,7 @@
         margin: 12px 0 4px 4px;
     }
     .special-rule {
-        background-color: white;
+        background-color: var(--secondary-compliment);
         border: 2px solid var(--secondary-colour);
         color: var(--secondary-colour);
         border-radius: 12px;

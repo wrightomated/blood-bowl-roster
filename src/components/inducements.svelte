@@ -10,12 +10,30 @@
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../customisation/customisation.store';
+    import type { Inducement } from '../models/inducement.model';
 
     export let selectedTeam: Team | CustomTeam;
 
     $: searchTerm = '';
 
     $: newFilteredInducements = inducementData.inducements
+        .filter((inducement) => {
+            let excludedInducementIds =
+                $customisationRules?.inducementSettings?.excludedInducementIds;
+            let includedInducementIds =
+                $customisationRules?.inducementSettings?.includedInducementIds;
+            if (includedInducementIds) {
+                return includedInducementIds.includes(inducement.id);
+            } else if (excludedInducementIds) {
+                return !excludedInducementIds.includes(inducement.id);
+            } else {
+                return true;
+            }
+        })
+        .concat(
+            $customisationRules?.inducementSettings?.customInducements || []
+        )
         .map((inducement) => ({
             ...inducement,
             max: $gameSettings?.inducementMaxKey
@@ -28,11 +46,7 @@
         .filter((inducement) => inducement.max > 0)
         .map((inducement) => ({
             ...inducement,
-            cost: $rosterSpecialRules.includes(
-                inducement?.reducedCost?.specialRule
-            )
-                ? inducement.reducedCost.cost
-                : inducement.cost,
+            cost: inducementReducedCost(inducement),
         }))
         .filter((inducement) =>
             filterInducement(inducement, {
@@ -55,12 +69,31 @@
         0
     );
 
+    function inducementReducedCost(inducement: Inducement) {
+        const reducedCost = inducement.reducedCost;
+
+        if (
+            $rosterSpecialRules.includes(reducedCost?.specialRule) ||
+            reducedCost?.teamName === selectedTeam.name
+        ) {
+            return reducedCost.cost;
+        }
+
+        return inducement.cost;
+    }
+
     const addInducement = (key: string) => {
-        roster.addInducement(key);
+        roster.addInducement(
+            key,
+            $customisationRules?.inducementSettings?.customInducements
+        );
     };
 
     const removeInducement = (key: string) => {
-        roster.removeInducement(key);
+        roster.removeInducement(
+            key,
+            $customisationRules?.inducementSettings?.customInducements
+        );
     };
 
     const toggleShowAllInducements = () => {
@@ -133,7 +166,9 @@
             {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>
                     <td class="inducement__display-name"
-                        >{$_('inducements.' + ind.id)}</td
+                        >{$_('inducements.' + ind.id, {
+                            default: ind.displayName,
+                        })}</td
                     >
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
                     <td>
@@ -190,9 +225,9 @@
 </table>
 
 <style lang="scss">
-    table {
-        min-width: 470px;
-    }
+    // table {
+    //     min-width: 470px;
+    // }
     .inducement {
         &__display-name {
             text-align: left;

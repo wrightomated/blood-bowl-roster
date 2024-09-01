@@ -36,7 +36,7 @@
 {#if $roster.notes}
     <div class="print-only">
         <strong>{$_('common.notes')}</strong>
-        <p>{$roster.notes}</p>
+        <p class="preserve-whitespace">{$roster.notes}</p>
     </div>
 {/if}
 
@@ -119,5 +119,9 @@
 
     .notes-area {
         width: 100%;
+    }
+
+    .preserve-whitespace {
+        white-space: pre;
     }
 </style>
