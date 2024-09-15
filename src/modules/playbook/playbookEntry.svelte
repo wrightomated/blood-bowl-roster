@@ -11,6 +11,8 @@
     let hoverCard: HTMLElement;
     $: hoverIndex = 0;
 
+    $: circleContent = 'number';
+
     $: numberOfRows = $gameSettings.pitch.length / 2;
     $: numberOfColumns = $gameSettings.pitch.width;
     $: pitchGrid = new Array(numberOfRows)
@@ -180,7 +182,6 @@
     }
 
     function hover(playerNumber, event) {
-        console.log({ playerNumber, event });
         if (!playerNumber) {
             hideCard();
             return;
@@ -189,9 +190,6 @@
         hoverIndex = $roster.players.findIndex(
             (player) => player.alterations.playerNumber === +playerNumber
         );
-
-        console.log({ hoverIndex });
-        console.log({ hoverCard });
         if (hoverCard) {
             hoverCard.style.display = 'block';
             hoverCard.style.position = 'fixed';
@@ -262,7 +260,19 @@
                 >
                     {#if !!player}
                         <div class="player-square">
-                            <p>{player}</p>
+                            <p>
+                                {circleContent === 'number'
+                                    ? player
+                                    : $roster.players
+                                          .find(
+                                              (p) =>
+                                                  p.alterations.playerNumber ===
+                                                  +player
+                                          )
+                                          .player.position.split(' ')
+                                          .map((word) => word[0])
+                                          .join('')}
+                            </p>
                         </div>
                     {/if}
                 </div>
@@ -277,7 +287,16 @@
             showTackleZones = option === 'on';
         }}
     />
-    <button on:click={pitchGridToRoster}>Gird</button>
+    <!-- Number / position -->
+    <p>Show player</p>
+    <ToggleButton
+        options={['number', 'position']}
+        selectedIndex={0}
+        selected={(option) => {
+            circleContent = option;
+        }}
+    />
+    <button class="rounded-button" on:click={pitchGridToRoster}>Gird</button>
 </div>
 
 <style lang="scss">
