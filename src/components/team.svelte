@@ -1,6 +1,5 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
-    import { playerCatalogue } from '../data/players.data';
     import {
         currentTeam,
         currentTeamIsDungeonBowl,
@@ -22,12 +21,9 @@
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
     import { _ } from 'svelte-i18n';
+    import { playerById } from '../helpers/playerCatalogueHelpers';
 
     $: teamList = $availableTeams;
-
-    const playerById = (id?: number) => {
-        return playerCatalogue.players.find((x) => x.id === id);
-    };
 
     const toggleStarPlayers = () => {
         showAvailableStarPlayers.set(!$showAvailableStarPlayers);
@@ -46,6 +42,7 @@
 </span>
 
 {#if $currentTeam}
+    {$currentTeam.id}
     {#if $teamSelectionOpen && !$currentTeamIsDungeonBowl}
         <span class="no-print">
             <AvailablePlayers />

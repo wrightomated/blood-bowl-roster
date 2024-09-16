@@ -9,6 +9,7 @@ import type {
     RosterPlayerRecord,
 } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
+import { getBaseTeamData } from '../store/currentTeam.store';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import { filteredTeamData } from './teamDataFilter';
@@ -221,9 +222,7 @@ const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
  * TODO: load tournament customisation earlier
  */
 const getTeamType = (teamId: string, format: TeamFormat) => {
-    const allTeams = filteredTeamData({
-        format,
-    });
+    const allTeams = getBaseTeamData(format === 'dungeon bowl');
 
     const teamType = allTeams.find((t) => t.id === teamId)?.name;
 
