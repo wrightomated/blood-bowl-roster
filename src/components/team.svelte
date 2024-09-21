@@ -21,7 +21,7 @@
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
     import { _ } from 'svelte-i18n';
-    import { playerById } from '../helpers/playerCatalogueHelpers';
+    import { playerCatalogue } from '../store/playerCatalogue.store';
 
     $: teamList = $availableTeams;
 
@@ -73,7 +73,9 @@
 
     {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
         <Roster
-            playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
+            playerTypes={$currentTeam.players.map((x) =>
+                $playerCatalogue.find((player) => player.id === x.id)
+            )}
         />
         <RerollsTable selectedTeam={$currentTeam} />
         <MatchHistoryRecords />

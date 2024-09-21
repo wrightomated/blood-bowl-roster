@@ -1,4 +1,3 @@
-import { sendEventToAnalytics } from '../analytics/plausible';
 import { teamData } from '../data/teams.data';
 import type { Extra, ExtraString } from '../models/extra.model';
 import type { RosterMode } from '../store/rosterMode.store';

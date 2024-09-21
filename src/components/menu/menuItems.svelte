@@ -9,7 +9,7 @@
         showNewTeamDialogue,
         teamSelectionOpen,
     } from '../../store/teamSelectionOpen.store';
-    import { currentTeam } from '../../store/currentTeam.store';
+    import { currentTeam, currentTeamId } from '../../store/currentTeam.store';
 
     import Button from '../uiComponents/button.svelte';
     import { teamFormat } from '../../store/teamFormat.store';
@@ -20,7 +20,7 @@
         teamLoadOpen.set(false);
         showDungeonBowl.set(false);
         menuDrawerOpen.set(false);
-        currentTeam.setCurrentTeamWithId($roster.teamId);
+        currentTeamId.set($roster.teamId);
     };
     const newTeam = () => {
         teamSelectionOpen.set($teamFormat !== 'dungeon bowl');

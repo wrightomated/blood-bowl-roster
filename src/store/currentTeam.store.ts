@@ -5,7 +5,6 @@ import type { Player } from '../models/player.model';
 import { filteredTeamData } from '../helpers/teamDataFilter';
 import { customisationRules } from '../customisation/customisation.store';
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
-import type { TeamFormat } from '../types/teamFormat';
 import { updateOldTeamId } from '../helpers/rosterVersionCheck';
 import { playerCatalogue } from './playerCatalogue.store';
 import { secretTeams } from '../modules/secret-league/secretTeams.store';
@@ -60,6 +59,7 @@ export const currentTeam: Readable<CustomTeam> = derived(
         const team = filteredTeamData(customisationOptions).find(
             (x) => x.id === $id
         );
+        console.log('currentTeam', team);
         return team;
     }
 );
