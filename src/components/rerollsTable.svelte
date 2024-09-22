@@ -14,6 +14,7 @@
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
     import { currentUserStore } from '../store/currentUser.store';
+    import { customisationRules } from '../customisation/customisation.store';
 
     export let selectedTeam: CustomTeam;
 
@@ -110,7 +111,11 @@
         <tr>
             <th>{$_('tables.treasury')}</th>
             <td class="treasury-cell">
-                <Treasury />
+                {#if $customisationRules?.lockTreasury}
+                    {formatNumberInThousands($roster.treasury)}
+                {:else}
+                    <Treasury />
+                {/if}
             </td>
         </tr>
 
