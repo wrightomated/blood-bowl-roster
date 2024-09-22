@@ -10,6 +10,7 @@ import replace from '@rollup/plugin-replace';
 import dotenv from 'dotenv';
 import child_process from 'child_process';
 import json from '@rollup/plugin-json';
+import { visualizer } from 'rollup-plugin-visualizer';
 dotenv.config();
 
 const production = !process.env.ROLLUP_WATCH;
@@ -105,6 +106,8 @@ export default {
         // If we're building for production (npm run build
         // instead of npm run dev), minify
         production && terser(),
+
+        visualizer(),
     ],
     watch: {
         clearScreen: false,

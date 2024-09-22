@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { blurOnEscapeOrEnter } from '../helpers/blurOnEscapeOrEnter';
-
     import { rosterToString } from '../helpers/rosterToString';
+    import RosterTextSummary from '../modules/shareRoster/rosterTextSummary.svelte';
 
     import { showExport } from '../store/showExport.store';
     import { roster } from '../store/teamRoster.store';
@@ -26,8 +25,7 @@
 
     const copyLink = (toggleFn: () => void, id: string) => {
         const urlInputBox: HTMLInputElement = document.querySelector(id);
-        urlInputBox.select();
-        document.execCommand('copy');
+        navigator.clipboard.writeText(urlInputBox.innerText);
         toggleFn();
     };
 
@@ -40,42 +38,34 @@
 {#if $showExport}
     <div class="boxed-div">
         <div class="share-box">
-            <label for="url-input">Share Url:</label>
-            <input
-                id="url-input"
-                value="{baseUrl}?code={code}"
-                use:blurOnEscapeOrEnter
-                readonly
-            />
+            <label for="url-string">Share Url:</label>
+            <p id="url-string">{baseUrl}?code={code}</p>
+
             {#if !urlCoppied}
                 <MaterialButton
                     hoverText="Copy Url"
                     symbol="content_copy"
                     cyData="copy-share-url"
-                    clickFunction={() => copyLink(toggleUrlCopy, '#url-input')}
+                    clickFunction={() => copyLink(toggleUrlCopy, '#url-string')}
                 />
             {:else}<i class="material-symbols-outlined saved">check_circle</i
                 >{/if}
         </div>
         <div class="share-box">
-            <label for="code-input">Export Code:</label>
-            <input
-                id="code-input"
-                data-cy="code-input"
-                value={code}
-                use:blurOnEscapeOrEnter
-                readonly
-            />
+            <label for="code-string">Export Code:</label>
+            <p id="code-string">{code}</p>
+
             {#if !codeCoppied}
                 <MaterialButton
                     hoverText="Copy Code"
                     symbol="content_copy"
                     clickFunction={() =>
-                        copyLink(toggleCodeCopy, '#code-input')}
+                        copyLink(toggleCodeCopy, '#code-string')}
                 />
             {:else}<i class="material-symbols-outlined saved">check_circle</i
                 >{/if}
         </div>
+        <RosterTextSummary />
     </div>
 {/if}
 
@@ -85,9 +75,6 @@
         padding: 10px;
         align-items: center;
 
-        input {
-            margin-right: 1em;
-        }
         label {
             margin-right: 1em;
         }
