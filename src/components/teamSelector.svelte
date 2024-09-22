@@ -192,7 +192,7 @@
 
     {#if $teamSelectionOpen}
         <div class="button-container">
-            <div class="filter__tier">
+            <!-- <div class="filter__tier">
                 Filter:
                 {#each $toggledTiers as _tier, i}
                     <button
@@ -215,7 +215,7 @@
                     class:selected={includeRetired}
                     class="filter__button">S</button
                 >
-            </div>
+            </div> -->
             <label class="filter__search">
                 {$_('common.search')}
                 <input
@@ -233,12 +233,7 @@
                         class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
                         >{$_('teams.names.' + team.id)}
-                        <span class="display-font"
-                            >{tierToNumeral(team.tier)}</span
-                        >{#if nafTeams.includes(team.id)}<span
-                                class="display-font">&nbsp;N</span
-                            >{/if}</button
-                    >
+                    </button>
                 {/each}
                 {#if sortedTeam.length === 0}
                     <p class="no-matches">No teams match your filter</p>

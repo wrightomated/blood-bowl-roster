@@ -1,0 +1,52 @@
+{
+    "format": "elevens",
+    "mode": "exhibition",
+    "treasury": 1100,
+    "tiers": 3,
+    "lockTreasury": true,
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "customContent": {
+        "createTeamTitle": "Stupor Bowl 2025",
+        "menuSubtitle": "STUPOR BOWL",
+        "teamTypeTitle": "STUPOR BOWL"
+    },
+
+    "allowances": {
+        "noSkillStacking": true,
+        "useSkillPoints": true,
+        "blockSppEditing": true,
+        "allowancesPerTier": {
+            "1": {
+                "starPlayer": 2,
+                "spp": 42
+            },
+            "2": {
+                "starPlayer": 2,
+                "spp": 42
+            },
+            "3": {
+                "starPlayer": 2,
+                "spp": 42
+            }
+        }
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "hideProfile": true,
+    "starPlayerSettings": {
+        "starPlayerCost": {
+            "star": 6,
+            "megaStar": 12
+        }
+    }
+}

@@ -5,45 +5,57 @@ export const inducementData: { inducements: Inducement[] } = {
     inducements: [
         {
             id: 'i1',
-
             cost: 20,
             max: 4,
             sevensMax: 2,
             sevensCost: 30,
+            publication: 'rulebook',
         },
         {
             id: 'i2',
-
             cost: 20,
             max: 3,
             sevensMax: 1,
             sevensCost: 30,
+            publication: 'rulebook',
         },
         {
             id: 'i3',
-
             cost: 30,
             max: 1,
+            publication: 'rulebook',
         },
-        { id: 'i4', cost: 50, max: 2, sevensMax: 2 },
-        { id: 'i5', cost: 100, max: 5, sevensMax: 5 },
+        {
+            id: 'i4',
+            cost: 50,
+            max: 2,
+            sevensMax: 2,
+            publication: 'rulebook',
+        },
+        {
+            id: 'i5',
+            cost: 100,
+            max: 5,
+            sevensMax: 5,
+            publication: 'rulebook',
+        },
         {
             id: 'i6',
-
             cost: 100,
             max: 8,
             sevensCost: 150,
             dungeonBowlMax: 8,
             sevensMax: 8,
+            publication: 'rulebook',
         },
         {
             id: 'i7',
-
             cost: 100,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 50 },
             max: 3,
             dungeonBowlMax: 3,
             sevensMax: 3,
+            publication: 'rulebook',
         },
         {
             id: 'i8',
@@ -52,6 +64,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 2,
             sevensMax: 2,
             requiresApothecary: true,
+            publication: 'rulebook',
         },
         {
             id: 'i9',
@@ -60,6 +73,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             sevensMax: 1,
             requiresSpecialRule: 'Sylvanian Spotlight',
+            publication: 'rulebook',
         },
         {
             id: 'i10',
@@ -68,6 +82,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             sevensMax: 1,
             requiresSpecialRule: 'Favoured of Nurgle',
+            publication: 'rulebook',
         },
         {
             id: 'i11',
@@ -75,6 +90,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 1,
             requiresSpecialRule: 'Low Cost Linemen',
+            publication: 'rulebook',
         },
         {
             id: 'i12',
@@ -83,19 +99,14 @@ export const inducementData: { inducements: Inducement[] } = {
             reducedCost: { teamName: 'Halfling', cost: 100 },
             max: 1,
             sevensMax: 1,
-        },
-        {
-            id: 'i13',
-
-            cost: 30,
-            max: 16,
-            sevensMax: 16,
+            publication: 'rulebook',
         },
         {
             id: 'i15',
 
             cost: 100,
             max: 1,
+            publication: 'rulebook',
         },
         {
             id: 'i18',
@@ -108,6 +119,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Old World Classic',
                 'Worlds Edge Superleague',
             ],
+            publication: 'deathzone',
         },
         {
             id: 'i19',
@@ -119,6 +131,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Underworld Challenge',
                 ...chaosSpecialRules,
             ],
+            publication: 'deathzone',
         },
         {
             id: 'i20',
@@ -126,6 +139,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 40,
             max: 1,
             requiresSpecialRule: 'Elven Kingdoms League',
+            publication: 'deathzone',
         },
         {
             id: 'i21',
@@ -133,12 +147,14 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 70,
             max: 1,
             requiresSpecialRule: 'Underworld Challenge',
+            publication: 'deathzone',
         },
         {
             id: 'i22',
 
             cost: 100,
             max: 1,
+            publication: 'deathzone',
         },
         {
             id: 'i23',
@@ -146,6 +162,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 130,
             max: 1,
             requiresSpecialRule: 'Sylvanian Spotlight',
+            publication: 'deathzone',
         },
         {
             id: 'i24',
@@ -157,6 +174,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Old World Classic',
                 'Underworld Challenge',
             ],
+            publication: 'deathzone',
         },
         {
             id: 'i25',
@@ -164,113 +182,28 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 90,
             max: 1,
             requiresSpecialRule: ['Badlands Brawl', 'Underworld Challenge'],
+            publication: 'deathzone',
         },
         {
             id: 'i26',
 
             cost: 90,
             max: 1,
+            publication: 'deathzone',
         },
-        {
-            id: 'i16',
+        // {
+        //     id: 'i16',
 
-            cost: 150,
-            max: 1,
-        },
-        {
-            id: 'i27',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: [
-                'Favoured of...',
-                'Underworld Challenge',
-                ...chaosSpecialRules,
-            ],
-        },
-        {
-            id: 'i28',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: [
-                'Elven Kingdoms League',
-                'Favoured of...',
-                ...chaosSpecialRules,
-            ],
-        },
-        {
-            id: 'i29',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: 'Elven Kingdoms League',
-        },
-        {
-            id: 'i30',
-
-            cost: 200,
-            max: 1,
-            requiresSpecialRule: 'Lustrian Superleague',
-        },
-        {
-            id: 'i31',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: ['Favoured of Nurgle', 'Underworld Challenge'],
-        },
-        {
-            id: 'i32',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: 'Sylvanian Spotlight',
-        },
-        {
-            id: 'i33',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: [
-                'Old World Classic',
-                'Sylvanian Spotlight',
-                'Underworld Challenge',
-            ],
-        },
-        {
-            id: 'i34',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: 'Underworld Challenge',
-        },
-        {
-            id: 'i35',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: 'Badlands Brawl',
-        },
-        {
-            id: 'i36',
-
-            cost: 150,
-            max: 1,
-            requiresSpecialRule: ['Badlands Brawl', 'Underworld Challenge'],
-        },
-        {
-            id: 'i37',
-
-            cost: 80,
-            max: 1,
-        },
+        //     cost: 150,
+        //     max: 1,
+        // },
         {
             id: 'i17',
 
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
             max: 1,
+            publication: 'rulebook',
         },
         {
             id: 'i38',
@@ -278,6 +211,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 130,
             max: 1,
             requiresSpecialRule: ['Lustrian Superleague', 'Old World Classic'],
+            publication: 'deathzone',
         },
         {
             id: 'i39',
@@ -285,6 +219,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             max: 1,
             requiresSpecialRule: 'Worlds Edge Superleague',
+            publication: 'deathzone',
         },
         {
             id: 'i40',
@@ -292,6 +227,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             max: 1,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
+            publication: 'deathzone',
         },
         {
             id: 'i41',
@@ -299,6 +235,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 80,
             max: 1,
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 40 },
+            publication: 'deathzone',
         },
         {
             id: 'i42',
@@ -306,6 +243,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 50,
             max: 1,
             requiresSpecialRule: 'Badlands Brawl',
+            publication: 'deathzone',
         },
         {
             id: 'i43',
@@ -313,6 +251,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 30,
             max: 3,
             requiresSpecialRule: 'Favoured of Nurgle',
+            publication: 'deathzone',
         },
         {
             id: 'i44',
@@ -323,6 +262,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Old World Classic',
                 'Worlds Edge Superleague',
             ],
+            publication: 'deathzone',
         },
         {
             id: 'i45',
@@ -331,6 +271,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             requiresSpecialRule: ['Halfling Thimble Cup', 'Old World Classic'],
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 60 },
+            publication: 'deathzone',
         },
         {
             id: 'i46',
@@ -339,6 +280,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             requiresSpecialRule: ['Halfling Thimble Cup', 'Old World Classic'],
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 30 },
+            publication: 'deathzone',
         },
         {
             id: 'i47',
@@ -346,18 +288,21 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 40,
             max: 3,
             requiresTier: 3,
+            publication: 'deathzone',
         },
         {
             id: 'i48',
 
             cost: 30,
             max: 1,
+            publication: 'deathzone',
         },
         {
             id: 'i49',
 
             cost: 60,
             max: 1,
+            publication: 'deathzone',
         },
         {
             id: 'i50',
@@ -373,12 +318,12 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 0,
             dungeonBowlMax: 1,
         },
-        {
-            id: 'i52',
+        // {
+        //     id: 'i52',
 
-            cost: 350,
-            max: 1,
-        },
+        //     cost: 350,
+        //     max: 1,
+        // },
         {
             id: 'i53',
 
@@ -413,6 +358,16 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 0,
             gutterBowlMax: 1,
+        },
+        {
+            id: 'i1000',
+            cost: 60,
+            max: 1,
+        },
+        {
+            id: 'i1001',
+            cost: 60,
+            max: 1,
         },
     ],
 };

@@ -61,10 +61,10 @@
         title={invalid.valid ? 'Roster is valid' : 'Roster is invalid'}
         >{invalid.valid ? 'checklist_rtl' : 'rule'}</i
     >
-    <p>
+    <!-- <p>
         <span class="mini-title">Tier:</span>
         {$currentTeam.tier}
-    </p>
+    </p> -->
     {#if sppAllowance > 0}
         <p>
             {#if $customisationRules?.allowances?.useSkillPoints}

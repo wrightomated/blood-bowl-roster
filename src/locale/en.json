@@ -260,7 +260,8 @@
         "624": "Animosity (Orc Lineman)",
         "625": "Animosity (Big Un Blocker)",
         "710": "Loner (5+)",
-        "711": "Loner (3+)"
+        "711": "Loner (3+)",
+        "1000": "Fan Favorite"
     },
     "teams": {
         "names": {
@@ -805,7 +806,9 @@
         "i54": "Superior Magic Potion",
         "i55": "Sawbones",
         "i56": "Snack Stand",
-        "i57": "Novice Wizard"
+        "i57": "Novice Wizard",
+        "i1000": "Coach Gitka",
+        "i1001": "Coach Bloody Rya"
     },
     "match": {
         "login": "You must be logged in to record match history.",

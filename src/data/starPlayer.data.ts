@@ -1,4 +1,5 @@
 import type { StarPlayer } from '../models/player.model';
+import { stuporBowlStarPlayers } from '../stuporBowl/stuporBowlStarPlayers';
 
 const theBlackGobbo: StarPlayer = {
     id: 200,
@@ -588,6 +589,7 @@ const jordellFreshbreeze: StarPlayer = {
     cost: 250,
     specialRules: ['Swift as the Breeze'],
 };
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -649,5 +651,6 @@ export const starPlayers = {
         rowanaForestfoot,
         kirotKrakeneye,
         jordellFreshbreeze,
+        ...stuporBowlStarPlayers,
     ],
 };
