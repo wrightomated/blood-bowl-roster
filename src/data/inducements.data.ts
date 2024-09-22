@@ -32,13 +32,13 @@ export const inducementData: { inducements: Inducement[] } = {
             sevensMax: 2,
             publication: 'rulebook',
         },
-        {
-            id: 'i5',
-            cost: 100,
-            max: 5,
-            sevensMax: 5,
-            publication: 'rulebook',
-        },
+        // {
+        //     id: 'i5',
+        //     cost: 100,
+        //     max: 5,
+        //     sevensMax: 5,
+        //     publication: 'rulebook',
+        // },
         {
             id: 'i6',
             cost: 100,
