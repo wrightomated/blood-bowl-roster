@@ -15,6 +15,7 @@
     import { gameSettings } from '../store/gameSettings.store';
     import { currentUserStore } from '../store/currentUser.store';
     import { customisationRules } from '../customisation/customisation.store';
+    import InducementList from './inducements/inducementList.svelte';
 
     export let selectedTeam: CustomTeam;
 
@@ -138,7 +139,8 @@
         <StarPlayerInducement />
     {/if}
 
-    <Inducements {selectedTeam} />
+    <!-- <Inducements {selectedTeam} /> -->
+    <InducementList {selectedTeam} />
 </div>
 
 <style lang="scss">

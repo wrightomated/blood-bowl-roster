@@ -14,6 +14,7 @@ export interface Inducement {
     dungeonBowlMax?: number;
     gutterBowlMax?: number;
     requiresTier?: number;
+    inducementType?: InducementType;
     /** No publication assumes rulebook */
     publication?:
         | 'rulebook'
@@ -30,3 +31,9 @@ export interface InducementCostReduction {
 }
 
 export type InducementKey = `i${number}`;
+export type InducementType =
+    | 'common'
+    | 'infamousCoach'
+    | 'wizzard'
+    | 'biasedReferee'
+    | 'other';

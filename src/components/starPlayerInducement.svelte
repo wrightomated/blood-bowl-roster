@@ -83,7 +83,7 @@
 
 <section class="no-print star-player">
     <header>
-        <h3>{$_('stars.title')}</h3>
+        <h3>{$_('stars.title')} ({currentStarPlayerAmount}/2)</h3>
     </header>
     <div class="star-player__content">
         {#if filteredStarPlayers.length > 0}
@@ -99,9 +99,6 @@
             </select>
         {/if}
         <div class="star-player__secondary">
-            <div class="star-player-amount">
-                {currentStarPlayerAmount} / 2
-            </div>
             <div class="star-player-cost">
                 {formatNumberInThousands(getSelected(selectedId)?.cost) || 0}
             </div>
