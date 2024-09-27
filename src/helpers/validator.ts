@@ -193,7 +193,7 @@ export function excessSpp(
 }
 
 /** Including dedicated fans */
-function teamTotal(roster: Roster) {
+export function teamTotal(roster: Roster) {
     const players = roster.players.filter((x) => !x.deleted);
     const playerTotal = players.reduce((a, b) => a + b.player.cost, 0);
     const inducementTotal = calculateInducementTotal(

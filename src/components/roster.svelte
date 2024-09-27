@@ -2,7 +2,6 @@
     import { roster } from '../store/teamRoster.store';
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
-    import Export from './export.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
@@ -81,7 +80,7 @@
     </p>
     <RosterSave />
 </div>
-<Export />
+
 <RosterDelete />
 
 {#if $rosterViewMode === 'grid'}
