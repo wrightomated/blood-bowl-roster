@@ -3,7 +3,6 @@
     import { roster } from '../../store/teamRoster.store';
 
     import MaterialButton from '../uiComponents/materialButton.svelte';
-    import RosterTextSummary from './rosterTextSummary.svelte';
 
     const baseUrl = window?.origin || 'https://bbroster.com';
 
