@@ -1,5 +1,9 @@
 import { PickedSpecialRule } from '../../data/teams.data';
+import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
+import { teamTotal } from '../../helpers/validator';
 import type { InducementsRecord, Roster } from '../../models/roster.model';
+import type { RosterMode } from '../../store/rosterMode.store';
+import type { TeamFormat } from '../../types/teamFormat';
 
 type PlayerSummary = {
     position: string;
@@ -10,8 +14,9 @@ type PlayerSummary = {
 export type ShareModel = {
     teamName: string;
     teamType: string;
-    format: string;
-    mode: string;
+    teamTotal: string;
+    format: TeamFormat;
+    mode: RosterMode;
     coachName?: string;
     nafNumber?: string;
     rerolls?: number;
@@ -63,6 +68,7 @@ export function rosterToShareModel(roster: Roster): ShareModel {
     return {
         teamName: roster.teamName,
         teamType: roster.teamType,
+        teamTotal: formatNumberInThousands(teamTotal(roster)),
         format: roster.format,
         mode: roster.mode,
         coachName: roster.coachDetails?.coachName,
