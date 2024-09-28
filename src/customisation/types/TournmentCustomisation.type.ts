@@ -22,7 +22,7 @@ export type TournamentCustomisation = {
     cssVariables?: Record<string, string>;
     advancementSettings?: AdvancementSetting[];
     starPlayerSettings?: {
-        excludeStarPlayers?: string[];
+        excludeStarPlayers?: number[];
         /** Spp */
         starPlayerCost?: {
             star: number;

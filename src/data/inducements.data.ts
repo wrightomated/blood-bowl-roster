@@ -44,10 +44,10 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 3,
             dungeonBowlMax: 3,
             sevensMax: 3,
+            requiresTier: 3,
         },
         {
             id: 'i8',
-
             cost: 100,
             max: 2,
             sevensMax: 2,
@@ -75,6 +75,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 1,
             requiresSpecialRule: 'Low Cost Linemen',
+            requiresTier: 3,
         },
         {
             id: 'i12',
@@ -83,6 +84,7 @@ export const inducementData: { inducements: Inducement[] } = {
             reducedCost: { teamName: 'Halfling', cost: 100 },
             max: 1,
             sevensMax: 1,
+            requiresTier: 3,
         },
         {
             id: 'i13',
@@ -271,6 +273,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
             max: 1,
+            requiresTier: 3,
         },
         {
             id: 'i38',

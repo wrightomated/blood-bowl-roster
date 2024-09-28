@@ -1,0 +1,74 @@
+{
+    "format": "elevens",
+    "mode": "exhibition",
+    "treasury": 1150,
+    "tiers": 3,
+
+    "tournamentTeamList": {
+        "excludedIds": ["22", "25", "27", "28"]
+    },
+    "customContent": {
+        "createTeamTitle": "NAF CHAMPIONSHIPS 2025",
+        "menuSubtitle": "NAF CHAMPS"
+    },
+    "updatedTierMap": {
+        "High Elf": 2,
+        "Orc": 1,
+        "Nurgle": 3
+    },
+    "inducementSettings": {
+        "includedInducementIds": [
+            "i4",
+            "i9",
+            "i2",
+            "i10",
+            "i8",
+            "i1",
+            "i17",
+            "i7",
+            "i12",
+            "i11"
+        ]
+    },
+    "allowances": {
+        "noSkillStacking": true,
+        "blockSppEditing": true,
+        "allowancesPerTier": {
+            "1": {
+                "secondarySkill": 0,
+                "starPlayer": 1,
+                "spp": 36
+            },
+            "2": {
+                "secondarySkill": 2,
+                "starPlayer": 2,
+                "spp": 48
+            },
+            "3": {
+                "secondarySkill": 3,
+                "starPlayer": 2,
+                "spp": 60
+            }
+        }
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "starPlayerSettings": {
+        "starPlayerCost": {
+            "star": 0,
+            "megaStar": 0
+        },
+        "excludeStarPlayers": [
+            234, 243, 201, 244, 245, 240, 208, 210, 251, 228, 215, 254, 221
+        ]
+    },
+    "hideProfile": true
+}

@@ -9,8 +9,15 @@
     $: customStarPlayers =
         $customisationRules?.starPlayerSettings?.customStarPlayers;
 
+    $: excludedStarPlayerIds =
+        $customisationRules?.starPlayerSettings?.excludeStarPlayers;
+
     $: filteredStarPlayers = filterStarPlayers(
-        starPlayers.starPlayers.concat(customStarPlayers || []),
+        starPlayers.starPlayers
+            .concat(customStarPlayers || [])
+            .filter(
+                (starPlayer) => !excludedStarPlayerIds?.includes(starPlayer.id)
+            ),
         $teamCreationSpecialRules
     );
 </script>

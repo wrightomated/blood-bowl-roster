@@ -14,6 +14,8 @@
     import { rosterCache } from '../store/rosterCache.store';
     import type { Roster } from '../models/roster.model';
     import { _ } from 'svelte-i18n';
+    import { rosterToCsv } from '../nafChamps/rosterToCsv';
+    import { extrasForTeam } from '../helpers/extrasForTeam';
 
     let saved = false;
     let saving = false;
@@ -79,6 +81,17 @@
                 componentProps: undefined,
             });
         });
+    }
+
+    function csvDownload() {
+        const csv = rosterToCsv($roster);
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.setAttribute('download', `${$roster.teamName}.csv`);
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
     const toggleDelete = () => showDelete.set(!$showDelete);
@@ -166,6 +179,12 @@
         clickFunction={toggleColumnControls}
     />
 {/if}
+
+<MaterialButton
+    hoverText="Download CSV"
+    symbol="csv"
+    clickFunction={csvDownload}
+/>
 
 <style lang="scss">
     .saved {

@@ -21,7 +21,8 @@
     import { _ } from 'svelte-i18n';
 
     import { activePlayers } from '../store/activePlayers.store';
-    import RosterValidator from './validator/rosterValidator.svelte';
+    import NafValidator from '../nafChamps/nafValidator.svelte';
+    import NafPackSelector from '../nafChamps/nafPackSelector.svelte';
 
     export let playerTypes: Player[];
 
@@ -66,6 +67,7 @@
     </div>
 </span>
 <SpecialRuleSelector />
+<NafPackSelector />
 
 <div class="sub-heading-box">
     <p class="sub-heading print-only print-only--larger">{$roster.teamName}</p>
@@ -140,7 +142,7 @@
 {/if}
 {#if $roster.format !== 'dungeon bowl'}
     {#if $roster.mode === 'exhibition' && $roster.format === 'elevens'}
-        <RosterValidator />
+        <NafValidator />
     {:else}
         <RosterPlayerCount />
     {/if}

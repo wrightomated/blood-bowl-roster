@@ -141,7 +141,7 @@ export const columnDetails: ColumnDetails[] = [
         rowDetails: {
             component: SppInput,
         },
-        disallowedRosterFormats: ['sevens'],
+        disallowedRosterFormats: ['sevens', 'elevens'],
         orderByPropertyPath: 'alterations.spp',
         sortFunction: (a, b) => {
             if (!a.alterations.spp || !b.alterations.spp) return -1;

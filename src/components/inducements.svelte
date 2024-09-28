@@ -139,7 +139,7 @@
                 >
             </tr>
         {/if}
-        {#if $showAllInducements && $roster.format !== 'dungeon bowl'}
+        <!-- {#if $showAllInducements && $roster.format !== 'dungeon bowl'}
             <tr class="no-print"
                 ><td colspan="4">
                     <div class="inducement__search">
@@ -161,7 +161,7 @@
                     </div>
                 </td>
             </tr>
-        {/if}
+        {/if} -->
         {#each newFilteredInducements as ind}
             {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>

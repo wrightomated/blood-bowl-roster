@@ -11,9 +11,16 @@
 
     let selectedId: number;
 
+    $: excludedStarPlayerIds =
+        $customisationRules?.starPlayerSettings?.excludeStarPlayers;
+
     $: customStarPlayers =
         $customisationRules?.starPlayerSettings?.customStarPlayers;
-    $: allStarPlayers = starPlayers.starPlayers.concat(customStarPlayers || []);
+    $: allStarPlayers = starPlayers.starPlayers
+        .concat(customStarPlayers || [])
+        .filter(
+            (starPlayer) => !excludedStarPlayerIds?.includes(starPlayer.id)
+        );
 
     $: filteredStarPlayers = filterStarPlayers(
         allStarPlayers,
@@ -100,7 +107,7 @@
         {/if}
         <div class="star-player__secondary">
             <div class="star-player-amount">
-                {currentStarPlayerAmount} / 2
+                {currentStarPlayerAmount}
             </div>
             <div class="star-player-cost">
                 {formatNumberInThousands(getSelected(selectedId)?.cost) || 0}

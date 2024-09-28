@@ -14,6 +14,8 @@ export type RosterValidationResult = {
         sppBalance?: number;
         tooManyOfPlayerType?: number[];
         teamTotalValue?: number;
+        tooManyPrimarySkills?: number;
+        tooManyStarPlayers?: number;
     };
 };
 
@@ -26,6 +28,11 @@ export type RosterValidationOptions = {
     minPlayers?: number;
     starPlayerSpp?: number;
     secondaryAllowance?: number;
+    nafOption: {
+        starPlayers: number;
+        primary: number;
+        secondary: number;
+    };
 };
 
 export function invalidRoster(
@@ -38,7 +45,8 @@ export function invalidRoster(
         maxPlayers,
         minPlayers,
         starPlayerSpp,
-        secondaryAllowance,
+        // secondaryAllowance,
+        nafOption,
     }: RosterValidationOptions
 ): RosterValidationResult {
     try {
@@ -46,33 +54,40 @@ export function invalidRoster(
         const tooMany = tooManyPlayers(roster, maxPlayers || 16);
         const tooBigGuy = tooManyBigGuy(roster, currentTeam?.maxBigGuys);
         const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkillId);
-        const sppBalance = excessSpp(roster, sppAllowance, starPlayerSpp);
+        // const sppBalance = excessSpp(roster, sppAllowance, starPlayerSpp);
         const tooManyOfPlayerType = tooManyOfPlayerTypeCalc(
             roster,
             currentTeam
         );
         const teamTotalValue = teamTotal(roster);
         const budgetValid = budget ? teamTotalValue <= budget : true;
-        let tooManySecondarySkills = 0;
-        if (secondaryAllowance) {
-            const advancements = allAdvancements(roster);
-            const secondarySkills = advancements.filter(
-                (x) =>
-                    x.type === 'secondaryselect' || x.type === 'secondaryrandom'
-            );
-            tooManySecondarySkills =
-                secondarySkills.length - secondaryAllowance;
-        }
+        // if (secondaryAllowance) {
+        //     const advancements = allAdvancements(roster);
+        //     const secondarySkills = advancements.filter(
+        //         (x) =>
+        //             x.type === 'secondaryselect' || x.type === 'secondaryrandom'
+        //     );
+        //     tooManySecondarySkills =
+        //         secondarySkills.length - secondaryAllowance;
+        // }
+
+        const nafOptionValid = nafOptionCheck(roster, nafOption);
+
+        let tooManySecondarySkills = nafOptionValid.secondary;
+        let tooManyPrimarySkills = nafOptionValid.primary;
+        let tooManyStarPlayers = nafOptionValid.starPlayers;
 
         const valid =
             !tooFew &&
             !tooMany &&
             !tooBigGuy &&
             !(moreThanMaxOfSameSkill.length > 0) &&
-            sppBalance >= 0 &&
+            // sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
             budgetValid &&
-            tooManySecondarySkills <= 0;
+            tooManySecondarySkills <= 0 &&
+            tooManyPrimarySkills <= 0 &&
+            tooManyStarPlayers <= 0;
 
         return {
             valid,
@@ -81,10 +96,12 @@ export function invalidRoster(
                 tooMany,
                 tooBigGuy,
                 moreThanFourOfTheSameSkill: moreThanMaxOfSameSkill,
-                sppBalance,
+                // sppBalance,
                 tooManyOfPlayerType,
                 teamTotalValue,
                 tooManySecondarySkills,
+                tooManyPrimarySkills,
+                tooManyStarPlayers,
             },
         };
     } catch (error) {
@@ -205,4 +222,24 @@ export function teamTotal(roster: Roster) {
         .map((x) => roster.extra[x.extraString] * x.cost || 0)
         .reduce((a, b) => a + b, 0);
     return playerTotal + inducementTotal + extraTotal;
+}
+
+function nafOptionCheck(
+    roster: Roster,
+    nafOption: {
+        starPlayers: number;
+        primary: number;
+        secondary: number;
+    }
+) {
+    const breakdown = advancementBreakdown(roster);
+    const starPlayers = roster.players.filter((x) => x.starPlayer).length;
+    const primary = breakdown.primaryselect + breakdown.primaryrandom;
+    const secondary = breakdown.secondaryselect + breakdown.secondaryrandom;
+
+    return {
+        starPlayers: nafOption.starPlayers - starPlayers,
+        primary: nafOption.primary - primary,
+        secondary: nafOption.secondary - secondary,
+    };
 }

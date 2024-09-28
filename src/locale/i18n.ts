@@ -1,4 +1,4 @@
-import { register, init, getLocaleFromNavigator } from 'svelte-i18n';
+import { register, init } from 'svelte-i18n';
 
 export const registerLocales = (savedLocale?: string) => {
     register('en', () => import('./en.json'));
