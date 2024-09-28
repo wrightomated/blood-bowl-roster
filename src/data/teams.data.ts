@@ -383,7 +383,7 @@ export const teamData: TeamList = {
             retired: true,
         },
         {
-            name: 'Chaos Dwarf',
+            name: 'Chaos Dwarf (ToL)',
             id: '23',
             players: [
                 { id: 96, max: 16 },
@@ -396,6 +396,7 @@ export const teamData: TeamList = {
             tier: 1,
             specialRules: ['Badlands Brawl', 'Worlds Edge Superleague'],
             pickSpecialRule: chaosSpecialRules,
+            retired: true,
         },
         {
             name: 'High Elf',
@@ -563,6 +564,22 @@ export const teamData: TeamList = {
             tier: 3,
             maxBigGuys: 2,
             specialRules: ['Halfling Thimble Cup'],
+        },
+        {
+            name: 'Chaos Dwarf',
+            id: '35',
+            players: [
+                { id: 96, max: 16 },
+                { id: 169, max: 2 },
+                { id: 170, max: 4 },
+                { id: 171, max: 2 },
+                { id: 172, max: 2 },
+                { id: 91, max: 1 },
+            ],
+            reroll: { cost: 70, max: 8 },
+            allowedApothecary: true,
+            tier: 1,
+            specialRules: ['Badlands Brawl', 'Favoured of Hashut'],
         },
     ],
 };
