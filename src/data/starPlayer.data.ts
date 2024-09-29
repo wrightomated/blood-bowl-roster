@@ -650,7 +650,7 @@ const htharkTheUnstoppable: StarPlayer = {
     playsFor: ['Badlands Brawl', 'Favoured of Hashut'],
     skills: [13, 51, 5, 54, 71, 11, 12, 60],
     cost: 300,
-    specialRules: ['Unstoppable Momentim'],
+    specialRules: ['Unstoppable Momentum'],
 };
 
 export const starPlayers = {
