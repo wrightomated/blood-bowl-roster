@@ -6,6 +6,7 @@ export const chaosSpecialRules: TeamSpecialRule[] = [
     'Favoured of Nurgle',
     'Favoured of Slaanesh',
     'Favoured of Tzeentch',
+    'Favoured of Hashut',
 ];
 
 export enum PickedSpecialRule {
@@ -15,6 +16,7 @@ export enum PickedSpecialRule {
     'Favoured of Nurgle',
     'Favoured of Slaanesh',
     'Favoured of Tzeentch',
+    'Favoured of Hashut',
 }
 
 export const teamData: TeamList = {
