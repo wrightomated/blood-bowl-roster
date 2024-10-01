@@ -616,7 +616,7 @@ const cipactlicihuatlSaurus: StarPlayer = {
 const cipactlicihuatlAmazon: StarPlayer = {
     id: 403,
     position: 'Cipactlicihuatl - Amazon',
-    playerStats: [7, 3, 4, 4, 8],
+    playerStats: [7, 3, 3, 4, 8],
     playsFor: [],
     // Dodge, Side Step, Jump Up, PRO & Loner (3+
     skills: [4, 9, 6, 19, 711],
