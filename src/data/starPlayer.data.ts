@@ -608,6 +608,16 @@ const htharkTheUnstoppable: StarPlayer = {
     specialRules: ['Unstoppable Momentim'],
 };
 
+const rashnackBackstabber: StarPlayer = {
+    id: 261,
+    position: 'Rashnack Backstabber',
+    playerStats: [7, 3, 3, 5, 8],
+    playsFor: ['Badlands Brawl'],
+    skills: [71, 20, 9, 10, 80],
+    cost: 130,
+    specialRules: ['Toxin Conniseur'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -671,5 +681,6 @@ export const starPlayers = {
         jordellFreshbreeze,
         zzhargMadeye,
         htharkTheUnstoppable,
+        rashnackBackstabber,
     ],
 };
