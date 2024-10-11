@@ -127,7 +127,7 @@ const minotaur: Player = {
     position: 'Minotaur',
     playerStats: [5, 5, 4, 0, 9],
     cost: 150,
-    skills: [71, 17, 30, 55, 60, 88],
+    skills: [17, 30, 71, 55, 60, 88],
     primary: ['M', 'S'],
     secondary: ['A', 'G'],
     bigGuy: true,
@@ -1473,6 +1473,34 @@ const woodlandFox: Player = {
     primary: [],
     secondary: ['A'],
 };
+const hobgoblinSneakyStabbas: Player = {
+    position: 'Hobgoblin Sneaky Stabbas',
+    id: 169,
+    cost: 70,
+    playerStats: [6, 3, 3, 5, 8],
+    skills: [20, 80],
+    primary: ['G'],
+    secondary: ['A', 'S'],
+};
+const newChaosDwarfBlocker: Player = {
+    ...chaosDwarf,
+    id: 170,
+    skills: [13, 31, 60],
+};
+const chaosDwarfFlamesmith: Player = {
+    position: 'Chaos Dwarf Flamesmith',
+    id: 171,
+    cost: 80,
+    playerStats: [5, 3, 4, 6, 10],
+    skills: [50, 100, 27, 60],
+    primary: ['G', 'S'],
+    secondary: ['A', 'M'],
+};
+const chaosDwarfBullCentaur: Player = {
+    ...bullCentaur,
+    id: 172,
+    secondary: ['A', 'M'],
+};
 
 export const playerCatalogue: PlayerCatalogue = {
     players: [
@@ -1644,5 +1672,9 @@ export const playerCatalogue: PlayerCatalogue = {
         gnomeBeastmaster,
         gnomeIllusionist,
         woodlandFox,
+        hobgoblinSneakyStabbas,
+        newChaosDwarfBlocker,
+        chaosDwarfFlamesmith,
+        chaosDwarfBullCentaur,
     ],
 };

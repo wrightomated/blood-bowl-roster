@@ -53,6 +53,7 @@ export type TeamName =
     | 'Chaos Renegade'
     | 'Amazon'
     | 'Chaos Dwarf'
+    | 'Chaos Dwarf (ToL)'
     | 'High Elf'
     | 'Norse'
     | 'Tomb Kings'
@@ -84,4 +85,5 @@ export type TeamSpecialRule =
     | 'Favoured of Khorne'
     | 'Favoured of Chaos Undivided'
     | 'Favoured of Slaanesh'
-    | 'Favoured of Tzeentch';
+    | 'Favoured of Tzeentch'
+    | 'Favoured of Hashut';
