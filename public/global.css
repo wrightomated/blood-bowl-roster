@@ -124,7 +124,7 @@ tr {
     background-color: white;
 }
 tr:nth-of-type(even) {
-    background-color: #eee;
+    background-color: var(--secondary-background-colour);
 }
 thead > tr {
     background-color: var(--main-colour);

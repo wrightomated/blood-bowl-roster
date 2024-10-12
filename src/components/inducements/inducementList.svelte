@@ -135,7 +135,7 @@
     section {
         display: grid;
         grid-template-columns: max-content 1fr max-content max-content;
-        gap: 8px;
+        // gap: 8px;
         padding: 0;
         background-color: white;
         align-items: center;

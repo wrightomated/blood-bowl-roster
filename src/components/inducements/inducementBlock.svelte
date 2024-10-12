@@ -33,7 +33,7 @@
 
 {#if inducements.length > 0}
     <div
-        class="inducement__heading"
+        class="ind__heading"
         on:click={toggleInducements}
         on:keydown={toggleInducements}
         role="button"
@@ -45,17 +45,17 @@
         >
     </div>
     {#if $showInducementBlock?.[toggleKey]}
-        {#each inducements as ind}
-            <div class="inducement__display-name">
+        {#each inducements as ind, i}
+            <div class="ind__block ind__display-name">
                 {$_('inducements.' + ind.id)}
             </div>
-            <div class="inducement__max">
+            <div class="ind__block ind__max">
                 {$roster.inducements?.[ind.id] || 0} / {ind.max}
             </div>
-            <div class="inducement__amount">
+            <div class="ind__block ind__amount">
                 {formatNumberInThousands(ind.cost)}
             </div>
-            <div class="inducement__control">
+            <div class="ind__block ind__control">
                 <div class="flex-container">
                     {#if $roster.inducements?.[ind.id] > 0}
                         <MaterialButton
@@ -88,7 +88,10 @@
 {/if}
 
 <style lang="scss">
-    .inducement {
+    .ind {
+        &__block {
+            padding: 8px;
+        }
         &__heading {
             background-color: var(--main-colour);
             font-weight: bold;
@@ -103,14 +106,24 @@
             align-items: center;
             text-transform: uppercase;
             cursor: pointer;
+
+            i {
+                color: var(--white);
+            }
         }
         &__amount {
             text-align: right;
         }
-        &__display-name {
-            @media (max-width: 370px) {
+
+        @media (max-width: 400px) {
+            &__block {
+                padding-top: 0;
+            }
+            &__display-name {
                 grid-column: 1 / -1;
-                margin-top: 8px;
+                padding-bottom: 0;
+                padding-top: 8px;
+                // margin-top: 8px;
             }
         }
     }
