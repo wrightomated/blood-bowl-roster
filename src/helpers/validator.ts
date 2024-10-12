@@ -79,12 +79,6 @@ export function invalidRoster(
             (nafOption.secondary - nafOptionValid.secondarySkills);
         let tooManyStarPlayers = nafOptionValid.starPlayers;
 
-        console.log(
-            tooManySecondarySkills,
-            tooManyPrimarySkills,
-            tooManyStarPlayers
-        );
-
         const valid =
             !tooFew &&
             !tooMany &&
