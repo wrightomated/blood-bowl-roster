@@ -74,8 +74,16 @@ export function invalidRoster(
         const nafOptionValid = nafOptionCheck(roster, nafOption);
 
         let tooManySecondarySkills = nafOptionValid.secondary;
-        let tooManyPrimarySkills = nafOptionValid.primary;
+        let tooManyPrimarySkills =
+            nafOptionValid.primary +
+            (nafOption.secondary - nafOptionValid.secondarySkills);
         let tooManyStarPlayers = nafOptionValid.starPlayers;
+
+        console.log(
+            tooManySecondarySkills,
+            tooManyPrimarySkills,
+            tooManyStarPlayers
+        );
 
         const valid =
             !tooFew &&
@@ -85,9 +93,9 @@ export function invalidRoster(
             // sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
             budgetValid &&
-            tooManySecondarySkills <= 0 &&
-            tooManyPrimarySkills <= 0 &&
-            tooManyStarPlayers <= 0;
+            tooManySecondarySkills >= 0 &&
+            tooManyPrimarySkills >= 0 &&
+            tooManyStarPlayers >= 0;
 
         return {
             valid,
@@ -224,6 +232,10 @@ export function teamTotal(roster: Roster) {
     return playerTotal + inducementTotal + extraTotal;
 }
 
+/**
+ * Values are the difference between the nafOption and the actual
+ * So if negative it means the roster has too many of that type
+ */
 function nafOptionCheck(
     roster: Roster,
     nafOption: {
@@ -241,5 +253,6 @@ function nafOptionCheck(
         starPlayers: nafOption.starPlayers - starPlayers,
         primary: nafOption.primary - primary,
         secondary: nafOption.secondary - secondary,
+        secondarySkills: secondary,
     };
 }

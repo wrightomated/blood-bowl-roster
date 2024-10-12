@@ -68,6 +68,9 @@
     <p class:error={invalid?.invalid.tooManyPrimarySkills < 0}>
         <span class="mini-title">Primary:</span>
         {adBreakdown.primaryselect} / {packAllowance.primary}
+        {#if packAllowance.primary + packAllowance.secondary > packAllowance.primary}
+            ({packAllowance.primary + packAllowance.secondary})
+        {/if}
     </p>
 
     <!-- secondary -->
