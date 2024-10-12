@@ -28,6 +28,7 @@ import {
     versionCheck,
 } from '../helpers/rosterVersionCheck';
 import type { Inducement } from '../models/inducement.model';
+import { guessSpecificAdvancements } from '../helpers/advancementOrder';
 
 export const MAX_PLAYER_NUMBER = 99;
 
@@ -347,7 +348,15 @@ const rosterFromCode = (code: string | null) => {
     try {
         let transformedRoster = stringToRoster(code);
 
-        return addPlayerNumbersToRoster(transformedRoster);
+        transformedRoster = addPlayerNumbersToRoster(transformedRoster);
+        const players = addSpecificAdvancementsToPlayers(
+            transformedRoster.players
+        );
+
+        return {
+            ...transformedRoster,
+            players,
+        };
     } catch (error) {
         return null;
     }
@@ -406,6 +415,20 @@ const addPlayerToPlayers: (
     return indexToAdd && indexToAdd >= 0 && indexToAdd < players.length
         ? players.map((p, i) => (i === indexToAdd ? playerWithNumber : p))
         : players.concat([playerWithNumber]);
+};
+
+const addSpecificAdvancementsToPlayers: (
+    players: RosterPlayerRecord[]
+) => RosterPlayerRecord[] = (players) => {
+    return players.map((p) => {
+        return {
+            ...p,
+            alterations: {
+                ...p.alterations,
+                specificAdvancements: guessSpecificAdvancements(p),
+            },
+        };
+    });
 };
 
 const deletePlayersFromPlayers: (
