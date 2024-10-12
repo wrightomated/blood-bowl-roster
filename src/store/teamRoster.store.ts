@@ -349,9 +349,14 @@ const rosterFromCode = (code: string | null) => {
         let transformedRoster = stringToRoster(code);
 
         transformedRoster = addPlayerNumbersToRoster(transformedRoster);
-        const players = addSpecificAdvancementsToPlayers(
-            transformedRoster.players
-        );
+        let players = transformedRoster.players;
+        try {
+            players = addSpecificAdvancementsToPlayers(
+                transformedRoster.players
+            );
+        } catch (error) {
+            console.error(error);
+        }
 
         return {
             ...transformedRoster,

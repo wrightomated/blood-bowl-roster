@@ -36,11 +36,20 @@ export function guessSpecificAdvancements(
             }
         );
     }
-    return determinePlayerAdvancements(
-        rosterPlayer.alterations.valueChange,
-        rosterPlayer.alterations?.statChange || [0, 0, 0, 0, 0],
-        mappedSkillTypes
-    );
+    return mappedSkillTypes.map((s) => {
+        return {
+            type:
+                s.skillType === 'primary' ? 'primaryselect' : 'secondaryselect',
+            advancementValue: s.skillId,
+            sppCost: 0,
+        };
+    });
+
+    // return determinePlayerAdvancements(
+    //     rosterPlayer.alterations.valueChange,
+    //     rosterPlayer.alterations?.statChange || [0, 0, 0, 0, 0],
+    //     mappedSkillTypes
+    // );
 }
 
 export function getSkillType(
