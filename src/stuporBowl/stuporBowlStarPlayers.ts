@@ -12,7 +12,7 @@ const daFreezer: StarPlayer = {
 
 const drunkyQB: StarPlayer = {
     id: 1001,
-    position: 'Drunky QB',
+    position: 'Slim McHamm',
     playerStats: [6, 3, 3, 2, 9],
     playsFor: [],
     skills: [711, 46, 37, 38, 39, 93, 22, 43, 42, 1000], // Loner (3+), Pass, Accurate, Cannoneer, Cloud Burster, Drunkard, Sure Hands, Leader, Hail Mary Pass, Fan Favorite
@@ -22,7 +22,7 @@ const drunkyQB: StarPlayer = {
 
 const sourness: StarPlayer = {
     id: 1002,
-    position: 'Sourness',
+    position: 'Salter Painton',
     playerStats: [7, 3, 3, 4, 9],
     playsFor: [],
     skills: [711, 13, 7, 22, 12, 16, 1000], // Loner (3+), Block, Leap, Sure Hands, Sure Feet, Fend, Fan Favorite
@@ -32,7 +32,7 @@ const sourness: StarPlayer = {
 
 const spike: StarPlayer = {
     id: 1003,
-    position: 'Spike',
+    position: 'Spike Dingleberry',
     playerStats: [7, 3, 3, 4, 9],
     playsFor: [],
     skills: [711, 13, 23, 3, 43, 52, 58, 5, 1000], // Loner (3+), Block, Tackle, Diving Tackle, Leader, Grab, Stand Firm, Defensive, Fan Favorite
