@@ -51,7 +51,7 @@ const collegeOfShadows: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [14, 68, 28, 165],
+            playerIds: [14, 68, 28, 165, 96],
         },
         runners: {
             max: 4,
@@ -67,7 +67,7 @@ const collegeOfShadows: DungeonBowlCollege = {
         },
         special: {
             max: 2,
-            playerIds: [18, 17, 166],
+            playerIds: [18, 17, 166, 169],
         },
     },
 };
@@ -262,7 +262,7 @@ const collegeOfHeavens: DungeonBowlCollege = {
     players: {
         linemen: {
             max: 16,
-            playerIds: [43, 152, 153, 96],
+            playerIds: [43, 152, 153],
         },
         blitzers: {
             max: 4,
@@ -278,7 +278,7 @@ const collegeOfHeavens: DungeonBowlCollege = {
         },
         special: {
             max: 2,
-            playerIds: [44, 146, 169],
+            playerIds: [44, 146],
         },
     },
 };
