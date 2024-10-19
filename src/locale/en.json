@@ -252,6 +252,7 @@
         "97": "Bloodlust (3+)",
         "98": "Trickster",
         "99": "My Ball",
+        "100": "Breathe Fire",
         "151": "Dirty Player (+2)",
         "551": "Mighty Blow (+2)",
         "620": "Animosity (all team-mates)",
@@ -287,7 +288,7 @@
             "20": "Wood Elf",
             "21": "Chaos Renegade",
             "22": "Amazon (ToL)",
-            "23": "Chaos Dwarf",
+            "23": "Chaos Dwarf (ToL)",
             "24": "High Elf",
             "25": "Norse (ToL)",
             "26": "Tomb Kings",
@@ -298,7 +299,8 @@
             "31": "Norse",
             "32": "Amazon",
             "33": "Vampire",
-            "34": "Gnome"
+            "34": "Gnome",
+            "35": "Chaos Dwarf"
         },
         "rules": {
             "Badlands Brawl": "Badlands Brawl",
@@ -317,7 +319,8 @@
             "Lustrian Superleague": "Lustrian Superleague",
             "Masters of Undeath": "Masters of Undeath",
             "Sylvanian Spotlight": "Sylvanian Spotlight",
-            "Low Cost Linemen": "Low Cost Linemen"
+            "Low Cost Linemen": "Low Cost Linemen",
+            "Favoured of Hashut": "Favoured of Hashut"
         }
     },
     "colleges": {
@@ -509,7 +512,11 @@
         "165": "Gnome Lineman",
         "166": "Gnome Beastmaster",
         "167": "Gnome Illusionist",
-        "168": "Woodland Fox"
+        "168": "Woodland Fox",
+        "169": "Hobgoblin Sneaky Stabba",
+        "170": "Chaos Dwarf Blocker",
+        "171": "Chaos Dwarf Flamesmith",
+        "172": "Bull Centaur Blitzer"
     },
     "stars": {
         "title": "Star Players",

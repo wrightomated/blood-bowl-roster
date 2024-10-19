@@ -21,7 +21,11 @@
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
     import { _ } from 'svelte-i18n';
+<<<<<<< HEAD
     import { playerCatalogue } from '../store/playerCatalogue.store';
+=======
+    import { customisationRules } from '../customisation/customisation.store';
+>>>>>>> main
 
     $: teamList = $availableTeams;
 
@@ -78,7 +82,9 @@
             )}
         />
         <RerollsTable selectedTeam={$currentTeam} />
-        <MatchHistoryRecords />
+        {#if !$customisationRules?.hideProfile}
+            <MatchHistoryRecords />
+        {/if}
     {/if}
 {/if}
 

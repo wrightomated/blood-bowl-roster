@@ -3,33 +3,25 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import PlayerAdvancement from '../playerAdvancement/playerAdvancement.svelte';
+    import HeaderModalContainer from '../uiComponents/headerModalContainer.svelte';
     import ExtendedDetails from './extendedDetails.svelte';
     import Injury from './injury.svelte';
 
     export let index: number;
+
     let rosterPlayer: RosterPlayerRecord;
     $: rosterPlayer = $roster.players[index];
 
-    let mainComponent = PlayerAdvancement;
-
-    const componentMap = {
-        advancements: PlayerAdvancement,
-        records: ExtendedDetails,
-        injuries: Injury,
-    };
     const options = ['advancements', 'injuries', 'records'];
 
-    let selectedOption = options[0];
-    function selected(option: string) {
-        selectedOption = option;
-        mainComponent = componentMap[option];
-    }
     const optionMap = {
         advancements: {
             title: 'Player advancements',
             icon: 'elevator',
             caption: 'Advancements',
             show: () => true,
+            component: PlayerAdvancement,
+            componentProps: { index },
         },
         injuries: {
             title: 'Player injuries',
@@ -37,38 +29,21 @@
             caption: 'Injuries',
             show: () =>
                 $roster.mode === 'league' && $roster.format !== 'sevens',
+            component: Injury,
+            componentProps: { index },
         },
         records: {
             title: 'Player records',
             icon: 'receipt_long',
             caption: 'Player records',
             show: () => !!rosterPlayer?.alterations?.gameRecords,
+            component: ExtendedDetails,
+            componentProps: { index },
         },
     };
 </script>
 
-<section class="edit-player-container">
-    <header class="header">
-        <div class="button-container">
-            {#each options as option}
-                {#if optionMap[option].show()}
-                    <button
-                        class="option-button"
-                        class:option-button--selected={selectedOption ===
-                            option}
-                        on:click={() => selected(option)}
-                    >
-                        <i
-                            class="material-symbols-outlined icon"
-                            title={optionMap[option].title}
-                            >{optionMap[option].icon}</i
-                        >
-                    </button>
-                {/if}
-            {/each}
-        </div>
-        <!-- <MaterialButton symbol="cancel"></MaterialButton> -->
-    </header>
+<HeaderModalContainer {options} {optionMap}>
     <div class="player-info">
         <p>
             {#if rosterPlayer.playerName}
@@ -90,58 +65,9 @@
             {/if}
         </p>
     </div>
-
-    <div class="edit-player-content">
-        <h3 class="option-title">{selectedOption}</h3>
-        <div class="edit-player">
-            <svelte:component this={mainComponent} {index} />
-        </div>
-    </div>
-</section>
+</HeaderModalContainer>
 
 <style lang="scss">
-    .header {
-        border-radius: 20px 20px 0 0;
-        background-color: var(--secondary-colour);
-    }
-    .edit-player-container {
-        border-radius: 25px;
-        border: var(--secondary-border);
-    }
-    .edit-player-content {
-        padding: 0 12px 12px 12px;
-    }
-    .button-container {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        padding: 6px;
-        border-bottom: 2px solid var(--secondary-colour);
-    }
-    .option-title {
-        text-transform: capitalize;
-    }
-    .option-button {
-        background: none;
-        border: none;
-        margin: 0;
-        font-family: var(--display-font);
-        cursor: pointer;
-
-        .icon {
-            font-size: 32px;
-            color: var(--secondary-background-colour);
-        }
-        &--selected {
-            color: var(--white);
-            .icon {
-                text-decoration: underline;
-            }
-        }
-    }
-    .edit-player {
-        margin-top: 16px;
-    }
     .player-info {
         text-align: center;
         font-size: 14px;

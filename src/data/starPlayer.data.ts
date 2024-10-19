@@ -588,6 +588,36 @@ const jordellFreshbreeze: StarPlayer = {
     cost: 250,
     specialRules: ['Swift as the Breeze'],
 };
+const zzhargMadeye: StarPlayer = {
+    id: 259,
+    position: 'Zzharg Madeye',
+    playerStats: [4, 4, 4, 3, 10],
+    playsFor: ['Favoured of Hashut', 'Badlands Brawl'],
+    skills: [38, 42, 71, 44, 79, 22, 60],
+    cost: 130,
+    specialRules: ["Then I started Blastin'!"],
+};
+
+const htharkTheUnstoppable: StarPlayer = {
+    id: 260,
+    position: "H'thark The Unstoppable",
+    playerStats: [6, 6, 4, 6, 10],
+    playsFor: ['Badlands Brawl', 'Favoured of Hashut'],
+    skills: [13, 51, 5, 54, 71, 11, 12, 60],
+    cost: 300,
+    specialRules: ['Unstoppable Momentim'],
+};
+
+const rashnackBackstabber: StarPlayer = {
+    id: 261,
+    position: 'Rashnack Backstabber',
+    playerStats: [7, 3, 3, 5, 8],
+    playsFor: ['Badlands Brawl'],
+    skills: [71, 20, 9, 10, 80],
+    cost: 130,
+    specialRules: ['Toxin Conniseur'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -649,5 +679,8 @@ export const starPlayers = {
         rowanaForestfoot,
         kirotKrakeneye,
         jordellFreshbreeze,
+        zzhargMadeye,
+        htharkTheUnstoppable,
+        rashnackBackstabber,
     ],
 };
