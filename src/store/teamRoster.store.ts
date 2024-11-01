@@ -349,6 +349,7 @@ const rosterFromCode = (code: string | null) => {
 
         return addPlayerNumbersToRoster(transformedRoster);
     } catch (error) {
+        console.error('Error loading roster from code', error);
         return null;
     }
 };
