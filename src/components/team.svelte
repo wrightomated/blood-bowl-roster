@@ -3,6 +3,7 @@
     import {
         currentTeam,
         currentTeamIsDungeonBowl,
+        playerTypes,
     } from '../store/currentTeam.store';
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
@@ -21,7 +22,6 @@
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
     import { _ } from 'svelte-i18n';
-    import { playerCatalogue } from '../store/playerCatalogue.store';
     import { customisationRules } from '../customisation/customisation.store';
 
     $: teamList = $availableTeams;
@@ -73,11 +73,7 @@
     {/if}
 
     {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
-        <Roster
-            playerTypes={$currentTeam.players.map((x) =>
-                $playerCatalogue.find((player) => player.id === x.id)
-            )}
-        />
+        <Roster playerTypes={$playerTypes} />
         <RerollsTable selectedTeam={$currentTeam} />
         {#if !$customisationRules?.hideProfile}
             <MatchHistoryRecords />

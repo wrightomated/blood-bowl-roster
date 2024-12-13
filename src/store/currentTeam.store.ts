@@ -47,6 +47,13 @@ export const currentTeamId = writable(updateOldTeamId(getTeamId()));
 export const currentTeam: Readable<CustomTeam> = derived(
     [currentTeamId, customisationRules, secretTeams],
     ([$id, $customisation, $secretTeams]) => {
+        let teamFromStorage = getTeamFromStorage();
+
+        if (teamFromStorage?.id !== '0' && teamFromStorage?.id === $id) {
+            console.log('teamFromStorage', teamFromStorage);
+            return teamFromStorage;
+        }
+
         let isDungeonBowl = !!$id && $id?.toString()?.includes('db');
         let teams = [...getBaseTeamData(isDungeonBowl), ...$secretTeams];
         let customisationOptions = {
@@ -59,7 +66,6 @@ export const currentTeam: Readable<CustomTeam> = derived(
         const team = filteredTeamData(customisationOptions).find(
             (x) => x.id === $id
         );
-        console.log('currentTeam', team);
         return team;
     }
 );
@@ -70,6 +76,7 @@ export const currentTeamIsDungeonBowl = derived(currentTeam, ($currentTeam) =>
 export const playerTypes: Readable<Player[]> = derived(
     [currentTeam, playerCatalogue.findById],
     ([$currentTeam, $findById]) => {
+        console.log('currentTeam', $currentTeam);
         return $currentTeam.players.map((player) => {
             return $findById(player.id);
         });
