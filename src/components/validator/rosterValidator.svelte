@@ -50,6 +50,10 @@
         currentTeam: $currentTeam,
         maxOfSkillId,
         starPlayerSpp,
+        secondaryAllowance:
+            $customisationRules?.allowances?.allowancesPerTier?.[
+                $currentTeam.tier
+            ]?.secondarySkill ?? 0,
     });
 </script>
 
@@ -133,6 +137,12 @@
         <p class="error">
             <i class="material-symbols-outlined no-transition">warning</i>
             {-1 * invalid.invalid.sppBalance} SPP over allowance.
+        </p>
+    {/if}
+    {#if invalid.invalid.tooManySecondarySkills}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Too many secondary skills
         </p>
     {/if}
 </div>

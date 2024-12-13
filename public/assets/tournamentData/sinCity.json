@@ -3,6 +3,7 @@
     "mode": "exhibition",
     "treasury": 1150,
     "tiers": 3,
+    "lockTreasury": true,
 
     "tournamentTeamList": {
         "excludedIds": ["22", "25", "27", "28"]

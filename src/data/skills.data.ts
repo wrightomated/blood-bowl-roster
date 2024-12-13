@@ -123,6 +123,8 @@ export const skillCatalogue: Skill[] = [
     { id: 202, category: 'M' },
     { id: 203, category: 'G' },
     { id: 204, category: 'S' },
+    // Chaos dwarf
+    { id: 100, category: 'T' },
 ];
 
 export const dungeonBowlSkillIds = {
