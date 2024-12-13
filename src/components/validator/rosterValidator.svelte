@@ -139,7 +139,7 @@
             {-1 * invalid.invalid.sppBalance} SPP over allowance.
         </p>
     {/if}
-    {#if invalid.invalid.tooManySecondarySkills}
+    {#if invalid.invalid.tooManySecondarySkills > 0}
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
             Too many secondary skills
