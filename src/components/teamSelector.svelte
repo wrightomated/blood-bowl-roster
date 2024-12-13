@@ -34,6 +34,8 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
+    import { secretTeams } from '../modules/secret-league/secretTeams.store';
+    import { playerCatalogue } from '../store/playerCatalogue.store';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -91,6 +93,8 @@
 
     const newTeam = (id: string) => {
         currentTeamId.set(id);
+
+        console.log(id);
 
         teamSelectionSpecialRule.set(
             $currentTeam?.pickSpecialRule
@@ -162,6 +166,19 @@
     function changeFormat(format: any) {
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
+    }
+
+    async function loadSecretTeams() {
+        const modules = await Promise.all([
+            import('../modules/secret-league/secretTeam.data'),
+            import('../modules/secret-league/secretPlayer.data'),
+        ]);
+        const secretTeamsData = modules[0].secretTeamData;
+        secretTeams.set(secretTeamsData);
+
+        const secretPlayersData = modules[1].secretPlayerData;
+        playerCatalogue.setSecretPlayers(secretPlayersData);
+        return secretTeamsData;
     }
 </script>
 
@@ -240,8 +257,27 @@
                             >{/if}</button
                     >
                 {/each}
-                {#if sortedTeam.length === 0}
+                {#if sortedTeam.length === 0 && searchTerm !== 'secret'}
                     <p class="no-matches">No teams match your filter</p>
+                {/if}
+                {#if searchTerm === 'secret'}
+                    {#await loadSecretTeams()}
+                        FUMBLE MAGIC
+                    {:then secretTeams}
+                        {#each secretTeams as st (st.id)}
+                            <button
+                                class="team-button rounded-button"
+                                animate:flip={{ duration: 200 }}
+                                transition:scale|local={{ duration: 200 }}
+                                class:selected={$currentTeam?.id === st?.id}
+                                on:click={() => newTeam(st.id)}
+                                >{st.name}
+                                <span class="display-font"
+                                    >{tierToNumeral(st.tier)}</span
+                                ></button
+                            >
+                        {/each}
+                    {/await}
                 {/if}
             </div>
             {#if $currentTeam?.pickSpecialRule}

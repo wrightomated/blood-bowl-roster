@@ -16,7 +16,9 @@
     <td class:danger={playerTypeCount > max}>
         {playerTypeCount}/{max}
     </td>
-    <td class="left-align">{$_('players.' + player.id)}</td>
+    <td class="left-align"
+        >{$_('players.' + player.id, { default: player.position })}</td
+    >
     <td>{formatNumberInThousands(player.cost)}</td>
     {#each player.playerStats as stat, index}
         <td>{`${stat === 0 ? '-' : index > 1 ? `${stat}+` : stat}`}</td>

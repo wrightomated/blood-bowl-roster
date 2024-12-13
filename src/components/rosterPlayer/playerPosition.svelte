@@ -70,7 +70,9 @@
     </span>
 {:else}
     <!-- {rosterPlayer.player.position} -->
-    {$_('players.' + rosterPlayer.player.id)}
+    {$_('players.' + rosterPlayer.player.id, {
+        default: rosterPlayer.player.position,
+    })}
     {#if danger}
         <span class="danger">
             <i class="material-symbols-outlined no-transition">warning</i>

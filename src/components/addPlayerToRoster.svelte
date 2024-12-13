@@ -45,8 +45,8 @@
             !amount || amount < 1
                 ? 1
                 : amount > maxOfPlayerType
-                ? maxOfPlayerType
-                : amount;
+                  ? maxOfPlayerType
+                  : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
             let alterations: PlayerAlterations = { spp: 0, ni: 0 };
@@ -138,7 +138,9 @@
                 >
                     {#each playerTypes as playerType}
                         <option value={playerType}>
-                            {$_('players.' + playerType.id)}
+                            {$_('players.' + playerType.id, {
+                                default: playerType.position,
+                            })}
                         </option>
                     {/each}
                     {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}

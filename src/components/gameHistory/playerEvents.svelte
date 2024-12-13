@@ -67,7 +67,10 @@
         return (
             player.alterations.playerNumber +
             ' ' +
-            (player.playerName || $_('players.' + player.player.id))
+            (player.playerName ||
+                $_('players.' + player.player.id, {
+                    default: player.player.position,
+                }))
         );
     }
 </script>
