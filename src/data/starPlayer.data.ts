@@ -595,7 +595,7 @@ const nebark: StarPlayer = {
 
     playerStats: [6, 2, 3, 4, 9],
     playsFor: [],
-    skills: [4, 81, 31, 30, 201, 202, 203, 204],
+    skills: [4, 81, 35, 30, 201, 202, 203, 204],
     cost: 100,
     specialRules: [''],
 };
