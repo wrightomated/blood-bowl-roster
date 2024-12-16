@@ -21,21 +21,18 @@ context('Team creation', () => {
         cy.getBySel('team-name').type(teamName);
 
         cy.getBySel('new-player-name-input').type('Bob');
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
+        cy.addPlayers(4);
 
-        cy.getBySel('new-player-position-select').select('Imperial Thrower');
+        cy.getBySel('new-player-position-select').select(
+            'Imperial Thrower 0/2'
+        );
         cy.getBySel('add-player').click();
-        cy.getBySel('new-player-position-select').select('Noble Blitzer');
+        cy.getBySel('new-player-position-select').select('Noble Blitzer 0/2');
         cy.getBySel('add-player').click();
-        cy.getBySel('new-player-position-select').select('Bodyguard');
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('new-player-position-select').select('Ogre');
+        cy.getBySel('new-player-position-select').select('Bodyguard 0/4');
+        cy.addPlayers(4);
+
+        cy.getBySel('new-player-position-select').select('Ogre 0/1');
         cy.getBySel('add-player').click();
         cy.getBySel('add-rerolls').click();
         cy.getBySel('add-rerolls').click();

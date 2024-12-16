@@ -18,6 +18,12 @@ Cypress.Commands.add('getClipboard', () => {
         return win.navigator.clipboard.readText();
     });
 });
+
+Cypress.Commands.add('addPlayers', (amount) => {
+    for (let i = 0; i < amount; i++) {
+        cy.getBySel('add-player').click();
+    }
+});
 //
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })
