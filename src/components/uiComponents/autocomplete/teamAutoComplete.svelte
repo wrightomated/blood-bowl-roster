@@ -185,24 +185,12 @@
                         >{i + 1}</button
                     >
                 {/each}
-                <!-- <button
-                    on:click={toggleNaf}
-                    title={$_('creation.naf')}
-                    class:selected={includeNaf}
-                    class="filter__button">N</button
-                > -->
                 <button
                     class="filter__button"
                     title="Filter retired teams"
                     class:selected={includeRetired}
                     on:click={toggleRetired}>R</button
                 >
-                <!-- <button
-                    on:click={toggleRetired}
-                    title={$_('creation.s')}
-                    class:selected={includeRetired}
-                    class="filter__button">S</button
-                > -->
             </div>
             {#if suggestions.length > 0}
                 {#each suggestions as team, index (team.id)}
@@ -393,7 +381,6 @@
                 border-color: var(--secondary-colour);
                 &:hover {
                     background: var(--button-shadow);
-                    // color: var(--secondary-colour);
                 }
             }
         }

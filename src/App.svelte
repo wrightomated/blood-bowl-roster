@@ -76,6 +76,6 @@
     main {
         padding: 8px;
         max-width: 1600px;
-        margin: 0 auto;
+        margin: 0 auto 2rem auto;
     }
 </style>
