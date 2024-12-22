@@ -23,8 +23,6 @@
     import type { RosterMode } from '../store/rosterMode.store';
     import { sendEventToAnalytics } from '../analytics/plausible';
     import Button from './uiComponents/button.svelte';
-    import { flip } from 'svelte/animate';
-    import { scale } from 'svelte/transition';
     import { showDungeonBowl } from '../store/showDungeonBowl.store';
     import type { TeamFormat } from '../types/teamFormat';
 
@@ -34,13 +32,13 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
-    // import Team from './team.svelte';
     import TeamAutoComplete from './uiComponents/autocomplete/teamAutoComplete.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
+    import { modalState } from '../store/modal.store';
 
     export let teamList: (Team | CustomTeam)[];
 
     let includeNaf: boolean = true;
-    let includeRetired: boolean = false;
 
     const nafTeams = ['28', '29'];
     let rosterModes: RosterMode[] = ['league', 'exhibition'];
@@ -76,7 +74,6 @@
     $: sortedTeam = sortTeam()
         .filter((x) => $filteredTiers.includes(x.tier))
         .filter((x) => (!includeNaf ? !nafTeams.includes(x.id) : true))
-        .filter((x) => !x?.retired || (x.retired && includeRetired))
         .filter((x) =>
             searchTerm
                 ? $_('teams.names.' + x.id)
@@ -133,34 +130,6 @@
         document.body.scrollIntoView();
     };
 
-    const tierToNumeral = (tier: number) => {
-        const lookup = {
-            X: 10,
-            IX: 9,
-            V: 5,
-            IV: 4,
-            I: 1,
-        };
-        let num = tier;
-        let roman = '';
-        let i;
-        for (i in lookup) {
-            while (num >= lookup[i]) {
-                roman += i;
-                num -= lookup[i];
-            }
-        }
-        return roman;
-    };
-
-    const toggleNaf = () => {
-        includeNaf = !includeNaf;
-    };
-
-    const toggleRetired = () => {
-        includeRetired = !includeRetired;
-    };
-
     const toggleDungeonBowl = (show: boolean) => {
         teamLoadOpen.set(false);
         teamSelectionOpen.set(!show);
@@ -171,6 +140,29 @@
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
     }
+
+    async function showModeInfo() {
+        modalState.modalLoading();
+        const info = await import('../modules/infoBlock/rosterModeInfo.svelte');
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
+    async function showFormatInfo() {
+        modalState.modalLoading();
+        const info = await import(
+            '../modules/infoBlock/rosterFormatInfo.svelte'
+        );
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
@@ -180,27 +172,41 @@
     </h2>
     <div class="select-area">
         {#if rosterModes.length > 1}
-            <ToggleButton
-                options={rosterModes}
-                selectedIndex={rosterModes.indexOf($rosterMode)}
-                selected={(mode) => {
-                    rosterMode.set(mode);
-                }}
-            />
+            <div class="flex">
+                <ToggleButton
+                    options={rosterModes}
+                    selectedIndex={rosterModes.indexOf($rosterMode)}
+                    selected={(mode) => {
+                        rosterMode.set(mode);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showModeInfo}
+                ></MaterialButton>
+            </div>
         {/if}
 
         {#if teamFormats.length > 1}
-            <ToggleButton
-                options={teamFormats}
-                selectedIndex={teamFormats.indexOf($teamFormat)}
-                selected={(format) => {
-                    changeFormat(format);
-                }}
-            />
+            <div class="flex">
+                <ToggleButton
+                    options={teamFormats}
+                    selectedIndex={teamFormats.indexOf($teamFormat)}
+                    selected={(format) => {
+                        changeFormat(format);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showFormatInfo}
+                ></MaterialButton>
+            </div>
         {/if}
 
         {#if $teamSelectionOpen}
-            <div class="filter__tier">
+            <!-- <div class="filter__tier">
                 Tier:
                 {#each $toggledTiers as _tier, i}
                     <button
@@ -223,7 +229,7 @@
                     class:selected={includeRetired}
                     class="filter__button">S</button
                 >
-            </div>
+            </div> -->
             <TeamAutoComplete
                 teamList={sortedTeam}
                 on:teamSelected={teamUpdated}
@@ -290,12 +296,16 @@
             {/if}
         </div> -->
 
-            <Button
-                clickFunction={createTeam}
-                cyData="create-team"
-                disabled={!$currentTeam || $currentTeamIsDungeonBowl}
-                >{$_('creation.create')}</Button
-            >
+            {#if $currentTeam && !$currentTeamIsDungeonBowl}
+                <Button
+                    clickFunction={createTeam}
+                    cyData="create-team"
+                    disabled={!$currentTeam || $currentTeamIsDungeonBowl}
+                    >{$_('creation.create') +
+                        ' ' +
+                        $_('teams.names.' + $currentTeam?.id)} Team</Button
+                >
+            {/if}
         {/if}
     </div>
 {/if}

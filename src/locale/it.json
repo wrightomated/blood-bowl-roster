@@ -79,7 +79,7 @@
         "type": "Tipo di squadra",
         "naf": "Filtra squadre NAF",
         "s": "Filtra squadre superate",
-        "tier": "Filtra livello {tier}",
+        "tier": "Livello {tier}",
         "special": "Seleziona regola speciale",
         "noMatch": "Nessuna squadra corrisponde al tuo filtro"
     },

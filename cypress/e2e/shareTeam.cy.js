@@ -5,6 +5,7 @@ context('Test that a team can be copied', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
         cy.contains('Chaos Chosen').click();
         cy.getBySel('create-team').click();
         cy.getBySel('team-name').type('The Treelovers');

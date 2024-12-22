@@ -5,6 +5,10 @@
 
     import type { Team } from '../../../models/team.model';
     import type { CustomTeam } from '../../../customisation/types/CustomiseTeamList.type';
+    import {
+        filteredTiers,
+        toggledTiers,
+    } from '../../../store/filterTier.store';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -16,19 +20,27 @@
     let showSuggestions = false;
     let inputElement: HTMLInputElement;
     let suggestionsElement: HTMLDivElement;
+    let includeRetired: boolean = false;
     let isValidSelection = false;
     $: isValidSelection = teamList.some((team) => team.name === input);
+
+    let teamListFiltered: (Team | CustomTeam)[] = [];
+    $: {
+        teamListFiltered = teamList.filter((team) => {
+            return includeRetired || !team.retired;
+        });
+    }
 
     // Reactive statement for filtering teams
     $: {
         if (input) {
-            suggestions = teamList.filter((team) =>
+            suggestions = teamListFiltered.filter((team) =>
                 $_('teams.names.' + team.id)
                     .toLowerCase()
                     .includes(input.toLowerCase())
             );
         } else if (showSuggestions) {
-            suggestions = teamList;
+            suggestions = teamListFiltered;
         } else {
             suggestions = [];
         }
@@ -120,6 +132,10 @@
         }
     }
 
+    function toggleRetired(): void {
+        includeRetired = !includeRetired;
+    }
+
     onMount(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () =>
@@ -156,26 +172,64 @@
         </svg>
     </div>
 
-    {#if showSuggestions && suggestions.length > 0}
+    {#if showSuggestions}
         <div bind:this={suggestionsElement} class="suggestions-container">
-            {#each suggestions as team, index (team.id)}
-                <div
-                    class="suggestion-item"
-                    class:selected={index === selectedIndex}
-                    class:retired={team.retired}
-                    role="button"
-                    on:click={() => handleSuggestionClick(team)}
-                    on:keydown={(e) =>
-                        e.key === 'Enter' && handleSuggestionClick(team)}
+            <div class="filter__tier">
+                Tiers:
+                {#each $toggledTiers as _tier, i}
+                    <button
+                        on:click={() => toggledTiers.toggleTier(i + 1)}
+                        class:selected={$filteredTiers.includes(i + 1)}
+                        class="filter__button"
+                        title={$_('creation.tier', { values: { tier: i + 1 } })}
+                        >{i + 1}</button
+                    >
+                {/each}
+                <!-- <button
+                    on:click={toggleNaf}
+                    title={$_('creation.naf')}
+                    class:selected={includeNaf}
+                    class="filter__button">N</button
+                > -->
+                <button
+                    class="filter__button"
+                    title="Filter retired teams"
+                    class:selected={includeRetired}
+                    on:click={toggleRetired}>R</button
                 >
-                    <div class="suggestion-content">
-                        <span class="team-name"
-                            >{$_('teams.names.' + team.id)}</span
-                        >
-                        <span class="team-tier">Tier {team.tier}</span>
+                <!-- <button
+                    on:click={toggleRetired}
+                    title={$_('creation.s')}
+                    class:selected={includeRetired}
+                    class="filter__button">S</button
+                > -->
+            </div>
+            {#if suggestions.length > 0}
+                {#each suggestions as team, index (team.id)}
+                    <div
+                        class="suggestion-item"
+                        class:selected={index === selectedIndex}
+                        class:retired={team.retired}
+                        role="button"
+                        on:click={() => handleSuggestionClick(team)}
+                        on:keydown={(e) =>
+                            e.key === 'Enter' && handleSuggestionClick(team)}
+                    >
+                        <div class="suggestion-content">
+                            <span class="team-name"
+                                >{$_('teams.names.' + team.id)}</span
+                            >
+                            <span class="team-tier"
+                                >{$_('creation.tier', {
+                                    values: { tier: team.tier },
+                                })}</span
+                            >
+                        </div>
                     </div>
-                </div>
-            {/each}
+                {/each}
+            {:else}
+                <div class="no-results">{$_('creation.noMatch')}</div>
+            {/if}
         </div>
     {/if}
 </div>
@@ -194,7 +248,7 @@
                 width: 100%;
                 padding: 1rem 1rem 1rem 3rem;
                 font-size: 1.125rem;
-                border: 1px solid var(--no-op-colour);
+                border: var(--secondary-border);
                 border-radius: 16px;
                 font-family: var(--display-font);
                 background-color: var(--white);
@@ -299,6 +353,47 @@
                         white-space: nowrap;
                         flex-shrink: 0;
                     }
+                }
+            }
+        }
+    }
+    .no-results {
+        padding: 1rem;
+        text-align: center;
+    }
+    .filter {
+        &__tier {
+            display: inline-block;
+            margin: 1rem;
+        }
+        &__button {
+            font-family: var(--display-font);
+            border-radius: 50%;
+            font-size: 0.75em;
+            background-color: var(--secondary-compliment);
+            color: var(--secondary-colour);
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            line-height: 0px;
+            text-align: center;
+            margin: 0 auto;
+            border: var(--secondary-border);
+            margin-right: 4px;
+
+            &:hover {
+                box-shadow: 0 4px 12px var(--button-shadow) inset;
+                background: var(--button-shadow);
+                color: var(--secondary-compliment);
+            }
+
+            &.selected {
+                background-color: var(--secondary-colour);
+                color: var(--secondary-compliment);
+                border-color: var(--secondary-colour);
+                &:hover {
+                    background: var(--button-shadow);
+                    // color: var(--secondary-colour);
                 }
             }
         }

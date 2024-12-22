@@ -5,7 +5,9 @@ context('Test that a team can be validated', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+
         cy.contains('Exhibition').click();
+        cy.get('.search-input').click();
         cy.contains('Chaos Chosen').click();
         cy.getBySel('create-team').click();
 
@@ -25,6 +27,7 @@ context('Test that a team can be validated', () => {
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Exhibition').click();
+        cy.get('.search-input').click();
         cy.contains('Chaos Chosen').click();
         cy.getBySel('create-team').click();
         cy.addPlayers(8);
