@@ -34,6 +34,8 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
+    // import Team from './team.svelte';
+    import TeamAutoComplete from './uiComponents/autocomplete/teamAutoComplete.svelte';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -87,6 +89,12 @@
 
     const sortTeam = () => {
         return teamList.sort((a, b) => a.name.localeCompare(b.name));
+    };
+
+    const teamUpdated = (e) => {
+        if (e.detail.teamId) {
+            newTeam(e.detail.teamId);
+        }
     };
 
     const newTeam = (id: string) => {
@@ -170,28 +178,60 @@
         {$customisationRules?.customContent?.createTeamTitle ||
             $_('creation.title')}
     </h2>
-    {#if rosterModes.length > 1}
-        <ToggleButton
-            options={rosterModes}
-            selectedIndex={rosterModes.indexOf($rosterMode)}
-            selected={(mode) => {
-                rosterMode.set(mode);
-            }}
-        />
-    {/if}
+    <div class="select-area">
+        {#if rosterModes.length > 1}
+            <ToggleButton
+                options={rosterModes}
+                selectedIndex={rosterModes.indexOf($rosterMode)}
+                selected={(mode) => {
+                    rosterMode.set(mode);
+                }}
+            />
+        {/if}
 
-    {#if teamFormats.length > 1}
-        <ToggleButton
-            options={teamFormats}
-            selectedIndex={teamFormats.indexOf($teamFormat)}
-            selected={(format) => {
-                changeFormat(format);
-            }}
-        />
-    {/if}
+        {#if teamFormats.length > 1}
+            <ToggleButton
+                options={teamFormats}
+                selectedIndex={teamFormats.indexOf($teamFormat)}
+                selected={(format) => {
+                    changeFormat(format);
+                }}
+            />
+        {/if}
 
-    {#if $teamSelectionOpen}
-        <div class="button-container">
+        {#if $teamSelectionOpen}
+            <div class="filter__tier">
+                Tier:
+                {#each $toggledTiers as _tier, i}
+                    <button
+                        on:click={() => toggledTiers.toggleTier(i + 1)}
+                        class:selected={$filteredTiers.includes(i + 1)}
+                        class="filter__button"
+                        title={$_('creation.tier', { values: { tier: i + 1 } })}
+                        >{tierToNumeral(i + 1)}</button
+                    >
+                {/each}
+                <button
+                    on:click={toggleNaf}
+                    title={$_('creation.naf')}
+                    class:selected={includeNaf}
+                    class="filter__button">N</button
+                >
+                <button
+                    on:click={toggleRetired}
+                    title={$_('creation.s')}
+                    class:selected={includeRetired}
+                    class="filter__button">S</button
+                >
+            </div>
+            <TeamAutoComplete
+                teamList={sortedTeam}
+                on:teamSelected={teamUpdated}
+            />
+            {#if $currentTeam?.pickSpecialRule}
+                <SelectSpecialRule />
+            {/if}
+            <!-- <div class="button-container">
             <div class="filter__tier">
                 Filter:
                 {#each $toggledTiers as _tier, i}
@@ -219,6 +259,7 @@
             <label class="filter__search">
                 {$_('common.search')}
                 <input
+                    type="search"
                     bind:value={searchTerm}
                     placeholder={$_('creation.type')}
                 />
@@ -247,15 +288,16 @@
             {#if $currentTeam?.pickSpecialRule}
                 <SelectSpecialRule />
             {/if}
-        </div>
+        </div> -->
 
-        <Button
-            clickFunction={createTeam}
-            cyData="create-team"
-            disabled={!$currentTeam || $currentTeamIsDungeonBowl}
-            >{$_('creation.create')}</Button
-        >
-    {/if}
+            <Button
+                clickFunction={createTeam}
+                cyData="create-team"
+                disabled={!$currentTeam || $currentTeamIsDungeonBowl}
+                >{$_('creation.create')}</Button
+            >
+        {/if}
+    </div>
 {/if}
 
 {#if $teamLoadOpen}
@@ -269,6 +311,11 @@
         font-size: 32px;
         margin-block-start: 16px;
         margin-block-end: 24px;
+    }
+
+    .select-area {
+        max-width: 600px;
+        margin: 0 auto;
     }
 
     .button-container {
@@ -288,7 +335,7 @@
     .filter {
         &__tier {
             display: inline-block;
-            margin: 1em 4px 1em 4px;
+            margin: 1rem 4px 0 4px;
         }
         &__button {
             font-family: var(--display-font);
@@ -307,13 +354,18 @@
 
             &:hover {
                 box-shadow: 0 4px 12px var(--button-shadow) inset;
-                background: var(--secondary-colour);
+                background: var(--button-shadow);
                 color: var(--secondary-compliment);
             }
+
             &.selected {
                 background-color: var(--secondary-colour);
                 color: var(--secondary-compliment);
                 border-color: var(--secondary-colour);
+                &:hover {
+                    background: var(--button-shadow);
+                    // color: var(--secondary-colour);
+                }
             }
         }
         &__search {

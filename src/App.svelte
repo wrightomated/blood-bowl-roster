@@ -59,13 +59,20 @@
 
 <div class="application">
     <Menu />
-    <main>
-        <Team />
-    </main>
+    <div>
+        <main>
+            <Team />
+        </main>
+    </div>
     <Footer />
 </div>
 
 <style lang="scss">
+    .application {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
     main {
         padding: 8px;
         max-width: 1600px;

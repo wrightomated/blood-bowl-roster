@@ -57,7 +57,7 @@
     }
     footer {
         border-top: 1px solid var(--secondary-colour);
-        margin: 2em 8px 0 8px;
+        margin: auto 8px 0 8px;
         padding-bottom: 1em;
     }
 </style>
