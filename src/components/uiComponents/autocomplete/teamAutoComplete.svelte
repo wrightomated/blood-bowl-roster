@@ -252,11 +252,11 @@
                 &::-webkit-search-cancel-button {
                     appearance: none;
                     -webkit-appearance: none;
-                    height: 1.5rem;
-                    width: 1.5rem;
-                    opacity: 0.8;
-                    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>");
+                    height: 24px;
+                    width: 24px;
+                    background-image: url('/assets/images/cancel.svg'); // Adjust path based on where you store it
                     background-size: contain;
+                    opacity: 0.7;
                     cursor: pointer;
 
                     &:hover {
