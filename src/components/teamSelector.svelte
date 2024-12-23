@@ -32,6 +32,8 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
+    import { secretTeams } from '../modules/secret-league/secretTeams.store';
+    import { playerCatalogue } from '../store/playerCatalogue.store';
     import TeamAutoComplete from './uiComponents/autocomplete/teamAutoComplete.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { modalState } from '../store/modal.store';
@@ -94,6 +96,8 @@
     const newTeam = (id: string) => {
         currentTeamId.set(id);
 
+        console.log(id);
+
         teamSelectionSpecialRule.set(
             $currentTeam?.pickSpecialRule
                 ? $currentTeam?.pickSpecialRule[0]
@@ -138,6 +142,19 @@
         toggleDungeonBowl(format === 'dungeon bowl');
     }
 
+    async function loadSecretTeams() {
+        const modules = await Promise.all([
+            import('../modules/secret-league/secretTeam.data'),
+            import('../modules/secret-league/secretPlayer.data'),
+        ]);
+        const secretTeamsData = modules[0].secretTeamData;
+        secretTeams.set(secretTeamsData);
+
+        const secretPlayersData = modules[1].secretPlayerData;
+        playerCatalogue.setSecretPlayers(secretPlayersData);
+        return secretTeamsData;
+    }
+
     async function showModeInfo() {
         modalState.modalLoading();
         const info = await import('../modules/infoBlock/rosterModeInfo.svelte');
@@ -160,6 +177,26 @@
             canClose: true,
         });
     }
+
+    // {#if searchTerm === 'secret'}
+    //                 {#await loadSecretTeams()}
+    //                     FUMBLE MAGIC
+    //                 {:then secretTeams}
+    //                     {#each secretTeams as st (st.id)}
+    //                         <button
+    //                             class="team-button rounded-button"
+    //                             animate:flip={{ duration: 200 }}
+    //                             transition:scale|local={{ duration: 200 }}
+    //                             class:selected={$currentTeam?.id === st?.id}
+    //                             on:click={() => newTeam(st.id)}
+    //                             >{st.name}
+    //                             <span class="display-font"
+    //                                 >{tierToNumeral(st.tier)}</span
+    //                             ></button
+    //                         >
+    //                     {/each}
+    //                 {/await}
+    //             {/if}
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}

@@ -152,6 +152,7 @@
         "removeAll": "Remove all inducements below (no refund)"
     },
     "skills": {
+        "0": "Unknown Skill",
         "1": "Catch",
         "2": "Diving Catch",
         "3": "Diving Tackle",

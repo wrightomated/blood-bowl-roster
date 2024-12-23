@@ -1,9 +1,9 @@
 <script lang="ts">
     import { roster } from '../store/teamRoster.store';
-    import { playerCatalogue } from '../data/players.data';
     import {
         currentTeam,
         currentTeamIsDungeonBowl,
+        playerTypes,
     } from '../store/currentTeam.store';
     import Roster from './roster.svelte';
     import RerollsTable from './rerollsTable.svelte';
@@ -26,10 +26,6 @@
 
     $: teamList = $availableTeams;
 
-    const playerById = (id?: number) => {
-        return playerCatalogue.players.find((x) => x.id === id);
-    };
-
     const toggleStarPlayers = () => {
         showAvailableStarPlayers.set(!$showAvailableStarPlayers);
         sendEventToAnalytics('toggle-star-players', {
@@ -47,6 +43,7 @@
 </span>
 
 {#if $currentTeam}
+    {$currentTeam.id}
     {#if $teamSelectionOpen && !$currentTeamIsDungeonBowl}
         <span class="no-print">
             <AvailablePlayers />
@@ -76,9 +73,7 @@
     {/if}
 
     {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
-        <Roster
-            playerTypes={$currentTeam.players.map((x) => playerById(x.id))}
-        />
+        <Roster playerTypes={$playerTypes} />
         <RerollsTable selectedTeam={$currentTeam} />
         {#if !$customisationRules?.hideProfile}
             <MatchHistoryRecords />

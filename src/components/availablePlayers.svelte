@@ -1,10 +1,10 @@
 <script lang="ts">
     import { _ } from 'svelte-i18n';
-    import { playerById } from '../helpers/playerCatalogueHelpers';
     import { currentTeam } from '../store/currentTeam.store';
     import { showAvailablePlayers } from '../store/showPlayerList.store';
     import Player from './player.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
+    import { playerCatalogue } from '../store/playerCatalogue.store';
 
     const togglePlayers = () => {
         showAvailablePlayers.set(!$showAvailablePlayers);
@@ -55,7 +55,9 @@
                     {#each $currentTeam.players as teamPlayer}
                         <Player
                             max={teamPlayer.max}
-                            player={playerById(teamPlayer.id)}
+                            player={$playerCatalogue.find(
+                                (player) => player.id === teamPlayer.id
+                            )}
                         />
                     {/each}
                 </tbody>
