@@ -6,11 +6,14 @@ context('Team creation', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
         cy.contains('Black Orc').click();
         cy.getBySel('selected-team-caption').should(
             'have.text',
             'Black Orc Team Players'
         );
+        cy.get('.search-input').type('{selectAll}').type('{backspace}');
+        cy.get('.search-input').type('imperial');
         cy.contains('Imperial Nobility').click();
         cy.getBySel('selected-team-caption').should(
             'have.text',
@@ -54,6 +57,8 @@ context('Team creation', () => {
 
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').type('{selectAll}').type('{backspace}');
+        cy.get('.search-input').type('black');
         cy.contains('Black Orc').click();
         cy.getBySel('selected-team-caption').should(
             'have.text',
@@ -70,6 +75,7 @@ context('Team creation', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').type('lizardmen');
         cy.contains('Lizardmen').click();
         cy.getBySel('create-team').click();
         cy.getBySel('star-player-select').select('Zolcath the Zoat');
