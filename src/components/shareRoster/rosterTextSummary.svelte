@@ -13,16 +13,6 @@
     $: r = rosterToShareModel($roster, $currentTeam);
 </script>
 
-<!-- Toggle to determine the display mode-->
-<!-- <p>Player display</p>
-<ToggleButton
-    {options}
-    selectedIndex={options.indexOf(displayMode)}
-    selected={(mode) => {
-        displayMode = mode;
-    }}
-/> -->
-
 <div class="roster-summary">
     <h3>{r.teamName}</h3>
     <div class="pill-box">

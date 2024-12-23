@@ -5,6 +5,7 @@ context('Test that a skill can be added to a player', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').type('skaven');
         cy.contains('Skaven').click();
         cy.getBySel('create-team').click();
         cy.getBySel('add-player').click();
@@ -19,6 +20,7 @@ context('Test that a skill can be added to a player', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
         cy.contains('Skaven').click();
         cy.getBySel('create-team').click();
         cy.getBySel('add-player').click();

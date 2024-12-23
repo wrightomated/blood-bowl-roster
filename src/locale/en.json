@@ -78,10 +78,10 @@
         "filter": "Filter",
         "type": "Team type",
         "naf": "Filter NAF teams",
-        "s": "Filter superseded teams",
-        "tier": "Filter tier {tier}",
+        "s": "Filter retired teams",
+        "tier": "Tier {tier}",
         "special": "Select special rule",
-        "noMatch": "No teams match your filter"
+        "noMatch": "No teams match your search"
     },
     "load": {
         "title": "Load Team",

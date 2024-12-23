@@ -193,7 +193,11 @@ export function excessSpp(
 }
 
 /** Including dedicated fans */
-export function teamTotal(roster: Roster, currentTeam: CustomTeam) {
+export function teamTotal(
+    roster: Roster,
+    currentTeam: CustomTeam,
+    includeDedicatedFans = true
+) {
     const players = roster.players.filter((x) => !x.deleted);
     const playerTotal = players.reduce((a, b) => a + b.player.cost, 0);
     const inducementTotal = calculateInducementTotal(
@@ -202,6 +206,9 @@ export function teamTotal(roster: Roster, currentTeam: CustomTeam) {
         roster.format
     );
     const extraTotal = extrasForTeam(roster.mode, roster.format, currentTeam)
+        .filter(
+            (x) => includeDedicatedFans || x.extraString !== 'dedicated_fans'
+        )
         .map((x) => roster.extra[x.extraString] * x.cost || 0)
         .reduce((a, b) => a + b, 0);
     return playerTotal + inducementTotal + extraTotal;

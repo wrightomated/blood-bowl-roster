@@ -72,7 +72,9 @@ export function rosterToShareModel(
     return {
         teamName: roster.teamName,
         teamType: roster.teamType,
-        teamTotal: formatNumberInThousands(teamTotal(roster, currentTeam)),
+        teamTotal: formatNumberInThousands(
+            teamTotal(roster, currentTeam, false)
+        ),
         format: roster.format,
         mode: roster.mode,
         coachName: roster.coachDetails?.coachName,
