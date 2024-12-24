@@ -195,39 +195,40 @@
         {$customisationRules?.customContent?.createTeamTitle ||
             $_('creation.title')}
     </h2>
-    {#if rosterModes.length > 1}
-        <div class="flex">
-            <ToggleButton
-                options={rosterModes}
-                selectedIndex={rosterModes.indexOf($rosterMode)}
-                selected={(mode) => {
-                    rosterMode.set(mode);
-                }}
-            />
-            <MaterialButton
-                symbol="info"
-                hoverText={'Information'}
-                clickFunction={showModeInfo}
-            ></MaterialButton>
-        </div>
-    {/if}
-
-    {#if teamFormats.length > 1}
-        <div class="flex">
-            <ToggleButton
-                options={teamFormats}
-                selectedIndex={teamFormats.indexOf($teamFormat)}
-                selected={(format) => {
-                    changeFormat(format);
-                }}
-            />
-            <MaterialButton
-                symbol="info"
-                hoverText={'Information'}
-                clickFunction={showFormatInfo}
-            ></MaterialButton>
-        </div>
-    {/if}
+    <div class="toggle-groups">
+        {#if rosterModes.length > 1}
+            <div class="flex">
+                <ToggleButton
+                    options={rosterModes}
+                    selectedIndex={rosterModes.indexOf($rosterMode)}
+                    selected={(mode) => {
+                        rosterMode.set(mode);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showModeInfo}
+                ></MaterialButton>
+            </div>
+        {/if}
+        {#if teamFormats.length > 1}
+            <div class="flex">
+                <ToggleButton
+                    options={teamFormats}
+                    selectedIndex={teamFormats.indexOf($teamFormat)}
+                    selected={(format) => {
+                        changeFormat(format);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showFormatInfo}
+                ></MaterialButton>
+            </div>
+        {/if}
+    </div>
 
     {#if $teamSelectionOpen}
         <div class="button-container">
@@ -304,6 +305,19 @@
 {/if}
 
 <style lang="scss">
+    .toggle-groups {
+        display: flex;
+        flex-wrap: wrap;
+        @media screen and (max-width: 600px) {
+            flex-direction: column;
+        }
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
     .page-title {
         color: var(--main-colour);
         text-align: center;
