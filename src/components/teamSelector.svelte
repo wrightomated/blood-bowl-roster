@@ -34,6 +34,8 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
+    import { modalState } from '../store/modal.store';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -163,6 +165,29 @@
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
     }
+
+    async function showModeInfo() {
+        modalState.modalLoading();
+        const info = await import('../modules/infoBlock/rosterModeInfo.svelte');
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
+    async function showFormatInfo() {
+        modalState.modalLoading();
+        const info = await import(
+            '../modules/infoBlock/rosterFormatInfo.svelte'
+        );
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
@@ -171,23 +196,37 @@
             $_('creation.title')}
     </h2>
     {#if rosterModes.length > 1}
-        <ToggleButton
-            options={rosterModes}
-            selectedIndex={rosterModes.indexOf($rosterMode)}
-            selected={(mode) => {
-                rosterMode.set(mode);
-            }}
-        />
+        <div class="flex">
+            <ToggleButton
+                options={rosterModes}
+                selectedIndex={rosterModes.indexOf($rosterMode)}
+                selected={(mode) => {
+                    rosterMode.set(mode);
+                }}
+            />
+            <MaterialButton
+                symbol="info"
+                hoverText={'Information'}
+                clickFunction={showModeInfo}
+            ></MaterialButton>
+        </div>
     {/if}
 
     {#if teamFormats.length > 1}
-        <ToggleButton
-            options={teamFormats}
-            selectedIndex={teamFormats.indexOf($teamFormat)}
-            selected={(format) => {
-                changeFormat(format);
-            }}
-        />
+        <div class="flex">
+            <ToggleButton
+                options={teamFormats}
+                selectedIndex={teamFormats.indexOf($teamFormat)}
+                selected={(format) => {
+                    changeFormat(format);
+                }}
+            />
+            <MaterialButton
+                symbol="info"
+                hoverText={'Information'}
+                clickFunction={showFormatInfo}
+            ></MaterialButton>
+        </div>
     {/if}
 
     {#if $teamSelectionOpen}
@@ -219,6 +258,8 @@
             <label class="filter__search">
                 {$_('common.search')}
                 <input
+                    class="search-input"
+                    type="search"
                     bind:value={searchTerm}
                     placeholder={$_('creation.type')}
                 />
