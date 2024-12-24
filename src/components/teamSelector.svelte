@@ -36,6 +36,8 @@
     import LoadTeam from './loadTeam.svelte';
     import { secretTeams } from '../modules/secret-league/secretTeams.store';
     import { playerCatalogue } from '../store/playerCatalogue.store';
+    import MaterialButton from './uiComponents/materialButton.svelte';
+    import { modalState } from '../store/modal.store';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -180,6 +182,28 @@
         playerCatalogue.setSecretPlayers(secretPlayersData);
         return secretTeamsData;
     }
+    async function showModeInfo() {
+        modalState.modalLoading();
+        const info = await import('../modules/infoBlock/rosterModeInfo.svelte');
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
+    async function showFormatInfo() {
+        modalState.modalLoading();
+        const info = await import(
+            '../modules/infoBlock/rosterFormatInfo.svelte'
+        );
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
@@ -187,25 +211,40 @@
         {$customisationRules?.customContent?.createTeamTitle ||
             $_('creation.title')}
     </h2>
-    {#if rosterModes.length > 1}
-        <ToggleButton
-            options={rosterModes}
-            selectedIndex={rosterModes.indexOf($rosterMode)}
-            selected={(mode) => {
-                rosterMode.set(mode);
-            }}
-        />
-    {/if}
-
-    {#if teamFormats.length > 1}
-        <ToggleButton
-            options={teamFormats}
-            selectedIndex={teamFormats.indexOf($teamFormat)}
-            selected={(format) => {
-                changeFormat(format);
-            }}
-        />
-    {/if}
+    <div class="toggle-groups">
+        {#if rosterModes.length > 1}
+            <div class="flex">
+                <ToggleButton
+                    options={rosterModes}
+                    selectedIndex={rosterModes.indexOf($rosterMode)}
+                    selected={(mode) => {
+                        rosterMode.set(mode);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showModeInfo}
+                ></MaterialButton>
+            </div>
+        {/if}
+        {#if teamFormats.length > 1}
+            <div class="flex">
+                <ToggleButton
+                    options={teamFormats}
+                    selectedIndex={teamFormats.indexOf($teamFormat)}
+                    selected={(format) => {
+                        changeFormat(format);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showFormatInfo}
+                ></MaterialButton>
+            </div>
+        {/if}
+    </div>
 
     {#if $teamSelectionOpen}
         <div class="button-container">
@@ -236,6 +275,8 @@
             <label class="filter__search">
                 {$_('common.search')}
                 <input
+                    class="search-input"
+                    type="search"
                     bind:value={searchTerm}
                     placeholder={$_('creation.type')}
                 />
@@ -258,7 +299,7 @@
                     >
                 {/each}
                 {#if sortedTeam.length === 0 && searchTerm !== 'secret'}
-                    <p class="no-matches">No teams match your filter</p>
+                    <p class="no-matches">{$_('creation.noMatch')}</p>
                 {/if}
                 {#if searchTerm === 'secret'}
                     {#await loadSecretTeams()}
@@ -299,6 +340,19 @@
 {/if}
 
 <style lang="scss">
+    .toggle-groups {
+        display: flex;
+        flex-wrap: wrap;
+        @media screen and (max-width: 600px) {
+            flex-direction: column;
+        }
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
     .page-title {
         color: var(--main-colour);
         text-align: center;
