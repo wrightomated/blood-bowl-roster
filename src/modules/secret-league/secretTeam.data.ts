@@ -3,7 +3,7 @@ import { chaosSpecialRules } from '../../data/teams.data';
 
 export const secretTeamData: CustomTeam[] = [
     {
-        name: 'Albion Teams',
+        name: 'Albion',
         id: 'st1000',
         players: [
             {
@@ -36,7 +36,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Araby Teams',
+        name: 'Araby',
         id: 'st1001',
         players: [
             {
@@ -69,7 +69,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Avelorn Teams',
+        name: 'Avelorn',
         id: 'st1002',
         players: [
             {
@@ -94,7 +94,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Elven Kingdoms League'],
     },
     {
-        name: 'Beastmen Teams',
+        name: 'Beastmen',
         id: 'st1003',
         players: [
             {
@@ -124,7 +124,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Black Dwarf Teams',
+        name: 'Black Dwarf',
         id: 'st1004',
         players: [
             {
@@ -158,7 +158,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Bretonnian Teams',
+        name: 'Bretonnian',
         id: 'st1005',
         players: [
             {
@@ -220,7 +220,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Slaanesh Teams',
+        name: 'Slaanesh',
         id: 'st1007',
         players: [
             {
@@ -245,7 +245,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Favoured of Slaanesh'],
     },
     {
-        name: 'Tzeentch Teams',
+        name: 'Tzeentch',
         id: 'st1008',
         players: [
             {
@@ -403,7 +403,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Favoured of Chaos Undivided'],
     },
     {
-        name: 'Centigor Teams',
+        name: 'Centigor',
         id: 'st1014',
         players: [
             {
@@ -429,7 +429,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Cult of Ulric Teams',
+        name: 'Cult of Ulric',
         id: 'st1015',
         players: [
             {
@@ -458,7 +458,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Black Ark Teams',
+        name: 'Black Ark',
         id: 'st1016',
         players: [
             {
@@ -516,7 +516,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Elven Kingdoms League'],
     },
     {
-        name: 'Dryad Teams',
+        name: 'Dryad',
         id: 'st1018',
         players: [
             {
@@ -545,7 +545,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Eight Peak Teams',
+        name: 'Eight Peak',
         id: 'st1019',
         players: [
             {
@@ -574,7 +574,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Engineer Teams',
+        name: 'Engineer',
         id: 'st1020',
         players: [
             {
@@ -619,7 +619,7 @@ export const secretTeamData: CustomTeam[] = [
         ],
     },
     {
-        name: 'Ironbreaker Teams',
+        name: 'Ironbreaker',
         id: 'st1021',
         players: [
             {
@@ -648,7 +648,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Norse Dwarf Teams',
+        name: 'Norse Dwarf',
         id: 'st1022',
         players: [
             {
@@ -685,7 +685,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Slayer Teams',
+        name: 'Slayer',
         id: 'st1023',
         players: [
             {
@@ -718,24 +718,24 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Elemental Teams',
+        name: 'Elemental',
         id: 'st1024',
         players: [
             {
                 id: 1099,
-                max: 1,
+                max: 16,
             },
             {
                 id: 1100,
-                max: 1,
+                max: 16,
             },
             {
                 id: 1101,
-                max: 1,
+                max: 16,
             },
             {
                 id: 1102,
-                max: 1,
+                max: 16,
             },
             {
                 id: 1103,
@@ -760,10 +760,11 @@ export const secretTeamData: CustomTeam[] = [
         },
         allowedApothecary: true,
         tier: null,
+        maxBigGuys: 1,
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Estalia Teams',
+        name: 'Estalia',
         id: 'st1025',
         players: [
             {
@@ -796,7 +797,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Ethereal Teams',
+        name: 'Ethereal',
         id: 'st1026',
         players: [
             {
@@ -825,7 +826,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight', 'Masters of Undeath'],
     },
     {
-        name: 'Fimir Teams',
+        name: 'Fimir',
         id: 'st1027',
         players: [
             {
@@ -913,7 +914,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Halfling Thimble Cup', 'Old World Classic'],
     },
     {
-        name: 'Four Nations Teams',
+        name: 'Four Nations',
         id: 'st1030',
         players: [
             {
@@ -946,7 +947,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Giant Teams',
+        name: 'Giant',
         id: 'st1031',
         players: [
             {
@@ -967,7 +968,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Gnoblar Teams',
+        name: 'Gnoblar',
         id: 'st1032',
         players: [
             {
@@ -1066,7 +1067,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight', 'Masters of Undeath'],
     },
     {
-        name: 'Half-Elf Teams',
+        name: 'Half-Elf',
         id: 'st1035',
         players: [
             {
@@ -1095,7 +1096,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Elven Kingdoms League', 'Old World Classic'],
     },
     {
-        name: 'Half-Orc Teams',
+        name: 'Half-Orc',
         id: 'st1036',
         players: [
             {
@@ -1128,7 +1129,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Badlands Brawl'],
     },
     {
-        name: 'Hill Goblin Teams',
+        name: 'Hill Goblin',
         id: 'st1037',
         players: [
             {
@@ -1161,7 +1162,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Badlands Brawl', 'Bribery and Corruption'],
     },
     {
-        name: 'Hobgoblin Teams',
+        name: 'Hobgoblin',
         id: 'st1038',
         players: [
             {
@@ -1235,7 +1236,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Hung Teams',
+        name: 'Hung',
         id: 'st1040',
         players: [
             {
@@ -1299,7 +1300,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: ['Old World Classic', 'Favoured of Tzeentch'],
     },
     {
-        name: 'Kurgan Teams',
+        name: 'Kurgan',
         id: 'st1042',
         players: [
             {
@@ -1329,7 +1330,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Dust Goblin Teams',
+        name: 'Dust Goblin',
         id: 'st1043',
         players: [
             {
@@ -1362,7 +1363,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Ka-Sabar Teams',
+        name: 'Ka-Sabar',
         id: 'st1044',
         players: [
             {
@@ -1391,7 +1392,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Lybaras Teams',
+        name: 'Lybaras',
         id: 'st1045',
         players: [
             {
@@ -1424,7 +1425,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Mahrak Teams',
+        name: 'Mahrak',
         id: 'st1046',
         players: [
             {
@@ -1453,7 +1454,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Numas Teams',
+        name: 'Numas',
         id: 'st1047',
         players: [
             {
@@ -1482,7 +1483,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Rasetra Teams',
+        name: 'Rasetra',
         id: 'st1048',
         players: [
             {
@@ -1511,7 +1512,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Zandri Teams',
+        name: 'Zandri',
         id: 'st1049',
         players: [
             {
@@ -1544,7 +1545,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Lumbria Teams',
+        name: 'Lumbria',
         id: 'st1050',
         players: [
             {
@@ -1569,7 +1570,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Halfling Thimble Cup', 'Old World Classic'],
     },
     {
-        name: 'Minotaur Teams',
+        name: 'Minotaur',
         id: 'st1051',
         players: [
             {
@@ -1595,7 +1596,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Myrmidia Teams',
+        name: 'Myrmidia',
         id: 'st1052',
         players: [
             {
@@ -1624,7 +1625,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Nautican Teams',
+        name: 'Nautican',
         id: 'st1053',
         players: [
             {
@@ -1649,7 +1650,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Lustrian Superleague'],
     },
     {
-        name: 'Night Goblin Teams',
+        name: 'Night Goblin',
         id: 'st1054',
         players: [
             {
@@ -1719,7 +1720,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Halfling Thimble Cup', 'Old World Classic'],
     },
     {
-        name: 'Nippon Teams',
+        name: 'Nippon',
         id: 'st1056',
         players: [
             {
@@ -1777,7 +1778,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Favoured of Tzeentch'],
     },
     {
-        name: 'Nuln Teams',
+        name: 'Nuln',
         id: 'st1058',
         players: [
             {
@@ -1888,7 +1889,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Savage Orc Teams',
+        name: 'Savage Orc',
         id: 'st1061',
         players: [
             {
@@ -1921,7 +1922,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Badlands Brawl'],
     },
     {
-        name: 'Sea Elf Teams',
+        name: 'Sea Elf',
         id: 'st1062',
         players: [
             {
@@ -1979,7 +1980,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Underworld Challenge'],
     },
     {
-        name: 'Mordkin Teams',
+        name: 'Mordkin',
         id: 'st1064',
         players: [
             {
@@ -2157,7 +2158,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Lustrian Superleague'],
     },
     {
-        name: 'Skink Teams',
+        name: 'Skink',
         id: 'st1070',
         players: [
             {
@@ -2186,7 +2187,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Lustrian Superleague'],
     },
     {
-        name: 'Snakemen Teams',
+        name: 'Snakemen',
         id: 'st1071',
         players: [
             {
@@ -2241,7 +2242,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic', 'Worlds Edge Superleague'],
     },
     {
-        name: 'Squig Teams',
+        name: 'Squig',
         id: 'st1073',
         players: [
             {
@@ -2278,7 +2279,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Badlands Brawl', 'Bribery and Corruption'],
     },
     {
-        name: 'Tilea Teams',
+        name: 'Tilea',
         id: 'st1074',
         players: [
             {
@@ -2295,7 +2296,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Treemen Teams',
+        name: 'Treemen',
         id: 'st1075',
         players: [
             {
@@ -2316,7 +2317,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Old World Classic'],
     },
     {
-        name: 'Troll Teams',
+        name: 'Troll',
         id: 'st1076',
         players: [
             {
@@ -2382,7 +2383,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight', 'Masters of Undeath'],
     },
     {
-        name: 'Valkyrie Teams',
+        name: 'Valkyrie',
         id: 'st1078',
         players: [
             {
@@ -2456,7 +2457,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Lahmian Teams',
+        name: 'Lahmian',
         id: 'st1080',
         players: [
             {
@@ -2481,7 +2482,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Necrarch Teams',
+        name: 'Necrarch',
         id: 'st1081',
         players: [
             {
@@ -2506,7 +2507,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight', 'Masters of Undeath'],
     },
     {
-        name: 'Strigoi Teams',
+        name: 'Strigoi',
         id: 'st1082',
         players: [
             {
@@ -2539,7 +2540,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Von Carstein Teams',
+        name: 'Von Carstein',
         id: 'st1083',
         players: [
             {
@@ -2560,7 +2561,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Were Teams',
+        name: 'Were',
         id: 'st1084',
         players: [
             {
@@ -2585,7 +2586,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Sylvanian Spotlight'],
     },
     {
-        name: 'Witch Hunter Teams',
+        name: 'Witch Hunter',
         id: 'st1085',
         players: [
             {
@@ -2618,7 +2619,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Lustrian Superleague'],
     },
     {
-        name: 'Kurnous Teams',
+        name: 'Kurnous',
         id: 'st1086',
         players: [
             {
@@ -2651,7 +2652,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Elven Kingdoms League'],
     },
     {
-        name: 'Isha Teams',
+        name: 'Isha',
         id: 'st1087',
         players: [
             {
@@ -2680,7 +2681,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Elven Kingdoms League'],
     },
     {
-        name: 'Zoat Teams',
+        name: 'Zoat',
         id: 'st1088',
         players: [
             {
@@ -2755,7 +2756,7 @@ export const secretTeamData: CustomTeam[] = [
         pickSpecialRule: chaosSpecialRules,
     },
     {
-        name: 'Malal Teams',
+        name: 'Malal',
         id: 'st1090',
         players: [
             {
@@ -2776,7 +2777,7 @@ export const secretTeamData: CustomTeam[] = [
         specialRules: ['Favoured of Chaos Undivided'],
     },
     {
-        name: 'Werewolf Teams',
+        name: 'Werewolf',
         id: 'st1091',
         players: [
             {

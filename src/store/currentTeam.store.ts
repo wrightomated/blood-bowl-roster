@@ -77,7 +77,7 @@ export const playerTypes: Readable<Player[]> = derived(
     [currentTeam, playerCatalogue.findById],
     ([$currentTeam, $findById]) => {
         console.log('currentTeam', $currentTeam);
-        return $currentTeam.players.map((player) => {
+        return $currentTeam?.players?.map((player) => {
             return $findById(player.id);
         });
     }

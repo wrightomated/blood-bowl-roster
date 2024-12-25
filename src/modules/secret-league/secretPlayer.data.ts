@@ -936,6 +936,7 @@ export const secretPlayerData: Player[] = [
         skills: [71, 60, 58],
         primary: ['S'],
         secondary: ['G', 'A'],
+        bigGuy: true,
     },
     {
         position: 'Incarnate Elemental of Water',
@@ -945,6 +946,7 @@ export const secretPlayerData: Player[] = [
         skills: [71, 9, 16],
         primary: ['S'],
         secondary: ['G', 'A'],
+        bigGuy: true,
     },
     {
         position: 'Incarnate Elemental of Fire',
@@ -954,6 +956,7 @@ export const secretPlayerData: Player[] = [
         skills: [71, 6, 17],
         primary: ['A', 'S'],
         secondary: ['G'],
+        bigGuy: true,
     },
     {
         position: 'Incarnate Elemental of Air',
@@ -963,6 +966,7 @@ export const secretPlayerData: Player[] = [
         skills: [71, 74, 36, 46, 42],
         primary: ['A', 'S'],
         secondary: ['G', 'P'],
+        bigGuy: true,
     },
     {
         position: 'Guardavía',

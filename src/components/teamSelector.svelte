@@ -290,7 +290,7 @@
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
-                        >{$_('teams.names.' + team.id)}
+                        >{$_('teams.names.' + team.id, { default: team.name })}
                         <span class="display-font"
                             >{tierToNumeral(team.tier)}</span
                         >{#if nafTeams.includes(team.id)}<span
