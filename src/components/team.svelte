@@ -3,6 +3,7 @@
     import {
         currentTeam,
         currentTeamIsDungeonBowl,
+        isSecretTeam,
         playerTypes,
     } from '../store/currentTeam.store';
     import Roster from './roster.svelte';
@@ -23,6 +24,7 @@
     import { availableTeams } from '../store/availableTeams.store';
     import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
+    import { playerCatalogue } from '../store/playerCatalogue.store';
 
     $: teamList = $availableTeams;
 
@@ -32,6 +34,18 @@
             players: $showAvailableStarPlayers,
         });
     };
+
+    async function loadSecretPlayers() {
+        if ($isSecretTeam) {
+            const secretPlayers = await import(
+                '../modules/secret-league/secretPlayer.data'
+            );
+            playerCatalogue.setSecretPlayers(secretPlayers.secretPlayerData);
+            return;
+        } else {
+            return;
+        }
+    }
 </script>
 
 <LocalStorageController />
@@ -43,7 +57,6 @@
 </span>
 
 {#if $currentTeam}
-    {$currentTeam.id}
     {#if $teamSelectionOpen && !$currentTeamIsDungeonBowl}
         <span class="no-print">
             <AvailablePlayers />
@@ -73,11 +86,13 @@
     {/if}
 
     {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
-        <Roster playerTypes={$playerTypes} />
-        <RerollsTable selectedTeam={$currentTeam} />
-        {#if !$customisationRules?.hideProfile}
-            <MatchHistoryRecords />
-        {/if}
+        {#await loadSecretPlayers() then _nothing}
+            <Roster playerTypes={$playerTypes} />
+            <RerollsTable selectedTeam={$currentTeam} />
+            {#if !$customisationRules?.hideProfile}
+                <MatchHistoryRecords />
+            {/if}
+        {/await}
     {/if}
 {/if}
 

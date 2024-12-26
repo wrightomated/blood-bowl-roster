@@ -62,7 +62,6 @@ context('Test that a team can be copied', () => {
                 const { playerId, ...restOfPlayer } = p;
                 return restOfPlayer;
             });
-            console.log(JSON.stringify(rosterNoId, null, 2));
             expect(rosterNoId).to.deep.equal(expectedRoster);
         });
     });

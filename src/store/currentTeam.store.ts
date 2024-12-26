@@ -50,7 +50,6 @@ export const currentTeam: Readable<CustomTeam> = derived(
         let teamFromStorage = getTeamFromStorage();
 
         if (teamFromStorage?.id !== '0' && teamFromStorage?.id === $id) {
-            console.log('teamFromStorage', teamFromStorage);
             return teamFromStorage;
         }
 
@@ -76,7 +75,6 @@ export const currentTeamIsDungeonBowl = derived(currentTeam, ($currentTeam) =>
 export const playerTypes: Readable<Player[]> = derived(
     [currentTeam, playerCatalogue.findById],
     ([$currentTeam, $findById]) => {
-        console.log('currentTeam', $currentTeam);
         return $currentTeam?.players?.map((player) => {
             return $findById(player.id);
         });
@@ -103,4 +101,8 @@ export const specialistIds = derived(currentTeam, ($currentTeam) =>
     $currentTeam.players
         .filter((p) => p.max !== 16 && p.max !== 12)
         .map((player) => player.id)
+);
+
+export const isSecretTeam = derived(currentTeam, ($currentTeam) =>
+    $currentTeam?.id?.toString()?.includes('st')
 );

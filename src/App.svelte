@@ -10,9 +10,6 @@
     import Modal from './components/uiComponents/modal.svelte';
     import Overlay from './components/uiComponents/overlay.svelte';
     import type { TournamentCustomisation } from './customisation/types/TournmentCustomisation.type';
-    import type { CustomTeam } from './customisation/types/CustomiseTeamList.type';
-    import { secretTeams } from './modules/secret-league/secretTeams.store';
-    import { playerCatalogue } from './store/playerCatalogue.store';
 
     const savedLocale = localStorage.getItem(localeStorageKey) || 'en';
     let loadingData: Promise<void>;
@@ -25,31 +22,6 @@
     }
 
     onMount(async () => {
-        // let selectedTeam = localStorage.getItem('selectedTeam');
-        // loadingData = new Promise(async (resolve) => {
-        //     if (selectedTeam) {
-        //         console.log('selectedTeam', selectedTeam);
-        //         try {
-        //             const selectedTeamJson = JSON.parse(selectedTeam);
-        //             if (selectedTeamJson.teamId?.includes('st')) {
-        //                 customisationRules.set(selectedTeamJson);
-        //                 const { secretTeamsData, secretPlayersData } =
-        //                     await loadSecretTeams();
-        //                 secretTeams.set(secretTeamsData);
-        //                 playerCatalogue.setSecretPlayers(secretPlayersData);
-        //                 resolve();
-        //             } else {
-        //                 resolve();
-        //             }
-        //         } catch (error) {
-        //             console.error('Error loading selected team', error);
-        //             resolve();
-        //         }
-        //     } else {
-        //         resolve();
-        //     }
-        // });
-
         // String replacement by rollup
         const eventId = '__bbroster.env.EVENT_ID';
         // @ts-ignore - this will be a string replacement by rollup
@@ -86,9 +58,6 @@
 <Modal />
 <Overlay />
 
-<!-- {#await loadingData}
-    <div>Loading...</div>
-{:then} -->
 <div class="application">
     <Menu />
     <div>
@@ -98,16 +67,6 @@
     </div>
     <Footer />
 </div>
-
-<!-- {/await} -->
-
-<!-- <div class="application">
-    <Menu />
-    <main>
-        <Team />
-    </main>
-    <Footer />
-</div> -->
 
 <style lang="scss">
     .application {

@@ -359,7 +359,6 @@ const rosterFromCode = (code: string | null) => {
 
 const getDefaultRoster: () => Roster = () => {
     const savedRoster = localStorage.getItem('roster');
-    console.log('savedRoster', savedRoster);
     const defaultRoster: Roster =
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||
@@ -392,7 +391,6 @@ const addMissingItemsToRoster = (roster: Roster) => {
         format: updatedRoster?.format || 'elevens',
         matchSummary: updatedRoster?.matchSummary || [],
     };
-    console.log('updatedRoster', updatedRoster);
     return updatedRoster;
 };
 

@@ -96,8 +96,6 @@
     const newTeam = (id: string) => {
         currentTeamId.set(id);
 
-        console.log(id);
-
         teamSelectionSpecialRule.set(
             $currentTeam?.pickSpecialRule
                 ? $currentTeam?.pickSpecialRule[0]
