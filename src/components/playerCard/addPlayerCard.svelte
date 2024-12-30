@@ -130,7 +130,9 @@
                         disabled={playerTypeCounts[i]?.current >=
                             playerTypeCounts[i]?.max}
                     >
-                        {$_('players.' + playerType.id)}
+                        {$_('players.' + playerType.id, {
+                            default: playerType.position,
+                        })}
                         {playerTypeCounts[i]?.current}/{playerTypeCounts[i]
                             ?.max}
                     </option>
