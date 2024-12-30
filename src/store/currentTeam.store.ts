@@ -12,6 +12,7 @@ import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 import { dbCollegeToTeam } from '../models/dungeonBowl.model';
 import { teamData } from '../data/teams.data';
 import type { Team } from '../models/team.model';
+import { getBaseTeamData } from '../helpers/baseTeamData';
 
 const getTeamIdFromQuery = () => {
     const code = window.location.search.substring(1).split('=')[1];
@@ -33,13 +34,6 @@ const getTeamFromStorage: () => CustomTeam = () => {
 
 function getTeamId() {
     return getTeamIdFromQuery() || getTeamFromStorage()?.id;
-}
-
-export function getBaseTeamData(isDungeonBowl: boolean): Team[] {
-    if (isDungeonBowl) {
-        return dungeonBowlColleges.colleges.map((x) => dbCollegeToTeam(x));
-    }
-    return teamData.teams;
 }
 
 export const currentTeamId = writable(updateOldTeamId(getTeamId()));

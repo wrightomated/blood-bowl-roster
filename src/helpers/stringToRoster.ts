@@ -9,9 +9,9 @@ import type {
     RosterPlayerRecord,
 } from '../models/roster.model';
 import type { TeamName } from '../models/team.model';
-import { getBaseTeamData } from '../store/currentTeam.store';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
+import { getBaseTeamData } from './baseTeamData';
 
 /*
 t1t0m0d1r2 p1 p1 p1 p1 p4 p4 p2 p3 p4 p4 p5 I The%20Altdorf%20Deamons:Bob
