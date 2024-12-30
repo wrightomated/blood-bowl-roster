@@ -61,8 +61,9 @@
                     ...$roster,
                     players: secretPlayers,
                 });
+                console.log($roster);
             }
-            if ($roster.teamType.toLocaleUpperCase() === 'unknown') {
+            if ($roster.teamType.toLowerCase() === 'unknown') {
                 roster.set({
                     ...$roster,
                     teamType: secretData.secretTeams.find(

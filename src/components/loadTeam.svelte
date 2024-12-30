@@ -20,6 +20,7 @@
     import Button from './uiComponents/button.svelte';
     import TeamPreviews from './teamPreviews.svelte';
     import { currentTeamId } from '../store/currentTeam.store';
+    import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
 
     let rosterCode: string;
 
@@ -32,12 +33,19 @@
         toggleLoad();
     }
 
-    function loadTeam(savedRoster: { id: number; name?: string }) {
+    async function loadTeam(savedRoster: { id: number; name?: string }) {
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
         const retrievedRoster = getSavedRosterFromLocalStorage(savedRoster.id);
         if (!retrievedRoster) {
             savedRosterIndex.removeIdFromIndex(savedRoster.id);
             return;
+        }
+        if (retrievedRoster.teamId.includes('st')) {
+            try {
+                await loadSecretData();
+            } catch (error) {
+                console.error(error);
+            }
         }
         currentTeamId.set(retrievedRoster.teamId);
         roster.loadRoster(retrievedRoster);
