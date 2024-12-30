@@ -618,6 +618,42 @@ const rashnackBackstabber: StarPlayer = {
     specialRules: ['Toxin Conniseur'],
 };
 
+// anqi Panqi
+const anqi: StarPlayer = {
+    id: 262,
+    position: 'Anqi Panqi',
+    playerStats: [7, 4, 5, 6, 10],
+    playsFor: ['Lustrian Superleague'],
+    skills: [13, 52, 71, 58],
+    cost: 190,
+    specialRules: ['Savage Blow'],
+};
+
+// Swiftvine Glimmershard
+const swiftvine: StarPlayer = {
+    id: 263,
+    position: 'Swiftvine Glimmershard',
+    playerStats: [7, 2, 3, 5, 7],
+    playsFor: ['Elven Kingdoms League', 'Halfling Thimble Cup'],
+    skills: [27, 16, 71, 9, 80, 81],
+    cost: 110,
+    specialRules: ['Furious Outburst'],
+};
+
+const maple: StarPlayer = {
+    id: 264,
+    position: 'Maple Highgrove',
+    playerStats: [3, 5, 5, 5, 11],
+    playsFor: [
+        'Elven Kingdoms League',
+        'Halfling Thimble Cup',
+        'Old World Classic',
+    ],
+    skills: [50, 52, 71, 55, 58, 34, 60],
+    cost: 210,
+    specialRules: ['Vicious Vines'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -682,5 +718,8 @@ export const starPlayers = {
         zzhargMadeye,
         htharkTheUnstoppable,
         rashnackBackstabber,
+        anqi,
+        swiftvine,
+        maple,
     ],
 };
