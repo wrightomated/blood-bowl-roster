@@ -23,7 +23,7 @@
     import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
-    import { _, t } from 'svelte-i18n';
+    import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
     import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
 
