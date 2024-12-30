@@ -12,6 +12,7 @@
     import type { TournamentCustomisation } from './customisation/types/TournmentCustomisation.type';
 
     const savedLocale = localStorage.getItem(localeStorageKey) || 'en';
+    let loadingData: Promise<void>;
     locale.set(savedLocale);
     registerLocales(savedLocale);
 

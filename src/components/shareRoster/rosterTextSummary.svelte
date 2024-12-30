@@ -8,8 +8,9 @@
 
     import SingleSkillColourPicker from '../singleSkillColourPicker.svelte';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
+    import { currentTeam } from '../../store/currentTeam.store';
 
-    $: r = rosterToShareModel($roster);
+    $: r = rosterToShareModel($roster, $currentTeam);
 </script>
 
 <div class="roster-summary">

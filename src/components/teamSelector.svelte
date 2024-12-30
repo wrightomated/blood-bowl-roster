@@ -36,6 +36,7 @@
     import LoadTeam from './loadTeam.svelte';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { modalState } from '../store/modal.store';
+    import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -166,6 +167,11 @@
         toggleDungeonBowl(format === 'dungeon bowl');
     }
 
+    async function loadSecretTeams() {
+        const secretData = await loadSecretData();
+        return secretData.secretTeams;
+    }
+
     async function showModeInfo() {
         modalState.modalLoading();
         const info = await import('../modules/infoBlock/rosterModeInfo.svelte');
@@ -274,7 +280,7 @@
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
-                        >{$_('teams.names.' + team.id)}
+                        >{$_('teams.names.' + team.id, { default: team.name })}
                         <span class="display-font"
                             >{tierToNumeral(team.tier)}</span
                         >{#if nafTeams.includes(team.id)}<span
@@ -282,8 +288,27 @@
                             >{/if}</button
                     >
                 {/each}
-                {#if sortedTeam.length === 0}
-                    <p class="no-matches">No teams match your filter</p>
+                {#if sortedTeam.length === 0 && searchTerm !== 'secret'}
+                    <p class="no-matches">{$_('creation.noMatch')}</p>
+                {/if}
+                {#if searchTerm === 'secret'}
+                    {#await loadSecretTeams()}
+                        FUMBLE MAGIC
+                    {:then secretTeams}
+                        {#each secretTeams as st (st.id)}
+                            <button
+                                class="team-button rounded-button"
+                                animate:flip={{ duration: 200 }}
+                                transition:scale|local={{ duration: 200 }}
+                                class:selected={$currentTeam?.id === st?.id}
+                                on:click={() => newTeam(st.id)}
+                                >{st.name}
+                                <span class="display-font"
+                                    >{tierToNumeral(st.tier)}</span
+                                ></button
+                            >
+                        {/each}
+                    {/await}
                 {/if}
             </div>
             {#if $currentTeam?.pickSpecialRule}

@@ -34,7 +34,7 @@
               ...filteredSkills(selected.skills),
               ...journeymanSkills($roster.format),
           ]
-        : filteredSkills(selected.skills);
+        : filteredSkills(selected?.skills);
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === selected?.id || 0
     ).length;
@@ -134,7 +134,9 @@
                             disabled={playerTypeCounts[i]?.current >=
                                 playerTypeCounts[i]?.max}
                         >
-                            {$_('players.' + playerType.id)}
+                            {$_('players.' + playerType.id, {
+                                default: playerType.position,
+                            })}
                             {playerTypeCounts[i]?.current}/{playerTypeCounts[i]
                                 ?.max}
                         </option>
