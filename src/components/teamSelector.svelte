@@ -37,6 +37,7 @@
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { modalState } from '../store/modal.store';
     import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
+    import FootballSpinner from './uiComponents/footballSpinner.svelte';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -288,12 +289,12 @@
                             >{/if}</button
                     >
                 {/each}
-                {#if sortedTeam.length === 0 && searchTerm !== 'secret'}
+                {#if sortedTeam.length === 0 && searchTerm?.toLowerCase() !== 'secret'}
                     <p class="no-matches">{$_('creation.noMatch')}</p>
                 {/if}
-                {#if searchTerm === 'secret'}
+                {#if searchTerm?.toLowerCase() === 'secret'}
                     {#await loadSecretTeams()}
-                        FUMBLE MAGIC
+                        <FootballSpinner />
                     {:then secretTeams}
                         {#each secretTeams as st (st.id)}
                             <button
