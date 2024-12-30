@@ -358,7 +358,6 @@ const rosterFromCode = (code: string | null) => {
 };
 
 const getDefaultRoster: () => Roster = () => {
-    const savedRoster = localStorage.getItem('roster');
     const defaultRoster: Roster =
         rosterFromQueryString() ||
         JSON.parse(localStorage.getItem('roster')) ||

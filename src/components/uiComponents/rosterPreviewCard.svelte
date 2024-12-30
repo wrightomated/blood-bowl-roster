@@ -7,10 +7,18 @@
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
     import { getTeamFormatShortDisplay } from '../../types/teamFormat';
+    import { loadSecretData } from '../../modules/secret-league/secretLeagueHelper';
 
     export let preview: RosterPreview;
 
     async function loadTeam(rosterId: string) {
+        if (preview.teamId.includes('st')) {
+            try {
+                await loadSecretData();
+            } catch (error) {
+                console.error(error);
+            }
+        }
         if ($rosterCache.rosters?.[rosterId]?.valid) {
             const cachedRoster = $rosterCache.rosters[rosterId].cachedItem;
             roster.loadRoster(cachedRoster);

@@ -17,9 +17,9 @@
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
     import { rosterCache } from '../store/rosterCache.store';
-    import type { RosterPreviews } from '../models/roster.model';
     import Button from './uiComponents/button.svelte';
     import TeamPreviews from './teamPreviews.svelte';
+    import { currentTeamId } from '../store/currentTeam.store';
 
     let rosterCode: string;
 
@@ -39,7 +39,7 @@
             savedRosterIndex.removeIdFromIndex(savedRoster.id);
             return;
         }
-
+        currentTeamId.set(retrievedRoster.teamId);
         roster.loadRoster(retrievedRoster);
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);

@@ -34,10 +34,9 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
-    import { secretTeams } from '../modules/secret-league/secretTeams.store';
-    import { playerCatalogue } from '../store/playerCatalogue.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
     import { modalState } from '../store/modal.store';
+    import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -169,17 +168,10 @@
     }
 
     async function loadSecretTeams() {
-        const modules = await Promise.all([
-            import('../modules/secret-league/secretTeam.data'),
-            import('../modules/secret-league/secretPlayer.data'),
-        ]);
-        const secretTeamsData = modules[0].secretTeamData;
-        secretTeams.set(secretTeamsData);
-
-        const secretPlayersData = modules[1].secretPlayerData;
-        playerCatalogue.setSecretPlayers(secretPlayersData);
-        return secretTeamsData;
+        const secretData = await loadSecretData();
+        return secretData.secretTeams;
     }
+
     async function showModeInfo() {
         modalState.modalLoading();
         const info = await import('../modules/infoBlock/rosterModeInfo.svelte');

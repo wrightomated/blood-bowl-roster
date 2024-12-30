@@ -2,6 +2,7 @@
     import { roster } from '../store/teamRoster.store';
     import {
         currentTeam,
+        currentTeamId,
         currentTeamIsDungeonBowl,
         isSecretTeam,
         playerTypes,
@@ -22,9 +23,9 @@
     import MatchHistoryRecords from './gameHistory/matchHistoryRecords.svelte';
     import AvailablePlayers from './availablePlayers.svelte';
     import { availableTeams } from '../store/availableTeams.store';
-    import { _ } from 'svelte-i18n';
+    import { _, t } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
-    import { playerCatalogue } from '../store/playerCatalogue.store';
+    import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
 
     $: teamList = $availableTeams;
 
@@ -35,12 +36,49 @@
         });
     };
 
+    // This should be moved to a helper function
+    async function populateCurrentTeam() {
+        if ($currentTeamId && $isSecretTeam) {
+            const secretData = await loadSecretData();
+            if (
+                $roster.players.some(
+                    (p) => p.player?.position === 'unknown-position'
+                )
+            ) {
+                const secretPlayers = $roster.players.map((p) => {
+                    if (p.player.position === 'unknown-position') {
+                        return {
+                            ...p,
+                            player: secretData.secretPlayers.find(
+                                (sp) => sp.id === p.player.id
+                            ),
+                        };
+                    } else {
+                        return p;
+                    }
+                });
+                roster.set({
+                    ...$roster,
+                    players: secretPlayers,
+                });
+            }
+            if ($roster.teamType.toLocaleUpperCase() === 'unknown') {
+                roster.set({
+                    ...$roster,
+                    teamType: secretData.secretTeams.find(
+                        (st) => st.id === $currentTeamId
+                    ).name,
+                });
+            }
+            return;
+        } else {
+            return;
+        }
+    }
+
     async function loadSecretPlayers() {
         if ($isSecretTeam) {
-            const secretPlayers = await import(
-                '../modules/secret-league/secretPlayer.data'
-            );
-            playerCatalogue.setSecretPlayers(secretPlayers.secretPlayerData);
+            await loadSecretData();
             return;
         } else {
             return;
@@ -55,46 +93,47 @@
     <TeamSelector {teamList} />
     <DungeonBowlContainer />
 </span>
+{#await populateCurrentTeam() then _nothing}
+    {#if $currentTeam}
+        {#if $teamSelectionOpen && !$currentTeamIsDungeonBowl}
+            <span class="no-print">
+                <AvailablePlayers />
+                <div class="header-container">
+                    <caption
+                        class="team-star-player-caption"
+                        on:click={toggleStarPlayers}
+                    >
+                        {$_('tables.starCaption', {
+                            values: { team: $currentTeam.name },
+                        })}
+                    </caption>
+                    <MaterialButton
+                        hoverText={$showAvailableStarPlayers
+                            ? $_('tables.hide')
+                            : $_('tables.show')}
+                        symbol={$showAvailableStarPlayers
+                            ? 'arrow_drop_up'
+                            : 'arrow_drop_down'}
+                        clickFunction={toggleStarPlayers}
+                    />
+                </div>
+                {#if $showAvailableStarPlayers}
+                    <StarPlayers />
+                {/if}
+            </span>
+        {/if}
 
-{#if $currentTeam}
-    {#if $teamSelectionOpen && !$currentTeamIsDungeonBowl}
-        <span class="no-print">
-            <AvailablePlayers />
-            <div class="header-container">
-                <caption
-                    class="team-star-player-caption"
-                    on:click={toggleStarPlayers}
-                >
-                    {$_('tables.starCaption', {
-                        values: { team: $currentTeam.name },
-                    })}
-                </caption>
-                <MaterialButton
-                    hoverText={$showAvailableStarPlayers
-                        ? $_('tables.hide')
-                        : $_('tables.show')}
-                    symbol={$showAvailableStarPlayers
-                        ? 'arrow_drop_up'
-                        : 'arrow_drop_down'}
-                    clickFunction={toggleStarPlayers}
-                />
-            </div>
-            {#if $showAvailableStarPlayers}
-                <StarPlayers />
-            {/if}
-        </span>
+        {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
+            {#await loadSecretPlayers() then _nothing}
+                <Roster playerTypes={$playerTypes} />
+                <RerollsTable selectedTeam={$currentTeam} />
+                {#if !$customisationRules?.hideProfile}
+                    <MatchHistoryRecords />
+                {/if}
+            {/await}
+        {/if}
     {/if}
-
-    {#if !$teamSelectionOpen && !$teamLoadOpen && !$showDungeonBowl && $roster.teamType}
-        {#await loadSecretPlayers() then _nothing}
-            <Roster playerTypes={$playerTypes} />
-            <RerollsTable selectedTeam={$currentTeam} />
-            {#if !$customisationRules?.hideProfile}
-                <MatchHistoryRecords />
-            {/if}
-        {/await}
-    {/if}
-{/if}
+{/await}
 
 <style lang="scss">
     .header-container {

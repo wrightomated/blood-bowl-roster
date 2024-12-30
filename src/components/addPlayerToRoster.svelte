@@ -34,7 +34,7 @@
               ...filteredSkills(selected.skills),
               ...journeymanSkills($roster.format),
           ]
-        : filteredSkills(selected.skills);
+        : filteredSkills(selected?.skills);
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === selected?.id || 0
     ).length;
