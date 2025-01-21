@@ -654,6 +654,40 @@ const maple: StarPlayer = {
     specialRules: ['Vicious Vines'],
 };
 
+const guffle: StarPlayer = {
+    id: 265,
+    position: 'Guffle Pussmaw',
+    playerStats: [5, 3, 3, 5, 10],
+    playsFor: ['Favoured of Nurgle'],
+    skills: [29, 71, 32, 73],
+    cost: 180,
+    specialRules: ['Bite'],
+};
+
+// Jeremiah Kool
+
+// 320K	MA	ST	AG	PA	AV
+// 8	3	1+	3+	9+
+// Block
+// Diving Catch
+// Dodge
+// Dump-Off
+// Loner (4+)
+// Nerves of Steel
+// On the Ball
+// Pass
+// Sidestep
+
+const jeremiahKool: StarPlayer = {
+    id: 266,
+    position: 'Jeremiah Kool',
+    playerStats: [8, 3, 1, 3, 9],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [13, 2, 4, 40, 71, 44, 45, 46, 9],
+    cost: 320,
+    specialRules: ['The Flashing Blade'],
+};
+
 export const starPlayers = {
     starPlayers: [
         theBlackGobbo,
@@ -721,5 +755,6 @@ export const starPlayers = {
         anqi,
         swiftvine,
         maple,
+        guffle,
     ],
 };
