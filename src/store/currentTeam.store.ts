@@ -97,6 +97,6 @@ export const specialistIds = derived(currentTeam, ($currentTeam) =>
         .map((player) => player.id)
 );
 
-export const isSecretTeam = derived(currentTeamId, ($currentTeamId) =>
-    $currentTeamId?.toString()?.includes('st')
-);
+export const isSecretTeam = derived(currentTeamId, ($currentTeamId) => {
+    $currentTeamId?.toString()?.includes('st');
+});

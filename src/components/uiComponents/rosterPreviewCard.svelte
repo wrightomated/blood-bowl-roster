@@ -12,12 +12,12 @@
     export let preview: RosterPreview;
 
     async function loadTeam(rosterId: string) {
-        if (preview.teamId?.includes('st')) {
-            try {
+        try {
+            if (preview.teamId?.includes('st')) {
                 await loadSecretData();
-            } catch (error) {
-                console.error(error);
             }
+        } catch (error) {
+            console.error(error);
         }
         if ($rosterCache.rosters?.[rosterId]?.valid) {
             const cachedRoster = $rosterCache.rosters[rosterId].cachedItem;

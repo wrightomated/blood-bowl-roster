@@ -40,12 +40,12 @@
             savedRosterIndex.removeIdFromIndex(savedRoster.id);
             return;
         }
-        if (retrievedRoster.teamId?.includes('st')) {
-            try {
+        try {
+            if (retrievedRoster.teamId?.includes('st')) {
                 await loadSecretData();
-            } catch (error) {
-                console.error(error);
             }
+        } catch (error) {
+            console.error(error);
         }
         currentTeamId.set(retrievedRoster.teamId);
         roster.loadRoster(retrievedRoster);
