@@ -12,10 +12,7 @@
     export let preview: RosterPreview;
 
     async function loadTeam(rosterId: string) {
-        if (
-            typeof retrievedRoster.teamId === 'string' &&
-            retrievedRoster.teamId.includes('st')
-        ) {
+        if (preview.teamId?.includes('st')) {
             try {
                 await loadSecretData();
             } catch (error) {

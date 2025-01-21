@@ -40,10 +40,7 @@
             savedRosterIndex.removeIdFromIndex(savedRoster.id);
             return;
         }
-        if (
-            typeof retrievedRoster.teamId === 'string' &&
-            retrievedRoster.teamId.includes('st')
-        ) {
+        if (retrievedRoster.teamId?.includes('st')) {
             try {
                 await loadSecretData();
             } catch (error) {

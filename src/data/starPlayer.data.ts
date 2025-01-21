@@ -664,20 +664,6 @@ const guffle: StarPlayer = {
     specialRules: ['Bite'],
 };
 
-// Jeremiah Kool
-
-// 320K	MA	ST	AG	PA	AV
-// 8	3	1+	3+	9+
-// Block
-// Diving Catch
-// Dodge
-// Dump-Off
-// Loner (4+)
-// Nerves of Steel
-// On the Ball
-// Pass
-// Sidestep
-
 const jeremiahKool: StarPlayer = {
     id: 266,
     position: 'Jeremiah Kool',
@@ -756,5 +742,6 @@ export const starPlayers = {
         swiftvine,
         maple,
         guffle,
+        jeremiahKool,
     ],
 };
