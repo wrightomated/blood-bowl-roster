@@ -8,19 +8,10 @@
 
     import SingleSkillColourPicker from '../singleSkillColourPicker.svelte';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
+    import { currentTeam } from '../../store/currentTeam.store';
 
-    $: r = rosterToShareModel($roster);
+    $: r = rosterToShareModel($roster, $currentTeam);
 </script>
-
-<!-- Toggle to determine the display mode-->
-<!-- <p>Player display</p>
-<ToggleButton
-    {options}
-    selectedIndex={options.indexOf(displayMode)}
-    selected={(mode) => {
-        displayMode = mode;
-    }}
-/> -->
 
 <div class="roster-summary">
     <h3>{r.teamName}</h3>

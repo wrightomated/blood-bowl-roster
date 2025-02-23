@@ -17,9 +17,10 @@
         showAvailableStarPlayers,
     } from '../store/showPlayerList.store';
     import { rosterCache } from '../store/rosterCache.store';
-    import type { RosterPreviews } from '../models/roster.model';
     import Button from './uiComponents/button.svelte';
     import TeamPreviews from './teamPreviews.svelte';
+    import { currentTeamId } from '../store/currentTeam.store';
+    import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
 
     let rosterCode: string;
 
@@ -32,14 +33,21 @@
         toggleLoad();
     }
 
-    function loadTeam(savedRoster: { id: number; name?: string }) {
+    async function loadTeam(savedRoster: { id: number; name?: string }) {
         savedRosterIndex.updateCurrentIndex(savedRoster.id);
         const retrievedRoster = getSavedRosterFromLocalStorage(savedRoster.id);
         if (!retrievedRoster) {
             savedRosterIndex.removeIdFromIndex(savedRoster.id);
             return;
         }
-
+        try {
+            if (retrievedRoster.teamId?.includes('st')) {
+                await loadSecretData();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        currentTeamId.set(retrievedRoster.teamId);
         roster.loadRoster(retrievedRoster);
         teamSelectionOpen.set(false);
         showAvailablePlayers.set(false);

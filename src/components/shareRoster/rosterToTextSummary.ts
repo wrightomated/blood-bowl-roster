@@ -1,3 +1,4 @@
+import type { CustomTeam } from '../../customisation/types/CustomiseTeamList.type';
 import { PickedSpecialRule } from '../../data/teams.data';
 import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
 import { teamTotal } from '../../helpers/validator';
@@ -29,7 +30,10 @@ export type ShareModel = {
     inducements: InducementsRecord;
 };
 
-export function rosterToShareModel(roster: Roster): ShareModel {
+export function rosterToShareModel(
+    roster: Roster,
+    currentTeam: CustomTeam
+): ShareModel {
     const playersByPosition: Record<string, any[]> = {};
     roster.players.forEach((player) => {
         if (!playersByPosition[player.player.position]) {
@@ -68,7 +72,9 @@ export function rosterToShareModel(roster: Roster): ShareModel {
     return {
         teamName: roster.teamName,
         teamType: roster.teamType,
-        teamTotal: formatNumberInThousands(teamTotal(roster)),
+        teamTotal: formatNumberInThousands(
+            teamTotal(roster, currentTeam, false)
+        ),
         format: roster.format,
         mode: roster.mode,
         coachName: roster.coachDetails?.coachName,

@@ -16,6 +16,7 @@
     import { _ } from 'svelte-i18n';
     import { rosterToCsv } from '../nafChamps/rosterToCsv';
     import { extrasForTeam } from '../helpers/extrasForTeam';
+    import { currentTeam } from '../store/currentTeam.store';
 
     let saved = false;
     let saving = false;
@@ -84,12 +85,16 @@
     }
 
     function csvDownload() {
-        const csv = rosterToCsv($roster);
+        const csv = rosterToCsv($roster, $currentTeam);
         const blob = new Blob([csv], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.setAttribute('download', `${$roster.teamName}.csv`);
+        const documentName =
+            $roster.teamName && $roster.teamName.length > 0
+                ? $roster.teamName
+                : 'unnamed-roster';
+        a.setAttribute('download', `${documentName}.csv`);
         a.click();
         URL.revokeObjectURL(url);
     }

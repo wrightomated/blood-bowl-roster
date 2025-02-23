@@ -155,6 +155,7 @@ export const testRoster: Roster = {
     extra: { dedicated_fans: 1, rerolls: 2 },
     inducements: {},
     treasury: 1000,
+    coachDetails: { coachName: '', nafNumber: '' },
 };
 
 export const inducementAndStarPlayer = {
@@ -251,15 +252,16 @@ export const noTeamName: Roster = {
     teamType: 'Black Orc',
     extra: { dedicated_fans: 1 },
     inducements: {},
+    coachDetails: { coachName: '', nafNumber: '' },
     treasury: 1000,
 };
 
 export const inducementAndStarPlayerString = 't22t10m1f0d1y1i8.1p224I';
 
 export const testRosterString =
-    't1t1000m1f0d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:Bob::::::Bill';
+    't1t1000m1f0d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons:::Bob::::::Bill';
 
 export const encodedRosterString =
-    't1t1000m1f0d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons%3ABob%3A%3A%3A%3A%3A%3ABill';
+    't1t1000m1f0d1r2p1p1p1p1p2p3p4p4p4p4p5s3IAltdorf%20Daemons%3A%3A%3ABob%3A%3A%3A%3A%3A%3ABill';
 
 export const playerSkillsString = 't25t20m1f0d1p104s1n1e21.55t1c10-101I';

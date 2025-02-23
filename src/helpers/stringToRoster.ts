@@ -11,7 +11,7 @@ import type {
 import type { TeamName } from '../models/team.model';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
-import { filteredTeamData } from './teamDataFilter';
+import { getBaseTeamData } from './baseTeamData';
 
 /*
 t1t0m0d1r2 p1 p1 p1 p1 p4 p4 p2 p3 p4 p4 p5 I The%20Altdorf%20Deamons:Bob
@@ -54,6 +54,15 @@ export const stringToRoster = (code: string) => {
         : roster;
 };
 
+export function getTeamIdFromCode(code: string) {
+    if (code) {
+        let [rosterString, ..._rest] = code.split('I');
+        let [id, ..._whatever] = itemsInRosterString(rosterString);
+        return id;
+    }
+    return null;
+}
+
 const expandPlayers = (players: string[]) => {
     return players.map((p) => expandPlayer(p));
 };
@@ -63,7 +72,7 @@ const expandPlayer: (playerString: string) => RosterPlayerRecord = (
 ) => {
     const [id, ...other] = itemsInPlayerString(playerString);
     const nId = parseInt(id);
-    const starPlayer = nId >= 200;
+    const starPlayer = nId >= 200 && nId < 1000;
     const player = findPlayer(nId);
     const alterations = constructAlterations(other);
 
@@ -80,10 +89,19 @@ const expandPlayer: (playerString: string) => RosterPlayerRecord = (
 const findPlayer = (id: number) => {
     if (id === 0) {
         return deletedPlayer();
-    } else if (id >= 200) {
+    } else if (id < 200) {
+        return playerCatalogue.players.find((p) => p.id === id);
+    } else if (id >= 200 && id < 1000) {
         return starPlayers.starPlayers.find((p) => p.id === id);
     } else {
-        return playerCatalogue.players.find((p) => p.id === id);
+        // This will either be a secret team player or a custom player which we don't have data for yet
+        return {
+            id,
+            position: 'unknown-position',
+            playerStats: [0, 0, 0, 0, 0],
+            cost: 0,
+            skills: [],
+        };
     }
 };
 
@@ -189,12 +207,16 @@ const addNamesToRoster: (roster: Roster, rosterNames: string) => Roster = (
     roster,
     rosterNames
 ) => {
-    const [teamName, ...playerNames] = rosterNames
+    const [teamName, coachName, nafNumber, ...playerNames] = rosterNames
         .split(':')
         .map((n) => decodeName(n));
     return {
         ...roster,
         teamName: teamName || '',
+        coachDetails: {
+            coachName: coachName || '',
+            nafNumber: nafNumber || '',
+        },
         players: roster.players.map((p, i) =>
             !p.starPlayer && playerNames?.[i]
                 ? { ...p, playerName: playerNames[i] }
@@ -221,13 +243,15 @@ const getFormat: (modeMatch: string) => TeamFormat = (modeMatch) => {
  * TODO: load tournament customisation earlier
  */
 const getTeamType = (teamId: string, format: TeamFormat) => {
-    const allTeams = filteredTeamData({
-        format,
-    });
+    const allTeams = getBaseTeamData(format === 'dungeon bowl');
 
     const teamType = allTeams.find((t) => t.id === teamId)?.name;
 
-    if (!teamType) throw new Error('No team type found');
+    if (!teamType) {
+        // Probably a secret or custom team at this point
+        // will do a further check later to try and find the team
+        return 'Unknown';
+    }
     return teamType;
 };
 

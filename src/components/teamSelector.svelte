@@ -34,6 +34,10 @@
     import { customisationRules } from '../customisation/customisation.store';
     import { _ } from 'svelte-i18n';
     import LoadTeam from './loadTeam.svelte';
+    import MaterialButton from './uiComponents/materialButton.svelte';
+    import { modalState } from '../store/modal.store';
+    import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
+    import FootballSpinner from './uiComponents/footballSpinner.svelte';
 
     export let teamList: (Team | CustomTeam)[];
 
@@ -163,6 +167,34 @@
         teamFormat.set(format);
         toggleDungeonBowl(format === 'dungeon bowl');
     }
+
+    async function loadSecretTeams() {
+        const secretData = await loadSecretData();
+        return secretData.secretTeams;
+    }
+
+    async function showModeInfo() {
+        modalState.modalLoading();
+        const info = await import('../modules/infoBlock/rosterModeInfo.svelte');
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
+    async function showFormatInfo() {
+        modalState.modalLoading();
+        const info = await import(
+            '../modules/infoBlock/rosterFormatInfo.svelte'
+        );
+        modalState.set({
+            ...$modalState,
+            componentProps: {},
+            component: info.default,
+            canClose: true,
+        });
+    }
 </script>
 
 {#if !$teamLoadOpen && $showNewTeamDialogue}
@@ -170,25 +202,40 @@
         {$customisationRules?.customContent?.createTeamTitle ||
             $_('creation.title')}
     </h2>
-    {#if rosterModes.length > 1}
-        <ToggleButton
-            options={rosterModes}
-            selectedIndex={rosterModes.indexOf($rosterMode)}
-            selected={(mode) => {
-                rosterMode.set(mode);
-            }}
-        />
-    {/if}
-
-    {#if teamFormats.length > 1}
-        <ToggleButton
-            options={teamFormats}
-            selectedIndex={teamFormats.indexOf($teamFormat)}
-            selected={(format) => {
-                changeFormat(format);
-            }}
-        />
-    {/if}
+    <div class="toggle-groups">
+        {#if rosterModes.length > 1}
+            <div class="flex">
+                <ToggleButton
+                    options={rosterModes}
+                    selectedIndex={rosterModes.indexOf($rosterMode)}
+                    selected={(mode) => {
+                        rosterMode.set(mode);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showModeInfo}
+                ></MaterialButton>
+            </div>
+        {/if}
+        {#if teamFormats.length > 1}
+            <div class="flex">
+                <ToggleButton
+                    options={teamFormats}
+                    selectedIndex={teamFormats.indexOf($teamFormat)}
+                    selected={(format) => {
+                        changeFormat(format);
+                    }}
+                />
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showFormatInfo}
+                ></MaterialButton>
+            </div>
+        {/if}
+    </div>
 
     {#if $teamSelectionOpen}
         <div class="button-container">
@@ -219,6 +266,8 @@
             <label class="filter__search">
                 {$_('common.search')}
                 <input
+                    class="search-input"
+                    type="search"
                     bind:value={searchTerm}
                     placeholder={$_('creation.type')}
                 />
@@ -232,7 +281,7 @@
                         transition:scale|local={{ duration: 200 }}
                         class:selected={$currentTeam?.id === team?.id}
                         on:click={() => newTeam(team.id)}
-                        >{$_('teams.names.' + team.id)}
+                        >{$_('teams.names.' + team.id, { default: team.name })}
                         <span class="display-font"
                             >{tierToNumeral(team.tier)}</span
                         >{#if nafTeams.includes(team.id)}<span
@@ -240,9 +289,28 @@
                             >{/if}</button
                     >
                 {/each}
-                {#if sortedTeam.length === 0}
-                    <p class="no-matches">No teams match your filter</p>
+                {#if sortedTeam.length === 0 && searchTerm?.toLowerCase() !== 'secret'}
+                    <p class="no-matches">{$_('creation.noMatch')}</p>
                 {/if}
+                <!-- {#if searchTerm?.toLowerCase() === 'secret'}
+                    {#await loadSecretTeams()}
+                        <FootballSpinner />
+                    {:then secretTeams}
+                        {#each secretTeams as st (st.id)}
+                            <button
+                                class="team-button rounded-button"
+                                animate:flip={{ duration: 200 }}
+                                transition:scale|local={{ duration: 200 }}
+                                class:selected={$currentTeam?.id === st?.id}
+                                on:click={() => newTeam(st.id)}
+                                >{st.name}
+                                <span class="display-font"
+                                    >{tierToNumeral(st.tier)}</span
+                                ></button
+                            >
+                        {/each}
+                    {/await}
+                {/if} -->
             </div>
             {#if $currentTeam?.pickSpecialRule}
                 <SelectSpecialRule />
@@ -263,6 +331,19 @@
 {/if}
 
 <style lang="scss">
+    .toggle-groups {
+        display: flex;
+        flex-wrap: wrap;
+        @media screen and (max-width: 600px) {
+            flex-direction: column;
+        }
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
     .page-title {
         color: var(--main-colour);
         text-align: center;

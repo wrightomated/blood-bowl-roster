@@ -15,10 +15,11 @@
     import { gameSettings } from '../store/gameSettings.store';
     import { currentUserStore } from '../store/currentUser.store';
     import { customisationRules } from '../customisation/customisation.store';
+    import { currentTeam } from '../store/currentTeam.store';
 
     export let selectedTeam: CustomTeam;
 
-    const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
+    const extras = extrasForTeam($roster.mode, $roster.format, $currentTeam);
 
     currentUserStore.subscribe((value) => {
         if ($roster?.coachDetails?.coachName === undefined) {
@@ -41,9 +42,9 @@
         .reduce((a, b) => a + b, 0);
 
     $: teamExtrasTotal = extrasForTeam(
-        selectedTeam.id,
         $roster.mode,
-        $roster.format
+        $roster.format,
+        $currentTeam
     )
         .filter((e) => e.extraString !== 'dedicated_fans')
         .map((e) => $roster.extra[e.extraString] * e.cost || 0)
