@@ -292,7 +292,7 @@
                 {#if sortedTeam.length === 0 && searchTerm?.toLowerCase() !== 'secret'}
                     <p class="no-matches">{$_('creation.noMatch')}</p>
                 {/if}
-                {#if searchTerm?.toLowerCase() === 'secret'}
+                <!-- {#if searchTerm?.toLowerCase() === 'secret'}
                     {#await loadSecretTeams()}
                         <FootballSpinner />
                     {:then secretTeams}
@@ -310,7 +310,7 @@
                             >
                         {/each}
                     {/await}
-                {/if}
+                {/if} -->
             </div>
             {#if $currentTeam?.pickSpecialRule}
                 <SelectSpecialRule />
