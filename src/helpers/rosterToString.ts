@@ -83,6 +83,8 @@ const pAlterations = (alts: PlayerAlterations, index: number) => {
 const getNameString = (roster: Roster) => {
     const encodedNames = encodeNames([
         roster.teamName,
+        roster?.coachDetails?.coachName ?? '',
+        roster?.coachDetails?.nafNumber ?? '',
         ...roster.players.map((x) => (x?.starPlayer ? '' : x.playerName)),
     ]);
     return compressEncodedNames(encodedNames);

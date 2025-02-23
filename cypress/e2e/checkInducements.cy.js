@@ -6,6 +6,7 @@ context('Test that the correct inducements are displayed', () => {
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Sevens').click();
+        cy.get('.search-input').click();
         cy.contains('Orc').click();
         cy.getBySel('create-team').click();
         cy.getBySel('toggle-inducements').click();
@@ -23,6 +24,7 @@ context('Test that the correct inducements are displayed', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
         cy.contains('Orc').click();
         cy.getBySel('create-team').click();
         cy.getBySel('toggle-inducements').click();

@@ -1,3 +1,4 @@
+import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import { inducementData } from '../data/inducements.data';
 import { extrasForTeam } from '../helpers/extrasForTeam';
 import { teamTotal } from '../helpers/validator';
@@ -6,11 +7,11 @@ import type { Roster, RosterPlayerRecord } from '../models/roster.model';
 import { format, unwrapFunctionStore } from 'svelte-i18n';
 const $format = unwrapFunctionStore(format);
 
-export function rosterToCsv(roster: Roster) {
+export function rosterToCsv(roster: Roster, currentTeam: CustomTeam) {
     let extras: Extra[] = extrasForTeam(
-        roster.teamId,
         roster.mode,
-        roster.format
+        roster.format,
+        currentTeam
     );
     let csv = '';
     csv += newCsvLine({
@@ -125,7 +126,7 @@ export function rosterToCsv(roster: Roster) {
 
     csv += newCsvLine({
         cell1: 'Tournament Team Value',
-        cell4: teamTotal(roster) * 1000,
+        cell4: teamTotal(roster, currentTeam) * 1000,
     });
 
     return csv;

@@ -23,6 +23,8 @@
     import { activePlayers } from '../store/activePlayers.store';
     import NafValidator from '../nafChamps/nafValidator.svelte';
     import NafPackSelector from '../nafChamps/nafPackSelector.svelte';
+    import AllPlayerPicker from '../modules/secret-league/allPlayerPicker.svelte';
+    import { currentTeamId } from '../store/currentTeam.store';
 
     export let playerTypes: Player[];
 
@@ -136,7 +138,13 @@
     </div>
 {/if}
 
+<!-- Hate to have this secret team if statement here... -->
+{#if $currentTeamId === 'st1090'}
+    <AllPlayerPicker placeholder="Mala addition" />
+{/if}
+
 <RosterStatusToggle />
+
 {#if $roster.format === 'dungeon bowl'}
     <DungeonBowlPlayerCount />
 {/if}
