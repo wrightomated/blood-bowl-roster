@@ -80,11 +80,11 @@ export function rosterToShareModel(
         coachName: roster.coachDetails?.coachName,
         nafNumber: roster.coachDetails?.nafNumber,
         rerolls: roster.extra['rerolls'],
-        assistantCoaches: roster.extra['assistantCoaches'],
+        assistantCoaches: roster.extra['assistant_coaches'],
         cheerleaders: roster.extra['cheerleaders'],
         dedicatedFans: roster.extra['dedicated_fans'],
         apothecary: roster.extra['apothecary'],
-        specialRule: PickedSpecialRule[roster.extra['specialRule']],
+        specialRule: PickedSpecialRule[roster.extra['special_rule']],
         playerSummary,
         inducements: roster.inducements,
     };
