@@ -5,6 +5,7 @@ context('Test that a team can be copied', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
         cy.contains('Chaos Chosen').click();
         cy.getBySel('create-team').click();
         cy.getBySel('team-name').type('The Treelovers');
@@ -12,8 +13,14 @@ context('Test that a team can be copied', () => {
         cy.getBySel('new-player-name-input').type('Tallboy');
         cy.getBySel('add-player').click();
         cy.getBySel('share-team').click();
-        cy.getBySel('code-input').click();
+        cy.window().then((win) => {
+            win.focus();
+        });
         cy.getBySel('copy-share-url').click();
+        cy.getClipboard().should(
+            'include',
+            '?code=t3t880m0f0d1s2p9p9IThe%20Treelovers::Tallboy'
+        );
     });
 
     it('should load roster', () => {
@@ -55,7 +62,6 @@ context('Test that a team can be copied', () => {
                 const { playerId, ...restOfPlayer } = p;
                 return restOfPlayer;
             });
-            console.log(JSON.stringify(rosterNoId, null, 2));
             expect(rosterNoId).to.deep.equal(expectedRoster);
         });
     });

@@ -20,12 +20,6 @@ import {
     testRosterString,
 } from './data/testRosterData';
 
-// test("should render", () => {
-//   const results = render(App, { props: { name: "world" } });
-
-// //   expect(() => results.getByText("Hello world!")).not.toThrow();
-// });
-
 test('should convert string into roster', () => {
     expect(stringToRoster(testRosterString)).toEqual(testRoster);
 });

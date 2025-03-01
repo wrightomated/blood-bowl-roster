@@ -4,7 +4,6 @@
     import { roster } from '../store/teamRoster.store';
     import { savedRosterIndex } from '../store/saveDirectory.store';
     import MaterialButton from './uiComponents/materialButton.svelte';
-    import { showExport } from '../store/showExport.store';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import { showDelete } from '../store/showDelete.store';
     import { showAllInducements } from '../store/showAllInducements.store';
@@ -67,10 +66,22 @@
             saving = false;
         }
     }
+    async function openShareModal() {
+        modalState.modalLoading($_('loading'));
+
+        await import('./shareRoster/shareRoster.svelte').then((component) => {
+            modalState.set({
+                ...$modalState,
+                isOpen: true,
+                canClose: true,
+                compact: true,
+                component: component.default,
+                componentProps: undefined,
+            });
+        });
+    }
 
     const toggleDelete = () => showDelete.set(!$showDelete);
-
-    const toggleExport = () => showExport.set(!$showExport);
 
     const printPage = () => {
         sendEventToAnalytics('Print');
@@ -128,8 +139,8 @@
 />
 <MaterialButton
     hoverText="Share roster"
-    symbol={$showExport ? 'link_off' : 'link'}
-    clickFunction={toggleExport}
+    symbol="share"
+    clickFunction={openShareModal}
     cyData="share-team"
 />
 <MaterialButton

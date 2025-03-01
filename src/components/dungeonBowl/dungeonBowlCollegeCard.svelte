@@ -1,13 +1,12 @@
 <script lang="ts">
     import { _ } from 'svelte-i18n';
-    import { playerCatalogue } from '../../data/players.data';
 
     import type { DungeonBowlCollege } from '../../models/dungeonBowl.model';
+    import { playerById } from '../../helpers/playerCatalogueHelpers';
 
     export let college: DungeonBowlCollege;
 
-    const getPlayerPosition = (id: number) =>
-        playerCatalogue.players.find((p) => p.id === id).position;
+    const getPlayerPosition = (id: number) => playerById(id).position;
 </script>
 
 <div class="college-card college-card--{college.name.toLowerCase()}">

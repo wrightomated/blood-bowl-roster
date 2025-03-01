@@ -51,7 +51,7 @@ export function invalidRoster(
             roster,
             currentTeam
         );
-        const teamTotalValue = teamTotal(roster);
+        const teamTotalValue = teamTotal(roster, currentTeam);
         const budgetValid = budget ? teamTotalValue <= budget : true;
         let tooManySecondarySkills = 0;
         if (secondaryAllowance) {
@@ -193,7 +193,11 @@ export function excessSpp(
 }
 
 /** Including dedicated fans */
-function teamTotal(roster: Roster) {
+export function teamTotal(
+    roster: Roster,
+    currentTeam: CustomTeam,
+    includeDedicatedFans = true
+) {
     const players = roster.players.filter((x) => !x.deleted);
     const playerTotal = players.reduce((a, b) => a + b.player.cost, 0);
     const inducementTotal = calculateInducementTotal(
@@ -201,7 +205,10 @@ function teamTotal(roster: Roster) {
         roster.teamId,
         roster.format
     );
-    const extraTotal = extrasForTeam(roster.teamId, roster.mode, roster.format)
+    const extraTotal = extrasForTeam(roster.mode, roster.format, currentTeam)
+        .filter(
+            (x) => includeDedicatedFans || x.extraString !== 'dedicated_fans'
+        )
         .map((x) => roster.extra[x.extraString] * x.cost || 0)
         .reduce((a, b) => a + b, 0);
     return playerTotal + inducementTotal + extraTotal;

@@ -589,6 +589,91 @@ const jordellFreshbreeze: StarPlayer = {
     cost: 250,
     specialRules: ['Swift as the Breeze'],
 };
+const zzhargMadeye: StarPlayer = {
+    id: 259,
+    position: 'Zzharg Madeye',
+    playerStats: [4, 4, 4, 3, 10],
+    playsFor: ['Favoured of Hashut', 'Badlands Brawl'],
+    skills: [38, 42, 71, 44, 79, 22, 60],
+    cost: 130,
+    specialRules: ["Then I started Blastin'!"],
+};
+
+const htharkTheUnstoppable: StarPlayer = {
+    id: 260,
+    position: "H'thark The Unstoppable",
+    playerStats: [6, 6, 4, 6, 10],
+    playsFor: ['Badlands Brawl', 'Favoured of Hashut'],
+    skills: [13, 51, 5, 54, 71, 11, 12, 60],
+    cost: 300,
+    specialRules: ['Unstoppable Momentim'],
+};
+
+const rashnackBackstabber: StarPlayer = {
+    id: 261,
+    position: 'Rashnack Backstabber',
+    playerStats: [7, 3, 3, 5, 8],
+    playsFor: ['Badlands Brawl'],
+    skills: [71, 20, 9, 10, 80],
+    cost: 130,
+    specialRules: ['Toxin Conniseur'],
+};
+
+// anqi Panqi
+const anqi: StarPlayer = {
+    id: 262,
+    position: 'Anqi Panqi',
+    playerStats: [7, 4, 5, 6, 10],
+    playsFor: ['Lustrian Superleague'],
+    skills: [13, 52, 71, 58],
+    cost: 190,
+    specialRules: ['Savage Blow'],
+};
+
+// Swiftvine Glimmershard
+const swiftvine: StarPlayer = {
+    id: 263,
+    position: 'Swiftvine Glimmershard',
+    playerStats: [7, 2, 3, 5, 7],
+    playsFor: ['Elven Kingdoms League', 'Halfling Thimble Cup'],
+    skills: [27, 16, 71, 9, 80, 81],
+    cost: 110,
+    specialRules: ['Furious Outburst'],
+};
+
+const maple: StarPlayer = {
+    id: 264,
+    position: 'Maple Highgrove',
+    playerStats: [3, 5, 5, 5, 11],
+    playsFor: [
+        'Elven Kingdoms League',
+        'Halfling Thimble Cup',
+        'Old World Classic',
+    ],
+    skills: [50, 52, 71, 55, 58, 34, 60],
+    cost: 210,
+    specialRules: ['Vicious Vines'],
+};
+
+const guffle: StarPlayer = {
+    id: 265,
+    position: 'Guffle Pussmaw',
+    playerStats: [5, 3, 3, 5, 10],
+    playsFor: ['Favoured of Nurgle'],
+    skills: [29, 71, 32, 73],
+    cost: 180,
+    specialRules: ['Bite'],
+};
+
+const jeremiahKool: StarPlayer = {
+    id: 266,
+    position: 'Jeremiah Kool',
+    playerStats: [8, 3, 1, 3, 9],
+    playsFor: ['Elven Kingdoms League'],
+    skills: [13, 2, 4, 40, 71, 44, 45, 46, 9],
+    cost: 320,
+    specialRules: ['The Flashing Blade'],
+};
 
 export const starPlayers = {
     starPlayers: [
@@ -651,6 +736,14 @@ export const starPlayers = {
         rowanaForestfoot,
         kirotKrakeneye,
         jordellFreshbreeze,
+        zzhargMadeye,
+        htharkTheUnstoppable,
+        rashnackBackstabber,
+        anqi,
+        swiftvine,
+        maple,
+        guffle,
+        jeremiahKool,
         ...stuporBowlStarPlayers,
     ],
 };

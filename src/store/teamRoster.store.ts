@@ -339,6 +339,9 @@ const switchTwoElements = (arr: any[], index1: number, index2: number) => {
 const rosterFromQueryString = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    if (!code) {
+        return null;
+    }
     window.history.replaceState({}, '', '/');
     return rosterFromCode(code);
 };
@@ -349,6 +352,7 @@ const rosterFromCode = (code: string | null) => {
 
         return addPlayerNumbersToRoster(transformedRoster);
     } catch (error) {
+        console.error('Error loading roster from code', error);
         return null;
     }
 };

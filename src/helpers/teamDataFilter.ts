@@ -1,19 +1,16 @@
+import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import type { TournamentCustomisation } from '../customisation/types/TournmentCustomisation.type';
-import { dungeonBowlColleges } from '../data/dungeonBowlColleges.data';
 import { teamData } from '../data/teams.data';
-import { dbCollegeToTeam } from '../models/dungeonBowl.model';
-import type { Team } from '../models/team.model';
-import type { TeamFormat } from '../types/teamFormat';
 
 export function filteredTeamData(options: {
-    format?: TeamFormat;
+    teams: CustomTeam[];
     tournamentCustomisation?: TournamentCustomisation;
 }) {
     if (!options.tournamentCustomisation) {
-        return getBaseTeamData(options?.format || 'elevens');
+        return options.teams;
     }
     const customisation = options.tournamentCustomisation;
-    let baseTeamData = getBaseTeamData(customisation.format);
+    let baseTeamData = teamData.teams;
 
     const filteredTeams = baseTeamData.filter((team) => {
         return !customisation.tournamentTeamList?.excludedIds.includes(team.id);
@@ -26,11 +23,4 @@ export function filteredTeamData(options: {
     const additionalTeams =
         customisation?.tournamentTeamList?.additionalTeams || [];
     return [...alteredTiersTeams, ...additionalTeams];
-}
-
-function getBaseTeamData(format?: TeamFormat): Team[] {
-    if (format === 'dungeon bowl') {
-        return dungeonBowlColleges.colleges.map((x) => dbCollegeToTeam(x));
-    }
-    return teamData.teams;
 }
