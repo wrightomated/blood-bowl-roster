@@ -14,7 +14,8 @@
     "updatedTierMap": {
         "High Elf": 2,
         "Orc": 1,
-        "Nurgle": 3
+        "Nurgle": 3,
+        "Vampire": 1
     },
     "inducementSettings": {
         "includedInducementIds": [
