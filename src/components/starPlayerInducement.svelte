@@ -69,8 +69,9 @@
     const addStarPlayer = () => {
         const addTwo = getSelected(selectedId).twoForOne;
         if (
+            addTwo &&
             $roster.players.filter((x) => !x.deleted).length + 2 >
-            $gameSettings.maxPlayers
+                $gameSettings.maxPlayers
         ) {
             return;
         }
