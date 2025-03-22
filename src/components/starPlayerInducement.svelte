@@ -8,6 +8,7 @@
     import type { StarPlayer } from '../models/player.model';
     import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
+    import { gameSettings } from '../store/gameSettings.store';
 
     let selectedId: number;
 
@@ -24,8 +25,18 @@
             let displayName = $_(`stars.${x.id}.name`, {
                 default: x.position,
             });
+
             if (x?.twoForOne) {
+                if (
+                    $roster.players.filter((x) => !x.deleted).length + 2 >
+                    $gameSettings.maxPlayers
+                ) {
+                    return { ...x, displayName: 'ignoreThis' };
+                }
                 const other = a.find((p) => p.id === x?.twoForOne);
+                if (!other) {
+                    return { ...x, displayName: 'ignoreThis' };
+                }
                 if (other.id < x.id) {
                     return { ...x, displayName: 'ignoreThis' };
                 }
@@ -57,6 +68,12 @@
 
     const addStarPlayer = () => {
         const addTwo = getSelected(selectedId).twoForOne;
+        if (
+            $roster.players.filter((x) => !x.deleted).length + 2 >
+            $gameSettings.maxPlayers
+        ) {
+            return;
+        }
 
         roster.addPlayer({
             player: getSelected(selectedId),
