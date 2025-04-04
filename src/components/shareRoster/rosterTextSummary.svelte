@@ -32,14 +32,15 @@
         {$roster.mode}
     </div>
     <div class="pill-box">
-        <span>CTV: {r.teamTotal}</span>
-        <span>
-            {#if r.mode === 'exhibition'}
+        <span>CTV: {r.currentTeamValue}</span>
+        <span>Roster Total: {r.teamTotal}</span>
+        {#if r.mode === 'exhibition'}
+            <span>
                 {$customisationRules?.allowances?.useSkillPoints
                     ? 'SP: ' + $spentSpp / 7
                     : 'SPP: ' + $spentSpp}
-            {/if}
-        </span>
+            </span>
+        {/if}
     </div>
 
     {#if r?.specialRule}

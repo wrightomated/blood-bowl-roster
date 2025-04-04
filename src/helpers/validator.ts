@@ -1,7 +1,10 @@
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
-import { extrasForTeam } from '../helpers/extrasForTeam';
-import { calculateInducementTotal } from '../helpers/totalInducementAmount';
+import {
+    calculateInducementTotal,
+    starPlayerInducementsCost,
+} from '../helpers/totalInducementAmount';
 import type { Roster } from '../models/roster.model';
+import { teamValue } from './teamValue';
 
 export type RosterValidationResult = {
     valid: boolean;
@@ -51,7 +54,7 @@ export function invalidRoster(
             roster,
             currentTeam
         );
-        const teamTotalValue = teamTotal(roster, currentTeam);
+        const teamTotalValue = teamTotalCost(roster, currentTeam, true);
         const budgetValid = budget ? teamTotalValue <= budget : true;
         let tooManySecondarySkills = 0;
         if (secondaryAllowance) {
@@ -192,24 +195,21 @@ export function excessSpp(
     return allowance + spp - starPlayerSpp;
 }
 
-/** Including dedicated fans */
-export function teamTotal(
+/**
+ * Calculate the total cost of a team including inducements
+ */
+export function teamTotalCost(
     roster: Roster,
     currentTeam: CustomTeam,
-    includeDedicatedFans = true
+    dedicatedFansCostIncluded = false
 ) {
-    const players = roster.players.filter((x) => !x.deleted);
-    const playerTotal = players.reduce((a, b) => a + b.player.cost, 0);
+    const tv = teamValue(roster, currentTeam, dedicatedFansCostIncluded);
     const inducementTotal = calculateInducementTotal(
         roster.inducements,
         roster.teamId,
         roster.format
     );
-    const extraTotal = extrasForTeam(roster.mode, roster.format, currentTeam)
-        .filter(
-            (x) => includeDedicatedFans || x.extraString !== 'dedicated_fans'
-        )
-        .map((x) => roster.extra[x.extraString] * x.cost || 0)
-        .reduce((a, b) => a + b, 0);
-    return playerTotal + inducementTotal + extraTotal;
+    const starPlayerCost = starPlayerInducementsCost(roster);
+
+    return tv + inducementTotal + starPlayerCost;
 }
