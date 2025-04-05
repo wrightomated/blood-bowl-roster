@@ -32,6 +32,8 @@ context('Test that the correct inducements are displayed', () => {
             .siblings('.inducement__control')
             .find('button')
             .click();
-        cy.getBySel('current-tv').should('have.text', '50,000');
+        cy.getBySel('toggle-inducements').click();
+        cy.getBySel('team-value').should('have.text', '0');
+        cy.getBySel('roster-total').should('have.text', '50,000 info');
     });
 });

@@ -1,7 +1,9 @@
 import type { CustomTeam } from '../../customisation/types/CustomiseTeamList.type';
 import { PickedSpecialRule } from '../../data/teams.data';
+import { extrasTotalCost } from '../../helpers/extrasForTeam';
 import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
-import { teamTotal } from '../../helpers/validator';
+import { currentTeamValue } from '../../helpers/teamValue';
+import { teamTotalCost } from '../../helpers/validator';
 import type { InducementsRecord, Roster } from '../../models/roster.model';
 import type { RosterMode } from '../../store/rosterMode.store';
 import type { TeamFormat } from '../../types/teamFormat';
@@ -16,6 +18,7 @@ export type ShareModel = {
     teamName: string;
     teamType: string;
     teamTotal: string;
+    currentTeamValue: string;
     format: TeamFormat;
     mode: RosterMode;
     coachName?: string;
@@ -73,7 +76,10 @@ export function rosterToShareModel(
         teamName: roster.teamName,
         teamType: roster.teamType,
         teamTotal: formatNumberInThousands(
-            teamTotal(roster, currentTeam, false)
+            teamTotalCost(roster, currentTeam, roster.mode === 'exhibition')
+        ),
+        currentTeamValue: formatNumberInThousands(
+            currentTeamValue(roster, currentTeam)
         ),
         format: roster.format,
         mode: roster.mode,
@@ -93,7 +99,6 @@ export function rosterToShareModel(
 export function rosterToTextSummary(roster: Roster): string {
     let summary = roster.teamName ? `${roster.teamName}\n` : '';
     summary += `${roster.teamType}\n`;
-    // summary += `Team Value: ${teamTotal(roster)}\n`;
     summary += `${roster.format}\n`;
     summary += `${roster.mode}\n`;
     summary += roster?.coachDetails?.coachName

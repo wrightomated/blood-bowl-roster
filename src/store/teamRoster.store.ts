@@ -555,6 +555,18 @@ function removeInducementFromStore(
 ) {
     let treasury = store.treasury;
     let pettyCash: number = store.pettyCash;
+    let inducements = {
+        ...store.inducements,
+        [inducementKey]: store?.inducements?.[inducementKey]
+            ? store.inducements[inducementKey] - 1
+            : 0,
+    };
+    if (store.leagueRosterStatus === 'commenced') {
+        return {
+            ...store,
+            inducements,
+        };
+    }
 
     if (typeof pettyCash === 'number') {
         pettyCash =
@@ -581,12 +593,7 @@ function removeInducementFromStore(
         ...store,
         treasury,
         pettyCash,
-        inducements: {
-            ...store.inducements,
-            [inducementKey]: store?.inducements?.[inducementKey]
-                ? store.inducements[inducementKey] - 1
-                : 0,
-        },
+        inducements,
     };
 }
 
