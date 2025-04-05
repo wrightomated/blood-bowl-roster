@@ -898,5 +898,9 @@
         "desert": "Desert",
         "street": "Street",
         "sewer": "Sewer"
+    },
+    "customisation": {
+        "spp": "SPP",
+        "sp": "Skill Points"
     }
 }

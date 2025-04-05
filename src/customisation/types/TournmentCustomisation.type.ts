@@ -48,7 +48,8 @@ export type TournamentCustomisation = {
 };
 
 export type TournamentAllowances = {
-    sppCost?: SPPCost;
+    sppCost?: IncreaseCost;
+    advancementCurrency?: AdvancementCurrency;
     /** Skill points as per matched play guide, effectively spp / 6 */
     useSkillPoints?: boolean;
     blockSppEditing?: boolean;
@@ -59,18 +60,20 @@ export type TournamentAllowances = {
     disallowTraitRemovalIds?: number[];
     traitAndStatSameAllowance?: boolean;
     increaseTierPerStarPlayer?: boolean;
-    allowancesPerTier?: Record<
-        number,
-        {
-            primarySkill?: number;
-            secondarySkill?: number;
-            starPlayer?: number;
-            spp: number;
-        }
-    >;
+    allowancesPerTier?: Record<number, TierAllowance>;
+    // useGoldForAdvancements?: boolean;
 };
 
-export type SPPCost = {
+export type AdvancementCurrency = 'spp' | 'sp' | 'gold';
+
+export type TierAllowance = {
+    primarySkill?: number;
+    secondarySkill?: number;
+    starPlayer?: number;
+    spp?: number;
+};
+
+export type IncreaseCost = {
     primarySkill?: number;
     secondarySkill?: number;
     statIncrease?: number;

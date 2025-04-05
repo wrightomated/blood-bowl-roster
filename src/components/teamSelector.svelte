@@ -235,6 +235,9 @@
                 ></MaterialButton>
             </div>
         {/if}
+        {#if $rosterMode === 'exhibition'}
+            <button class="rounded-button">Customise (beta)</button>
+        {/if}
     </div>
 
     {#if $teamSelectionOpen}
