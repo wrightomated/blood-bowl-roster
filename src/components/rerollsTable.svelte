@@ -73,7 +73,7 @@
         </tr>
         <tr>
             <th>{$_('tables.tv')}</th>
-            <td>
+            <td data-cy="team-value">
                 {formatNumberInThousands(teamTotal)}
             </td>
         </tr>
@@ -88,7 +88,7 @@
 
         <tr>
             <th>Roster Total</th>
-            <td class="roster-total-cell">
+            <td class="roster-total-cell" data-cy="roster-total">
                 {formatNumberInThousands(rosterTotal)}
                 <MaterialButton
                     symbol="info"

@@ -81,6 +81,8 @@ context('Team creation', () => {
         cy.getBySel('star-player-select').select('Zolcath the Zoat');
         cy.getBySel('add-star-player').click();
         cy.getBySel('player-0-name').should('have.text', 'Zolcath the Zoat');
+        cy.getBySel('team-value').should('have.text', '0');
+        cy.getBySel('roster-total').should('have.text', '230,000 info');
     });
 });
 

@@ -9,5 +9,6 @@ export default defineConfig({
         //   return require('./cypress/plugins/index.js')(on, config)
         // },
         baseUrl: 'https://bbroster.com/',
+        // baseUrl: 'http://localhost:5001/',
     },
 });

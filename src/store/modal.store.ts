@@ -56,7 +56,7 @@ function createModalState() {
                     ...store,
                     isOpen: false,
                     canClose: true,
-                    component: undefined,
+                    component: null,
                     componentProps: {},
                     compact: false,
                 };
