@@ -433,7 +433,7 @@ const skinkRunnerLineman: Player = {
 
 const chameleonSkink: Player = {
     id: 44,
-    position: 'Chameleon Skinks',
+    position: 'Chameleon Skink',
     playerStats: [7, 2, 3, 3, 8],
     cost: 70,
     skills: [4, 45, 20, 81],

@@ -23,7 +23,7 @@
               (rosterPlayer.alterations?.valueChange || 0);
 
     //   CHAOS CUP
-    $: starPlayerCost = $customisationRules?.starPlayerCost;
+    $: starPlayerCost = $customisationRules?.starPlayerSettings?.starPlayerCost;
     $: sppText = rosterPlayer?.starPlayer
         ? getSppForPlayer(starPlayerCost)
         : rosterPlayer?.alterations?.spp * -1 || '-';
@@ -60,17 +60,22 @@
     <div><span class="mini-title">SPP:</span> {sppText}</div>
     <!-- {#if $roster.format !== 'sevens'}
         {#if $roster.players[index]?.alterations?.spp !== undefined}
-            <label
-                ><span class="mini-title">SPP:</span>
-                <input
-                    class="spp-input"
-                    type="number"
-                    placeholder="?"
-                    inputmode="numeric"
-                    use:blurOnEscapeOrEnter
-                    bind:value={$roster.players[index].alterations.spp}
-                />
-            </label>
+            {#if !$customisationRules?.allowances?.blockSppEditing}
+                <label
+                    ><span class="mini-title">SPP:</span>
+                    <input
+                        class="spp-input"
+                        type="number"
+                        placeholder="?"
+                        inputmode="numeric"
+                        use:blurOnEscapeOrEnter
+                        bind:value={$roster.players[index].alterations.spp}
+                    />
+                </label>
+            {:else}
+                <span class="mini-title">SPP:&nbsp;</span>
+                {-1 * rosterPlayer.alterations.spp}
+            {/if}
         {:else if !rosterPlayer.starPlayer}0{/if}
     {/if} -->
 

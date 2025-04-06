@@ -6,6 +6,7 @@ context('Test that the correct inducements are displayed', () => {
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
         cy.contains('Sevens').click();
+        cy.get('.search-input').click();
         cy.contains('Orc').click();
         cy.getBySel('create-team').click();
         cy.getBySel('toggle-inducements').click();
@@ -17,5 +18,22 @@ context('Test that the correct inducements are displayed', () => {
         cy.contains('Part-time Assistant Coach');
         cy.contains('Temp Agency Cheerleader');
         cy.contains('Wandering Apothecary');
+    });
+
+    it('should add an inducement and increase current team value', () => {
+        cy.visit('/');
+        cy.getBySel('menu-button').click();
+        cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
+        cy.contains('Orc').click();
+        cy.getBySel('create-team').click();
+        cy.getBySel('toggle-inducements').click();
+        cy.contains('Bribe')
+            .siblings('.inducement__control')
+            .find('button')
+            .click();
+        cy.getBySel('toggle-inducements').click();
+        cy.getBySel('team-value').should('have.text', '0');
+        cy.getBySel('roster-total').should('have.text', '50,000 info');
     });
 });

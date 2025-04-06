@@ -6,11 +6,14 @@ context('Team creation', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').click();
         cy.contains('Black Orc').click();
         cy.getBySel('selected-team-caption').should(
             'have.text',
             'Black Orc Team Players'
         );
+        cy.get('.search-input').type('{selectAll}').type('{backspace}');
+        cy.get('.search-input').type('imperial');
         cy.contains('Imperial Nobility').click();
         cy.getBySel('selected-team-caption').should(
             'have.text',
@@ -21,21 +24,18 @@ context('Team creation', () => {
         cy.getBySel('team-name').type(teamName);
 
         cy.getBySel('new-player-name-input').type('Bob');
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
+        cy.addPlayers(4);
 
-        cy.getBySel('new-player-position-select').select('Imperial Thrower');
+        cy.getBySel('new-player-position-select').select(
+            'Imperial Thrower 0/2'
+        );
         cy.getBySel('add-player').click();
-        cy.getBySel('new-player-position-select').select('Noble Blitzer');
+        cy.getBySel('new-player-position-select').select('Noble Blitzer 0/2');
         cy.getBySel('add-player').click();
-        cy.getBySel('new-player-position-select').select('Bodyguard');
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('add-player').click();
-        cy.getBySel('new-player-position-select').select('Ogre');
+        cy.getBySel('new-player-position-select').select('Bodyguard 0/4');
+        cy.addPlayers(4);
+
+        cy.getBySel('new-player-position-select').select('Ogre 0/1');
         cy.getBySel('add-player').click();
         cy.getBySel('add-rerolls').click();
         cy.getBySel('add-rerolls').click();
@@ -57,6 +57,8 @@ context('Team creation', () => {
 
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').type('{selectAll}').type('{backspace}');
+        cy.get('.search-input').type('black');
         cy.contains('Black Orc').click();
         cy.getBySel('selected-team-caption').should(
             'have.text',
@@ -73,11 +75,14 @@ context('Team creation', () => {
         cy.visit('/');
         cy.getBySel('menu-button').click();
         cy.getBySel('new-team').click();
+        cy.get('.search-input').type('lizardmen');
         cy.contains('Lizardmen').click();
         cy.getBySel('create-team').click();
         cy.getBySel('star-player-select').select('Zolcath the Zoat');
         cy.getBySel('add-star-player').click();
         cy.getBySel('player-0-name').should('have.text', 'Zolcath the Zoat');
+        cy.getBySel('team-value').should('have.text', '0');
+        cy.getBySel('roster-total').should('have.text', '230,000 info');
     });
 });
 

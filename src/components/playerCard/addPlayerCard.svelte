@@ -35,13 +35,21 @@
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === selected?.id)?.max || 0;
 
+    $: playerTypeCounts = playerTypes.map((x) => {
+        return {
+            id: x.id,
+            max: $currentTeam.players.find((p) => p.id === x.id)?.max || 0,
+            current: $roster.players.filter((p) => p.player.id === x.id).length,
+        };
+    });
+
     const addPlayers = () => {
         const numberOfPlayers =
             !amount || amount < 1
                 ? 1
                 : amount > maxOfPlayerType
-                ? maxOfPlayerType
-                : amount;
+                  ? maxOfPlayerType
+                  : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
             let alterations: PlayerAlterations = { spp: 0, ni: 0 };
@@ -78,6 +86,15 @@
         }
         // Reset amount for next player selection
         amount = 1;
+        if (numberOfPlayerType >= maxOfPlayerType - numberOfPlayers) {
+            // first id that isn't at max
+            const nextId = playerTypeCounts.findIndex(
+                (x) => x.current + 1 < x.max
+            );
+            if (nextId !== -1) {
+                selected = playerTypes[nextId];
+            }
+        }
     };
 </script>
 
@@ -107,9 +124,17 @@
             />
             x
             <select aria-label="New Player Position" bind:value={selected}>
-                {#each playerTypes as playerType}
-                    <option value={playerType}>
-                        {playerType.position}
+                {#each playerTypes as playerType, i}
+                    <option
+                        value={playerType}
+                        disabled={playerTypeCounts[i]?.current >=
+                            playerTypeCounts[i]?.max}
+                    >
+                        {$_('players.' + playerType.id, {
+                            default: playerType.position,
+                        })}
+                        {playerTypeCounts[i]?.current}/{playerTypeCounts[i]
+                            ?.max}
                     </option>
                 {/each}
                 {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}
@@ -163,7 +188,8 @@
         border: 2px solid var(--secondary-background-colour);
         height: 100%;
         background-color: var(--secondary-background-colour);
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
 
         &__content {

@@ -78,10 +78,10 @@
         "filter": "Filter",
         "type": "Team type",
         "naf": "Filter NAF teams",
-        "s": "Filter superseded teams",
-        "tier": "Filter tier {tier}",
+        "s": "Filter retired teams",
+        "tier": "Tier {tier}",
         "special": "Select special rule",
-        "noMatch": "No teams match your filter"
+        "noMatch": "No teams match your search"
     },
     "load": {
         "title": "Load Team",
@@ -152,6 +152,7 @@
         "removeAll": "Remove all inducements below (no refund)"
     },
     "skills": {
+        "0": "Unknown Skill",
         "1": "Catch",
         "2": "Diving Catch",
         "3": "Diving Tackle",
@@ -387,7 +388,7 @@
         "41": "Human Catcher",
         "42": "Human Blitzer",
         "43": "Skink Lineman",
-        "44": "Chameleon Skinks",
+        "44": "Chameleon Skink",
         "45": "Saurus Blocker",
         "46": "Kroxigor",
         "47": "Zombie Lineman",
@@ -831,7 +832,7 @@
         "i49": "Medical Unguent",
         "i50": "Desperate Measures",
         "i51": "College Wizard",
-        "i52": "Giant Mercenary Player",
+        "i52": "Giant Mercenary Player (24spp)",
         "i53": "Lesser Magic Potion",
         "i54": "Superior Magic Potion",
         "i55": "Sawbones",
@@ -867,7 +868,6 @@
         },
         "events": {
             "title": "Player Events",
-
             "type": "Event Type",
             "turn": "Turn",
             "opp": "Opponent's Total Touchdowns",

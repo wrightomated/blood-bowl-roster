@@ -1,5 +1,5 @@
 import type { CollegeName } from './dungeonBowl.model';
-import type { TeamName, TeamSpecialRule, TeamTier } from './team.model';
+import type { TeamName, TeamSpecialRule } from './team.model';
 
 export interface Inducement {
     id: InducementKey;

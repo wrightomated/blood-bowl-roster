@@ -18,6 +18,7 @@ function createModalState() {
             update((store) => {
                 return { ...store, canClose };
             }),
+
         modalLoading: (loadingText?: string) =>
             update((store) => {
                 loadingText = loadingText || 'loading';
@@ -55,11 +56,22 @@ function createModalState() {
                     ...store,
                     isOpen: false,
                     canClose: true,
-                    component: undefined,
+                    component: null,
                     componentProps: {},
                     compact: false,
                 };
             }),
+        modalCustomComponent: (component: any, componentProps: any = {}) => {
+            update((store) => {
+                return {
+                    ...store,
+                    isOpen: true,
+                    canClose: true,
+                    component,
+                    componentProps,
+                };
+            });
+        },
     };
 }
 

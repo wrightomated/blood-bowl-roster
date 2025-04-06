@@ -3,6 +3,7 @@
         RosterPlayerRecord,
         SpecificAdvancement,
     } from '../../models/roster.model';
+    import { customisationRules } from '../../customisation/customisation.store';
     import { roster } from '../../store/teamRoster.store';
     import CurrentAdvancementList from './currentAdvancementList.svelte';
 
@@ -20,6 +21,7 @@
         specificAdvancements.length === 0 ||
         (specificAdvancements.length === 1 &&
             specificAdvancements[0].type.includes('primary'));
+    $: skillStackingAllowed = !$customisationRules?.allowances?.noSkillStacking;
 </script>
 
 <CurrentAdvancementList {rosterPlayer} {index} />

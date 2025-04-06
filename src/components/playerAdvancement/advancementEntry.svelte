@@ -7,6 +7,7 @@
     import type { SpecificAdvancement } from '../../models/roster.model';
     import { roster } from '../../store/teamRoster.store';
     import MaterialButton from '../uiComponents/materialButton.svelte';
+    import { customisationRules } from '../../customisation/customisation.store';
 
     export let advancement: SpecificAdvancement;
     export let deleteFunction: () => void;
@@ -23,6 +24,10 @@
         type: advancementCombinationToType(advancement.type),
         isRandom: advancement.type.includes('random'),
     };
+
+    $: sppString = $customisationRules?.allowances?.useSkillPoints
+        ? `${advancement.sppCost / 6} SP`
+        : `${advancement.sppCost} SPP`;
 
     function advancementCombinationToType(
         combination: AdvancementCombination
@@ -52,7 +57,7 @@
     {/if}
     <!-- hide for sevens -->
     {#if $roster.format !== 'sevens'}
-        <span class="advancement-details__spp">{advancement.sppCost} SPP</span>
+        <span class="advancement-details__spp">{sppString}</span>
     {/if}
 </div>
 <!-- <div> -->

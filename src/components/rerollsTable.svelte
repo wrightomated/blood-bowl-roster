@@ -6,7 +6,6 @@
     import { extrasForTeam } from '../helpers/extrasForTeam';
     import Treasury from './treasury.svelte';
     import StarPlayerInducement from './starPlayerInducement.svelte';
-    import { calculateInducementTotal } from '../helpers/totalInducementAmount';
     import {
         formatNumber,
         formatNumberInThousands,
@@ -14,10 +13,16 @@
     import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
     import { gameSettings } from '../store/gameSettings.store';
     import { currentUserStore } from '../store/currentUser.store';
+    import { customisationRules } from '../customisation/customisation.store';
+    import { currentTeam } from '../store/currentTeam.store';
+    import { currentTeamValue, teamValue } from '../helpers/teamValue';
+    import { teamTotalCost } from '../helpers/validator';
+    import MaterialButton from './uiComponents/materialButton.svelte';
+    import { modalState } from '../store/modal.store';
 
     export let selectedTeam: CustomTeam;
 
-    const extras = extrasForTeam(selectedTeam.id, $roster.mode, $roster.format);
+    $: extras = extrasForTeam($roster.mode, $roster.format, $currentTeam);
 
     currentUserStore.subscribe((value) => {
         if ($roster?.coachDetails?.coachName === undefined) {
@@ -28,46 +33,18 @@
         }
     });
 
-    $: teamTotal = $roster.players
-        .filter((p) => !p?.starPlayer)
-        .map(
-            (x) =>
-                x.player.cost +
-                ($roster.mode === 'exhibition'
-                    ? 0
-                    : x?.alterations?.valueChange || 0)
-        )
-        .reduce((a, b) => a + b, 0);
+    $: teamTotal = teamValue($roster, $currentTeam);
+    $: currentTotal = currentTeamValue($roster, $currentTeam);
+    $: rosterTotal = teamTotalCost(
+        $roster,
+        $currentTeam,
+        $roster.mode === 'exhibition'
+    );
 
-    $: teamExtrasTotal = extrasForTeam(
-        selectedTeam.id,
-        $roster.mode,
-        $roster.format
-    )
-        .filter((e) => e.extraString !== 'dedicated_fans')
-        .map((e) => $roster.extra[e.extraString] * e.cost || 0)
-        .reduce((a, b) => a + b, 0);
-
-    $: currentTotal =
-        $roster.players
-            .filter((p) => !p?.alterations?.tr && !p?.alterations?.mng)
-            .map(
-                (x) =>
-                    ((x.player.id === 56 || x.player.id === 73) &&
-                    $roster.mode !== 'exhibition' &&
-                    $roster.format !== 'dungeon bowl'
-                        ? 0
-                        : x.player.cost) +
-                    ($roster.mode === 'exhibition'
-                        ? 0
-                        : x?.alterations?.valueChange || 0)
-            )
-            .reduce((a, b) => a + b, 0) +
-        calculateInducementTotal(
-            $roster.inducements,
-            $roster.teamId,
-            $roster.format
-        );
+    async function showRosterTotalInfo() {
+        const info = await import('../modules/infoBlock/rosterTotal.svelte');
+        modalState.modalCustomComponent(info.default);
+    }
 </script>
 
 <div class="tables">
@@ -96,22 +73,39 @@
         </tr>
         <tr>
             <th>{$_('tables.tv')}</th>
-            <td>
-                {formatNumberInThousands(teamTotal + teamExtrasTotal)}
+            <td data-cy="team-value">
+                {formatNumberInThousands(teamTotal)}
             </td>
         </tr>
+        {#if teamTotal !== currentTotal}
+            <tr>
+                <th>{$_('tables.ctv')}</th>
+                <td data-cy="current-tv">
+                    {formatNumberInThousands(currentTotal)}
+                </td>
+            </tr>
+        {/if}
+
         <tr>
-            <th>{$_('tables.ctv')}</th>
-            <td data-cy="current-tv">
-                {formatNumberInThousands(currentTotal + teamExtrasTotal)}
+            <th>Roster Total</th>
+            <td class="roster-total-cell" data-cy="roster-total">
+                {formatNumberInThousands(rosterTotal)}
+                <MaterialButton
+                    symbol="info"
+                    hoverText={'Information'}
+                    clickFunction={showRosterTotalInfo}
+                ></MaterialButton>
             </td>
         </tr>
 
         <tr>
             <th>{$_('tables.treasury')}</th>
             <td class="treasury-cell">
-                {formatNumberInThousands($roster.treasury)}
-                <!-- <Treasury /> -->
+                {#if $customisationRules?.lockTreasury}
+                    {formatNumberInThousands($roster.treasury)}
+                {:else}
+                    <Treasury />
+                {/if}
             </td>
         </tr>
 
@@ -179,6 +173,12 @@
 
     .treasury-cell {
         border-right: 1px solid #ccc;
+    }
+    .roster-total-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
     }
 
     @media screen and (max-width: 650px) {

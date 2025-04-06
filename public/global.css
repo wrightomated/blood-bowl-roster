@@ -1,8 +1,15 @@
-@font-face {
+/* @font-face {
     font-family: 'Norse';
     font-style: normal;
     font-weight: 400;
     src: url(/assets/norse/Norsebold.otf) format('opentype');
+} */
+
+@font-face {
+    font-family: 'big_noodle_titling';
+    src: url(/assets/fonts/big_noodle_titling.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 :root {
@@ -29,6 +36,7 @@
 
     --display-font: 'Roboto Slab', serif;
     --body-font: 'PT Sans', sans-serif;
+    --tournament-font: 'big_noodle_titling', sans-serif;
 
     --secondary-border: 2px solid var(--secondary-colour);
 }
@@ -59,8 +67,9 @@ h6 {
 }
 
 a {
-    color: rgb(0, 100, 200);
-    text-decoration: none;
+    /* color: rgb(0, 100, 200); */
+    color: var(--main-colour);
+    text-decoration: underline;
 }
 
 a:hover {
@@ -68,7 +77,7 @@ a:hover {
 }
 
 a:visited {
-    color: rgb(0, 80, 160);
+    color: var(--main-colour);
 }
 
 label {

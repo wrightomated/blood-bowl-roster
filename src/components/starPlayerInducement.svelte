@@ -7,18 +7,44 @@
     import { formatNumberInThousands } from '../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../models/player.model';
     import { _ } from 'svelte-i18n';
+    import { customisationRules } from '../customisation/customisation.store';
+    import { gameSettings } from '../store/gameSettings.store';
+    import { currentTeam } from '../store/currentTeam.store';
 
     let selectedId: number;
 
+    $: customStarPlayers =
+        $customisationRules?.starPlayerSettings?.customStarPlayers;
+    $: allStarPlayers = starPlayers.starPlayers.concat(customStarPlayers || []);
+
     $: filteredStarPlayers = filterStarPlayers(
-        starPlayers,
+        allStarPlayers,
         $rosterSpecialRules,
         $roster.players.map((x) => x.player.id)
     )
-        .map((x, i, a) => {
-            let displayName = $_(`stars.${x.id}.name`);
+        .filter((x) => {
+            const allowedMegaStar =
+                $customisationRules?.allowances?.allowancesPerTier?.[
+                    $currentTeam.tier
+                ]?.megaStar > 0;
+            return x.megaStar ? allowedMegaStar : true;
+        })
+        .map((x, _i, a) => {
+            let displayName = $_(`stars.${x.id}.name`, {
+                default: x.position,
+            });
+
             if (x?.twoForOne) {
+                if (
+                    $roster.players.filter((x) => !x.deleted).length + 2 >
+                    $gameSettings.maxPlayers
+                ) {
+                    return { ...x, displayName: 'ignoreThis' };
+                }
                 const other = a.find((p) => p.id === x?.twoForOne);
+                if (!other) {
+                    return { ...x, displayName: 'ignoreThis' };
+                }
                 if (other.id < x.id) {
                     return { ...x, displayName: 'ignoreThis' };
                 }
@@ -44,12 +70,22 @@
             return true;
         }).length;
 
+    $: starPlayerMax =
+        $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
+            ?.starPlayer ?? 2;
     const getSelected = (id) => {
-        return starPlayers.starPlayers.find((x) => x.id === id);
+        return allStarPlayers.find((x) => x.id === id);
     };
 
     const addStarPlayer = () => {
         const addTwo = getSelected(selectedId).twoForOne;
+        if (
+            addTwo &&
+            $roster.players.filter((x) => !x.deleted).length + 2 >
+                $gameSettings.maxPlayers
+        ) {
+            return;
+        }
 
         roster.addPlayer({
             player: getSelected(selectedId),
@@ -58,7 +94,7 @@
         });
 
         if (addTwo) {
-            const twoForPlayer = starPlayers.starPlayers.find(
+            const twoForPlayer = allStarPlayers.find(
                 (x) => x.id === getSelected(selectedId).twoForOne
             );
             roster.addPlayer({
@@ -93,13 +129,13 @@
         {/if}
         <div class="star-player__secondary">
             <div class="star-player-amount">
-                {currentStarPlayerAmount} / 2
+                {currentStarPlayerAmount} / {starPlayerMax}
             </div>
             <div class="star-player-cost">
                 {formatNumberInThousands(getSelected(selectedId)?.cost) || 0}
             </div>
             <div class="add-star">
-                {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < 2}
+                {#if filteredStarPlayers.length > 0 && currentStarPlayerAmount < starPlayerMax}
                     <MaterialButton
                         hoverText="Add star player"
                         symbol="add_circle"

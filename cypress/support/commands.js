@@ -10,8 +10,20 @@
 //
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
-    return cy.get(`[data-cy=${selector}]`, ...args)
-  })
+    return cy.get(`[data-cy=${selector}]`, ...args);
+});
+
+Cypress.Commands.add('getClipboard', () => {
+    return cy.window().then((win) => {
+        return win.navigator.clipboard.readText();
+    });
+});
+
+Cypress.Commands.add('addPlayers', (amount) => {
+    for (let i = 0; i < amount; i++) {
+        cy.getBySel('add-player').click();
+    }
+});
 //
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })

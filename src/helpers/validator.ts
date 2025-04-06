@@ -1,8 +1,10 @@
 import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
-import { extrasForTeam } from '../helpers/extrasForTeam';
-import { calculateInducementTotal } from '../helpers/totalInducementAmount';
-import type { StarPlayer } from '../models/player.model';
-import type { Roster, RosterPlayerRecord } from '../models/roster.model';
+import {
+    calculateInducementTotal,
+    starPlayerInducementsCost,
+} from '../helpers/totalInducementAmount';
+import type { Roster } from '../models/roster.model';
+import { teamValue } from './teamValue';
 
 export type RosterValidationResult = {
     valid: boolean;
@@ -11,6 +13,7 @@ export type RosterValidationResult = {
         tooMany?: boolean;
         tooBigGuy?: boolean;
         moreThanFourOfTheSameSkill?: string[];
+        tooManySecondarySkills?: number;
         sppBalance?: number;
         tooManyOfPlayerType?: number[];
         teamTotalValue?: number;
@@ -21,10 +24,11 @@ export type RosterValidationOptions = {
     sppAllowance: number;
     currentTeam: CustomTeam;
     budget: number;
-    maxOfSkill?: number;
+    maxOfSkillId?: number;
     maxPlayers?: number;
     minPlayers?: number;
     starPlayerSpp?: number;
+    secondaryAllowance?: number;
 };
 
 export function invalidRoster(
@@ -33,23 +37,35 @@ export function invalidRoster(
         sppAllowance,
         currentTeam,
         budget,
-        maxOfSkill,
+        maxOfSkillId,
         maxPlayers,
         minPlayers,
         starPlayerSpp,
+        secondaryAllowance,
     }: RosterValidationOptions
 ): RosterValidationResult {
     try {
         const tooFew = tooFewPlayers(roster, minPlayers || 11);
         const tooMany = tooManyPlayers(roster, maxPlayers || 16);
         const tooBigGuy = tooManyBigGuy(roster, currentTeam?.maxBigGuys);
-        const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkill);
+        const moreThanMaxOfSameSkill = moreThanMaxSkills(roster, maxOfSkillId);
         const sppBalance = excessSpp(roster, sppAllowance, starPlayerSpp);
         const tooManyOfPlayerType = tooManyOfPlayerTypeCalc(
             roster,
             currentTeam
         );
-        const teamTotalValue = teamTotal(roster);
+        const teamTotalValue = teamTotalCost(roster, currentTeam, true);
+        const budgetValid = budget ? teamTotalValue <= budget : true;
+        let tooManySecondarySkills = 0;
+        if (secondaryAllowance) {
+            const advancements = allAdvancements(roster);
+            const secondarySkills = advancements.filter(
+                (x) =>
+                    x.type === 'secondaryselect' || x.type === 'secondaryrandom'
+            );
+            tooManySecondarySkills =
+                secondarySkills.length - secondaryAllowance;
+        }
 
         const valid =
             !tooFew &&
@@ -58,7 +74,8 @@ export function invalidRoster(
             !(moreThanMaxOfSameSkill.length > 0) &&
             sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
-            teamTotalValue <= budget;
+            budgetValid &&
+            tooManySecondarySkills <= 0;
 
         return {
             valid,
@@ -70,6 +87,7 @@ export function invalidRoster(
                 sppBalance,
                 tooManyOfPlayerType,
                 teamTotalValue,
+                tooManySecondarySkills,
             },
         };
     } catch (error) {
@@ -116,14 +134,24 @@ function tooManyOfPlayerTypeCalc(
     return tooMany;
 }
 
-/**
- * Number of primary skills
- * Number of secondary skills
- * Number of characteristic increases
- * Number of trait removals
- */
-function advancementBreakdown(roster: Roster) {
+export function advancementBreakdown(roster: Roster) {
     const advancements = allAdvancements(roster);
+    const breakdown = advancements.reduce(
+        (a, b) => {
+            if (a[b.type] !== undefined) {
+                a[b.type]++;
+            }
+            return a;
+        },
+        {
+            primaryselect: 0,
+            primaryrandom: 0,
+            characteristic: 0,
+            secondaryselect: 0,
+            secondaryrandom: 0,
+        }
+    );
+    return breakdown;
 }
 /**
  * return any skillids that appear more than skillMax times in the advancements
@@ -164,20 +192,28 @@ export function excessSpp(
         .map((x) => x.alterations?.spp || 0)
         .reduce((a, b) => a + b, 0);
 
-    return allowance + spp - starPlayerSpp;
+    // CHAOS CUP GIANT COSTS 24
+    const hasGiant = roster.inducements?.['i52'] >= 1;
+    console.log({ hasGiant });
+
+    return allowance + spp - starPlayerSpp - (hasGiant ? 24 : 0);
 }
 
-/** Including dedicated fans */
-function teamTotal(roster: Roster) {
-    const players = roster.players.filter((x) => !x.deleted);
-    const playerTotal = players.reduce((a, b) => a + b.player.cost, 0);
+/**
+ * Calculate the total cost of a team including inducements
+ */
+export function teamTotalCost(
+    roster: Roster,
+    currentTeam: CustomTeam,
+    dedicatedFansCostIncluded = false
+) {
+    const tv = teamValue(roster, currentTeam, dedicatedFansCostIncluded);
     const inducementTotal = calculateInducementTotal(
         roster.inducements,
         roster.teamId,
         roster.format
     );
-    const extraTotal = extrasForTeam(roster.teamId, roster.mode, roster.format)
-        .map((x) => roster.extra[x.extraString] * x.cost || 0)
-        .reduce((a, b) => a + b, 0);
-    return playerTotal + inducementTotal + extraTotal;
+    const starPlayerCost = starPlayerInducementsCost(roster);
+
+    return tv + inducementTotal + starPlayerCost;
 }

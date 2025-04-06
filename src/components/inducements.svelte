@@ -18,11 +18,21 @@
     $: searchTerm = '';
 
     $: newFilteredInducements = inducementData.inducements
-        .filter(
-            (inducement) =>
-                !$customisationRules?.excludedInducementIds?.includes(
-                    inducement.id
-                )
+        .filter((inducement) => {
+            let excludedInducementIds =
+                $customisationRules?.inducementSettings?.excludedInducementIds;
+            let includedInducementIds =
+                $customisationRules?.inducementSettings?.includedInducementIds;
+            if (includedInducementIds) {
+                return includedInducementIds.includes(inducement.id);
+            } else if (excludedInducementIds) {
+                return !excludedInducementIds.includes(inducement.id);
+            } else {
+                return true;
+            }
+        })
+        .concat(
+            $customisationRules?.inducementSettings?.customInducements || []
         )
         .map((inducement) => ({
             ...inducement,
@@ -73,11 +83,17 @@
     }
 
     const addInducement = (key: string) => {
-        roster.addInducement(key);
+        roster.addInducement(
+            key,
+            $customisationRules?.inducementSettings?.customInducements
+        );
     };
 
     const removeInducement = (key: string) => {
-        roster.removeInducement(key);
+        roster.removeInducement(
+            key,
+            $customisationRules?.inducementSettings?.customInducements
+        );
     };
 
     const toggleShowAllInducements = () => {
@@ -150,7 +166,9 @@
             {#if $roster.inducements?.[ind.id] > 0 || $showAllInducements}
                 <tr>
                     <td class="inducement__display-name"
-                        >{$_('inducements.' + ind.id)}</td
+                        >{$_('inducements.' + ind.id, {
+                            default: ind.displayName,
+                        })}</td
                     >
                     <td>{$roster.inducements?.[ind.id] || 0} / {ind.max}</td>
                     <td>
@@ -207,9 +225,9 @@
 </table>
 
 <style lang="scss">
-    table {
-        min-width: 470px;
-    }
+    // table {
+    //     min-width: 470px;
+    // }
     .inducement {
         &__display-name {
             text-align: left;

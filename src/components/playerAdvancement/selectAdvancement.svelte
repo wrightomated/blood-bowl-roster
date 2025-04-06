@@ -7,6 +7,7 @@
         type SelectionType,
         skillIncreaseCost,
     } from '../../data/advancementCost.data';
+    import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { getGameTypeSettings } from '../../helpers/gameSettings';
     import type { RosterPlayerRecord } from '../../models/roster.model';
     import type { SkillCategory } from '../../models/skill.model';
@@ -103,7 +104,7 @@
     }
 </script>
 
-<!-- {#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined}
+{#if $roster.format !== 'sevens' && $roster.players[index]?.alterations?.spp !== undefined && !$customisationRules?.allowances?.blockSppEditing}
     <label class="spp"
         ><span class="mini-title">SPP:</span>
         <input
@@ -115,7 +116,7 @@
             bind:value={$roster.players[index].alterations.spp}
         />
     </label>
-{/if} -->
+{/if}
 
 <ToggleButton options={advancementTypes} selected={selectAdvancementType} />
 

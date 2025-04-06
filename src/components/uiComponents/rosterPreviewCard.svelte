@@ -7,10 +7,18 @@
     import { teamLoadOpen } from '../../store/teamLoadOpen.store';
     import { roster } from '../../store/teamRoster.store';
     import { getTeamFormatShortDisplay } from '../../types/teamFormat';
+    import { loadSecretData } from '../../modules/secret-league/secretLeagueHelper';
 
     export let preview: RosterPreview;
 
     async function loadTeam(rosterId: string) {
+        try {
+            if (preview.teamId?.includes('st')) {
+                await loadSecretData();
+            }
+        } catch (error) {
+            console.error(error);
+        }
         if ($rosterCache.rosters?.[rosterId]?.valid) {
             const cachedRoster = $rosterCache.rosters[rosterId].cachedItem;
             roster.loadRoster(cachedRoster);
@@ -36,7 +44,10 @@
 </script>
 
 <button class="roster-preview" on:click={() => loadTeam(preview.rosterId)}>
-    <p>{$_('roster.teamType', { values: { type: preview.teamType } })}</p>
+    <header>
+        <p>{$_('roster.teamType', { values: { type: preview.teamType } })}</p>
+    </header>
+
     <h3>{preview.teamName || 'Unnamed'}</h3>
     <p>
         {preview.format ? getTeamFormatShortDisplay(preview.format) + ' ' : ''}
@@ -57,14 +68,25 @@
         text-align: center;
         font-family: var(--display-font);
         background-color: white;
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
-        padding: 12px;
+        padding: 0px;
         border: 2px solid white;
 
         &:hover {
             cursor: pointer;
 
+            border: var(--secondary-border);
+        }
+
+        header {
+            background-color: var(--secondary-colour);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            // padding: 10px;
+            padding-bottom: 0;
+            min-height: 52px;
             border: var(--secondary-border);
         }
     }
