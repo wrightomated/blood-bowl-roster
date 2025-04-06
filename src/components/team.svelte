@@ -26,6 +26,7 @@
     import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
     import { loadSecretData } from '../modules/secret-league/secretLeagueHelper';
+    import { CURRENT_ROSTER_VERSION } from '../helpers/rosterVersionCheck';
 
     $: teamList = $availableTeams;
 
@@ -37,7 +38,6 @@
     };
 
     customisationRules.subscribe((rules) => {
-        // Once the customisation rules are loaded, we can check if there are any additional players
         if (
             rules?.starPlayerSettings?.customStarPlayers &&
             $roster.players.some(
@@ -63,6 +63,16 @@
                 ...$roster,
                 players: updatedPlayers,
             });
+        }
+
+        if (rules !== undefined && $roster.version === 'code') {
+            if (rules.rosterVersion !== $roster.version) {
+                console.log('updating roster version');
+                roster.update((store) => ({
+                    ...store,
+                    version: rules?.rosterVersion ?? CURRENT_ROSTER_VERSION,
+                }));
+            }
         }
     });
 

@@ -291,6 +291,7 @@ function createRoster() {
                 return noDraft;
             }),
         set,
+        update,
     };
 }
 

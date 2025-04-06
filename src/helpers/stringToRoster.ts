@@ -32,6 +32,7 @@ export const stringToRoster = (code: string) => {
             : teamId;
 
     const roster: Roster = {
+        version: 'code',
         teamId: backwardsCompatibleId,
         extra: stringToExtra(
             extras.filter(

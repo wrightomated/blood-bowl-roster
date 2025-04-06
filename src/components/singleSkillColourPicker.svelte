@@ -10,7 +10,7 @@
     export let allowInput: boolean = true;
 
     onMount(() => {
-        if (!$roster.config.customSkillColour[skillId]) {
+        if (!$roster?.config?.customSkillColour?.[skillId]) {
             $roster.config.customSkillColour[skillId] = defaultColour;
         }
     });
@@ -18,9 +18,9 @@
 
 <div
     class="extra"
-    style:color={$roster.config.customSkillColour[skillId] || defaultColour}
+    style:color={$roster?.config?.customSkillColour?.[skillId] || defaultColour}
 >
-    {#if allowInput}
+    {#if allowInput && $roster?.config?.customSkillColour?.[skillId]}
         <input
             type="color"
             aria-label={`Select colour for ${$_(`skills.${skillId}`)}`}
