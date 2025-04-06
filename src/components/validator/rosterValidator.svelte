@@ -45,7 +45,7 @@
         (acc, x) =>
             acc +
             ($customisationRules?.starPlayerSettings?.starPlayerCost
-                ? x.megaStar
+                ? playerIsMegaStar($customisationRules, x)
                     ? $customisationRules.starPlayerSettings.starPlayerCost
                           .megaStar
                     : $customisationRules.starPlayerSettings.starPlayerCost.star
