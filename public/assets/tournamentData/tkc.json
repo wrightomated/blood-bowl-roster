@@ -5,6 +5,7 @@
         "teamTypeTitle": "TKC"
     },
     "format": "elevens",
+    "rosterVersion": "TKC2025",
     "mode": "exhibition",
     "treasury": 1150,
     "lockTreasury": true,

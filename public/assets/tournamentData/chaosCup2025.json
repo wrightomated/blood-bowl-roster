@@ -5,6 +5,7 @@
         "teamTypeTitle": "CHAOS CUP"
     },
     "format": "elevens",
+    "rosterVersion": "ChaosCup2025",
     "mode": "exhibition",
     "treasury": 1150,
     "lockTreasury": true,
