@@ -11,6 +11,7 @@
     import type { StarPlayer } from '../../models/player.model';
     import { customisationRules } from '../../customisation/customisation.store';
     import { starPlayers } from '../../data/starPlayer.data';
+    import { playerIsMegaStar } from '../../customisation/customisationHelpers';
 
     export let index: number;
     let rosterPlayer: RosterPlayerRecord;
@@ -45,10 +46,12 @@
         megaStar: number;
     }) {
         const starPlayer = rosterPlayer.player as StarPlayer;
+        const isMegaStar = playerIsMegaStar($customisationRules, starPlayer);
+
         if (!!starPlayer?.twoForOne && starPlayer.twoForOne < starPlayer.id) {
             return '-';
         }
-        if (starPlayer.megaStar) {
+        if (isMegaStar) {
             return starPlayerCost?.megaStar || '-';
         } else {
             return starPlayerCost?.star || '-';

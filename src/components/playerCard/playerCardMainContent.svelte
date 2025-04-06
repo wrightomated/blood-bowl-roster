@@ -1,5 +1,6 @@
 <script lang="ts">
     import { customisationRules } from '../../customisation/customisation.store';
+    import { playerIsMegaStar } from '../../customisation/customisationHelpers';
     import { blurOnEscapeOrEnter } from '../../helpers/blurOnEscapeOrEnter';
     import { formatNumberInThousands } from '../../helpers/formatTotalToThousands';
     import type { StarPlayer } from '../../models/player.model';
@@ -33,10 +34,12 @@
         megaStar: number;
     }) {
         const starPlayer = rosterPlayer.player as StarPlayer;
+        const isMegaStar = playerIsMegaStar($customisationRules, starPlayer);
+
         if (!!starPlayer?.twoForOne && starPlayer.twoForOne < starPlayer.id) {
             return '-';
         }
-        if (starPlayer.megaStar) {
+        if (isMegaStar) {
             return starPlayerCost?.megaStar || '-';
         } else {
             return starPlayerCost?.star || '-';

@@ -22,6 +22,8 @@ export type TournamentCustomisation = {
     advancementSettings?: AdvancementSetting[];
     starPlayerSettings?: {
         excludeStarPlayers?: string[];
+        /** Ids of mega stars. This will ignore all default mega stars if defined */
+        megaStarPlayers?: number[];
         /** Spp */
         starPlayerCost?: {
             star: number;

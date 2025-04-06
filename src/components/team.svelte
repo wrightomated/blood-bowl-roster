@@ -36,6 +36,36 @@
         });
     };
 
+    customisationRules.subscribe((rules) => {
+        // Once the customisation rules are loaded, we can check if there are any additional players
+        if (
+            rules?.starPlayerSettings?.customStarPlayers &&
+            $roster.players.some(
+                (p) => p.player?.position === 'unknown-position'
+            )
+        ) {
+            const updatedPlayers = $roster.players.map((p) => {
+                if (p.player.position === 'unknown-position') {
+                    const customPlayer =
+                        rules.starPlayerSettings.customStarPlayers.find(
+                            (sp) => sp.id === p.player.id
+                        );
+
+                    return {
+                        ...p,
+                        player: customPlayer || p.player,
+                        starPlayer: true,
+                    };
+                }
+                return p;
+            });
+            roster.set({
+                ...$roster,
+                players: updatedPlayers,
+            });
+        }
+    });
+
     // This should be moved to a helper function
     async function populateCurrentTeam() {
         if ($currentTeamId && $isSecretTeam) {

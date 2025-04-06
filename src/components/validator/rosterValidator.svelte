@@ -8,6 +8,7 @@
     import { spentSpp } from '../../store/spentSpp.store';
     import { customisationRules } from '../../customisation/customisation.store';
     import { gameSettings } from '../../store/gameSettings.store';
+    import { playerIsMegaStar } from '../../customisation/customisationHelpers';
 
     let starPlayers: StarPlayer[];
     $: starPlayers = $roster.players
@@ -25,6 +26,15 @@
             return true;
         })
         .map((x) => x.player as StarPlayer);
+    $: megaStars = starPlayers.filter((x) =>
+        playerIsMegaStar($customisationRules, x)
+    );
+    $: maxStarPlayers =
+        $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
+            ?.starPlayer ?? 2;
+    $: maxMegaStars =
+        $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
+            ?.megaStar ?? 2;
 
     $: sppAllowance =
         $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
@@ -80,9 +90,15 @@
         <RosterPlayerCount />
     </p>
     {#if starPlayers.length > 0}
-        <p>
+        <p class:error={starPlayers.length > maxStarPlayers}>
             <span class="mini-title">Star Players:</span>
-            {starPlayers.length}
+            {starPlayers.length}/{maxStarPlayers}
+        </p>
+    {/if}
+    {#if megaStars.length > 0}
+        <p class:error={megaStars.length > maxMegaStars}>
+            <span class="mini-title">Mega Stars:</span>
+            {megaStars.length}/{maxMegaStars}
         </p>
     {/if}
 </div>
