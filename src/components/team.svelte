@@ -91,7 +91,6 @@
                     ...$roster,
                     players: secretPlayers,
                 });
-                console.log($roster);
             }
             if ($roster.teamType.toLowerCase() === 'unknown') {
                 roster.set({

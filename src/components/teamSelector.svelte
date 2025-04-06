@@ -106,6 +106,7 @@
     const createTeam = () => {
         savedRosterIndex.newId();
         roster.reset({
+            version: $customisationRules?.rosterVersion ?? undefined,
             teamId: $currentTeam.id,
             teamType: $currentTeam.name,
             mode: $rosterMode,

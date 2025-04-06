@@ -17,6 +17,7 @@ export type RosterValidationResult = {
         sppBalance?: number;
         tooManyOfPlayerType?: number[];
         teamTotalValue?: number;
+        incorrectVersion?: boolean;
     };
 };
 
@@ -29,6 +30,7 @@ export type RosterValidationOptions = {
     minPlayers?: number;
     starPlayerSpp?: number;
     secondaryAllowance?: number;
+    rosterVersion?: string;
 };
 
 export function invalidRoster(
@@ -42,6 +44,7 @@ export function invalidRoster(
         minPlayers,
         starPlayerSpp,
         secondaryAllowance,
+        rosterVersion,
     }: RosterValidationOptions
 ): RosterValidationResult {
     try {
@@ -67,6 +70,9 @@ export function invalidRoster(
                 secondarySkills.length - secondaryAllowance;
         }
 
+        const incorrectVersion =
+            rosterVersion && roster.version !== rosterVersion;
+
         const valid =
             !tooFew &&
             !tooMany &&
@@ -75,7 +81,8 @@ export function invalidRoster(
             sppBalance >= 0 &&
             !(tooManyOfPlayerType.length > 0) &&
             budgetValid &&
-            tooManySecondarySkills <= 0;
+            tooManySecondarySkills <= 0 &&
+            !incorrectVersion;
 
         return {
             valid,
@@ -88,6 +95,7 @@ export function invalidRoster(
                 tooManyOfPlayerType,
                 teamTotalValue,
                 tooManySecondarySkills,
+                incorrectVersion,
             },
         };
     } catch (error) {
@@ -194,7 +202,6 @@ export function excessSpp(
 
     // CHAOS CUP GIANT COSTS 24
     const hasGiant = roster.inducements?.['i52'] >= 1;
-    console.log({ hasGiant });
 
     return allowance + spp - starPlayerSpp - (hasGiant ? 24 : 0);
 }

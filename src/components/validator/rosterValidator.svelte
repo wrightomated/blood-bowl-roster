@@ -60,6 +60,7 @@
         currentTeam: $currentTeam,
         maxOfSkillId,
         starPlayerSpp,
+        rosterVersion: $customisationRules?.rosterVersion,
     });
 </script>
 
@@ -149,6 +150,12 @@
         <p class="error">
             <i class="material-symbols-outlined no-transition">warning</i>
             {-1 * invalid.invalid.sppBalance} SPP over allowance.
+        </p>
+    {/if}
+    {#if invalid.invalid.incorrectVersion}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Roster version is incorrect. Create a new roster.
         </p>
     {/if}
 </div>

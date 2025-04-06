@@ -7,6 +7,8 @@ import type { TeamFormat } from '../../types/teamFormat';
 import type { CustomiseTeamList } from './CustomiseTeamList.type';
 
 export type TournamentCustomisation = {
+    /** Used to specify that roster is for the event */
+    rosterVersion?: string;
     // Treasury in thousands
     treasury: number;
     lockTreasury?: boolean;
