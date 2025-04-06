@@ -92,17 +92,21 @@ const findPlayer = (id: number) => {
     } else if (id < 200) {
         return playerCatalogue.players.find((p) => p.id === id);
     } else if (id >= 200 && id < 1000) {
-        return starPlayers.starPlayers.find((p) => p.id === id);
-    } else {
-        // This will either be a secret team player or a custom player which we don't have data for yet
-        return {
-            id,
-            position: 'unknown-position',
-            playerStats: [0, 0, 0, 0, 0],
-            cost: 0,
-            skills: [],
-        };
+        // Older tournaments used to have star players in the player catalogue instead of custom star players
+        const foundStar = starPlayers.starPlayers.find((p) => p.id === id);
+        if (foundStar) {
+            return foundStar;
+        }
     }
+
+    // This will either be a secret team player or a custom player which we don't have data for yet
+    return {
+        id,
+        position: 'unknown-position',
+        playerStats: [0, 0, 0, 0, 0],
+        cost: 0,
+        skills: [],
+    };
 };
 
 const mapInducements = (inducements: string[]) => {

@@ -54,7 +54,7 @@
                     return {
                         ...p,
                         player: customPlayer || p.player,
-                        starPlayer: true,
+                        starPlayer: !!customPlayer,
                     };
                 }
                 return p;
