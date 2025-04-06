@@ -6,35 +6,94 @@
     },
     "format": "elevens",
     "mode": "exhibition",
-    "treasury": 1200,
-    "tiers": 3,
+    "treasury": 1150,
+    "lockTreasury": true,
+    "tiers": 5,
     "tournamentTeamList": {
         "excludedIds": ["22", "25", "27", "28"]
     },
-    "excludedInducementIds": [
-        "i5",
-        "i16",
-        "i27",
-        "i28",
-        "i29",
-        "i30",
-        "i31",
-        "i32",
-        "i33",
-        "i34",
-        "i35",
-        "i36",
-        "i37",
-        "i13",
-        "i45"
-    ],
+    "updatedTierMap": {
+        "Lizardmen": 1,
+        "Amazon": 1,
+        "Skaven": 1,
+        "Underworld Denizens": 1,
+        "Dark Elf": 1,
+        "Shambling Undead": 1,
+        "Dwarf": 1,
+        "Wood Elf": 1,
+
+        "Chaos Dwarf": 2,
+        "Vampire": 2,
+        "High Elf": 2,
+        "Elven Union": 2,
+        "Necromantic Horror": 2,
+        "Norse": 2,
+        "Norse (ToL)": 2,
+
+        "Human": 3,
+        "Orc": 3,
+        "Old World Alliance": 3,
+        "Chaos Chosen": 3,
+        "Chaos Renegade": 3,
+        "Tomb Kings": 3,
+
+        "Imperial Nobility": 4,
+        "Khorne": 4,
+        "Daemons of Khorne": 4,
+        "Black Orc": 4,
+        "Nurgle": 4,
+        "Slann": 4,
+
+        "Gnome": 5,
+        "Goblin": 5,
+        "Halfling": 5,
+        "Snotling": 5,
+        "Ogre": 5
+    },
+    "inducementSettings": {
+        "includedInducementIds": [
+            "i4",
+            "i9",
+            "i10",
+            "i8",
+            "i48",
+            "i15",
+            "i7",
+            "i12",
+            "i11",
+            "i52"
+        ]
+    },
     "allowances": {
-        "sppPerTier": {
-            "1": 42,
-            "2": 54,
-            "3": 66
+        "allowancesPerTier": {
+            "1": {
+                "spp": 36,
+                "starPlayer": 1,
+                "megaStar": 0
+            },
+            "2": {
+                "spp": 42,
+                "starPlayer": 1,
+                "megaStar": 0
+            },
+            "3": {
+                "spp": 50,
+                "starPlayer": 1,
+                "megaStar": 0
+            },
+            "4": {
+                "spp": 56,
+                "starPlayer": 1,
+                "megaStar": 1
+            },
+            "5": {
+                "spp": 64,
+                "starPlayer": 1,
+                "megaStar": 1
+            }
         },
-        "maxOfSkill": 4
+        "maxOfSkillId": 4,
+        "blockSppEditing": true
     },
     "advancementSettings": [
         {
@@ -46,14 +105,29 @@
             "selectionTypes": ["select"]
         }
     ],
-    "starPlayerCost": {
-        "star": 12,
-        "megaStar": 18
+    "starPlayerSettings": {
+        "starPlayerCost": {
+            "star": 12,
+            "megaStar": 24
+        },
+        "megaStarPlayers": [234, 243, 201, 208, 210, 228, 215, 260, 254],
+        "customStarPlayers": [
+            {
+                "id": 1000,
+                "position": "Valtor \"The Stake Bearer\"",
+                "playerStats": [6, 3, 4, 5, 9],
+                "playsFor": [],
+                "skills": [29, 26, 80, 77, 62, 711, 1000],
+                "cost": 210,
+                "specialRules": ["The Desert Dervish"]
+            }
+        ]
     },
     "cssVariables": {
-        "--main-colour": "#2e4d67",
-        "--secondary-colour": "#333333",
-        "--button-shadow": "#bde4f3",
-        "--error": "#dd0033"
-    }
+        "--main-colour": "#007a78",
+        "--secondary-colour": "#c3252d",
+        "--button-shadow": "#c4a208",
+        "--error": "#c3252d"
+    },
+    "hideProfile": true
 }
