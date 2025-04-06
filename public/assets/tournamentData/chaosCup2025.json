@@ -109,7 +109,19 @@
         "starPlayerCost": {
             "star": 12,
             "megaStar": 24
-        }
+        },
+        "megaStarPlayers": [234, 243, 201, 208, 210, 228, 215, 260, 254],
+        "customStarPlayers": [
+            {
+                "id": 1000,
+                "position": "Valtor \"The Stake Bearer\"",
+                "playerStats": [6, 3, 4, 5, 9],
+                "playsFor": [],
+                "skills": [29, 26, 80, 77, 62, 711, 1000],
+                "cost": 210,
+                "specialRules": ["The Desert Dervish"]
+            }
+        ]
     },
     "cssVariables": {
         "--main-colour": "#007a78",
