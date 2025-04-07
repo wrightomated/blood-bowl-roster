@@ -204,7 +204,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 70, max: 8 },
             allowedApothecary: false,
-            tier: 2,
+            tier: 3,
             specialRules: ['Favoured of Nurgle'],
         },
         {
@@ -259,7 +259,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
-            tier: 2,
+            tier: 1,
             specialRules: ['Badlands Brawl'],
         },
         {
@@ -411,7 +411,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 50, max: 8 },
             allowedApothecary: true,
-            tier: 1,
+            tier: 2,
             specialRules: ['Elven Kingdoms League'],
         },
         {
@@ -548,7 +548,7 @@ export const teamData: TeamList = {
             ],
             reroll: { cost: 60, max: 8 },
             allowedApothecary: true,
-            tier: 2,
+            tier: 1,
             specialRules: ['Sylvanian Spotlight'],
         },
         {
