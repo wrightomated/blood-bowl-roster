@@ -18,6 +18,8 @@ export type RosterValidationResult = {
         tooManyOfPlayerType?: number[];
         teamTotalValue?: number;
         incorrectVersion?: boolean;
+        tooManyStarPlayers?: number;
+        tooManyMegaStarPlayers?: number;
     };
 };
 
@@ -31,6 +33,12 @@ export type RosterValidationOptions = {
     starPlayerSpp?: number;
     secondaryAllowance?: number;
     rosterVersion?: string;
+    starPlayerCounts?: {
+        starPlayerCount: number;
+        starPlayerMax: number;
+        megaStarPlayerCount?: number;
+        megaStarPlayerMax?: number;
+    };
 };
 
 export function invalidRoster(
@@ -45,6 +53,7 @@ export function invalidRoster(
         starPlayerSpp,
         secondaryAllowance,
         rosterVersion,
+        starPlayerCounts,
     }: RosterValidationOptions
 ): RosterValidationResult {
     try {
@@ -73,6 +82,12 @@ export function invalidRoster(
         const incorrectVersion =
             rosterVersion && roster.version !== rosterVersion;
 
+        const tooManyStarPlayers =
+            starPlayerCounts?.starPlayerCount > starPlayerCounts?.starPlayerMax;
+        const tooManyMegaStarPlayers =
+            starPlayerCounts?.megaStarPlayerCount >
+            starPlayerCounts?.megaStarPlayerMax;
+
         const valid =
             !tooFew &&
             !tooMany &&
@@ -82,7 +97,9 @@ export function invalidRoster(
             !(tooManyOfPlayerType.length > 0) &&
             budgetValid &&
             tooManySecondarySkills <= 0 &&
-            !incorrectVersion;
+            !incorrectVersion &&
+            !tooManyStarPlayers &&
+            !tooManyMegaStarPlayers;
 
         return {
             valid,

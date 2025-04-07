@@ -12,6 +12,7 @@
     import { _ } from 'svelte-i18n';
     import { customisationRules } from '../customisation/customisation.store';
     import type { Inducement } from '../models/inducement.model';
+    import { currentTeam } from '../store/currentTeam.store';
 
     export let selectedTeam: Team | CustomTeam;
 
@@ -31,6 +32,19 @@
                 return true;
             }
         })
+        // START CHAOS CUP remove giant if not the correct tier
+        .filter((inducement) => {
+            if (
+                inducement.id === 'i52' &&
+                !$customisationRules?.allowances?.allowancesPerTier?.[
+                    $currentTeam.tier
+                ]?.megaStar
+            ) {
+                return false;
+            }
+            return true;
+        })
+        // END CHAOS CUP
         .concat(
             $customisationRules?.inducementSettings?.customInducements || []
         )

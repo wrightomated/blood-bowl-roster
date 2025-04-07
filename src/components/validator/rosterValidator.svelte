@@ -35,6 +35,9 @@
     $: maxMegaStars =
         $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
             ?.megaStar ?? 2;
+    $: hasGiant = $roster.inducements?.['i52'] >= 1;
+    $: starPlayerCount = starPlayers.length + (hasGiant ? 1 : 0);
+    $: megaStarCount = megaStars.length + (hasGiant ? 1 : 0);
 
     $: sppAllowance =
         $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
@@ -90,16 +93,16 @@
     <p>
         <RosterPlayerCount />
     </p>
-    {#if starPlayers.length > 0}
-        <p class:error={starPlayers.length > maxStarPlayers}>
+    {#if starPlayerCount > 0}
+        <p class:error={starPlayerCount > maxStarPlayers}>
             <span class="mini-title">Star Players:</span>
-            {starPlayers.length}/{maxStarPlayers}
+            {starPlayerCount}/{maxStarPlayers}
         </p>
     {/if}
-    {#if megaStars.length > 0}
-        <p class:error={megaStars.length > maxMegaStars}>
+    {#if megaStarCount > 0}
+        <p class:error={megaStarCount > maxMegaStars}>
             <span class="mini-title">Mega Stars:</span>
-            {megaStars.length}/{maxMegaStars}
+            {megaStarCount}/{maxMegaStars}
         </p>
     {/if}
 </div>
@@ -156,6 +159,18 @@
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>
             Roster version is incorrect. Create a new roster.
+        </p>
+    {/if}
+    {#if invalid.invalid.tooManyStarPlayers}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Too many star players.
+        </p>
+    {/if}
+    {#if invalid.invalid.tooManyMegaStarPlayers}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Too many mega stars.
         </p>
     {/if}
 </div>
