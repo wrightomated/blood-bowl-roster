@@ -21,7 +21,7 @@ export type RosterValidationResult = {
 };
 
 export type RosterValidationOptions = {
-    sppAllowance: number;
+    sppAllowance: number | null;
     currentTeam: CustomTeam;
     budget: number;
     maxOfSkillId?: number;

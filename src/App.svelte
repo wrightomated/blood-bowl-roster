@@ -45,6 +45,8 @@
             } catch (error) {
                 console.error('Error loading customisation', error);
             }
+        } else {
+            customisationRules.set(null);
         }
 
         await import('./components/auth/firebaseAuth.service').then(
