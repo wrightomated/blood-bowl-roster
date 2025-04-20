@@ -9,12 +9,12 @@ import type { CustomiseTeamList } from './CustomiseTeamList.type';
 export type TournamentCustomisation = {
     // Treasury in thousands
     treasury: number;
+    format: TeamFormat;
     lockTreasury?: boolean;
     tournamentTeamList?: CustomiseTeamList;
     updatedTierMap?: Partial<Record<TeamName, number>>;
     tiers?: number;
     allowances?: TournamentAllowances;
-    format: TeamFormat;
     mode?: RosterMode;
     validator?: ValidatorOptions;
     colourScheme?: string;
@@ -55,10 +55,6 @@ export type TournamentAllowances = {
     maxOfSkillId?: number;
     noSkillStacking?: boolean | SkillStack;
     statImprovementAllowancePerPlayer?: number;
-    allowTraitRemoval?: number;
-    disallowTraitRemovalIds?: number[];
-    traitAndStatSameAllowance?: boolean;
-    increaseTierPerStarPlayer?: boolean;
     allowancesPerTier?: Record<
         number,
         {
@@ -68,15 +64,22 @@ export type TournamentAllowances = {
             spp: number;
         }
     >;
+
+    // Not implemented yet
+    // allowTraitRemoval?: number;
+    // disallowTraitRemovalIds?: number[];
+    // traitAndStatSameAllowance?: boolean;
+    // increaseTierPerStarPlayer?: boolean;
 };
 
 export type SPPCost = {
     primarySkill?: number;
     secondarySkill?: number;
-    statIncrease?: number;
-    agIncrease?: number;
-    stIncrease?: number;
-    traitRemoval?: number;
+    // statIncrease?: number[];
+    // statIncrease?: number;
+    // agIncrease?: number;
+    // stIncrease?: number;
+    // traitRemoval?: number;
 };
 
 export type ValidatorOptions = {

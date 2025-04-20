@@ -37,7 +37,7 @@
         {#if r.mode === 'exhibition'}
             <span>
                 {$customisationRules?.allowances?.useSkillPoints
-                    ? 'SP: ' + $spentSpp / 7
+                    ? 'SP: ' + $spentSpp / 6
                     : 'SPP: ' + $spentSpp}
             </span>
         {/if}

@@ -2,13 +2,6 @@ export type AdvancementType = 'primary' | 'secondary' | 'characteristic';
 export type SelectionType = 'random' | 'select';
 export type SkillType = Exclude<AdvancementType, 'characteristic'>;
 
-export const advancementCosts = {
-    ranPri: [3, 4, 6, 8, 10, 15],
-    priOrRanSec: [6, 8, 12, 16, 20, 30],
-    sec: [12, 14, 18, 22, 26, 40],
-    char: [18, 20, 24, 28, 32, 50],
-};
-
 export const advancementCostsMap: Partial<
     Record<AdvancementCombination, number[]>
 > = {
@@ -18,6 +11,7 @@ export const advancementCostsMap: Partial<
     secondaryselect: [12, 14, 18, 22, 26, 40],
     characteristic: [18, 20, 24, 28, 32, 50],
 };
+
 export const skillIncreaseCost: Record<`${SkillType}${SelectionType}`, number> =
     {
         primaryrandom: 10,

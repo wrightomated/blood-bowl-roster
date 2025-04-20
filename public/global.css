@@ -52,8 +52,8 @@ h6 {
 }
 
 a {
-    color: rgb(0, 100, 200);
-    text-decoration: none;
+    color: var(--main-colour);
+    text-decoration: underline;
 }
 
 a:hover {
@@ -61,7 +61,7 @@ a:hover {
 }
 
 a:visited {
-    color: rgb(0, 80, 160);
+    color: var(--main-colour);
 }
 
 label {
