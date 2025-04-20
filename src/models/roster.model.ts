@@ -37,6 +37,9 @@ export interface Roster {
     coachDetails?: CoachDetails;
     notes?: string;
     config?: RosterConfig;
+
+    // TUSCON MONSOON
+    bobcatNumber?: number;
 }
 
 export type RosterPreviews = Record<string, RosterPreview>;

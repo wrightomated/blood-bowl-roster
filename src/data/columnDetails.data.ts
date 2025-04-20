@@ -131,24 +131,24 @@ export const columnDetails: ColumnDetails[] = [
             component: TextElement,
         },
     },
-    {
-        id: 12,
-        name: 'Spp',
-        title: 'roster.column.titles.12',
-        headerDetails: {
-            elementId: 'spp-header',
-        },
-        rowDetails: {
-            component: SppInput,
-        },
-        disallowedRosterFormats: ['sevens'],
-        orderByPropertyPath: 'alterations.spp',
-        sortFunction: (a, b) => {
-            if (!a.alterations.spp || !b.alterations.spp) return -1;
+    // {
+    //     id: 12,
+    //     name: 'Spp',
+    //     title: 'roster.column.titles.12',
+    //     headerDetails: {
+    //         elementId: 'spp-header',
+    //     },
+    //     rowDetails: {
+    //         component: SppInput,
+    //     },
+    //     disallowedRosterFormats: ['sevens'],
+    //     orderByPropertyPath: 'alterations.spp',
+    //     sortFunction: (a, b) => {
+    //         if (!a.alterations.spp || !b.alterations.spp) return -1;
 
-            return a.alterations.spp - b.alterations.spp;
-        },
-    },
+    //         return a.alterations.spp - b.alterations.spp;
+    //     },
+    // },
     {
         id: 13,
         name: 'MNG',

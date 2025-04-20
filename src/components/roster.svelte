@@ -21,9 +21,10 @@
     import { _ } from 'svelte-i18n';
 
     import { activePlayers } from '../store/activePlayers.store';
-    import RosterValidator from './validator/rosterValidator.svelte';
     import AllPlayerPicker from '../modules/secret-league/allPlayerPicker.svelte';
     import { currentTeamId } from '../store/currentTeam.store';
+    import TusconValidator from '../customisation/tuscon/tusconValidator.svelte';
+    import BobcatPlayerCard from '../customisation/tuscon/bobcatPlayerCard.svelte';
 
     export let playerTypes: Player[];
 
@@ -87,6 +88,7 @@
 
 {#if $rosterViewMode === 'grid'}
     <div class="player-cards">
+        <BobcatPlayerCard />
         {#each $activePlayers as player, index (player.playerId)}
             <RosterPlayerCard {index} />
         {/each}
@@ -123,6 +125,22 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- TUScON -->
+                <tr>
+                    <td></td>
+                    <td class="left-align" colspan="2">The Bobcat</td>
+                    <td class="left-align">TMBBT STAR PLAYER</td>
+                    <td>7</td>
+                    <td>3</td>
+                    <td>2+</td>
+                    <td>3+</td>
+                    <td>8+</td>
+                    <td class="left-align"
+                        >Dump off, Fumblerooskie, Kick, Loner (4+)</td
+                    >
+                    <td>NA</td>
+                </tr>
+                <!-- TUSCON -->
                 {#each $roster.players as rosterPlayer, index}
                     {#if !rosterPlayer?.deleted}
                         <RosterPlayerRow {index} />
@@ -148,7 +166,8 @@
 {/if}
 {#if $roster.format !== 'dungeon bowl'}
     {#if $roster.mode === 'exhibition' && $roster.format === 'elevens'}
-        <RosterValidator />
+        <!-- <RosterValidator /> -->
+        <TusconValidator />
     {:else}
         <RosterPlayerCount />
     {/if}

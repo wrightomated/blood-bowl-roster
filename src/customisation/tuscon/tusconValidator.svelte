@@ -2,12 +2,15 @@
     import { _ } from 'svelte-i18n';
     import { roster } from '../../store/teamRoster.store';
     import type { StarPlayer } from '../../models/player.model';
-    import RosterPlayerCount from '../rosterPlayerCount.svelte';
-    import { invalidRoster } from '../../helpers/validator';
+    import {
+        advancementBreakdown,
+        invalidRoster,
+    } from '../../helpers/validator';
     import { currentTeam } from '../../store/currentTeam.store';
     import { spentSpp } from '../../store/spentSpp.store';
     import { customisationRules } from '../../customisation/customisation.store';
     import { gameSettings } from '../../store/gameSettings.store';
+    import RosterPlayerCount from '../../components/rosterPlayerCount.svelte';
 
     let starPlayers: StarPlayer[];
     $: starPlayers = $roster.players
@@ -25,6 +28,9 @@
             return true;
         })
         .map((x) => x.player as StarPlayer);
+
+    $: tierAllowance =
+        $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier];
 
     $: sppAllowance =
         $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
@@ -50,7 +56,12 @@
         currentTeam: $currentTeam,
         maxOfSkillId,
         starPlayerSpp,
+        nafOption: {
+            primary: tierAllowance?.primarySkill,
+            secondary: tierAllowance?.secondarySkill,
+        },
     });
+    $: adBreakdown = advancementBreakdown($roster);
 </script>
 
 <div class="validator">
@@ -79,6 +90,20 @@
     <p>
         <RosterPlayerCount />
     </p>
+    <!-- primary -->
+    <p class:error={invalid?.invalid.tooManyPrimarySkills < 0}>
+        <span class="mini-title">Primary:</span>
+        {adBreakdown?.primaryselect} / {tierAllowance?.primarySkill}
+        {#if tierAllowance?.primarySkill + tierAllowance?.secondarySkill > tierAllowance?.primarySkill}
+            ({tierAllowance?.primarySkill + tierAllowance?.secondarySkill})
+        {/if}
+    </p>
+
+    <!-- secondary -->
+    <p class:error={invalid?.invalid.tooManySecondarySkills < 0}>
+        <span class="mini-title">Secondary:</span>
+        {adBreakdown.secondaryselect} / {tierAllowance?.secondarySkill}
+    </p>
     {#if starPlayers.length > 0}
         <p>
             <span class="mini-title">Star Players:</span>
@@ -87,6 +112,19 @@
     {/if}
 </div>
 <div class="error-messages">
+    {#if invalid?.invalid.tooManyPrimarySkills < 0}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Too many primary skills.
+        </p>
+    {/if}
+
+    {#if invalid?.invalid.tooManySecondarySkills < 0}
+        <p>
+            <i class="material-symbols-outlined no-transition">warning</i>
+            Too many secondary skills.
+        </p>
+    {/if}
     {#if invalid?.invalid?.moreThanFourOfTheSameSkill?.length > 0}
         <p>
             <i class="material-symbols-outlined no-transition">warning</i>

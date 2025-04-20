@@ -153,19 +153,20 @@
     symbol="file_copy"
     clickFunction={copyRoster}
 />
+
 <!-- <MaterialButton
     hoverText="Sort by column"
     symbol="sort"
     clickFunction={printPage}
 /> -->
 
-{#if $rosterViewMode === 'table'}
+<!-- {#if $rosterViewMode === 'table'}
     <MaterialButton
         hoverText="Roster Settings"
         symbol="settings"
         clickFunction={toggleColumnControls}
     />
-{/if}
+{/if} -->
 
 <style lang="scss">
     .saved {

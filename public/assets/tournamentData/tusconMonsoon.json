@@ -1,0 +1,79 @@
+{
+    "customContent": {
+        "createTeamTitle": "Tucson Monsoon Roster",
+        "menuSubtitle": "Tucson Monsoon",
+        "teamTypeTitle": "Tucson Monsoon"
+    },
+    "format": "elevens",
+    "mode": "exhibition",
+
+    "hideProfile": true,
+    "treasury": 1100,
+    "lockTreasury": true,
+    "updatedTierMap": {
+        "Gnome": 4,
+        "Halfling": 4,
+        "Goblin": 4,
+        "Ogre": 4,
+        "Snotling": 4
+    },
+    "advancementSettings": [
+        {
+            "type": "primary",
+            "selectionTypes": ["select"]
+        },
+        {
+            "type": "secondary",
+            "selectionTypes": ["select"]
+        }
+    ],
+    "tiers": 4,
+    "allowances": {
+        "maxOfSkillId": 4,
+        "noSkillStacking": true,
+        "statImprovementAllowancePerPlayer": 0,
+        "blockSppEditing": true,
+        "allowancesPerTier": {
+            "1": {
+                "primarySkill": 4,
+                "secondarySkill": 1,
+                "starPlayer": 2,
+                "spp": 0
+            },
+            "2": {
+                "primarySkill": 5,
+                "secondarySkill": 1,
+                "starPlayer": 2,
+                "spp": 0
+            },
+            "3": {
+                "primarySkill": 6,
+                "secondarySkill": 1,
+                "starPlayer": 2,
+                "spp": 0
+            },
+            "4": {
+                "primarySkill": 7,
+                "secondarySkill": 1,
+                "starPlayer": 2,
+                "spp": 0
+            }
+        },
+        "sppCost": {
+            "primarySkill": 0,
+            "secondarySkill": 0
+        }
+    },
+    "inducementSettings": {
+        "includedInducementIds": [
+            "i4",
+            "i7",
+            "i8",
+            "i9",
+            "i10",
+            "i11",
+            "i12",
+            "i52"
+        ]
+    }
+}
