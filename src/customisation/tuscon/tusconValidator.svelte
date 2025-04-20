@@ -62,6 +62,8 @@
         },
     });
     $: adBreakdown = advancementBreakdown($roster);
+    $: starPlayerAmount = starPlayers.length;
+    $: megaStarPlayerAmount = starPlayers.filter((x) => x.megaStar).length;
 </script>
 
 <div class="validator">
@@ -93,7 +95,9 @@
     <!-- primary -->
     <p class:error={invalid?.invalid.tooManyPrimarySkills < 0}>
         <span class="mini-title">Primary:</span>
-        {adBreakdown?.primaryselect} / {tierAllowance?.primarySkill}
+        {adBreakdown?.primaryselect +
+            starPlayerAmount * 2 +
+            megaStarPlayerAmount * 2} / {tierAllowance?.primarySkill}
         {#if tierAllowance?.primarySkill + tierAllowance?.secondarySkill > tierAllowance?.primarySkill}
             ({tierAllowance?.primarySkill + tierAllowance?.secondarySkill})
         {/if}

@@ -241,5 +241,6 @@ function nafOptionCheck(
         primary: nafOption.primary - primary,
         secondary: nafOption.secondary - secondary,
         secondarySkills: secondary,
+        starPlayersTax: starPlayers * 2 + megaStarPlayers * 4,
     };
 }

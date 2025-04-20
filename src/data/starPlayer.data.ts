@@ -138,6 +138,7 @@ const lordBorak: StarPlayer = {
     skills: [13, 151, 71, 55, 10],
     cost: 260,
     specialRules: ['Lord of Chaos'],
+    megaStar: true,
 };
 const mightyZug: StarPlayer = {
     id: 214,
@@ -281,6 +282,7 @@ const whilhelmChaney: StarPlayer = {
     skills: [1, 26, 17, 71, 77, 24],
     cost: 220,
     specialRules: ['Savage Mauling'],
+    megaStar: true,
 };
 
 const kreek: StarPlayer = {
@@ -456,6 +458,7 @@ const dribl: StarPlayer = {
     cost: 190,
     twoForOne: 245,
     specialRules: ['A Sneaky Pair'],
+    megaStar: true,
 };
 const drul: StarPlayer = {
     id: 245,
@@ -466,6 +469,7 @@ const drul: StarPlayer = {
     cost: 0,
     twoForOne: 244,
     specialRules: ['A Sneaky Pair'],
+    megaStar: true,
 };
 const bilerot: StarPlayer = {
     id: 246,
@@ -549,6 +553,7 @@ const skitter: StarPlayer = {
     skills: [4, 71, 33, 20, 80],
     cost: 150,
     specialRules: ['Master Assassin'],
+    megaStar: true,
 };
 
 const rodneyRoachbait: StarPlayer = {
