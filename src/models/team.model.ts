@@ -66,7 +66,10 @@ export type TeamName =
     | 'Amazon (Incomplete)'
     | 'Vampire (ToL)'
     | 'Vampire (Incomplete)'
-    | 'Gnome';
+    | 'Gnome'
+    | 'Stunty Black Orc'
+    | 'Stunty Lizardmen'
+    | 'Stunty Underworld';
 
 export type TeamSpecialRule =
     | 'Badlands Brawl'
