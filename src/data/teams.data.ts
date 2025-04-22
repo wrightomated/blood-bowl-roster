@@ -609,7 +609,7 @@ export const teamData: TeamList = {
             specialRules: ['Lustrian Superleague'],
         },
         {
-            name: 'Underworld Denizens',
+            name: 'Stunty Underworld',
             id: '119',
             players: [
                 { id: 125, max: 12 },
