@@ -128,8 +128,9 @@
                 <!-- TUScON -->
                 <tr>
                     <td></td>
-                    <td class="left-align" colspan="2">The Bobcat</td>
-                    <td class="left-align">TMBBT STAR PLAYER</td>
+                    <td class="left-align">The Bobcat</td>
+                    <td></td>
+                    <td class="left-align">TMBBT Star Player</td>
                     <td>7</td>
                     <td>3</td>
                     <td>2+</td>
