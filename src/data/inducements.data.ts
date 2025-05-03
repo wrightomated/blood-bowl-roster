@@ -44,7 +44,6 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 3,
             dungeonBowlMax: 3,
             sevensMax: 3,
-            requiresTier: 3,
         },
         {
             id: 'i8',
@@ -273,6 +272,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
             max: 1,
+            requiresTier: 3,
         },
         {
             id: 'i38',
