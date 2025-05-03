@@ -273,7 +273,6 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
             max: 1,
-            requiresTier: 3,
         },
         {
             id: 'i38',
