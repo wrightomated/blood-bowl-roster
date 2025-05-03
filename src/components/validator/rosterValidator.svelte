@@ -35,9 +35,8 @@
     $: maxMegaStars =
         $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
             ?.megaStar ?? 2;
-    $: hasGiant = $roster.inducements?.['i52'] >= 1;
-    $: starPlayerCount = starPlayers.length + (hasGiant ? 1 : 0);
-    $: megaStarCount = megaStars.length + (hasGiant ? 1 : 0);
+    $: starPlayerCount = starPlayers.length;
+    $: megaStarCount = megaStars.length;
 
     $: sppAllowance =
         $customisationRules?.allowances?.allowancesPerTier?.[$currentTeam.tier]
