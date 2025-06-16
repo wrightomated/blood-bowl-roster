@@ -22,33 +22,33 @@
         "Shambling Undead": 1,
         "Dwarf": 1,
         "Wood Elf": 1,
+        "Vampire": 1,
 
         "Chaos Dwarf": 2,
-        "Vampire": 2,
         "High Elf": 2,
+        "Human": 2,
         "Elven Union": 2,
         "Necromantic Horror": 2,
+        "Orc": 2,
         "Norse": 2,
         "Norse (ToL)": 2,
 
-        "Human": 3,
-        "Orc": 3,
-        "Old World Alliance": 3,
         "Chaos Chosen": 3,
         "Chaos Renegade": 3,
+        "Khorne": 3,
+        "Old World Alliance": 3,
         "Tomb Kings": 3,
+        "Daemons of Khorne": 3,
 
         "Imperial Nobility": 4,
-        "Khorne": 4,
-        "Daemons of Khorne": 4,
         "Black Orc": 4,
         "Nurgle": 4,
         "Slann": 4,
+        "Gnome": 4,
+        "Snotling": 4,
 
-        "Gnome": 5,
         "Goblin": 5,
         "Halfling": 5,
-        "Snotling": 5,
         "Ogre": 5
     },
     "inducementSettings": {
@@ -62,6 +62,7 @@
             "i7",
             "i12",
             "i11",
+            "i42",
             "i52"
         ]
     },
@@ -118,7 +119,7 @@
                 "playerStats": [6, 3, 4, 5, 9],
                 "playsFor": [],
                 "skills": [29, 26, 80, 77, 62, 711, 1000],
-                "cost": 210,
+                "cost": 200,
                 "specialRules": ["The Desert Dervish"]
             }
         ]
