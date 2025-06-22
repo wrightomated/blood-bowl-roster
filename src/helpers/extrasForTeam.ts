@@ -1,31 +1,46 @@
-import { sendEventToAnalytics } from '../analytics/plausible';
-import { teamData } from '../data/teams.data';
+import type { CustomTeam } from '../customisation/types/CustomiseTeamList.type';
 import type { Extra, ExtraString } from '../models/extra.model';
+import type { Roster } from '../models/roster.model';
 import type { RosterMode } from '../store/rosterMode.store';
 import type { TeamFormat } from '../types/teamFormat';
 import { getGameTypeSettings } from './gameSettings';
 
+export function extrasTotalCost(
+    roster: Roster,
+    currentTeam: CustomTeam,
+    includeDedicatedFans: boolean
+) {
+    const extras = extrasForTeam(roster.mode, roster.format, currentTeam);
+    const extraTotal = extras
+        .filter(
+            (x) => includeDedicatedFans || x.extraString !== 'dedicated_fans'
+        )
+        .map((x) => roster.extra[x.extraString] * x.cost || 0)
+        .reduce((a, b) => a + b, 0);
+    return extraTotal;
+}
+
 export const extrasForTeam: (
-    teamId: string,
     rosterMode: RosterMode,
-    teamFormat: TeamFormat
-) => Extra[] = (teamId, rosterMode, teamFormat) => {
-    return getExtras(teamId, rosterMode, teamFormat);
+    teamFormat: TeamFormat,
+    currentTeam: CustomTeam
+) => Extra[] = (rosterMode, teamFormat, currentTeam) => {
+    return getExtras(rosterMode, teamFormat, currentTeam);
 };
 
 const getExtras = (
-    teamId: string,
     rosterMode: RosterMode,
-    teamFormat: TeamFormat
+    teamFormat: TeamFormat,
+    currentTeam: CustomTeam
 ) => {
-    const team = teamData.teams.find((x) => x.id === teamId);
     const gameSettings = getGameTypeSettings(teamFormat);
     return [
         {
             extraString: 'rerolls' as ExtraString,
             cost:
                 gameSettings.rerollDetails.overrideCost ||
-                team.reroll.cost * gameSettings.rerollDetails.costMultiplier,
+                currentTeam.reroll.cost *
+                    gameSettings.rerollDetails.costMultiplier,
             max: gameSettings.rerollDetails.max,
         },
         {
@@ -53,6 +68,6 @@ const getExtras = (
     ].filter(
         (x) =>
             x.max > 0 &&
-            (x.extraString !== 'apothecary' || team.allowedApothecary)
+            (x.extraString !== 'apothecary' || currentTeam.allowedApothecary)
     );
 };

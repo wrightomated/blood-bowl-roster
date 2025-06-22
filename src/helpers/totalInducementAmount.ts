@@ -1,9 +1,16 @@
 import { inducementData } from '../data/inducements.data';
 import { teamData } from '../data/teams.data';
 import type { Inducement } from '../models/inducement.model';
-import type { InducementsRecord } from '../models/roster.model';
+import type { InducementsRecord, Roster } from '../models/roster.model';
 import type { TeamSpecialRule } from '../models/team.model';
 import type { TeamFormat } from '../types/teamFormat';
+
+export const starPlayerInducementsCost = (roster: Roster) => {
+    return roster.players
+        .filter((x) => x.starPlayer && !x.deleted)
+        .map((x) => x.player.cost)
+        .reduce((a, b) => a + b, 0);
+};
 
 export const calculateInducementTotal = (
     inducements: InducementsRecord,
@@ -11,13 +18,14 @@ export const calculateInducementTotal = (
     format: TeamFormat,
     customInducements?: Inducement[]
 ) => {
-    return Object.keys(inducements)
+    const inducementsCost = Object.keys(inducements)
         .map(
             (key) =>
                 inducementCost(format, key, teamId, customInducements) *
                 inducements[key]
         )
         .reduce((a, b) => a + b, 0);
+    return inducementsCost;
 };
 
 export const inducementCost = (

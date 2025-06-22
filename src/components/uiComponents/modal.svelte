@@ -5,6 +5,8 @@
     import { scrollYHistory } from '../../store/scrollYHistory.store';
     import MaterialButton from './materialButton.svelte';
 
+    let windowScrollY = 0;
+
     function onOverlayClick() {
         if ($modalState.canClose) {
             modalState.close();
@@ -29,19 +31,15 @@
         let application: HTMLElement = document?.querySelector('.application');
         if (state.isOpen) {
             if (application) {
-                // if (window.scrollY > 0) {
-                //     scrollYHistory.set(window.scrollY);
-                // }
+                windowScrollY = window.scrollY;
                 application.style.position = 'fixed';
                 application.style.width = '100%';
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: 'instant' });
             }
         } else {
             if (application) {
                 application.style.position = null;
-                // window.scrollTo({
-                //     top: $scrollYHistory,
-                // });
+                window.scrollTo({ top: windowScrollY, behavior: 'smooth' });
             }
         }
     });
@@ -88,7 +86,6 @@
     }
     .modal {
         position: absolute;
-        // width: min(50vw, 780px);
         left: 50%;
         top: 5vh;
         margin-bottom: 5vh;
@@ -98,7 +95,8 @@
         min-width: 240px;
         padding: 20px 2px;
         border-radius: 25px;
-        box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+        box-shadow:
+            0 2px 3px 0 rgba(60, 64, 67, 0.3),
             0 6px 10px 4px rgba(60, 64, 67, 0.15);
         @media screen and (min-width: 801px) {
             min-width: 780px;

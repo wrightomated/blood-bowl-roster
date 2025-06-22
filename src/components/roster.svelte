@@ -2,7 +2,6 @@
     import { roster } from '../store/teamRoster.store';
     import type { Player } from '../models/player.model';
     import RosterSave from './rosterSave.svelte';
-    import Export from './export.svelte';
     import { rosterViewMode } from '../store/rosterDisplayMode.store';
     import RosterDelete from './rosterDelete.svelte';
     import AddPlayerCard from './playerCard/addPlayerCard.svelte';
@@ -23,6 +22,8 @@
 
     import { activePlayers } from '../store/activePlayers.store';
     import RosterValidator from './validator/rosterValidator.svelte';
+    import AllPlayerPicker from '../modules/secret-league/allPlayerPicker.svelte';
+    import { currentTeamId } from '../store/currentTeam.store';
 
     export let playerTypes: Player[];
 
@@ -81,7 +82,7 @@
     </p>
     <RosterSave />
 </div>
-<Export />
+
 <RosterDelete />
 
 {#if $rosterViewMode === 'grid'}
@@ -135,7 +136,13 @@
     </div>
 {/if}
 
+<!-- Hate to have this secret team if statement here... -->
+{#if $currentTeamId === 'st1090'}
+    <AllPlayerPicker placeholder="Mala addition" />
+{/if}
+
 <RosterStatusToggle />
+
 {#if $roster.format === 'dungeon bowl'}
     <DungeonBowlPlayerCount />
 {/if}

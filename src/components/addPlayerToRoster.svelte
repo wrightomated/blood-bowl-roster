@@ -34,19 +34,28 @@
               ...filteredSkills(selected.skills),
               ...journeymanSkills($roster.format),
           ]
-        : filteredSkills(selected.skills);
+        : filteredSkills(selected?.skills);
     $: numberOfPlayerType = $roster.players.filter(
         (x) => x.player.id === selected?.id || 0
     ).length;
     $: maxOfPlayerType =
         $currentTeam.players.find((x) => x.id === selected?.id)?.max || 0;
+
+    $: playerTypeCounts = playerTypes.map((x) => {
+        return {
+            id: x.id,
+            max: $currentTeam.players.find((p) => p.id === x.id)?.max || 0,
+            current: $roster.players.filter((p) => p.player.id === x.id).length,
+        };
+    });
+
     const addPlayers = () => {
         const numberOfPlayers =
             !amount || amount < 1
                 ? 1
                 : amount > maxOfPlayerType
-                ? maxOfPlayerType
-                : amount;
+                  ? maxOfPlayerType
+                  : amount;
         for (let i = 0; i < numberOfPlayers; i++) {
             const { journeyman, ...player } = selected;
             let alterations: PlayerAlterations = { spp: 0, ni: 0 };
@@ -83,33 +92,16 @@
         }
         // Reset amount for next player selection
         amount = 1;
+        if (numberOfPlayerType >= maxOfPlayerType - numberOfPlayers) {
+            // first id that isn't at max
+            const nextId = playerTypeCounts.findIndex(
+                (x) => x.current + 1 < x.max
+            );
+            if (nextId !== -1) {
+                selected = playerTypes[nextId];
+            }
+        }
     };
-
-    // const addPlayer = () => {
-    //     const { journeyman, ...player } = selected;
-    //     const extraSkills = journeyman
-    //         ? journeymanSkills($roster.format)
-    //         : undefined;
-    //     let alterations: PlayerAlterations = { spp: 0, ni: 0 };
-
-    //     if (journeyman) {
-    //         alterations = { ...alterations, journeyman };
-    //     }
-
-    //     if (extraSkills) {
-    //         alterations = { ...alterations, extraSkills };
-    //     }
-
-    //     roster.addPlayer(
-    //         {
-    //             playerName: newName,
-    //             player: { ...player, skills: filteredSkills(player.skills) },
-    //             alterations,
-    //         },
-    //         index
-    //     );
-    //     newName = '';
-    // };
 
     const filteredSkills: (skills: number[]) => number[] = (skills) => {
         return $roster.format === 'dungeon bowl'
@@ -136,9 +128,17 @@
                     bind:value={selected}
                     data-cy="new-player-position-select"
                 >
-                    {#each playerTypes as playerType}
-                        <option value={playerType}>
-                            {$_('players.' + playerType.id)}
+                    {#each playerTypes as playerType, i}
+                        <option
+                            value={playerType}
+                            disabled={playerTypeCounts[i]?.current >=
+                                playerTypeCounts[i]?.max}
+                        >
+                            {$_('players.' + playerType.id, {
+                                default: playerType.position,
+                            })}
+                            {playerTypeCounts[i]?.current}/{playerTypeCounts[i]
+                                ?.max}
                         </option>
                     {/each}
                     {#if $roster.mode !== 'exhibition' && $roster.leagueRosterStatus === 'commenced'}
