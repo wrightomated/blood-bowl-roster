@@ -51,6 +51,7 @@
         'sevens',
         'dungeon bowl',
         'gutter bowl',
+        'beach bowl',
     ];
 
     $: searchTerm = '';

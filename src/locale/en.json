@@ -6,6 +6,7 @@
     "sevens": "Sevens",
     "dungeon bowl": "Dungeon Bowl",
     "gutter bowl": "Gutter Bowl",
+    "beach bowl": "Beach Bowl",
     "tools": "Roster tools",
     "loading": "Loading...",
     "success": "Success!",
@@ -813,7 +814,8 @@
         "i54": "Superior Magic Potion",
         "i55": "Sawbones",
         "i56": "Snack Stand",
-        "i57": "Novice Wizard"
+        "i57": "Novice Wizard",
+        "i58": "Souvenir"
     },
     "match": {
         "login": "You must be logged in to record match history.",

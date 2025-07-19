@@ -6,6 +6,7 @@
     "sevens": "A sept",
     "dungeon bowl": "Dungeon Bowl",
     "gutter bowl": "Gutter Bowl",
+    "beach bowl": "Beach Bowl",
     "tools": "Outils de Composition d'Équipe",
     "loading": "En cours de chargement...",
     "success": "Succès!",
@@ -782,7 +783,8 @@
         "i54": "Superior Magic Potion",
         "i55": "Sawbones",
         "i56": "Snack Stand",
-        "i57": "Novice Wizard"
+        "i57": "Novice Wizard",
+        "i58": "Souvenir"
     },
     "match": {
         "login": "Vous devez être connecté pour enregistrer l'historique des matchs.",
