@@ -13,7 +13,7 @@
 
     $: circleContent = 'number';
 
-    $: numberOfRows = $gameSettings.pitch.length / 2;
+    $: numberOfRows = $gameSettings.pitch.halfLength;
     $: numberOfColumns = $gameSettings.pitch.width;
     $: pitchGrid = new Array(numberOfRows)
         .fill('p')
@@ -231,7 +231,7 @@
             </div>
         {/each}
     </div>
-    <p class="center">Center</p>
+    <p class="center">Centre</p>
     <!-- A grid 15 wide 13 heigh, the bottom row is the endzone -->
     <div
         class="grid pitch"

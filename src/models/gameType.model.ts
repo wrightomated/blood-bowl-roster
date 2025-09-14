@@ -28,6 +28,7 @@ export interface GameType {
         width: number;
         length: number;
         gutter: number;
+        halfLength: number;
     };
     // | { default: number; rules: StarPlayerInclusionRules[] };
 }

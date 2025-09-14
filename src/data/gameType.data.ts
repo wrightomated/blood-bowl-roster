@@ -28,6 +28,7 @@ export const sevensGame: GameTypeSettings = {
         length: 20,
         width: 11,
         gutter: 4,
+        halfLength: 7, // no mans land is 6, so half length is 7
     },
 };
 
@@ -60,6 +61,7 @@ export const elevensGame: GameTypeSettings = {
         length: 26,
         width: 15,
         gutter: 4,
+        halfLength: 13,
     },
 };
 
