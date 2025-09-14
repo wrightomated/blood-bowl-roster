@@ -296,7 +296,7 @@
             circleContent = option;
         }}
     />
-    <button class="rounded-button" on:click={pitchGridToRoster}>Gird</button>
+    <button class="rounded-button" on:click={pitchGridToRoster}>Grid</button>
 </div>
 
 <style lang="scss">

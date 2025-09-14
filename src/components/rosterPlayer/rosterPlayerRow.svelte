@@ -10,8 +10,11 @@
     import type { RosterPlayerRecord } from '../../models/roster.model';
 
     export let index: number;
+    export let player: RosterPlayerRecord = undefined;
+
+    // Use passed player data or fall back to index lookup
     let rosterPlayer: RosterPlayerRecord;
-    $: rosterPlayer = $roster.players[index];
+    $: rosterPlayer = player || $roster.players[index];
 
     $: currentCost =
         rosterPlayer?.alterations?.mng || rosterPlayer?.alterations?.tr
@@ -57,16 +60,19 @@
                 NI: {
                     index,
                     alteration: 'ni',
+                    player: rosterPlayer,
                 },
                 MNG: {
                     index,
                     alteration: 'mng',
+                    player: rosterPlayer,
                 },
                 TR: {
                     index,
                     alteration: 'tr',
+                    player: rosterPlayer,
                 },
-            }[column] || { index }
+            }[column] || { index, player: rosterPlayer }
         );
     };
 </script>

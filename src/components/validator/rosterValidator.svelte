@@ -102,7 +102,7 @@
             Big Guys
         </p>
     {/if}
-    {#if invalid.invalid.tooManyOfPlayerType.length > 0}
+    {#if invalid.invalid?.tooManyOfPlayerType?.length > 0}
         <p>
             <i class="material-symbols-outlined no-transition">warning</i> Too
             many of player type:

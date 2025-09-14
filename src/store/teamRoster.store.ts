@@ -155,6 +155,13 @@ function createRoster() {
                     players: switchTwoElements(store.players, index, target),
                 };
             }),
+        reorderPlayers: (newPlayersOrder: RosterPlayerRecord[]) =>
+            update((store) => {
+                return {
+                    ...store,
+                    players: newPlayersOrder,
+                };
+            }),
         addInducement: (
             inducementKey: string,
             customInducements?: Inducement[]

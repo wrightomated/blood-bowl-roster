@@ -24,6 +24,8 @@
     import RosterValidator from './validator/rosterValidator.svelte';
     import AllPlayerPicker from '../modules/secret-league/allPlayerPicker.svelte';
     import { currentTeamId } from '../store/currentTeam.store';
+    import { dndzone } from 'svelte-dnd-action';
+    import { flip } from 'svelte/animate';
 
     export let playerTypes: Player[];
 
@@ -32,6 +34,54 @@
             ? $roster.players.findIndex((p) => p.deleted)
             : $roster.players.length;
     $: activePlayersNumber = $activePlayers.length;
+
+    // For drag and drop functionality - ensure the roster reflects the current order
+    $: rosterPlayersForDnd = $activePlayers.map((player, index) => ({
+        ...player,
+        id: player.playerId || `player-${index}`,
+        rosterIndex: $roster.players.findIndex(
+            (p) => p.playerId === player.playerId
+        ),
+    }));
+
+    function handleDndConsider(e) {
+        rosterPlayersForDnd = e.detail.items;
+    }
+
+    function handleDndFinalize(e) {
+        rosterPlayersForDnd = e.detail.items;
+
+        // Create a new players array by reordering only the active players
+        const reorderedActivePlayers = e.detail.items.map((item) => {
+            const { id, rosterIndex, ...player } = item;
+            return player;
+        });
+
+        // Rebuild the full players array maintaining deleted players in their positions
+        const newPlayersOrder = [];
+
+        // First, add all the reordered active players
+        reorderedActivePlayers.forEach((player) => {
+            newPlayersOrder.push(player);
+        });
+
+        // Then add any deleted players at the end
+        $roster.players.forEach((player) => {
+            if (player.deleted) {
+                newPlayersOrder.push(player);
+            }
+        });
+
+        roster.reorderPlayers(newPlayersOrder);
+
+        // Update the rosterIndex for each item after reordering
+        rosterPlayersForDnd = rosterPlayersForDnd.map((player, index) => ({
+            ...player,
+            rosterIndex: index,
+        }));
+    }
+
+    const flipDurationMs = 300;
     // function orderOn(column: ColumnDetails) {
     //     columnSortOrder.set(
     //         $sortedColumn?.name === column.name && $columnSortOrder === 'asc'
@@ -86,15 +136,24 @@
 <RosterDelete />
 
 {#if $rosterViewMode === 'grid'}
-    <div class="player-cards">
-        {#each $activePlayers as player, index (player.playerId)}
-            <RosterPlayerCard {index} />
+    <div
+        class="player-cards"
+        use:dndzone={{ items: rosterPlayersForDnd, flipDurationMs }}
+        on:consider={handleDndConsider}
+        on:finalize={handleDndFinalize}
+    >
+        {#each rosterPlayersForDnd as player, idx (player.id)}
+            <div animate:flip={{ duration: flipDurationMs }}>
+                <RosterPlayerCard index={player.rosterIndex} />
+            </div>
         {/each}
-
-        {#if activePlayersNumber < $gameSettings.maxPlayers}
-            <AddPlayerCard {playerTypes} index={nextPlayerIndex} />
-        {/if}
     </div>
+
+    {#if activePlayersNumber < $gameSettings.maxPlayers}
+        <div class="add-player-section">
+            <AddPlayerCard {playerTypes} index={nextPlayerIndex} />
+        </div>
+    {/if}
 {:else}
     <div class="table-container">
         <table class="roster-table">
@@ -111,27 +170,24 @@
                                 : c?.customName
                                   ? c.customName
                                   : $_('roster.column.names.' + c.id)}
-                            <!-- {#if c.orderByPropertyPath}
-                                <MaterialButton
-                                    hoverText="Sort"
-                                    symbol="sort"
-                                    clickFunction={() => orderOn(c)}
-                                />
-                            {/if} -->
                         </th>
                     {/each}
                 </tr>
             </thead>
-            <tbody>
-                {#each $roster.players as rosterPlayer, index}
-                    {#if !rosterPlayer?.deleted}
-                        <RosterPlayerRow {index} />
-                    {/if}
+            <tbody
+                use:dndzone={{ items: rosterPlayersForDnd, flipDurationMs }}
+                on:consider={handleDndConsider}
+                on:finalize={handleDndFinalize}
+            >
+                {#each rosterPlayersForDnd as player, idx (player.id)}
+                    <RosterPlayerRow index={idx} {player} />
                 {/each}
-                {#if activePlayersNumber < $gameSettings.maxPlayers}
-                    <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />
-                {/if}
             </tbody>
+            {#if activePlayersNumber < $gameSettings.maxPlayers}
+                <tbody>
+                    <AddPlayerToRoster {playerTypes} index={nextPlayerIndex} />
+                </tbody>
+            {/if}
         </table>
     </div>
 {/if}
@@ -259,5 +315,48 @@
     }
     .coach {
         margin-left: auto;
+    }
+
+    /* Drag and drop styling */
+    :global(.dnd-action-draggable-wrapper) {
+        cursor: grab;
+        transition: all 0.2s ease;
+    }
+
+    :global(.dnd-action-draggable-wrapper:hover) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    :global(.dnd-action-draggable-wrapper.dnd-action-is-dragged) {
+        cursor: grabbing;
+        opacity: 0.8;
+        transform: rotate(3deg);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Table specific drag styling */
+    .table-container :global(.dnd-action-draggable-wrapper tr) {
+        background-color: var(--background-color, white);
+        border-radius: 4px;
+    }
+
+    .table-container
+        :global(.dnd-action-draggable-wrapper.dnd-action-is-dragged tr) {
+        background-color: var(--main-colour, #1e40af);
+        color: white;
+    }
+
+    /* Grid specific drag styling */
+    .player-cards :global(.dnd-action-draggable-wrapper) {
+        border-radius: 8px;
+    }
+
+    .player-cards :global(.dnd-action-draggable-wrapper.dnd-action-is-dragged) {
+        border: 2px solid var(--main-colour, #1e40af);
+    }
+
+    .add-player-section {
+        display: contents;
     }
 </style>

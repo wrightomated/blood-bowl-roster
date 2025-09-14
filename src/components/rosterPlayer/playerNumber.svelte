@@ -4,7 +4,11 @@
 
     export let index: number;
     export let variant: 'default' | 'card' = 'default';
-    let playerNumber = getPlayerNumberAlteration();
+    export let player: any = undefined;
+
+    // Use passed player data or fall back to index lookup
+    $: rosterPlayer = player || $roster.players[index];
+    let playerNumber = rosterPlayer?.alterations?.playerNumber;
 
     const changeNumber = () => {
         if (
@@ -12,17 +16,24 @@
             playerNumber > MAX_PLAYER_NUMBER ||
             playerNumber < 0
         ) {
-            playerNumber = getPlayerNumberAlteration();
+            playerNumber = rosterPlayer?.alterations?.playerNumber;
         } else {
-            roster.updatePlayerNumber(index, playerNumber);
+            // Find the current index in the roster array
+            const currentIndex = $roster.players.findIndex(
+                (p) => p.playerId === rosterPlayer.playerId
+            );
+            if (currentIndex >= 0) {
+                roster.updatePlayerNumber(currentIndex, playerNumber);
+            }
         }
     };
 
-    // TODO: reactive solution for this
-    roster.subscribe((x) => (playerNumber = getPlayerNumberAlteration()));
-
-    function getPlayerNumberAlteration() {
-        return $roster.players[index]?.alterations?.playerNumber;
+    // Only update local playerNumber when rosterPlayer changes from external source
+    // but don't interfere with user typing
+    let lastRosterPlayerNumber = rosterPlayer?.alterations?.playerNumber;
+    $: if (rosterPlayer?.alterations?.playerNumber !== lastRosterPlayerNumber) {
+        lastRosterPlayerNumber = rosterPlayer?.alterations?.playerNumber;
+        playerNumber = rosterPlayer?.alterations?.playerNumber;
     }
 </script>
 

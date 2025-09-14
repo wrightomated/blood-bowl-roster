@@ -4,12 +4,12 @@
     import { roster } from '../../store/teamRoster.store';
 
     export let index: number;
-    $: rosterPlayer = $roster.players[index];
+    $: rosterPlayer = $roster?.players[index];
 </script>
 
-{#if rosterPlayer.starPlayer}
+{#if rosterPlayer?.starPlayer}
     <span data-cy={`player-${index}-name`}>{rosterPlayer.player.position}</span>
-{:else}
+{:else if !!rosterPlayer}
     <input
         data-cy={`player-${index}-name`}
         aria-labelledby="name-header"

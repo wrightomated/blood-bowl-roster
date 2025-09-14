@@ -52,5 +52,5 @@ export const inducementCost = (
         }
     }
 
-    return format === 'sevens' && ind.sevensCost ? ind.sevensCost : ind.cost;
+    return format === 'sevens' && ind.sevensCost ? ind.sevensCost : ind?.cost;
 };

@@ -4,16 +4,41 @@
 
     export let index: number;
     export let alteration: string;
+    export let player: any = undefined;
+
+    // Use passed player data or fall back to index lookup
+    $: rosterPlayer = player || $roster.players[index];
+    $: alterationValue = rosterPlayer?.alterations?.[alteration];
+
+    function updateAlteration(value: number) {
+        // Find the current index in the roster array
+        const currentIndex = $roster.players.findIndex(
+            (p) => p.playerId === rosterPlayer.playerId
+        );
+        if (currentIndex >= 0) {
+            roster.updatePlayer(
+                {
+                    ...rosterPlayer,
+                    alterations: {
+                        ...rosterPlayer.alterations,
+                        [alteration]: value,
+                    },
+                },
+                currentIndex
+            );
+        }
+    }
 </script>
 
-{#if $roster.players[index]?.alterations?.[alteration] !== undefined}
+{#if rosterPlayer?.alterations?.[alteration] !== undefined}
     <input
         type="number"
         aria-labelledby="{alteration}-header"
         placeholder="?"
         inputmode="numeric"
         use:blurOnEscapeOrEnter
-        bind:value={$roster.players[index].alterations[alteration]}
+        value={alterationValue}
+        on:input={(e) => updateAlteration(parseInt(e.target.value) || 0)}
     />
 {:else}-{/if}
 

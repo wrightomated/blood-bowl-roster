@@ -71,9 +71,9 @@ export function invalidRoster(
             !tooFew &&
             !tooMany &&
             !tooBigGuy &&
-            !(moreThanMaxOfSameSkill.length > 0) &&
+            !(moreThanMaxOfSameSkill?.length > 0) &&
             sppBalance >= 0 &&
-            !(tooManyOfPlayerType.length > 0) &&
+            !(tooManyOfPlayerType?.length > 0) &&
             budgetValid &&
             tooManySecondarySkills <= 0;
 
@@ -100,7 +100,7 @@ export function invalidRoster(
 
 export function tooFewPlayers(roster: Roster, minimum: number): boolean {
     return (
-        roster.players.filter((x) => !x.deleted && !x.starPlayer).length <
+        roster.players.filter((x) => !x?.deleted && !x?.starPlayer)?.length <
         minimum
     );
 }
