@@ -3,7 +3,6 @@
     import { currentTeam } from '../store/currentTeam.store';
     import { showAvailablePlayers } from '../store/showPlayerList.store';
     import Player from './player.svelte';
-    import MaterialButton from './uiComponents/materialButton.svelte';
     import { playerCatalogue } from '../store/playerCatalogue.store';
 
     const togglePlayers = () => {
@@ -13,22 +12,23 @@
 
 <span class="no-print">
     <div class="header-container">
-        <caption
+        <button
             class="team-player-caption"
             data-cy="selected-team-caption"
+            title={$showAvailablePlayers
+                ? $_('tables.hide')
+                : $_('tables.show')}
             on:click={togglePlayers}
         >
             {$_('tables.caption', {
                 values: { team: $currentTeam.name },
             })}
-        </caption>
-        <MaterialButton
-            hoverText={$showAvailablePlayers
-                ? $_('tables.hide')
-                : $_('tables.show')}
-            symbol={$showAvailablePlayers ? 'arrow_drop_up' : 'arrow_drop_down'}
-            clickFunction={togglePlayers}
-        />
+            <i class="material-symbols-outlined"
+                >{$showAvailablePlayers
+                    ? 'arrow_drop_up'
+                    : 'arrow_drop_down'}</i
+            >
+        </button>
     </div>
     {#if $showAvailablePlayers}
         <div class="table-container">
@@ -75,9 +75,15 @@
         min-width: 100px;
     }
     .header-container {
-        display: flex;
-        margin-top: 1em;
-        caption {
+        button {
+            display: flex;
+            align-items: center;
+            margin-top: 1em;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-align: left;
             font-family: var(--display-font);
         }
     }
