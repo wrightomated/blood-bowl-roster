@@ -61,7 +61,7 @@
         <div class="college-buttons">
             {#each dungeonBowlColleges.colleges as college}
                 <button
-                    class="college-button college-button--{college.name.toLowerCase()}"
+                    class="college-button college-button--{college.name.toLowerCase()} rounded-button"
                     class:selected={$currentTeam?.id === college.id}
                     on:click={() => selectCollege(college)}
                     >{$_('colleges.' + college.name)}</button
@@ -84,7 +84,6 @@
 {/if}
 
 <style lang="scss">
-    @use '../../styles/mixins/roundedButton';
     $colleges: 'fire', 'shadow', 'metal', 'light', 'death', 'life', 'beasts',
         'heavens';
 
@@ -93,7 +92,6 @@
     }
 
     .college-button {
-        @include roundedButton.rounded-button;
         &:hover {
             color: white;
         }
