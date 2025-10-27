@@ -49,79 +49,80 @@
 
 <div class="tables">
     <table class="tables__item">
-        <tr class:no-print={!$roster?.coachDetails?.coachName}>
-            <th>{$_('tables.coach')}</th>
-            <td>
-                <input
-                    placeholder={$_('tables.coach')}
-                    id="coach-name"
-                    data-cy="coach-name"
-                    bind:value={$roster.coachDetails.coachName}
-                />
-            </td>
-        </tr>
-        <tr class:no-print={!$roster?.coachDetails?.nafNumber}>
-            <th>{$_('tables.naf')}</th>
-            <td>
-                <input
-                    placeholder={$_('tables.naf')}
-                    id="naf-number"
-                    data-cy="naf-number"
-                    bind:value={$roster.coachDetails.nafNumber}
-                />
-            </td>
-        </tr>
-        <tr>
-            <th>{$_('tables.tv')}</th>
-            <td data-cy="team-value">
-                {formatNumberInThousands(teamTotal)}
-            </td>
-        </tr>
-        {#if teamTotal !== currentTotal}
-            <tr>
-                <th>{$_('tables.ctv')}</th>
-                <td data-cy="current-tv">
-                    {formatNumberInThousands(currentTotal)}
+        <tbody>
+            <tr class:no-print={!$roster?.coachDetails?.coachName}>
+                <th>{$_('tables.coach')}</th>
+                <td>
+                    <input
+                        placeholder={$_('tables.coach')}
+                        id="coach-name"
+                        data-cy="coach-name"
+                        bind:value={$roster.coachDetails.coachName}
+                    />
                 </td>
             </tr>
-        {/if}
-
-        <tr>
-            <th>Roster Total</th>
-            <td class="roster-total-cell" data-cy="roster-total">
-                {formatNumberInThousands(rosterTotal)}
-                <MaterialButton
-                    symbol="info"
-                    hoverText={'Information'}
-                    clickFunction={showRosterTotalInfo}
-                ></MaterialButton>
-            </td>
-        </tr>
-
-        <tr>
-            <th>{$_('tables.treasury')}</th>
-            <td class="treasury-cell">
-                {#if $customisationRules?.lockTreasury}
-                    {formatNumberInThousands($roster.treasury)}
-                {:else}
-                    <Treasury />
-                {/if}
-            </td>
-        </tr>
-
-        {#if $roster.mode === 'league' && typeof $roster.pettyCash === 'number'}
+            <tr class:no-print={!$roster?.coachDetails?.nafNumber}>
+                <th>{$_('tables.naf')}</th>
+                <td>
+                    <input
+                        placeholder={$_('tables.naf')}
+                        id="naf-number"
+                        data-cy="naf-number"
+                        bind:value={$roster.coachDetails.nafNumber}
+                    />
+                </td>
+            </tr>
             <tr>
-                <th>{$_('common.petty')}</th>
+                <th>{$_('tables.tv')}</th>
+                <td data-cy="team-value">
+                    {formatNumberInThousands(teamTotal)}
+                </td>
+            </tr>
+            {#if teamTotal !== currentTotal}
+                <tr>
+                    <th>{$_('tables.ctv')}</th>
+                    <td data-cy="current-tv">
+                        {formatNumberInThousands(currentTotal)}
+                    </td>
+                </tr>
+            {/if}
+            <tr>
+                <th>Roster Total</th>
+                <td class="roster-total-cell" data-cy="roster-total">
+                    {formatNumberInThousands(rosterTotal)}
+                    <MaterialButton
+                        symbol="info"
+                        hoverText={'Information'}
+                        clickFunction={showRosterTotalInfo}
+                    ></MaterialButton>
+                </td>
+            </tr>
+            <tr>
+                <th>{$_('tables.treasury')}</th>
                 <td class="treasury-cell">
-                    {formatNumber($roster.pettyCash)}
+                    {#if $customisationRules?.lockTreasury}
+                        {formatNumberInThousands($roster.treasury)}
+                    {:else}
+                        <Treasury />
+                    {/if}
                 </td>
             </tr>
-        {/if}
+            {#if $roster.mode === 'league' && typeof $roster.pettyCash === 'number'}
+                <tr>
+                    <th>{$_('common.petty')}</th>
+                    <td class="treasury-cell">
+                        {formatNumber($roster.pettyCash)}
+                    </td>
+                </tr>
+            {/if}
+        </tbody>
     </table>
     <table class="tables__item">
-        {#each extras as extra}
-            <ExtraRosterAdditionsRow {extra} />
-        {/each}
+        <tbody>
+            {#each extras as extra}
+                <ExtraRosterAdditionsRow {extra} />
+            {/each}
+        </tbody>
     </table>
 
     {#if $gameSettings?.starPlayersAllowance > 0}

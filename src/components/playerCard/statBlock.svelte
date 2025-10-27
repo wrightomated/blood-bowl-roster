@@ -17,7 +17,6 @@
 </div>
 
 <style lang="scss">
-    @import '../../styles/font';
     .characteristic {
         height: 50px;
         width: 50px;
@@ -51,7 +50,7 @@
     .value {
         margin-top: 22px;
         font-size: 16px;
-        font-family: $display-font;
+        font-family: var(--display-font);
     }
     .improved {
         color: green;

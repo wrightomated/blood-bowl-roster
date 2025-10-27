@@ -100,23 +100,22 @@
             <span class="no-print">
                 <AvailablePlayers />
                 <div class="header-container">
-                    <caption
+                    <button
                         class="team-star-player-caption"
                         on:click={toggleStarPlayers}
+                        title={$showAvailableStarPlayers
+                            ? $_('tables.hide')
+                            : $_('tables.show')}
                     >
                         {$_('tables.starCaption', {
                             values: { team: $currentTeam.name },
                         })}
-                    </caption>
-                    <MaterialButton
-                        hoverText={$showAvailableStarPlayers
-                            ? $_('tables.hide')
-                            : $_('tables.show')}
-                        symbol={$showAvailableStarPlayers
-                            ? 'arrow_drop_up'
-                            : 'arrow_drop_down'}
-                        clickFunction={toggleStarPlayers}
-                    />
+                        <i class="material-symbols-outlined"
+                            >{$showAvailableStarPlayers
+                                ? 'arrow_drop_up'
+                                : 'arrow_drop_down'}</i
+                        >
+                    </button>
                 </div>
                 {#if $showAvailableStarPlayers}
                     <StarPlayers />
@@ -138,9 +137,15 @@
 
 <style lang="scss">
     .header-container {
-        display: flex;
-        margin-top: 1em;
-        caption {
+        button {
+            display: flex;
+            align-items: center;
+            margin-top: 1em;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-align: left;
             font-family: var(--display-font);
         }
     }

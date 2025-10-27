@@ -8,7 +8,7 @@
     contenteditable="true"
     bind:innerHTML={textValue}
     placeholder="Edit"
-/>
+></span>
 
 <style lang="scss">
     .custom-text {

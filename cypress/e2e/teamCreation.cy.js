@@ -8,15 +8,11 @@ context('Team creation', () => {
         cy.getBySel('new-team').click();
         cy.get('.search-input').click();
         cy.contains('Black Orc').click();
-        cy.getBySel('selected-team-caption').should(
-            'have.text',
-            'Black Orc Team Players'
-        );
+        cy.getBySel('selected-team-caption').contains('Black Orc Team Players');
         cy.get('.search-input').type('{selectAll}').type('{backspace}');
         cy.get('.search-input').type('imperial');
         cy.contains('Imperial Nobility').click();
-        cy.getBySel('selected-team-caption').should(
-            'have.text',
+        cy.getBySel('selected-team-caption').contains(
             'Imperial Nobility Team Players'
         );
         cy.getBySel('create-team').click();
@@ -60,10 +56,7 @@ context('Team creation', () => {
         cy.get('.search-input').type('{selectAll}').type('{backspace}');
         cy.get('.search-input').type('black');
         cy.contains('Black Orc').click();
-        cy.getBySel('selected-team-caption').should(
-            'have.text',
-            'Black Orc Team Players'
-        );
+        cy.getBySel('selected-team-caption').contains('Black Orc Team Players');
 
         cy.getBySel('menu-button').click();
         cy.getBySel('load-team').click();

@@ -179,7 +179,6 @@
 </div>
 
 <style lang="scss">
-    @import '../../styles/font';
     .player-card {
         border-radius: 25px;
         position: relative;
