@@ -110,3 +110,29 @@ export const gutterBowlGame: GameTypeSettings = {
     inducementMaxKey: 'gutterBowlMax',
     turnsPerHalf: 6,
 };
+
+export const beachBowlGame: GameTypeSettings = {
+    teamFormat: 'beach bowl',
+    maxPlayers: 11,
+    minPlayers: 7,
+    startingTreasury: 600,
+    rerollDetails: { costMultiplier: 2, max: 6 },
+    assistantCoaches: { cost: 20, max: 3 },
+    cheerleaders: { cost: 20, max: 6 },
+    apothecary: { cost: 0, max: 0 },
+    dedicatedFans: { cost: 20, max: 6 },
+    advancementSettings: [
+        {
+            type: 'primary',
+            selectionTypes: ['random'],
+        },
+        {
+            type: 'secondary',
+            selectionTypes: ['random'],
+        },
+    ],
+    starPlayersAllowance: 2,
+    maxSpecialists: 4,
+    inducementCostKey: 'beachBowlCost',
+    inducementMaxKey: 'beachBowlMax',
+};

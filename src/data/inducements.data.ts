@@ -10,6 +10,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 4,
             sevensMax: 2,
             sevensCost: 30,
+            beachBowlMax: 0,
         },
         {
             id: 'i2',
@@ -18,15 +19,17 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 3,
             sevensMax: 1,
             sevensCost: 30,
+            beachBowlMax: 0,
         },
         {
             id: 'i3',
 
             cost: 30,
             max: 1,
+            beachBowlMax: 0,
         },
-        { id: 'i4', cost: 50, max: 2, sevensMax: 2 },
-        { id: 'i5', cost: 100, max: 5, sevensMax: 5 },
+        { id: 'i4', cost: 50, max: 2, sevensMax: 2, beachBowlMax: 2 },
+        { id: 'i5', cost: 100, max: 5, sevensMax: 5, beachBowlMax: 0 },
         {
             id: 'i6',
 
@@ -35,6 +38,7 @@ export const inducementData: { inducements: Inducement[] } = {
             sevensCost: 150,
             dungeonBowlMax: 8,
             sevensMax: 8,
+            beachBowlMax: 0,
         },
         {
             id: 'i7',
@@ -44,6 +48,8 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 3,
             dungeonBowlMax: 3,
             sevensMax: 3,
+            beachBowlMax: 0,
+            beachBowlMax: 0,
         },
         {
             id: 'i8',
@@ -52,6 +58,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 2,
             sevensMax: 2,
             requiresApothecary: true,
+            beachBowlMax: 0,
         },
         {
             id: 'i9',
@@ -60,6 +67,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             sevensMax: 1,
             requiresSpecialRule: 'Sylvanian Spotlight',
+            beachBowlMax: 0,
         },
         {
             id: 'i10',
@@ -68,6 +76,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             sevensMax: 1,
             requiresSpecialRule: 'Favoured of Nurgle',
+            beachBowlMax: 0,
         },
         {
             id: 'i11',
@@ -75,6 +84,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 1,
             requiresSpecialRule: 'Low Cost Linemen',
+            beachBowlMax: 0,
         },
         {
             id: 'i12',
@@ -83,6 +93,7 @@ export const inducementData: { inducements: Inducement[] } = {
             reducedCost: { teamName: 'Halfling', cost: 100 },
             max: 1,
             sevensMax: 1,
+            beachBowlMax: 1,
         },
         {
             id: 'i13',
@@ -90,12 +101,14 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 30,
             max: 16,
             sevensMax: 16,
+            beachBowlMax: 0,
         },
         {
             id: 'i15',
 
             cost: 100,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i18',
@@ -108,6 +121,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Old World Classic',
                 'Worlds Edge Superleague',
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i19',
@@ -119,6 +133,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Underworld Challenge',
                 ...chaosSpecialRules,
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i20',
@@ -126,6 +141,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 40,
             max: 1,
             requiresSpecialRule: 'Elven Kingdoms League',
+            beachBowlMax: 0,
         },
         {
             id: 'i21',
@@ -133,12 +149,14 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 70,
             max: 1,
             requiresSpecialRule: 'Underworld Challenge',
+            beachBowlMax: 0,
         },
         {
             id: 'i22',
 
             cost: 100,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i23',
@@ -146,6 +164,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 130,
             max: 1,
             requiresSpecialRule: 'Sylvanian Spotlight',
+            beachBowlMax: 0,
         },
         {
             id: 'i24',
@@ -157,6 +176,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Old World Classic',
                 'Underworld Challenge',
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i25',
@@ -164,18 +184,21 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 90,
             max: 1,
             requiresSpecialRule: ['Badlands Brawl', 'Underworld Challenge'],
+            beachBowlMax: 0,
         },
         {
             id: 'i26',
 
             cost: 90,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i16',
 
             cost: 150,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i27',
@@ -187,6 +210,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Underworld Challenge',
                 ...chaosSpecialRules,
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i28',
@@ -198,6 +222,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Favoured of...',
                 ...chaosSpecialRules,
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i29',
@@ -205,6 +230,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 150,
             max: 1,
             requiresSpecialRule: 'Elven Kingdoms League',
+            beachBowlMax: 0,
         },
         {
             id: 'i30',
@@ -212,6 +238,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 200,
             max: 1,
             requiresSpecialRule: 'Lustrian Superleague',
+            beachBowlMax: 0,
         },
         {
             id: 'i31',
@@ -219,6 +246,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 150,
             max: 1,
             requiresSpecialRule: ['Favoured of Nurgle', 'Underworld Challenge'],
+            beachBowlMax: 0,
         },
         {
             id: 'i32',
@@ -226,6 +254,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 150,
             max: 1,
             requiresSpecialRule: 'Sylvanian Spotlight',
+            beachBowlMax: 0,
         },
         {
             id: 'i33',
@@ -237,6 +266,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Sylvanian Spotlight',
                 'Underworld Challenge',
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i34',
@@ -244,6 +274,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 150,
             max: 1,
             requiresSpecialRule: 'Underworld Challenge',
+            beachBowlMax: 0,
         },
         {
             id: 'i35',
@@ -251,6 +282,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 150,
             max: 1,
             requiresSpecialRule: 'Badlands Brawl',
+            beachBowlMax: 0,
         },
         {
             id: 'i36',
@@ -258,12 +290,14 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 150,
             max: 1,
             requiresSpecialRule: ['Badlands Brawl', 'Underworld Challenge'],
+            beachBowlMax: 0,
         },
         {
             id: 'i37',
 
             cost: 80,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i17',
@@ -271,6 +305,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i38',
@@ -278,6 +313,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 130,
             max: 1,
             requiresSpecialRule: ['Lustrian Superleague', 'Old World Classic'],
+            beachBowlMax: 0,
         },
         {
             id: 'i39',
@@ -285,6 +321,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             max: 1,
             requiresSpecialRule: 'Worlds Edge Superleague',
+            beachBowlMax: 0,
         },
         {
             id: 'i40',
@@ -292,6 +329,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 120,
             max: 1,
             reducedCost: { specialRule: 'Bribery and Corruption', cost: 80 },
+            beachBowlMax: 0,
         },
         {
             id: 'i41',
@@ -299,6 +337,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 80,
             max: 1,
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 40 },
+            beachBowlMax: 0,
         },
         {
             id: 'i42',
@@ -306,6 +345,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 50,
             max: 1,
             requiresSpecialRule: 'Badlands Brawl',
+            beachBowlMax: 0,
         },
         {
             id: 'i43',
@@ -313,6 +353,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 30,
             max: 3,
             requiresSpecialRule: 'Favoured of Nurgle',
+            beachBowlMax: 0,
         },
         {
             id: 'i44',
@@ -323,6 +364,7 @@ export const inducementData: { inducements: Inducement[] } = {
                 'Old World Classic',
                 'Worlds Edge Superleague',
             ],
+            beachBowlMax: 0,
         },
         {
             id: 'i45',
@@ -331,6 +373,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             requiresSpecialRule: ['Halfling Thimble Cup', 'Old World Classic'],
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 60 },
+            beachBowlMax: 0,
         },
         {
             id: 'i46',
@@ -339,6 +382,7 @@ export const inducementData: { inducements: Inducement[] } = {
             max: 1,
             requiresSpecialRule: ['Halfling Thimble Cup', 'Old World Classic'],
             reducedCost: { specialRule: 'Halfling Thimble Cup', cost: 30 },
+            beachBowlMax: 0,
         },
         {
             id: 'i47',
@@ -346,18 +390,21 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 40,
             max: 3,
             requiresTier: 3,
+            beachBowlMax: 0,
         },
         {
             id: 'i48',
 
             cost: 30,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i49',
 
             cost: 60,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i50',
@@ -365,6 +412,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 50,
             max: 0,
             sevensMax: 5,
+            beachBowlMax: 0,
         },
         {
             id: 'i51',
@@ -372,12 +420,14 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 0,
             dungeonBowlMax: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i52',
 
             cost: 350,
             max: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i53',
@@ -385,6 +435,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 50,
             max: 0,
             gutterBowlMax: 99,
+            beachBowlMax: 0,
         },
         {
             id: 'i54',
@@ -392,6 +443,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 0,
             gutterBowlMax: 99,
+            beachBowlMax: 0,
         },
         {
             id: 'i55',
@@ -399,6 +451,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 50,
             max: 0,
             gutterBowlMax: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i56',
@@ -406,6 +459,7 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 0,
             gutterBowlMax: 1,
+            beachBowlMax: 0,
         },
         {
             id: 'i57',
@@ -413,6 +467,13 @@ export const inducementData: { inducements: Inducement[] } = {
             cost: 100,
             max: 0,
             gutterBowlMax: 1,
+            beachBowlMax: 0,
+        },
+        {
+            id: 'i58',
+            cost: 50,
+            max: 0
+            beachBowlMax: 3,
         },
     ],
 };

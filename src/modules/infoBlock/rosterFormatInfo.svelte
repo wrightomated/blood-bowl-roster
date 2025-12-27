@@ -67,3 +67,18 @@
     <li>Perfect for narrative campaigns in urban settings</li>
 </ul>
 <p>Rules found in <em>Blood Bowl: Gutter Bowl</em></p>
+
+<h4>Beach Bowl</h4>
+
+<p>
+    Beach Bowl is a Blood Bowl variant designed to simulate
+    low-stakes games of oceanside sand football. Key features include:
+</p>
+<ul>
+    <li>7 players per side on the pitch</li>
+    <li>Smaller roster size (11 players maximum)</li>
+    <li>Reduced pitch size (20 squares long by 9 squares wide)</li>
+    <li>No casualties</li>
+</ul>
+<p>Rules found on the NAF website</p>
+
