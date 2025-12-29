@@ -39,6 +39,14 @@
             >{$_('common.email')}
             <i class="material-symbols-outlined">email</i></a
         >
+        |
+        <a
+            href="https://buymeacoffee.com/bbroster"
+            class="blog-link"
+            target="_blank"
+            >Buy me a coffee <i class="material-symbols-outlined">local_cafe</i
+            ></a
+        >
     </p>
 </footer>
 

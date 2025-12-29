@@ -34,7 +34,7 @@
         />
     </div>
     <h1>
-        BB Roster {#if $customisationRules?.customContent?.menuSubtitle}
+        BB Roster | 2020 {#if $customisationRules?.customContent?.menuSubtitle}
             | <span>{$customisationRules.customContent.menuSubtitle}</span>
         {/if}
     </h1>
